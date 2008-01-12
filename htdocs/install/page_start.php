@@ -16,14 +16,16 @@
 */
 
 require_once 'common.inc.php';
+
+
 if ( !defined( 'XOOPS_INSTALL' ) )	exit();
 
 	$wizard->setPage( 'start' );
 	$pageHasForm = false;
 
     $content = "";
-    include "./language/$wizard->language/welcome.php";
-    
-    include 'install_tpl.php';
 
+    include "./language/$wizard->language/welcome.php";
+
+    include 'install_tpl.php';
 ?>

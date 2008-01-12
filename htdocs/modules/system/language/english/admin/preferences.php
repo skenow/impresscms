@@ -216,9 +216,9 @@ define("_MD_AM_LDAP_USETLS_DESC", "Use a TLS (Transport Layer Security) connecti
 								  " and the LDAP version must be set to 3.");
 
 define("_MD_AM_LDAP_LOGINLDAP_ATTR","LDAP Attribute use to search the user");
-define("_MD_AM_LDAP_LOGINLDAP_ATTR_D","When Login name use in the DN option is set to yes, must correspond to the login name impressCMS");
+define("_MD_AM_LDAP_LOGINLDAP_ATTR_D","When Login name use in the DN option is set to yes, must correspond to the login name ImpressCMS");
 define("_MD_AM_LDAP_LOGINNAME_ASDN", "Login name use in the DN");
-define("_MD_AM_LDAP_LOGINNAME_ASDN_D", "The impressCMS login name is used in the LDAP DN (eg : uid=<loginname>,dc=impresscms,dc=org)<br>The entry is directly read in the LDAP Server without search");
+define("_MD_AM_LDAP_LOGINNAME_ASDN_D", "The ImpressCMS login name is used in the LDAP DN (eg : uid=<loginname>,dc=impresscms,dc=org)<br>The entry is directly read in the LDAP Server without search");
 
 define("_MD_AM_LDAP_FILTER_PERSON", "The search filter LDAP query to find user");
 define("_MD_AM_LDAP_FILTER_PERSON_DESC", "Special LDAP Filter to find user. @@loginname@@ is replace by the users's login name<br> MUST BE BLANK IF YOU DON'T KNOW WHAT YOU DO' !" .
@@ -257,6 +257,8 @@ define("_MD_AM_ML_NAMES","Language names");
 define("_MD_AM_ML_NAMESDSC","Enter the names of the language to use, separated by a comma");
 define("_MD_AM_ML_CAPTIONS","Language captions");
 define("_MD_AM_ML_CAPTIONSDSC","Enter the captions you would like to use for these languages");
+define("_MD_AM_ML_CHARSET","Charsets");
+define("_MD_AM_ML_CHARSETDSC","Enter the charsets of these languages");
 
 define("_MD_AM_REMEMBERME","Enable the 'Remember Me' feature in the login.");
 define("_MD_AM_REMEMBERMEDSC","The 'Remember Me' feature can represent a security issue. Use it under your own risk.");

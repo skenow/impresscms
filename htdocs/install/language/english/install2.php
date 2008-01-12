@@ -7,7 +7,7 @@ define("_INSTALL_REGUSERSD","Registered Users Group");
 define("_INSTALL_ANONUSERS","Anonymous Users");
 define("_INSTALL_ANONUSERSD","Anonymous Users Group");
 
-define("_INSTALL_L165","The site is currently closed for maintainance. Please come back later.");
+define("_INSTALL_L165","The site is currently closed for maintenance. Please come back later.");
 
 
 define("_INSTALL_ANON","Anonymous");
@@ -70,5 +70,4 @@ We will not sell, distribute or lease your personal information to third parties
 </p><p>
 If you believe that any information we are holding on you is incorrect or incomplete, please write to or email us as soon as possible, at the above address. We will promptly correct any information found to be incorrect.
 </p>");
-
 ?>

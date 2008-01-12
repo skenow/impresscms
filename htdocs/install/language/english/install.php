@@ -37,7 +37,7 @@ define( "FAILED", "Failed" );
 define( "XOOPS_INSTALL_WIZARD", " %s - Installation Wizard" );
 define( "INSTALL_STEP", "Step" );
 define( "INSTALL_OUTOF", " out of " );
-define( "INSTALL_COPYRIGHT", "Copyright &copy; 2008%s <a href=\"http://www.impresscms.org\">ImpressCMS</a>" );
+define( "INSTALL_COPYRIGHT", "Copyright &copy; 2007%s <a href=\"http://www.impresscms.org\">The ImpressCMS Project</a>" );
 
 define( "LANGUAGE_SELECTION", "Language selection" );
 define( "LANGUAGE_SELECTION_TITLE", "Choose your language");		// L128
@@ -80,7 +80,7 @@ define( "DB_USER_HELP",  "Name of the user account that will be used to connect 
 define( "DB_PASS_LABEL", "Password" );	// L52
 define( "DB_PASS_HELP",  "Password of your database user account"); // L68
 define( "DB_NAME_LABEL", "Database name" );	// L29
-define( "DB_NAME_HELP",  "The name of database on the host. The installer will attempt to create the database if not exist"); // L64
+define( "DB_NAME_HELP",  "The name of database on the host. The installer will attempt to create a database if one does not exist"); // L64
 define( "DB_PREFIX_LABEL", "Table prefix" );	// L30
 define( "DB_PREFIX_HELP",  "This prefix will be added to all new tables created to avoid name conflicts in the database. If you are unsure, just keep the default"); // L63
 define( "DB_PCONNECT_LABEL", "Use persistent connection" );	// L54
@@ -131,7 +131,7 @@ define( "ERR_NO_XOOPS_FOUND", "No ImpressCMS installation could be found in the 
 define( "ERR_INVALID_EMAIL", "Invalid Email" ); // L73
 define( "ERR_REQUIRED", "Please enter all the required info." ); // L41
 define( "ERR_PASSWORD_MATCH", "The two passwords do not match" );
-define( "ERR_NEED_WRITE_ACCESS", "The server must be given write access to the following files and folder<br />(i.e. <em>chmod 777 directory_name</em> on a UNIX/LINUX server)" ); // L72
+define( "ERR_NEED_WRITE_ACCESS", "The server must be given write access to the following files and folders<br />(i.e. <em>chmod 777 directory_name</em> on a UNIX/LINUX server)" ); // L72
 define( "ERR_NO_DATABASE", "Could not create database. Contact the server administrator for details." ); // L31
 define( "ERR_NO_DBCONNECTION", "Could not connect to the database server." ); // L106
 define( "ERR_WRITING_CONSTANT", "Failed writing constant %s." ); // L122
@@ -177,6 +177,8 @@ define("_INSTALL_CHARSET","ISO-8859-1");
 
 define("_INSTALL_PHYSICAL_PATH","Physical path");
 
-define("TRUST_PATH_COULD_NOT_BE_CREATED","Since the trust path was not found, the installation wizard tried to create it. Unfortunatly, it was not able to do so. Please create a folder on your server that will become the trust path and make this folder writable by the server. Hit the refresh button once this is done.");
-
+define("TRUST_PATH_VALIDATE","A suggested name for the Trust path has been created above for you. If you wish to use an alternative name, please replace the above location with your choice of name.<br /><br />When done, please click on the Create Trust Path button.");
+define("TRUST_PATH_NEED_CREATED_MANUALLY","It was not possible to create the trust path. Please create it manually and click on the following Refresh button.");
+define("BUTTON_CREATE_TUST_PATH","Create Trust Path");
+define("TRUST_PATH_SUCCESSFULLY_CREATED", "The trust path was successfully created.");
 ?>

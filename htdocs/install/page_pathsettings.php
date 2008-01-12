@@ -49,7 +49,13 @@ class PathStuffController {
 		if ( isset( $_SESSION['settings']['TRUST_PATH'] ) ) {
 			$this->xoopsTrustPath = $_SESSION['settings']['TRUST_PATH'];
 		} else {
-			$this->xoopsTrustPath = substr( $this->xoopsRootPath, 0, strrpos( $this->xoopsRootPath, '/' ) ) . '/trust_path' . substr( md5( time() ), 0, 5);
+			$web_root = dirname( $this->xoopsRootPath );
+			$arr = explode('/',$web_root);
+			$web_root = '';
+			for ($i = 0; $i < count($arr)-1; $i++){
+			    $web_root .= $arr[$i].'/';
+			}
+			$this->xoopsTrustPath = $web_root . 'trust_path' . substr( md5( time() ), 0, 5);
 		}
 		if ( isset( $_SESSION['settings']['URL'] ) ) {
 			$this->xoopsUrl = $_SESSION['settings']['URL'];
@@ -140,20 +146,20 @@ class PathStuffController {
 	function checkTrustPath() {
 	   	if ( is_dir( $this->xoopsTrustPath ) && is_readable( $this->xoopsTrustPath ) ) {
 			return $this->validTrustPath = true;
-	   	} else {
-	   		// trust path was not found, let's try and create it
-	   		if (!empty($this->xoopsTrustPath)) {
-				if (@icms_install_mkdir($this->xoopsTrustPath)) {
-					if ( is_dir( $this->xoopsTrustPath ) && is_readable( $this->xoopsTrustPath ) ) {
-						return $this->validTrustPath = true;
-					}
-				} else {
-					return $this->validTrustPath = false;
-				}
-	   		}
 	   	}
 		return $this->validTrustPath = false;
 	}
+
+	function createTrustPath() {
+		if (@icms_install_mkdir($this->xoopsTrustPath)) {
+			if ( is_dir( $this->xoopsTrustPath ) && is_readable( $this->xoopsTrustPath ) ) {
+				$_SESSION['settings']['TRUST_PATH'] = $this->xoopsTrustPath;
+				return $this->validTrustPath = true;
+			}
+		}
+		return $this->validTrustPath = false;
+	}
+
 	function checkPermissions() {
 		$paths = array( 'mainfile.php', 'uploads', 'templates_c', 'cache' );
 		$errors = array();
@@ -238,20 +244,31 @@ class PathStuffController {
 
 function genRootCheckHtml( $valid ) {
 	if ( $valid ) {
-		return '<img src="img/yes.png" alt="Success" />' . htmlspecialchars( sprintf( XOOPS_FOUND, XOOPS_VERSION ) );
+		return '<img src="img/yes.png" alt="Success" />' .  sprintf( XOOPS_FOUND, XOOPS_VERSION);
 	}  else {
-		return '<img src="img/no.png" alt="Error" /><br />' . htmlspecialchars( ERR_NO_XOOPS_FOUND );
+		return '<img src="img/no.png" alt="Error" /><br />' .ERR_NO_XOOPS_FOUND;
 	}
 }
 
 function genTrustPathCheckHtml( $valid ) {
 	if ( $valid ) {
-		return '<img src="img/yes.png" alt="Success" />' . htmlspecialchars( _INSTALL_TRUST_PATH_FOUND );
+		return '<img src="img/yes.png" alt="Success" />' . _INSTALL_TRUST_PATH_FOUND;
 	}  else {
-		return '<img src="img/no.png" alt="Error" /><br />' . htmlspecialchars( _INSTALL_ERR_NO_TRUST_PATH_FOUND );
+		return '<img src="img/no.png" alt="Error" /><br />' . _INSTALL_ERR_NO_TRUST_PATH_FOUND;
 	}
 }
 
+function genCreateTrustPathHtml($valid) {
+	if (!$valid) {
+		?>
+		<p><?php echo TRUST_PATH_NEED_CREATED_MANUALLY . '</p>'; ?>
+		<button type="button" onclick="createTrustPath(this.form.elements.trustpath.value);"><?php echo BUTTON_REFRESH; ?></button>
+		<?
+	} else {
+		?>
+		<p><?php echo TRUST_PATH_SUCCESSFULLY_CREATED . '</p>';
+	}
+}
 
 $ctrl = new PathStuffController();
 
@@ -263,6 +280,11 @@ if ( $_SERVER['REQUEST_METHOD'] == 'GET' && @$_GET['action'] == 'checkrootpath' 
 if ( $_SERVER['REQUEST_METHOD'] == 'GET' && @$_GET['action'] == 'checktrustpath' ) {
 	$ctrl->xoopsTrustPath = $_GET['path'];
 	echo genTrustPathCheckHtml( $ctrl->checkTrustPath() );
+	exit();
+}
+if ( $_SERVER['REQUEST_METHOD'] == 'GET' && @$_GET['action'] == 'createtrustpath' ) {
+	$ctrl->xoopsTrustPath = $_GET['path'];
+	echo genCreateTrustPathHtml( $ctrl->createTrustPath() );
 	exit();
 }
 $ctrl->execute();
@@ -285,13 +307,18 @@ function updTrustPath( val ) {
 		'trustpathimg', '<?php echo $_SERVER['PHP_SELF']; ?>',
 		{ method:'get',parameters:'action=checktrustpath&path='+val }
 	);
-	$('trustperms').style.display='none';
+}
+function createTrustPath(val) {
+	new Ajax.Updater(
+		'trustperms', '<?php echo $_SERVER['PHP_SELF']; ?>',
+		{ method:'get',parameters:'action=createtrustpath&path='+val }
+	);
 }
 </script>
 <fieldset>
 	<legend><?php echo _INSTALL_PHYSICAL_PATH; ?></legend>
 	<label for="rootpath"><?php echo XOOPS_ROOT_PATH_LABEL; ?></label>
-	<div class="xoform-help"><?php echo htmlspecialchars(XOOPS_ROOT_PATH_HELP); ?></div>
+	<div class="xoform-help"><?php echo XOOPS_ROOT_PATH_HELP; ?></div>
 	<input type="text" name="ROOT_PATH" id="rootpath" value="<?php echo $ctrl->xoopsRootPath; ?>"
 		onchange="updRootPath(this.value)" />
 	<span id="rootpathimg"><?php echo genRootCheckHtml( $ctrl->validRootPath ); ?></span>
@@ -315,25 +342,23 @@ function updTrustPath( val ) {
 <fieldset>
 	<legend><?php echo _INSTALL_TRUST_PATH; ?></legend>
 	<label for="trustpath"><?php echo _INSTALL_TRUST_PATH_LABEL; ?></label>
-	<div class="xoform-help"><?php echo htmlspecialchars(_INSTALL_TRUST_PATH_HELP); ?></div>
+	<div class="xoform-help"><?php echo _INSTALL_TRUST_PATH_HELP; ?></div>
 	<input type="text" name="TRUST_PATH" id="trustpath" value="<?php echo $ctrl->xoopsTrustPath; ?>"
 		onchange="updTrustPath(this.value)" />
 	<span id="trustpathimg"><?php echo genTrustPathCheckHtml( $ctrl->validTrustPath ); ?></span>
 <?php if ( !$ctrl->validTrustPath && $ctrl->xoopsTrustPath != '') { ?>
 	<div id="trustperms" class="x2-note">
-	<p><?php echo TRUST_PATH_COULD_NOT_BE_CREATED . '</p>'; ?>
-	<button type="submit" /> <?php echo BUTTON_REFRESH; ?></button>
+	<p><?php echo TRUST_PATH_VALIDATE . '</p>'; ?>
+	<button type="button" onclick="createTrustPath(this.form.elements.trustpath.value); updTrustPath(this.form.elements.trustpath.value);"><?php echo BUTTON_CREATE_TUST_PATH; ?></button>
 	<?php
 }?>
-
-
 
 </fieldset>
 
 <fieldset>
 	<legend><?php echo _INSTALL_WEB_LOCATIONS; ?></legend>
 	<label for="url"><?php echo _INSTALL_WEB_LOCATIONS_LABEL; ?></label>
-	<div class="xoform-help"><?php echo htmlspecialchars(XOOPS_URL_HELP); ?></div>
+	<div class="xoform-help"><?php echo XOOPS_URL_HELP; ?></div>
 	<input type="text" name="URL" id="url" value="<?php echo $ctrl->xoopsUrl; ?>" />
 </fieldset>
 

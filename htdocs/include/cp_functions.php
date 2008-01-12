@@ -127,7 +127,7 @@ window.onload=startList;
 	$menu[$i]['absolute'] = 1;
 	$menu[$i]['small'] = XOOPS_URL.'/images/logout.png';
 
-	$tpl->append('navitems', array('link'=>'#','text'=>_CPHOME, 'menu'=>$menu));
+	$tpl->append('navitems', array('id'=>'cphome','link'=>'#','text'=>_CPHOME, 'menu'=>$menu));
 
 	$module_handler = xoops_gethandler('module');
 	$mod =& $module_handler->getByDirname('system');
@@ -137,10 +137,11 @@ window.onload=startList;
     foreach ($mod->getAdminMenu() as $lkn){
     	$sadmin = $moduleperm_handler->checkRight('system_admin', $lkn['id'], $xoopsUser->getGroups());
     	if ($sadmin){
+    		$lkn['dir'] = 'system';
     		$menu[] = $lkn;
     	}
     }
-	$tpl->append('navitems', array('link'=>XOOPS_URL.'/modules/system/admin.php', 'text'=>_SYSTEM, 'dir'=>'system', 'menu'=>$menu));
+	$tpl->append('navitems', array('id'=>'opsystem','link'=>XOOPS_URL.'/modules/system/admin.php', 'text'=>_SYSTEM, 'dir'=>'system', 'menu'=>$menu));
 
 	$module_handler =& xoops_gethandler('module');
 	$criteria = new CriteriaCompo();
@@ -187,7 +188,7 @@ window.onload=startList;
 					$rtn['hassubs'] = 0;
 					unset($rtn['subs']);
 				}
-				if (isset($inf['iconsmall']) && $inf['iconsmall']!='' ) $rtn['small'] =  $inf['iconsmall'];
+				if (isset($inf['iconsmall']) && $inf['iconsmall']!='' ) $rtn['small'] =  XOOPS_URL.'/modules/'.$m->dirname().'/'.$inf['iconsmall'];
 			}else{
 				$m->loadInfoAsVar($m->dirname(),false);
 				$inf =& $m->getInfo();
@@ -220,7 +221,7 @@ window.onload=startList;
 					$rtn['hassubs'] = 0;
 					unset($rtn['subs']);
 				}
-				if (isset($inf['iconsmall']) && $inf['iconsmall']!='' ) $rtn['small'] =  $inf['iconsmall'];
+				if (isset($inf['iconsmall']) && $inf['iconsmall']!='' ) $rtn['small'] =  XOOPS_URL.'/modules/'.$m->dirname().'/'.$inf['iconsmall'];
 			}
 			$menu[] = $rtn;
 			if ($m->dirname() == 'system'){
@@ -228,11 +229,8 @@ window.onload=startList;
 			}
 		}
 	}
-	//echo '<PRE>';
-	//print_r($menu);
-	//echo '</PRE>';
     $tpl->assign('systemadm', $systemadm);
-	$tpl->append('navitems', array('link'=>XOOPS_URL.'/modules/system/admin.php?fct=modulesadmin', 'text'=>_MODULES, 'dir'=>$m->dirname(), 'menu'=>$menu));
+	$tpl->append('navitems', array('id'=>'modules','link'=>XOOPS_URL.'/modules/system/admin.php?fct=modulesadmin', 'text'=>_MODULES, 'dir'=>$m->dirname(), 'menu'=>$menu));
 
 	$i=0;
 
@@ -245,7 +243,7 @@ window.onload=startList;
 	$i++;
 
 
-	$tpl->append('navitems', array('link'=>"#",'text'=>_IMPRESSCMS_NEWS, 'menu'=>$menu));
+	$tpl->append('navitems', array('id'=>'news','link'=>"#",'text'=>_IMPRESSCMS_NEWS, 'menu'=>$menu));
 
 	$tpl->assign('lang_prefs', _IMPRESSCMS_PREFS);
 	$tpl->assign('ml_is_enabled', $im_multilanguageConfig['ml_enable']);
