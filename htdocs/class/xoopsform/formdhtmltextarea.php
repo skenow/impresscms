@@ -153,20 +153,13 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 			$ret .= "<option value='$font'>$font</option>\n";
 		}
 		$ret .= "</select>\n";
-		$colorarray = array("00", "33", "66", "99", "CC", "FF");
 		$ret .= "<select id='".$ele_name."Color' onchange='setVisible(\"".$this->_hiddenText."\");setElementColor(\"".$this->_hiddenText."\",this.options[this.selectedIndex].value);'>\n";
 		$ret .= "<option value='COLOR'>"._COLOR."</option>\n";
-		foreach ( $colorarray as $color1 ) {
-			foreach ( $colorarray as $color2 ) {
-				foreach ( $colorarray as $color3 ) {
-					$ret .= "<option value='".$color1.$color2.$color3."' style='background-color:#".$color1.$color2.$color3.";color:#".$color1.$color2.$color3.";'>#".$color1.$color2.$color3."</option>\n";
-				}
-			}
-		}
-		$ret .= "</select><span id='".$this->_hiddenText."'>"._EXAMPLE."</span>\n";
-		$ret .= "<br />\n";
+		$ret .= "</select><span id='".$this->_hiddenText."'>"._EXAMPLE."</span>\n"; 
+				$ret .= "<br />\n";
 		$ret .= "<img onclick='javascript:setVisible(\"".$this->_hiddenText."\");makeBold(\"".$this->_hiddenText."\");' onmouseover='style.cursor=\"hand\"' src='".XOOPS_URL."/images/bold.gif' alt='bold' />&nbsp;<img onclick='javascript:setVisible(\"".$this->_hiddenText."\");makeItalic(\"".$this->_hiddenText."\");' onmouseover='style.cursor=\"hand\"' src='".XOOPS_URL."/images/italic.gif' alt='italic' />&nbsp;<img onclick='javascript:setVisible(\"".$this->_hiddenText."\");makeUnderline(\"".$this->_hiddenText."\");' onmouseover='style.cursor=\"hand\"' src='".XOOPS_URL."/images/underline.gif' alt='underline' />&nbsp;<img onclick='javascript:setVisible(\"".$this->_hiddenText."\");makeLineThrough(\"".$this->_hiddenText."\");' src='".XOOPS_URL."/images/linethrough.gif' alt='linethrough' onmouseover='style.cursor=\"hand\"' />&nbsp;&nbsp;<input type='text' id='".$ele_name."Addtext' size='20' />&nbsp;<input type='button' onclick='xoopsCodeText(\"".$ele_name."\", \"".$this->_hiddenText."\", \"".htmlspecialchars(_ENTERTEXTBOX, ENT_QUOTES)."\")' class='formButton' value='"._ADD."' /><br /><br /><textarea id='".$ele_name."' name='".$ele_name."' onselect=\"xoopsSavePosition('".$ele_name."');\" onclick=\"xoopsSavePosition('".$ele_name."');\" onkeyup=\"xoopsSavePosition('".$ele_name."');\" cols='".$this->getCols()."' rows='".$this->getRows()."'".$this->getExtra().">".$this->getValue()."</textarea><br />\n";
 		$ret .= $this->_renderSmileys();
+		$ret .= "\n<script language='javascript'>setTimeout(\"icmsMakeColorSelector('".$ele_name."Color')\", 0);</script>";
 		return $ret;
 	}
 

@@ -413,6 +413,23 @@ function xoopsValidate(subjectId, textareaId, submitId, plzCompletePhrase, msgTo
 }
 
 
+function icmsMakeColorSelector (elId) {
+	var colorS = xoopsGetElementById(elId);
+	var colorMap = ["00", "33", "66", "99", "CC", "FF"];
+	for (var colorR = 0; colorR < colorMap.length; ++colorR) {
+		for (var colorG = 0; colorG < colorMap.length; ++colorG) {
+			for (var colorB = 0; colorB < colorMap.length; ++colorB) {
+				var colorV = colorMap[colorR] + colorMap[colorG] + colorMap[colorB];
+				// process color
+				var colorO = document.createElement("OPTION");
+				colorO.text = "#" + colorV;
+				colorO.value = colorV;
+				colorO.style.color = colorO.style.backgroundColor = "#" + colorV;;
+				colorS.options[colorS.length] = colorO;
+			}
+		}
+	}
+}
 
 
 
