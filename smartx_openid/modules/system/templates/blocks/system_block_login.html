@@ -1,0 +1,40 @@
+<div id="login-form">
+	<form style="margin-top: 0px;" action="<{$xoops_url}>/user.php" method="post">
+	<table width="98%" align="center">
+	  <tr>
+	    <td><{$block.lang_username}></td>
+	    <td><input type="text" name="uname" size="8" value="<{$block.unamevalue}>" maxlength="25" /></td>
+	  </tr>
+	  <tr>
+	    <td><{$block.lang_password}></td>
+	    <td><input type="password" name="pass" size="8" maxlength="32" /></td>
+	  </tr>
+	  <tr>
+	    <td colspan="2">
+	  	  <input type="hidden" name="xoops_redirect" value="<{$xoops_requesturi}>" />
+	      <input type="hidden" name="op" value="login" />
+	      <input type="submit" value="<{$block.lang_login}>" /><br />
+	      <{$block.sslloginlink}>
+	    </td>
+	  </tr>
+	</table>
+	</form>
+	<div style="text-align: center;"><a href="#" onclick="xoopsGetElementById('openid-verify-form').style.display = 'block'; xoopsGetElementById('login-form').style.display = 'none';">Login with an OpenID ?</a></div>
+</div>
+
+<div id="openid-verify-form" style="display: none;">
+  	<form method="get" action="<{$xoops_url}>/xo/try_auth.php">
+	    Your OpenID URL : 
+	    <input type="hidden" name="action" value="verify" />
+	    <input type="text" class="openid_url" name="openid_url" value="" />
+	    <input type="submit" value="Login" />
+	</form>
+	<div style="text-align: center;"><a href="#" onclick="xoopsGetElementById('openid-verify-form').style.display = 'none'; xoopsGetElementById('login-form').style.display = 'block';">Go back to normal login</a></div>  
+</div>
+
+<div align="center">
+	<br />
+  <a href="<{$xoops_url}>/user.php#lost"><{$block.lang_lostpass}></a>
+  <br />
+  <a href="<{$xoops_url}>/register.php"><{$block.lang_registernow}></a>
+</div>

@@ -1,0 +1,27 @@
+<h1>PHP OpenID Authentication Example</h1>
+<h2>Using OpenID 2</h2>
+<p>
+  This example consumer uses the <a
+  href="http://www.openidenabled.com/openid/libraries/php/">PHP
+  OpenID</a> library. It just verifies that the URL that you enter
+  is your identity URL.
+</p>
+
+<{if $msg}>
+	<div class="alert">alert : <{$msg}></div>
+<{/if}>
+<{if $error}>
+	<div class="error">error : <{$error}></div>
+<{/if}>
+<{if $success}>
+	<div class="success">success : <{$success}></div>
+<{/if}>
+
+<div id="verify-form">
+  <form method="get" action="try_auth.php">
+    Identity&nbsp;URL:
+    <input type="hidden" name="action" value="verify" />
+    <input type="text" name="openid_url" value="" />
+    <input type="submit" value="Verify" />
+  </form>
+</div>

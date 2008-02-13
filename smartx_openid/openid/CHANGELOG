@@ -1,0 +1,14 @@
+Thu Apr 26 11:41:52 PDT 2007  cygnus@janrain.com
+  tagged 1.2.3
+
+Thu Apr 26 11:19:11 PDT 2007  cygnus@janrain.com
+  * Make yadis META tag search ignore comments
+
+Mon Apr 16 16:05:28 PDT 2007  cygnus@janrain.com
+  * Do not send openid.ns values in OpenID 1 messages
+
+Mon Apr 16 14:25:49 PDT 2007  cygnus@janrain.com
+  * Fix simple registration API to use toMessage()
+
+Thu Apr 12 15:03:50 PDT 2007  cygnus@janrain.com
+  tagged 2.0.0-rc2

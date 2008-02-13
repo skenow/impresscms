@@ -1,0 +1,2 @@
+[14-Jun-2006 12:13:48] PHP Warning:  Invalid argument supplied for foreach() in /home/inboxfac/public_html/class/xoopseditor/fckeditor/editor/dialog/fck_spellerpages/spellerpages/server-scripts/spellchecker.php on line 22
+[14-Jun-2006 12:16:46] PHP Warning:  Invalid argument supplied for foreach() in /home/inboxfac/public_html/class/xoopseditor/fckeditor/editor/dialog/fck_spellerpages/spellerpages/server-scripts/spellchecker.php on line 22

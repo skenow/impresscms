@@ -1,0 +1,50 @@
+<div id="loginformular">
+	<h2><{$lang_connect_title}></h2>
+	<div style="padding-top: 5px;"><{$lang_pleaseconnect}></div>	
+	<div style="padding-top: 5px;"><{$lang_pleaseconnect2}></div>
+	<fieldset style="padding: 10px;">
+  		<legend style="font-weight: bold;"><{$lang_login}></legend>
+  		<div id="login-form2">
+  		<form action="user.php" method="post">
+    	<{$lang_username}> <br /><input type="text" name="uname" size="26" maxlength="32" value="<{$usercookie}>" /><br />
+   		<{$lang_password}><br /> <input type="password" name="pass" size="26" maxlength="32" /><br />
+	    <input type="checkbox" name="rememberme" value="On" /><{$lang_rememberme}><br /><{* autologin hack GIJ *}>
+	    <input type="hidden" name="op" value="login" />
+	    <input type="hidden" name="xoops_redirect" value="<{$redirect_page}>" /><br />
+    	<input type="submit" value="<{$lang_login}>" />
+  		</form>
+  		<div style="text-align: left;"><a href="#" onclick="xoopsGetElementById('openid-verify-form2').style.display = 'block'; xoopsGetElementById('login-form2').style.display = 'none';">Login with an OpenID ?</a></div>
+  		</div>
+		<div id="openid-verify-form2" style="display: none;">
+		  	<form method="get" action="<{$xoops_url}>/xo/try_auth.php">
+			    Your OpenID URL : 
+			    <input type="hidden" name="action" value="verify" />
+			    <input type="text" class="openid_url" name="openid_url" value="" />
+			    <input type="submit" value="Login" />
+			</form>
+			<div style="text-align: left;"><a href="#" onclick="xoopsGetElementById('openid-verify-form2').style.display = 'none'; xoopsGetElementById('login-form2').style.display = 'block';">Go back to normal login</a></div>  
+		</div>
+  		
+  		<a name="lost"></a><div><{$lang_notregister}><br /></div>
+	</fieldset>
+	
+	<br />
+	
+	<fieldset style="padding: 10px;">
+  		<legend style="font-weight: bold;"><{$lang_connectproblem}></legend>
+		<{$lang_connectproblem_text}>
+	</fieldset>
+
+	<br />
+
+	<fieldset style="padding: 10px;">
+  		<legend style="font-weight: bold;"><{$lang_lostpassword}></legend>
+  		<div><{$lang_noproblem}></div>
+  		<form action="lostpass.php" method="post">
+    		<{$lang_youremail}> <input type="text" name="email" size="26" maxlength="60" />&nbsp;&nbsp<input type="hidden" name="op" value="mailpasswd" /><br /><br /><input type="submit" value="<{$lang_sendpassword}>" />
+  		</form>
+	</fieldset>
+	<br />
+	<br />
+</div>
+

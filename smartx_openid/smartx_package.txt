@@ -1,0 +1,401 @@
+/**
+ * SmartX Package Information file
+ *
+ * @license GNU
+ * @author Marc-André Lanciault <mal@inboxinternational.com>
+ * @version $Id: smartx_package.txt,v 1.1 2007/06/05 18:54:23 marcan Exp $
+ * @link http://inboxinternational.com INBOX Solutions
+ */
+
+XOOPS Core
+==========
+
+SmartX is currently based on XOOPS version 2.0.15 (http://devteam.xoops.org/releases/xoops-2.0.15.html)
+
+
+SmartObject Framework
+=====================
+
+The SmartX package features the SmartObject Framework version 1.0.
+
+XOOPS Multilanguages
+====================
+
+The SmartX package features the integration of XOOPS Multilanguages 2.0.5 to manage multilingual sites.
+
+
+Modules available in the package
+================================
+
+-	contact
+-	extcal
+-	liaise
+-	multimenu
+-	mylinks
+-	newbb
+-	smartcontent
+-	smartfaq
+-	smarthelp
+-	smartlanguage
+-	smartmedia
+-	smartobject
+-	smartpartner
+-	smartsection
+-	smartshop
+-	wiwimod
+-	xcgal
+-	xhelp
+-	xhld
+-	xoopspoll
+
+* Note that most of these modules have been slighlty modified.
+Details of these modifiations shall be documented soon
+
+Available themes
+================
+
+- 	7dana-soft
+-	blue_shine
+-	default
+-	geometric_red
+-	inbox_bleu
+-	inbox_original
+-	inbox_rouge
+-	kubrick
+-	kubrickleft
+-	must_antique
+-	xf_April
+-	xf_blue_grey_V1
+-	xf_colourLightBlue
+-	xf_colourRed
+-	xf_greenGrass
+-	xf_orange_grey_V1
+-	xf_pro_001_corporate_black
+-	xpro_002_corporate_yellow
+-	xpro_003_corporate_red
+-	xpro_004_sports_footb
+-	xpro_005_sports_socc
+-	xpro_006_sports_bask
+-	xpro_007_corp_webconsult
+-	xpro_008_corporate_blue
+-	xpro_009_corporate_business_red
+-	xpro_013_corporate_blue
+-	xpro_014_blog_notes
+-	xpro_015_clean_adventure
+-	xpro_016_blog
+-	xpro_017_blue_CSS
+-	xpro_018_green_news
+-	xpro_019_red_css
+-	xpro_020_podcast
+-	xpro_022_iris_v1
+-	xpro_023_iris_v2
+-	xpro_024_iris_v3
+-	xpro_026_dynamic_spaces
+-	xpro_027_auto_deluxe
+-	xpro_028_dark_obsession
+-	xpro_029_web_interaction
+
+New features and Hacks implemented in the package
+=================================================
+
+-	/check
+ 	Script developed by Dave Lerner to test different features of various clients
+	For example : cookies, HTTP_REFERER, Javascript, etc...
+
+-	/class/database/mysqldatabase.php (382-387)
+	Hack by marcan to track query count. To be used with xoops_debug_initiateQueryCount() and xoops_debug_getQueryCount() within the SmartObject Framework
+
+-	/xoopseditor
+	XoopsEditor framework as found on XOOPS 2.2.x
+
+-	/xoopseditor/fckeditor
+	FCKEditor version 2.3 Beta integrated with the XoopsEditor framework
+	This editor features Images upload and Server browsing
+
+-	/class/coopsform/form.php (162-172)
+	Adds an * to the form element when it is required
+
+-	/class/xoopsform/formtextdateselec.php (64-73)
+	Hack to prevent javascript output at the top of the XHTML document
+
+-	/class/module.textsanitizer.php (230-233)
+	Modification in the behavior of [url] XoopsCode, eg the link will open in the same window and a new window.
+
+-	/class/module.textsanitizer.php (240-244)
+	Addition of a new XoopsCode [urlblank], displaying a link that shall open in a new window
+
+-	/class/module.textsanitizer.php (266-274
+	Addition of a new XoopsCode [siteimg] that will display an image already present in XOOPS_URL/images/
+
+-	/class/xoopssecurity.php (98-103 and 127-132)
+	Addind the error messages to the XoopsSecurity::errors whic was not done. <
+	This was causing a blank page on some occassion when a new user registration
+	failed because of a XoopsSecurity check failure.
+
+-	/images/search2.gif
+	Image used in the Search block
+
+-	/images/xoops_80x15.gif
+	Little discrete icon mentionning that this site use XOOPS
+
+-	/include/checklogin.php (59-75 and 135-144)
+	Auto-Login hack by GIJOE
+
+-	/include/checklogin.php (39-50 and 77-90)
+	Autologin the user if he is activating his account.
+
+-	/include/common.php (32-40)
+	including debug functions present in the SmartObject framework.
+
+-	/include/common.php (206-225)
+	Hack to automatically display ALL themes present in XOOPS_URL/themes,
+	without having to enabled then in System Admin > Preferences > Generl Settings
+
+-	/include/checklogin.php (228-278)
+	Auto-Login hackby GIJOE
+
+-	/include/cp_functions.php (112)
+	Replacement of the XOOPS logo by the INBOX Solutions logo.
+
+-	/include/cp_functions.php (120)
+	XOOPS News link removed.
+
+-	/include/cp_functions.php (159)
+	Addition of the line "Powered by InBox Solutions".
+
+-	/include/functions.php (337-342)
+	Hack to keep baner information even when finished.
+
+-	/include/notification_select.php (84-88)
+	Addition of an informative line in the Notifications select block.
+
+-	/include/registerform.php
+	Adding the real name as a mandatory field on the registration form
+
+-	/kernel/notification.php (131-135)
+	Setting the SiteName as the name ofthe sender when sending a notification to a user.
+
+-	/kernel/user.php (99)
+	Setting the default notification method to "Email" when a new user is created.
+
+-	/kernel/vCard.php
+	vCard class modified from SugarCRM providing methods to deal with vCard.
+
+-	/language/english/mail_template/activated.tpl
+	Changing the Username by the RealName of the user.
+
+-	/language/english/mail_template/adminactivate.tpl
+	Adding more information in this notification, eg Username, Real name and email of the newly registered user.
+
+-	/language/english/mail_template/lostpass1.tpl
+	Changing the message to a more comprehensive message.
+
+-	/language/english/mail_template/lostpass2.tpl
+	Changing the message to a more comprehensive message.
+
+-	/language/english/mail_template/new_pm.tpl
+	Hack to notify a user by email when he receives a new private message.
+
+-	/language/english/mail_template/newuser_notify.tpl
+	Mail template to notify the admin when a new user registers automatically.
+
+-	/language/english/mail_template/register.tpl
+	Changing the message to a more generic message not only related to community based web sites.
+
+-	/language/english/mail_template/welcome.tpl
+	Mail template to welcome a new user and sending him his username and password.
+
+-	/language/english/notification.php (87-90)
+	Addition of informative lines in the Notifications select block.
+
+-	/language/english/pmsg.php (24-26)
+	Hack to notify a user by email when he receives a new private message.
+
+-	/language/english/pmsg.php (48-50)
+	Adding more information on the Private Message page.
+
+-	/language/english/search.php (24-26)
+	Adding more information on the search page.
+
+-	/language/english/user.php
+	Different language changes in the registration process.
+
+-	/language/french/mail_template/activated.tpl
+	Changing the Username by the RealName of the user.
+
+-	/language/french/mail_template/adminactivate.tpl
+	Adding more information in this notification, eg Username, Real name and email of the newly registered user.
+
+-	/language/french/mail_template/lostpass1.tpl
+	Changing the message to a more comprehensive message.
+
+-	/language/french/mail_template/lostpass2.tpl
+	Changing the message to a more comprehensive message.
+
+-	/language/french/mail_template/new_pm.tpl
+	Hack to notify a user by email when he receives a new private message.
+
+-	/language/french/mail_template/newuser_notify.tpl
+	Mail template to notify the admin when a new user registers automatically.
+
+-	/language/french/mail_template/register.tpl
+	Changing the message to a more generic message not only related to community based web sites.
+
+-	/language/french/mail_template/welcome.tpl
+	Mail template to welcome a new user and sending him his username and password.
+
+-	/language/french/admin.php
+	Different language changes regarding Users.
+
+-	/language/french/global.php
+	Different language changes.
+
+-	/language/french/mail.php
+	Different language changes.
+
+-	/language/french/notification.php
+	Different language changes and addition of informative lines in the Notifications select block.
+
+-	/language/french/pmsg.php
+	Different language changes and adding more information on the Private Message page.
+
+-	/language/french/search.php (25-27)
+	Adding more information on the search page.
+
+-	/language/french/user.php
+	Different language changes in the registration process.
+
+-	/modules/system/admin/mailusers/mailform.php (57-66)
+	Have this check box checked by default : "Send message only to users that accept notification messages".
+
+-	/modules/system/admin/mailusers/mailusers.php
+	Different fixes in the Mail Users feature.
+
+-	/modules/system/images/log_inbox.jpg
+	INBOX Solutions logo in the administration header.
+
+-	/modules/system/images/system_slogo.png
+	New logo for the System module.
+
+-	/modules/system/language/french/admin/findusers.php
+	Different language changes.
+
+-	/modules/system/language/french/admin/preferences.php
+	Different language changes.
+
+-	/modules/system/language/french/admin/users.php
+	Different language changes.
+
+-	/modules/system/language/french/blocks.php
+	Different language changes.
+
+-	/modules/system/templates/blocks/system_block_login.html
+	Modifications in the login block display.
+
+-	/modules/system/templates/blocks/system_block_online.html
+	Modifications in the Users Online block display.
+
+-	/modules/system/templates/blocks/system_block_search.html
+	Modifications in the search block display.
+
+-	/modules/system/templates/system_notification_list.html
+	Modifications in the notification list display.
+
+-	/modules/system/templates/system_notification_select.html
+	Modifications in the notification select display.
+
+-	/modules/system/templates/system_redirect.html
+	Modifications in the redirect page display.
+
+-	/modules/system/templates/system_siteclosed.html
+	Modifications in the site closed page display.
+
+-	/modules/system/templates/system_notification_select.html
+	Modifications in the notification select display.
+
+-	/modules/system/templates/system_userform.html
+	Modifications in the user login page display.
+
+-	/modules/system/templates/system_userinfo.html
+	Modifications in the user profile page display.
+
+-	/modules/system/style.css
+	Fixing the width of the first columns of admi form to 200px.
+
+-	/notfound
+	Handling 404 and 500 errors in a gracious way that completely integrates with the site.
+
+-	edituser.php (108)
+	Allowig a bigger signature (1000 chars instead of 255)
+
+-	edituser.php (148-153)
+	Adding more information in the edit profile page.
+
+-	edituser.php (216-231)
+	Hiding some fields eg timezone notification methods, etc...
+
+-	footer.php (30-55)
+	Creating a smarty tag (array) contaiing information about the current URL.
+
+-	pmlite (76-98)
+	Sending an email notification when a user receives a new private message.
+
+-	pmlite (57-68)
+	More information in the Private Message page
+
+-	register.php (119-123 and 157-161 and 170-177 and 204-208)
+	Adding the real name as a mandatory field on the registration form.
+
+-	register.php (131-134)
+	Setting the "user_mailok" field to True and hiding iton the form.
+
+-	register.php (139-144)
+	Fixing a bug related to XoopsSecurity when new user insert was failing.
+
+-	register.php (238-281 and 310-330 and 360-391)
+	Sending a notification email to a elected group when a new user registers.
+
+-	register.php (290-295 and 335-341)
+	Including the real name in the mail notifications.
+
+-	register.php (407-416)
+	Adding a little box related to connexion problems.
+
+-	search.php (99-103)
+	More information on the Search page
+
+-	search.php (178-187)
+	Hack to only display the modules were there are results to show.
+
+-	search.php (189-199)
+	Hack to align the item icon vertically.
+
+-	/user.php (59-65)
+	More information on the login page.
+
+-	/user.php (136-142)
+	Including the real name in the mail notification.
+
+-	/userinfo.php (56-57)
+	Adding the Notifications button the View Account page.
+
+-	/userinfo.php (77-86)
+	Hack to deny access to the user profile page to Anonymous users.
+
+-	/userinfno.php (98-103)
+	Includig the Inquiero button for this user if available (and if SmartHelp module is availabl)
+
+-	/userinfno.php (115-125)
+	Make sure that the Avatar row is not displayed if no avatar has been selected by user.
+
+-	/userinfno.php (130-141)
+	Hack to not display the web site of a user if he has not inputed one.
+
+-	/userinfno.php (177-185)
+	vCard in the user profile.
+
+-	/vCard.php
+	vCard in the user profile.
+
+-	/viewpmsg.php (58-63)
+	More information in the Private Messages page.
