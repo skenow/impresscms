@@ -1,0 +1,60 @@
+<div id="logoHead">
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr><td align="left">
+<a href="<{$xoops_url}>/index.php" title="<{$xoops_sitename}>"><img src="<{$xoops_url}>/images/header-logo.png" alt="XOOPS"/></a>
+</td><td align="right">
+&nbsp;
+</td></tr></table>
+</div>
+<div id="navbarCP">
+  <ul id="nav">
+    <{foreach item=item from=$navitems}>
+      <{if $systemadm || $item.id != 'opsystem'}>
+        <{if $modulesadm || $item.id != 'modules'}>
+	      <li><a href="<{$item.link}>"><img src="<{$xoops_url}>/modules/system/images/arrow1.gif" alt="arrow"/>&nbsp;<{$item.text}></a>
+	        <ul>
+		      <{foreach item=sub from=$item.menu}>
+                <{if $item.id == 'cphome'}>
+		          <li><a href="<{if $sub.absolute==1}><{$sub.link}><{else}><{$xoops_url}>/modules/<{$sub.dir}>/<{$sub.link}><{/if}>" style="background-image: url(<{if $sub.small!=''}><{$sub.small}><{else}><{$xoops_url}>/modules/system/images/imagesarrow1.gif<{/if}>);"><{$sub.title}></a></li>
+                <{elseif $item.id == 'opsystem'}>
+		          <li><a href="<{if $sub.absolute==1}><{$sub.link}><{else}><{$xoops_url}>/modules/<{$sub.dir}>/<{$sub.link}><{/if}>" style="background-image: url(<{if $sub.small!=''}><{$xoops_url}>/modules/system/<{$sub.small}><{/if}>);"><{$sub.title}></a></li>
+                <{elseif $item.id == 'modules'}>
+		          <li><a href="<{if $sub.absolute==1}><{$sub.link}><{else}><{$xoops_url}>/modules/<{$sub.dir}>/<{$sub.link}><{/if}>" style="background-image: url(<{if $sub.small!=''}><{$sub.small}><{else}><{$xoops_url}>/modules/system/images/modulesitem.png<{/if}>);"><{$sub.title}></a>
+    		      <{if $sub.hassubs}>
+	    	        <ul>
+		              <{foreach item=subitem from=$sub.subs}>
+		                <li><a href="<{$subitem.link}>"><{$subitem.title}></a></li>
+		              <{/foreach}>  
+		            </ul>
+		          <{/if}>
+		          </li>
+                <{elseif $item.id == 'news'}>
+    		      <li><a href="<{if $sub.absolute==1}><{$sub.link}><{else}><{$xoops_url}>/modules/<{$sub.dir}>/<{$sub.link}><{/if}>" style="background-image: url(<{if $sub.small!=''}><{$sub.small}><{/if}>);"><{$sub.title}></a></li>
+                <{/if}>
+		      <{/foreach}>
+		    </ul>
+	      </li>
+	    <{/if}>
+	  <{/if}>
+    <{/foreach}>
+  </ul>
+  <{if $ml_is_enabled}>
+	<span id="nav-change-language">[mlimg]</span>
+  <{/if}>
+</div>
+<{ if $modname != '' }>
+  <div id="navOptionsCP">
+	<div class="modname">
+	  <{$modname}>
+	</div>
+	<{foreach item=op from=$mod_options}>
+	  <a href="<{$op.link}>" title="<{$op.title}>">
+        <{if $op.title == $lang_prefs && $moddir!='system'}>
+          <img src="<{$xoops_url}>/modules/system/images/prefs.png" alt="<{$lang_preferences}>" />
+        <{else}>  
+          <img src="<{if $op.icon==''}><{$xoops_url}>/images/icon_options.png<{else}><{$modpath}>/<{$op.icon}><{/if}>" alt="<{$op.title}>" />
+        <{/if}>
+      </a>
+	<{/foreach}>
+  </div>
+<{/if}>
