@@ -11,7 +11,6 @@ $return_to = getReturnTo();//1123
 $response = $consumer->complete($return_to);//1123
 $_SESSION['openid_response']=$response;
 
-
 if ($response->status == Auth_OpenID_CANCEL) {
     // This means the authentication was cancelled.
     $msg = 'Verification cancelled.';
@@ -28,11 +27,11 @@ if ($response->status == Auth_OpenID_CANCEL) {
 	$sreg_resp = Auth_OpenID_SRegResponse::fromSuccessResponse($response);
 	$sreg = $sreg_resp->contents();
 	$_SESSION['openid_sreg']=$sreg;
-	
+
     // $openid = $response->identity_url;
     $esc_identity = htmlspecialchars($cid, ENT_QUOTES);
 
-    $success = "You have successfully verified $esc_identity 
+    $success = "You have successfully verified $esc_identity
     ($displayId) as your identity.";
 
 
@@ -40,15 +39,15 @@ if ($response->status == Auth_OpenID_CANCEL) {
         $success .= '  (XRI CanonicalID: '.$response->endpoint->canonicalID.') ';
     }
 
-    $query = "SELECT * from " . $xoopsDB->prefix('openid_localid') . 
+    $query = "SELECT * from " . $xoopsDB->prefix('openid_localid') .
      " WHERE openid='".$cid."'";
     $res = $xoopsDB->query($query,1);
     //$numrows =　$xoopsDB->getRowsNum($res);
     $row = $xoopsDB->fetchArray($res);
 
     if($row) {
-    	// He is already registered into the map. 
-    	$lid = $row['localid'];    	
+    	// He is already registered into the map.
+    	$lid = $row['localid'];
  		$criteria = new CriteriaCompo(new Criteria('uname', $lid ));
 		$user_handler =& xoops_gethandler('user');
 		$users =& $user_handler->getObjects($criteria, false);
@@ -58,7 +57,7 @@ if ($response->status == Auth_OpenID_CANCEL) {
 		if (false != $user && $user->getVar('level') > 0) {
 			$member_handler =& xoops_gethandler('member');
 			$user->setVar('last_login', time());
-			if (!$member_handler->insertUser($user)) {
+			if (!$member_handler->insertUser($user, true)) {
 			}
 			$_SESSION['xoopsUserId'] = $user->getVar('uid');
 			$_SESSION['xoopsUserGroups'] = $user->getGroups();
@@ -67,10 +66,10 @@ if ($response->status == Auth_OpenID_CANCEL) {
 				$_SESSION['xoopsUserTheme'] = $user_theme;
 			}
 			//include_once(XOOPS_ROOT_PATH.'/footer.php');
-			header("Location: " . $_SESSION['frompage']);
+			$back_to_location = isset($_SESSION['frompage']) && $_SESSION['frompage'] != '' ? $_SESSION['frompage'] : XOOPS_URL;
+			header("Location: " . $back_to_location);
 			unset($_SESSION['frompage']);
 		}
-
     } else {
     	$xoopsOption['template_main'] = 'openid_new_user.html';
 		setlocale(LC_ALL,"ja_JP.EUC");
@@ -96,7 +95,6 @@ if ($response->status == Auth_OpenID_CANCEL) {
 		$xoopsTpl->assign('youropenid', _OD_YOUR_OPENID);
 		include_once XOOPS_ROOT_PATH.'/footer.php';
     }
-    
-}
 
+}
 ?>
