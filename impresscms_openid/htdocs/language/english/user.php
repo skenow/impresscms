@@ -152,5 +152,7 @@ define('_US_GROUPS', 'User\'s Groups');
 
 // openid
 define('_US_OPENID_NOPERM', 'No permission.');
+define('_US_OPENID_FORM_CAPTION', 'OpenID');
+define('_US_OPENID_FORM_DSC', '');
 
 ?>

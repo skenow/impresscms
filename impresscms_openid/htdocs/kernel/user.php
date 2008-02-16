@@ -102,6 +102,8 @@ class XoopsUser extends XoopsObject
         $this->initVar('user_intrest', XOBJ_DTYPE_TXTBOX, null, false, 150);
         $this->initVar('user_mailok', XOBJ_DTYPE_INT, 1, false);
 
+		$this->initVar('openid', XOBJ_DTYPE_TXTBOX, '', false, 255);
+
         // for backward compatibility
         if (isset($id)) {
             if (is_array($id)) {

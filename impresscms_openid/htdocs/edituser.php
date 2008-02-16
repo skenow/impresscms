@@ -100,6 +100,7 @@ if ($op == 'saveuser') {
         if ($xoopsConfigUser['allow_chgmail'] == 1) {
             $edituser->setVar('email', $email, true);
         }
+        $edituser->setVar('openid', isset($_POST['openid']) ? trim($_POST['openid']) : '');
         $edituser->setVar('url', formatURL($_POST['url']));
         $edituser->setVar('user_icq', $_POST['user_icq']);
         $edituser->setVar('user_from', $_POST['user_from']);
@@ -168,6 +169,17 @@ if ($op == 'editprofile') {
     $email_cbox->addOption(1, _US_ALLOWVIEWEMAIL);
     $email_tray->addElement($email_cbox);
     $form->addElement($email_tray);
+
+    /*
+     * @todo we need to add this in the preference
+     */
+    $config_to_enable_openid = true;
+	if ($config_to_enable_openid) {
+    	$openid_text = new XoopsFormText(_US_OPENID_FORM_CAPTION, 'openid', 30, 255, $xoopsUser->getVar('openid'));
+    	$openid_text->setDescription(_US_OPENID_FORM_DSC);
+    	$form->addElement($openid_text);
+	}
+
     $url_text = new XoopsFormText(_US_WEBSITE, 'url', 30, 100, $xoopsUser->getVar('url', 'E'));
     $form->addElement($url_text);
 
