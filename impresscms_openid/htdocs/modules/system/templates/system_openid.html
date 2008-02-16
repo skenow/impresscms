@@ -1,0 +1,50 @@
+<pre>
+    <{$msg}>
+    <{$error}>
+    <{$success}>
+</pre>
+
+<table>
+<tr>
+<td style="width:47%;border:1px dashed #aaaaaa;padding:10px;">
+<h3 class="centerLblockTitle"><{$existinguser}></h3>
+<{$loginbelow}>
+<br />
+<form method="POST" action="link.php">
+<table>
+<tr><th><{$xoopsuname}></th><td><input type="text" name="uname" /> </td></tr>
+<tr><th><{$xoopspass}></th><td><input type="password" name="pass" /> </td></tr>
+</table>
+<input type="submit" />
+</form>
+
+</td>
+<td style="width:6%;">&nbsp;
+</td>
+<td style="width:47%;border:1px dashed #aaaaaa;padding:10px;">
+<h3 class="centerLblockTitle"><{$nonmember}></h3>
+<p>
+<{$enterwantedname}>
+</p>
+<form method="POST" action="finish_auth.php" />
+
+<input type="hidden" name="openid_register" value="1" />
+<table>
+<tr>
+<th><{$screenamelabel}></th><td><input type="text" name="uname" value="<{$unam}>" /></td>
+</tr>
+</table>
+<input type="submit">
+
+</form>
+
+</td>
+</tr>
+</table>
+<table>
+<tr>
+<th><{$youropenid}></th><td><{$displayId}></td>
+</tr>
+</table>
+
+

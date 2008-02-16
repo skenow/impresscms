@@ -183,3 +183,13 @@ div.cpicon span.unor{
 #http_error_text {padding-top: 5px; padding-bottom: 5px; text-align: left;}
 #http_error_searchform{padding-top: 5px; line-height: 5px; padding-bottom: 0px;}
 #http_error li{color: black; padding-top: 5px; padding-bottom: 5px;}
+
+.openid_url {
+	background-image: url(./images/openid-inputicon.gif);
+	background-repeat: no-repeat;
+	background-attachment: scroll;
+	background-color: #ffffff;
+	background-x-position: 0pt;
+	background-y-position: 50%;
+	padding-left: 18px;
+}

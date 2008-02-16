@@ -35,20 +35,52 @@ if (!defined('XOOPS_ROOT_PATH')) {
 include_once XOOPS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/user.php';
 $uname = !isset($_POST['uname']) ? '' : trim($_POST['uname']);
 $pass = !isset($_POST['pass']) ? '' : trim($_POST['pass']);
-if ($uname == '' || $pass == '') {
-    redirect_header(XOOPS_URL.'/user.php', 1, _US_INCORRECTLOGIN);
-}
 $member_handler =& xoops_gethandler('member');
 $myts =& MyTextsanitizer::getInstance();
 
 include_once XOOPS_ROOT_PATH.'/class/auth/authfactory.php';
 include_once XOOPS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/auth.php';
+
 $xoopsAuth =& XoopsAuthFactory::getAuthConnection($myts->addSlashes($uname));
+
 //$user = $xoopsAuth->authenticate($myts->addSlashes($uname), $myts->addSlashes($pass));
 // uname&email hack GIJ
 $uname4sql = addslashes( $myts->stripSlashesGPC($uname) ) ;
 $pass4sql = addslashes( $myts->stripSlashesGPC($pass) ) ;
-if( strstr( $uname , '@' ) ) {
+
+if ($xoopsAuth->auth_method == 'openid') {
+	$user = $xoopsAuth->authenticate();
+	if (!$user) {
+		$xoopsOption['template_main'] = 'system_openid.html';
+		include_once(XOOPS_ROOT_PATH . "/header.php");
+		if(preg_match('/^http/',$xoopsAuth->displayid)){
+			if($_SESSION['openid_sreg']['nickname']!='') {
+				$unam = alphaonly($_SESSION['openid_sreg']['nickname']);
+			} else {
+				$unam = "";
+			}
+		} else {
+			$unam = $xoopsAuth->displayid;
+		}
+		$xoopsTpl->assign('displayId', $xoopsAuth->displayid);
+		$xoopsTpl->assign('cid', $xoopsAuth->openid);
+		$xoopsTpl->assign('unam', $unam);
+		$xoopsTpl->assign('existinguser',_OD_EXISTINGUSER);
+		$xoopsTpl->assign('loginbelow',_OD_LOGINBELOW);
+		$xoopsTpl->assign('xoopsuname', _OD_XOOPSUNAME);
+		$xoopsTpl->assign('xoopspass', _OD_XOOPSPASS);
+		$xoopsTpl->assign('nonmember', _OD_NONMEMBER);
+		$xoopsTpl->assign('enterwantedname', _OD_ENTERWANTEDNAME);
+		$xoopsTpl->assign('screenamelabel', _OD_SCREENNAMELABEL);
+		$xoopsTpl->assign('youropenid', _OD_YOUR_OPENID);
+		include_once XOOPS_ROOT_PATH.'/footer.php';
+		exit;
+	}
+} elseif(strstr( $uname , '@' )) {
+	if ($uname == '' || $pass == '') {
+	    redirect_header(XOOPS_URL.'/user.php', 1, _US_INCORRECTLOGIN);
+	}
+
 	// check by email if uname includes '@'
 	$criteria = new CriteriaCompo(new Criteria('email', $uname4sql ));
 	$criteria->add(new Criteria('pass', md5( $pass4sql )));

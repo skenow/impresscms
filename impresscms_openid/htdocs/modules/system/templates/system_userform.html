@@ -1,3 +1,4 @@
+
 <div>
 <div style="float: left; width: 45% ">
 <fieldset style="padding: 10px;">
@@ -11,7 +12,10 @@
     <input type="hidden" name="xoops_redirect" value="<{$redirect_page}>" />
     <br />
     <input type="submit" value="<{$lang_login}>" />
+  
   </form>
+
+  
   <a name="lost"></a>  <{if $allow_registration }>  <div style="text-align: right;"><{$lang_notregister}><br /></div><{/if}>
 </div>
 <div style="float: right; width: 50% ">
@@ -27,5 +31,19 @@
      <input type="submit" value="<{$lang_sendpassword}>" />
   </form>
 </fieldset>
+
 </div>
+
 </div>
+<div style="clear: both;"></div>
+
+  		<div style="text-align: left;"><a href="#" onclick="xoopsGetElementById('openid-verify-form2').style.display = 'block'; xoopsGetElementById('login-form2').style.display = 'none';">Login with an OpenID ?</a></div>
+		<div id="openid-verify-form2" style="display: none;">
+		  	<form method="get" action="<{$xoops_url}>/try_auth.php">
+			    Your OpenID URL : 
+			    <input type="hidden" name="action" value="verify" />
+			    <input type="text" class="openid_url" name="openid_identifier"  value="" />
+			    <input type="submit" value="Login" />
+			</form>
+			<div style="text-align: left;"><a href="#" onclick="xoopsGetElementById('openid-verify-form2').style.display = 'none'; xoopsGetElementById('login-form2').style.display = 'block';">Go back to normal login</a></div>  
+		</div>  

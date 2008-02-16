@@ -149,4 +149,8 @@ define('_US_PRESSLOGIN', 'Press the button below to login');
 
 define('_US_ADMINNO', 'User in the webmasters group cannot be removed');
 define('_US_GROUPS', 'User\'s Groups');
+
+// openid
+define('_US_OPENID_NOPERM', 'No permission.');
+
 ?>
