@@ -1,50 +1,39 @@
-<pre>
-    <{$msg}>
-    <{$error}>
-    <{$success}>
-</pre>
+<h1><{$smarty.const._US_OPENID_YOUR}>: <{$displayId}></h1>
 
-<table>
-<tr>
-<td style="width:47%;border:1px dashed #aaaaaa;padding:10px;">
-<h3 class="centerLblockTitle"><{$existinguser}></h3>
-<{$loginbelow}>
-<br />
-<form method="POST" action="link.php">
-<table>
-<tr><th><{$xoopsuname}></th><td><input type="text" name="uname" /> </td></tr>
-<tr><th><{$xoopspass}></th><td><input type="password" name="pass" /> </td></tr>
-</table>
-<input type="submit" />
-</form>
+<div>
+<div style="float: left; width: 45% ">
+<fieldset style="padding: 10px;">
+  <legend style="font-weight: bold;"><{$smarty.const._US_OPENID_EXISTING_USER}></legend>
+  <{$smarty.const._US_OPENID_EXISTING_USER_LOGIN_BELOW}>
+  <br >
+  <form action="finish_auth.php" method="post">
+    <{$smarty.const._US_NICKNAME}>: <input type="text" name="uname" size="21" maxlength="25" value="<{$usercookie}>" /><br />
+    <br>
+    <{$smarty.const._US_PASSWORD}>: <input type="password" name="pass" size="21" maxlength="32" /><br />
+    <input type="hidden" name="op" value="login" />
+    <br />
+	<input type="hidden" name="openid_link" value="1" />    
+    <input type="submit" value="<{$smarty.const._LOGIN}>" />
+  </form>
+</div>
+<div style="float: right; width: 50% ">
+</fieldset>
+<fieldset style="padding: 10px;">
+  <legend style="font-weight: bold;"><{$smarty.const._US_OPENID_NOM_MEMBER}></legend>
+  <div>
+	<{$smarty.const._US_OPENID_NON_MEMBER_DSC}></div>
+	<br />
+  <form action="finish_auth.php" method="post">
+  
+    <{$smarty.const._US_NICKNAME}>: <input type="text" name="uname" size="26" maxlength="60" />
+    <br />
+    <br />
+     <input type="hidden" name="openid_register" value="1" />
+     <input type="submit" value="<{$smarty.const._SUBMIT}>" />
+  </form>
+</fieldset>
 
-</td>
-<td style="width:6%;">&nbsp;
-</td>
-<td style="width:47%;border:1px dashed #aaaaaa;padding:10px;">
-<h3 class="centerLblockTitle"><{$nonmember}></h3>
-<p>
-<{$enterwantedname}>
-</p>
-<form method="POST" action="finish_auth.php" />
+</div>
 
-<input type="hidden" name="openid_register" value="1" />
-<table>
-<tr>
-<th><{$screenamelabel}></th><td><input type="text" name="uname" value="<{$unam}>" /></td>
-</tr>
-</table>
-<input type="submit">
-
-</form>
-
-</td>
-</tr>
-</table>
-<table>
-<tr>
-<th><{$youropenid}></th><td><{$displayId}></td>
-</tr>
-</table>
-
-
+</div>
+<div style="clear: both;"></div>

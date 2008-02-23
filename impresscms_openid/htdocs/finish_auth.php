@@ -1,8 +1,9 @@
 <?php
+define('ICMS_INCLUDE_OPENID', true);
 $xoopsOption['pagetype'] = 'user';
 include_once("mainfile.php");
+
 if (isset($_POST['openid_register'])) {
-	require_once(ICMS_LIBRARIES_ROOT_PATH . "/phpopenid/occommon.php");
 	$response=@$_SESSION['openid_response'];
 	//icms_debug_vardump($_SESSION); exit;
 	if (@$response->status != Auth_OpenID_SUCCESS) {
@@ -191,8 +192,8 @@ if (isset($_POST['openid_register'])) {
 	                pass='*',
 	                user_regdate=$timenow ,
 	                timezone_offset=$tz,
-	                user_from=$country
-					openid=$cid
+	                user_from=$country,
+					openid='$cid'
 	                " ;
 	    //echo $query; exit;
 		$xoopsDB->queryF($query);
@@ -220,7 +221,7 @@ if (isset($_POST['openid_register'])) {
 		if (false != $user && $user->getVar('level') > 0) {
 			$member_handler =& xoops_gethandler('member');
 			$user->setVar('last_login', time());
-			if (!$member_handler->insertUser($user)) {
+			if (!$member_handler->insertUser($user, false)) {
 			}
 			$_SESSION['xoopsUserId'] = $user->getVar('uid');
 			$_SESSION['xoopsUserGroups'] = $user->getGroups();
@@ -245,6 +246,78 @@ if (isset($_POST['openid_register'])) {
 		echo $msg;
 		include_once(XOOPS_ROOT_PATH.'/footer.php');
 	}
+} elseif(isset($_POST['openid_link'])) {
+	$response=$_SESSION['openid_response'];
+	if (@$response->status != Auth_OpenID_SUCCESS) {
+		redirect_header(XOOPS_URL . '/user.php', 3, _US_OPENID_NOPERM);
+	} 
+	
+	include_once(XOOPS_ROOT_PATH.'/header.php');
+	
+	$uname = alphaonly($_POST['uname']);
+	$pass = alphaonly($_POST['pass']);
+	
+	$query='SELECT `uid`, `uname`, `pass` from ' . $xoopsDB->prefix('users') . 
+		" WHERE `uname`='" . $uname . "'";
+	$res=$xoopsDB->query($query,1);
+	//echo "<pre>\n";
+	$err .= $xoopsDB->error();
+	$xusers=$xoopsDB->fetchArray($res);
+	//print_r($xusers);
+	$xuser=$xusers; unset($xusers);
+	//echo "</pre>";
+	if($xuser['pass'] != md5($pass)){
+		$err .= 'username or password invalid.';
+		$xoopsOption['template_main'] = 'openid_new_user.html';
+		include_once(XOOPS_ROOT_PATH.'/footer.php');
+		exit;
+	} else if ($response->status == Auth_OpenID_SUCCESS) {
+		//$msg = 'Auth_OpenID_SUCCESS';
+		//echo "uname/password OK. Auth_OpenID_SUCCESS";
+	    // This means the authentication succeeded.
+	    $displayId = $response->getDisplayIdentifier();
+	    $cid = $response->identity_url;
+	
+		$query="INSERT into ". $xoopsDB->prefix('openid_localid') . 
+				" SET 
+				`localid`='$uname', 
+				`openid`='$cid', 
+				`displayid`='$displayId', 
+				`created`=NOW()";
+		//echo "\n<br />" . $query;
+		$res=$xoopsDB->queryF($query);
+		$err .= $xoopsDB->error();
+		
+		$msg = $msg . '<br />openid_localid ÅÐÏ¿½ªÎ»';
+		
+		$criteria = new CriteriaCompo(new Criteria('uname', $uname ));
+		$user_handler =& xoops_gethandler('user');
+		$users =& $user_handler->getObjects($criteria, false);
+		$user = $users[0] ;
+		unset( $users ) ;
+		$xoopsUser = $user;
+		if (false != $user && $user->getVar('level') > 0) {
+			$member_handler =& xoops_gethandler('member');
+			$user->setVar('last_login', time());
+			$user->setVar('openid', $response->identity_url);
+			if (!$member_handler->insertUser($user)) {
+			}
+			$_SESSION['xoopsUserId'] = $user->getVar('uid');
+			$_SESSION['xoopsUserGroups'] = $user->getGroups();
+			$user_theme = $user->getVar('theme');
+			if (in_array($user_theme, $xoopsConfig['theme_set_allowed'])) {
+				$_SESSION['xoopsUserTheme'] = $user_theme;
+			}
+		}
+		unset($_SESSION['openid_response']);
+		unset($_SESSION['openid_sreg']);
+		header("Location: " . $_SESSION['frompage']);
+		unset($_SESSION['frompage']);
+	} else {
+		echo "Sorry, Unknown Error Encountered. ";
+	}
+
+	include_once(XOOPS_ROOT_PATH.'/footer.php');
 } else {
 	include_once("include/checklogin.php");
 }

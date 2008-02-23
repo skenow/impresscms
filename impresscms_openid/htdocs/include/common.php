@@ -283,6 +283,11 @@ $icmsLibrariesHandler = IcmsLibrariesHandler::getInstance();
     }
     $xoopsRequestUri = $_SERVER[ 'REQUEST_URI' ];       // Deprecated (use the corrected $_SERVER variable now)
     /**#@-*/
+    
+    // Include openid common functions if needed
+    if (defined('ICMS_INCLUDE_OPENID')) {
+    	require_once ICMS_LIBRARIES_ROOT_PATH . "/phpopenid/occommon.php";
+    }
 
     // ############## Login a user with a valid session ##############
     $xoopsUser = '';

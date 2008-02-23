@@ -1,6 +1,6 @@
 <?php
+define('ICMS_INCLUDE_OPENID', true);
 include_once("mainfile.php");
-require_once ICMS_LIBRARIES_ROOT_PATH . "/phpopenid/occommon.php";
 
 $_SESSION['frompage'] = isset ($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : (isset ($_ENV['HTTP_REFERER']) ? $_ENV['HTTP_REFERER'] : '');
 //SESSION is started automatically by Xoops. -- Natsuhiko

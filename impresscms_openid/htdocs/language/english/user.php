@@ -154,5 +154,9 @@ define('_US_GROUPS', 'User\'s Groups');
 define('_US_OPENID_NOPERM', 'No permission.');
 define('_US_OPENID_FORM_CAPTION', 'OpenID');
 define('_US_OPENID_FORM_DSC', '');
-
+define('_US_OPENID_EXISTING_USER', 'Existing user');
+define('_US_OPENID_EXISTING_USER_LOGIN_BELOW', 'If you are an existing user, login below with your usernam eand password in order to associate your user account with this OpenID.');
+define('_US_OPENID_NOM_MEMBER', 'No account yet ?');
+define('_US_OPENID_NON_MEMBER_DSC', 'If you do not yet have an account on this site, please enter the username you would like to use and we will create an account for you, associated with this OpenID.');
+define('_US_OPENID_YOUR', 'Your OpenID');
 ?>
