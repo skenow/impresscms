@@ -10,9 +10,9 @@ function showDiv(type){
 }
 </script>
 <{if $catcount > 0}>
-<div>
-  <a href="#" onclick="showDiv('addcatform'); document.anchors.item('addcatform').scrollIntoView(); return false;"><{$lang_imanager_cat_addnewcat}></a> 
-  | <a href="#" onclick="showDiv('addimgform'); document.anchors.item('addimgform').scrollIntoView(); return false;"><{$lang_imanager_cat_addnewimg}></a>
+<div align="right">
+  <input type="button" onclick="showDiv('addcatform'); document.anchors.item('addcatform').scrollIntoView(); return false;" value="<{$lang_imanager_cat_addnewcat}>" />
+  <input type="button" onclick="showDiv('addimgform'); document.anchors.item('addimgform').scrollIntoView(); return false;" value="<{$lang_imanager_cat_addnewimg}>" />
 </div>
 <form action="admin.php" method="post">
   <table width="100%" celpadding="0" cellspacing="1" class="outer">
@@ -61,9 +61,9 @@ function showDiv(type){
   <input type="hidden" name="fct" value="images" />
   <{$token}>
 </form>
-<div>
-  <a href="#" onclick="showDiv('addcatform'); document.anchors.item('addcatform').scrollIntoView(); return false;"><{$lang_imanager_cat_addnewcat}></a> 
-  | <a href="#" onclick="showDiv('addimgform'); document.anchors.item('addimgform').scrollIntoView(); return false;"><{$lang_imanager_cat_addnewimg}></a>
+<div align="right">
+  <input type="button" onclick="showDiv('addcatform'); document.anchors.item('addcatform').scrollIntoView(); return false;" value="<{$lang_imanager_cat_addnewcat}>" />
+  <input type="button" onclick="showDiv('addimgform'); document.anchors.item('addimgform').scrollIntoView(); return false;" value="<{$lang_imanager_cat_addnewimg}>" />
 </div>
 <{/if}>
 <div id="addimgform" class="opt_divs" style="display:none; margin:5px; padding:5px;"><{$addimgform}></div>
