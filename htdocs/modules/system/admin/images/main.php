@@ -321,8 +321,8 @@ function imanager_listimg($imgcat_id) {
 			$arrimg[$i]['size'] = icms_convert_size(filesize($src1));
 		}
 		$arrimg[$i]['src'] = $src.'?'.time();
-
-		$preview_url = '<a href="'.$src.'" rel="lightbox[categ'.$images[$i]->getVar('imgcat_id').']" title="'.$images[$i]->getVar('image_nicename').'"><img src="images/view.png" title="'._PREVIEW.'" alt="'._PREVIEW.'" /></a>';
+		$src_lightbox = XOOPS_URL."/modules/system/admin/images/preview.php?file=".str_replace( XOOPS_UPLOAD_URL."/" , "" , $src );
+		$preview_url = '<a href="'.$src_lightbox.'" rel="lightbox[categ'.$images[$i]->getVar('imgcat_id').']" title="'.$images[$i]->getVar('image_nicename').'"><img src="images/view.png" title="'._PREVIEW.'" alt="'._PREVIEW.'" /></a>';
 		$arrimg[$i]['preview_link'] = $preview_url;
 
 		$list =& $imgcat_handler->getList(array(), null, null, $imagecategory->getVar('imgcat_storetype'));
