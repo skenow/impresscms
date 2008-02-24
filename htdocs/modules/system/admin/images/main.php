@@ -42,7 +42,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
 	//include_once XOOPS_ROOT_PATH.'/class/template.php';
 	//$tpl = new XoopsTpl();
 	define('_IMANAGER_TPL_PATH',XOOPS_ROOT_PATH.'/modules/system/templates/admin/images');
-	
+	include(XOOPS_ROOT_PATH."/libraries/wideimage/lib/WideImage.inc.php");
     $op = 'list';
     if (isset($_POST)) {
         foreach ( $_POST as $k => $v ) {
@@ -103,13 +103,8 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     		$image =& $image_handler->get($image_id);
     		$imgcat_handler = xoops_gethandler('imagecategory');
     		$imagecategory =& $imgcat_handler->get($image->getVar('imgcat_id'));
-    		echo '<div style="margin:5px;" align="center">';
-    		if ($imagecategory->getVar('imgcat_storetype') == 'db') {
-    			echo '<img src="'.XOOPS_URL.'/image.php?id='.$image->getVar('image_id').'" title="'.$image->getVar('image_nicename').'" /><br />';
-    		} else {
-    			echo '<img src="'.XOOPS_UPLOAD_URL.'/'.$image->getVar('image_name').'" title="'.$image->getVar('image_nicename').'" /><br />';
-    		}
-    		echo '</div>';
+    		$src = '<img src="'.XOOPS_URL."/modules/system/admin/images/preview.php?file=".$image->getVar('image_name').'" title="'.$image->getVar('image_nicename').'" /><br />';
+    		echo '<div style="margin:5px;" align="center">'.$src.'</div>';
     		xoops_confirm(array('op' => 'delfileok', 'image_id' => $image_id, 'imgcat_id' => $imgcat_id, 'fct' => 'images'), 'admin.php', _MD_RUDELIMG);
     		xoops_cp_footer();
     		break;
@@ -309,7 +304,7 @@ function imanager_listimg($imgcat_id) {
     	$arrimg[$i]['height'] = $imginfo['height'];
     	
 		if ($imagecategory->getVar('imgcat_storetype') == 'db') {
-			$src = XOOPS_URL.'/image.php?id='.$i;
+			$src = XOOPS_URL."/modules/system/admin/images/preview.php?file=".$images[$i]->getVar('image_name').'&resize=0';
 			include_once XOOPS_ROOT_PATH.'/class/image.class.php';
 			$newimage = Image::open($src);
 			$newimage->save(XOOPS_UPLOAD_PATH.'/'.$images[$i]->getVar('image_name'));
@@ -321,7 +316,7 @@ function imanager_listimg($imgcat_id) {
 			$arrimg[$i]['size'] = icms_convert_size(filesize($src1));
 		}
 		$arrimg[$i]['src'] = $src.'?'.time();
-		$src_lightbox = XOOPS_URL."/modules/system/admin/images/preview.php?file=".str_replace( XOOPS_UPLOAD_URL."/" , "" , $src );
+		$src_lightbox = XOOPS_URL."/modules/system/admin/images/preview.php?file=".$images[$i]->getVar('image_name');
 		$preview_url = '<a href="'.$src_lightbox.'" rel="lightbox[categ'.$images[$i]->getVar('imgcat_id').']" title="'.$images[$i]->getVar('image_nicename').'"><img src="images/view.png" title="'._PREVIEW.'" alt="'._PREVIEW.'" /></a>';
 		$arrimg[$i]['preview_link'] = $preview_url;
 
