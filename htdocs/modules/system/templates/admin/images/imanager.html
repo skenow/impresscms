@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<title>Imager Manager v1.0</title>
+	<link rel="stylesheet" href="css/xp-info-pane.css">
+	<link rel="stylesheet" href="css/imanager.css">
+	<link rel="stylesheet" href="css/image-crop.css">
+	<script type="text/javascript" src="js/xp-info-pane.js"></script>
+    <script type="text/javascript" src="js/PageInfo.js"></script>
+    <script type="text/javascript">
+      //<![CDATA[
+      if (window.opener){
+      	window.moveTo(0, 0);
+      	window.resizeTo(screen.width, screen.height - 28);
+      	window.focus();
+      }
+      //]]>
+    </script>
+	<script type="text/javascript">
+	var cropToolBorderWidth = 1;	// Width of dotted border around crop rectangle
+	var smallSquareWidth = 7;	// Size of small squares used to resize crop rectangle
+	
+	var crop_minimumPercent = 10;	// Minimum percent - resize
+	var crop_maximumPercent = 200;	// Maximum percent -resize
+	var crop_imageWidth = 1;
+	var crop_imageHeight = 1;
+	var crop_originalImageWidth = 1;
+	var crop_originalImageHeight = 1;
+	var crop_minimumWidthHeight = 15;	// Minimum width and height of crop area
+	
+	var updateFormValuesAsYouDrag = true;	// This variable indicates if form values should be updated as we drag. This process could make the script work a little bit slow. That's why this option is set as a variable.
+	
+	/* End of variables you could modify */
+	</script>
+	<script type="text/javascript" src="js/image-crop.js"></script>
+    <{$xoops_module_header}>
+</head>
+<body onload="xajax_createPreviewImg();">
+<{$spinner}>
+<div id="btn_area" align="right">
+<form>
+  <input type="button" name="btn1" value="Apply Changes" onclick="xajax_applyAllChanges(xajax.getFormValues('filter_form'), xajax.getFormValues('rotation_form'), xajax.getFormValues('crop_form'), xajax.getFormValues('resize_form')); return false;" />
+  <input type="button" name="btn2" value="Undo All Changes" onclick="xajax_undoAllChanges();" />
+  <input type="button" name="btn3" value="Save" onclick="changesSaved = true; return false;" />
+  <input type="button" name="btn4" value="Close" onclick="appClose = true; window.close();" />
+</form>
+</div>
+<div style="clear:both;"></div>
+<div id="dhtmlgoodies_xpPane">
+	<div class="dhtmlgoodies_panel">
+	  <div style="padding:5px; font-family:verdana; font-size:10px;">
+      <b>File:</b> <span id="lb_file_name"></span><br />
+      <b>Width:</b> <span id="lb_width"></span>px<br />
+      <b>Height:</b> <span id="lb_height"></span>px<br />
+      <b>Size:</b> <span id="lb_size"></span>
+	  </div>
+	</div>
+	<div class="dhtmlgoodies_panel">
+	  <div>
+	    <form id="filter_form" style="padding:5px;">
+	      <b>Filters: </b>
+	      <select name="filter" id="filter" size="1" onchange="xajax_selFilter(this.value);">
+	        <option value="">--- Select ---</option>
+	        <option value="IMG_FILTER_NEGATE">Negative</option>
+	        <option value="IMG_FILTER_GRAYSCALE">Grayscale</option>
+	        <option value="IMG_FILTER_BRIGHTNESS">Brightness</option>
+	        <option value="IMG_FILTER_CONTRAST">Contrast</option>
+	        <option value="IMG_FILTER_COLORIZE">Colorize</option>
+	        <option value="IMG_FILTER_EDGEDETECT">Highlight Edges</option>
+	        <option value="IMG_FILTER_EMBOSS">Emboss</option>
+	        <option value="IMG_FILTER_GAUSSIAN_BLUR">Gaussian Blur</option>
+	        <option value="IMG_FILTER_SELECTIVE_BLUR">Selective Blur</option>
+	        <option value="IMG_FILTER_MEAN_REMOVAL">Sketchy</option>
+	        <option value="IMG_FILTER_SMOOTH">Smooth</option>
+	        <option value="IMG_FILTER_SEPIA">Sepia</option>
+	      </select>
+          <div id="filter_args" style="display:none; line-height:20px;"></div>
+		  <input id="form_1_sts" name="form_1_sts" type="hidden" value="0">
+		</form>  
+	  </div>
+	</div> 
+	<div class="dhtmlgoodies_panel">
+	  <div>
+	    <form id="rotation_form" style="padding:5px;">
+	    <b>Degrees: </b>
+	      <select name="rotation" id="rotation" size="1" onchange="xajax_selRotate(this.value);">
+	        <option value="">--- Select ---</option>
+	        <option value="-90">90&deg; CW</option>
+	        <option value="90">90&deg; CCW</option>
+	        <option value="180">180&deg;</option>
+	        <!--<option value="-1">Arbitrary...</option>-->
+	      </select>
+	      <div id="rotate_args" style="display:none; line-height:20px;"></div>
+	      <input id="form_2_sts" name="form_2_sts" type="hidden" value="0">
+	    </form>
+	  </div>
+	</div>
+	<div class="dhtmlgoodies_panel">
+	  <div>
+	    <form id="crop_form" style="padding:5px;">
+	      <fieldset>
+	        <legend class="blockTitle">Percent</legend>
+	        <b>Percent: </b><input type="text" name="percent" id="percent" size="5">
+	      </fieldset>
+	      <fieldset>
+	        <legend class="blockTitle">X or Y axis</legend>
+            <table style="text-align: center;" cellpadding="0" cellspacing="2">
+              <tr>
+                <td><b>Horizontal: </b></td>
+                <td><input type="text" name="horizontal" id="horizontal" size="5"></td>
+              </tr>
+              <tr>
+                <td align="left"><b>Vertical: </b></td>
+                <td><input type="text" name="vertical" id="vertical" size="5"></td>
+              </tr>
+            </table>
+	      </fieldset>
+	      <fieldset>
+	        <legend class="blockTitle">Crop from sides</legend>
+            <table style="text-align: center;" cellpadding="0" cellspacing="0">
+              <tr>
+                <td><b>Top</b><br><input id="pcropt" name="pcropt" size="4" type="text"></td>
+              </tr>
+              <tr>
+                <td><b>Left </b><input id="pcropl" name="pcropl" size="4" type="text">&nbsp;<input id="pcropr" name="pcropr" size="4" type="text"><b> Right</b></td>
+              </tr>
+              <tr>
+                <td><input id="pcropb" name="pcropb" size="4" type="text"><br><b>Bottom</b></td>
+              </tr>
+            </table>
+	      </fieldset>
+	      <input id="form_3_sts" name="form_3_sts" type="hidden" value="0">
+	      <input id="cropt" name="cropt"type="hidden">
+          <input id="cropl" name="cropl" type="hidden">
+          <input id="cropr" name="cropr" type="hidden">
+          <input id="cropb" name="cropb" type="hidden">
+	    </form>
+	  </div>
+	</div>
+	<div class="dhtmlgoodies_panel">
+	  <div>
+	    <form id="resize_form" style="padding:5px;">
+            <table style="text-align: center;" cellpadding="0" cellspacing="0">
+              <tr>
+                <td><b>Width:</b></td>
+                <td><input id="pwidth" name="pwidth" size="10" type="text" onchange="xajax_resizeKeepProportional(xajax.getFormValues('resize_form'),1);"></td>
+              </tr>
+              <tr>
+                <td><b>Height:</b></td>
+                <td width="70%"><input id="pheight" name="pheight" size="10" type="text" onchange="xajax_resizeKeepProportional(xajax.getFormValues('resize_form'),2);"></td>
+              </tr>
+              <tr>
+                <td colspan="2"><input id="proportional" name="proportional" type="checkbox" value="1" checked> <b>Proportional</b></td>
+              </tr>
+            </table>
+          <input id="width" name="width" size="10" type="hidden" />
+          <input id="height" name="height" size="10" type="hidden" /> 
+	      <input id="form_4_sts" name="form_4_sts" type="hidden" value="0">
+	    </form>
+	  </div>
+	</div>
+</div>
+<input type="hidden" class="textInput" name="crop_percent_size" id="crop_percent_size" value="100">
+<div class="crop_content">
+  <div id="imageContainer">
+    <img src="images/loading.gif" />
+  </div>
+</div>
+<div style="display:none;">
+  <span style="font-size:12px; font-weight:bold; color:#fff; border-bottom: 1px solid #fff;">Actions</span>
+  <div id="actionLabel" style="color:#fff; font-size:10px;"></div>
+</div>
+<div style="display:none; margin-top:5px;">
+  <span style="font-size:12px; font-weight:bold; color:#fff; border-bottom: 1px solid #fff;">Debug</span>
+  <div id="Debuglabel" style="color:#fff; font-size:10px;"></div>
+</div>
+<div style="clear:both;"></div>
+<script type="text/javascript">
+initDhtmlgoodies_xpPane(Array('Image Info','Filters','Rotate Canvas','Crop Image','Resize Image'),Array(true,false,false,false,false),Array());
+</script>
+</body>
+</head>

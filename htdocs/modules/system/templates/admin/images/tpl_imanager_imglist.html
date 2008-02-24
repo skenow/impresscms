@@ -1,0 +1,58 @@
+<script>
+  var XOOPS_URL = "<{$xoops_url}>";
+  var XOOPS_ROOT_PATH = "<{$xoops_root_path}>";
+</script>
+<script type="text/javascript" src="<{$xoops_url}>/modules/system/admin/images/js/imanager.js"></script>
+<link rel="stylesheet" href="<{$xoops_url}>/libraries/lightbox/css/lightbox.css" type="text/css" media="screen" />
+<script src="<{$xoops_url}>/libraries/scriptaculous/lib/prototype.js" type="text/javascript"></script>
+<script src="<{$xoops_url}>/libraries/scriptaculous/src/scriptaculous.js?load=effects" type="text/javascript"></script>
+<script src="<{$xoops_url}>/libraries/lightbox/js/lightbox.js" type="text/javascript"></script>
+<table width="100%" celpadding="0" cellspacing="1" class="outer">
+  <tr>
+    <td colspan="8" class="head" align="center">
+      <a style="float:left;" href="admin.php?fct=images" title="<{$lang_imanager_cat_back}>"><img src="images/back.png" /></a>
+      <h2 style="font-weight:bold; padding:0;"><{$lang_imanager_title}></h2>
+    </td>
+  </tr>
+  <tr>
+    <th align="center"><{$lang_imanager_catmsize}></th>
+    <th align="center"><{$lang_imanager_catmwidth}></th>
+    <th align="center"><{$lang_imanager_catmheight}></th>
+    <th align="center"><{$lang_imanager_catstype}></th>
+    <th align="center"><{$lang_imanager_catdisp}></th>
+    <th align="center"><{$lang_imanager_catqtde}></th>
+    <th align="center"><{$lang_imanager_catoptions}></th>
+  </tr>
+  <tr class="odd">
+    <td align="center"><{$cat_maxsize}></td>
+    <td align="center"><{$cat_maxwidth}>px</td>
+    <td align="center"><{$cat_maxheight}>px</td>
+    <td align="center"><img src="images/<{$cat_storetype}>.png" title="<{$cat_storetype}>" /></td>
+    <td align="center"><img src="images/<{$cat_display}>.png" /></td>
+    <td align="center"><{$imgcount}></td>
+    <td align="center">
+      <a href="#" onclick="showDiv('addimgform',''); document.anchors.item('addimgform').scrollIntoView(); return false;" title="<{$lang_imanager_cat_addimg}>"><img src="images/add.png" /></a>
+      <a href="admin.php?fct=images&amp;op=editcat&amp;imgcat_id=<{$cat_id}>" title="<{$lang_imanager_cat_edit}>"><img src="images/edit_big.png" /></a>
+      <a href="admin.php?fct=images&amp;op=delcat&amp;imgcat_id=<{$cat_id}>" title="<{$lang_imanager_cat_del}>"><img src="images/delete_big.png" /></a>
+    </td>
+  </tr>
+</table>
+<div style="padding:5px;" align="right">
+  <form action="admin.php?fct=images&op=listimg&imgcat_id=<{$cat_id}>" method="POST">
+    <input type="text" name="query" id="query" size="20" value="<{$query}>" />
+    <input type="submit" name="btn" value="<{$lang_search}>" />
+    <input type="submit" name="btn1" value="<{$lang_cancel}>" onclick="document.getElementById('query').value='';" />
+  </form>
+</div>
+<{foreach from=$images item=image key=key}>
+  <{include file="$xoops_root_path/modules/system/templates/admin/images/tpl_imanager_img.html" image=$image i=$key}>
+<{/foreach}>
+<br style="clear:both;" />
+<{foreach from=$images item=image key=key}>
+  <{include file="$xoops_root_path/modules/system/templates/admin/images/tpl_imanager_editimg.html" image=$image i=$key}>
+  <{include file="$xoops_root_path/modules/system/templates/admin/images/tpl_imanager_filterimg.html" image=$image i=$key}>
+  <{include file="$xoops_root_path/modules/system/templates/admin/images/tpl_imanager_cloneimg.html" image=$image i=$key}>
+<{/foreach}>
+<div id="addimgform" class="opt_divs" style="display:none; padding:5px; margin:5px;"><{$addimgform}></div>
+<a name="addimgform">
+<{$pag}>

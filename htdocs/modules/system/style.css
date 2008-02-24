@@ -324,3 +324,55 @@ div.CPfoot{
 	padding-top: 5px;
 	padding-right: 5px;
 }
+
+/*image manager*/
+.imanager_image_box {
+    float:left;
+    border:1px solid #CCCCCC;
+    padding:3px;
+    margin:5px;
+    text-align:center;
+    width:165px;
+    overflow:hidden;
+}
+
+.imanager_image_box:hover {
+    background-color: #FFF6BF;
+}
+
+.imanager_image_img {
+    display:block;
+    height:120px;
+    overflow:hidden;
+}
+
+.imanager_image_img img{
+    width:159px;
+}
+
+.imanager_image_label{
+    display:block;
+    font-size:13px;
+    color: #E24949;
+    font-weight:bold;
+    line-height:180%;
+}
+
+.imanager_image_info{
+    display:block;
+    font-size:9px;
+    font-weight:normal;
+    color: #333333;
+    line-height:120%;
+    text-align:left;
+}
+
+.imanager_image_btns{
+    display:block;
+    margin-top:3px;
+}
+
+.img_list_info_panel{
+    padding: 5px;
+    margin:5px;
+}

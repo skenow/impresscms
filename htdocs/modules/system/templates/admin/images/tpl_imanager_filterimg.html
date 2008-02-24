@@ -1,0 +1,55 @@
+<div id="filter_image<{$i}>" class="opt_divs" style="display:none; padding:5px; margin:5px;">
+  <form id="filter_form<{$i}>" action="admin.php" method="post">
+    <table width="100%" cellspacing="1" class="outer">
+      <tr><th colspan="2"><{$lang_image_applyfilters}>: <{$image.nicename}></th></tr>
+      <tr>
+        <td class="head"><{$lang_image_filterssave}></td>
+        <td class="odd">
+          <{$image.filter_select}>
+		  <div id="<{$i}>_arg1" style="display:none; line-height:20px;"><span id="<{$i}>_targ1">1</span><b>:</b> <input type="text" name="<{$i}>arg1" id="<{$i}>arg1"> <span id="<{$i}>_larg1">1</span></div>
+		  <div id="<{$i}>_arg2" style="display:none; line-height:20px;"><span id="<{$i}>_targ2">2</span><b>:</b> <input type="text" name="<{$i}>arg2" id="<{$i}>arg2"> <span id="<{$i}>_larg2">1</span></div>
+		  <div id="<{$i}>_arg3" style="display:none; line-height:20px;"><span id="<{$i}>_targ3">3</span><b>:</b> <input type="text" name="<{$i}>arg3" id="<{$i}>arg3"> <span id="<{$i}>_larg3">1</span></div>
+		</td>
+	  </tr>
+	  <tr>
+	    <td class="head"><{$lang_image_filtersoverw}></td>
+	    <td class="odd">
+	      <{$lang_yes}> <input type="radio" name="overwrite" value="1" onclick="overpanel(<{$i}>,this.value);" checked /> 
+	      <{$lang_no}> <input type="radio" name="overwrite" value="0" onclick="overpanel(<{$i}>,this.value);" />
+		  <div id="<{$i}>overpanel" style="display:none; line-height:20px;">
+		    <table width="100%" cellspacing="1" class="outer">
+		      <tr>
+		        <td class="head"><{$lang_image_name}></td>
+		        <td class="odd"><input type="text" name="image_nicename" id="name<{$i}>" size=20 value="Copy of <{$image.nicename}>"></td>
+		      </tr>
+		      <tr>
+		        <td class="head"><{$lang_image_weight}></td>
+		        <td class="odd"><input type="text" name="image_weight" size="5" value="0"></td>
+		      </tr>
+		      <tr>
+		        <td class="head"><{$lang_image_disp}></td>
+		        <td class="odd">
+		          <{$lang_yes}> <input type="radio" name="image_display" value="1" checked /> 
+		          <{$lang_no}> <input type="radio" name="image_display" value="0" />
+		        </td>
+		      </tr>  
+		    </table>
+		  </div>
+		</td>
+      </tr>
+	  <tr>
+	    <td class="head" colspan="2" align="center">
+	      <input type="submit" name="submit" value="<{$lang_submit}>" /> 
+	      <input type="button" name="btn_preview" value="<{$lang_image_filterpreview}>" onclick="filter_preview(<{$i}>,'<{$image.src}>',<{$image.width}>+20,<{$image.height}>+20); return false;" /> 
+	      <input type="button" name="btn" value="<{$lang_cancel}>" onclick="document.getElementById('filter_image<{$i}>').style.display = 'none'; return false;" />
+	    </td>
+	  </tr>
+	</table>
+    <input type="hidden" name="image_id" value="<{$image.id}>" />
+    <input type="hidden" name="imgcat_id" value="<{$image.categ_id}>" />
+    <input type="hidden" name="op" value="filter" />
+    <input type="hidden" name="fct" value="images" />
+    <{$image.filter_token}>
+  </form>
+</div>
+<a name="filter_image<{$i}>">

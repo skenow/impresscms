@@ -1,0 +1,16 @@
+<div id="img<{$i}>" class="imanager_image_box">
+  <span class="imanager_image_img"><img src="<{$image.src}>" title="<{$image.nicename}>" /></span>
+  <span class="imanager_image_label"><{$image.display_nicename}></span>
+  <span class="imanager_image_info">
+    <b>file:</b> <{$image.name}><br />
+    <b>size:</b> <{$image.size}><br />
+    <b>width:</b> <{$image.width}>px<br />
+    <b>height:</b> <{$image.height}>px
+  </span>
+  <span class="imanager_image_btns">
+    <{$image.preview_link}>
+    <a href="#" onclick="showDiv('edit_image',<{$i}>); document.anchors.item('edit_image<{$i}>').scrollIntoView(); return false;" title="<{$lang_imanager_cat_edit}>"><img src="images/edit.png" /></a>
+    <a href="#" onclick="showDiv('clone_image',<{$i}>); document.anchors.item('clone_image<{$i}>').scrollIntoView(); return false;" title="<{$lang_imanager_cat_clone}>"><img src="images/clone.png" /></a>
+    <a href="admin.php?fct=images&amp;op=delfile&amp;image_id=<{$i}>&imgcat_id=<{$image.categ_id}>" title="<{$lang_imanager_cat_delete}>"><img src="images/delete.png" /></a>
+  </span>
+</div>
