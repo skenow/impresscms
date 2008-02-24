@@ -347,7 +347,7 @@ div.CPfoot{
 }
 
 .imanager_image_img img{
-    width:159px;
+    max-width:159px;
 }
 
 .imanager_image_label{
