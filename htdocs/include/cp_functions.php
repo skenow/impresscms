@@ -33,10 +33,12 @@ include_once XOOPS_ROOT_PATH.'/class/template.php';
 $tpl = new XoopsTpl();
 $tpl->assign('xoops_url',XOOPS_URL);
 $tpl->assign('xoops_sitename',$xoopsConfig['sitename']);
+include_once(XOOPS_ROOT_PATH . '/class/icmslibrarieshandler.php');
+$icmsLibrariesHandler = IcmsLibrariesHandler::getInstance();
 
 function xoops_cp_header($ret = 0)
 {
-    global $xoopsConfig, $xoopsModule, $xoopsUser, $tpl, $im_multilanguageConfig;
+    global $xoopsConfig, $xoopsModule, $xoopsUser, $tpl, $im_multilanguageConfig, $icmsLibrariesHandler;
 
 	if (!headers_sent()) {
 		header('Content-Type:text/html; charset='._CHARSET);
@@ -78,8 +80,10 @@ startList = function() {
 }
 window.onload=startList;
 
-//--><!]]></script>
-	</head>
+//--><!]]></script>";
+    $icmsLibrariesHandler->triggerEvent('adminHeader');
+    $icmsLibrariesHandler->triggerEvent('adminBeforeFooter');
+	echo "</head>
         <body>" ;
 	/**
 	 * Loading admin dropdown menus
