@@ -42,6 +42,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
 	//include_once XOOPS_ROOT_PATH.'/class/template.php';
 	//$tpl = new XoopsTpl();
 	define('_IMANAGER_TPL_PATH',XOOPS_ROOT_PATH.'/modules/system/templates/admin/images');
+	
 	include(XOOPS_ROOT_PATH."/libraries/wideimage/lib/WideImage.inc.php");
 	
     $op = 'list';
@@ -305,18 +306,18 @@ function imanager_listimg($imgcat_id) {
 		$arrimg[$i]['categ_id'] = $images[$i]->getVar('imgcat_id');
 		$arrimg[$i]['display_nicename'] = xoops_substr($images[$i]->getVar('image_nicename'),0,20);
 		
-    	$imginfo = ($imagecategory->getVar('imgcat_storetype') != 'db')?$images[$i]->getInfo(XOOPS_UPLOAD_URL.'/'.$imagecategory->getVar('imgcat_foldername'),'url',true):$images[$i]->getInfo(XOOPS_URL.'/image.php?id='.$i,'db',true);
+    	$imginfo = ($imagecategory->getVar('imgcat_storetype') != 'db')?$images[$i]->getInfo(ICMS_IMANAGER_FOLDER_URL.'/'.$imagecategory->getVar('imgcat_foldername'),'url',true):$images[$i]->getInfo(XOOPS_URL.'/image.php?id='.$i,'db',true);
     	$arrimg[$i]['width'] = $imginfo['width'];
     	$arrimg[$i]['height'] = $imginfo['height'];
     	
 		if ($imagecategory->getVar('imgcat_storetype') == 'db') {
 			$src = XOOPS_URL."/modules/system/admin/images/preview.php?file=".$images[$i]->getVar('image_name').'&resize=0';
-			$img = wiImage::load($images[$i]->getVar('image_body'))->saveToFile(XOOPS_UPLOAD_PATH.'/'.$images[$i]->getVar('image_name'));
-			$arrimg[$i]['size'] = icms_convert_size(filesize(XOOPS_UPLOAD_PATH.'/'.$images[$i]->getVar('image_name')));
-			@unlink(XOOPS_UPLOAD_PATH.'/'.$images[$i]->getVar('image_name'));
+			$img = wiImage::load($images[$i]->getVar('image_body'))->saveToFile(ICMS_IMANAGER_FOLDER_PATH.'/'.$images[$i]->getVar('image_name'));
+			$arrimg[$i]['size'] = icms_convert_size(filesize(ICMS_IMANAGER_FOLDER_PATH.'/'.$images[$i]->getVar('image_name')));
+			@unlink(ICMS_IMANAGER_FOLDER_PATH.'/'.$images[$i]->getVar('image_name'));
 		} else {
-			$src = XOOPS_UPLOAD_URL.'/'.$imagecategory->getVar('imgcat_foldername').'/'.$images[$i]->getVar('image_name');
-			$arrimg[$i]['size'] = icms_convert_size(filesize(XOOPS_UPLOAD_PATH.'/'.$imagecategory->getVar('imgcat_foldername').'/'.$images[$i]->getVar('image_name')));
+			$src = ICMS_IMANAGER_FOLDER_URL.'/'.$imagecategory->getVar('imgcat_foldername').'/'.$images[$i]->getVar('image_name');
+			$arrimg[$i]['size'] = icms_convert_size(filesize(ICMS_IMANAGER_FOLDER_PATH.'/'.$imagecategory->getVar('imgcat_foldername').'/'.$images[$i]->getVar('image_name')));
 		}
 		$arrimg[$i]['src'] = $src.'?'.time();
 		$src_lightbox = XOOPS_URL."/modules/system/admin/images/preview.php?file=".$images[$i]->getVar('image_name');
@@ -379,8 +380,8 @@ function imanager_addcat() {
 	}
 	$imagecategory->setVar('imgcat_type', 'C');
 	
-	if (!file_exists(XOOPS_UPLOAD_PATH.'/'.$imagecategory->getVar('imgcat_foldername'))){
-		if (!mkdir(XOOPS_UPLOAD_PATH.'/'.$imagecategory->getVar('imgcat_foldername'))){
+	if (!file_exists(ICMS_IMANAGER_FOLDER_PATH.'/'.$imagecategory->getVar('imgcat_foldername'))){
+		if (!mkdir(ICMS_IMANAGER_FOLDER_PATH.'/'.$imagecategory->getVar('imgcat_foldername'))){
 			redirect_header('admin.php?fct=images',1,_MD_FAILADDCAT);
 		}
 	}
@@ -542,7 +543,7 @@ function imanager_delcatok($imgcat_id) {
 		if (!$image_handler->delete($images[$i])) {
 			$errors[] = sprintf(_MD_FAILDEL, $i);
 		} else {
-			if (file_exists(XOOPS_UPLOAD_PATH.'/'.$imagecategory->getVat('imgcat_foldername').'/'.$images[$i]->getVar('image_name')) && !unlink(XOOPS_UPLOAD_PATH.'/'.$imagecategory->getVat('imgcat_foldername').'/'.$images[$i]->getVar('image_name'))) {
+			if (file_exists(ICMS_IMANAGER_FOLDER_PATH.'/'.$imagecategory->getVat('imgcat_foldername').'/'.$images[$i]->getVar('image_name')) && !unlink(ICMS_IMANAGER_FOLDER_PATH.'/'.$imagecategory->getVat('imgcat_foldername').'/'.$images[$i]->getVar('image_name'))) {
 				$errors[] = sprintf(_MD_FAILUNLINK, $i);
 			}
 		}
@@ -600,9 +601,9 @@ function imanager_addfile() {
 
 	include_once XOOPS_ROOT_PATH.'/class/uploader.php';
 	if ($imagecategory->getVar('imgcat_storetype') == 'db') {
-		$updir = XOOPS_UPLOAD_PATH;
+		$updir = ICMS_IMANAGER_FOLDER_PATH;
 	}else{
-		$updir = XOOPS_UPLOAD_PATH.'/'.$imagecategory->getVar('imgcat_foldername');
+		$updir = ICMS_IMANAGER_FOLDER_PATH.'/'.$imagecategory->getVar('imgcat_foldername');
 	}
 	$uploader = new XoopsMediaUploader($updir, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png', 'image/bmp'), $imagecategory->getVar('imgcat_maxsize'), $imagecategory->getVar('imgcat_maxwidth'), $imagecategory->getVar('imgcat_maxheight'));
 	$uploader->setPrefix('img');
@@ -691,8 +692,8 @@ function imanager_updateimage() {
 				$imagecategory  =& $imgcat_handler->get(intval($imgcat_id[$i]));
 				if ($imagecategory->getVar('imgcat_storetype') != 'db') { 
 					$oldimgcategory =& $imgcat_handler->get(intval($oldcat));
-					$src = XOOPS_UPLOAD_PATH.'/'.$oldimgcategory->getVar('imgcat_foldername').'/'.$image->getVar('image_name');
-					$dest = XOOPS_UPLOAD_PATH.'/'.$imagecategory->getVar('imgcat_foldername').'/'.$image->getVar('image_name');
+					$src = ICMS_IMANAGER_FOLDER_PATH.'/'.$oldimgcategory->getVar('imgcat_foldername').'/'.$image->getVar('image_name');
+					$dest = ICMS_IMANAGER_FOLDER_PATH.'/'.$imagecategory->getVar('imgcat_foldername').'/'.$image->getVar('image_name');
 					if (!copy($src,$dest)){
 						$error[] = sprintf(_FAILSAVEIMG, $image_id[$i]);
 					}
@@ -737,7 +738,7 @@ function imanager_delfileok($image_id,$redir=null) {
 		xoops_cp_footer();
 		exit();
 	}
-	@unlink(XOOPS_UPLOAD_PATH.'/'.$imagecategory->getVar('imgcat_foldername').'/'.$image->getVar('image_name'));
+	@unlink(ICMS_IMANAGER_FOLDER_PATH.'/'.$imagecategory->getVar('imgcat_foldername').'/'.$image->getVar('image_name'));
 	if (isset($redir)){
 		$redir = '&op=listimg&imgcat_id='.$redir;
 	}else{
@@ -801,14 +802,14 @@ function imanager_clone() {
 	$newimg->setVar('imgcat_id', $imgcat_id);
 	if ($imagecategory->getVar('imgcat_storetype') == 'db') {
 		$src = XOOPS_URL."/modules/system/admin/images/preview.php?file=".$image->getVar('image_name').'&resize=0';
-		$img = wiImage::load($image->getVar('image_body'))->saveToFile(XOOPS_UPLOAD_PATH.'/'.$image->getVar('image_name'));
-		$fp = @fopen(XOOPS_UPLOAD_PATH.'/'.$image->getVar('image_name'), 'rb');
-		$fbinary = @fread($fp, filesize(XOOPS_UPLOAD_PATH.'/'.$image->getVar('image_name')));
+		$img = wiImage::load($image->getVar('image_body'))->saveToFile(ICMS_IMANAGER_FOLDER_PATH.'/'.$image->getVar('image_name'));
+		$fp = @fopen(ICMS_IMANAGER_FOLDER_PATH.'/'.$image->getVar('image_name'), 'rb');
+		$fbinary = @fread($fp, filesize(ICMS_IMANAGER_FOLDER_PATH.'/'.$image->getVar('image_name')));
 		@fclose($fp);
 		$newimg->setVar('image_body', $fbinary, true);
-		@unlink(XOOPS_UPLOAD_PATH.'/'.$image->getVar('image_name'));
+		@unlink(ICMS_IMANAGER_FOLDER_PATH.'/'.$image->getVar('image_name'));
 	}else{
-		$folder = XOOPS_UPLOAD_PATH.'/'.$imagecategory->getVar('imgcat_foldername');
+		$folder = ICMS_IMANAGER_FOLDER_PATH.'/'.$imagecategory->getVar('imgcat_foldername');
 		if (!@copy($folder.'/'.$image->getVar('image_name'),$folder.'/'.$imgname)){
 			$msg = sprintf(_FAILSAVEIMG, $image->getVar('image_nicename'));
 		}

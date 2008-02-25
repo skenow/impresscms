@@ -140,6 +140,9 @@ $xoops =& new xos_kernel_Xoops2();
     define("XOOPS_THEME_URL", XOOPS_URL."/themes");
     define("XOOPS_COMPILE_PATH", XOOPS_ROOT_PATH."/templates_c");
     define("XOOPS_CACHE_PATH", XOOPS_ROOT_PATH."/cache");
+    
+    define('ICMS_IMANAGER_FOLDER_PATH',XOOPS_ROOT_PATH.'/imagemanager');
+    define('ICMS_IMANAGER_FOLDER_URL',XOOPS_URL.'/imagemanager');
 
 	// TODO: Change the name of the constant.
 	define("XOOPS_EDITOR_PATH", XOOPS_ROOT_PATH."/editors");
