@@ -543,13 +543,19 @@ function imanager_delcatok($imgcat_id) {
 		if (!$image_handler->delete($images[$i])) {
 			$errors[] = sprintf(_MD_FAILDEL, $i);
 		} else {
-			if (file_exists(ICMS_IMANAGER_FOLDER_PATH.'/'.$imagecategory->getVat('imgcat_foldername').'/'.$images[$i]->getVar('image_name')) && !unlink(ICMS_IMANAGER_FOLDER_PATH.'/'.$imagecategory->getVat('imgcat_foldername').'/'.$images[$i]->getVar('image_name'))) {
-				$errors[] = sprintf(_MD_FAILUNLINK, $i);
+			if (file_exists(ICMS_IMANAGER_FOLDER_PATH.'/'.$imagecategory->getVar('imgcat_foldername').'/'.$images[$i]->getVar('image_name'))){
+				if (!@unlink(ICMS_IMANAGER_FOLDER_PATH.'/'.$imagecategory->getVar('imgcat_foldername').'/'.$images[$i]->getVar('image_name'))) {
+					$errors[] = sprintf(_MD_FAILUNLINK, $i);
+				}
 			}
 		}
 	}
 	if (!$imgcat_handler->delete($imagecategory)) {
 		$errors[] = sprintf(_MD_FAILDELCAT, $imagecategory->getVar('imgcat_name'));
+	}else{
+		if (!@rmdir(ICMS_IMANAGER_FOLDER_PATH.'/'.$imagecategory->getVar('imgcat_foldername'))) {
+			$errors[] = sprintf(_MD_FAILDELCAT, $i);
+		}
 	}
 	if (count($errors) > 0) {
 		xoops_cp_header();
