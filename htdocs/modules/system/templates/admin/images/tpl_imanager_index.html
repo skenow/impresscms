@@ -8,6 +8,15 @@ function showDiv(type){
 	}
 	document.getElementById(type).style.display = 'block';
 }
+function actField(value,id){
+	var field = document.getElementById(id);
+	if (value == 'file'){
+		field.disabled = false;
+	}else{
+		field.value = ' ';
+		field.disabled = true;
+	}
+}
 </script>
 <{if $catcount > 0}>
 <div align="right">

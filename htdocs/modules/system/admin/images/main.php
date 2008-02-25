@@ -29,7 +29,7 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 // Restructured by: Rodrigo P. Lima (AKA TheRplima)                          //
-// Project: The XOOPS Project                                                //
+// Project: The ImpressCMS Project                                           //
 // ------------------------------------------------------------------------- //
 
 if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid()) ) {
@@ -43,6 +43,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
 	//$tpl = new XoopsTpl();
 	define('_IMANAGER_TPL_PATH',XOOPS_ROOT_PATH.'/modules/system/templates/admin/images');
 	include(XOOPS_ROOT_PATH."/libraries/wideimage/lib/WideImage.inc.php");
+	
     $op = 'list';
     if (isset($_POST)) {
         foreach ( $_POST as $k => $v ) {
@@ -197,9 +198,14 @@ function imanager_index(){
 	$form->addElement(new XoopsFormText(_IMGMAXHEIGHT, 'imgcat_maxheight', 3, 4, 120));
 	$form->addElement(new XoopsFormText(_MD_IMGCATWEIGHT, 'imgcat_weight', 3, 4, 0));
 	$form->addElement(new XoopsFormRadioYN(_MD_IMGCATDISPLAY, 'imgcat_display', 1, _YES, _NO));
-	$storetype = new XoopsFormRadio(_MD_IMGCATSTRTYPE.'<br /><span style="color:#ff0000;">'._MD_STRTYOPENG.'</span>', 'imgcat_storetype', 'file');
+	$storetype = new XoopsFormRadio(_MD_IMGCATSTRTYPE, 'imgcat_storetype', 'file');
+	$storetype->setDescription('<span style="color:#ff0000;">'._MD_STRTYOPENG.'</span>');
 	$storetype->addOptionArray(array('file' => _MD_ASFILE, 'db' => _MD_INDB));
+	$storetype->setExtra('onchange="actField(this.value,\'imgcat_foldername\');"');
 	$form->addElement($storetype);
+	$fname = new XoopsFormText(_MD_IMGCATFOLDERNAME, 'imgcat_foldername', 50, 255);
+	$fname->setDescription('<span style="color:#ff0000;">'._MD_IMGCATFOLDERNAME_DESC.'<br />'._MD_STRTYOPENG.'</span>');
+	$form->addElement($fname,true);
 	$form->addElement(new XoopsFormHidden('op', 'addcat'));
 	$form->addElement(new XoopsFormHidden('fct', 'images'));
 	$tray1 = new XoopsFormElementTray('' ,'');
@@ -299,7 +305,7 @@ function imanager_listimg($imgcat_id) {
 		$arrimg[$i]['categ_id'] = $images[$i]->getVar('imgcat_id');
 		$arrimg[$i]['display_nicename'] = xoops_substr($images[$i]->getVar('image_nicename'),0,20);
 		
-    	$imginfo = ($imagecategory->getVar('imgcat_storetype') != 'db')?$images[$i]->getInfo(XOOPS_UPLOAD_URL,'url',true):$images[$i]->getInfo(XOOPS_URL.'/image.php?id='.$i,'db',true);
+    	$imginfo = ($imagecategory->getVar('imgcat_storetype') != 'db')?$images[$i]->getInfo(XOOPS_UPLOAD_URL.'/'.$imagecategory->getVar('imgcat_foldername'),'url',true):$images[$i]->getInfo(XOOPS_URL.'/image.php?id='.$i,'db',true);
     	$arrimg[$i]['width'] = $imginfo['width'];
     	$arrimg[$i]['height'] = $imginfo['height'];
     	
@@ -309,8 +315,8 @@ function imanager_listimg($imgcat_id) {
 			$arrimg[$i]['size'] = icms_convert_size(filesize(XOOPS_UPLOAD_PATH.'/'.$images[$i]->getVar('image_name')));
 			@unlink(XOOPS_UPLOAD_PATH.'/'.$images[$i]->getVar('image_name'));
 		} else {
-			$src = XOOPS_UPLOAD_URL.'/'.$images[$i]->getVar('image_name');
-			$arrimg[$i]['size'] = icms_convert_size(filesize(XOOPS_ROOT_PATH.'/uploads/'.$images[$i]->getVar('image_name')));
+			$src = XOOPS_UPLOAD_URL.'/'.$imagecategory->getVar('imgcat_foldername').'/'.$images[$i]->getVar('image_name');
+			$arrimg[$i]['size'] = icms_convert_size(filesize(XOOPS_UPLOAD_PATH.'/'.$imagecategory->getVar('imgcat_foldername').'/'.$images[$i]->getVar('image_name')));
 		}
 		$arrimg[$i]['src'] = $src.'?'.time();
 		$src_lightbox = XOOPS_URL."/modules/system/admin/images/preview.php?file=".$images[$i]->getVar('image_name');
@@ -368,9 +374,19 @@ function imanager_addcat() {
 	$imagecategory->setVar('imgcat_display', $imgcat_display);
 	$imagecategory->setVar('imgcat_weight', $imgcat_weight);
 	$imagecategory->setVar('imgcat_storetype', $imgcat_storetype);
+	if ($imgcat_storetype == 'file'){
+		$imagecategory->setVar('imgcat_foldername', $imgcat_foldername);
+	}
 	$imagecategory->setVar('imgcat_type', 'C');
+	
+	if (!file_exists(XOOPS_UPLOAD_PATH.'/'.$imagecategory->getVar('imgcat_foldername'))){
+		if (!mkdir(XOOPS_UPLOAD_PATH.'/'.$imagecategory->getVar('imgcat_foldername'))){
+			redirect_header('admin.php?fct=images',1,_MD_FAILADDCAT);
+		}
+	}
+	
 	if (!$imgcat_handler->insert($imagecategory)) {
-		exit();
+		redirect_header('admin.php?fct=images',1,_MD_FAILADDCAT);
 	}
 	$newid = $imagecategory->getVar('imgcat_id');
 	$imagecategoryperm_handler =& xoops_gethandler('groupperm');
@@ -427,7 +443,7 @@ function imanager_editcat($imgcat_id){
 	$form->addElement(new XoopsFormText(_IMGMAXHEIGHT, 'imgcat_maxheight', 3, 4, $imagecategory->getVar('imgcat_maxheight')));
 	$form->addElement(new XoopsFormText(_MD_IMGCATWEIGHT, 'imgcat_weight', 3, 4, $imagecategory->getVar('imgcat_weight')));
 	$form->addElement(new XoopsFormRadioYN(_MD_IMGCATDISPLAY, 'imgcat_display', $imagecategory->getVar('imgcat_display'), _YES, _NO));
-	$storetype = array('db' => _MD_INDB, 'file' => _MD_ASFILE);
+	$storetype = array('db' => _MD_INDB, 'file' => sprintf(_MD_ASFILE,XOOPS_ROOT_PATH.'/'.$imagecategory->getVar('imgcat_foldername')));
 	$form->addElement(new XoopsFormLabel(_MD_IMGCATSTRTYPE, $storetype[$imagecategory->getVar('imgcat_storetype')]));
 	$form->addElement(new XoopsFormHidden('imgcat_id', $imgcat_id));
 	$form->addElement(new XoopsFormHidden('op', 'updatecat'));
@@ -517,10 +533,7 @@ function imanager_delcatok($imgcat_id) {
 		redirect_header('admin.php?fct=images',1);
 	}
 	if ($imagecategory->getVar('imgcat_type') != 'C') {
-		xoops_cp_header();
-		xoops_error(_MD_SCATDELNG);
-		xoops_cp_footer();
-		exit();
+		redirect_header('admin.php?fct=images',1,_MD_SCATDELNG);
 	}
 	$image_handler =& xoops_gethandler('image');
 	$images =& $image_handler->getObjects(new Criteria('imgcat_id', $imgcat_id), true, false);
@@ -529,7 +542,7 @@ function imanager_delcatok($imgcat_id) {
 		if (!$image_handler->delete($images[$i])) {
 			$errors[] = sprintf(_MD_FAILDEL, $i);
 		} else {
-			if (file_exists(XOOPS_UPLOAD_PATH.'/'.$images[$i]->getVar('image_name')) && !unlink(XOOPS_UPLOAD_PATH.'/'.$images[$i]->getVar('image_name'))) {
+			if (file_exists(XOOPS_UPLOAD_PATH.'/'.$imagecategory->getVat('imgcat_foldername').'/'.$images[$i]->getVar('image_name')) && !unlink(XOOPS_UPLOAD_PATH.'/'.$imagecategory->getVat('imgcat_foldername').'/'.$images[$i]->getVar('image_name'))) {
 				$errors[] = sprintf(_MD_FAILUNLINK, $i);
 			}
 		}
@@ -586,7 +599,12 @@ function imanager_addfile() {
 	}
 
 	include_once XOOPS_ROOT_PATH.'/class/uploader.php';
-	$uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png', 'image/bmp'), $imagecategory->getVar('imgcat_maxsize'), $imagecategory->getVar('imgcat_maxwidth'), $imagecategory->getVar('imgcat_maxheight'));
+	if ($imagecategory->getVar('imgcat_storetype') == 'db') {
+		$updir = XOOPS_UPLOAD_PATH;
+	}else{
+		$updir = XOOPS_UPLOAD_PATH.'/'.$imagecategory->getVar('imgcat_foldername');
+	}
+	$uploader = new XoopsMediaUploader($updir, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png', 'image/bmp'), $imagecategory->getVar('imgcat_maxsize'), $imagecategory->getVar('imgcat_maxwidth'), $imagecategory->getVar('imgcat_maxheight'));
 	$uploader->setPrefix('img');
 	$err = array();
 	$ucount = count($_POST['xoops_upload_file']);
@@ -658,9 +676,27 @@ function imanager_updateimage() {
 			$image->setVar('image_display', $image_display[$i]);
 			$image->setVar('image_weight', $image_weight[$i]);
 			$image->setVar('image_nicename', $image_nicename[$i]);
+			if ($image->getVar('imgcat_id') != $imgcat_id[$i]){
+				$changedCat = true;
+				$oldcat = $image->getVar('imgcat_id');
+			}else{
+				$changedCat = false;
+			}
 			$image->setVar('imgcat_id', $imgcat_id[$i]);
 			if (!$image_handler->insert($image)) {
 				$error[] = sprintf(_FAILSAVEIMG, $image_id[$i]);
+			}
+			if ($changedCat){
+				$imgcat_handler =& xoops_gethandler('imagecategory');
+				$imagecategory  =& $imgcat_handler->get(intval($imgcat_id[$i]));
+				if ($imagecategory->getVar('imgcat_storetype') != 'db') { 
+					$oldimgcategory =& $imgcat_handler->get(intval($oldcat));
+					$src = XOOPS_UPLOAD_PATH.'/'.$oldimgcategory->getVar('imgcat_foldername').'/'.$image->getVar('image_name');
+					$dest = XOOPS_UPLOAD_PATH.'/'.$imagecategory->getVar('imgcat_foldername').'/'.$image->getVar('image_name');
+					if (!copy($src,$dest)){
+						$error[] = sprintf(_FAILSAVEIMG, $image_id[$i]);
+					}
+				}
 			}
 		}
 		if (count($error) > 0) {
@@ -693,13 +729,15 @@ function imanager_delfileok($image_id,$redir=null) {
 	if (!is_object($image)) {
 		redirect_header('admin.php?fct=images',1);
 	}
+	$imgcat_handler =& xoops_gethandler('imagecategory');
+	$imagecategory  =& $imgcat_handler->get(intval($image->getVar('imgcat_id')));
 	if (!$image_handler->delete($image)) {
 		xoops_cp_header();
 		xoops_error(sprintf(_MD_FAILDEL, $image->getVar('image_id')));
 		xoops_cp_footer();
 		exit();
 	}
-	@unlink(XOOPS_UPLOAD_PATH.'/'.$image->getVar('image_name'));
+	@unlink(XOOPS_UPLOAD_PATH.'/'.$imagecategory->getVar('imgcat_foldername').'/'.$image->getVar('image_name'));
 	if (isset($redir)){
 		$redir = '&op=listimg&imgcat_id='.$redir;
 	}else{
@@ -770,7 +808,8 @@ function imanager_clone() {
 		$newimg->setVar('image_body', $fbinary, true);
 		@unlink(XOOPS_UPLOAD_PATH.'/'.$image->getVar('image_name'));
 	}else{
-		if (!@copy(XOOPS_UPLOAD_PATH.'/'.$image->getVar('image_name'),XOOPS_UPLOAD_PATH.'/'.$imgname)){
+		$folder = XOOPS_UPLOAD_PATH.'/'.$imagecategory->getVar('imgcat_foldername');
+		if (!@copy($folder.'/'.$image->getVar('image_name'),$folder.'/'.$imgname)){
 			$msg = sprintf(_FAILSAVEIMG, $image->getVar('image_nicename'));
 		}
 	}

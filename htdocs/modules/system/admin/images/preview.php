@@ -12,10 +12,11 @@ $imgcat_handler = xoops_gethandler('imagecategory');
 
 $image =& $image_handler->getObjects(new Criteria('image_name', $file),false,true);
 $imagecategory =& $imgcat_handler->get($image[0]->getVar('imgcat_id'));
+$folder = XOOPS_UPLOAD_PATH.'/'.$imagecategory->getVar('imgcat_foldername');
 if ($imagecategory->getVar('imgcat_storetype') == 'db') {
 	$img = wiImage::loadFromString($image[0]->getVar('image_body'));
 }else{
-	$img = wiImage::load(XOOPS_ROOT_PATH.'/uploads/'.$file);
+	$img = wiImage::load($folder.'/'.$file);
 }
 $width = $img->getWidth();
 $height = $img->getHeight();

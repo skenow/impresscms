@@ -42,6 +42,7 @@ class XoopsImagecategory extends XoopsObject
 		$this->XoopsObject();
 		$this->initVar('imgcat_id', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('imgcat_name', XOBJ_DTYPE_TXTBOX, null, true, 100);
+		$this->initVar('imgcat_foldername', XOBJ_DTYPE_TXTBOX, null, true, 100);
 		$this->initVar('imgcat_display', XOBJ_DTYPE_INT, 1, false);
 		$this->initVar('imgcat_weight', XOBJ_DTYPE_INT, 0, false);
 		$this->initVar('imgcat_maxsize', XOBJ_DTYPE_INT, 0, false);
@@ -121,9 +122,9 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
         }
         if ($imgcat->isNew()) {
             $imgcat_id = $this->db->genId('imgcat_imgcat_id_seq');
-            $sql = sprintf("INSERT INTO %s (imgcat_id, imgcat_name, imgcat_display, imgcat_weight, imgcat_maxsize, imgcat_maxwidth, imgcat_maxheight, imgcat_type, imgcat_storetype) VALUES ('%u', %s, '%u', '%u', '%u', '%u', '%u', %s, %s)", $this->db->prefix('imagecategory'), intval($imgcat_id), $this->db->quoteString($imgcat_name), intval($imgcat_display), intval($imgcat_weight), intval($imgcat_maxsize), intval($imgcat_maxwidth), intval($imgcat_maxheight), $this->db->quoteString($imgcat_type), $this->db->quoteString($imgcat_storetype));
+            $sql = sprintf("INSERT INTO %s (imgcat_id, imgcat_name, imgcat_foldername, imgcat_display, imgcat_weight, imgcat_maxsize, imgcat_maxwidth, imgcat_maxheight, imgcat_type, imgcat_storetype) VALUES ('%u', %s, %s, '%u', '%u', '%u', '%u', '%u', %s, %s)", $this->db->prefix('imagecategory'), intval($imgcat_id), $this->db->quoteString($imgcat_name), $this->db->quoteString($imgcat_foldername), intval($imgcat_display), intval($imgcat_weight), intval($imgcat_maxsize), intval($imgcat_maxwidth), intval($imgcat_maxheight), $this->db->quoteString($imgcat_type), $this->db->quoteString($imgcat_storetype));
         } else {
-            $sql = sprintf("UPDATE %s SET imgcat_name = %s, imgcat_display = '%u', imgcat_weight = '%u', imgcat_maxsize = '%u', imgcat_maxwidth = '%u', imgcat_maxheight = '%u', imgcat_type = %s WHERE imgcat_id = '%u'", $this->db->prefix('imagecategory'), $this->db->quoteString($imgcat_name), intval($imgcat_display), intval($imgcat_weight), intval($imgcat_maxsize), intval($imgcat_maxwidth), intval($imgcat_maxheight), $this->db->quoteString($imgcat_type), intval($imgcat_id));
+            $sql = sprintf("UPDATE %s SET imgcat_name = %s, imgcat_foldername = %s, imgcat_display = '%u', imgcat_weight = '%u', imgcat_maxsize = '%u', imgcat_maxwidth = '%u', imgcat_maxheight = '%u', imgcat_type = %s WHERE imgcat_id = '%u'", $this->db->prefix('imagecategory'), $this->db->quoteString($imgcat_name), $this->db->quoteString($imgcat_foldername), intval($imgcat_display), intval($imgcat_weight), intval($imgcat_maxsize), intval($imgcat_maxwidth), intval($imgcat_maxheight), $this->db->quoteString($imgcat_type), intval($imgcat_id));
         }
         if (!$result = $this->db->query($sql)) {
             return false;
