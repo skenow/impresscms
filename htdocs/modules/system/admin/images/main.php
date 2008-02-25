@@ -283,7 +283,7 @@ function imanager_listimg($imgcat_id) {
 	$criteria->setOrder('DESC');
 	$criteria->setSort('image_weight');
 	$criteria->setLimit(15);
-	$images =& $image_handler->getObjects($criteria, true, false);
+	$images =& $image_handler->getObjects($criteria, true, true);
 
 	$tpl->assign('imgcount',$imgcount);
 	//$tpl->assign('images',$images);
@@ -305,15 +305,12 @@ function imanager_listimg($imgcat_id) {
     	
 		if ($imagecategory->getVar('imgcat_storetype') == 'db') {
 			$src = XOOPS_URL."/modules/system/admin/images/preview.php?file=".$images[$i]->getVar('image_name').'&resize=0';
-			include_once XOOPS_ROOT_PATH.'/class/image.class.php';
-			$newimage = Image::open($src);
-			$newimage->save(XOOPS_UPLOAD_PATH.'/'.$images[$i]->getVar('image_name'));
-            $arrimg[$i]['size'] = icms_convert_size(filesize(XOOPS_UPLOAD_PATH.'/'.$images[$i]->getVar('image_name')));
+			$img = wiImage::load($images[$i]->getVar('image_body'))->saveToFile(XOOPS_UPLOAD_PATH.'/'.$images[$i]->getVar('image_name'));
+			$arrimg[$i]['size'] = icms_convert_size(filesize(XOOPS_UPLOAD_PATH.'/'.$images[$i]->getVar('image_name')));
 			@unlink(XOOPS_UPLOAD_PATH.'/'.$images[$i]->getVar('image_name'));
 		} else {
 			$src = XOOPS_UPLOAD_URL.'/'.$images[$i]->getVar('image_name');
-			$src1 = XOOPS_ROOT_PATH.'/uploads/'.$images[$i]->getVar('image_name');
-			$arrimg[$i]['size'] = icms_convert_size(filesize($src1));
+			$arrimg[$i]['size'] = icms_convert_size(filesize(XOOPS_ROOT_PATH.'/uploads/'.$images[$i]->getVar('image_name')));
 		}
 		$arrimg[$i]['src'] = $src.'?'.time();
 		$src_lightbox = XOOPS_URL."/modules/system/admin/images/preview.php?file=".$images[$i]->getVar('image_name');
@@ -754,7 +751,6 @@ function imanager_clone() {
 	if ( ($ext = strrpos( $image->getVar('image_name'), '.' )) !== false ) {
 		$ext = strtolower(substr( $image->getVar('image_name'), $ext + 1 ));
 	}
-	include_once XOOPS_ROOT_PATH.'/class/image.class.php';
 
 	$imgname = 'img'.icms_random_str(12).'.'.$ext;
 	$newimg =& $image_handler->create();
@@ -766,8 +762,8 @@ function imanager_clone() {
 	$newimg->setVar('image_weight', $_POST['image_weight']);
 	$newimg->setVar('imgcat_id', $imgcat_id);
 	if ($imagecategory->getVar('imgcat_storetype') == 'db') {
-		$newimage = Image::open(XOOPS_URL.'/image.php?id='.$image->getVar('image_id'));
-		$newimage->save(XOOPS_UPLOAD_PATH.'/'.$image->getVar('image_name'));
+		$src = XOOPS_URL."/modules/system/admin/images/preview.php?file=".$image->getVar('image_name').'&resize=0';
+		$img = wiImage::load($image->getVar('image_body'))->saveToFile(XOOPS_UPLOAD_PATH.'/'.$image->getVar('image_name'));
 		$fp = @fopen(XOOPS_UPLOAD_PATH.'/'.$image->getVar('image_name'), 'rb');
 		$fbinary = @fread($fp, filesize(XOOPS_UPLOAD_PATH.'/'.$image->getVar('image_name')));
 		@fclose($fp);
