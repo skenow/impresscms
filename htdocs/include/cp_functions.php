@@ -60,7 +60,7 @@ function xoops_cp_header($ret = 0)
 	';
 	echo '<link rel="stylesheet" type="text/css" media="all" href="'.XOOPS_URL.'/xoops.css" />';
     echo '<link rel="stylesheet" type="text/css" media="all" href="'.XOOPS_URL.'/modules/system/style.css" />';
-
+    $icmsLibrariesHandler->triggerEvent('adminHeader');
     echo "<script type=\"text/javascript\"><!--//--><![CDATA[//><!--
 startList = function() {
 	if (document.all&&document.getElementById) {
@@ -81,7 +81,6 @@ startList = function() {
 window.onload=startList;
 
 //--><!]]></script>";
-    $icmsLibrariesHandler->triggerEvent('adminHeader');
     $icmsLibrariesHandler->triggerEvent('adminBeforeFooter');
 	echo "</head>
         <body>" ;
