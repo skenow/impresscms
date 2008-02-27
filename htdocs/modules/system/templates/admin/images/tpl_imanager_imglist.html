@@ -1,7 +1,3 @@
-<script>
-  var XOOPS_URL = "<{$xoops_url}>";
-  var XOOPS_ROOT_PATH = "<{$xoops_root_path}>";
-</script>
 <script type="text/javascript" src="<{$xoops_url}>/modules/system/admin/images/js/imanager.js"></script>
 <table width="100%" celpadding="0" cellspacing="1" class="outer">
   <tr>
@@ -46,6 +42,7 @@
 <br style="clear:both;" />
 <{foreach from=$images item=image key=key}>
   <{include file="$xoops_root_path/modules/system/templates/admin/images/tpl_imanager_editimg.html" image=$image i=$key}>
+  <{include file="$xoops_root_path/modules/system/templates/admin/images/tpl_imanager_cloneimg.html" image=$image i=$key}>
 <{/foreach}>
 <div id="addimgform" class="opt_divs" style="display:none; padding:5px; margin:5px;"><{$addimgform}></div>
 <a name="addimgform">

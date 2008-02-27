@@ -12,11 +12,14 @@ $imgcat_handler = xoops_gethandler('imagecategory');
 
 $image =& $image_handler->getObjects(new Criteria('image_name', $file),false,true);
 $imagecategory =& $imgcat_handler->get($image[0]->getVar('imgcat_id'));
-$folder = ICMS_IMANAGER_FOLDER_PATH.'/'.$imagecategory->getVar('imgcat_foldername');
+
+$categ_path = $imgcat_handler->getCategFolder($imagecategory);
+$categ_url  = $imgcat_handler->getCategFolder($imagecategory,1,'url');
+
 if ($imagecategory->getVar('imgcat_storetype') == 'db') {
 	$img = wiImage::loadFromString($image[0]->getVar('image_body'));
 }else{
-	$img = wiImage::load($folder.'/'.$file);
+	$img = wiImage::load($categ_path.'/'.$file);
 }
 $width = $img->getWidth();
 $height = $img->getHeight();
