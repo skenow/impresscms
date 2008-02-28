@@ -300,6 +300,7 @@ CREATE TABLE imagebody (
 
 CREATE TABLE imagecategory (
   imgcat_id smallint(5) unsigned NOT NULL auto_increment,
+  imgcat_id smallint(5) unsigned NOT NULL default '0',
   imgcat_name varchar(100) NOT NULL default '',
   imgcat_maxsize int(8) unsigned NOT NULL default '0',
   imgcat_maxwidth smallint(3) unsigned NOT NULL default '0',
