@@ -253,7 +253,7 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
     		$ret[$i] = $categories[$i]->getVar('imgcat_name');
     		$subcategories = $this->getCategList($groups, $perm, $display, $storetype, $categories[$i]->getVar('imgcat_id'));
     		foreach (array_keys($subcategories) as $j) {
-    			$ret[$j] = '--'.$subcategories[$j];
+    			$ret[$j] = '-'.$subcategories[$j];
     		}
     	}
     	

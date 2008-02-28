@@ -8,6 +8,7 @@ define('_MD_IMGMAIN','Image Manager Main');
 define('_MD_ADDIMGCAT','Add Image Category:');
 define('_MD_EDITIMGCAT','Edit Image Category:');
 define('_MD_DELETEIMGCAT','Delete Image Category');
+define('_MD_IMGCATPARENT','Parent Category:');
 define('_MD_IMGCATNAME','Category Name:');
 define('_MD_IMGCATRGRP','Select groups for image manager use:<br /><br /><span style="font-weight: normal;">These are groups allowed to use the image manager for selecting images but not uploading. Webmaster has automatic access.</span>');
 define('_MD_IMGCATWGRP','Select groups allowed to upload images:<br /><br /><span style="font-weight: normal;">Typical usage is for moderator and admin groups.</span>');

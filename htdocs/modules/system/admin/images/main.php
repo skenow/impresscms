@@ -197,7 +197,7 @@ function imanager_index($imgcat_id=null){
 	}
 	$form = new XoopsThemeForm(_MD_ADDIMGCAT, 'imagecat_form', 'admin.php', 'post', true);
 	$list =& $imgcat_handler->getCategList();
-	$sup = new XoopsFormSelect(_MD_IMGCATRGRP, 'imgcat_pid', $id);
+	$sup = new XoopsFormSelect(_MD_IMGCATPARENT, 'imgcat_pid', $id);
 	$list[0] = '--------------------';
 	ksort($list);
 	$sup->addOptionArray($list);
@@ -838,7 +838,7 @@ function imanager_clone() {
 		$newimg->setVar('image_body', $fbinary, true);
 		@unlink(ICMS_IMANAGER_FOLDER_PATH.'/'.$image->getVar('image_name'));
 	}else{
-		if (!@copy($categ_path.'/'.$image->getVar('image_name'),$folder.'/'.$imgname)){
+		if (!@copy($categ_path.'/'.$image->getVar('image_name'),$categ_path.'/'.$imgname)){
 			$msg = sprintf(_FAILSAVEIMG, $image->getVar('image_nicename'));
 		}
 	}
