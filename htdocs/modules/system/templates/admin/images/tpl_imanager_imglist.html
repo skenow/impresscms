@@ -1,17 +1,14 @@
 <script type="text/javascript" src="<{$xoops_url}>/modules/system/admin/images/js/imanager.js"></script>
+<div class="CPbigTitle" style="background-image: url(admin/images/images/images_big.png)"><{$admnav}></div>
+<h1 style="font-weight:bold; padding:0;" align="center"><{$lang_imanager_title}></h1>
 <table width="100%" celpadding="0" cellspacing="1" class="outer">
-  <tr>
-    <td colspan="8" class="head" align="center">
-      <a style="float:left;" href="admin.php?fct=images" title="<{$lang_imanager_cat_back}>"><img src="images/back.png" /></a>
-      <h2 style="font-weight:bold; padding:0;"><{$lang_imanager_title}></h2>
-    </td>
-  </tr>
   <tr>
     <th align="center"><{$lang_imanager_catmsize}></th>
     <th align="center"><{$lang_imanager_catmwidth}></th>
     <th align="center"><{$lang_imanager_catmheight}></th>
     <th align="center"><{$lang_imanager_catstype}></th>
     <th align="center"><{$lang_imanager_catdisp}></th>
+    <th align="center" width="5%"><{$lang_imanager_catsubs}></th>
     <th align="center"><{$lang_imanager_catqtde}></th>
     <th align="center"><{$lang_imanager_catoptions}></th>
   </tr>
@@ -21,6 +18,13 @@
     <td align="center"><{$cat_maxheight}>px</td>
     <td align="center"><img src="images/<{$cat_storetype}>.png" title="<{$cat_storetype}>" /></td>
     <td align="center"><img src="images/<{$cat_display}>.png" /></td>
+    <td align="center">
+    <{if $cat_subs > 0}>
+      <{$cat_subs}> <a href="admin.php?fct=images&imgcat_id=<{$cat_id}>" title="View Sub-categories"><img src="images/viewsubs.gif" align="absmiddle" /></a>
+    <{else}>
+      <{$cat_subs}>
+    <{/if}>
+    </td>
     <td align="center"><{$imgcount}></td>
     <td align="center">
       <a href="#" onclick="showDiv('addimgform',''); document.anchors.item('addimgform').scrollIntoView(); return false;" title="<{$lang_imanager_cat_addimg}>"><img src="images/add.png" /></a>

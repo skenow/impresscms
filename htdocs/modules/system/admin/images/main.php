@@ -249,13 +249,15 @@ function imanager_listimg($imgcat_id) {
 	if (!is_object($imagecategory)) {
 		redirect_header('admin.php?fct=images',1);
 	}
-
+	
+    $tpl->assign('admnav',adminNav($imgcat_id));
 	$tpl->assign('lang_imanager_title',sprintf(_MD_IMAGESIN,$imagecategory->getVar('imgcat_name')));
 	$tpl->assign('lang_imanager_catmsize',_MD_IMAGECATMSIZE);
 	$tpl->assign('lang_imanager_catmwidth',_MD_IMAGECATMWIDTH);
 	$tpl->assign('lang_imanager_catmheight',_MD_IMAGECATMHEIGHT);
 	$tpl->assign('lang_imanager_catstype',_MD_IMAGECATSTYPE);
 	$tpl->assign('lang_imanager_catdisp',_MD_IMAGECATDISP);
+	$tpl->assign('lang_imanager_catsubs',_MD_IMAGECATSUBS);
 	$tpl->assign('lang_imanager_catqtde',_MD_IMAGECATQTDE);
 	$tpl->assign('lang_imanager_catoptions',_MD_IMAGECATOPTIONS);
 
@@ -276,7 +278,10 @@ function imanager_listimg($imgcat_id) {
 	$tpl->assign('cat_storetype',$imagecategory->getVar('imgcat_storetype'));
 	$tpl->assign('cat_display',$imagecategory->getVar('imgcat_display'));
 	$tpl->assign('cat_id',$imagecategory->getVar('imgcat_id'));
-	
+
+	$subs  = count($imgcat_handler->getObjects(new CriteriaCompo(new Criteria('imgcat_pid', $imgcat_id))));
+	$tpl->assign('cat_subs',$subs);
+
 	$tpl->assign('lang_imanager_img_preview',_PREVIEW);
 	
 	$tpl->assign('lang_image_name',_IMAGENAME);
@@ -466,7 +471,7 @@ function imanager_editcat($imgcat_id){
 	$form->addElement(new XoopsFormHidden('fct', 'images'));
 	$form->addElement(new XoopsFormButton('', 'imgcat_button', _SUBMIT, 'submit'));
 	xoops_cp_header();
-	echo '<a href="admin.php?fct=images">'. _MD_IMGMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'.$imagecategory->getVar('imgcat_name').'<br /><br />';
+	echo '<div class="CPbigTitle" style="background-image: url(admin/images/images/images_big.png)">'.adminNav($imgcat_id).'</div><br />';
 	$form->display();
 }
 
@@ -856,27 +861,28 @@ function imanager_clone() {
 	redirect_header('admin.php?fct=images'.$redir,2,$msg);
 }
 
-function adminNav($imgcat_id = null, $separador = "/", $style="style='font-weight:bold'"){
-	$admin_url = "admin.php?fct=images";
+function adminNav($id = null, $separador = "<span style=\"font-weight:bold;\">&raquo;&raquo;</span>"){
+	global $fct;
+	$admin_url = "admin.php?fct=$fct";
 
-	if (is_null($imgcat_id)) {
-		return false;
-	}else{
-		if ($imgcat_id > 0){
-			$imgcat_handler =& xoops_gethandler('imagecategory');
-			$imagecategory =& $imgcat_handler->get(intval($imgcat_id));
-			if ($imagecategory->getVar('imgcat_id') > 0) {
-				$ret = "<a href='".$admin_url."&imgcat_id=".$imagecategory->getVar('imgcat_id')."'>".$imagecategory->getVar('imgcat_name')."</a>";
-				if ($imagecategory->getVar('imgcat_pid') == 0) {
-					return "<a href='".$admin_url."'>"._MD_IMGMAIN."</a> $separador ".$ret;
-				}elseif ($imagecategory->getVar('imgcat_pid') > 0){
-					$ret = adminNav($imagecategory->getVar('imgcat_pid'), $separador)." $separador ". $ret;
-				}
-			}
-		}else{
-			return false;
-		}
+	if (is_null($id)) {
+		$id = 0;
 	}
+	if ($id > 0){
+		$imgcat_handler =& xoops_gethandler('imagecategory');
+		$imagecategory =& $imgcat_handler->get(intval($id));
+		if ($imagecategory->getVar('imgcat_id') > 0) {
+			$ret = "<a href='".$admin_url."&imgcat_id=".$imagecategory->getVar('imgcat_id')."'>".$imagecategory->getVar('imgcat_name')."</a>";
+			if ($imagecategory->getVar('imgcat_pid') == 0) {
+				return "<a href='".$admin_url."'>"._MD_IMGMAIN."</a> $separador ".$ret;
+			}elseif ($imagecategory->getVar('imgcat_pid') > 0){
+				$ret = adminNav($imagecategory->getVar('imgcat_pid'), $separador)." $separador ". $ret;
+			}
+		}
+	}else{
+		return _MD_IMGMAIN;
+	}
+
 	return $ret;
 }
 ?>

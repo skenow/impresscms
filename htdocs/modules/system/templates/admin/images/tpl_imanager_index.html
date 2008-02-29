@@ -1,13 +1,12 @@
 <script type="text/javascript" src="http://impresscms.no-ip.info/image_manager/modules/system/admin/images/js/imanager.js"></script>
+<div class="CPbigTitle" style="background-image: url(admin/images/images/images_big.png)"><{$admnav}></div><br />
 <{if $catcount > 0}>
-<div id="admnav"><{$admnav}></div>
 <div align="right">
   <input type="button" onclick="showDiv('addcatform'); document.anchors.item('addcatform').scrollIntoView(); return false;" value="<{$lang_imanager_cat_addnewcat}>" />
   <input type="button" onclick="showDiv('addimgform'); document.anchors.item('addimgform').scrollIntoView(); return false;" value="<{$lang_imanager_cat_addnewimg}>" />
 </div>
 <form action="admin.php" method="post">
   <table width="100%" celpadding="0" cellspacing="1" class="outer">
-    <tr><td colspan="12" class="head" align="center"><{$lang_imanager_title}></td></tr>
     <tr>
       <th align="center" width="3%"><{$lang_imanager_catid}></th>
       <th align="center" width="20%"><{$lang_imanager_catname}></th>
@@ -40,11 +39,7 @@
         </td>
         <td><{$count[i]}></td>
         <td>
-          <{if $count[i] > 0}>
-            <a href="admin.php?fct=images&amp;op=listimg&amp;imgcat_id=<{$imagecategorys[i]->getVar('imgcat_id')}>" title="<{$lang_imanager_cat_listimg}>"><img src="images/view_big.png" /></a>
-          <{else}>
-            <img src="images/view_big_off.png" />
-          <{/if}>  
+          <a href="admin.php?fct=images&amp;op=listimg&amp;imgcat_id=<{$imagecategorys[i]->getVar('imgcat_id')}>" title="<{$lang_imanager_cat_listimg}>"><img src="images/view_big.png" /></a>
           <a href="admin.php?fct=images&amp;op=editcat&amp;imgcat_id=<{$imagecategorys[i]->getVar('imgcat_id')}>" title="<{$lang_imanager_cat_edit}>"><img src="images/edit_big.png" /></a>
           <{if ($imagecategorys[i]->getVar('imgcat_type') == 'C')}>
             <a href="admin.php?fct=images&amp;op=delcat&amp;imgcat_id=<{$imagecategorys[i]->getVar('imgcat_id')}>" title="<{$lang_imanager_cat_del}>"><img src="images/delete_big.png" /></a>
