@@ -87,6 +87,19 @@ Upgrading from any XOOPS ranging from 2.0.7 to 2.0.16 (using the full package):
 10. Delete the upgrade folder.
 11. Enter the Admin area & then flush your browsers cache (on windows IE & Firefox you can do this by pressing CTRL+F5. MAC & Safari users can press CTRL+R, Linux Users can also press CTRL+R or CTRL+F5 when using Firefox), this will ensure that the new admin interface will display properly. 12. Update the "system" module from the modules administration interface.
 
+ImpressCMS supports OpenID login !
+==================================
+
+Starting with version 1.1, ImpressCMS natively supports OpenID login. Our OpenID integration was originally based on Sakimura's excellent OpenID module for XOOPS. More information about this module can be found on the author's web site: http://www.sakimura.org/.  
+
+The OpenID integration enables users to login to ImpressCMS sites with their OpenID.
+
+Once successfully authenticated to an OpenID Provider such as Yahoo!, AOL etc., users are asked whether they have an existing account on the site which they would link to their authenticated OpenId, simply create a new one user account which will be linked to this OpenID.
+
+Supports OpenID 2.0 and thus, XRDS, XRI, etc. Also, it supports sreg so if the OpenID Provider supports it, it can populate the ImpressCMS users table as well.
+
+Tested against Yahoo!, Linksafe, 2idi, ClaimID an MyOpenID.
+
 
 Revealing the blank page backtrace log
 ==================================
