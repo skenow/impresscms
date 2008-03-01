@@ -2,10 +2,11 @@
 /* -----------------------------------------------------
 // OpenID RP Module for Xoops
 //  by Nat Sakimura
-//  (c) 2008 by Nat Sakimura (=nat)
+//  (c) 2008 by Nat Sakimura (=nat), JanRain
 //  License: GPL
 //
-// occommon.php is the file for shared functions.
+// occommon.php is the file for shared functions. 
+// This file is based on JanRain's Library example. 
 -------------------------------------------------------- */
 $path_extra = dirname(__FILE__);
 $path_extra2 = ICMS_LIBRARIES_ROOT_PATH . "/phpopenid/";
@@ -128,13 +129,16 @@ $store = new Auth_OpenID_FileStore($store_path);
  */
 $consumer = new Auth_OpenID_Consumer($store);
 
+/**
+ * Sanitization Functions
+ */
 function quote_smart($value)
 {
     // Stripslashes
     if (get_magic_quotes_gpc()) {
         $value = stripslashes($value);
     }
-    // 数値以外をクオートする
+    // Escape non-numeric string
     if (!is_numeric($value)) {
         $value = "'" . mysql_real_escape_string($value) . "'";
     }
@@ -144,7 +148,7 @@ function quote_smart($value)
 
 function alphaonly($str)
 {
-	$str2 = preg_replace("/![a-zA-Z0-9=@\/\.]/",'_',$str);
+	$str2 = preg_replace("/[^a-zA-Z0-9=@\/\.]/",'_',$str);
 	return $str2;
 }
 

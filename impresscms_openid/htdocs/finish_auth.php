@@ -24,7 +24,7 @@ if (isset($_POST['openid_register'])) {
 	 */
 	$tzoffset=array('Tokyo'=>'+9','London'=>'0');
 
-	$uname = alphaonly($_POST['uname']);
+	$uname = quote_smart($_POST['uname']);
 
 	/**
 	 * @todo use the related UserConfigOption
@@ -254,9 +254,9 @@ if (isset($_POST['openid_register'])) {
 	
 	include_once(XOOPS_ROOT_PATH.'/header.php');
 	
-	$uname = alphaonly($_POST['uname']);
-	$pass = alphaonly($_POST['pass']);
-	
+	$uname4sql = quote_smart($uname);
+	$pass4sql = quote_smart($pass);
+			
 	$query='SELECT `uid`, `uname`, `pass` from ' . $xoopsDB->prefix('users') . 
 		" WHERE `uname`='" . $uname . "'";
 	$res=$xoopsDB->query($query,1);
@@ -278,16 +278,6 @@ if (isset($_POST['openid_register'])) {
 	    $displayId = $response->getDisplayIdentifier();
 	    $cid = $response->identity_url;
 	
-		$query="INSERT into ". $xoopsDB->prefix('openid_localid') . 
-				" SET 
-				`localid`='$uname', 
-				`openid`='$cid', 
-				`displayid`='$displayId', 
-				`created`=NOW()";
-		//echo "\n<br />" . $query;
-		$res=$xoopsDB->queryF($query);
-		$err .= $xoopsDB->error();
-		
 		$msg = $msg . '<br />openid_localid ÅÐÏ¿½ªÎ»';
 		
 		$criteria = new CriteriaCompo(new Criteria('uname', $uname ));
