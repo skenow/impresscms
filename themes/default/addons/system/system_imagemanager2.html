@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC '//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<{$zarilia_langcode}>" lang="<{$zarilia_langcode}>">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=<{$zarilia_charset}>" />
+<meta http-equiv="content-language" content="<{$zarilia_langcode}>" />
+<title><{$zarilia_sitename}><{$lang_imgmanager}></title>
+<{$zarilia_header}>
+<{$zarilia_addon_header}>
+
+<{$image_form.javascript}>
+<link href="<{$zarilia_url}>/addons/system/style.css" rel="stylesheet" type="text/css" />
+</head><body onload="window.resizeTo(<{$xsize}>, <{$ysize}>);"> 
+<table border='0' width='100%' cellspacing='0' cellpadding='0'> 
+  <tr> 
+    <td>&nbsp;</td> 
+  </tr> 
+</table>
+ 
+<table cellspacing="0" cellpadding="2" width="90%" id="imagenav" align="center" class="outer"> 
+  <tr class="even"> 
+    <td align="left"><b><{$lang_imgmanager}></b> : <{$lang_upload}></td>
+  </tr> 
+</table><br /> 
+
+<form name="<{$image_form.name}>" id="<{$image_form.name}>" action="<{$image_form.op}>" method="<{$image_form.method}>" <{$image_form.extra}>> 
+
+<table id="imagemain" width = "90%" align="center" class="outer"> 
+  <tr align="left"> 
+    <th colspan="2"><{$lang_imagename}></th> 
+  </tr> 
+  <!-- start of form elements loop --> 
+<{foreach item=element from=$image_form.elements}> <{if $element.hidden != true}> 
+  <tr valign="top"> 
+    <td class="head"><{$element.caption}></td> 
+    <td class="even"><{$element.body}></td> 
+  </tr> 
+<{else}> <{$element.body}> <{/if}> <{/foreach}> 
+  <!-- end of form elements loop --> 
+  <tr> 
+    <td colspan="2" class="foot" align="center">&nbsp;</td> 
+  </tr>
+</table> 
+</form> 
+
+<table width="90%" border="0" cellspacing="1" cellpadding="2" align="center"> 
+  <tr> 
+    <td class="even" style="text-align: center;">
+	  <div id="footer"> 
+        <input value="<{$lang_close}>" type="button" class="formbutton" onclick="javascript:window.close();" /> 
+      </div></td> 
+  </tr> 
+</table> 
+</body>
+</html>

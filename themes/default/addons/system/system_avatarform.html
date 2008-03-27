@@ -1,0 +1,59 @@
+<script type="text/javascript"><{$zariliaform.javascript}></script>
+<div class="zar_title"><{$title}></div>
+<div class="zar_subtitle"><{$subtitle}></div><br />
+<{if $menubar}>
+	<div class="zar_heading"><{$menubar}></div>
+<{/if}>
+
+<{if $allowupload}>
+	<div style="text-align: left;"><h4 style="color:#ff0000; font-weight:bold;"><{$smarty.const._US_OLDDELETED}></h4> <img src="<{$zarilia_upload}>/<{$avatar}>" alt="" /></div>
+<{/if}>
+
+<{if $allowupload}>
+<table width="100%" cellspacing="0">
+	<form name="uploadavatar" method="post" onsubmit="return zariliaFormValidate_uploadavatar();" enctype="multipart/form-data">
+	<input type="hidden" name="page_type" value="avatar" />
+	<input type="hidden" name="act" value="avatarupload" />
+	<tr>
+		<td width="35%" class="itemHead"><b><{$smarty.const._US_MAXPIXEL}></b></td>
+        <td><{$avatar_width}> x <{$avatar_height}></td>
+	</tr>
+   	<tr>
+		<td class="itemHead"><b><{$smarty.const._US_MAXIMGSZ}></b></td>
+        <td><{$avatar_maxsize}></td>
+	</tr>
+   	<tr>
+		<td class="itemHead"><b><{$smarty.const._US_SELFILE}> </b>  </td>
+        <td><input type='hidden' name='MAX_FILE_SIZE' value='<{$avatar_maxsize}>' />
+			<input type='file' name='avatarfile' id='avatarfile' />
+			<input type='hidden' name='zarilia_upload_file[]' id='zarilia_upload_file[]' value='avatarfile' />
+		</td>
+	</tr>
+		<input type='hidden' name='uid' id='uid' value='1' />
+	<tr>
+		<td width="45%" class="itemHead"><b> </b>  </td>
+        <td><input type='submit' class='formbutton'  name='submit'  id='submit' value='Submit'  /></td>
+	</tr>
+ 	</form>
+</table><br />
+<{/if}>
+
+<table width="100%" cellspacing="0">
+<{if $header }>
+	<tr>
+		<th><{$header}></th>
+	</tr>
+<{/if}>
+	<form name="<{$uploadavatar.name}>" method="<{$uploadavatar.method}>" <{$uploadavatar.extra}>>
+	<input type="hidden" name="page_type" value="<{$page_type}>" />
+	<{foreach item=element from=$uploadavatar.elements}> <{if $element.hidden != true}> <{if $element.split }> <{$element.split}> <{else}>
+	<tr>
+		<td width="35%" class="itemHead"><b><{$element.caption}> <{if $element.required}>* Required<{/if}></b> <{if $element.description }> <br /><span style="font-weight: normal;"><{$element.description}></span> <{/if}> </td>
+        <td><{$element.body}></td>
+<{/if}>
+	</tr>
+<{else}> <{$element.body}> <{/if}> <{/foreach}>
+	</form>
+</table>
+
+

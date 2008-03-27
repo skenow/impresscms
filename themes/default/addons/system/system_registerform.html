@@ -1,0 +1,48 @@
+<script type="text/javascript"><{$registerform.javascript}></script>
+
+<form name="<{$registerform.name}>" action="<{$registerform.op}>" method="<{$registerform.method}>" <{$registerform.extra}>>
+<table width="100%" align="center" cellspacing="0" cellpadding="0">
+  <tr>
+    <td colspan="3" align="left"><h3><{$smarty.const._US_REG_FORM_HEADING}></h3>
+      <div class='register_login'><{$smarty.const._US_REGALREADYHAVE}> <a href="<{$zarilia_url}>/index.php?page_type=user" target="_blank"><{$smarty.const._US_REGSIGNIN}></a></div>
+      <table id="content">
+        <tr>
+          <td class='register_title'><{$title}></td>
+        </tr>
+<{if $subtitle}>
+        <tr>
+          <td class='register_subtitle'><{$subtitle}></td>
+        </tr>
+<{/if}>
+        <tr>
+          <td class='register_subtitle'> <table width="100%" cellspacing="0">
+              <{if $header}>
+			  	<p><{$header}></p>
+			  <{/if}>
+<input type="hidden" name="page_type" value="register" />
+<{foreach item=element from=$registerform.elements}> <{if $element.hidden != true}> <{if $element.split }> <{$element.split}> <{else}>
+              <tr>
+                <td class="itemHead" width="40%"> <b><{$element.caption}> <{if $element.required}>* Required<{/if}></b>
+				<{if $element.description }> <div><span style="font-weight: normal;"><{$element.description}></span></div> <{/if}> </td>
+                <td class="itemBody"><{$element.body}></td>
+<{/if}> </tr>
+<{else}> <{$element.body}> <{/if}> <{/foreach}>
+            </table>
+			</td>
+        </tr>
+        <table align="center" cellspacing="0" cellpadding="0" id="buttons">
+          <tr>
+            <td width='10%'>&nbsp;</td>
+            <td width='25%' align='left' nowrap='nowrap'><{$b_back}></td>
+            <td width='20%' align='center'><{$b_reload}> <{$b_restart}></td>
+            <td width='25%' align='right' nowrap='nowrap'><{$b_next}></td>
+            <td width='10%'>&nbsp;</td>
+          </tr>
+        </table>
+      </table></td>
+    <td width='10%'><br />
+<{$stepbar}></td>
+    <td width='2%'>&nbsp;</td>
+  </tr>
+</table>
+</form>

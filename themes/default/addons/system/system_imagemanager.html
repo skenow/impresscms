@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC '//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<{$zarilia_langcode}>" lang="<{$zarilia_langcode}>">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="content-language" content="<{$zarilia_langcode}>" />
+<title><{$sitename}><{$lang_imgmanager}></title>
+<{$zarilia_header}>
+<{$zarilia_addon_header}>
+<script type="text/javascript">
+<!--//
+function appendCode(addCode) {
+	var targetDom = window.opener.zariliaGetElementById('<{$target}>');
+
+	if (targetDom.createTextRange && targetDom.caretPos){
+  		var caretPos = targetDom.caretPos;
+		caretPos.text = caretPos.text.charAt(caretPos.text.length - 1)
+== ' ' ? addCode + ' ' : addCode;
+	} else if (targetDom.getSelection && targetDom.caretPos){
+		var caretPos = targetDom.caretPos;
+		caretPos.text = caretPos.text.charat(caretPos.text.length - 1)
+== ' ' ? addCode + ' ' : addCode;
+	} else {
+		targetDom.value = targetDom.value + addCode;
+  	}
+	//window.close();
+	return;
+}
+
+function InsertWysiwygImage(addCode)
+{
+	window.opener.XK_InsertImage('<{$target}>',addCode,'');
+	//window.close();
+	return;
+};
+//-->
+</script>
+</head>
+<body onload="window.resizeTo(<{$xsize}>, <{$ysize}>);">
+<br /><br />
+<table cellspacing="1" cellpadding="2" width="90%" align="center" class="outers">
+<tr>
+  <td align="left" width="50%"><{$selection_box}></td>
+ <{if $show_cat > 0}>
+  <td align="right" width="50%">
+   <a href="<{$zarilia_url}>/mediamanager.php?target=<{$target}>&amp;op=upload&amp;imgcat_id=<{$show_cat}>"> <img src='<{$zarilia_url}>/images/upload.png' border='0' alt='<{$smarty.const._ADDIMAGE}>' align= "absmiddle"/></a>
+  </td>
+ <{/if}>
+</tr>
+</table>
+<br />
+<table id="imagemain" cellspacing="1" border="0" width="90%" align="center" class="outers">
+  <tr align="left">
+    <th><{$smarty.const._MA_AD_MEDIA_DETAILS}></th>
+    <th align="center"><{$smarty.const._MA_AD_MEDIA_IMAGE}></th>
+  </tr>
+<{if $media_total > 0}>
+ <{section name=i loop=$images}>
+  <tr valign="top">
+    <td class='head' nowrap="nowrap:">
+	<input type="hidden" name="image_id[]" value="<{$images[i].id}>" />
+	 <table>
+	  <tr>
+	   <td width="30%"><b><{$smarty.const._MA_AD_MEDIA_EREALNAME}></b></td><td><{$images[i].nicename}></td>
+	  </tr>
+	  <tr>
+	   <td width="30%"><b><{$smarty.const._MA_AD_MEDIA_ENAME}></b></td><td><{$images[i].realname}></td>
+	  </tr>
+	  <tr>
+	   <td width="30%"><b><{$smarty.const._MA_AD_MEDIA_EFILESIZE}></b></td><td><{$images[i].size}></td>
+	  </tr>
+	   <{if $images[i].width }>
+	  <tr>
+	    <td width="30%"><b><{$smarty.const._MA_AD_MEDIA_EDIM}></b></td><td><{$lang_weight}>: <{$images[i].width}> X <{$lang_height}>: <{$images[i].height}></td>
+	  </tr>
+	   <{/if}>
+	  <tr>
+	   <td width="30%"><b><{$smarty.const._MA_AD_MEDIA_EMIMETYPE}></b></td><td><{$images[i].mimetype}></td>
+	  </tr>
+	 </table>
+	</td>
+    <td width= "70%" class = 'even' style="text-align: center;">
+	  <div align="center">
+		<{$images[i].src}>
+	  </div>
+	  <div align="center">
+		 <{$media}>
+		 <{if $images[i].media != 1 }>
+		  <a href="#" onclick="javascript:appendCode('<{$images[i].lxcode}>');"> <img src="<{$zarilia_url}>/images/im_back.png" title="Insert Left Align" alt="Left" /></a>
+		 <{/if}>
+		  <a href="#" onclick="javascript:appendCode('<{$images[i].xcode}>');"> <img src="<{$zarilia_url}>/images/im_down.png" title="Insert Center Align" alt="Center" /></a>
+
+		 <{if $images[i].media != 1 }>
+  	 	 <a href="#" onclick="javascript:appendCode('<{$images[i].rxcode}>');"> <img src="<{$zarilia_url}>/images/im_forward.png" title="Insert Right Align" alt="Right" /></a>
+         <a href="#" onclick="javascript:InsertWysiwygImage('<{$images[i].xcode}>');"> <img src="<{$zarilia_url}>/images/im_add.png" title="Insert Into Wysiwyg" alt="Insert Into Wysiwyg" /></a>
+		 <{/if}>
+	  </div>
+	</td>
+  </tr>
+ <{/section}>
+<{else}>
+  <tr>
+    <td colspan="4" class="even" align="center"><b><{$smarty.const._MA_AD_MEDIA_NOTHINGFOUND}></b></td>
+  </tr>
+<{/if}>
+  <tr>
+    <td colspan="4" class="footer" align="center">&nbsp;</td>
+  </tr>
+</table>
+<{if pagenav}>
+	<div style="padding-top: 6px; padding-bottom: 6px; padding-right: 6px; text-align: right; " id="pagenav"><{$pagenav}></div>
+<{/if}>
+
+<div style="padding-top: 6px; padding-bottom: 6px; padding-right: 6px; text-align: center; ">
+	<input value="<{$smarty.const._CLOSE}>" type="button" class="formbutton" onclick="javascript:window.close();" />
+</div>
+
+</body>
+</html>

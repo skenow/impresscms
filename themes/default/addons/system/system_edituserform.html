@@ -1,0 +1,25 @@
+<script type="text/javascript"><{$zariliaform.javascript}></script>
+
+<div class="zar_title"><{$title}></div>
+<div class="zar_subtitle"><{$subtitle}></div><br />
+
+<{if $menubar}>
+	<div class="zar_heading"><{$menubar}></div>
+<{/if}>
+<table width="100%" cellspacing="0">
+<{if $header }>
+	<tr>
+		<th><{$header}></th>
+	</tr>
+<{/if}>
+<form name="<{$zariliaform.name}>" action="<{$zariliaform.op}>" method="<{$zariliaform.method}>" <{$zariliaform.extra}>>
+<input type="hidden" name="page_type" value="<{$page_type}>" />
+<{foreach item=element from=$zariliaform.elements}> <{if $element.hidden != true}> <{if $element.split }> <{$element.split}> <{else}>
+	<tr>
+		<td width="35%" class="itemHead"><b><{$element.caption}> <{if $element.required}>* Required<{/if}></b> <{if $element.description }> <br /><span style="font-weight: normal;"><{$element.description}></span> <{/if}> </td>
+        <td><{$element.body}></td>
+<{/if}>
+	</tr>
+<{else}> <{$element.body}> <{/if}> <{/foreach}>
+	</form>
+</table>

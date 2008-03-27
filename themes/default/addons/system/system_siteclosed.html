@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<{$zarilia_langcode}>" lang="<{$zarilia_langcode}>">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=<{$zarilia_charset}>" />
+<meta http-equiv="content-language" content="<{$zarilia_langcode}>" />
+<title><{$zarilia_sitename}></title>
+<link rel="stylesheet" type="text/css" media="all" href="<{$zarilia_themecss}>" />
+</head>
+<body >
+  <p>&nbsp;</p>
+  <p align="center"><img src="<{$zarilia_theme_image}>/logo.gif" /></p>
+  <form action="<{$zarilia_url}>/index.php" method="post">
+    <table cellspacing="0" align="center" style="width: 200px;">
+     <tr>
+        <th style="padding : 2px; vertical-align : middle;" colspan="2"><span class="style1"><{$lang_login}></span></th>
+      </tr>
+      <tr>
+        <td class="style1" style="padding: 2px;"><{$lang_username}></td>
+        <td style="padding: 2px;"><input type="text" name="uname" size="12" value="" /></td>
+      </tr>
+      <tr>
+        <td class="style1" style="padding: 2px;"><{$lang_password}></td>
+        <td style="padding: 2px;"><input type="password" name="pass" size="12" /></td>
+      </tr>
+      <tr>
+        <td style="padding: 2px;">&nbsp;</td>
+        <td style="padding: 2px;"><input type="hidden" name="zarilia_login" value="1" /><input type="submit" class="formbutton" value=<{$lang_login}>" /></td>
+      </tr>
+    </table>
+  	<input type="hidden" name="page_type" value="user" />
+  	<input type="hidden" name="page_type" value="user" />
+  	<input type="hidden" name="act" value="dologin" />
+  </form>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<h4><{$lang_login}></h4>
+<div style="text-align: left;"><{$smarty.const._US_LOGINNOTICE}></div><br />
+<form id="userlogin" action="<{$zarilia_url}>" method="post">
+  <table width="100%" border="0" cellspacing="1" cellpadding="2" summary="">
+    <tr>
+      <td colspan="2"><b><{$smarty.const._US_LOGINUSINGDETAILS}></b></td>
+    </tr>
+    <tr>
+      <td width="30%"><b><{$smarty.const._USERNAME}></b></td>
+      <td><input type="text" style='vertical-align: middle;' name="login" size="21" maxlength="25" value="<{$usercookie}>" /></td>
+    </tr>
+    <tr>
+      <td><b><{$smarty.const._PASSWORD}></b></td>
+      <td><input type="password" style='vertical-align: middle;' name="pass" size="21" maxlength="32" /></td>
+    </tr>
+    <{if $showimage}>
+	<tr>
+      <td><b><{$smarty.const._MB_SYSTEM_LOGINCHECK}></b></td>
+      <td>
+	  	<input type="text" style='vertical-align: middle;' name="verification" size="5" maxlength="32" />&nbsp;<{$verification_image}>
+	  	<input type="hidden" name="verification_ver" value="<{$verification_ver}>" />
+	  </td>
+    </tr>
+    <{/if}>
+	<tr>
+      <td>&nbsp;</td>
+      <td>
+	   <input type="checkbox" style=' vertical-align: middle;' name="rememberme" value="1"/> <{$smarty.const._US_REMEBERME}> <br />
+	   <input type="checkbox" style=' vertical-align: middle;' name="loginanon" value="1"/> <{$smarty.const._US_LOGINANON}> </td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td><input type="submit" class="formbutton" value="<{$smarty.const._LOGIN}>" /></td>
+    </tr>
+  </table>
+  <input type="hidden" name="page_type" value="user" />
+  <input type="hidden" name="act" value="dologin" />
+  <{if $redirect_page}>
+   <input type="hidden" name="zarilia_redirect" value="<{$redirect_page}>" />
+  <{/if}>
+</form>
+<div style="text-align: left;"><{$smarty.const._US_BROWSERCOOKIES}></div>
+
+<{if $allow_register }>
+	<h4><{$smarty.const._US_CREATEACCOUNT}></h4>
+	<div style="text-align: left;"><{$smarty.const._US_CREATEACCOUNTTEXT}></div><br />
+	<div style="text-align: left;"><{$smarty.const._US_CREATEACCOUNTSIGNUP}></div>
+<{/if}>

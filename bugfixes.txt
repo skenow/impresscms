@@ -1,0 +1,4 @@
+/*Bug fixes for this version*/
+
+Fixed Bug: Undefined index dirname, caused un installed addons not to show.
+Fixed blank pages on PHP info and System Info.

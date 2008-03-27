@@ -1,0 +1,50 @@
+<Limit GET POST>
+#The next line modified by DenyIP
+order allow,deny
+#The next line modified by DenyIP
+#deny from all
+allow from all
+</Limit>
+
+<Limit PUT DELETE>
+order deny,allow
+deny from all
+</Limit>
+
+<Files 403.shtml>
+order allow,deny
+allow from all
+</Files>
+
+#<set a custom error page>
+ErrorDocument 400 /index.php?page_type=page_error
+ErrorDocument 401 /index.php?page_type=page_error
+ErrorDocument 402 /index.php?page_type=page_error
+ErrorDocument 403 /index.php?page_type=page_error
+ErrorDocument 404 /index.php?page_type=page_error
+ErrorDocument 405 /index.php?page_type=page_error
+ErrorDocument 406 /index.php?page_type=page_error
+ErrorDocument 407 /index.php?page_type=page_error
+ErrorDocument 408 /index.php?page_type=page_error
+ErrorDocument 409 /index.php?page_type=page_error
+ErrorDocument 411 /index.php?page_type=page_error
+ErrorDocument 412 /index.php?page_type=page_error
+ErrorDocument 413 /index.php?page_type=page_error
+ErrorDocument 414 /index.php?page_type=page_error
+ErrorDocument 415 /index.php?page_type=page_error
+ErrorDocument 417 /index.php?page_type=page_error
+ErrorDocument 500 /index.php?page_type=page_error
+ErrorDocument 501 /index.php?page_type=page_error
+ErrorDocument 502 /index.php?page_type=page_error
+ErrorDocument 503 /index.php?page_type=page_error
+ErrorDocument 504 /index.php?page_type=page_error
+ErrorDocument 505 /index.php?page_type=page_error
+
+<FilesMatch "\.(gif|jpe?g|png|css|js|cgi)$">
+  ErrorDocument 404 default
+</FilesMatch>
+
+#<Set some php settings off>
+php_value session.auto_start              0
+php_value magic_quotes_gpc                on
+php_value register_globals                0

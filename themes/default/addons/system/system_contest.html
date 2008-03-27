@@ -1,0 +1,38 @@
+<table>
+ <tr>
+  <td colspan="2">
+   <div><{$contest_pulldown}></div>
+   <h2><i><{$contest_name}></i></h2>
+   <div valign="middle">
+		<a href="" target="_blank">
+	     <img src="<{$zarilia_url}>/<{$contest_main_image}>" width="300" height="250" align="right" style="border: 1px solid rgb(204, 102, 0); margin: 3px;" />
+	    </a>
+    <div><{$contest_text}></div>
+	<h4><{$smarty.const._CONTEST_RULES}></h4>
+    <div><{$contest_rules}></div>
+   </div>
+  </td>
+ </tr>
+ <tr>
+  <td colspan="2"><br /></td>
+ </tr>
+ <tr>
+  <{if $contest_box_image}>
+   <td>
+	 <div><img src="<{$zarilia_url}>/<{$contest_box_image}>" vspace="5" hspace="5" align="left" width="120" height="90" border="0" style="border: 1px solid rgb(204, 102, 0); margin: 3px;"/></div>
+   </td>
+  <{/if}>
+  <td>
+	<h4 style="margin-top: 0px;"><{$smarty.const._CONTEST_PRIZE}></h4>
+    <div><{$contest_prize}></div>
+  </td>
+ </tr>
+ <{if $contest_output}>
+  <tr>
+   <td colspan="2">
+	<h4><{$lang_output}></h4>
+	<div><{$contest_output}></div>
+   </td>
+  </tr>
+ <{/if}>
+</table><br /><br />

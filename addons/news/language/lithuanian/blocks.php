@@ -1,0 +1,41 @@
+<?php
+// $Id: blocks.php,v 1.16 2004/09/01 17:48:07 hthouzard Exp $
+define("_MB_NEWS_NOTYET","Šiandien dar nėra Didžiojo Straipsnio.");
+define("_MB_NEWS_TMRSI","Šiandien daugiausia skaitomas Straipsnis yra:");
+define("_MB_NEWS_ORDER","Rūšiuoti pagal");
+define("_MB_NEWS_DATE","Publikavimo data");
+define("_MB_NEWS_HITS","Kirčiu skaičius");
+define("_MB_NEWS_DISP","Rodyti");
+define("_MB_NEWS_ARTCLS","straipsnius");
+define("_MB_NEWS_CHARS","Pavadinimo ilgis");
+define("_MB_NEWS_LENGTH"," ženklų");
+define("_MB_TITLE", "Pavadinimas");
+define("_MB_POSTED", "Rašytas");
+define("_MB_POSTER", "Autorius");
+define("_MB_ACTION", "Veiksmas");
+define("_MB_TOPIC", "Tema");
+define("_MB_DELETE", "Trinti");
+define("_MB_NEWS_RESTRICTTOPICS", "Apriboti temas būti matomas pagal vartotoją?");
+define("_MB_NEWS_TEASER", "Rodyti anonso ilgumą (0 be anonso)");
+define("_MB_NEWS_SPOTLIGHT", "Įgalinti Dėmesio Centro galimybę");
+define("_MB_NEWS_FIRST", "--Pirmas elementas--");
+define("_MB_NEWS_IMAGE", "Dėmesio Centro paveikslas");
+define("_MB_SPOTLIGHT_TOPIC", "Pasirinkite naudojamą temą(as)");
+define("_MB_SPOTLIGHT_ALL_TOPICS", "Visas temas");
+define("_MB_NEWS_SPOTLIGHT_ARTICLE", "Pažymėkite straipsnį:");
+define("_MB_READMORE","Skaityti daugiau...");
+define("_MB_NEWS_RATE","Reitingas");
+define("_MB_NEWS_SHOW_NEWS_COUNT","Rodyti naujienų skaičių?");
+define("_MB_NEWS_SPOTLIGHT_TITLE", "Dėmesio Centras");
+define("_MB_NEWS_VIEW_TYPE1", "Klasikinis");
+define("_MB_NEWS_VIEW_TYPE2", "Kortelinis");
+define("_MB_NEWS_TAB_COLOR1", "Apibendrinamos eilutės spalva (ši eilutė yra truputi žemiau kortelės pavadinimo)");
+define("_MB_NEWS_TAB_COLOR2", "Kortelės turinio fono spalva");
+define("_MB_NEWS_TAB_COLOR3", "Dabartinės kortelės antraštės spalva");
+define("_MB_NEWS_TAB_COLOR4", "Nepasirinktos kortelės antraštės spalva");
+define("_MB_NEWS_TAB_COLOR5", "Antraštės sklandanti spalva");
+define("_MB_NEWS_WHAT_PUBLISH", "Ką norite publikuoti <br />dėmesio centre ?");
+define("_MB_NEWS_RECENT_NEWS", "Paskutinės naujienos (nenaudokite sąrašo esančio žemiau)");
+define("_MB_NEWS_RECENT_SPECIFIC", "Specifines naujienas (žiūrėkite žemiau)");
+define("_MB_NEWS_DEFAULT_COLORS", "Palikite zonas tuščias norint naudoti pirmenybines spalvas");
+?>

@@ -1,0 +1,11 @@
+You need to do some steps to run Zarilia on your server:
+ [x] create mysql db
+ [x] import content of file zarilia.sql.zip
+ [x] chmod -r ./data/
+ [x] change 'url' value in file siteinfo.default.php (here is default site url)
+ [x] modify in site.global.php 'db' array (change host, user, pass, name)
+ [x] open zarilia web site in browser
+ [x] login with user admin and password 123456
+ [x] modify in site.global.php passkey option value (type there any secret text)
+ [x] go to administration of web (in browser) 
+ [x] go to users administration and edit default user (if you don't wannt to edit type password and save)

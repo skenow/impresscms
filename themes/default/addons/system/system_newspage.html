@@ -1,0 +1,35 @@
+<{if $content_title}>
+ <h3><{$content_title}></h3>
+<{/if}>
+
+<{if $content_avatar}>
+	<{$content_avatar}>
+<{/if}>
+
+<{if $content_author}>
+ <div><{$smarty.const._CONTENT_AUTHOR}><{$content_author}></div>
+<{/if}>
+
+<{if $content_published}>
+ <div><{$smarty.const._CONTENT_PUBLISHED}><{$content_published}></div><br />
+<{/if}>
+
+<br clear="all" />
+
+
+<div align="right"><{$content_icons}></div>
+
+<{if $content_subtitle}>
+ <div><strong><{$content_subtitle}></strong></div><br />
+<{/if}>
+
+<{if $content_body}>
+ <{if $content_intro}>
+  <div><{$content_intro}></div><br />
+ <{/if}>
+ <div><{$content_body}></div>
+<{/if}>
+
+<{if $content_updated}>
+ <br /><div><i><{$smarty.const._CONTENT_UPDATED}><{$content_updated}></i></div><br />
+<{/if}>

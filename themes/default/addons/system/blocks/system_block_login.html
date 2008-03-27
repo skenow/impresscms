@@ -1,0 +1,24 @@
+<form style="margin: 0px;" action="<{$zarilia_url}>" method="post">
+    <{$block.lang_username}><br />
+    <input type="text" name="login" size="12" value="<{$block.unamevalue}>" maxlength="25" /><br />
+    <{$block.lang_password}><br />
+    <input type="password" name="pass" size="12" maxlength="32" /><br />
+    <{if $block.showimage }>
+	 <{$block.lang_verification}><br />
+	 <input type="text" name="verification" size="5" maxlength="5" />&nbsp;<{$block.verification_image}><br />
+     <input type="hidden" name="verification_ver" value="<{$block.verification_ver}>" />
+	<{/if}>
+	<input type="checkbox" name="rememberme" value="1" /><{$block.lang_rememberme}><br />
+	<input type="checkbox" name="logonanon" value="1" /><{$block.lang_logonanon}><br />
+  	<{if $zarilia_requesturi}>
+   		<input type="hidden" name="zarilia_redirect" value="<{$zarilia_requesturi}>" />
+  	<{/if}>
+  	<input type="hidden" name="page_type" value="user" />
+  	<input type="hidden" name="act" value="dologin" />
+    <input type="submit" class="formbutton" value="<{$block.lang_login}>" /><br />
+    <{$block.sslloginlink}>
+</form>
+<div style="text-align: right;"><a href="<{$zarilia_url}>/index.php?page_type=user&act=lostpass"><{$block.lang_lostpass}></a></div>
+<{if $block.allow_register }>
+	<div style="text-align: right;"><a href="<{$zarilia_url}>/index.php?page_type=register"><{$block.lang_registernow}></a></div>
+<{/if}>

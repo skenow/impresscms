@@ -1,0 +1,15 @@
+<!-- ADMIN NAVIGATION BAR START -->
+ <div id="navbar">
+  <ul style="visibility: hidden; display: none;">
+<{foreach item=menu from=$system_menu}>
+     <li><span>&nbsp;</span><a href="javascript:void(0)" target="_self"><{$menu.title}></a>
+      <ul>
+<{foreach item=item from=$menu.items}>
+         <li><{if strlen($item.url)>0}><span><{if strlen($item.image)>0}> <img src="<{$item.image}>" width="16" height="16" alt="" title=""/> <{else}> <{if strlen($item.class)>0}> <img src="<{$zarilia_theme_url}>/images/admin_menu/<{$item.class}>.png" width="16" height="16" alt="" title=""/> <{else}> <img src="<{$zarilia_theme_url}>/images/admin_menu/blank.gif" width="16" height="16"  alt="" title=""/> <{/if}> <{/if}> </span> <a href='<{$item.url}>' target="_self"><{$item.title}></a>  <{/if}></li>
+<{/foreach}>
+       </ul>
+    </li>
+<{/foreach}>
+   </ul>
+  <script type="text/javascript">cmDrawFromText('navbar', 'hbr', cmThemeOffice, 'ThemeOffice');</script>
+</div>

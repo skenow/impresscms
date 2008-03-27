@@ -1,0 +1,39 @@
+<script type="text/javascript" src="<{$zarilia_url}>/include/javascript/validation.js"></script>
+<script type="text/javascript" src="<{$zarilia_url}>/class/zariliaform/scripts/generate.js"></script>
+<script type="text/javascript" src="<{$zarilia_url}>/class/zariliaform/scripts/multilanguage.js"></script>
+
+<form style="margin: 0px; padding: 0px;" name="register" id="register" action="index.php" method="post" onSubmit="return <{$validate_form}>();">
+ <input type="hidden" name="page_type" value="register" />
+	<{if $hidden}>
+		<{foreach from=$hidden key="key" item="value"}>
+			<input type="hidden" name="<{$key}>" value="<{$value}>" />
+		<{/foreach}>
+	<{/if}>
+	<table width="100%" align="center" cellspacing="0" cellpadding="0">
+	  <tr>
+	    <td width='2%'>&nbsp;</td>
+	       <td colspan="3" align="left">
+			<h3><{$smarty.const._US_REG_FORM_HEADING}></h3>
+			<div class='register_login'><{$smarty.const._US_REGALREADYHAVE}> <a href="<{$zarilia_url}>/index.php?page_type=user" target="_blank"><{$smarty.const._US_REGSIGNIN}></a></div>
+			<table id="content">
+				<tr><td class='register_title'><{$title}></td></tr>
+			<{if $subtitle}>
+				<tr><td class='register_subtitle'><{$subtitle}></td></tr>
+			<{/if}>
+			 <tr><td class='register_subtitle'><{$content}></td></tr>
+				<table align="center" cellspacing="0" cellpadding="0" id="buttons">
+				  <tr>
+				    <td width='10%'>&nbsp;</td>
+				    <td width='25%' align='left' nowrap='nowrap'><{$b_back}></td>
+				    <td width='20%' align='center'><{$b_reload}> <{$b_restart}></td>
+				    <td width='25%' align='right' nowrap='nowrap'><{$b_next}></td>
+				    <td width='10%'>&nbsp;</td>
+				  </tr>
+				</table>
+			</table>
+		 </td>
+	    <td width='10%'><br /><{$stepbar}></td>
+		<td width='2%'>&nbsp;</td>
+	  </tr>
+	</table>
+</form>

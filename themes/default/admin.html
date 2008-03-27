@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC '//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<{$zarilia_langcode}>" lang="<{$zarilia_langcode}>">
+<head>
+<{$zarilia_header|trim}>
+</head>
+<body>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr class="menu">
+    <td> <{include file="$zarilia_theme/navigation/theme_adminnav.html" misc=$system_menu.misc users=$system_menu.users information=$system_menu.information blocks=$system_menu.blocks}> </td>
+    <td class="mcell"> <a href="<{$zarilia_url}>/addons/system/" title="<{$smarty.const._CP_AM_HOME}>"><img src='<{$zarilia_theme_url}>/images/admin_menu/configs.png' align='middle' height='16' width='16' alt='' /></a> <a href="<{$zarilia_url}>/" title="<{$smarty.const._CP_AM_HOME}>"><img src='<{$zarilia_theme_url}>/images/admin_menu/home.png' align='middle' height='16' width='16' alt='' /></a> <a href="<{$zarilia_url}>/index.php?page_type=user&amp;act=logout" title="<{$smarty.const._CP_AM_LOGOUT}>" target="_self"><img src='<{$zarilia_theme_url}>/images/admin_menu/exit.png' align='middle' height='16' width='16' alt='' /></a> </td>
+  </tr>
+</table>
+<table id='maintable' cellspacing='0' summary=''>
+  <tr>
+    <td id='sidebarleft'>&nbsp;</td>
+    <td id='sidetable'><div id="sidepanel">
+        <table id='console_info' class='navOpened' border='0' cellpadding='0' cellspacing='0' width='100%'>
+          <tr>
+            <td><img src='<{$zarilia_imageurl}>/blank.gif' align='middle' height='1' width='185' alt='' /></td>
+          </tr>
+          <tr onClick="cpShowHide('console_info');">
+            <td class='navTitle'><{$text_console_info}> </td>
+          </tr>
+          <tr>
+            <td class='navContent'><div class='tree'>
+                <table border='0' class='node' cellpadding='0' cellspacing='0' width='100%'>
+                  <tr>
+                    <td><{$text_welcome}> <strong> <{$user}></strong></td>
+                  </tr>
+                  <tr>
+                    <td> <{$text_loginip}><strong><{$loginip}></strong></td>
+                  </tr>
+                  <tr>
+                    <td><{$text_loginat}><strong><{$loginat}></strong></td>
+                  </tr>
+<{if $is_message}>
+                  <tr>
+                    <td><{$text_personalmessages}><a href='<{$zarilia_url}>/addons/message/'>( <b><{$personalmessages}></b> )</a></td>
+                  </tr>
+<{/if}>
+                </table>
+              </div></td>
+          </tr>
+        </table>
+<{foreach item=block from=$blocks_menu}>
+        <table id="block_<{$block.id}>" class="navOpened" border="0" cellpadding="0" cellspacing="0" width="100%">
+          <tr onClick="cpShowHide('block_<{$block.id}>');">
+            <td class='navTitle'><{$block.title}></td>
+          </tr>
+          <tr>
+            <td class='navContent'><div class="tree">
+                <table border="0" class="node"  cellpadding="0" cellspacing="0" width="100%">
+<{if is_array($block.items)>0}> <{foreach item=item from=$block.items}> <{if strlen($item.url)>0}>
+                  <tr>
+                    <td><img src='<{$zarilia_theme_url}>/images/admin_menu/admin_run.png' align='middle' height='16' width='16' alt='' />&nbsp;&nbsp;<a href="<{$item.url}>"><{$item.title}></a></td>
+                  </tr>
+<{else}>
+                  <tr>
+                    <td><hr></td>
+                  </tr>
+<{/if}> <{/foreach}> <{else}>
+                  <tr>
+                    <td><{$block.items}></td>
+                  </tr>
+<{/if}>
+                </table></div></td>
+          </tr>
+        </table>
+<{/foreach}></div>
+    <script type="text/javascript">cpDoShow();</script> </td>
+    <td id='sidebarright' onClick="cpShowHide('sidepanel');cpIMGOpenClose('limage','sidepanel','<{$zarilia_theme_url}>/images/admin/arrow-left.gif','<{$zarilia_theme_url}>/images/admin/arrow-right.gif');"><img style="padding-left: 2px; padding-right: 1px" id="limage" src="<{$zarilia_theme_url}>/images/admin/arrow-right.gif" alt="" title=""/></td>
+    <td id='content' width='100%'><br /><{control name="block" 3="stats"}>
+<{$zarilia_contents}><br /> </td>
+  </tr>
+</table>
+<div id="navbarfooter" style="text-align: center; padding: 5px;">Zarilia</div>
+</body></html>

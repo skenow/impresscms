@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC '//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<{$zarilia_langcode}>" lang="<{$zarilia_langcode}>">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=<{$zarilia_charset}>" />
+<meta http-equiv="content-language" content="<{$zarilia_langcode}>" />
+<title><{$zarilia_sitename}> <{$smarty.const._MA_AD_MEDIA_MANAGER}></title>
+<{$zarilia_header}>
+<{$zarilia_addon_header}>
+<{$media_form.javascript}>
+
+</head><body onload="window.resizeTo(<{$xsize}>, <{$ysize}>);">
+<br /><br />
+<table cellspacing="0" cellpadding="2" width="90%" id="medianav" align="center" class="outer">
+  <tr class="even">
+    <td align="left"><b><{$smarty.const._MA_AD_MEDIA_MANAGER}></b> : <{$smarty.const._MA_AD_MEDIA_UPLOAD}></td>
+  </tr>
+</table><br />
+
+<form name="<{$media_form.name}>" id="<{$media_form.name}>" action="<{$media_form.op}>" method="<{$media_form.method}>" <{$media_form.extra}>>
+<table id="mediamain" width = "90%" align="center" class="outer">
+  <tr align="left">
+    <th colspan="2"><{$smarty.const._MA_AD_MEDIA_CREATE}></th>
+  </tr>
+  <!-- start of form elements loop -->
+<{foreach item=element from=$media_form.elements}>
+	<{if $element.hidden != true}>
+	  <tr valign="top">
+	    <td class="head"><{$element.caption}></td>
+	    <td class="even"><{$element.body}></td>
+	  </tr>
+	<{else}>
+		<{$element.body}>
+	<{/if}>
+<{/foreach}>
+  <!-- end of form elements loop -->
+  <tr>
+    <td colspan="2" class="foot" align="center">&nbsp;</td>
+  </tr>
+</table>
+</form>
+
+<div style="padding-top: 6px; padding-bottom: 6px; padding-right: 6px; text-align: center; ">
+	<input value="<{$smarty.const._CLOSE}>" type="button" class="formbutton" onclick="javascript:window.close();" />
+</div>
+</body>
+</html>

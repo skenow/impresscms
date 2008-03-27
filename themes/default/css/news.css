@@ -1,0 +1,33 @@
+div.header{ text-align: left;  color: #92BC38;  border-bottom: 1px dashed;  font-weight: bold;  font-size: 16px;  margin-bottom: 12px;      }
+div.latest{
+	color: #92BC38;
+	margin-bottom: 12px;
+	font-weight: bold;
+	font-size: 16px;
+	margin-top: 12px;
+}
+div.nav{
+	margin-top: 12px;
+	text-align: right;
+	margin-right: 10px;
+}
+.morelink {
+	font-weight: normal;
+	color: #4E6119;
+}
+
+#news{
+	width: 100%;
+}
+#news .newstitle {
+	font-weight: normal;
+	font-size: 14px;
+	padding-bottom: 4px;
+}
+
+#news .newstitle a {
+	font-weight: normal;
+	font-size: 14px;
+	color: Black;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+}

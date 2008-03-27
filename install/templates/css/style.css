@@ -1,0 +1,140 @@
+/* form and table elements*/
+img { border: 0;  vertical-align: middle;  }
+#zariliaHiddenText {visibility: hidden; color: #000000; font-weight: normal; font-style: normal; text-decoration: none;}
+
+body { color: black; margin: 0; padding: 0; font: 11px Tahoma; background: #f2f2f3 url(../../img/b_bg.gif) repeat-x }
+form { margin: 0px 0px 0px 0px; }
+h1 { }
+h2 { color: #92BC38;  font-weight: bold;  font-size: 14px;   }
+h3 { }
+h4 { }
+h5 { }
+th { color: #666666; padding: 2px; vertical-align: middle; font-family: Verdana, Arial, Helvetica, sans-serif }
+
+input { font-size: 10px; color: #000000; border: 1px solid #000000; margin-bottom: 4px; vertical-align: middle; background: #CCCCCC; padding: 2px }
+input:hover { background: #E1EFD0; Cursor: pointer; }
+input.formButton {   color: #3B3F3F;  font-family: Arial, Hevlvetica, sans-serif;  text-align: center;  font-size: 11px;  font-weight: bold;  border: 1px solid #92BC38;  width: auto;  padding: 0px 5px;  height: 26px !important;  height: 24px;  margin: 1px;  vertical-align: middle; }
+input.formCheckbox {  margin: 0px; vertical-align: middle; }
+
+li { margin-left: 2px; list-style: square inside; color: #92BC38 }
+ul { margin: 2px; padding: 2px; list-style: decimal inside; text-align: left }
+ul.circle { list-style-type: disc; margin: 0px }
+/*end elements*/
+
+a { color: #666666; text-decoration: none; font-weight: bold; background: transparent }
+a:hover { color: #FF9900 }
+a:active { color: #FF9900 }
+
+table {}
+table td { padding: 0; border-width: 0; vertical-align: top;  }
+
+table#Header { width: 80%; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #CCCCCC; }
+.HeaderBannerLeft { background: url(../../img/headerbg.png) repeat-x; height:101px !important; height: 91px; padding-left: 20px;  padding-top: 10px;    }
+.HeaderBannerRight { background: url(../../img/headerbg.png) repeat-x; padding-left: 20px;  padding-top: 10px;    }
+.HeaderBottom{ background: Black url(../../img/headerbottom-bg.png);  height: 32px !important; height: 30px; border-bottom: 1px solid Black;  }
+
+table#MainBody { width: 80%; 	margin-bottom: 0px;	background: White; }
+table#MainFooter { width: 80%;  background: #3A3D3D url(../../img/footerbottom-bg.png) repeat-x;  height: 50px;  vertical-align: top;  color: White;    }
+
+/*Column*/
+td#leftcolumn { width: 200px; padding-top: 10px;  background: #92BC38;  vertical-align: top;   }
+td#leftcolumn a:hover { color: #F0E68C; }
+td#centercolumn { padding-right: 8px; padding-left: 8px; padding-top: 5px;  vertical-align: top;   }
+
+/*Blocks Left*/
+td#leftcolumn div.blockTitle { padding: 2px 3px 5px 5px; color: White; font-weight: bold; font-size: 14px; }
+td#leftcolumn div.blockContent { padding: 3px 5px 10px 5px; }
+
+/*Navigation*/
+.NavFooter { padding: 5px 5px; text-align: center;  vertical-align: middle;  }
+/*div*/
+div.Footer{ padding: 5px 0px 0px 0px; text-align: center; }
+div#content { text-align: left; padding: 8px 8px 8px 8px;}
+
+.install_logo {
+	background: url(../../img/install_logo.png) no-repeat 10px;
+	font-size: 16px;
+	font-weight: bold;
+	text-align: left;
+	color: #666666;
+	padding: 10px 0px 20px 80px;
+	white-space: nowrap;
+	position: relative;
+	float: left;
+}
+
+table {
+    border : 0;
+}
+
+.install_subtitle{
+	text-align: left;
+	padding: 10px 0px 10px 10px;
+	float: left;
+	}
+
+.install {
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 3em;
+	margin-bottom: 3em;
+	padding: 10px;
+	width: 750px;
+}
+
+.license {
+  padding: 0px 0px 0px 0px;
+  margin:  0px 0px 0px 0px;
+  width: 100%;
+  height: 400px;
+  overflow: auto;
+  text-align: justify;
+}
+.license li {
+	text-align: left;
+}
+
+.license pre {
+	text-align: left;
+	line-height: 1em;
+}
+
+h1 {
+	font-size: 15px;
+	font-weight: bold;
+ 	color: #92BC38;
+	padding: 2px 10px 2px 0px;
+ 	text-align: left;
+	border-bottom: 1px dashed #92BC38;
+	margin-bottom: 10px;
+}
+
+.install-form {
+	text-align: left;
+	width: 69%;
+}
+
+.install-text {
+	text-align: left;
+	width: 50%;
+	padding: 2px;
+}
+
+.form-block {
+	border: 1px dashed #92BC38;
+	background: #E1EFD0;
+	padding-top: 5px;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.head {
+	padding: 5px;
+	font-weight: bold;
+	color: #3B3F3F;
+	width: 60%;
+	}
+
+.even {
+	
+}

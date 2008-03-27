@@ -1,0 +1,42 @@
+<{if $section_title}>
+ <h3><{$section_title}></h3>
+<{/if}>
+
+<table width="100%" cellpadding="2" cellspacing="1" border="0" class="streamingpane">
+ <tr>
+  <td valign="top" class="streamingdescription">
+	<{if $section_image}>
+	 <{$section_image}>
+	<{/if}>
+	<{if $section_description}>
+	 	<{$section_description}>
+	<{/if}>
+  </td>
+ </tr>
+</table>
+
+<h3><{$smarty.const._CONTENT_STREAMS}></h3>
+<{foreach item=streaming from=$streaming}>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td height="20" colspan="2" class="sectiontableheader"><a href="javascript:openWithSelfMain('<{$zarilia_url}>/misc.php?op=showpopups&type=play&amp;id=<{$streaming.streaming_id}>','Play Media',420,350);" class="category"><{$streaming.streaming_title}></a></td>
+  </tr>
+  <tr class="sectiontableentry1">
+    <{if $streaming.streaming_image}>
+	  <td width="100" height="20" style="text-align: center;"><a href="javascript:openWithSelfMain('<{$zarilia_url}>/misc.php?op=showpopups&type=play&amp;id=<{$streaming.streaming_id}>','Play Media',420,350);" class="category"><{$streaming.streaming_image}></a></td>
+    <{/if}>
+	<td width="90%" height="20" valign="top">
+	 <{$smarty.const._CONTENT_POSTEDBY}><{$streaming.streaming_author}>&nbsp;<{$smarty.const._CONTENT_POSTEDON}><{$streaming.streaming_published}><br /><br /><{$streaming.streaming_intro}>
+	<div><{$streaming.streaming_description}></div>
+	</td>
+  </tr>
+</table>
+<div style='text-align: right;'>
+<a href="javascript:openWithSelfMain('<{$zarilia_url}>/misc.php?op=showpopups&type=play&amp;id=<{$streaming.streaming_id}>','Play Media',420,350);"><{$streaming.streaming_play}></a>
+<a href="<{$zarilia_url}>/download.php?page_type=stream&amp;id=<{$streaming.streaming_id}>" class="category"><{$streaming.streaming_download}></a>
+</div><br />
+<{/foreach}>
+
+<br /><div style="text-align: left;"><{$page_nav}></div>
+
+<{$page_backbutton}>

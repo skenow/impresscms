@@ -1,0 +1,25 @@
+<h2><{$smarty.const._US_LOSTPASSWORD}></h2>
+<div><{$smarty.const._US_NOPROBLEM}></div>
+<h3><{$smarty.const._US_PASSWORDRETRIEVAL}></h3>
+<div style="margin-left: 20px;"><{$smarty.const._US_NOPROBLEM}></div>
+
+<form style="margin: 0px; padding: 0px;" id="lostpass" action="index.php" method="post">
+ <input type="hidden" name="op" value="mailpasswd" />
+ <input type="hidden" name="page_type" value="user" />
+ <input type="hidden" name="act" value="lostconfirm" />
+  <table width="90%" border="0" cellspacing="1" cellpadding="2" summary="">
+    <tr>
+      <td style="text-align: right; padding-right: 5px;" width="30%"><b><{$smarty.const._US_YOUREMAIL}></b></td>
+      <td><input type="text" name="email" size="21" maxlength="32" /></td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td><input type="submit" class="formbutton" value="<{$smarty.const._US_SENDPASSWORD}>" />	</td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td><b><{$smarty.const._US_LOSTCLICK}></b></div></td>
+    </tr>
+  </table>
+
+</form>

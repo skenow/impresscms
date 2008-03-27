@@ -1,0 +1,26 @@
+<table width="100%" cellspacing="0">
+  <{if $block.showgroups == true}>
+  <!-- start group loop -->
+  <{foreach item=group from=$block.groups}>
+  <tr>
+    <th colspan="2"><{$group.name}></th>
+  </tr>
+  <!-- start group member loop -->
+  <{foreach item=user from=$group.users}>
+  <tr>
+    <td class="even" valign="middle" align="center">
+	 <{if $user.avatar != ""}>
+	  <img src="<{$user.avatar}>" alt="" width="32" /><br />
+	 <{/if}>
+	 <a href="<{$zarilia_url}>/userinfo.php?uid=<{$user.id}>"><{$user.name}></a>
+	</td>
+	<td class="odd" width="20%" align="right" valign="middle"><{$user.msglink}></td>
+  </tr>
+  <{/foreach}>
+  <!-- end group member loop -->
+  <{/foreach}>
+  <!-- end group loop -->
+  <{/if}>
+</table>
+<div class="footer" style="text-align: center;"><{$block.logourl}></div>
+<div class="footer" style="text-align: center;"><{$block.recommendlink}></div>

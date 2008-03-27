@@ -1,0 +1,22 @@
+<table width="100%" cellspacing="0">
+  <tr>
+    <td id="mainmenu">
+	  <!-- start mainmenu menu loop -->
+		<{foreach item=mainmenu from=$block.mainmenu}>
+			<{if  $mainmenu.link == 0 }>
+				<a class="<{$mainmenu.style}>" href="<{$mainmenu.directory}>" <{$mainmenu.target}>>
+			      <{if $mainmenu.image != '' }>
+				    <img src='<{$zarilia_uploads}>/<{$mainmenu.image}>' valign='middle' height='16' width='16' alt='<{$mainmenu.name}>' />&nbsp;
+				  <{/if}>
+				<{$mainmenu.name}></a>
+			<{else}>
+				<a class="<{$mainmenu.style}>" href="<{$mainmenu.directory}>" <{$mainmenu.target}>>
+			      <{if $mainmenu.image != '' }>
+				    <img src='<{$zarilia_uploads}>/<{$mainmenu.image}>' valign='middle' height='16' width='16' alt='<{$mainmenu.name}>' />&nbsp;
+				  <{/if}>
+				<{$mainmenu.name}></a>
+			<{/if}>
+		<{/foreach}>
+      <!-- end mainmenu loop --> </td>
+  </tr>
+</table>

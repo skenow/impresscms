@@ -1,0 +1,16 @@
+<?php
+/*define( '_CONTENT_AUTHOR', 'Autorius: ' );
+define( '_CONTENT_PUBLISHED', 'Publikuota: ' );
+define( '_CONTENT_UPDATED', 'Atnaujinta: ' );
+define( '_CONTENT_RENDERED', 'PDF sugeneruotas: ' );
+define( '_CONTENT_URL_TOITEM', 'Adresas: ' );
+define( '_PDF_NEW_PAGE', 'Naujas puslapis' );
+
+/*blogs*/
+/*define( '_CONTENT_LATESTBLOGS', 'Paskutiniai blogai' );
+define( '_CONTENT_STREAMS', 'Paskutiniai srautai' );
+define( '_CONTENT_POSTEDBY', 'Paskelbta ' );
+define( '_CONTENT_POSTEDON', ' ' );
+define( '_CONTENT_BACK', 'Atgal' );
+define( '_CONTENT_CONTINUE', 'Tėsti skaitymą ' );*/
+?>

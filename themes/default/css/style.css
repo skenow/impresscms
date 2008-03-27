@@ -1,0 +1,151 @@
+/* form and table elements*/
+img { border: 0;  vertical-align: middle;  }
+#zariliaHiddenText {visibility: hidden; color: #000000; font-weight: normal; font-style: normal; text-decoration: none;}
+
+body { color: black; margin: 0; padding: 0; font: 11px Tahoma; background: #f2f2f3 url(../images/b_bg.gif) repeat-x }
+form { margin: 0px 0px 0px 0px; }
+h1 { }
+h2 { }
+h3 { }
+h4 { }
+h5 { }
+th { color: #666666; padding: 2px; vertical-align: middle; font-family: Verdana, Arial, Helvetica, sans-serif }
+
+input { font-size: 10px; color: #000000; border: 1px solid #000000; margin-bottom: 4px; vertical-align: middle; background: #CCCCCC; padding: 2px }
+input:hover { background: #999999; Cursor: pointer; }
+input.formButton {   color: Black;  font-family: Arial, Hevlvetica, sans-serif;  text-align: center;  font-size: 11px;  font-weight: bold;  border: 1px solid #cccccc;  width: auto;  padding: 0px 5px;  height: 26px !important;  height: 24px;  margin: 1px;  vertical-align: middle; }
+input.formCheckbox {  margin: 0px; vertical-align: middle; }
+
+li { margin-left: 2px; list-style: square inside; color: #92BC38 }
+ul { margin: 2px; padding: 2px; list-style: decimal inside; text-align: left }
+ul.circle { list-style-type: disc; margin: 0px }
+/*end elements*/
+
+a { color: #666666; text-decoration: none; font-weight: bold; background: transparent }
+a:hover { color: #FF9900 }
+a:active { color: #FF9900 }
+
+table {}
+table td { padding: 0; border-width: 0; vertical-align: top;  }
+
+table#Header { width: 80%; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #CCCCCC; }
+.HeaderBannerLeft { background: url(../images/headerbg.png) repeat-x; height:101px !important; height: 91px; padding-left: 20px;  padding-top: 10px;    }
+.HeaderBannerRight { background: url(../images/headerbg.png) repeat-x; padding-left: 20px;  padding-top: 10px;    }
+.HeaderNav{ background: #006400 url(../images/navigation_bg.png);  height: 32px !important; height: 28px;  border-bottom: 1px solid Black;  }
+.HeaderBottom{ background: Black url(../images/headerbottom-bg.png);  height: 32px !important; height: 30px; border-bottom: 1px solid Black;  }
+
+.leftside{ background: White url(../images/leftside.png) repeat-y right;  width: auto;  }
+.rightside{     }
+
+table#MainBody { width: 80%; 	margin-bottom: 0px;	background: White; }
+table#MainFooter { width: 80%;  background: url(../images/footerbottom-bg.png) repeat-x;  height: 50px;  vertical-align: top;    }
+
+/*Column*/
+td#leftcolumn { width: 180px; padding-top: 10px;  background: #92BC38;  vertical-align: top;   }
+td#leftcolumn a:hover { color: #F0E68C; }
+
+td#leftcolumnfooter { width: 180px; background: #92BC38;  vertical-align: top;   }
+
+td#centercolumn { padding-right: 8px; padding-left: 8px; padding-top: 5px;  vertical-align: top;   }
+td#rightcolumn { width: 170px;  vertical-align: top;  }
+
+/*Blocks Left*/
+td#leftcolumn div.blockTitle { padding: 2px 3px 5px 5px; color: White; font-weight: bold; font-size: 14px; }
+td#leftcolumn div.blockContent { padding: 3px 5px 10px 5px; }
+
+/*blocks Right*/
+td#rightcolumn div.blockTitle { padding: 2px 3px 5px 5px; color: #92BC38; font-weight: bold; font-size: 14px; }
+td#rightcolumn div.blockContent { padding: 3px 5px 5px 5px; }
+
+/*Center Columns*/
+td#centerCcolumn { padding: 0px 3px 1px 3px }
+td#centerCcolumn div.blockContent, td#centerLcolumn div.blockContent, td#centerRcolumn div.blockContent { padding: 3px 5px 10px 5px; }
+
+td#centerCcolumn div.blockTitle { padding: 2px 3px 5px 5px; color: #92BC38; font-weight: bold; font-size: 14px;  border-bottom: 1px dashed #92BC38;  }
+td#centerLcolumn div.blockTitle, td#centerRcolumn div.blockTitle { padding: 2px 3px 5px 5px; color: #92BC38; font-weight: bold; font-size: 14px;    }
+
+/*Navigation*/
+.NavFooter { padding: 5px 5px;  text-align: center;  vertical-align: middle;  }
+/*div*/
+div.Footer{ padding: 5px 0px 0px 0px; text-align: center; }
+div#content { text-align: left; padding: 8px 8px 16px 8px;}
+
+/*nav Bar*/
+#navbar {background: transparent; padding-top: 2px; padding-bottom: 2px; padding-left: 5px;  padding: 5px;  }
+
+/** define news  **/
+.item { margin-bottom: 8px; }
+.itemAdminLink, .itemPermaLink { font-size: 10px }
+.itemBody { padding: 5px }
+.itemHead { padding: 10px 3px 3px; color: Black; }
+.itemBody { padding: 10px 3px 3px; color: Black; }
+.itemInfo, .itemFoot { text-align: right; padding: 3px }
+.itemStats, .itemPoster, .itemPostDate { font-size: 9px }
+.itemText { margin-top: 1px; margin-bottom: 1px }
+.itemText:first-letter { }
+.itemTitle a { font-size: 11px; font-weight: bold; color: Black }
+
+/* Redirect */
+.redirect_style1 { font-weight: bold; font-size: 12px; text-align: center }
+.redirect_style2 { font-size: 10px; text-align: center }
+.section .item { margin-bottom: 0px }
+.title_msg{ font-weight: bold; text-align: left }
+
+/*Main Menu*/
+td#mainmenu a, td#usermenu a { 	display: block; 	color: #666666; 	padding: 3px 5px; 	font-weight: bold; 	border-top: 1px solid #BADD68; 	border-right: 10px solid #3E4242; 	border-bottom: 1px solid #4E6119; 	border-left: 5px solid #3E4242; 	text-decoration: none;  }
+td#mainmenu a.highlight { 	display: block; 	color: White; 	padding: 3px 5px; 	font-weight: bold; 	border-top: 1px solid #BADD68; 	border-right: 10px solid #3E4242; 	border-bottom: 1px solid #4E6119; 	border-left: 5px solid #3E4242; 	text-decoration: none;  }
+td#mainmenu a.menuSub { padding-left: 9px }
+td#mainmenu a.menuTop, td#mainmenu a.menuMain { }
+td#mainmenu a:hover, td#usermenu a:hover { 	display: block; 	color: #F0E68C; 	padding: 3px 5px; 	font-weight: bold; 	border-top: 1px solid #4E6119; 	border-right: 10px solid #80A52D; 	border-bottom: 1px solid #BADD68; 	border-left: 5px solid #4E6119; 	text-decoration: none;  }
+td#usermenu a.highlight { }
+td#usermenu a.menuTop { }
+
+/*Comments*/
+.comDate { font-weight: normal; font-style: italic; font-size: smaller }
+.comDateCaption { font-weight: bold; font-style: normal }
+.comText { padding: 2px }
+.comTitle { font-weight: bold; margin-bottom: 2px }
+.comUserName { }
+.comUserRank, .comUserImg { margin: 2px }
+.comUserRankText { font-size: 10px; font-weight: bold }
+.comUserStat { font-size: 10px; color: #92BC38; font-weight: bold; border: 1px solid silver; margin: 2px; padding: 2px; background: #ffffff }
+.comUserStatCaption { font-weight: normal }
+.comUserStatus { margin-left: 2px; margin-top: 10px; color: #0053A6; font-weight: bold; font-size: 10px }
+#zariliaHiddenText {visibility: hidden; color: #000000; font-weight: normal; font-style: normal; text-decoration: none;}
+
+#stepbar { background-color: #F1F1F1;	width: 170px !important;	width: 170px;	font-size: 11px;	float: left;	text-align: left;}
+.step-on { color: #696969;	background: #DCDCDC;	font-weight: bold;	font-size: 11px;	padding: 5px;	border: 1px solid #cccccc;	margin-bottom: 2px;}
+.step-off { font-size: 11px;	color: #999999;	font-weight: bold;	padding: 5px;	border: 1px solid #cccccc;	margin-bottom: 2px;}
+
+table#content { width: 100%; margin-bottom: 5px; padding-top: 5px;    margin-right: 5px;       }
+.register_login{ text-align: right;	color: #696969;	font-weight: normal;	padding-top: 5px;	padding-bottom: 12px;	padding-right: 8px;}
+.register_title{ text-align: left;	color: #696969;	font-weight: bold;	font-size: 13px;	border-bottom: 1px dotted #708090;	}
+.register_subtitle{ text-align: left;	color: #696969;	padding-top: 6px; }
+.register_content{ text-align: right;	color: #696969;	font-weight: bold; }
+
+/* Redirect */
+.redirect_container{
+	padding: 10px; margin-left : auto; margin-right : auto; border: 1px dashed #006400; width: 60%;
+	background-color: #92BC38;
+}
+.box{
+	padding: 5px; margin-left : auto; margin-right : auto; width: 80%;
+	text-align: left;
+	}
+
+.redirect_style1 { font-weight: bold; font-size: 16px; text-align: center;  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;  color: White;   }
+.redirect_style2 { font-size: 12px; text-align: center }
+
+/*Buttons*/
+#buttonbars { float: left; width: 100%; line-height: normal; margin-bottom: 0px }
+/* End IE5-Mac hack */
+#buttonbars #current a { background: url(../images/admin/tab_left_active.png) no-repeat left top; border: 0 }
+#buttonbars #current a span { background: url(../images/admin/tab_right_active.png) no-repeat right top; padding-bottom: 4px }
+#buttonbars #current a:hover span, #buttonbars a:hover span { background: url(../images/admin/tab_right_hover.png) no-repeat right top }
+#buttonbars #current a:hover, #buttonbars a:hover { background: url(../images/admin/tab_left_hover.png) no-repeat left top }
+#buttonbars a { float: left; background: url(../images/admin/tab_left.png) no-repeat left top; margin: 0; padding: 0 0 0 9px; text-decoration: none }
+#buttonbars a span { float: left; display: block; background: url(../images/admin/tab_right.png) no-repeat right top; padding: 5px 15px 4px 6px; font-weight: normal; color: #765 }
+/* Commented Backslash Hack hides rule from IE5-Mac \*/
+#buttonbars a span { float: none }
+#buttonbars li { display: inline; margin: 0; padding: 0 }
+#buttonbars ul { margin: 0; margin-top: 0px; padding: 0px 0px 2px; list-style: none }

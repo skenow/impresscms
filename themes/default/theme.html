@@ -1,0 +1,119 @@
+<html>
+<head>
+<{$zarilia_header}>
+<link rel="stylesheet" type="text/css" href="<{$zarilia_theme_url}>/css/style.css" />
+</head>
+<body>
+<!-- START HEADER-->
+<table align="center" border="0" cellspacing="0" cellpadding="0" id="Header">
+  <tr>
+    <td class="HeaderBannerLeft"><img src="<{$zarilia_theme_image}>/logo.gif" alt="<{$zarilia_slogan}>" title="<{$zarilia_slogan}>" width="227" height="81" /></td>
+    <td class="HeaderBannerRight"></td>
+  </tr>
+  <tr>
+    <td colspan="2" class="HeaderNav"><div id="navbar">
+        <ul style="visibility: hidden; display: none;">
+<{foreach item=menu from=$system_menu}>
+          <li><span> </span> <{if $menu.url != '' }> <a href="<{$menu.url}>" target="_self"><{$menu.title}></a> <{else}> <a href="javascript:void(0)" target="_self"><{$menu.title}></a> <{/if}>
+            <ul>
+<{foreach item=item from=$menu.items}>
+              <li> <{if strlen($item.url)>0}> <span> <{if strlen($item.image)>0}> <img src="<{$item.image}>" width="16" height="16" alt="" title=""/> <{else}> <{if strlen($item.class)>0}> <img src="<{$zarilia_theme_url}>/images/admin_menu/<{$item.class}>.png" width="16" height="16" alt="" title=""/> <{else}> <{/if}> <{/if}> </span> <{if $item.title == 'hr'}> <span>
+                <hr />
+                </span> <{else}> <a href='<{$item.url}>' target="_self"><{$item.mid}><{$item.title}></a> <{/if}> <{/if}> </li>
+<{/foreach}>
+            </ul>
+          </li>
+<{/foreach}>
+        </ul>
+        <script type="text/javascript">cmDrawFromText('navbar', 'hbr', cmThemeOffice, 'ThemeOffice');</script>
+      </div></td>
+  </tr>
+  <tr>
+    <td colspan="2" class="HeaderBottom">&nbsp;</td>
+  </tr>
+</table>
+<table align="center" cellspacing="0" id="MainBody" >
+  <tr> <{if $zarilia_showlblock == 1}>
+    <td id="leftcolumn"> <!-- Start left blocks loop -->
+<{foreach item=block from=$zarilia_lblocks}>
+      <div class="blockTitle"><{$block.title}></div>
+      <div class="blockContent"><{$block.content}></div>
+<{/foreach}>
+      <!-- End left blocks loop --> </td>
+<{/if}>
+    <td id="centercolumn"><!-- Display center blocks if any -->
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td align="center"><{$zarilia_banner}></td>
+        </tr>
+      </table>
+<{if $zarilia_showcblock == 1}>
+      <table width="100%" cellspacing="0">
+        <tr>
+          <td id="centerCcolumn" colspan="2"> <!-- Start center-center blocks loop -->
+<{foreach item=block from=$zarilia_ccblocks}>
+            <div class="blockTitle"><{$block.title}></div>
+            <div class="blockContent"><{$block.content}></div>
+<{/foreach}>
+            <!-- End center-center blocks loop --> </td>
+        </tr>
+        <tr>
+          <td id="centerLcolumn"> <!-- Start center-left blocks loop -->
+<{foreach item=block from=$zarilia_clblocks}>
+            <div class="blockTitle"><{$block.title}></div>
+            <div class="blockContent"><{$block.content}></div>
+<{/foreach}>
+            <!-- End center-left blocks loop --> </td>
+          <td id="centerRcolumn"> <!-- Start center-right blocks loop -->
+<{foreach item=block from=$zarilia_crblocks}>
+            <div class="blockTitle"><{$block.title}></div>
+            <div class="blockContent"><{$block.content}></div>
+<{/foreach}>
+            <!-- End center-right blocks loop --> </td>
+        </tr>
+      </table>
+<{/if}>
+      <!-- End display center blocks -->
+      <div id="content"> <{$zarilia_contents}> </div>
+<{if $zarilia_showcblock == 1}>
+      <table width="100%" cellspacing="0">
+        <tr>
+          <td id="centerCcolumn" colspan="2"> <!-- Start center-center blocks loop -->
+<{foreach item=block from=$zarilia_ccblocks_down}>
+            <div class="blockTitle"><{$block.title}></div>
+            <div class="blockContent"><{$block.content}></div>
+<{/foreach}>
+            <!-- End center-center blocks loop --> </td>
+        </tr>
+        <tr>
+          <td id="centerLcolumn"> <!-- Start center-left blocks loop -->
+<{foreach item=block from=$zarilia_clblocks_down}>
+            <div class="blockTitle"><{$block.title}></div>
+            <div class="blockContent"><{$block.content}></div>
+<{/foreach}>
+            <!-- End center-left blocks loop --> </td>
+          <td id="centerRcolumn"> <!-- Start center-right blocks loop -->
+<{foreach item=block from=$zarilia_crblocks_down}>
+            <div class="blockTitle"><{$block.title}></div>
+            <div class="blockContent"><{$block.content}></div>
+<{/foreach}>
+            <!-- End center-right blocks loop --> </td>
+        </tr>
+      </table>
+<{/if}> </td>
+<{if $zarilia_showrblock == 1}>
+    <td id="rightcolumn"> <!-- Start right blocks loop -->
+<{foreach item=block from=$zarilia_rblocks}>
+      <div class="blockTitle"><{$block.title}></div>
+      <div class="blockContent"><{$block.content}></div>
+<{/foreach}>
+      <!-- End right blocks loop --> </td>
+<{/if}> </tr>
+</table>
+<table id="MainFooter" align="center">
+  <tr>
+    <td class="NavFooter"> <{foreach item=footermenu from=$system_footermenu}> <{if $footermenu.url != '' }> <span><a href="<{$footermenu.url}>" target="_self"><{$footermenu.title}></a>&nbsp;&nbsp;&nbsp;</span> <{/if}> <{/foreach}> </td>
+  </tr>
+</table>
+<div class="Footer"><{$zarilia_meta_footer}></div>
+</body></html>

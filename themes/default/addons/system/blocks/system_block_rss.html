@@ -1,0 +1,15 @@
+<table width="100%" class="outer"><tr><td>
+<{foreach item=feed from=$block.feeds}>
+ <table width="100%"><tr><td>
+	<a href="<{$feed.site_url}>" target="_blank"><{$feed.site_name}></a><br />
+	<{if $feed.image.url != ""}>
+	  <img src="<{$feed.image.url}>" width="<{$feed.image.width|default:88}>" height="<{$feed.image.height|default:31}>" alt="<{$feed.image.title}>" /><br />
+	<{/if}>
+	<{section name=i loop=$feed.items}>
+	  <{if $feed.items[i].title != ""}>
+	  <div><img src="<{$zarilia_url}>/images/icons/xml.gif" align="absmiddle" width="14" height="14" alt="" />&nbsp;<span style="text-indent: 20px;"><a href="<{$feed.items[i].link}>" target="_blank"><{$feed.items[i].title}></a></span></div>
+	  <{/if}>
+	<{/section}>
+ </td></tr></table><br />
+<{/foreach}>
+</td></tr></table>

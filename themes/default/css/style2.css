@@ -1,0 +1,264 @@
+img { border: 0;  vertical-align: middle;  }
+#zariliaHiddenText {visibility: hidden; color: #000000; font-weight: normal; font-style: normal; text-decoration: none;}
+
+.pagneutral {font-size: 10px; width: 16px; height: 19px;text-align: center; background-image: url(./images/pagneutral.gif);}
+.pagact {font-size: 10px; width: 16px; height: 19px;text-align: center; background-image: url(./images/pagact.gif);}
+.paginact {font-size: 10px; width: 16px; height: 19px;text-align: center; background-image: url(./images/paginact.gif);}
+
+a { color: #666666; text-decoration: none; font-weight: bold; background: transparent }
+a:hover { color: #FF9900 }
+a:active { color: #FF9900 }
+
+/*main body*/
+body { color: black; margin: 0; padding: 0; font: 11px Tahoma; background: #f2f2f3 url(../images/b_bg.gif) repeat-x }
+
+div#content { text-align: left; padding: 8px }
+div.confirmMsg { 
+	color: Navy; 
+	text-align: center; 
+	border-top: 1px solid #DDDDFF; 
+	border-left: 1px solid #DDDDFF; 
+	border-right: 1px solid #AAAAAA; 
+	border-bottom: 1px solid #AAAAAA; 
+	font-weight: bold; 
+	padding: 10px; 
+	background: #DDFFDF 
+}
+
+div.errorMsg { text-align: center; border-top: 1px solid #DDDDFF; border-left: 1px solid #DDDDFF; border-right: 1px solid #AAAAAA; border-bottom: 1px solid #AAAAAA; font-weight: bold; padding: 10px; background: #FFCCCC }
+div.resultMsg { color: #333333; text-align: center; border-top: 1px solid silver; border-left: 1px solid silver; font-weight: bold; border-right: 1px solid #666666; border-bottom: 1px solid #666666; padding: 10px; background: #CCCCCC }
+div.zariliaCode, div.zariliaQuote { background: #FFFFFF; border: 1px inset #000080; font-family: "Courier New",Courier,monospace; padding: 0px 6px 6px 6px }
+
+form {
+	margin: 0px 0px 0px 0px;
+}
+
+h1 { }
+h2 { }
+h3 { }
+h4 { }
+h5 { }
+
+img, .comUserRankImg { border: 0;  vertical-align: middle;   }
+input { font-size: 10px; color: #000000; border: 1px solid #000000; margin-bottom: 4px; vertical-align: middle; background: #CCCCCC; padding: 2px }
+input.formButton { 
+  color: #191970;
+  font-family: Arial, Hevlvetica, sans-serif;
+  text-align: center;
+  font-size: 11px;
+  font-weight: bold;
+  border: 1px solid #cccccc;
+  width: auto;
+  background: url(addons/system/images/button_bg.png) repeat-x;
+  padding: 0px 5px;
+  height: 26px !important;
+  height: 24px;
+  margin: 1px;
+  vertical-align: middle;
+}
+input.formCheckbox { 
+  margin: 0px;
+  vertical-align: middle;
+}
+
+input:hover { background: #999999 }
+li { margin-left: 2px; list-style: square inside; color: #0053A6 }
+
+/* Table defines for CSS style */
+table { font: 11px Tahoma }
+table td { padding: 0; border-width: 0; vertical-align: top; font: 11px Tahoma }
+table#Footer { width: 80%; border: 1px solid #999999; background: #eeeeee;  margin-bottom: 5px;  }
+table#Header { width: 80%; height: 126px; height: 130px !important; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #CCCCCC; background: url(../images/header_bg.gif) repeat-x }
+table#Main { width: 80%; border-right-width: 1px; border-left-width: 1px; border-right-style: solid; border-left-style: solid; border-right-color: #999999; border-left-color: #999999; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #999999; margin-bottom: 5px; background: #FFFFFF url(../images/hex_bg.gif) no-repeat left bottom }
+
+/*Center Columns*/
+td#centerCcolumn { padding: 0px 3px 1px 3px }
+td#centerCcolumn div.blockContent { padding: 3px; margin-right: 0px; margin-left: 0px; margin-bottom: 2px; background: url(../images/news_11.gif) repeat-x }
+td#centercolumn { padding-right: 8px; padding-left: 8px; padding-top: 5px; }
+
+td#centercolumn th { color: #666666; vertical-align: middle; border-bottom-width: 2px; border-bottom-style: solid }
+td#centerLcolumn div.blockContent { padding: 3px; margin-left: 3px; margin-right: 2px; margin-bottom: 2px; background: url(../images/news_11.gif) repeat-x }
+td#centerLcolumn, td#centerRcolumn { width: 30%; padding: 0px 0px 0px 0px }
+td#centerRcolumn div.blockContent { padding: 3px; margin-left: 2px; margin-right: 3px; margin-bottom: 2px; background: url(../images/news_11.gif) repeat-x }
+td#centerRcolumn div.blockTitle, td#centerCcolumn div.blockTitle, td#centerLcolumn div.blockTitle { padding: 10px 3px 3px; color: #000066; font-weight: bold }
+
+/*left Columns*/
+td#leftcolumn { width: 180px; padding-top: 10px;  background: #92BC38;  }
+td#leftcolumn div.blockTitle { padding: 8px 3px 5px 10px; color: #004089; font-weight: bold; font-size: 11px; }
+td#leftcolumn div.blockContent { padding: 3px; }
+
+td#leftcolumn th, td#rightcolumn th { color: #FFFFFF; vertical-align: middle; background: #0053A6 }
+/*/*login Boxes on Menu*/
+td#loginboxes { color: #272727; width: 40%; text-align: left; vertical-align: middle; padding-left: 5px; font-weight: bold; font-size: 90%; white-space: nowrap; padding: 0% 0% 0% 0% }
+/*Menu item Columns*/
+td#mainmenu a, td#usermenu a { display: block; color: #666666; font-size: 11px; padding: 3px 5px; font-weight: normal; border-top: 1px solid #E4EAEF; border-right: 10px solid #6995d6; border-bottom: 1px solid #CFD3D8; border-left: 5px solid #c7d3de; text-decoration: none; background: #FFFFFF url(../images/main_menu_bg.gif) repeat-y right }
+td#mainmenu a.highlight { display: block; color: #666666; font-size: 11px; padding: 3px 5px; font-weight: normal; border-top: 1px solid #E4EAEF; border-right: 10px solid #6995d6; border-bottom: 1px solid #CFD3D8; border-left: 5px solid #c7d3de; text-decoration: none; background: #FFFFFF url(../images/main_menu_bgmessage.gif) repeat-y right }
+td#mainmenu a.menuSub { padding-left: 9px }
+td#mainmenu a.menuTop, td#mainmenu a.menuMain { }
+td#mainmenu a:hover, td#usermenu a:hover { display: block; color: #FF6600; font-size: 11px; padding: 3px 5px; font-weight: normal; border-top: 1px solid #E4EAEF; border-right: 10px solid #EB7907; border-bottom: 1px solid #CFD3D8; border-left: 5px solid #c7d3de; text-decoration: none; background: #FFFFFF url(../images/main_menu_bghover.gif) repeat-y right }
+
+/*right Coluymns*/
+td#rightcolumn { width: 170px }
+td#rightcolumn div.blockContent { padding: 3px; border: 1px dotted #1D3C83; margin-bottom: 15px; margin-right: 10px }
+td#rightcolumn div.blockTitle { padding: 3px; color: #333333; font-weight: bold }
+
+td#search { width: 95%; text-align: right; vertical-align: middle; padding-right: 10px }
+
+td#usermenu a.highlight { color: #FFFFFF; background: #5F9FE0 }
+td#usermenu a.menuTop { }
+
+th { color: #666666; padding: 2px; vertical-align: middle; font-family: Verdana, Arial, Helvetica, sans-serif }
+ul { margin: 2px; padding: 2px; list-style: decimal inside; text-align: left }
+ul.circle { list-style-type: disc; margin: 0px }
+/**/
+.comDate { font-weight: normal; font-style: italic; font-size: smaller }
+.comDateCaption { font-weight: bold; font-style: normal }
+.comText { padding: 2px }
+.comTitle { font-weight: bold; margin-bottom: 2px }
+.comUserName { }
+.comUserRank, .comUserImg { margin: 2px }
+.comUserRankText { font-size: 10px; font-weight: bold }
+.comUserStat { font-size: 10px; color: #0053A6; font-weight: bold; border: 1px solid silver; margin: 2px; padding: 2px; background: #ffffff }
+.comUserStatCaption { font-weight: normal }
+.comUserStatus { margin-left: 2px; margin-top: 10px; color: #0053A6; font-weight: bold; font-size: 10px }
+
+/**/
+.even, tr.even td { padding: 2px; background: #FFFFFF url(../images/even.gif) repeat-y left }
+.foot { padding: 2px; font-weight: bold; text-align: center; border-top: 2px solid }
+.footer { padding: 1px 3px; text-align: center; font-weight: normal; color: #666666; text-decoration: none; font-size: 10px }
+.footer a { text-decoration: none; font-weight: normal; color: #999999 }
+.footer a:hover { color: #CCCCCC }
+.head { 
+	padding: 2px; 
+	font-weight: bold; 
+	background: #FFFFFF url(../images/head.gif) repeat-y left;
+	}
+
+.HeadbgL { background: #88C116 url(../images/headerbg.png) repeat-x;  padding-left: 20px;  padding-top: 10px;    }
+.HeadbgR { background: #88C116 url(../images/header_bg.png) repeat-x; }
+.html .NavMenu td { position: relative /* ie 5.0 fix */ }
+
+/** define news  **/
+.item { margin-bottom: 8px; background: url(../images/news_11.gif) repeat-x }
+.itemAdminLink, .itemPermaLink { font-size: 10px }
+.itemBody { padding: 5px }
+.itemHead { padding: 10px 3px 3px; color: #000066 }
+.itemInfo, .itemFoot { text-align: right; padding: 3px }
+.itemStats, .itemPoster, .itemPostDate { font-size: 9px }
+.itemText { margin-top: 1px; margin-bottom: 1px }
+.itemText:first-letter { }
+.itemTitle a { font-size: 11px; font-weight: bold; color: #000066 }
+
+/**/
+.MenuBotC{ background: #006400 url(../images/navigation_bg.png);  height: 30px;  border-bottom: 1px solid Black;  }
+
+#navbar {background: Red; border-bottom: padding-top: 2px;padding-bottom: 2px;padding-left: 5px;cursor: default;}*/
+.NavMenu {font-family: Verdana,Tahoma,Georgia,sans-serif;-moz-user-select: none;  color: Aqua; }
+.NavMenu .button,
+.NavMenu .button:hover,
+.NavMenu .button-active,
+.NavMenu .button-active:hover {line-height: normal;padding: 3px 6px 3px 6px;border: 1px solid #ECE9D8;color: #676767;text-decoration: none;font-family: Tahoma,Georgia,sans-serif;font-size: 11px;font-weight: bold;cursor: default;white-space: nowrap;display: block;position: relative;}
+.NavMenu .button:hover { background-color: #EE82EE; }
+.NavMenu .button-active,
+.NavMenu .button-active:hover {border-color: #ACA899 #ffffff #ffffff #ACA899;color: #F08080;}
+.NavMenu .item,
+.NavMenu .item:hover,
+.NavMenu .item-active,
+.NavMenu .item-active:hover {background-color: #ffffff;font-family: Tahoma,Georgia,sans-serif;font-size: 11px;line-height: normal;padding: 3px 16px 4px 10px;color: #676767;border: 0px solid transparent;text-decoration: none;font-weight: bold;cursor: default;white-space: nowrap;display: block;position: relative;}
+.NavMenu .item:hover,
+.NavMenu .item-active,
+.NavMenu .item-active:hover {background-color: #efefef;color: #272727;border: 0px solid #316AC5;}
+.NavMenu .section {background-color: #ffffff;position: absolute;visibility: hidden;z-index: -1;}
+.NavMenu .arrow {position: absolute;top: 7px;right: 8px;border: 0;}
+.NavMenu hr{height: 1px;width: 90%;border: 0px none;color: #24237f;background-color: #24237f;}
+html .NavMenu td { position: relative;}  ie 5.0 fix */
+
+/* ...Nav bar end */
+/* Odd and eveb tables*/
+.odd, tr.odd td { padding: 2px; background: #FFFFFF url(../images/odd.gif) repeat-y left }
+/** borde de even odd**/
+.outer { }
+.outers { border: 1px solid #8B4513 }
+/* Redirect */
+.redirect_style1 { font-weight: bold; font-size: 12px; text-align: center }
+.redirect_style2 { font-size: 10px; text-align: center }
+.section .item { margin-bottom: 0px }
+.title_msg{ font-weight: bold; text-align: left }
+
+/*Buttons*/
+#buttonbars { float: left; width: 100%; line-height: normal; margin-bottom: 0px }
+/* End IE5-Mac hack */
+#buttonbars #current a { background: url(../images/admin/tab_left_active.png) no-repeat left top; border: 0 }
+#buttonbars #current a span { background: url(../images/admin/tab_right_active.png) no-repeat right top; padding-bottom: 4px }
+#buttonbars #current a:hover span, #buttonbars a:hover span { background: url(../images/admin/tab_right_hover.png) no-repeat right top }
+#buttonbars #current a:hover, #buttonbars a:hover { background: url(../images/admin/tab_left_hover.png) no-repeat left top }
+#buttonbars a { float: left; background: url(../images/admin/tab_left.png) no-repeat left top; margin: 0; padding: 0 0 0 9px; text-decoration: none }
+#buttonbars a span { float: left; display: block; background: url(../images/admin/tab_right.png) no-repeat right top; padding: 5px 15px 4px 6px; font-weight: normal; color: #765 }
+/* Commented Backslash Hack hides rule from IE5-Mac \*/
+#buttonbars a span { float: none }
+#buttonbars li { display: inline; margin: 0; padding: 0 }
+#buttonbars ul { margin: 0; margin-top: 0px; padding: 0px 0px 2px; list-style: none }
+/* Nav bar start...*/
+#navbar { background: transparent; padding-top: 0px; padding-bottom: 0px; padding-left: 0px; cursor: default;  }
+
+table#profileheading { width: 100%}
+
+/*Register information*/
+
+#stepbar {
+	background-color: #F1F1F1;
+	width: 170px !important;
+	width: 170px;
+	font-size: 11px;
+	float: left;
+	text-align: left;
+}
+
+.step-on {
+	color: #696969;
+	background: #DCDCDC;
+	font-weight: bold;
+	font-size: 11px;
+	padding: 5px;
+	border: 1px solid #cccccc;
+	margin-bottom: 2px;
+}
+
+.step-off {
+  font-size: 11px;
+	color: #999999;
+	font-weight: bold;
+	padding: 5px;
+	border: 1px solid #cccccc;
+	margin-bottom: 2px;
+}
+table#content { width: 100%;   border-right-style: solid; border-left-style: solid; border-right-color: #999999; border-left-color: #999999;  border-bottom-style: solid; border-bottom-color: #999999; margin-bottom: 5px;  border: 1px solid #cccccc;  margin-top: 0px;  padding: 10px;  padding-top: 5px;  margin-left: 10px;  margin-right: 10px;       }
+
+.register_login{
+	text-align: right;
+	color: #696969;
+	font-weight: normal;
+	padding-top: 5px;
+	padding-bottom: 12px;
+	padding-right: 8px;
+}
+
+.register_title{
+	text-align: left;
+	color: #696969;
+	font-weight: bold;
+	font-size: 13px;
+	border-bottom: 1px dotted #708090;
+	}
+
+.register_subtitle{
+	text-align: left;
+	color: #696969;
+	padding-top: 6px;
+}
+
+.register_content{
+	text-align: right;
+	color: #696969;
+	font-weight: bold;
+}

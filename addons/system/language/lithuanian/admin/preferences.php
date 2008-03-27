@@ -1,0 +1,330 @@
+<?php
+// $Id: preferences.php,v 1.3 2007/04/12 14:15:09 catzwolf Exp $
+// %%%%%%	Admin Addons Name  AdminGroup 	%%%%%
+// dont change
+define( '_MD_AM_SITEPREF', 'Site Preferences' );
+define( '_MD_AM_SITEPREFDSC', '' );
+define( '_MD_AM_SITENAME', 'Site name' );
+define( '_MD_AM_SITENAMEDSC', '' );
+define( '_MD_AM_TIME', 'Global Timestamp' );
+define( '_MD_AM_TIMEDESC', '' );
+define( '_MD_AM_SLOGAN', 'Slogan for your site' );
+define( '_MD_AM_SLOGANDSC', '' );
+define( '_MD_AM_ADMINML', 'Admin Mail Address' );
+define( '_MD_AM_ADMINMLDSC', '' );
+define( '_MD_AM_LANGUAGE', 'Default language' );
+define( '_MD_AM_LANGUAGEDSC', '' );
+define( '_MD_AM_STARTPAGE', 'Addons for your start page' );
+define( '_MD_AM_STARTPAGEDSC', '' );
+define( '_MD_AM_NONE', 'None' );
+define( '_MD_AM_NONEDSC', '' );
+define( '_MD_AM_SERVERTZ', 'Server timezone' );
+define( '_MD_AM_SERVERTZDSC', '' );
+define( '_MD_AM_DEFAULTTZ', 'Default timezone' );
+define( '_MD_AM_DEFAULTTZDSC', '' );
+define( '_MD_AM_DTHEME', 'Default theme' );
+define( '_MD_AM_DTHEMEDSC', '' );
+define( '_MD_AM_THEMESET', 'Theme Set' );
+define( '_MD_AM_THEMESETDSC', '' );
+define( '_MD_AM_ANONNAME', 'Username for anonymous users' );
+define( '_MD_AM_ANONNAMEDSC', '' );
+define( '_MD_AM_MINPASS', 'Minimum length of password required' );
+define( '_MD_AM_MINPASSDSC', '' );
+define( '_MD_AM_NEWUNOTIFY', 'Email Notification:' );
+define( '_MD_AM_NEWUNOTIFYDSC', 'Notify by email when new user has registered' );
+define( '_MD_AM_SELFDELETE', 'Account Deletion:' );
+define( '_MD_AM_SELFDELETEDSC', 'Allow users to delete their own account?' );
+define( '_MD_AM_USER_RESTRICT', 'Register Restriction:' );
+define( '_MD_AM_USER_RESTRICTDSC', 'User will be restricted to register by IP, multi account under the same IP address is not permitted.' );
+define( '_MD_AM_USER_LRESTRICT', 'Login Restriction:' );
+define( '_MD_AM_USER_LRESTRICTDSC', 'User will be restricted to login by IP, multi login sessions under the same IP address is not permitted.' );
+define( '_MD_AM_PM_REG', 'PM On Registration:' );
+define( '_MD_AM_PM_REGDSC', 'Send new user Private message on regisration?' );
+/*
+define( '_MD_AM_PM_REG_MES', 'PM Registration Message:' );
+define( '_MD_AM_PM_REG_MESDSC', 'Enter Private message text.' );
+*/
+define( '_MD_AM_USEGZIP', 'Use gzip compression?' );
+define( '_MD_AM_USEGZIPDSC', '' );
+
+define( '_MD_AM_UNAMELVL', 'Select the level of strictness for username filtering' );
+define( '_MD_AM_UNAMELVLDSC', '' );
+define( '_MD_AM_STRICT', 'Strict (only alphabets and numbers)' );
+define( '_MD_AM_MEDIUM', 'Medium' );
+define( '_MD_AM_LIGHT', 'Light (recommended for multi-byte chars)' );
+define( '_MD_AM_USERCOOKIE', 'Name for user cookies.' );
+define( '_MD_AM_USERCOOKIEDSC', 'This cookie contains only a user name and is saved in a user pc for a year (if the user wishes). If a user have this cookie, username will be automatically inserted in the login box.' );
+define( '_MD_AM_USEMYSESS', 'Use custom session' );
+define( '_MD_AM_USEMYSESSDSC', 'Select yes to customise session related values.' );
+define( '_MD_AM_SESSNAME', 'Session name' );
+define( '_MD_AM_SESSNAMEDSC', 'The name of session (Valid only when \'use custom session\' is enabled)' );
+define( '_MD_AM_SESSEXPIRE', 'Session expiration' );
+define( '_MD_AM_SESSEXPIREDSC', 'Maximum duration of session idle time in minutes (Valid only when \'use custom session\' is enabled. Works only when you are using PHP4.2.0 or later.)' );
+define( '_MD_AM_BANNERS', 'Activate banner ads?' );
+define( '_MD_AM_MYIP', 'Your IP address' );
+define( '_MD_AM_MYIPDSC', 'This IP will not counted as impression for banners' );
+define( '_MD_AM_ALWDHTML', 'HTML tags allowed in all posts.' );
+define( '_MD_AM_INVLDMINPASS', 'Invalid value for minimum length of password.' );
+define( '_MD_AM_INVLDUCOOK', 'Invalid value for usercookie name.' );
+define( '_MD_AM_INVLDSCOOK', 'Invalid value for sessioncookie name.' );
+define( '_MD_AM_INVLDSEXP', 'Invalid value for session expiration time.' );
+define( '_MD_AM_ADMNOTSET', 'Admin mail is not set.' );
+define( '_MD_AM_DONTCHNG', 'Don\'t change!' );
+define( '_MD_AM_REMEMBER', 'Remember to chmod 666 this file in order to let the system write to it properly.' );
+define( '_MD_AM_IFUCANT', 'If you can\'t change the permissions you can edit the rest of this file by hand.' );
+define( '_MD_AM_COMMODE', 'Default Comment Display Mode' );
+define( '_MD_AM_COMMODEDSC', '' );
+define( '_MD_AM_COMORDER', 'Default Comments Display Order' );
+define( '_MD_AM_COMORDERDSC', '' );
+define( '_MD_AM_ALLOWHTML', 'Allow HTML tags in user comments?' );
+
+define( '_MD_AM_AVATARALLOW', 'Allow custom avatar upload?' );
+define( '_MD_AM_AVATARALWDSC', '' );
+define( '_MD_AM_AVATARMP', 'Minimum posts required' );
+define( '_MD_AM_AVATARMPDSC', 'Enter the minimum number of posts required to upload a custom avatar' );
+define( '_MD_AM_AVATARW', 'Avatar image max width (pixel)' );
+define( '_MD_AM_AVATARWDSC', '' );
+define( '_MD_AM_AVATARH', 'Avatar image max height (pixel)' );
+define( '_MD_AM_AVATARHDSC', '' );
+define( '_MD_AM_AVATARMAX', 'Avatar image max filesize (byte)' );
+define( '_MD_AM_AVATARMAXDSC', '' );
+define( '_MD_AM_AVATARCONF', 'Custom avatar settings' );
+define( '_MD_AM_CHNGUTHEME', 'Change all user\'s theme' );
+define( '_MD_AM_NOTIFYTO', 'Select group to which new user notification mail will be sent' );
+define( '_MD_AM_NOTIFYTODSC', '' );
+define( '_MD_AM_ALLOWTHEME', 'Allow users to select theme?' );
+define( '_MD_AM_ALLOWIMAGE', 'Allow users to display image files in posts?' );
+define( '_MD_AM_USERACTV', 'Requires activation by user (recommended)' );
+define( '_MD_AM_AUTOACTV', 'Activate automatically' );
+define( '_MD_AM_ADMINACTV', 'Activation by administrators' );
+define( '_MD_AM_ACTVTYPE', 'Select activation type of newly registered users' );
+define( '_MD_AM_ACTVTYPEDSC', '' );
+define( '_MD_AM_ACTVGROUP', 'Select group to which activation mail will be sent' );
+define( '_MD_AM_ACTVGROUPDSC', '' );
+define( '_MD_AM_USESSL', 'Use SSL for login?' );
+define( '_MD_AM_USESSLDSC', '' );
+define( '_MD_AM_SSLPOST', 'SSL Post variable name' );
+define( '_MD_AM_SSLPOSTDSC', 'The name of variable used to transfer session value via POST. If you are unsure, set any name that is hard to guess.' );
+
+define( '_MD_AM_DEBUGMODE', 'Information/Debug Level:' );
+define( '_MD_AM_DEBUGMODEDSC', 'Displays Information regarding your website. Can help in the aid of fixing (debugging) errors on your website' );
+define( '_MD_AM_DEBUGMODEOK', 'Information/Debug Groups' );
+define( '_MD_AM_DEBUGMODEOKDSC', 'Debug Groups Options. Select groups that can see debugging output.' );
+define( '_MD_AM_DEBUGLEVEL', 'Set PHP Error Level:' );
+define( '_MD_AM_DEBUGLEVELDSC', 'Sets the error level type from PHP. Use inconjunction with \'Display PHP Errors\'. Best to leave as default ' );
+
+define( '_MD_AM_DEBUGMODE0', 'Display No Information' );
+define( '_MD_AM_DEBUGMODE1', 'Display PHP Errors' );
+define( '_MD_AM_DEBUGMODE2', 'Display MySQL Queries' );
+define( '_MD_AM_DEBUGMODE3', 'Display Block Information' );
+define( '_MD_AM_DEBUGMODE4', 'Display Template Information' );
+define( '_MD_AM_DEBUGMODE5', 'Display Timers/Extra Information' );
+define( '_MD_AM_DEBUGMODE6', 'Display Page Generated' );
+define( '_MD_AM_MINUNAME', 'Minimum length of username required' );
+define( '_MD_AM_MINUNAMEDSC', '' );
+define( '_MD_AM_MAXUNAME', 'Maximum length of username' );
+define( '_MD_AM_MAXUNAMEDSC', '' );
+define( '_MD_AM_ALLWCHGMAIL', 'Allow users to change email address?' );
+define( '_MD_AM_ALLWCHGMAILDSC', '' );
+define( '_MD_AM_IPBAN', 'IP Banning' );
+define( '_MD_AM_BADEMAILS', 'Enter emails that should not be used in user profile' );
+define( '_MD_AM_BADEMAILSDSC', 'Separate each with a <b>|</b>, case insensitive, regex enabled.' );
+define( '_MD_AM_BADUNAMES', 'Enter names that should not be selected as username' );
+define( '_MD_AM_BADUNAMESDSC', 'Separate each with a <b>|</b>, case insensitive, regex enabled.' );
+define( '_MD_AM_DOBADIPS', 'Enable IP bans?' );
+define( '_MD_AM_DOBADIPSDSC', 'Users from specified IP addresses will not be able to view your site' );
+define( '_MD_AM_BADIPS', 'Enter IP addresses that should be banned from the site.<br />Separate each with a <b>|</b>, case insensitive, regex enabled.' );
+define( '_MD_AM_BADIPSDSC', '^aaa.bbb.ccc will disallow visitors with an IP that starts with aaa.bbb.ccc<br />aaa.bbb.ccc$ will disallow visitors with an IP that ends with aaa.bbb.ccc<br />aaa.bbb.ccc will disallow visitors with an IP that contains aaa.bbb.ccc' );
+define( '_MD_AM_PREFMAIN', 'Preferences Main' );
+define( '_MD_AM_METAKEY', 'Meta Keywords' );
+define( '_MD_AM_METAKEYDSC', 'The keywords meta tag is a series of keywords that represents the content of your site. Type in keywords with each separated by a comma or a space in between. (Ex. ZARILIA, PHP, mySQL, portal system)' );
+define( '_MD_AM_METARATING', 'Meta Rating' );
+define( '_MD_AM_METARATINGDSC', 'The rating meta tag defines your site age and content rating' );
+define( '_MD_AM_METAOGEN', 'General' );
+define( '_MD_AM_METAO14YRS', '14 years' );
+define( '_MD_AM_METAOREST', 'Restricted' );
+define( '_MD_AM_METAOMAT', 'Mature' );
+define( '_MD_AM_METAROBOTS', 'Meta Robots' );
+define( '_MD_AM_METAROBOTSDSC', 'The Robots Tag declares to search engines what content to index and spider' );
+define( '_MD_AM_INDEXFOLLOW', 'Index, Follow' );
+define( '_MD_AM_NOINDEXFOLLOW', 'No Index, Follow' );
+define( '_MD_AM_INDEXNOFOLLOW', 'Index, No Follow' );
+define( '_MD_AM_NOINDEXNOFOLLOW', 'No Index, No Follow' );
+define( '_MD_AM_METAAUTHOR', 'Meta Author' );
+define( '_MD_AM_METAAUTHORDSC', 'The author meta tag defines the name of the author of the document being read. Supported data formats include the name, email address of the webmaster, company name or URL.' );
+define( '_MD_AM_METACOPYR', 'Meta Copyright' );
+define( '_MD_AM_METACOPYRDSC', 'The copyright meta tag defines any copyright statements you wish to disclose about your web page documents.' );
+define( '_MD_AM_METADESC', 'Meta Description' );
+define( '_MD_AM_METADESCDSC', 'The description meta tag is a general description of what is contained in your web page' );
+define( '_MD_AM_FOOTER', 'Footer' );
+define( '_MD_AM_FOOTERDSC', 'Be sure to type links in full path starting from http://, otherwise the links will not work correctly in addons pages.' );
+define( '_MD_AM_DOCENSOR', 'Enable censoring of unwanted words?' );
+define( '_MD_AM_DOCENSORDSC', 'Words will be censored if this option is enabled. This option may be turned off for enhanced site speed.' );
+define( '_MD_AM_CENSORWRD', 'Words to censor' );
+define( '_MD_AM_CENSORWRDDSC', 'Enter words that should be censored in user posts.<br />Separate each with a <b>|</b>, case insensitive.' );
+define( '_MD_AM_CENSORRPLC', 'Bad words will be replaced with:' );
+define( '_MD_AM_CENSORRPLCDSC', 'Censored words will be replaced with the characters entered in this textbox' );
+define( '_MD_AM_DOSEARCH', 'Enable global searches?' );
+define( '_MD_AM_DOSEARCHDSC', 'Allow searching for posts/items within your site.' );
+define( '_MD_AM_MINSEARCH', 'Minimum keyword length' );
+define( '_MD_AM_MINSEARCHDSC', 'Enter the minimum keyword length that users are required to enter to perform search' );
+define( '_MD_AM_MODCONFIG', 'Addons Config Options' );
+define( '_MD_AM_DSPDSCLMR', 'Display disclaimer?' );
+define( '_MD_AM_DSPDSCLMRDSC', 'Select yes to display disclaimer in registration page' );
+define( '_MD_AM_REGDSCLMR', 'Registration disclaimer' );
+define( '_MD_AM_REGDSCLMRDSC', 'Enter text to be displayed as registration disclaimer' );
+define( '_MD_AM_ALLOWREG', 'Allow new user registration?' );
+define( '_MD_AM_ALLOWREGDSC', 'Select yes to accept new user registration' );
+define( '_MD_AM_THEMEFILE', 'Update addon template .html files from themes/your theme/templates directory?' );
+define( '_MD_AM_THEMEFILEDSC', 'If this option is enabled, addon template .html files will be updated automatically if there are newer files under the themes/your theme/templates directory for the current theme. This should be turned off once the site goes public.' );
+define( '_MD_AM_CLOSESITE', 'Turn your site off?' );
+define( '_MD_AM_CLOSESITEDSC', 'Select yes to turn your site off so that only users in selected groups have access to the site. ' );
+define( '_MD_AM_CLOSESITEOK', 'Select groups that are allowed to access while the site is turned off.' );
+define( '_MD_AM_CLOSESITEOKDSC', 'Users in the default webmasters group are always granted access.' );
+define( '_MD_AM_CLOSESITETXT', 'Reason for turning off the site' );
+define( '_MD_AM_CLOSESITETXTDSC', 'The text that is presented when the site is closed.' );
+define( '_MD_AM_SITECACHE', 'Site-wide Cache' );
+define( '_MD_AM_SITECACHEDSC', 'Caches whole contents of the site for a specified amount of time to enhance performance. Setting site-wide cache will override addon-level cache, block-level cache, and addon item level cache if any.' );
+define( '_MD_AM_MODCACHE', 'Addons-wide Cache' );
+define( '_MD_AM_MODCACHEDSC', 'Caches addon contents for a specified amount of time to enhance performance. Setting addon-wide cache will override addon item level cache if any.' );
+define( '_MD_AM_NOADDON', 'There is no addon that can be cached.' );
+define( '_MD_AM_DTPLSET', 'Default template set' );
+define( '_MD_AM_DTPLSETDSC', '' );
+define( '_MD_AM_SSLLINK', 'URL where SSL login page is located' );
+define( '_MD_AM_SSLLINKDSC', '' );
+//define( '_MD_AM_AJAXENABLED', 'Enabled AJAX support?' );
+//define( '_MD_AM_AJAXENABLEDDSC', 'Check this if you want that to use AJAX in your website.' );
+define( '_MD_AM_QUICKREDIRECT', 'Enabled Quick Direct?' );
+define( '_MD_AM_QUICKREDIRECTDSC', 'Select this option to remove the direct page from your website.' );
+//define( '_MD_AM_SHORTURL', 'Enabled Short Urls?' );
+//define( '_MD_AM_SHORTURLDSC', 'Enable Short URL hack on website? This will shorten the URL to a more search engine friendly one. <br />WARNING: This will increase CPU on server.' );
+define( '_MD_AM_IMGVER', 'Use Image Verification?' );
+define( '_MD_AM_IMGVER_DSC', 'Use Image verification on user registration.' );
+define( '_MD_AM_GATHERSTATS', 'Gather Stats?' );
+define( '_MD_AM_GATHERSTATS_DSC', 'Gather User information. Warning: This will create more queries on the mysql server.' );
+define( '_MD_AM_CHARSET', 'Default Character Encoding:' );
+define( '_MD_AM_CHARSETDSC', '' );
+define( '_MD_AM_MULTIBYTE', 'Default Multibyte:' );
+define( '_MD_AM_MULTIBYTEDSC', '' );
+define( '_MD_AM_MLEDITSTYLE', 'Langauge Edit Method?' );
+define( '_MD_AM_MLEDITSTYLEDSC', '' );
+
+define( '_MD_AM_SHOWIMAGEVER', 'Show Login Verification' );
+define( '_MD_AM_SHOWIMAGEVERDSC', 'Shows image verification on login block and user page' );
+
+// added for mailer
+define( '_MD_AM_MAILER_MAIL', '' );
+define( '_MD_AM_MAILER_SENDMAIL', '' );
+define( '_MD_AM_MAILER_', '' );
+define( '_MD_AM_MAILFROM', 'FROM address' );
+define( '_MD_AM_MAILFROMDESC', '' );
+define( '_MD_AM_MAILFROMNAME', 'FROM name' );
+define( '_MD_AM_MAILFROMNAMEDESC', '' );
+
+// RMV-NOTIFY
+define( '_MD_AM_MAILFROMUID', 'FROM user' );
+define( '_MD_AM_MAILFROMUIDDESC', 'When the system sends a private message, which user should appear to have sent it?' );
+define( '_MD_AM_MAILERMETHOD', 'Mail delivery method' );
+define( '_MD_AM_MAILERMETHODDESC', 'Method used to deliver mail. Default is \'mail\', use others only if that makes trouble.' );
+define( '_MD_AM_SMTPHOST', 'SMTP host(s)' );
+define( '_MD_AM_SMTPHOSTDESC', 'List of SMTP servers to try to connect to.' );
+define( '_MD_AM_SMTPUSER', 'SMTPAuth username' );
+define( '_MD_AM_SMTPUSERDESC', 'Username to connect to an SMTP host with SMTPAuth.' );
+define( '_MD_AM_SMTPPASS', 'SMTPAuth password' );
+define( '_MD_AM_SMTPPASSDESC', 'Password to connect to an SMTP host with SMTPAuth.' );
+define( '_MD_AM_SENDMAILPATH', 'Path to sendmail' );
+define( '_MD_AM_SENDMAILPATHDESC', 'Path to the sendmail program (or substitute) on the webserver.' );
+define( '_MD_AM_THEMEOK', 'Selectable themes' );
+define( '_MD_AM_THEMEOKDSC', 'Choose themes that users can select as the default theme' );
+define( '_MD_AM_INSTALLED', 'Installed' );
+define( '_MD_AM_UNACTIVE', 'Unactive' );
+
+define( '_MD_AM_COPPAAGE', 'Minimum Age' );
+define( '_MD_AM_COPPAAGE_DSC', 'Minimum age a user must be before they can register.' );
+define( '_MD_AM_COPPA_REGISTER', 'Register Form:' );
+define( '_MD_AM_COPPA_REGISTER_DSC', 'Display Coppa form at register process?' );
+define( '_MD_AM_COPPA_EMAIL', 'Coppa Email:' );
+define( '_MD_AM_COPPA_EMAIL_DSC', 'Email address to use for coppa?' );
+define( '_MD_AM_COPPA_FAX', 'Coppa Fax Number:' );
+define( '_MD_AM_COPPA_FAX_DSC', "The Children's Online Privacy and Protection Act of 1998 ('COPPA') defines a 'Child' as anyone under the age of 13. Our website strictly adheres to COPPA. This site is not intended for children. We will not register or otherwise collect Personal Information from persons who identify themselves as being under the age of 13 during the registration process without the prior verifiable consent of that person''s parent or guardian.\r\n\r\nThe safety and privacy of Children on the Internet is very important to us. We are committed to comply with the requirements of the Children''s Online Privacy Protection Act of 1998 (COPPA). For more information about COPPA, please visit the Federal Trade Commission''s website.\r\n\r\nOur website is a General Audience website. We want to help you guard your Child''s privacy. We want to be sure that no individual under the age of 13 shares information without parental consent. We will not permit registration of anyone who identifies him/herself to be under 13 years of age (a 'Child') without verifiable consent from that Child's parent/guardian." );
+define( '_MD_AM_COPPA_TEXT', 'Coppa Text:' );
+define( '_MD_AM_COPPA_TEXT_DSC', '' );
+define( '_MD_AM_COPPA_DIRECTTEXT', 'Coppa Error Text:' );
+define( '_MD_AM_COPPA_DIRECTTEXT_DSC', '' );
+// Users
+define( '_MD_AM_', '' );
+define( '_MD_AM_TOTAL', 'Total' );
+define( '_MD_AM_VEIWING', 'Viewing' );
+define( '_MD_AM_UID', 'UID' );
+define( '_MD_AM_UNAME', 'Username' );
+define( '_MD_AM_USER_REGDATE', 'Registered' );
+/*
+* Media
+*/
+define( '_MD_AM_IMGPREFIX', 'Image Prefix' );
+define( '_MD_AM_IMGPREFIX_DSC', '' );
+/*
+*
+*/
+define( "_MD_AM_EVENTSSYSTEM", "Events system" );
+define( '_MD_AM_EVENTSSYSTEMDISABLED', '(disabled)' );
+define( '_MD_AM_EVENTSSYSTEMINTERNAL', 'Internal' );
+define( '_MD_AM_EVENTSSYSTEMAT', 'At (only Windows 2000 or newer)' );
+define( '_MD_AM_EVENTSSYSTEMCRONTAB', 'CronTab (only *nix)' );
+define( '_MD_AM_EVENTSENABLE', 'Enabled?');
+define( '_MD_AM_EVENTSSYSTEM_DESC', 'Select used events system for performing tasks.' );
+define( "_MD_AM_EVENTSINTERVAL", "Specify interval for checking for new events" );
+define( "_MD_AM_EVENTSINTERVAL_DESC", "Specify interval for automatically checking for events. This value doesn't matters if you are specified '"._MD_AM_EVENTSSYSTEMDISABLED."' or '"._MD_AM_EVENTSSYSTEMINTERNAL."' events system." );
+define( '_MD_AM_EVENTSHELPER', 'Helper application' );
+define( '_MD_AM_EVENTSHELPER_DESC', 'Select application needed to view/execute php files.' );
+// Authentication constants
+define( "_MD_AM_AUTHMETHOD", "Authentication Method" );
+define( "_MD_AM_AUTHMETHODDESC", "Which authentication method would you like to use for signing on users." );
+define( "_MD_AM_LDAP_MAIL_ATTR", "LDAP - Mail Field Name" );
+define( "_MD_AM_LDAP_MAIL_ATTR_DESC", "The name of the E-Mail field in your LDAP directory tree." );
+define( "_MD_AM_LDAP_NAME_ATTR", "LDAP - Common Name Field Name" );
+define( "_MD_AM_LDAP_NAME_ATTR_DESC", "The name of the Comman Name field in your LDAP directory." );
+define( "_MD_AM_LDAP_SURNAME_ATTR", "LDAP - Surname Fiend Name" );
+define( "_MD_AM_LDAP_SURNAME_ATTR_DESC", "The name of the Surname field in your LDAP directory." );
+define( "_MD_AM_LDAP_GIVENNAME_ATTR", "LDAP - Given Name Field Name" );
+define( "_MD_AM_LDAP_GIVENNAME_ATTR_DSC", "The name of the Given Name field in your LDAP directory." );
+define( "_MD_AM_LDAP_UID_ATTR", "LDAP - UID Field Name" );
+define( "_MD_AM_LDAP_UID_ATTR_DESC", "The name of the User ID field in your LDAP directory." );
+define( "_MD_AM_LDAP_BASE_DN", "LDAP - Base DN" );
+define( "_MD_AM_LDAP_BASE_DN_DESC", "The base DN (Distinguished Name) of your LDAP directory tree." );
+define( "_MD_AM_LDAP_PORT", "LDAP - Port Number" );
+define( "_MD_AM_LDAP_PORT_DESC", "The port number needed to access your LDAP directory server." );
+define( "_MD_AM_LDAP_SERVER", "LDAP - Server Name" );
+define( "_MD_AM_LDAP_SERVER_DESC", "The name of your LDAP directory server." );
+define( "_MD_AM_LDAP_UID_ASDN", "UID as DN" );
+define( "_MD_AM_LDAP_UID_ASDN_DESC", "The uid attribute is used as DN" );
+define( "_MD_AM_LDAP_MANAGER_DN", "DN of the LDAP manager" );
+define( "_MD_AM_LDAP_MANAGER_DN_DESC", "The DN of the user allow to make search (eg manager)" );
+define( "_MD_AM_LDAP_MANAGER_PASS", "Password of the LDAP manager" );
+define( "_MD_AM_LDAP_MANAGER_PASS_DESC", "The password of the user allow to make search" );
+define( "_MD_AM_LDAP_VERSION", "LDAP Version protocol" );
+define( "_MD_AM_LDAP_VERSION_DESC", "The LDAP Version protocol : 2 or 3" );
+
+/*
+* Editor choices
+*/
+define( "_MD_AM_AEDITOR", "Admin Editor:" );
+define( "_MD_AM_AEDITORDSC", "Administrator Default editor." );
+define( "_MD_AM_UEDITOR", "User Editor:" );
+define( "_MD_AM_UEDITORDSC", "User Default editor." );
+define( "_MD_AM_UCHOICE", "User Editor Choice" );
+define( "_MD_AM_UCHOICEDSC", "Select Editors that user will be able to select as their default editor." );
+define( "_MD_AM_DEFAULTROWS", "Number Rows:" );
+define( "_MD_AM_DEFAULTROWSDSC", "" );
+define( "_MD_AM_DEFAULTCOLS", "Number Columns:" );
+define( "_MD_AM_DEFAULTCOLSDSC", "" );
+define( "_MD_AM_DEFAULTWIDTH", "Default editor width:" );
+define( "_MD_AM_DEFAULTWIDTHDSC", "" );
+define( "_MD_AM_DEFAULTHEIGHT", "Default editor height:" );
+define( "_MD_AM_DEFAULTHEIGHTDSC", "" );
+
+
+define( "_MD_AM_ALLOWPM" , "Allow PM?");
+define( "_MD_AM_MESSAGE_GROUP" , "Message group");
+
+?>
