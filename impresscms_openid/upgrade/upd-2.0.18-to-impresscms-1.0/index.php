@@ -12,26 +12,26 @@ class upgrade_impcms05 {
 		$this->blocks_engine_upgrade();
 		$this->apply_new_blocks();
 		$this->apply_templates();
-		return ($this->cleaning_write_folders());
+		return ($this->cleaning_templates_c());
 	}
-	function cleaning_write_folders() {
-		$dir = array();
-		$dir['templates_c'] = XOOPS_ROOT_PATH."/templates_c/";
-		$dir['cache'] = XOOPS_ROOT_PATH."/cache/";
-
-		foreach ($dir as $d)
-		{
-			$dd = opendir($d);
-			while($file = readdir($dd))
-			{
-		 		if(is_file($d.$file) && ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess'))
-				{
-		  			unlink($d.$file);
-				}
-			}
-			closedir($dd);
+	function cleaning_templates_c() {
+		$dir = opendir(XOOPS_ROOT_PATH."/templates_c/");
+		while($file = readdir($dir)){
+		 if(is_file(XOOPS_ROOT_PATH."/templates_c/".$file) && $file != 'index.html') {
+		  unlink(XOOPS_ROOT_PATH."/templates_c/".$file);
+		 }
 		}
-			return true;
+		closedir($dir);
+		
+		//also emptying cahce folder
+		$dir = opendir(XOOPS_ROOT_PATH."/cache/");
+		while($file = readdir($dir)){
+		 if(is_file(XOOPS_ROOT_PATH."/cache/".$file) && $file != 'index.html') {
+		  unlink(XOOPS_ROOT_PATH."/cache/".$file);
+		 }
+		}
+		closedir($dir);		
+		return true;
 	}
 	function apply_conf_configcategory() {
 		$db = $GLOBALS['xoopsDB'];
@@ -119,7 +119,7 @@ class upgrade_impcms05 {
 	 * Verify that a mysql table exists
 	 *
 	 * @package News
-	 * @author Hervï¿½ Thouzard (www.herve-thouzard.com)
+	 * @author Hervé Thouzard (www.herve-thouzard.com)
 	 * @copyright (c) The Xoops Project - www.xoops.org
 	*/
 	function table_exists($tablename) {

@@ -3,6 +3,9 @@ define('ICMS_INCLUDE_OPENID', true);
 $xoopsOption['pagetype'] = 'user';
 include_once("mainfile.php");
 
+/**
+ * Registering a new user with his openid
+ */
 if (isset($_POST['openid_register'])) {
 	$response=@$_SESSION['openid_response'];
 	//icms_debug_vardump($_SESSION); exit;
