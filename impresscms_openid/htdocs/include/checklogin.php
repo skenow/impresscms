@@ -112,7 +112,7 @@ if (false != $user) {
         }
     }
     $user->setVar('last_login', time());
-    if (!$member_handler->insertUser($user)) {
+    if (!$member_handler->insertUser($user, true)) {
     }
     // Regenrate a new session id and destroy old session
     session_regenerate_id(true);
