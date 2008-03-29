@@ -34,8 +34,6 @@
  **/
 include "mainfile.php";
 
-icms_debug_vardump($xoopsConfig);
-
 //check if start page is defined
 if ( isset($xoopsConfig['startpage']) && $xoopsConfig['startpage'] != "" && $xoopsConfig['startpage'] != "--" ) {
 	header('Location: '.XOOPS_URL.'/modules/'.$xoopsConfig['startpage'].'/');
