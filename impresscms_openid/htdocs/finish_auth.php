@@ -3,6 +3,8 @@ define('ICMS_INCLUDE_OPENID', true);
 $xoopsOption['pagetype'] = 'user';
 include_once("mainfile.php");
 
+$redirect_url = $_SESSION['frompage'];
+
 /**
  * Registering a new user with his openid
  */
@@ -235,7 +237,7 @@ if (isset($_POST['openid_register'])) {
 			unset($_SESSION['openid_response']);
 			unset($_SESSION['openid_sreg']);
 			print_r($_SESSION['openid_response']);
-	    header("Location: " . $_SESSION['frompage']);
+	    header("Location: " . $redirect_url);
 	    unset($_SESSION['frompage']);
 		}
 	} else { // Username Collided.
@@ -250,6 +252,9 @@ if (isset($_POST['openid_register'])) {
 		include_once(XOOPS_ROOT_PATH.'/footer.php');
 	}
 } elseif(isset($_POST['openid_link'])) {
+	/**
+	 * Linking an existing user with this openid
+	 */
 	$response=$_SESSION['openid_response'];
 	if (@$response->status != Auth_OpenID_SUCCESS) {
 		redirect_header(XOOPS_URL . '/user.php', 3, _US_OPENID_NOPERM);
@@ -257,60 +262,46 @@ if (isset($_POST['openid_register'])) {
 	
 	include_once(XOOPS_ROOT_PATH.'/header.php');
 	
-	$uname4sql = quote_smart($uname);
-	$pass4sql = quote_smart($pass);
-			
-	$query='SELECT `uid`, `uname`, `pass` from ' . $xoopsDB->prefix('users') . 
-		" WHERE `uname`='" . $uname . "'";
-	$res=$xoopsDB->query($query,1);
-	//echo "<pre>\n";
-	$err .= $xoopsDB->error();
-	$xusers=$xoopsDB->fetchArray($res);
-	//print_r($xusers);
-	$xuser=$xusers; unset($xusers);
-	//echo "</pre>";
-	if($xuser['pass'] != md5($pass)){
-		$err .= 'username or password invalid.';
-		$xoopsOption['template_main'] = 'openid_new_user.html';
-		include_once(XOOPS_ROOT_PATH.'/footer.php');
-		exit;
-	} else if ($response->status == Auth_OpenID_SUCCESS) {
-		//$msg = 'Auth_OpenID_SUCCESS';
-		//echo "uname/password OK. Auth_OpenID_SUCCESS";
-	    // This means the authentication succeeded.
-	    $displayId = $response->getDisplayIdentifier();
-	    $cid = $response->identity_url;
+	$myts = MyTextSanitizer::getInstance();
 	
-		$msg = $msg . '<br />openid_localid ÅÐÏ¿½ªÎ»';
-		
-		$criteria = new CriteriaCompo(new Criteria('uname', $uname ));
-		$user_handler =& xoops_gethandler('user');
-		$users =& $user_handler->getObjects($criteria, false);
-		$user = $users[0] ;
-		unset( $users ) ;
-		$xoopsUser = $user;
-		if (false != $user && $user->getVar('level') > 0) {
-			$member_handler =& xoops_gethandler('member');
-			$user->setVar('last_login', time());
-			$user->setVar('openid', $response->identity_url);
-			if (!$member_handler->insertUser($user)) {
-			}
-			$_SESSION['xoopsUserId'] = $user->getVar('uid');
-			$_SESSION['xoopsUserGroups'] = $user->getGroups();
-			$user_theme = $user->getVar('theme');
-			if (in_array($user_theme, $xoopsConfig['theme_set_allowed'])) {
-				$_SESSION['xoopsUserTheme'] = $user_theme;
-			}
-		}
-		unset($_SESSION['openid_response']);
-		unset($_SESSION['openid_sreg']);
-		header("Location: " . $_SESSION['frompage']);
-		unset($_SESSION['frompage']);
-	} else {
-		echo "Sorry, Unknown Error Encountered. ";
+	$uname4sql = addslashes($myts->stripSlashesGPC($_POST['uname'])) ;
+	$pass4sql = addslashes( $myts->stripSlashesGPC($_POST['pass']) ) ;
+	
+	$member_handler = xoops_gethandler('member');
+	$thisUser = $member_handler->loginUser($uname4sql, $pass4sql);
+
+	if (!$thisUser) {
+		redirect_header($redirect_url, 3, _US_OPENID_LINKED_AUTH_FAILED);
+	}
+	
+	if ($thisUser->getVar('level') == 0) {
+		redirect_header($redirect_url, 3, _US_OPENID_LINKED_AUTH_NOT_ACTIVATED);
+	}
+	
+	// This means the authentication succeeded.
+    $displayId = $response->getDisplayIdentifier();
+    $cid = $response->identity_url;
+
+	$thisUser->setVar('last_login', time());
+	$thisUser->setVar('openid', $response->identity_url);
+	
+	if (!$member_handler->insertUser($thisUser)) {
+		redirect_header($redirect_url, 3, _US_OPENID_LINKED_AUTH_CANNOT_SAVE);
+	}
+	
+	$_SESSION['xoopsUserId'] = $thisUser->getVar('uid');
+	$_SESSION['xoopsUserGroups'] = $thisUser->getGroups();
+	$user_theme = $thisUser->getVar('theme');
+	
+	if (in_array($user_theme, $xoopsConfig['theme_set_allowed'])) {
+		$_SESSION['xoopsUserTheme'] = $user_theme;
 	}
 
-	include_once(XOOPS_ROOT_PATH.'/footer.php');
+	unset($_SESSION['openid_response']);
+	unset($_SESSION['openid_sreg']);
+	unset($_SESSION['frompage']);
+	
+	redirect_header($redirect_url, 3, sprintf(_US_LOGGINGU, $thisUser->getVar('uname')));
 } else {
 	include_once("include/checklogin.php");
 }

@@ -159,4 +159,7 @@ define('_US_OPENID_EXISTING_USER_LOGIN_BELOW', 'If you are an existing user, log
 define('_US_OPENID_NOM_MEMBER', 'No account yet ?');
 define('_US_OPENID_NON_MEMBER_DSC', 'If you do not yet have an account on this site, please enter the username you would like to use and we will create an account for you, associated with this OpenID.');
 define('_US_OPENID_YOUR', 'Your OpenID');
+define('_US_OPENID_LINKED_AUTH_FAILED', 'The username and password you entered did not match a valid user. Please try again.');
+define('_US_OPENID_LINKED_AUTH_NOT_ACTIVATED', 'The user account which your are loging in with has not been activated. Please activate your account and then try again.');
+define('_US_OPENID_LINKED_AUTH_CANNOT_SAVE', 'Sorry, an error occured. It was not possible to update this user account with the authenticated OpenID.')
 ?>
