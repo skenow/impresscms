@@ -32,6 +32,11 @@ if (!defined('XOOPS_ROOT_PATH')) {
 	exit();
 }
 /**
+ * @package kernel
+ * @copyright copyright &copy; 2000 XOOPS.org
+ */
+
+/**
  * Class for users
  * @author Kazumi Ono <onokazu@xoops.org>
  * @copyright copyright (c) 2000-2003 XOOPS.org
@@ -102,6 +107,8 @@ class XoopsUser extends XoopsObject
         $this->initVar('bio', XOBJ_DTYPE_TXTAREA, null, false, null);
         $this->initVar('user_intrest', XOBJ_DTYPE_TXTBOX, null, false, 150);
         $this->initVar('user_mailok', XOBJ_DTYPE_INT, 1, false);
+
+        $this->initVar('language', XOBJ_DTYPE_OTHER, null, false);
 
         // for backward compatibility
         if (isset($id)) {
@@ -180,6 +187,73 @@ class XoopsUser extends XoopsObject
 			$this->_groups =& $groupsArr;
 		}
 	}
+
+	/**
+	 * sends a welcome message to the user which account has just been activated
+	 *
+	 * return TRUE if success, FALSE if not
+	 */
+	function sendWelcomeMessage() {
+		global $xoopsConfig, $xoopsConfigUser;
+		
+		$myts =& MyTextSanitizer::getInstance();
+	
+		if (!$xoopsConfigUser['welcome_msg']) {
+			return true;
+		}
+		
+		$xoopsMailer =& getMailer();
+		
+		$xoopsMailer->useMail();
+		$xoopsMailer->setBody($xoopsConfigUser['welcome_msg_content']);
+		$xoopsMailer->assign('UNAME', $this->getVar('uname'));
+		$user_email = $this->getVar('email');
+		$xoopsMailer->assign('X_UEMAIL', $user_email);			
+      	$xoopsMailer->setToEmails($user_email);
+		$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
+		$xoopsMailer->setFromName($xoopsConfig['sitename']);
+		$xoopsMailer->setSubject(sprintf(_US_YOURREGISTRATION, $myts->stripSlashesGPC($xoopsConfig['sitename'])));
+		if (!$xoopsMailer->send(true)) {
+			$this->setErrors(_US_WELCOMEMSGFAILED);
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
+	/**
+	 * sends a notification to admins to inform them that a new user registered
+	 * 
+	 * This method first checks in the preferences if we need to send a notification to admins upon new user
+	 * registration. If so, it sends the mail.
+	 *
+	 * return TRUE if success, FALSE if not
+	 */
+	function newUserNotifyAdmin() {
+		global $xoopsConfigUser, $xoopsConfig;
+		
+		if ($xoopsConfigUser['new_user_notify'] == 1 && !empty($xoopsConfigUser['new_user_notify_group'])) {
+			$member_handler = xoops_getHandler('member');
+			$xoopsMailer =& getMailer();
+			$xoopsMailer->useMail();
+			$xoopsMailer->setTemplate('newuser_notify.tpl');
+			$xoopsMailer->assign('UNAME', $this->getVar('uname'));
+			$xoopsMailer->assign('EMAIL', $this->getVar('email'));
+	      	$xoopsMailer->setToGroups($member_handler->getGroup($xoopsConfigUser['new_user_notify_group']));
+			$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
+			$xoopsMailer->setFromName($xoopsConfig['sitename']);
+			$xoopsMailer->setSubject(sprintf(_US_NEWUSERREGAT,$xoopsConfig['sitename']));
+				if (!$xoopsMailer->send(true)) {
+				$this->setErrors(_US_NEWUSERNOTIFYADMINFAIL);
+				return false;
+			} else {
+				return true;
+			}
+		} else {
+			return true;
+		}
+	}
+	
     /**
      * get the groups that the user belongs to
 	 *
@@ -429,7 +503,11 @@ class XoopsUser extends XoopsObject
     {
         return $this->getVar("last_login");
     }
-	/**#@-*/
+	
+	function language()
+    {
+        return $this->getVar("language");
+    }
 
 }
 
@@ -482,7 +560,7 @@ class XoopsUserHandler extends XoopsObjectHandler
     }
 
     /**
-     * retrieve a user
+     * retrieve a user from ID
      *
      * @param int $id UID of the user
      * @return mixed reference to the {@link XoopsUser} object, FALSE if failed
@@ -533,11 +611,11 @@ class XoopsUserHandler extends XoopsObjectHandler
         // Added two fields, notify_method, notify_mode
         if ($user->isNew()) {
             $uid = $this->db->genId($this->db->prefix('users').'_uid_seq');
-            $sql = sprintf("INSERT INTO %s (uid, uname, name, email, url, user_avatar, user_regdate, user_icq, user_from, user_sig, user_viewemail, actkey, user_aim, user_yim, user_msnm, pass, posts, attachsig, rank, level, theme, timezone_offset, last_login, umode, uorder, notify_method, notify_mode, user_occ, bio, user_intrest, user_mailok) VALUES ('%u', %s, %s, %s, %s, %s, '%u', %s, %s, %s, '%u', %s, %s, %s, %s, %s, '%u', '%u', '%u', '%u', %s, %s, '%u', %s, '%u', '%u', '%u', %s, %s, %s, '%u')", $this->db->prefix('users'), intval($uid), $this->db->quoteString($uname), $this->db->quoteString($name), $this->db->quoteString($email), $this->db->quoteString($url), $this->db->quoteString($user_avatar), time(), $this->db->quoteString($user_icq), $this->db->quoteString($user_from), $this->db->quoteString($user_sig), intval($user_viewemail), $this->db->quoteString($actkey), $this->db->quoteString($user_aim), $this->db->quoteString($user_yim), $this->db->quoteString($user_msnm),
-			$this->db->quoteString($pass), intval($posts), intval($attachsig), intval($rank), intval($level), $this->db->quoteString($theme), $this->db->quoteString(floatval($timezone_offset)), 0, $this->db->quoteString($umode), intval($uorder), intval($notify_method), intval($notify_mode), $this->db->quoteString($user_occ), $this->db->quoteString($bio), $this->db->quoteString($user_intrest), intval($user_mailok));
+          $sql = sprintf("INSERT INTO %s (uid, uname, name, email, url, user_avatar, user_regdate, user_icq, user_from, user_sig, user_viewemail, actkey, user_aim, user_yim, user_msnm, pass, posts, attachsig, rank, level, theme, timezone_offset, last_login, umode, uorder, notify_method, notify_mode, user_occ, bio, user_intrest, user_mailok, language) VALUES ('%u', %s, %s, %s, %s, %s, '%u', %s, %s, %s, '%u', %s, %s, %s, %s, %s, '%u', '%u', '%u', '%u', %s, %s, '%u', %s, '%u', '%u', '%u', %s, %s, %s, '%u', %s)", $this->db->prefix('users'), intval($uid), $this->db->quoteString($uname), $this->db->quoteString($name), $this->db->quoteString($email), $this->db->quoteString($url), $this->db->quoteString($user_avatar), time(), $this->db->quoteString($user_icq), $this->db->quoteString($user_from), $this->db->quoteString($user_sig), intval($user_viewemail), $this->db->quoteString($actkey), $this->db->quoteString($user_aim), $this->db->quoteString($user_yim), $this->db->quoteString($user_msnm),
+    			$this->db->quoteString($pass), intval($posts), intval($attachsig), intval($rank), intval($level), $this->db->quoteString($theme), $this->db->quoteString(floatval($timezone_offset)), 0, $this->db->quoteString($umode), intval($uorder), intval($notify_method), intval($notify_mode), $this->db->quoteString($user_occ), $this->db->quoteString($bio), $this->db->quoteString($user_intrest), intval($user_mailok) , $this->db->quoteString($language));
         } else {
-            $sql = sprintf("UPDATE %s SET uname = %s, name = %s, email = %s, url = %s, user_avatar = %s, user_icq = %s, user_from = %s, user_sig = %s, user_viewemail = '%u', user_aim = %s, user_yim = %s, user_msnm = %s, posts = %d,  pass = %s, attachsig = '%u', rank = '%u', level= '%u', theme = %s, timezone_offset = %s, umode = %s, last_login = '%u', uorder = '%u', notify_method = '%u', notify_mode = '%u', user_occ = %s, bio = %s, user_intrest = %s, user_mailok = '%u' WHERE uid = %u", $this->db->prefix('users'), $this->db->quoteString($uname), $this->db->quoteString($name), $this->db->quoteString($email), $this->db->quoteString($url), $this->db->quoteString($user_avatar), $this->db->quoteString($user_icq), $this->db->quoteString($user_from), $this->db->quoteString($user_sig), $user_viewemail, $this->db->quoteString($user_aim), $this->db->quoteString($user_yim), $this->db->quoteString($user_msnm), intval($posts), $this->db->quoteString($pass), intval($attachsig), intval($rank),
-			intval($level), $this->db->quoteString($theme), $this->db->quoteString(floatval($timezone_offset)), $this->db->quoteString($umode), intval($last_login), intval($uorder), intval($notify_method), intval($notify_mode), $this->db->quoteString($user_occ), $this->db->quoteString($bio), $this->db->quoteString($user_intrest), intval($user_mailok), intval($uid));
+          $sql = sprintf("UPDATE %s SET uname = %s, name = %s, email = %s, url = %s, user_avatar = %s, user_icq = %s, user_from = %s, user_sig = %s, user_viewemail = '%u', user_aim = %s, user_yim = %s, user_msnm = %s, posts = %d,  pass = %s, attachsig = '%u', rank = '%u', level= '%u', theme = %s, timezone_offset = %s, umode = %s, last_login = '%u', uorder = '%u', notify_method = '%u', notify_mode = '%u', user_occ = %s, bio = %s, user_intrest = %s, user_mailok = '%u', language = %s WHERE uid = %u", $this->db->prefix('users'), $this->db->quoteString($uname), $this->db->quoteString($name), $this->db->quoteString($email), $this->db->quoteString($url), $this->db->quoteString($user_avatar), $this->db->quoteString($user_icq), $this->db->quoteString($user_from), $this->db->quoteString($user_sig), $user_viewemail, $this->db->quoteString($user_aim), $this->db->quoteString($user_yim), $this->db->quoteString($user_msnm), intval($posts), $this->db->quoteString($pass), intval($attachsig), intval($rank),            
+    			intval($level), $this->db->quoteString($theme), $this->db->quoteString(floatval($timezone_offset)), $this->db->quoteString($umode), intval($last_login), intval($uorder), intval($notify_method), intval($notify_mode), $this->db->quoteString($user_occ), $this->db->quoteString($bio), $this->db->quoteString($user_intrest), intval($user_mailok), $this->db->quoteString($language) , intval($uid));
         }
         if (false != $force) {
             $result = $this->db->queryF($sql);

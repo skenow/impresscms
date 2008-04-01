@@ -192,36 +192,7 @@ $xoops =& new xos_kernel_Xoops2();
 include_once(XOOPS_ROOT_PATH . '/class/icmslibrarieshandler.php');
 $icmsLibrariesHandler = IcmsLibrariesHandler::getInstance();
     // #################### Easiest ML by Gijoe #################
-	$im_multilanguageConfig =& $config_handler->getConfigsByCat(IM_CONF_MULILANGUAGE);
-	if ($im_multilanguageConfig['ml_enable']) {
-		require XOOPS_ROOT_PATH.'/include/im_multilanguage.php' ;
-    	$easiestml_langs = explode( ',' , $im_multilanguageConfig['ml_tags'] ) ;
-    	include_once(XOOPS_ROOT_PATH . '/class/xoopslists.php');
 
-    	$easiestml_langpaths = XoopsLists::getLangList();
-    	$langs = array_combine($easiestml_langs,explode( ',' , $im_multilanguageConfig['ml_names'] ));
-
-    	if( $im_multilanguageConfig['ml_autoselect_enabled']  && isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) && $_SERVER['HTTP_ACCEPT_LANGUAGE'] != "" ){
-			$autolang = substr($_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2);
-			if (in_array($autolang,$easiestml_langs)){
-    			$xoopsConfig['language'] = $langs[$autolang];
-    		}
-    	}
-
-    	if (isset( $_GET['lang'] ) && isset($_COOKIE['lang'])){
-    		if (in_array($_GET['lang'],$easiestml_langs)){
-    			$xoopsConfig['language'] = $langs[$_GET['lang']];
-    		}
-    	}elseif(isset($_COOKIE['lang'])){
-    		if (in_array($_COOKIE['lang'],$easiestml_langs)){
-    			$xoopsConfig['language'] = $langs[$_COOKIE['lang']];
-    		}
-    	}elseif(isset($_GET['lang'])){
-    		if (in_array($_GET['lang'],$easiestml_langs)){
-    			$xoopsConfig['language'] = $langs[$_GET['lang']];
-    		}
-    	}
-	}
 
     // Disable gzip compression if PHP is run under CLI mode
     // To be refactored
@@ -253,27 +224,6 @@ $icmsLibrariesHandler = IcmsLibrariesHandler::getInstance();
     $xoopsConfig['xoops_url'] = XOOPS_URL;
     $xoopsConfig['root_path'] = XOOPS_ROOT_PATH."/";
 
-
-    // #################### Include site-wide lang file ##################
-    if ( file_exists(XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/global.php") ) {
-        include_once XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/global.php";
-    } else {
-        include_once XOOPS_ROOT_PATH."/language/english/global.php";
-    }
-
-    // ################ Include page-specific lang file ################
-    if (isset($xoopsOption['pagetype']) && false === strpos($xoopsOption['pagetype'], '.')) {
-        if ( file_exists(XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/".$xoopsOption['pagetype'].".php") ) {
-            include_once XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/".$xoopsOption['pagetype'].".php";
-        } else {
-            include_once XOOPS_ROOT_PATH."/language/english/".$xoopsOption['pagetype'].".php";
-        }
-    }
-    $xoopsOption = array();
-
-    if ( !defined("XOOPS_USE_MULTIBYTES") ) {
-        define("XOOPS_USE_MULTIBYTES",0);
-    }
 
     /**#@+
      * Host abstraction layer
@@ -374,9 +324,12 @@ $icmsLibrariesHandler = IcmsLibrariesHandler::getInstance();
 			$_SESSION['xoopsUserGroups'] = $user->getGroups();
 			// begin newly added in 2004-11-30
 			$user_theme = $user->getVar('theme');
+			$user_language = $user->language();
 			if (in_array($user_theme, $xoopsConfig['theme_set_allowed'])) {
 				$_SESSION['xoopsUserTheme'] = $user_theme;
 			}
+			$_SESSION['xoopsUserLanguage'] = $user_language;
+			
 			// end newly added in 2004-11-30
 			// update autologin cookies
 			$expire = time() + ( defined('XOOPS_AUTOLOGIN_LIFETIME') ? XOOPS_AUTOLOGIN_LIFETIME : 604800 ) ; // 1 week default
@@ -404,13 +357,84 @@ $icmsLibrariesHandler = IcmsLibrariesHandler::getInstance();
             }
             $xoopsUser->setGroups($_SESSION['xoopsUserGroups']);
             $xoopsUserIsAdmin = $xoopsUser->isAdmin();
+            if(!isset($_SESSION['xoopsUserLanguage']) ){
+            	$_SESSION['xoopsUserLanguage'] = $xoopsUser->language();
         }
     }
+    }
+    
+	$im_multilanguageConfig =& $config_handler->getConfigsByCat(IM_CONF_MULILANGUAGE);
+	if ($im_multilanguageConfig['ml_enable']) {
+		require XOOPS_ROOT_PATH.'/include/im_multilanguage.php' ;
+    	$easiestml_langs = explode( ',' , $im_multilanguageConfig['ml_tags'] ) ;
+    	include_once(XOOPS_ROOT_PATH . '/class/xoopslists.php');
+
+    	$easiestml_langpaths = XoopsLists::getLangList();
+    	$langs = array_combine($easiestml_langs,explode( ',' , $im_multilanguageConfig['ml_names'] ));
+			
+    	if( $im_multilanguageConfig['ml_autoselect_enabled']  && isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) && $_SERVER['HTTP_ACCEPT_LANGUAGE'] != "" ){
+			$autolang = substr($_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2);
+			if (in_array($autolang,$easiestml_langs)){
+    			$xoopsConfig['language'] = $langs[$autolang];
+    		}
+    	}
+    	if (isset( $_GET['lang'] ) && isset($_COOKIE['lang'])){
+    		if (in_array($_GET['lang'],$easiestml_langs)){
+    			$xoopsConfig['language'] = $langs[$_GET['lang']];
+    			if(isset( $_SESSION['xoopsUserLanguage'] )){
+    				$_SESSION['xoopsUserLanguage'] = $langs[$_GET['lang']];
+    			}
+    		}
+    	}elseif(isset($_COOKIE['lang']) && isset( $_SESSION['xoopsUserLanguage'] )){
+    		if($_COOKIE['lang'] != $_SESSION['xoopsUserLanguage'] ){
+    			if( in_array( $_SESSION['xoopsUserLanguage'] , $langs ) )
+    				$xoopsConfig['language'] = $_SESSION['xoopsUserLanguage'];
+    		}else{
+    			if (in_array($_COOKIE['lang'],$easiestml_langs))
+    				$xoopsConfig['language'] = $langs[$_COOKIE['lang']];	
+    		}
+    	}elseif(isset($_COOKIE['lang'])){
+    		if (in_array($_COOKIE['lang'],$easiestml_langs)){
+    			$xoopsConfig['language'] = $langs[$_COOKIE['lang']];
+    			if(isset( $_SESSION['xoopsUserLanguage'] )){
+    				$_SESSION['xoopsUserLanguage'] = $langs[$_GET['lang']];
+    			}
+    		}
+    	}elseif(isset($_GET['lang'])){
+    		if (in_array($_GET['lang'],$easiestml_langs)){
+    			$xoopsConfig['language'] = $langs[$_GET['lang']];
+    		}
+    	}
+	}
+    
+	// #################### Include site-wide lang file ##################
+    if ( file_exists(XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/global.php") ) {
+        include_once XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/global.php";
+    } else {
+        include_once XOOPS_ROOT_PATH."/language/english/global.php";
+    }
+
+    // ################ Include page-specific lang file ################
+    if (isset($xoopsOption['pagetype']) && false === strpos($xoopsOption['pagetype'], '.')) {
+        if ( file_exists(XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/".$xoopsOption['pagetype'].".php") ) {
+            include_once XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/".$xoopsOption['pagetype'].".php";
+        } else {
+            include_once XOOPS_ROOT_PATH."/language/english/".$xoopsOption['pagetype'].".php";
+        }
+    }
+	
+	$xoopsOption = array();
+
+    if ( !defined("XOOPS_USE_MULTIBYTES") ) {
+        define("XOOPS_USE_MULTIBYTES",0);
+    }
+    
     if (!empty($_POST['xoops_theme_select']) && in_array($_POST['xoops_theme_select'], $xoopsConfig['theme_set_allowed'])) {
         $xoopsConfig['theme_set'] = $_POST['xoops_theme_select'];
         $_SESSION['xoopsUserTheme'] = $_POST['xoops_theme_select'];
     } elseif (!empty($_SESSION['xoopsUserTheme']) && in_array($_SESSION['xoopsUserTheme'], $xoopsConfig['theme_set_allowed'])) {
         $xoopsConfig['theme_set'] = $_SESSION['xoopsUserTheme'];
+        
     }
 
     if ($xoopsConfig['closesite'] == 1) {

@@ -11,6 +11,16 @@ Legend :
 ImpressCMS 1.1 (changes from ImpressCMS 1.0)
 =========================================
 
++ language/english/databaseupdater.php  (added)
+
+language/english/user.php
+--------------------------
+
++define('_US_YOURREGISTRATION', 'Your registration at %s');
++define('_US_NEWUSERREGAT', 'New registration at %s');
++define('_US_WELCOMEMSGFAILED', 'Error while sending the welcome email.');
++define('_US_NEWUSERNOTIFYADMINFAIL', 'Notification to admin about new user registration failed.');
+
 modules/system/language/english/admin/preferences.php
 --------------------------
 
@@ -18,6 +28,10 @@ define("_MD_AM_ML_AUTOSELECT_ENABLED","Language Autoselection");
 define("_MD_AM_ML_AUTOSELECT_ENABLED_DESC","Make the system autoselect the language of the site depending the web browser language configuration.");
 define("_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE","Allow annonymous users to users profiles");
 define("_MD_AM_ML_AUTOSELECT_ENABLED","Autoselect the language depeding the browser configuration");
++define("_MD_AM_WELCOMEMSG","Send a welcome message to newly registered user");
++define("_MD_AM_WELCOMEMSGDSC","Send a welcome message to new user when their account gets activated. The content of this message can be configured in the following option.");
++define("_MD_AM_WELCOMEMSG_CONTENT","Content of the welcome message");
++define("_MD_AM_WELCOMEMSG_CONTENTDSC","You can edit the message that is sent to the new user. Note that you can use the following tags: <br /><br />- {UNAME} = username of the user<br />- {X_UEMAIL} = email of the user<br />- {X_ADMINMAIL} = admin email address<br />- {X_SITENAME} = name of the site<br />- {X_SITEURL} = URL of the site");
 
 modules/system/languages/english/admin/groups.php
 -------------------------------------------------
@@ -25,11 +39,17 @@ modules/system/languages/english/admin/groups.php
 + define("_AM_EDPERM","Can use the WYSIWYG editor in the following modules");
 + define("_AM_DEBUG_PERM","The Debug Mode is enabled for the next modules");
 
+language/english/mail_template/
+------------------------------
+
++ welcome.tpl
++ newuser_notify.tpl
++- register.tpl (modified to use {X_ADMINMAIL} and not {ADMINMAIL})
+
 ImpressCMS 1.0 (changes from XOOPS 2.0.17)
 =========================================
 
-language/english/mail_template/
-------------------------------
+
 
 +  new_pm.tpl
 

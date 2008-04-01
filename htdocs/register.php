@@ -223,17 +223,10 @@ case 'finish':
 			include 'footer.php';
 			exit();
 		}
-		// notify always
-		if ($xoopsConfigUser['new_user_notify'] == 1 && !empty($xoopsConfigUser['new_user_notify_group'])) {
-			$xoopsMailer =& getMailer();
-			$xoopsMailer->useMail();
-			$member_handler =& xoops_gethandler('member');
-			$xoopsMailer->setToGroups($member_handler->getGroup($xoopsConfigUser['new_user_notify_group']));
-			$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
-			$xoopsMailer->setFromName($xoopsConfig['sitename']);
-			$xoopsMailer->setSubject(sprintf(_US_NEWUSERREGAT,$xoopsConfig['sitename']));
-			$xoopsMailer->setBody(sprintf(_US_HASJUSTREG, $uname));
-			$xoopsMailer->send();
+		// Activate automatically
+		if ($xoopsConfigUser['new_user_notify'] == 1) {
+			$newuser->sendWelcomeMessage();		
+			$newuser->newUserNotifyAdmin();	
 		}
 		// update invite_code (if any)
 		if ($valid_actkey) {
@@ -241,7 +234,12 @@ case 'finish':
 		}
 		if ($xoopsConfigUser['activation_type'] == 1 || $xoopsConfigUser['activation_type'] == 3) {
 			redirect_header('index.php', 4, _US_ACTLOGIN);
+			exit();
 		}
+
+		$thisuser = new XoopsUser($newid);
+
+		// Activation by user
 		if ($xoopsConfigUser['activation_type'] == 0) {
 			$xoopsMailer =& getMailer();
 			$xoopsMailer->useMail();
@@ -258,6 +256,8 @@ case 'finish':
 			} else {
 				echo _US_YOURREGISTERED;
 			}
+			$thisuser->newUserNotifyAdmin();
+		// activation by admin
 		} elseif ($xoopsConfigUser['activation_type'] == 2) {
 			$xoopsMailer =& getMailer();
 			$xoopsMailer->useMail();

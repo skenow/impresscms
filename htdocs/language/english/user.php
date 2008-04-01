@@ -144,9 +144,16 @@ define('_US_SELFILE','Select file');
 define('_US_OLDDELETED','Your old avatar will be deleted!');
 define('_US_CHOOSEAVT', 'Choose avatar from the available list');
 define('_US_SELECT_THEME', 'Default Theme');
+define('_US_SELECT_LANG', 'Default Language');
 
 define('_US_PRESSLOGIN', 'Press the button below to login');
 
 define('_US_ADMINNO', 'User in the webmasters group cannot be removed');
 define('_US_GROUPS', 'User\'s Groups');
+
+define('_US_YOURREGISTRATION', 'Your registration at %s');
+define('_US_NEWUSERREGAT', 'New registration at %s');
+define('_US_WELCOMEMSGFAILED', 'Error while sending the welcome email.');
+define('_US_NEWUSERNOTIFYADMINFAIL', 'Notification to admin about new user registration failed.');
+
 ?>
