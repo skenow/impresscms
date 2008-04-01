@@ -12,7 +12,6 @@ $member_handler = xoops_gethandler('member');
  */
 if (isset($_POST['openid_register'])) {
 	$response=@$_SESSION['openid_response'];
-	//icms_debug_vardump($_SESSION); exit;
 	if (@$response->status != Auth_OpenID_SUCCESS) {
 		redirect_header(XOOPS_URL . '/user.php', 3, _US_OPENID_NOPERM);
 	} else {

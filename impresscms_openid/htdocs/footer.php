@@ -27,6 +27,7 @@
 if (!defined("XOOPS_ROOT_PATH")) {
     die("XOOPS root path not defined");
 }
+
 if ( !defined("XOOPS_FOOTER_INCLUDED") ) {
 	define("XOOPS_FOOTER_INCLUDED",1);
 
