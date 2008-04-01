@@ -169,10 +169,10 @@ class XoopsLogger {
 	 */
 	function render( $output ) {
 		global $xoopsUser;
-/*		if ( !$this->activated || !$xoopsUser || !$xoopsUser->isAdmin() ) {
+		if ( !$this->activated || !$xoopsUser || !$xoopsUser->isAdmin() ) {
 			return $output;
 		}
-*/		$this->renderingEnabled = $this->activated = false;
+		$this->renderingEnabled = $this->activated = false;
 
 		$log = $this->dump( $this->usePopup ? 'popup' : '' );
 
