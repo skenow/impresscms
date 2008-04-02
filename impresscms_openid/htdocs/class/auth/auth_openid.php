@@ -33,7 +33,7 @@ class XoopsAuthOpenid extends XoopsAuth {
 	 * @var string $openid openid used for this authentication
 	 */
 	var $openid;
-
+	
 	/**
 	 * Authentication Service constructor
 	 */
@@ -51,13 +51,19 @@ class XoopsAuthOpenid extends XoopsAuth {
 		require_once ICMS_LIBRARIES_ROOT_PATH . "/phpopenid/occommon.php";
 
 		// session_start();
-		// Complete the authentication process using the server's response.
-		$consumer = getConsumer();//1123
-		$return_to = getReturnTo();//1123
-		//$response = $consumer->complete($_GET);
-		$response = $consumer->complete($return_to);//1123
-		$_SESSION['openid_response']=$response;
-
+		
+		// check to see if we alredy have an OpenID response in SESSION
+		if (isset($_SESSION['openid_response'])) {
+			$response = $_SESSION['openid_response'];
+		} else {
+			// Complete the authentication process using the server's response.
+			$consumer = getConsumer();//1123
+			$return_to = getReturnTo();//1123
+			//$response = $consumer->complete($_GET);
+			$response = $consumer->complete($return_to);//1123
+			$_SESSION['openid_response']=$response;
+		}
+		
 		if ($response->status == Auth_OpenID_CANCEL) {
 		    // This means the authentication was cancelled.
 		    $this->setErrors('100', 'Verification cancelled.');
