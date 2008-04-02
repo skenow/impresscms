@@ -13,11 +13,14 @@ include_once XOOPS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/auth.php';
 $xoopsAuth =& XoopsAuthFactory::getAuthConnection($myts->addSlashes($uname));
 $user = $xoopsAuth->authenticate();
 
+if ($xoopsAuth->errorOccured()) {
+	redirect_header($redirect_url, 3, $xoopsAuth->getHtmlErrors());
+}
+
 switch($xoopsAuth->step) {
 	case OPENID_STEP_NO_USER_FOUND:
 		$xoopsOption['template_main'] = 'system_openid.html';
 		include_once(XOOPS_ROOT_PATH . "/header.php");
-
 		
 		$sreg=$_SESSION['openid_sreg'];
 		
