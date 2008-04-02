@@ -166,5 +166,6 @@ define('_US_OPENID_NEW_USER_UNAME_TOO_SHORT', 'The username you have inputed is 
 define('_US_OPENID_NEW_USER_UNAME_EXISTS', 'The username your have inputed is already used. Please try again.');
 define('_US_OPENID_NEW_USER_CANNOT_INSERT', 'Sorry, an error occured. It was not possible to create the new user. Please try again.');
 define('_US_OPENID_NEW_USER_CANNOT_INSERT_INGROUP', 'Sorry, an error occured. It was not possible to add the new user in the proper groups. Please contact the administrator of the site.');
-define('_US_OPENID_NEW_USER_AUTH_NOT_ACTIVATED', 'The newly created user has not been activated.')
+define('_US_OPENID_NEW_USER_AUTH_NOT_ACTIVATED', 'The newly created user has not been activated.');
+define('_US_OPENID_NEW_USER_CREATED', 'A new user was created with the username %s. Automatically logging you in...');
 ?>

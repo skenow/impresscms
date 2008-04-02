@@ -96,6 +96,10 @@ if( empty( $user ) || ! is_object( $user ) ) {
 // end of uname&email hack GIJ
 
 if (false != $user) {
+	/**
+	 * @todo this REALLY needs to be moved in a XoopsUser method call
+	 */
+	
     if (0 == $user->getVar('level')) {
         redirect_header(XOOPS_URL.'/index.php', 5, _US_NOACTTPADM);
     }

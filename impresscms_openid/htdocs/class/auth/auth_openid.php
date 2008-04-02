@@ -16,13 +16,13 @@
 * @version		$Id$
 */
 
+define('OPENID_STEP_BACK_FROM_SERVER', 1);
+define('OPENID_STEP_REGISTER', 2);
+define('OPENID_STEP_LINK', 3);
+define('OPENID_STEP_NO_USER_FOUND', 4);
+define('OPENID_STEP_USER_FOUND', 5);
+
 class XoopsAuthOpenid extends XoopsAuth {
-
-	/**
-	 * @var bool $openidNotFound will be TRUE if the openid was not found
-	 */
-	var $openidNotFound=false;
-
 
 	/**
 	 * @var string $displayid $displayid fetch from the openid authentication
@@ -40,6 +40,17 @@ class XoopsAuthOpenid extends XoopsAuth {
 	 * @var OpenIDResponse object
 	 */
 	var $response;	
+	
+	/**
+	 * Where are we in the process
+	 * Possible options are
+	 *   - OPENID_STEP_BACK_FROM_SERVER
+	 *   - OPENID_STEP_REGISTER
+	 *   - OPENID_STEP_LINK
+	 *   - OPENID_STEP_NO_USER_FOUND
+	 * @var int
+	 */
+	var $step = OPENID_STEP_BACK_FROM_SERVER;
 	
 	/**
 	 * Authentication Service constructor
@@ -104,21 +115,32 @@ class XoopsAuthOpenid extends XoopsAuth {
 			 */
 		    //$this->setErrors('103', $success);
 
-			// Do we already have a user with this openid
-			$member_handler = & xoops_gethandler('member');
-			$criteria = new CriteriaCompo();
-			$criteria->add(new Criteria('openid', $this->openid));
-			$users =& $member_handler->getUsers($criteria);
-			if ($users && count($users) > 0) {
-				return $users[0];
+		    /**
+		     * Now, where are we in the process, just back from OpenID server or trying to register or 
+		     * trying to link to an existing account
+		     */
+		    if (isset($_POST['openid_register'])) {
+		    	$this->step = OPENID_STEP_REGISTER;
+		    } elseif (isset($_POST['openid_link'])) {
+		    	$this->step = OPENID_STEP_LINK;
 		    } else {
-		    	/*
-		    	 * This openid was not found in the users table.Let's ask the user if he wants
-		    	 * to create a new user account on the site or else login with his already registered
-		    	 * account
-		    	 */
-				$this->openidNotFound = true;
-				return false;
+				// Do we already have a user with this openid
+				$member_handler = & xoops_gethandler('member');
+				$criteria = new CriteriaCompo();
+				$criteria->add(new Criteria('openid', $this->openid));
+				$users =& $member_handler->getUsers($criteria);
+				if ($users && count($users) > 0) {
+					$this->step = OPENID_STEP_USER_FOUND;
+					return $users[0];
+			    } else {
+			    	/*
+			    	 * This openid was not found in the users table.Let's ask the user if he wants
+			    	 * to create a new user account on the site or else login with his already registered
+			    	 * account
+			    	 */
+					$this->step = OPENID_STEP_NO_USER_FOUND;
+					return false;
+			    }
 		    }
 		}
 	}
