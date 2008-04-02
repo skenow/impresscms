@@ -73,7 +73,6 @@ switch($xoopsAuth->step) {
 			redirect_header(XOOPS_URL . '/finish_auth.php', 3, _US_OPENID_NEW_USER_UNAME_EXISTS);
 		}
 	
-		$email = addslashes($myts->stripSlashesGPC($sreg['email']));
 		$name = addslashes($myts->stripSlashesGPC(utf8_decode($sreg['fullname'])));
 		//$tz = quote_smart($tzoffset[$sreg['timezone']]);
 		$country = addslashes($myts->stripSlashesGPC(utf8_decode($sreg['country'])));
