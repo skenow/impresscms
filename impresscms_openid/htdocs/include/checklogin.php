@@ -48,35 +48,7 @@ $xoopsAuth =& XoopsAuthFactory::getAuthConnection($myts->addSlashes($uname));
 $uname4sql = addslashes( $myts->stripSlashesGPC($uname) ) ;
 $pass4sql = addslashes( $myts->stripSlashesGPC($pass) ) ;
 
-if ($xoopsAuth->auth_method == 'openid') {
-	$user = $xoopsAuth->authenticate();
-	if (!$user) {
-		$xoopsOption['template_main'] = 'system_openid.html';
-		include_once(XOOPS_ROOT_PATH . "/header.php");
-		if(preg_match('/^http/',$xoopsAuth->displayid)){
-			if($_SESSION['openid_sreg']['nickname']!='') {
-				$unam = alphaonly($_SESSION['openid_sreg']['nickname']);
-			} else {
-				$unam = "";
-			}
-		} else {
-			$unam = $xoopsAuth->displayid;
-		}
-		$xoopsTpl->assign('displayId', $xoopsAuth->displayid);
-		$xoopsTpl->assign('cid', $xoopsAuth->openid);
-		$xoopsTpl->assign('unam', $unam);
-		$xoopsTpl->assign('existinguser',_OD_EXISTINGUSER);
-		$xoopsTpl->assign('loginbelow',_OD_LOGINBELOW);
-		$xoopsTpl->assign('xoopsuname', _OD_XOOPSUNAME);
-		$xoopsTpl->assign('xoopspass', _OD_XOOPSPASS);
-		$xoopsTpl->assign('nonmember', _OD_NONMEMBER);
-		$xoopsTpl->assign('enterwantedname', _OD_ENTERWANTEDNAME);
-		$xoopsTpl->assign('screenamelabel', _OD_SCREENNAMELABEL);
-		$xoopsTpl->assign('youropenid', _OD_YOUR_OPENID);
-		include_once XOOPS_ROOT_PATH.'/footer.php';
-		exit;
-	}
-} elseif(strstr( $uname , '@' )) {
+if(strstr( $uname , '@' )) {
 	if ($uname == '' || $pass == '') {
 	    redirect_header(XOOPS_URL.'/user.php', 1, _US_INCORRECTLOGIN);
 	}
