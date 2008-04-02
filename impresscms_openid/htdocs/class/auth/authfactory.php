@@ -48,13 +48,15 @@ class XoopsAuthFactory
 	{
 		static $auth_instance;
 		if (!isset($auth_instance)) {
+			
 			$config_handler =& xoops_gethandler('config');
     		$authConfig =& $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);
 			require_once XOOPS_ROOT_PATH.'/class/auth/auth.php';
 			if (empty($authConfig['auth_method'])) { // If there is a config error, we use xoops
 				$xoops_auth_method = 'xoops';
 			} else {
-			    $xoops_auth_method = $authConfig['auth_method'];
+
+				$xoops_auth_method = $authConfig['auth_method'];
 
 			    // However if auth_method is XOOPS, and openid login is activated and a user is trying to authenticate with his openid
 
@@ -63,7 +65,7 @@ class XoopsAuthFactory
 			     */
 			    $config_to_enable_openid = true;
 
-			    if ($authConfig['auth_method'] == 'xoops' && $config_to_enable_openid && isset($_REQUEST['openid_identity'])) {
+			    if ($authConfig['auth_method'] == 'xoops' && $config_to_enable_openid && (isset($_REQUEST['openid_identity']) || isset($_SESSION['openid_response']))) {
 					$xoops_auth_method = 'openid';
 			    }
 			}
