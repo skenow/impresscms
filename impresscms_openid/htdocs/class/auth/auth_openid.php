@@ -148,7 +148,7 @@ class XoopsAuthOpenid extends XoopsAuth {
 	}
 	
 	function errorOccured() {
-		return count($this->getErrors);
+		return count($this->_errors) > 0;
 	}
 }
 
