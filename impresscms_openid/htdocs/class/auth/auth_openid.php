@@ -35,6 +35,13 @@ class XoopsAuthOpenid extends XoopsAuth {
 	var $openid;
 	
 	/**
+	 * OpenID response
+	 *
+	 * @var OpenIDResponse object
+	 */
+	var $response;	
+	
+	/**
 	 * Authentication Service constructor
 	 */
 	function XoopsAuthOpenid (&$dao) {
@@ -54,42 +61,42 @@ class XoopsAuthOpenid extends XoopsAuth {
 		
 		// check to see if we alredy have an OpenID response in SESSION
 		if (isset($_SESSION['openid_response'])) {
-			$response = $_SESSION['openid_response'];
+			$this->response = $_SESSION['openid_response'];
 		} else {
 			// Complete the authentication process using the server's response.
 			$consumer = getConsumer();//1123
 			$return_to = getReturnTo();//1123
-			//$response = $consumer->complete($_GET);
-			$response = $consumer->complete($return_to);//1123
-			$_SESSION['openid_response']=$response;
+			//$this->response = $consumer->complete($_GET);
+			$this->response = $consumer->complete($return_to);//1123
+			$_SESSION['openid_response']=$this->response;
 		}
 		
-		if ($response->status == Auth_OpenID_CANCEL) {
+		if ($this->response->status == Auth_OpenID_CANCEL) {
 		    // This means the authentication was cancelled.
 		    $this->setErrors('100', 'Verification cancelled.');
-		} else if ($response->status == Auth_OpenID_FAILURE) {
-		    $this->setErrors('101', "OpenID authentication failed: " . $response->message);
+		} else if ($this->response->status == Auth_OpenID_FAILURE) {
+		    $this->setErrors('101', "OpenID authentication failed: " . $this->response->message);
 			/**
 			 * This can be uncommented to display the $_REQUEST array. This is usefull for
 			 * troubleshooting purposes
 			 */
 			 //$this->setErrors('102', "REQUEST info: <pre>" . var_export($_REQUEST, true) . "</pre>");
 			 return false;
-		} else if ($response->status == Auth_OpenID_SUCCESS) {
+		} else if ($this->response->status == Auth_OpenID_SUCCESS) {
 		    // This means the authentication succeeded.
-			$this->displayid = $response->getDisplayIdentifier();
-			$this->openid = $response->identity_url;
-			$sreg_resp = Auth_OpenID_SRegResponse::fromSuccessResponse($response);
+			$this->displayid = $this->response->getDisplayIdentifier();
+			$this->openid = $this->response->identity_url;
+			$sreg_resp = Auth_OpenID_SRegResponse::fromSuccessResponse($this->response);
 			$sreg = $sreg_resp->contents();
 			$_SESSION['openid_sreg']=$sreg;
 
-		    // $openid = $response->identity_url;
+		    // $openid = $this->response->identity_url;
 		    $esc_identity = htmlspecialchars($this->openid, ENT_QUOTES);
 
 		    $success = "You have successfully verified $esc_identity (" . $this->displayid . ") as your identity.";
 
-		    if ($response->endpoint->canonicalID) {
-		        $success .= '  (XRI CanonicalID: '.$response->endpoint->canonicalID.') ';
+		    if ($this->response->endpoint->canonicalID) {
+		        $success .= '  (XRI CanonicalID: '.$this->response->endpoint->canonicalID.') ';
 		    }
 
 			/**
