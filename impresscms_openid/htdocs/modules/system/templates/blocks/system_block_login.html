@@ -1,5 +1,5 @@
 <div id="xoops_block_login_form">
-<form style="margin-top: 0px;" action="<{$xoops_url}>/user.php" method="post">
+  <form style="margin-top: 0px;" action="<{$xoops_url}>/user.php" method="post">
     <{$block.lang_username}><br />
     <input type="text" name="uname" size="12" value="<{$block.unamevalue}>" maxlength="25" /><br />
     <{$block.lang_password}><br />
@@ -11,22 +11,22 @@
     <input type="hidden" name="op" value="login" />
     <input type="submit" value="<{$block.lang_login}>" /><br />
     <{$block.sslloginlink}>
-</form>
+  </form>
+  <div style="text-align: left;"><a href="#" onclick="xoopsGetElementById('openid-verify-form2').style.display = 'block'; xoopsGetElementById('xoops_block_login_form').style.display = 'none'; return false;">Login with an OpenID ?</a></div>
 </div>
-  		<div style="text-align: left;"><a href="#" onclick="xoopsGetElementById('openid-verify-form2').style.display = 'block'; xoopsGetElementById('login-form2').style.display = 'none';">Login with an OpenID ?</a></div>
-		<div id="openid-verify-form2" style="display: none;">
-		  	<form method="get" action="<{$xoops_url}>/try_auth.php">
-			    Your OpenID URL : 
-			    <input type="hidden" name="action" value="verify" />
-			    <input type="text" class="openid_url" name="openid_identifier"  value="" />
-			    <input type="submit" value="Login" />
-			</form>
-			<div style="text-align: left;"><a href="#" onclick="xoopsGetElementById('xoops_block_login_form').style.display = 'none'; xoopsGetElementById('login-form2').style.display = 'block';">Go back to normal login</a></div>  
-		</div>  
-		
-<a href="<{$xoops_url}>/user.php#lost" title="<{$block.lang_lostpass}>"><{$block.lang_lostpass}></a>
 
+<div id="openid-verify-form2" style="display: none;">
+  <form method="get" action="<{$xoops_url}>/try_auth.php">
+    Your OpenID URL : 
+    <input type="hidden" name="action" value="verify" />
+    <input type="text" class="openid_url" name="openid_identifier"  value="" />
+    <input type="submit" value="Login" />
+  </form>
+  <div style="text-align: left;"><a href="#" onclick="xoopsGetElementById('xoops_block_login_form').style.display = 'block'; xoopsGetElementById('openid-verify-form2').style.display = 'none'; return false;">Go back to normal login</a></div>  
+</div>  
+<br />	
+<a href="<{$xoops_url}>/user.php#lost" title="<{$block.lang_lostpass}>"><{$block.lang_lostpass}></a>
 <{if $block.registration }>
-<br /><br />
+<br />
 <a href="<{$xoops_url}>/register.php" title="<{$block.lang_registernow}>"><{$block.lang_registernow}></a>
 <{/if}>
