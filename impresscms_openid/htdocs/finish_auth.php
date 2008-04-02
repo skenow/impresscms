@@ -12,22 +12,19 @@ include_once XOOPS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/auth.php';
 
 $xoopsAuth =& XoopsAuthFactory::getAuthConnection($myts->addSlashes($uname));
 $user = $xoopsAuth->authenticate();
-icms_debug($xoopsAuth->step);
 
 switch($xoopsAuth->step) {
 	case OPENID_STEP_NO_USER_FOUND:
 		$xoopsOption['template_main'] = 'system_openid.html';
 		include_once(XOOPS_ROOT_PATH . "/header.php");
-		if(preg_match('/^http/',$xoopsAuth->displayid)){
-			if($_SESSION['openid_sreg']['nickname']!='') {
-				$unam = alphaonly($_SESSION['openid_sreg']['nickname']);
-			} else {
-				$unam = "";
-			}
-		}
+
+		
+		$sreg=$_SESSION['openid_sreg'];
+		
 		$xoopsTpl->assign('displayId', $xoopsAuth->displayid);
 		$xoopsTpl->assign('cid', $xoopsAuth->openid);
-		$xoopsTpl->assign('unam', $unam);
+		$xoopsTpl->assign('uname', isset($sreg['nickname']) ? $sreg['nickname'] : '');
+		$xoopsTpl->assign('email', isset($sreg['email']) ? $sreg['email'] : '');
 		$xoopsTpl->assign('existinguser',_OD_EXISTINGUSER);
 		$xoopsTpl->assign('loginbelow',_OD_LOGINBELOW);
 		$xoopsTpl->assign('xoopsuname', _OD_XOOPSUNAME);
@@ -40,15 +37,31 @@ switch($xoopsAuth->step) {
 	break;
 	
 	case OPENID_STEP_REGISTER:
+		
+		/**
+		 * setting the step to the previous one for if there is an error, user will be redirected
+		 * a step behind
+		 */
+		$_SESSION['openid_step'] = OPENID_STEP_NO_USER_FOUND;
+		
 		$sreg=$_SESSION['openid_sreg'];
 		include_once(XOOPS_ROOT_PATH.'/header.php');
 	
+		/**
+		 * @todo this is only temporary and it needs to be included in the template as a javascript check
+		 */
+		if (empty($_POST['email']) || empty($_POST['uname'])) {
+			redirect_header(XOOPS_URL . '/finish_auth.php', 3, 'email and username are mandatory');
+		}
+		
+		$email = addslashes($_POST['email']) ;
+		
 		$uname = addslashes($_POST['uname']) ;
 		/**
 		 * @todo use the related UserConfigOption
 		 */
 		if (strlen($uname)<3 ){ // Username too short.
-			redirect_header($redirect_url, 3, _US_OPENID_NEW_USER_UNAME_TOO_SHORT);
+			redirect_header(XOOPS_URL . '/finish_auth.php', 3, _US_OPENID_NEW_USER_UNAME_TOO_SHORT);
 		}
 	
 		// checking if this uname is available
@@ -56,8 +69,8 @@ switch($xoopsAuth->step) {
 		$user_handler =& xoops_gethandler('user');
 		$users =& $user_handler->getObjects($criteria, false);
 		
-		if (is_array($users) && count($users) > 1) {
-			redirect_header($redirect_url, 3, _US_OPENID_NEW_USER_UNAME_EXISTS);
+		if (is_array($users) && count($users) > 0) {
+			redirect_header(XOOPS_URL . '/finish_auth.php', 3, _US_OPENID_NEW_USER_UNAME_EXISTS);
 		}
 	
 		$email = addslashes($myts->stripSlashesGPC($sreg['email']));
@@ -206,7 +219,7 @@ switch($xoopsAuth->step) {
 		$newUser->setVar('timesone_offset', $xoopsConfig['default_TZ']);
 		$newUser->setVar('openid', $xoopsAuth->openid);
 		if (!$member_handler->insertUser($newUser)) {
-			redirect_header($redirect_url, 3, _US_OPENID_NEW_USER_CANNOT_INSERT . ' ' . $newUser->getHtmlErrors());
+			redirect_header(XOOPS_URL . '/finish_auth.php', 3, _US_OPENID_NEW_USER_CANNOT_INSERT . ' ' . $newUser->getHtmlErrors());
 		}
 	
 		// Now, add the user to the group.
@@ -253,11 +266,6 @@ switch($xoopsAuth->step) {
 		/**
 		 * Linking an existing user with this openid
 		 */
-		$response=$_SESSION['openid_response'];
-		if (@$response->status != Auth_OpenID_SUCCESS) {
-			redirect_header(XOOPS_URL . '/user.php', 3, _US_OPENID_NOPERM);
-		} 
-		
 		include_once(XOOPS_ROOT_PATH.'/header.php');
 		
 		$uname4sql = addslashes($myts->stripSlashesGPC($_POST['uname'])) ;
@@ -274,11 +282,10 @@ switch($xoopsAuth->step) {
 		}
 		
 		// This means the authentication succeeded.
-	    $displayId = $response->getDisplayIdentifier();
-	    $cid = $response->identity_url;
+	    $displayId = $xoopsAuth->response->getDisplayIdentifier();
 	
 		$thisUser->setVar('last_login', time());
-		$thisUser->setVar('openid', $response->identity_url);
+		$thisUser->setVar('openid', $xoopsAuth->openid);
 		
 		if (!$member_handler->insertUser($thisUser)) {
 			redirect_header($redirect_url, 3, _US_OPENID_LINKED_AUTH_CANNOT_SAVE);

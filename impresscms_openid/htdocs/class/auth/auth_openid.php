@@ -123,6 +123,8 @@ class XoopsAuthOpenid extends XoopsAuth {
 		    	$this->step = OPENID_STEP_REGISTER;
 		    } elseif (isset($_POST['openid_link'])) {
 		    	$this->step = OPENID_STEP_LINK;
+		    } elseif(isset($_SESSION['openid_step'])) {
+		    	$this->step = $_SESSION['openid_step'];
 		    } else {
 				// Do we already have a user with this openid
 				$member_handler = & xoops_gethandler('member');

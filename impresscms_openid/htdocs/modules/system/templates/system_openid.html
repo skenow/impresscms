@@ -25,7 +25,8 @@
 	<br />
   <form action="finish_auth.php" method="post">
   
-    <{$smarty.const._US_NICKNAME}>: <input type="text" name="uname" size="26" maxlength="60" />
+    <{$smarty.const._US_NICKNAME}>: <input type="text" name="uname" size="26" maxlength="60" value="<{$uname}>"/><br />
+    <{$smarty.const._US_EMAIL}>: <input type="text" name="email" size="26" maxlength="255" value="<{$email}>"/>
     <br />
     <br />
      <input type="hidden" name="openid_register" value="1" />
