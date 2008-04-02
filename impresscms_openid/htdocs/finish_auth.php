@@ -303,7 +303,7 @@ switch($xoopsAuth->step) {
 		unset($_SESSION['openid_sreg']);
 		unset($_SESSION['frompage']);
 		
-		redirect_header($redirect_url, 3, sprintf(_US_LOGGINGU, $thisUser->getVar('uname')));		
+		redirect_header($redirect_url, 3, sprintf(_US_OPENID_LINKED_DONE, $thisUser->getVar('uname')));		
 	break;
 		
 }
