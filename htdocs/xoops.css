@@ -42,6 +42,8 @@ acronym, abbr, dfn {
     background-image:   url(./images/paginact.gif);
 }
 
+
+
 /* For required elements in XOOPS form, can be overwritten in theme styles */
 .xo-theme-form td.head {
     width: 30%;
@@ -151,13 +153,11 @@ div.cpicon a {
 	padding: 2px 5px 1px 5px;
 	margin: 3px;
 	color: #666666;
+	background-color: white;
+	opacity: 0;
+	filter:Alpha(Opacity=0) ;
 }
-
-div.cpicon a:hover{
-	background-color: #FFF6C1;
-	border: 1px solid #FF9900;
-	color: #1E90FF;
-}
+div.cpicon a span {background-color: white;}
 
 div.cpicon img { margin-top: 4px; margin-bottom: 4px; width: 32px; height: 32px;}
 div.cpicon span {

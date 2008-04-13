@@ -73,8 +73,7 @@ function xoops_footer()
 
 function xoops_error($msg, $title='')
 {
-    echo '
-    <div class="errorMsg">';
+    echo '<div class="errorMsg"><img src="'.XOOPS_URL.'/modules/system/images/big_warning.gif" />';
     if ($title != '') {
         echo '<h4>'.$title.'</h4>';
     }

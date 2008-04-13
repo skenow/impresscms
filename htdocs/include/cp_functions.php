@@ -64,29 +64,13 @@ function xoops_cp_header($ret = 0)
 	echo '<link rel="stylesheet" type="text/css" media="all" href="'.XOOPS_URL.'/xoops.css" />';
     echo '<link rel="stylesheet" type="text/css" media="all" href="'.XOOPS_URL.'/modules/system/style.css" />';
     $icmsLibrariesHandler->triggerEvent('adminHeader');
-    echo "<script type=\"text/javascript\"><!--//--><![CDATA[//><!--
-startList = function() {
-	if (document.all&&document.getElementById) {
-		navRoot = document.getElementById(\"nav\");
-		for (i=0; i<navRoot.childNodes.length; i++) {
-			node = navRoot.childNodes[i];
-			if (node.nodeName==\"LI\") {
-				node.onmouseover=function() {
-					this.className+=\" over\";
-				}
-				node.onmouseout=function() {
-					this.className=this.className.replace(\" over\", \"\");
-				}
-			}
-		}
-	}
-}
-window.onload=startList;
 
-//--><!]]></script>";
-    $icmsLibrariesHandler->triggerEvent('adminBeforeFooter');
-	echo "</head>
-        <body>" ;
+	echo "<script src='".XOOPS_URL."/libraries/jquery/jquery.js'></script>";
+	echo "<script src='".XOOPS_URL."/libraries/jquery/jquery.color.js'></script>";
+	echo "<script src='".XOOPS_URL."/libraries/jquery/jquery.pngFix.js'></script>";
+	echo "<script src='".XOOPS_URL."/modules/system/include/jquery_admin_code.js'></script>";
+	$icmsLibrariesHandler->triggerEvent('adminBeforeFooter');
+	echo "</head><body>" ;
 	/**
 	 * Loading admin dropdown menus
 	 */
@@ -131,6 +115,7 @@ window.onload=startList;
     		}
     		$navitem['menu'] = $sysprefs = $perm_itens; //Getting array of allowed system prefs
     	}
+    	
     	$icmsAdminTpl->append('navitems', $navitem);
     }
 //icms_debug_vardump($sysprefs);
@@ -247,30 +232,25 @@ function xoopsfwrite()
 
 /**
  * Creates a multidimensional array with items of the dropdown menus of the admin panel.
- * This array will be saved, by the function xoops_module_write_admin_menu, in a cache file 
+ * This array will be saved, by the function xoops_module_write_admin_menu, in a cache file
  * to preserve resources of the server and to maintain compatibility with some modules Xoops.
- * 
+ *
  * @author TheRplima
- * 
+ *
  * @return array (content of admin panel dropdown menus)
  */
 function impresscms_get_adminmenu(){
 	global $xoopsUser;
-	
+
 	$admin_menu = array();
 	$modules_menu = array();
 	$systemadm = false;
 	$cont = 0;
-	
+
 	#########################################################################
 	# Control Panel Home menu
 	#########################################################################
-    $i = 0;
-	$menu[$i]['link'] = XOOPS_URL."/admin.php";
-	$menu[$i]['title'] = _CPHOME;
-	$menu[$i]['absolute'] = 1;
-	$menu[$i]['small'] = XOOPS_URL."/modules/system/images/mini_cp.png";
-	$i++;
+  $i = 0;
 
 	$menu[$i]['link'] = XOOPS_URL;
 	$menu[$i]['title'] = _YOURHOME;
@@ -282,16 +262,16 @@ function impresscms_get_adminmenu(){
 	$menu[$i]['title'] = _LOGOUT;
 	$menu[$i]['absolute'] = 1;
 	$menu[$i]['small'] = XOOPS_URL.'/images/logout.png';
-	
+
 	$admin_menu[$cont]['id']   = 'cphome';
-    $admin_menu[$cont]['text'] = _CPHOME;
-    $admin_menu[$cont]['link'] = '#';
+    $admin_menu[$cont]['text'] = _YOURHOME;
+    $admin_menu[$cont]['link'] = XOOPS_URL;
     $admin_menu[$cont]['menu'] = $menu;
 	$cont++;
 	#########################################################################
 	# end
 	#########################################################################
-	
+
 	#########################################################################
 	# System Preferences menu
 	#########################################################################
@@ -302,16 +282,16 @@ function impresscms_get_adminmenu(){
     	$lkn['dir'] = 'system';
     	$menu[] = $lkn;
     }
-	
-	$admin_menu[$cont]['id']   = 'opsystem';
-    $admin_menu[$cont]['text'] = _SYSTEM;
-    $admin_menu[$cont]['link'] = XOOPS_URL.'/modules/system/admin.php';
+
+	$admin_menu[$cont]['id']   = 'cphome';
+    $admin_menu[$cont]['text'] = _CPHOME;
+    $admin_menu[$cont]['link'] = XOOPS_URL.'/admin.php';
     $admin_menu[$cont]['menu'] = $menu;
 	$cont++;
 	#########################################################################
 	# end
 	#########################################################################
-	
+
 	#########################################################################
 	# Modules menu
 	#########################################################################
@@ -371,7 +351,7 @@ function impresscms_get_adminmenu(){
 	#########################################################################
 	# end
 	#########################################################################
-	
+
 	#########################################################################
 	# ImpressCMS News Feed menu
 	#########################################################################
@@ -450,13 +430,11 @@ function xoops_module_get_admin_menu(){
 	return impresscms_get_adminmenu();
 }
 
-function xoops_module_write_admin_menu($content)
-{   
+function xoops_module_write_admin_menu($content) {
 	global $xoopsConfig;
     if (!xoopsfwrite()) {
         return false;
     }
-	
     $filename = XOOPS_CACHE_PATH.'/adminmenu_'.$xoopsConfig['language'].'.php';
     if ( !$file = fopen($filename, "w") ) {
         echo 'failed open file';

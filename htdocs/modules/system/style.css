@@ -116,7 +116,10 @@ a:hover { background-color: transparent; color: #ff9966; font-weight: bold; text
 
 /* ===== Redirect messages ===== */
 .errorMsg,.confirmMsg, .resultMsg , .warningMsg, .successMsg { padding: .8em; text-align:center; margin-bottom: 1em; border: 2px solid #ddd;}
-.errorMsg { background-color: #FBE3E4; color: #D12F19; border-color: #FBC2C4; }
+.errorMsg {width: 60%; margin: 10px 20% 15px; background-color: white; color: #D12F19; border-color: #FBC2C4; }
+.errorMsg img {float: left; position: relative; left: 0px; top: -20px;
+/* jQuery required */
+opacity: 0; filter:Alpha(Opacity=0); z-index: 1;}
 .confirmMsg { background-color: #FFF6BF; color: #817134; border-color: #FFD324; }
 .warningMsg { background-color: #99CCFF; color: #000099; border-color: #0099FF; }
 .resultMsg { background-color: #E6EFC2; color: #529214; border-color: #C6D880; }
@@ -189,29 +192,30 @@ div#logoHead{
 }
 div#navbarCP{
 	background: url(images/bg-lr-titles.gif);
+	background: url(images/navbar-bg_dark.png) repeat-x;
+	/*padding: 4px;*/
+	/*border-top: 1px solid #FFFFFF;
+	border-bottom: 1px solid #CCCCCC;*/
 	font-weight: normal;
 	font-family: Arial, Helvetica, sans-serif;
 	height: 25px;
 }
-div#navbarCP ul{
-	list-style: none;
-	padding: 0;
-	margin: 0;
-	/*border: 1;*/
-}
+div#navbarCP ul{list-style: none;	padding: 0;	margin: 0;z-index: 500; position: relative;}
 div#navbarCP ul li{ list-style: none; padding: 0; float: left; margin: 0; margin-left: 3px; position: relative; }
-div#navbarCP ul li a{ padding: 4px;	display: block;	color: #4d4d4d;	font-weight: normal; font-size:14px; padding-right:20px;}
-div#navbarCP ul li a:hover{	border-color: #ADD8E6; color: #000; text-decoration: none; }
-div#navbarCP ul li ul{
+div#navbarCP ul li a{ padding: 4px;	display: block;	color: #FFFFFF;	font-weight: normal; font-size:14px; padding-right:20px;}
+div#navbarCP ul li a:hover{	border-color: #ADD8E6; color: #99CCFF; text-decoration: none; }
+div#navbarCP ul li ul {
+	width: 150px;
 	display: none;
 	position: absolute;
 	top: 1em;
+	*top: 2em;
 	margin-left: 15px;
 	background: #FFFFFF;
-	border: 1px solid #000000;
+	border: 1px solid #ccc;
+	border-bottom: 4px solid #F3AC03;
 	padding: 0;
-	z-index: 1;
-	/*margin: 0;*/
+	z-index: 500;
 }
 div#navbarCP ul li ul a{
 	color: #666666;
@@ -220,7 +224,6 @@ div#navbarCP ul li ul a{
 	padding-left: 20px;
 	margin: 0;
 	font-size:11px;
-	/*border:1px solid #000000;*/
 	border: 1px solid #FFFFFF;
 }
 div#navbarCP ul li ul a:hover{
@@ -232,14 +235,12 @@ div#navbarCP ul li ul a:hover{
 div#navbarCP ul li ul li{
 	width: 150px;
 	margin: 0;
-	*width: 150px;
 	*margin-left:-10px;
 }
 div#navbarCP ul li > ul {
 	top: auto;
 	left: auto;
 }
-div#navbarCP ul li:hover ul, div#navbarCP li.over ul{ display: block; }
 div#navbarCP ul li ul li{
 	float: none;
 }
@@ -248,18 +249,15 @@ div#navbarCP ul li ul li ul{
 	margin-top:-25px;
 }
 div#navbarCP ul li ul li ul li{
-	display:none;
+	display: block;
 }
-div#navbarCP ul li ul li:hover ul li {
-	display:block;
-}
-
 div#bodyCP{
 	width: 95%;
 	margin: 0 auto;
 	background-color: #FFFFFF;
 	border: 1px solid #CCCCCC;
 	padding: 8px;
+display: none;
 }
 div#containBodyCP{
 	padding: 0;
