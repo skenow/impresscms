@@ -189,7 +189,7 @@ CREATE TABLE config (
   conf_valuetype varchar(10) NOT NULL default '',
   conf_order smallint(5) unsigned NOT NULL default '0',
   PRIMARY KEY  (conf_id),
-  KEY conf_mod_cat_id (conf_modid,conf_catid)
+  KEY mod_cat_order (conf_modid,conf_catid,conf_order)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
