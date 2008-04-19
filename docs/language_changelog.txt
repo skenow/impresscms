@@ -11,27 +11,62 @@ Legend :
 ImpressCMS 1.1 (changes from ImpressCMS 1.0)
 =========================================
 
+install/language/english/install2.php
+--------------------------
++  define("_WELCOME_MSG_CONTENT", "Welcome {UNAME},
+
+Your account has been successfully activated on {X_SITENAME}. As a member of our site, you will benefit from all the features reserved to registered members !
+
+Once again, welcome to our site. Visit us often !
+
+If you did not registered to our site, please contact us at the following address {X_ADMINMAIL}, and we will fix the situation.
+
+-----------
+Yours truly,
+{X_SITENAME}
+{X_SITEURL}");
+
 + language/english/databaseupdater.php  (added)
+--------------------------
 
 language/english/user.php
 --------------------------
 
 +define('_US_YOURREGISTRATION', 'Your registration at %s');
-+define('_US_NEWUSERREGAT', 'New registration at %s');
 +define('_US_WELCOMEMSGFAILED', 'Error while sending the welcome email.');
 +define('_US_NEWUSERNOTIFYADMINFAIL', 'Notification to admin about new user registration failed.');
+
+modules/system/language/english/admin/modulesadmin.php
+--------------------------
+
++  define('_MD_AM_MODULESADMIN_SUPPORT', 'Module Support Site');
++  define('_MD_AM_MODULESADMIN_STATUS', 'Status');
++  define('_MD_AM_MODULESADMIN_MODULENAME', 'Module Name');
++  define('_MD_AM_MODULESADMIN_MODULETITLE', 'Module Title');
 
 modules/system/language/english/admin/preferences.php
 --------------------------
 
-define("_MD_AM_ML_AUTOSELECT_ENABLED","Language Autoselection");
-define("_MD_AM_ML_AUTOSELECT_ENABLED_DESC","Make the system autoselect the language of the site depending the web browser language configuration.");
-define("_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE","Allow annonymous users to users profiles");
-define("_MD_AM_ML_AUTOSELECT_ENABLED","Autoselect the language depeding the browser configuration");
++  define("_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE","Allow annonymous users to users profiles");
++  define("_MD_AM_ML_AUTOSELECT_ENABLED","Autoselect the language depeding the browser configuration");
 +define("_MD_AM_WELCOMEMSG","Send a welcome message to newly registered user");
 +define("_MD_AM_WELCOMEMSGDSC","Send a welcome message to new user when their account gets activated. The content of this message can be configured in the following option.");
 +define("_MD_AM_WELCOMEMSG_CONTENT","Content of the welcome message");
 +define("_MD_AM_WELCOMEMSG_CONTENTDSC","You can edit the message that is sent to the new user. Note that you can use the following tags: <br /><br />- {UNAME} = username of the user<br />- {X_UEMAIL} = email of the user<br />- {X_ADMINMAIL} = admin email address<br />- {X_SITENAME} = name of the site<br />- {X_SITEURL} = URL of the site");
++  define("_MD_AM_EXT_DATE","Do you want to use an extended/local date function?");
++  define("_MD_AM_EXT_DATEDSC","Note: by activating this option, ImpressCMS will use an extended calendar script <b>ONLY</b> if you have this script running on your site.<br />Please visit <a href='http://wiki.impresscms.org/index.php?title=Extended_date_function'>extended date function</a> for more info.");
++  define("_MD_AM_SEARCH_USERDATE","Show user and date in search results");
++  define("_MD_AM_SEARCH_NO_RES_MOD","Show modules with no match in search results");
++  define("_MD_AM_SEARCH_NO_RES_MODDSC","");
++  define("_MD_AM_SEARCH_PER_PAGE","Item per page in search results");
++  define("_MD_AM_SEARCH_PER_PAGEDSC","");
++  define("_MD_AM_EDITOR_DEFAULT","Default Editor");
++  define("_MD_AM_EDITOR_DEFAULT_DESC","Select the default Editor for all the site.");
++  define("_MD_AM_EDITOR_ENABLED_LIST","Enabled Editors");
++  define("_MD_AM_EDITOR_ENABLED_LIST_DESC","Select the selectable editors by the modules (If the module has a configuration to select the editor.)");
++  define("_MD_AM_USE_SHA256","Use SHA256 Encryption for Passwords (Recommended)");
++  define("_MD_AM_USE_SHA256DSC","Select 'yes' for SHA256. Select 'no' for MD5 (not recommended).<br />Changing this will render all passwords invalid!");
+
 
 modules/system/languages/english/admin/groups.php
 -------------------------------------------------
@@ -45,6 +80,14 @@ language/english/mail_template/
 + welcome.tpl
 + newuser_notify.tpl
 +- register.tpl (modified to use {X_ADMINMAIL} and not {ADMINMAIL})
+
+install/language/english/install.php
+------------------------------------
+
++ define( "DB_SALT_LABEL", "Password Salt Key" );	// L98
++ define( "DB_SALT_HELP",  "This salt key will be appended to passwords in function icms_encryptPass(), and is used to create a totally unique secure password. Do Not change this key once your site is live, doing so will render ALL passwords invalid. created to avoid name conflicts in the database. If you are unsure, just keep the default"); // L97
++ define( "ADMIN_SALT_LABEL", "Password Salt Key" ); // L99
+
 
 ImpressCMS 1.0 (changes from XOOPS 2.0.17)
 =========================================
@@ -1117,10 +1160,10 @@ install/language/english/install.php
 -define("_INSTALL_L165","The site is currently closed for maintenance. Please come back later.");
 +//
 +define("_INSTALL_SELECT_MODS_INTRO", "In the selection box on the left side, please select the modules that
-+you wish to install on this site.
-+All the installed modules are accessible by the admin group and the registered users.
-+In case you would like to give visitors to the site (unregistered users or users who are not logged in) access to one or more of the
-+installed modules please select these modules in the selection box on the right.");
+you wish to install on this site.
+All the installed modules are accessible by the admin group and the registered users.
+In case you would like to give visitors to the site (unregistered users or users who are not logged in) access to one or more of the
+installed modules please select these modules in the selection box on the right.");
 
 -// %s is filename
 -define("_INSTALL_L152","Could not open %s.");

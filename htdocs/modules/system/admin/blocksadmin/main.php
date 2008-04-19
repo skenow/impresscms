@@ -43,12 +43,10 @@ if ( isset($_POST) ) {
 }
 
 if ( isset($_GET['op']) ) {
-	# Adding dynamic block area/position system - TheRpLima - 2007-10-21
-    //if ($_GET['op'] == "edit" || $_GET['op'] == "delete" || $_GET['op'] == "delete_ok" || $_GET['op'] == "clone") {
-    if ($_GET['op'] == "edit" || $_GET['op'] == "delete" || $_GET['op'] == "delete_ok" || $_GET['op'] == "clone" || $_GET['op'] == "adminpblocks") {
-	#
+	if ($_GET['op'] == "edit" || $_GET['op'] == "delete" || $_GET['op'] == "delete_ok" || $_GET['op'] == "clone" || $_GET['op'] == "adminpblocks" || $_GET['op'] == "changestatus") {
         $op = $_GET['op'];
         $bid = isset($_GET['bid']) ? intval($_GET['bid']) : 0;
+		$sts = isset($_GET['sts']) ? intval($_GET['sts']) : 0;
     }
 }
 
@@ -118,11 +116,10 @@ if ($op == 'adminpblocks') {
 	  include "blockspadmin.php";
 	  exit;
 }
-#
 
 if ( $op == "list" ) {
     xoops_cp_header();
-    list_blocks();
+	echo list_blocks();
     xoops_cp_footer();
     exit();
 }
@@ -133,11 +130,17 @@ if ( $op == "order" ) {
         exit();
     }
     foreach (array_keys($bid) as $i) {
-        if ( $oldweight[$i] != $weight[$i] || $oldvisible[$i] != $visible[$i] || $oldside[$i] != $side[$i] )
-        order_block($bid[$i], $weight[$i], $visible[$i], $side[$i]);
+		if ( $oldweight[$i] != $weight[$i] || $oldside[$i] != $side[$i] )
+		order_block($bid[$i], $weight[$i], $side[$i]);
     }
     redirect_header("admin.php?fct=blocksadmin",1,_AM_DBUPDATED);
     exit();
+}
+
+if ( $op == "changestatus" ) {
+	changests_block($bid,$sts);
+	redirect_header("admin.php?fct=blocksadmin",1,_AM_DBUPDATED);
+	exit();
 }
 
 if ( $op == "save" ) {
@@ -185,16 +188,6 @@ if ( $op == "edit" ) {
     exit();
 }
 
-# Activate the block clone function - TheRpLima - 2007-10-21
-/*
-if ($op == 'clone') {
-    clone_block($bid);
-}
-
-if ($op == 'clone_ok') {
-    clone_block_ok($bid, $bside, $bweight, $bvisible, $bcachetime, $bmodule, $options);
-}
-*/
 if ($op == 'clone') {
     clone_block($bid);
 }
@@ -205,5 +198,4 @@ if ($op == 'clone_ok') {
     $bcontent = isset($bcontent) ? $bcontent : '';
     clone_block_ok($bid,$bside,$bweight,$bvisible,$btitle,$bcontent,$bcachetime,$bmodule,$options);
 }
-#
 ?>

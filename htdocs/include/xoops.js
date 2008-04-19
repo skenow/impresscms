@@ -18,7 +18,6 @@ function $() {
 }
 }
 
-	
 function xoopsGetElementById(id){
 	return $(id);
 }
@@ -412,7 +411,14 @@ function xoopsValidate(subjectId, textareaId, submitId, plzCompletePhrase, msgTo
 	}
 }
 
-
-
-
-
+function icms_showDiv(type,id,classname){
+	divs = document.getElementsByTagName('div');
+	for (i=0; i<divs.length;i++){
+		if (/classname/.test(divs[i].className)){
+			divs[i].style.display = 'none';
+		}
+	}
+	if (!id)id = '';
+	changeDisplay(type+id);
+	document.anchors.item(type+id+'_anchor').scrollIntoView();
+}

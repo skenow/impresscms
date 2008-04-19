@@ -275,11 +275,14 @@ define("_MD_AM_WELCOMEMSG_CONTENT","Content of the welcome message");
 define("_MD_AM_WELCOMEMSG_CONTENTDSC","You can edit the message that is sent to the new user. Note that you can use the following tags: <br /><br />- {UNAME} = username of the user<br />- {X_UEMAIL} = email of the user<br />- {X_ADMINMAIL} = admin email address<br />- {X_SITENAME} = name of the site<br />- {X_SITEURL} = URL of the site");
 
 define("_MD_AM_SEARCH_USERDATE","Show user and date in search results");
-define("_MD_AM_SEARCH_USERDATE","");
+define("_MD_AM_SEARCH_USERDATEDSC","");
 define("_MD_AM_SEARCH_NO_RES_MOD","Show modules with no match in search results");
 define("_MD_AM_SEARCH_NO_RES_MODDSC","");
 define("_MD_AM_SEARCH_PER_PAGE","Item per page in search results");
 define("_MD_AM_SEARCH_PER_PAGEDSC","");
+
+define("_MD_AM_EXT_DATE","Do you want to use an extended/local date function?");
+define("_MD_AM_EXT_DATEDSC","Note: by activating this option, ImpressCMS will use an extended calendar script <b>ONLY</b> if you have this script running on your site.<br />Please visit <a href='http://wiki.impresscms.org/index.php?title=Extended_date_function'>extended date function</a> for more info.");
 
 define("_MD_AM_EDITOR_DEFAULT","Default Editor");
 define("_MD_AM_EDITOR_DEFAULT_DESC","Select the default Editor for all the site.");
@@ -289,6 +292,8 @@ define("_MD_AM_EDITOR_ENABLED_LIST_DESC","Select the selectable editors by the m
 
 define("_MD_AM_ML_AUTOSELECT_ENABLED","Autoselect the language depending the browser configuration");
 
-define("_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE","Allow annonymous users to see user profiles.");
-?>
+define("_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE","Allow anonymous users to see user profiles.");
 
+define("_MD_AM_USE_SHA256","Use SHA256 Encryption for Passwords (Recommended)");
+define("_MD_AM_USE_SHA256DSC","Select 'yes' for SHA256. Select 'no' for MD5 (not recommended).<br />Changing this will render all passwords invalid!");
+?>
