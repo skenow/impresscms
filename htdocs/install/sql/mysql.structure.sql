@@ -241,12 +241,10 @@ CREATE TABLE group_permission (
   gperm_id int(10) unsigned NOT NULL auto_increment,
   gperm_groupid smallint(5) unsigned NOT NULL default '0',
   gperm_itemid mediumint(8) unsigned NOT NULL default '0',
-  gperm_modid mediumint(5) unsigned NOT NULL default '0',
+  gperm_modid smallint(5) unsigned NOT NULL default '0',
   gperm_name varchar(50) NOT NULL default '',
   PRIMARY KEY  (gperm_id),
-  KEY groupid (gperm_groupid),
-  KEY itemid (gperm_itemid),
-  KEY gperm_modid (gperm_modid,gperm_name(10))
+  KEY name_mod_group (gperm_name(10),gperm_modid,gperm_groupid)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
