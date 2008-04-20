@@ -1,7 +1,7 @@
 <?php
 
 /**
-* $Id: databaseupdater.php 1434 2008-04-05 06:25:57Z pesian_stranger $
+* $Id: databaseupdater.php 1699 2008-04-19 15:26:23Z xoops-magazine $
 * Module: SmartContent
 * Author: The SmartFactory <www.smartfactory.ca>
 * Licence: GNU
@@ -21,7 +21,7 @@ define("_DATABASEUPDATER_MSG_CREATE_TABLE", "Table %s created");
 define("_DATABASEUPDATER_MSG_CREATE_TABLE_ERR", "Error creating table %s");
 define("_DATABASEUPDATER_MSG_NEWFIELD", "Successfully added field %s");
 define("_DATABASEUPDATER_MSG_NEWFIELD_ERR", "Error adding field %s");
-define("_DATABASEUPDATER_NEEDUPDATE", "Your database is out-of-date. Please upgrade your database tables!<br><b>Note : The ImpressCMS strongly recommends you to backup all your database tables before running this upgrade script.</b><br>");
+define("_DATABASEUPDATER_NEEDUPDATE", "Your database is out-of-date. Please upgrade your database tables!<br /><b>Note : The ImpressCMS strongly recommends you to backup all your database tables before running this upgrade script.</b><br />");
 define("_DATABASEUPDATER_NOUPDATE", "Your database is up-to-date. No updates are necessary.");
 define("_DATABASEUPDATER_UPDATE_DB", "Updating Database");
 define("_DATABASEUPDATER_UPDATE_ERR", "Errors updating to version %s");

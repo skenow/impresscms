@@ -1,29 +1,17 @@
 <?php
-// $Id: functions.php 1099 2007-10-19 01:08:14Z dugris $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
+/**
+* Helper functions available in the ImpressCMS process
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @package		core
+* @since		XOOPS
+* @author		http://www.xoops.org The XOOPS Project
+* @author		modified by marcan <marcan@impresscms.org>
+* @version		$Id: admin.php 1683 2008-04-19 13:50:00Z malanciault $
+*/
 
 // ################## Various functions from here ################
 
@@ -52,10 +40,10 @@ function xoops_header($closehead=true)
     <meta name="copyright" content="'.htmlspecialchars($xoopsConfigMetaFooter['meta_copyright']).'" />
     <meta name="generator" content="ImpressCMS" />
     <title>'.htmlspecialchars($xoopsConfig['sitename']).'</title>
-    <script type="text/javascript" src="'.XOOPS_URL.'/include/xoops.js"></script>
+    <script type="text/javascript" src="'.ICMS_URL.'/include/xoops.js"></script>
     ';
     $themecss = getcss($xoopsConfig['theme_set']);
-    echo '<link rel="stylesheet" type="text/css" media="all" href="'.XOOPS_URL.'/xoops.css" />';
+    echo '<link rel="stylesheet" type="text/css" media="all" href="'.ICMS_URL.'/xoops.css" />';
     if ($themecss) {
         echo '<link rel="stylesheet" type="text/css" media="all" href="'.$themecss.'" />';
         //echo '<style type="text/css" media="all"><!-- @import url('.$themecss.'); --></style>';
@@ -206,8 +194,8 @@ function formatTimestamp($time, $format="l", $timeoffset="")
         break;
     }
 //Start addition including extended date function
-	if ( file_exists(XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/ext/ext_date_function.php") && $xoopsConfig['use_ext_date'] == 1 && $format != 'mysql' ){
-         include_once XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/ext/ext_date_function.php";
+	if ( file_exists(ICMS_ROOT_PATH."/language/".$xoopsConfig['language']."/ext/ext_date_function.php") && $xoopsConfig['use_ext_date'] == 1 && $format != 'mysql' ){
+         include_once ICMS_ROOT_PATH."/language/".$xoopsConfig['language']."/ext/ext_date_function.php";
        return ucfirst(ext_date($datestring,$usertimestamp));
 	   } else {
     return ucfirst(date($datestring, $usertimestamp));
@@ -250,7 +238,7 @@ function OpenWaitBox()
     echo "<div id='waitDiv' style='position:absolute;left:40%;top:50%;visibility:hidden;text-align: center;'>
     <table cellpadding='6' border='2' class='bg2'>
       <tr>
-        <td align='center'><b><big>" ._FETCHING."</big></b><br /><img src='".XOOPS_URL."/images/await.gif' alt='' /><br />" ._PLEASEWAIT."</td>
+        <td align='center'><b><big>" ._FETCHING."</big></b><br /><img src='".ICMS_URL."/images/await.gif' alt='' /><br />" ._PLEASEWAIT."</td>
       </tr>
     </table>
     </div>
@@ -359,7 +347,7 @@ function xoops_getbanner()
         if ($htmlbanner){
             $bannerobject = $htmlcode;
         }else{
-            $bannerobject = '<div><a href="'.XOOPS_URL.'/banners.php?op=click&amp;bid='.$bid.'" target="_blank">';
+            $bannerobject = '<div><a href="'.ICMS_URL.'/banners.php?op=click&amp;bid='.$bid.'" target="_blank">';
             if (stristr($imageurl, '.swf')) {
                 $bannerobject = $bannerobject
                     .'<object type="application/x-shockwave-flash" data="'.$imageurl.'" width="468" height="60">'
@@ -384,18 +372,18 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
     global $xoopsConfig, $xoopsLogger, $xoopsUserIsAdmin;
     if ( preg_match( "/[\\0-\\31]|about:|script:/i", $url) ) {
         if (!preg_match('/^\b(java)?script:([\s]*)history\.go\(-[0-9]*\)([\s]*[;]*[\s]*)$/si', $url) ) {
-            $url = XOOPS_URL;
+            $url = ICMS_URL;
         }
     }
     if ( !$allowExternalLink && $pos = strpos( $url, '://' ) ) {
-        $xoopsLocation = substr( XOOPS_URL, strpos( XOOPS_URL, '://' ) + 3 );
+        $xoopsLocation = substr( ICMS_URL, strpos( ICMS_URL, '://' ) + 3 );
         if ( substr($url, $pos + 3, strlen($xoopsLocation)) != $xoopsLocation)  {
-			$url = XOOPS_URL;
+			$url = ICMS_URL;
 	     }elseif(substr($url, $pos + 3, strlen($xoopsLocation)+1) == $xoopsLocation.'.') {
-	        $url = XOOPS_URL;
+	        $url = ICMS_URL;
 	     }
        /* if (strcasecmp(substr($url, $pos + 3, strlen($xoopsLocation)), $xoopsLocation)) {
-            $url = XOOPS_URL;
+            $url = ICMS_URL;
         }*/
     }
     $theme = $xoopsConfig['theme_set'];
@@ -404,8 +392,8 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 		$theme = $_SESSION['xoopsUserTheme'];
 	} 
 
-    require_once XOOPS_ROOT_PATH . '/class/template.php';
-    require_once XOOPS_ROOT_PATH . '/class/theme.php';
+    require_once ICMS_ROOT_PATH . '/class/template.php';
+    require_once ICMS_ROOT_PATH . '/class/theme.php';
 
 	$xoopsThemeFactory =& new xos_opal_ThemeFactory();
 	$xoopsThemeFactory->allowedThemes = $xoopsConfig['theme_set_allowed'];
@@ -522,9 +510,9 @@ function &getMailer()
 {
     global $xoopsConfig;
     $inst = false;
-    include_once XOOPS_ROOT_PATH."/class/xoopsmailer.php";
-    if ( file_exists(XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/xoopsmailerlocal.php") ) {
-        include_once XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/xoopsmailerlocal.php";
+    include_once ICMS_ROOT_PATH."/class/xoopsmailer.php";
+    if ( file_exists(ICMS_ROOT_PATH."/language/".$xoopsConfig['language']."/xoopsmailerlocal.php") ) {
+        include_once ICMS_ROOT_PATH."/language/".$xoopsConfig['language']."/xoopsmailerlocal.php";
         if ( class_exists("XoopsMailerLocal") ) {
             $inst =& new XoopsMailerLocal();
         }
@@ -540,7 +528,7 @@ function &xoops_gethandler($name, $optional = false )
     static $handlers;
     $name = strtolower(trim($name));
     if (!isset($handlers[$name])) {
-        if ( file_exists( $hnd_file = XOOPS_ROOT_PATH.'/kernel/'.$name.'.php' ) ) {
+        if ( file_exists( $hnd_file = ICMS_ROOT_PATH.'/kernel/'.$name.'.php' ) ) {
             require_once $hnd_file;
         }
         $class = 'Xoops'.ucfirst($name).'Handler';
@@ -574,7 +562,7 @@ function &xoops_getmodulehandler($name = null, $module_dir = null, $optional = f
     }
     $name = (!isset($name)) ? $module_dir : trim($name);
     if (!isset($handlers[$module_dir][$name])) {
-        if ( file_exists( $hnd_file = XOOPS_ROOT_PATH . "/modules/{$module_dir}/class/{$name}.php" ) ) {
+        if ( file_exists( $hnd_file = ICMS_ROOT_PATH . "/modules/{$module_dir}/class/{$name}.php" ) ) {
             include_once $hnd_file;
         }
         $class = ucfirst(strtolower($module_dir)).ucfirst($name).'Handler';
@@ -798,7 +786,7 @@ function xoops_getLinkedUnameFromId($userid)
         $member_handler =& xoops_gethandler('member');
         $user =& $member_handler->getUser($userid);
         if (is_object($user)) {
-            $linkeduser = '<a href="'.XOOPS_URL.'/userinfo.php?uid='.$userid.'">'. $user->getVar('uname').'</a>';
+            $linkeduser = '<a href="'.ICMS_URL.'/userinfo.php?uid='.$userid.'">'. $user->getVar('uname').'</a>';
             return $linkeduser;
         }
     }
@@ -902,6 +890,32 @@ function icms_getCurrentModuleName() {
 	}
 }
 /**
+ * Load a module language file
+ * 
+ * If $module = core, file wil be loaded from ICMS_ROOT_PATH/language/
+ *
+ * @param string $module dirname of the module
+ * @param string $file name of the file without ".php"
+ */
+function icms_loadLanguageFile($module, $file) {
+	global $xoopsConfig;
+	
+	if ($module == 'core') {
+		$languagePath = ICMS_ROOT_PATH . '/language/';
+	} else {
+		$languagePath = ICMS_ROOT_PATH . '/modules/' . $module . '/language/';
+	}
+
+	$filename = $languagePath . $xoopsConfig['language'] . '/' . $file . '.php';
+	if (!file_exists($filename)) {
+		$filename = $languagePath . 'english/' . $file . '.php';
+	}
+
+	if (file_exists($filename)) {
+		include_once($filename);
+	}
+}
+/**
  * php 4 compat for array_combine
  */
 if (!function_exists('array_combine')) {
@@ -952,7 +966,7 @@ function icms_encryptPass($pass, $salt)
 	{
 		if (!function_exists('hash'))
 		{
-			include_once XOOPS_ROOT_PATH.'/class/sha256.inc.php';
+			include_once ICMS_ROOT_PATH.'/class/sha256.inc.php';
 			$pass = SHA256::hash($salt.md5($pass).$mainSalt);
 		}
 		else

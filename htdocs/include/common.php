@@ -39,71 +39,29 @@ define('ICMS_ROOT_PATH', XOOPS_ROOT_PATH);
 define('ICMS_URL', XOOPS_URL);
 define('ICMS_TRUST_PATH', XOOPS_TRUST_PATH);
 
+// ################# Creation of the IcmsLibrariesHandler ##############
 /**
- * Extremely reduced kernel class
- * This class should not really be defined in this file, but it wasn't worth including an entire
- * file for those two functions.
- * Few notes:
- * - modules should use this class methods to generate physical paths/URIs (the ones which do not conform
- * will perform badly when true URL rewriting is implemented)
- */
-class xos_kernel_Xoops2 {
-	var $paths = array(
-		'www' => array(), 'modules' => array(), 'themes' => array(),
-	);
-	function xos_kernel_Xoops2() {
-		$this->paths['www'] = array( XOOPS_ROOT_PATH, XOOPS_URL );
-		$this->paths['modules'] = array( XOOPS_ROOT_PATH . '/modules', XOOPS_URL . '/modules' );
-		$this->paths['themes'] = array( XOOPS_ROOT_PATH . '/themes', XOOPS_URL . '/themes' );
-	}
-	/**
-	 * Convert a XOOPS path to a physical one
-	 */
-	function path( $url, $virtual = false ) {
-		$path = '';
-		@list( $root, $path ) = explode( '/', $url, 2 );
-		if ( !isset( $this->paths[$root] ) ) {
-			list( $root, $path ) = array( 'www', $url );
-		}
-		if ( !$virtual ) {		// Returns a physical path
-			return $this->paths[$root][0] . '/' . $path;
-		}
-		return !isset( $this->paths[$root][1] ) ? '' : ( $this->paths[$root][1] . '/' . $path );
-	}
-	/**
-	* Convert a XOOPS path to an URL
+ * @todo The definition of the library path needs to be in mainfile
+ * But for the purpose of proof of concept, let's defined it here
 	*/
-	function url( $url ) {
-		return ( false !== strpos( $url, '://' ) ? $url : $this->path( $url, true ) );
-	}
-	/**
-	* Build an URL with the specified request params
-	*/
-	function buildUrl( $url, $params = array() ) {
-		if ( $url == '.' ) {
-			$url = $_SERVER['REQUEST_URI'];
-		}
-		$split = explode( '?', $url );
-		if ( count($split) > 1 ) {
-			list( $url, $query ) = $split;
-			parse_str( $query, $query );
-			$params = array_merge( $query, $params );
-		}
-		if ( !empty( $params ) ) {
-			foreach ( $params as $k => $v ) {
-				$params[$k] = $k . '=' . rawurlencode($v);
-			}
-			$url .= '?' . implode( '&', $params );
-		}
-		return $url;
-	}
+// ImpressCMS Third Party Libraries folder
+define( 'ICMS_LIBRARIES_PATH', XOOPS_ROOT_PATH . '/libraries' );
+define( 'ICMS_LIBRARIES_URL', XOOPS_URL . '/libraries' );
 
+include_once(XOOPS_ROOT_PATH . '/class/icmslibrarieshandler.php');
+$icmsLibrariesHandler = IcmsLibrariesHandler::getInstance();
+// ################# Creation of the IcmsLibrariesHandler ##############
 
+// triggering event "startingCoreBoot" of third party integration
+$icmsLibrariesHandler->triggerEvent('startCoreBoot');
 
+// ################# Creation of the ImpressCMS Kernel object ##############
+include_once(ICMS_ROOT_PATH . '/kernel/icmskernel.php');
 
-}
-global $xoops;
-$xoops =& new xos_kernel_Xoops2();
+global $impresscms, $xoops;
+$impresscms =& new IcmsKernel();
+$xoops =& $impresscms;
+// ################# Creation of the ImpressCMS Kernel object ##############
 
     // Instantiate security object
     require_once XOOPS_ROOT_PATH."/class/xoopssecurity.php";
@@ -152,14 +110,6 @@ $xoops =& new xos_kernel_Xoops2();
 	define("XOOPS_EDITOR_PATH", XOOPS_ROOT_PATH."/editors");
 	define("XOOPS_EDITOR_URL", XOOPS_URL."/editors");
 	
-	/**
-	 * @todo The definition of the library path needs to be in mainfile
-	 * But for the purpose of proof of concept, let's defined it here
-	 */
-	// ImpressCMS Third Party Libraries folder
-	define( 'ICMS_LIBRARIES_PATH', XOOPS_ROOT_PATH . '/libraries' );
-	define( 'ICMS_LIBRARIES_URL', XOOPS_URL . '/libraries' );
-	
 	define("SMARTY_DIR", ICMS_LIBRARIES_PATH."/smarty/");
 	
     if (!defined('XOOPS_XMLRPC')) {
@@ -192,12 +142,6 @@ $xoops =& new xos_kernel_Xoops2();
     $config_handler =& xoops_gethandler('config');
     $xoopsConfig =& $config_handler->getConfigsByCat(XOOPS_CONF);
 
-// ################# Creation of the IcmsLibrariesHandler ##############
-
-// This needs to be removed and put in mainfile later
-
-include_once(XOOPS_ROOT_PATH . '/class/icmslibrarieshandler.php');
-$icmsLibrariesHandler = IcmsLibrariesHandler::getInstance();
     // #################### Easiest ML by Gijoe #################
 
 
@@ -441,7 +385,6 @@ $icmsLibrariesHandler = IcmsLibrariesHandler::getInstance();
         $_SESSION['xoopsUserTheme'] = $_POST['xoops_theme_select'];
     } elseif (!empty($_SESSION['xoopsUserTheme']) && in_array($_SESSION['xoopsUserTheme'], $xoopsConfig['theme_set_allowed'])) {
         $xoopsConfig['theme_set'] = $_SESSION['xoopsUserTheme'];
-        
     }
 
     if ($xoopsConfig['closesite'] == 1) {
@@ -484,7 +427,6 @@ $icmsLibrariesHandler = IcmsLibrariesHandler::getInstance();
         $xoopsUserIsAdmin = $xoopsUser->isAdmin(1);
     }
 	// triggering event "finishCoreBoot" of third party integration
-	global $icmsLibrariesHandler;
 	$icmsLibrariesHandler->triggerEvent('finishCoreBoot');
     $xoopsLogger->stopTime( 'XOOPS Boot' );
     $xoopsLogger->startTime( 'Module init' );
