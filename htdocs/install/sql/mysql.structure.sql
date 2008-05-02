@@ -370,12 +370,8 @@ CREATE TABLE modules (
   hasnotification tinyint(1) unsigned NOT NULL default '0',
   dbversion int(11) unsigned NOT NULL default '1',
   PRIMARY KEY  (mid),
-  KEY hasmain (hasmain),
-  KEY hasadmin (hasadmin),
-  KEY hassearch (hassearch),
-  KEY hasnotification (hasnotification),
-  KEY dirname (dirname),
-  KEY name (name(15))
+  KEY dirname (dirname(5)),
+  KEY active_main_weight(isactive, hasmain, weight)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
