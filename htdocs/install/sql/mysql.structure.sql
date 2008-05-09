@@ -436,7 +436,6 @@ CREATE TABLE priv_msgs (
   msg_text text NOT NULL,
   read_msg tinyint(1) unsigned NOT NULL default '0',
   PRIMARY KEY  (msg_id),
-  KEY to_userid (to_userid),
   KEY touseridreadmsg (to_userid,read_msg),
   KEY msgidfromuserid (msg_id,from_userid)
 ) TYPE=MyISAM;
@@ -454,7 +453,6 @@ CREATE TABLE ranks (
   rank_special tinyint(1) unsigned NOT NULL default '0',
   rank_image varchar(255) default NULL,
   PRIMARY KEY  (rank_id),
-  KEY rank_min (rank_min),
   KEY rank_max (rank_max),
   KEY rankminrankmaxranspecial (rank_min,rank_max,rank_special),
   KEY rankspecial (rank_special)
