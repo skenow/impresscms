@@ -263,7 +263,7 @@ modules/system/language/english/admin/preferences.php
 +  define('_MD_AM_ALLWHTSIGDSC', 'If some attackers post an external image using [img], he can know IPs or User-Agents of users visited your site.<br />Allowing HTML can cause Script Insertion vulnerability if malicious user change his/her signature.');
 +  define('_MD_AM_ALLWSHOWSIG', 'Do you want to allow your users to use a signature on their profile/posts, in your site?');
 +  define('_MD_AM_ALLWSHOWSIGDSC', 'By enabling this option, users will be able to use a personal signature which will be added (on their own choice) after their posts.');
-+  define("_MD_AM_PERSON","Personalization");
++  define("_MD_AM_PERSON","Personalisation");
 +  define("_MD_AM_GOOGLE_ANA","Google Analytcs");
 +  define("_MD_AM_GOOGLE_ANA_DESC","Insert the script informed by Google Analytics for your site. If you don't use it, leave it blank.");
 +- define("_MD_AM_LLOGOADM","Admin Logo");

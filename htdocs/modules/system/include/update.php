@@ -111,7 +111,7 @@ function xoops_module_update_system(&$module) {
         if ($fp) {
             $default_login_content = fread($fp, filesize($default_login_content_file));
         }
-	    // Adding new function of Personalization
+	    // Adding new function of Personalisation
 	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'adm_left_logo', '_MD_AM_LLOGOADM', '/uploads/img482278e29e81c.png', '_MD_AM_LLOGOADM_DESC', 'select_image', 'text', 1);
 	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'adm_left_logo_url', '_MD_AM_LLOGOADM_URL', 'http://www.impresscms.org', '_MD_AM_LLOGOADM_URL_DESC', 'textbox', 'text', 2);
 	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'adm_left_logo_alt', '_MD_AM_LLOGOADM_ALT', 'ImpressCMS', '_MD_AM_LLOGOADM_ALT_DESC', 'textbox', 'text', 3);
