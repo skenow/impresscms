@@ -25,18 +25,28 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
+/**
+* Allows banner clients to login and manage their banners
+* 
+* Clients can view the statistics for their banners, send the statistics to their
+* email address, or change the target url for the banner
+*
+* @package banners
+*/
+ 
 $xoopsOption['pagetype'] = "banners";
 
-include "mainfile.php";
+include 'mainfile.php';
 
-/********************************************/
-/* Function to let your client login to see */
-/* the stats                                */
-/********************************************/
+/**
+* Function to let your client login to see 
+* the stats          
+*               
+*/
 function clientlogin()
 {
     global $xoopsDB, $xoopsLogger, $xoopsConfig;
-    include("header.php");
+    include 'header.php';
     echo "<div id='login_window'>
           <h2 class='content_title'>"._BANNERS_LOGIN_TITLE."</h2>
           <form method='post' action='banners.php' class='login_form'>
@@ -50,13 +60,13 @@ function clientlogin()
           <div class='login_info'>"._BANNERS_LOGIN_INFO."</div>".
           $GLOBALS['xoopsSecurity']->getTokenHTML("BANNER_LOGIN")."
           </form></div>";
-    include "footer.php";
+    include 'footer.php';
 }
 
-/*********************************************/
-/* Function to display the banners stats for */
-/* each client                               */
-/*********************************************/
+/**
+* Function to display the banners stats for 
+* each client                               
+*/
 function bannerstats()
 {
     global $xoopsDB, $xoopsConfig, $xoopsLogger;
@@ -66,7 +76,7 @@ function bannerstats()
     $result = $xoopsDB->query(sprintf("SELECT cid, name, passwd FROM %s WHERE login=%s", $xoopsDB->prefix("bannerclient"), $xoopsDB->quoteString($_SESSION['banner_login'])));
     list($cid, $name, $passwd) = $xoopsDB->fetchRow($result);
         if ( $_SESSION['banner_pass'] == $passwd ) {
-            include "header.php";
+            include 'header.php';
 
             echo "<div id='bannerstats'>
                   <h4 class='content_title'>".sprintf( _BANNERS_TITLE , $name )."</h4><hr />
@@ -120,14 +130,12 @@ function bannerstats()
                     echo $myts->displayTarea($htmlcode);
                 }else{
                     if(strtolower(substr($imageurl,strrpos($imageurl,".")))==".swf") {
-                        echo "<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,28,0\" width=\"468\" height=\"60\">";
-                        echo "<param name=movie value=\"$imageurl\" />";
-                        echo "<param name=quality value='high' />";
-                        echo "<embed src=\"$imageurl\" quality='high' pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" width=\"468\" height=\"60\">";
-                        echo "</embed>";
-                        echo "</object>";
+                        echo '<object type="application/x-shockwave-flash" data="'.$imageurl.'" width="468" height="60">';
+                        echo '<param name=movie value="'.$imageurl.'" />';
+                        echo '<param name="quality" value="high" />';
+                        echo '</object>';
                     } else {
-                        echo "<img src='$imageurl' alt='' />";
+                        echo '<img src="'.$imageurl.'" alt="" />';
                     }
                 }
                 echo "<br /><strong>" . _BANNERS_ID . $bid . "</strong><br />" .
@@ -144,7 +152,7 @@ function bannerstats()
                 }
             }
 
-            /* Finnished Banners */
+            /* Finished Banners */
             echo "<br />";
             if($result = $xoopsDB->query("select bid, impressions, clicks, datestart, dateend from ".$xoopsDB->prefix("bannerfinish")." where cid='".intval($cid)."'")){
                 echo "<h4 class='content_title'>" . sprintf(_BANNERS_FINISHED, $name) . "</h4><hr />
@@ -173,16 +181,19 @@ function bannerstats()
                 }
                 echo "</table></div>";
             }
-            include "footer.php";
+            include 'footer.php';
         } else {
             redirect_header("banners.php",2);
         }
 }
 
-/*********************************************/
-/* Function to let the client E-mail his     */
-/* banner Stats                              */
-/*********************************************/
+/**
+* Function to let the client E-mail his     
+* banner Stats      
+* 
+* @param int $cid client id
+* @param int $bid banner id                       
+*/
 function EmailStats($cid, $bid)
 {
     global $xoopsDB, $xoopsConfig;
@@ -228,10 +239,14 @@ function EmailStats($cid, $bid)
     redirect_header("banners.php",2);
 }
 
-/*********************************************/
-/* Function to let the client to change the  */
-/* url for his banner                        */
-/*********************************************/
+/**
+* Function to let the client to change the  
+* url for his banner     
+* 
+* @param int $cid client id
+* @param int $bid banner id
+* @param str $url new target url for the banner                   
+*/
 function change_banner_url_by_client($cid, $bid, $url)
 {
     global $xoopsDB;
@@ -251,7 +266,11 @@ function change_banner_url_by_client($cid, $bid, $url)
     }
     redirect_header("banners.php",2);
 }
-
+/**
+ * Updates the click counter for a banner
+ * 
+ * @param int $bid banner id
+ */   
 function clickbanner($bid)
 {
     global $xoopsDB;
@@ -276,14 +295,14 @@ if (!empty($_POST['op'])) {
 }
 $myts =& MyTextSanitizer::getInstance();
 switch ( $op ) {
-case "click":
+case 'click':
     $bid = 0;
     if (!empty($_GET['bid'])) {
         $bid = intval($_GET['bid']);
     }
     clickbanner($bid);
     break;
-case "Ok":
+case 'Ok':
     if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
         if ( !$GLOBALS['xoopsSecurity']->check(true,false,"BANNER_LOGIN") ) {
             redirect_header("banners.php", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
@@ -310,7 +329,7 @@ case _BANNERS_CHANGE:
     }
     change_banner_url_by_client($cid, $bid, $url);
     break;
-case "EmailStats":
+case 'EmailStats':
     $bid = $cid = 0;
     if (!empty($_GET['bid'])) {
         $bid = intval($_GET['bid']);
@@ -320,7 +339,7 @@ case "EmailStats":
     }
     EmailStats($cid, $bid);
     break;
-case "login":
+case 'login':
 default:
     clientlogin();
     break;

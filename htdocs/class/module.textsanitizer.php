@@ -53,6 +53,11 @@ class MyTextSanitizer
 	 */
 	var $censorConf;
 
+	/**
+	 *
+	 */
+	var $protector;
+
 	/*
 	* Constructor of this class
     *
@@ -127,10 +132,43 @@ class MyTextSanitizer
 	 **/
 	function makeClickable(&$text)
 	{
+			$config_handler =& xoops_gethandler('config');
+			$xoopsConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
+        if ($xoopsConfigPersona['shorten_url'] == 1) {
+	$text = ' '.$text;
+
+	$patterns = array("/(^|[^]_a-z0-9-=\"'\/])([a-z]+?):\/\/([^, \r\n\"\(\)'<>]+)/i", "/(^|[^]_a-z0-9-=\"'\/])www\.([a-z0-9\-]+)\.([^, \r\n\"\(\)'<>]+)/i", "/(^|[^]_a-z0-9-=\"'\/])ftp\.([a-z0-9\-]+)\.([^, \r\n\"\(\)'<>]+)/i", "/(^|[^]_a-z0-9-=\"'\/:\.])([a-z0-9\-_\.]+?)@([^, \r\n\"\(\)'<>\[\]]+)/i");
+
+	$replacements = array("\\1<a href=\"\\2://\\3\" rel=\"external\">\\2://\\3</a>", "\\1<a href=\"http://www.\\2.\\3\" rel=\"external\">www.\\2.\\3</a>", "\\1<a href=\"ftp://ftp.\\2.\\3\" rel=\"external\">ftp.\\2.\\3</a>", "\\1<a href=\"mailto:\\2@\\3\">\\2@\\3</a>");
+
+	$text = preg_replace($patterns, $replacements, $text);
+
+	$links = explode('<a', $text);
+	$countlinks = count($links);
+   for ($i = 0; $i < $countlinks; $i++)
+   {
+	$link = $links[$i];
+	$link = (preg_match('#(.*)(href=")#is', $link)) ? '<a' . $link : $link;
+	$begin = strpos($link, '>') + 1;
+	$end = strpos($link, '<', $begin);
+	$length = $end - $begin;
+	$urlname = substr($link, $begin, $length);
+
+	$maxlength = intval($xoopsConfigPersona['max_url_long']);
+	$cutlength = intval($xoopsConfigPersona['pre_chars_left']);
+	$endlength = -intval($xoopsConfigPersona['last_chars_left']);
+	$middleurl = " ... ";
+	$chunked = (strlen($urlname) > $maxlength && preg_match('#^(https://|http://|ftp://|www\.)#is', $urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $urlname;
+	$text = str_replace('>' . $urlname . '<', '>' . $chunked . '<', $text); 
+   }
+	$text = substr($text, 1);
+	return($text);
+		}else{
 		$patterns = array("/(^|[^]_a-z0-9-=\"'\/])([a-z]+?):\/\/([^, \r\n\"\(\)'<>]+)/i", "/(^|[^]_a-z0-9-=\"'\/])www\.([a-z0-9\-]+)\.([^, \r\n\"\(\)'<>]+)/i", "/(^|[^]_a-z0-9-=\"'\/])ftp\.([a-z0-9\-]+)\.([^, \r\n\"\(\)'<>]+)/i", "/(^|[^]_a-z0-9-=\"'\/:\.])([a-z0-9\-_\.]+?)@([^, \r\n\"\(\)'<>\[\]]+)/i");
 		$replacements = array("\\1<a href=\"\\2://\\3\" target=\"_blank\">\\2://\\3</a>", "\\1<a href=\"http://www.\\2.\\3\" target=\"_blank\">www.\\2.\\3</a>", "\\1<a href=\"ftp://ftp.\\2.\\3\" target=\"_blank\">ftp.\\2.\\3</a>", "\\1<a href=\"mailto:\\2@\\3\">\\2@\\3</a>");
 		return preg_replace($patterns, $replacements, $text);
-	}
+		}
+			}
 
 	/**
 	 * Replace XoopsCodes with their equivalent HTML formatting
@@ -151,11 +189,11 @@ class MyTextSanitizer
 		$patterns[] = "/\[siteurl=(['\"]?)([^\"'<>]*)\\1](.*)\[\/siteurl\]/sU";
 		$replacements[] = '<a href="'.XOOPS_URL.'/\\2">\\3</a>';
 		$patterns[] = "/\[url=(['\"]?)(http[s]?:\/\/[^\"'<>]*)\\1](.*)\[\/url\]/sU";
-		$replacements[] = '<a href="\\2" target="_blank">\\3</a>';
+		$replacements[] = '<a href="\\2" rel="external">\\3</a>';
 		$patterns[] = "/\[url=(['\"]?)(ftp?:\/\/[^\"'<>]*)\\1](.*)\[\/url\]/sU";
-		$replacements[] = '<a href="\\2" target="_blank">\\3</a>';
+		$replacements[] = '<a href="\\2" rel="external">\\3</a>';
 		$patterns[] = "/\[url=(['\"]?)([^\"'<>]*)\\1](.*)\[\/url\]/sU";
-		$replacements[] = '<a href="http://\\2" target="_blank">\\3</a>';
+		$replacements[] = '<a href="http://\\2" rel="external">\\3</a>';
 		$patterns[] = "/\[color=(['\"]?)([a-zA-Z0-9]*)\\1](.*)\[\/color\]/sU";
 		$replacements[] = '<span style="color: #\\2;">\\3</span>';
 		$patterns[] = "/\[size=(['\"]?)([a-z0-9-]*)\\1](.*)\[\/size\]/sU";
@@ -179,10 +217,10 @@ class MyTextSanitizer
 		$patterns[] = "/\[img align=(['\"]?)(left|center|right)\\1 id=(['\"]?)([0-9]*)\\3]([^\"\(\)\?\&'<>]*)\[\/img\]/sU";
 		$patterns[] = "/\[img id=(['\"]?)([0-9]*)\\1]([^\"\(\)\?\&'<>]*)\[\/img\]/sU";
 		if ($allowimage != 1) {
-			$replacements[] = '<a href="\\3" target="_blank">\\3</a>';
-			$replacements[] = '<a href="\\1" target="_blank">\\1</a>';
-			$replacements[] = '<a href="'.XOOPS_URL.'/image.php?id=\\4" target="_blank">\\5</a>';
-			$replacements[] = '<a href="'.XOOPS_URL.'/image.php?id=\\2" target="_blank">\\3</a>';
+			$replacements[] = '<a href="\\3" rel="external">\\3</a>';
+			$replacements[] = '<a href="\\1" rel="external">\\1</a>';
+			$replacements[] = '<a href="'.XOOPS_URL.'/image.php?id=\\4" rel="external">\\5</a>';
+			$replacements[] = '<a href="'.XOOPS_URL.'/image.php?id=\\2" rel="external">\\3</a>';
 		} else {
 			$replacements[] = '<img src="\\3" align="\\2" alt="" />';
 			$replacements[] = '<img src="\\1" alt="" />';
@@ -281,10 +319,27 @@ class MyTextSanitizer
 	 **/
 	function &displayTarea( $text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1)
 	{
+		// ################# Preload Trigger beforeDisplayTarea ##############
+		global $icmsPreloadHandler;
+		$icmsPreloadHandler->triggerEvent('beforeDisplayTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
+		
 		if ($html != 1) {
 			// html not allowed
 			$text = $this->htmlSpecialChars($text);
 		}
+		else {
+			// html allowed - sanitize with html purifier
+			$config = HTMLPurifier_Config::createDefault();
+			$config->set('Cache', 'SerializerPath', ICMS_TRUST_PATH.'/cache/htmlpurifier/configs');
+			$config->set('Core', 'Encoding', _CHARSET);
+			$config->set('HTML', 'Doctype', 'XHTML 1.0 Transitional');
+			$config->set('HTML', 'TidyLevel', 'medium'); // takes code and turns deprecated tags into valid tags (depends on doctype)
+
+			$this->purifier = new HTMLPurifier($config);
+
+			$text = $this->purifier->purify($text);
+		}
+
 		$text = $this->codePreConv($text, $xcode); // Ryuji_edit(2003-11-18)
 		$text = $this->makeClickable($text);
 		if ($smiley != 0) {
@@ -305,6 +360,9 @@ class MyTextSanitizer
 			$text = $this->nl2Br($text);
 		}
 		$text = $this->codeConv($text, $xcode, $image);	// Ryuji_edit(2003-11-18)
+		// ################# Preload Trigger afterDisplayTarea ##############
+		global $icmsPreloadHandler;
+		$icmsPreloadHandler->triggerEvent('afterDisplayTarea', array(&$text, $html, $smiley, $xcode, $image, $br));		
 		return $text;
 	}
 
@@ -326,6 +384,19 @@ class MyTextSanitizer
 			// html not allowed
 			$text = $this->htmlSpecialChars($text);
 		}
+		else {
+			// html allowed - sanitize with html purifier
+			$config = HTMLPurifier_Config::createDefault();
+			$config->set('Cache', 'SerializerPath', ICMS_TRUST_PATH.'/cache/htmlpurifier/configs');
+			$config->set('Core', 'Encoding', _CHARSET);
+			$config->set('HTML', 'Doctype', 'XHTML 1.0 Transitional');
+			$config->set('HTML', 'TidyLevel', 'medium'); // takes code and turns deprecated tags into valid tags (depends on doctype)
+
+			$this->purifier = new HTMLPurifier($config);
+
+			$text = $this->purifier->purify($text);
+		}
+
 		$text = $this->codePreConv($text, $xcode); // Ryuji_edit(2003-11-18)
 		$text = $this->makeClickable($text);
 		if ($smiley != 0) {

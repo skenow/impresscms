@@ -31,6 +31,8 @@
 if (!defined('XOOPS_ROOT_PATH')) {
 	die("XOOPS root path not defined");
 }
+
+
 /**
  *
  *
@@ -74,7 +76,7 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 	var $htmlEditor = array();
 
 	/**
-     * Hidden text
+   * Hidden text
 	 * @var	string
 	 * @access	private
 	 */
@@ -83,17 +85,33 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 	/**
 	 * Constructor
 	 *
-     * @param	string  $caption    Caption
-     * @param	string  $name       "name" attribute
-     * @param	string  $value      Initial text
-     * @param	int     $rows       Number of rows
-     * @param	int     $cols       Number of columns
-     * @param	string  $hiddentext Hidden Text
+   * @param	string  $caption    Caption
+   * @param	string  $name       "name" attribute
+   * @param	string  $value      Initial text
+   * @param	int     $rows       Number of rows
+   * @param	int     $cols       Number of columns
+   * @param	string  $hiddentext Hidden Text
 	 */
 	function XoopsFormDhtmlTextArea($caption, $name, $value, $rows=5, $cols=50, $hiddentext="xoopsHiddenText", $options = array() )
 	{
 		$this->XoopsFormTextArea($caption, $name, $value, $rows, $cols);
 		$this->_hiddenText = $hiddentext;
+		global $xoopsConfig, $xoopsUser,$xoopsModule;
+
+		$groups   = (is_object($xoopsUser)) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+		$moduleid = (is_object($xoopsModule)) ? $xoopsModule->mid() : 1;
+		
+		if (isset($options['editor']) && $options['editor'] != '' && $options['editor'] != $xoopsConfig['editor_default']){
+			$editor_default = $options['editor'];
+		}else{
+			$editor_default = $xoopsConfig['editor_default'];
+		}
+		
+		$gperm_handler =& xoops_gethandler('groupperm');
+		if( file_exists( XOOPS_EDITOR_PATH."/".$editor_default."/xoops_version.php" ) && $gperm_handler->checkRight('use_wysiwygeditor', $moduleid, $groups)){
+			include(XOOPS_EDITOR_PATH."/".$editor_default."/xoops_version.php");
+			$this->htmlEditor = array( $editorversion['class'], XOOPS_EDITOR_PATH."/".$editorversion['dirname']."/".$editorversion['file'] );
+		}
 		
 		if ( !empty( $this->htmlEditor ) ) {
 			$options['name'] = $this->_name;
@@ -103,7 +121,7 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 				$this->htmlEditor = XOS::create( $this->htmlEditor[0] );
 			} else {
 				list( $class, $path ) = $this->htmlEditor;
-				include_once XOOPS_ROOT_PATH . $path;
+				include_once $path;
 				if ( class_exists( $class ) ) {
 					$this->htmlEditor = new $class( $options );
 				} else {
@@ -113,10 +131,12 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 		}
 	}
 
+
+
 	/**
 	 * Prepare HTML for output
 	 *
-     * @return	string  HTML
+   * @return	string  HTML
 	 */
 	function render()
 	{
@@ -170,6 +190,13 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 		return $ret;
 	}
 
+
+
+	/**
+	 * Render Validation Javascript
+	 *
+   * @return	mixed  rendered validation javascript or empty string
+	 */
 	function renderValidationJS() {
 		if ( $this->htmlEditor && is_object( $this->htmlEditor ) && method_exists( $this->htmlEditor, "renderValidationJS" ) ) {
 			if ( !isset( $this->htmlEditor->isEnabled ) || $this->htmlEditor->isEnabled ) {
@@ -179,9 +206,13 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 		return '';		
 	}
 
+
+
+
+
 	/**
 	 * prepare HTML for output of the smiley list.
-     *
+   *
 	 * @return	string HTML
 	 */
 	function _renderSmileys()
@@ -198,4 +229,5 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 		return $ret;
 	}
 }
+
 ?>

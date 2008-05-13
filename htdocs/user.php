@@ -24,7 +24,11 @@
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
-
+/**
+ * Login page for users, will redirect to userinfo.php if the user is logged in
+ * @package kernel 
+ * @subpackage users 
+ */ 
 $xoopsOption['pagetype'] = 'user';
 include 'mainfile.php';
 
@@ -46,7 +50,17 @@ if ($op == 'main') {
             $xoopsTpl->assign('usercookie', $_COOKIE[$xoopsConfig['usercookie']]);
         }
         if (isset($_GET['xoops_redirect'])) {
-            $xoopsTpl->assign('redirect_page', htmlspecialchars(trim($_GET['xoops_redirect']), ENT_QUOTES));
+	        $redirect = htmlspecialchars(trim($_GET['xoops_redirect']), ENT_QUOTES);
+	        $isExternal = false;
+	        if ($pos = strpos( $redirect, '://' )) {
+	            $xoopsLocation = substr( XOOPS_URL, strpos( XOOPS_URL, '://' ) + 3 );
+	             if ( substr($redirect, $pos + 3, strlen($xoopsLocation)) != $xoopsLocation)  {
+					$redirect = XOOPS_URL;
+		         }elseif(substr($redirect, $pos + 3, strlen($xoopsLocation)+1) == $xoopsLocation.'.') {
+		            $redirect = XOOPS_URL;
+		         }
+	        }
+        	$xoopsTpl->assign('redirect_page', $redirect);
         }
         $xoopsTpl->assign('lang_password', _PASSWORD);
         $xoopsTpl->assign('lang_notregister', _US_NOTREGISTERED);
@@ -70,10 +84,20 @@ if ($op == 'main') {
         $xoopsTpl->assign('xoops_pagetitle', _LOGIN);
         include 'footer.php';
     } elseif ( !empty($_GET['xoops_redirect']) ) {
-        header('Location: '.$_GET['xoops_redirect']);
+        $redirect = htmlspecialchars(trim($_GET['xoops_redirect']));
+        $isExternal = false;
+        if ($pos = strpos( $redirect, '://' )) {
+            $xoopsLocation = substr( XOOPS_URL, strpos( XOOPS_URL, '://' ) + 3 );
+             if ( substr($redirect, $pos + 3, strlen($xoopsLocation)) != $xoopsLocation)  {
+	              $redirect = XOOPS_URL;
+	         }elseif(substr($redirect, $pos + 3, strlen($xoopsLocation)+1) == $xoopsLocation.'.') {
+	              $redirect = XOOPS_URL;
+	         }
+        }
+        header('Location: ' . $redirect);
 		exit();
     } else {
-        header('Location: '.XOOPS_URL.'/userinfo.php?uid='.$xoopsUser->getVar('uid'));
+        header('Location: '.XOOPS_URL.'/userinfo.php?uid='.intval($xoopsUser->getVar('uid')));
 		exit();
     }
     exit();
@@ -105,6 +129,7 @@ if ($op == 'logout') {
     }
     $message = _US_LOGGEDOUT.'<br />'._US_THANKYOUFORVISIT;
     redirect_header('index.php', 1, $message);
+    exit();
 }
 
 if ($op == 'actv') {
@@ -148,6 +173,7 @@ if ($op == 'actv') {
                     }
                     include 'footer.php';
                 } else {
+                	$thisuser->sendWelcomeMessage();
                     redirect_header( 'user.php', 5, _US_ACTLOGIN, false );
                 }
             } else {
@@ -163,11 +189,13 @@ if ($op == 'delete') {
     $xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
     if (!$xoopsUser || $xoopsConfigUser['self_delete'] != 1) {
         redirect_header('index.php',5,_US_NOPERMISS);
+        exit();
     } else {
         $groups = $xoopsUser->getGroups();
         if (in_array(XOOPS_GROUP_ADMIN, $groups)){
             // users in the webmasters group may not be deleted
             redirect_header('user.php', 5, _US_ADMINNO);
+            exit();
         }
         $ok = !isset($_POST['ok']) ? 0 : intval($_POST['ok']);
         if ($ok != 1) {
@@ -175,7 +203,7 @@ if ($op == 'delete') {
             xoops_confirm(array('op' => 'delete', 'ok' => 1), 'user.php', _US_SURETODEL.'<br/>'._US_REMOVEINFO);
             include 'footer.php';
         } else {
-            $del_uid = $xoopsUser->getVar("uid");
+            $del_uid = intval($xoopsUser->getVar("uid"));
             $member_handler =& xoops_gethandler('member');
             if (false != $member_handler->deleteUser($xoopsUser)) {
                 $online_handler =& xoops_gethandler('online');

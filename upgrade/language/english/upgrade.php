@@ -1,10 +1,11 @@
 <?php
-// $Id: upgrade.php 558 2006-06-20 06:35:23Z skalpa $
+// $Id$
 
 define( "_XOOPS_UPGRADE", "ImpressCMS Upgrade" );
 define( "_CHECKING_APPLIED", "Checking applied upgrades:" );
 define( "_SET_FILES_WRITABLE", "Make the following files writable before proceeding:" );
 define( "_NO_NEED_UPGRADE", "No upgrade necessary. Please remove this folder from your server" );
+define( "_SYS_NEED_UPGRADE", "In order to Complete the upgrade proccess, please click here, and upgrade system module." );
 define( "_NEED_UPGRADE", "Upgrade needed" );
 define( "_PROCEED_UPGRADE", "Proceed to upgrade" );
 define( "_PERFORMING_UPGRADE", "Performing %s upgrade" );
@@ -22,6 +23,9 @@ define( "_FINISH", "Finish" );
 define( "_RELOAD", "Reload" );
 
 define('_UPGRADE_CHARSET', _CHARSET);
+define( "LEGEND_DATABASE", "Database Character Set" );
+define( "DB_COLLATION_LABEL", "Database character set and collation" );
+define( "DB_COLLATION_HELP",  "MySQL includes character set support that enables you to store data using a variety of character sets and perform comparisons according to a variety of collations.<br />We <b>STRONGLY</b> recommend you to use '<b>UTF-8</b>' as default.");
 
 define("_UPGRADE_PRIVPOLICY", "<p>This privacy policy sets out how [website name] uses and protects any information that you give [website name] when you use this website. [website name] is committed to ensuring that your privacy is protected. Should we ask you to provide certain information by which you can be identified when using this website, then you can be assured that it will only be used in accordance with this privacy statement. [website name] may change this policy from time to time by updating this page. You should check this page from time to time to ensure that you are happy with any changes.
 </p><p>
@@ -73,5 +77,4 @@ We will not sell, distribute or lease your personal information to third parties
 </p><p>
 If you believe that any information we are holding on you is incorrect or incomplete, please write to or email us as soon as possible, at the above address. We will promptly correct any information found to be incorrect.
 </p>");
-
 ?>

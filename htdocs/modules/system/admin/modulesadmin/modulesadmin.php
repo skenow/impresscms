@@ -33,81 +33,51 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     exit("Access Denied");
 }
 
-function xoops_module_list()
-{
-    xoops_cp_header();
-    echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/modulesadmin/images/modulesadmin_big.png)">'._MD_AM_MODADMIN.'</div><br />';
-    echo "
-
-
-    <form action='admin.php' method='post' name='moduleadmin' id='moduleadmin'>
-    <table class='outer' width='100%' cellpadding='4' cellspacing='1'>
-    <tr align='center'><th>"._MD_AM_MODULE."</th><th>"._MD_AM_VERSION."</th><th>"._MD_AM_LASTUP."</th><th>"._MD_AM_ACTIVE."</th><th>"._MD_AM_ORDER."<br /><small>"._MD_AM_ORDER0."</small></th><th>"._MD_AM_ACTION."</th></tr>
-    ";
+function xoops_module_list() {
+    global $icmsAdminTpl,$xoopsUser,$xoopsConfig;
+    
+    $icmsAdminTpl->assign('lang_madmin',_MD_AM_MODADMIN);
+    $icmsAdminTpl->assign('lang_module',_MD_AM_MODULE);
+    $icmsAdminTpl->assign('lang_version',_MD_AM_VERSION);
+    $icmsAdminTpl->assign('lang_modstatus',_MD_AM_MODULESADMIN_STATUS);
+    $icmsAdminTpl->assign('lang_lastup',_MD_AM_LASTUP);
+    $icmsAdminTpl->assign('lang_active',_MD_AM_ACTIVE);
+    $icmsAdminTpl->assign('lang_order',_MD_AM_ORDER);
+    $icmsAdminTpl->assign('lang_order0',_MD_AM_ORDER0);
+    $icmsAdminTpl->assign('lang_action',_MD_AM_ACTION);
+    $icmsAdminTpl->assign('lang_modulename',_MD_AM_MODULESADMIN_MODULENAME);
+    $icmsAdminTpl->assign('lang_moduletitle',_MD_AM_MODULESADMIN_MODULETITLE);
+    $icmsAdminTpl->assign('lang_info',_INFO);
+    $icmsAdminTpl->assign('lang_update',_MD_AM_UPDATE);
+    $icmsAdminTpl->assign('lang_unistall',_MD_AM_UNINSTALL);
+    $icmsAdminTpl->assign('lang_support',_MD_AM_MODULESADMIN_SUPPORT);
+    $icmsAdminTpl->assign('lang_submit',_MD_AM_SUBMIT);
+    $icmsAdminTpl->assign('lang_install',_MD_AM_INSTALL);
+    
     $module_handler =& xoops_gethandler('module');
     $installed_mods =& $module_handler->getObjects();
     $listed_mods = array();
-    $count = 0;
     foreach ( $installed_mods as $module ) {
-        if ($count % 2 == 0) {
-            $class = 'even';
-        } else {
-            $class = 'odd';
-        }
-        $module->getInfo();
-        $count++;
-        echo "<tr class='$class' align='center' valign='middle'>\n";
-        echo "<td valign='bottom'>";
-        if ( $module->getVar('hasadmin') == 1 && $module->getVar('isactive') == 1) {
-            echo '<a href="'.XOOPS_URL.'/modules/'.$module->getVar('dirname').'/'.$module->getInfo('adminindex').'"><img src="'.XOOPS_URL.'/modules/'.$module->getVar('dirname').'/'.$module->getInfo('image').'" alt="'.$module->getVar('name', 'E').'" border="0" /></a><br /><input type="text" name="newname['.$module->getVar('mid').']" value="'.$module->getVar('name', 'E').'" maxlength="150" size="20" />';
-        } else {
-            echo '<img src="'.XOOPS_URL.'/modules/'.$module->getVar('dirname').'/'.$module->getInfo('image').'" alt="'.$module->getVar('name', 'E').'" border="0" /><br /><input type="text" name="newname['.$module->getVar('mid').']" value="'.$module->getVar('name', 'E').'" maxlength="150" size="20" />';
-        }
-        echo '<input type="hidden" name="oldname['.$module->getVar('mid').']" value="' .$module->getVar('name').'" /></td>';
-        /*
-        if ( $module->modinfo['version'] != round($module->getVar('version') / 100, 2) ){
-        	echo "<td align='center'>".$module->modinfo['version']." != ".round($module->getVar('version') / 100, 2)."</td><td align='center'>".formatTimestamp($module->getVar('last_update'),'m')."<br />";
-        }else{
-        	echo "<td align='center'>".round($module->getVar('version') / 100, 2)."</td><td align='center'>".formatTimestamp($module->getVar('last_update'),'m')."<br />";
-        }
-        */ 
-        echo "<td align='center'>".round($module->getVar('version') / 100, 2)."</td><td align='center'>".formatTimestamp($module->getVar('last_update'),'m')."<br />";
-        if ($module->getVar('dirname') != 'system' && $module->getVar('isactive') == 1) {
-            echo '</td><td><input type="checkbox" name="newstatus['.$module->getVar('mid').']" value="1" checked="checked" /><input type="hidden" name="oldstatus['.$module->getVar('mid').']" value="1" />';
-            $extra = '<a href="'.XOOPS_URL.'/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module='.$module->getVar('dirname').'"><img src="'.XOOPS_URL.'/modules/system/images/update.png" alt="'._MD_AM_UPDATE.'" /></a>';
-        } elseif ($module->getVar('dirname') != 'system') {
-            echo '</td><td><input type="checkbox" name="newstatus['.$module->getVar('mid').']" value="1" /><input type="hidden" name="oldstatus['.$module->getVar('mid').']" value="0" />';
-            $extra = '<a href="'.XOOPS_URL.'/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module='.$module->getVar('dirname').'"><img src="'.XOOPS_URL.'/modules/system/images/update.png" alt="'._MD_AM_UPDATE.'" /></a>&nbsp;<a href="'.XOOPS_URL.'/modules/system/admin.php?fct=modulesadmin&amp;op=uninstall&amp;module='.$module->getVar('dirname').'"><img src="'.XOOPS_URL.'/modules/system/images/uninstall.png" alt="'._MD_AM_UNINSTALL.'" /></a>';
-        } else {
-            echo '</td><td><input type="checkbox" name="newstatus['.$module->getVar('mid').']" value="1" checked="checked" /><input type="hidden" name="oldstatus['.$module->getVar('mid').']" value="1" />';
-            $extra = '<a href="'.XOOPS_URL.'/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module='.$module->getVar('dirname').'"><img src="'.XOOPS_URL.'/modules/system/images/update.png" alt="'._MD_AM_UPDATE.'" /></a>';
-        }
-        echo "</td><td>";
-        if ($module->getVar('hasmain') == 1) {
-            echo '<input type="hidden" name="oldweight['.$module->getVar('mid').']" value="'.$module->getVar('weight').'" /><input type="text" name="weight['.$module->getVar('mid').']" size="3" maxlength="5" value="'.$module->getVar('weight').'" />';
-        } else {
-            echo '<input type="hidden" name="oldweight['.$module->getVar('mid').']" value="0" /><input type="hidden" name="weight['.$module->getVar('mid').']" value="0" />';
-        }
-        echo "
-        </td>
-        <td>".$extra."&nbsp;<a href='javascript:openWithSelfMain(\"".XOOPS_URL."/modules/system/admin.php?fct=version&amp;mid=".$module->getVar('mid')."\",\"Info\",300,230);'>";
-        echo '<img src="'.XOOPS_URL.'/modules/system/images/info.png" alt="'._INFO.'" /></a><input type="hidden" name="module[]" value="'.$module->getVar('mid').'" /></td>
-        </tr>
-        ';
+    	$module -> getInfo();
+    	$mod = array();
+    	$mod['mid'] = $module->getVar('mid');
+    	$mod['dirname'] = $module->getVar('dirname');
+    	$mod['name'] = $module -> getInfo('name');
+    	$mod['image'] = $module -> getInfo('image');
+    	$mod['adminindex'] = $module->getInfo('adminindex');
+    	$mod['hasadmin'] = $module->getVar('hasadmin');
+    	$mod['hasmain'] = $module->getVar('hasmain');
+    	$mod['isactive'] = $module->getVar('isactive');
+    	$mod['version'] = round($module -> getVar('version') / 100, 2);
+    	$mod['status'] = ($module->getInfo('status'))?$module->getInfo('status'):'&nbsp;';
+    	$mod['last_update'] = ($module -> getVar('last_update') != 0)?formatTimestamp($module -> getVar('last_update'), 'm'):'&nbsp;';
+    	$mod['weight'] = $module->getVar('weight');
+    	$mod['support_site_url'] = $module->getInfo('support_site_url');
+        $icmsAdminTpl->append('modules',$mod);
         $listed_mods[] = $module->getVar('dirname');
     }
-    echo "<tr class='foot'><td colspan='6' align='center'><input type='hidden' name='fct' value='modulesadmin' />
-    <input type='hidden' name='op' value='confirm' />
-    <input type='submit' name='submit' value='"._MD_AM_SUBMIT."' />
-    </td></tr></table>
-    </form>
-    <br />
-    <table width='100%' border='0' class='outer' cellpadding='4' cellspacing='1'>
-    <tr align='center'><th>"._MD_AM_MODULE."</th><th>"._MD_AM_VERSION."</th><th>"._MD_AM_ACTION."</th></tr>
-    ";
-	require_once XOOPS_ROOT_PATH."/class/xoopslists.php";
-	$dirlist = XoopsLists::getModulesList();
-    $count = 0;
+    
+    $dirlist = XoopsLists::getModulesList();
 	foreach($dirlist as $file){
         clearstatcache();
         $file = trim($file);
@@ -116,29 +86,21 @@ function xoops_module_list()
             if (!$module->loadInfo($file, false)) {
                 continue;
             }
-            if ($count % 2 == 0) {
-                $class = 'even';
-            } else {
-                $class = 'odd';
-            }
-            echo '<tr class="'.$class.'" align="center" valign="middle">
-            <td align="center" valign="bottom"><img src="'.XOOPS_URL.'/modules/'.$module->getInfo('dirname').'/'.$module->getInfo('image').'" alt="'.htmlspecialchars($module->getInfo('name')).'" border="0" /></td>
-            <td align="center">'.round($module->getInfo('version'), 2).'</td>
-            <td>
-            <a href="'.XOOPS_URL.'/modules/system/admin.php?fct=modulesadmin&amp;op=install&amp;module='.$module->getInfo('dirname').'"><img src="'.XOOPS_URL.'/modules/system/images/install.png" alt="'._MD_AM_INSTALL.'" /></a>';
-            echo "&nbsp;<a href='javascript:openWithSelfMain(\"".XOOPS_URL."/modules/system/admin.php?fct=version&amp;mid=".$module->getInfo('dirname')."\",\"Info\",300,230);'>";
-            echo '<img src="'.XOOPS_URL.'/modules/system/images/info.png" alt="'._INFO.'" /></a></td></tr>
-            ';
+            $mod = array();
+            $mod['dirname'] = $module->getInfo('dirname');
+            $mod['name'] = $module->getInfo('name');
+            $mod['image'] = $module->getInfo('image');
+            $mod['version'] = round($module->getInfo('version'), 2);
+            $mod['status'] = $module->getInfo('status');
+            $icmsAdminTpl->append('avmodules',$mod);
             unset($module);
-            $count++;
         }
     }
-    echo "</table>";
-    xoops_cp_footer();
+
+    return $icmsAdminTpl->fetch('db:admin/modulesadmin/system_adm_modulesadmin.html');
 }
 
-function xoops_module_install($dirname)
-{
+function xoops_module_install($dirname) {
     global $xoopsUser, $xoopsConfig;
     $dirname = trim($dirname);
     $db =& Database::getInstance();
@@ -304,7 +266,7 @@ function xoops_module_install($dirname)
                                 $newbid = $db->getInsertId();
                             }
                             $msgs[] = '&nbsp;&nbsp;Block <b>'.$block['name'].'</b> added. Block ID: <b>'.$newbid.'</b>';
-                            $sql = 'INSERT INTO '.$db->prefix('block_module_link').' (block_id, module_id) VALUES ('.intval($newbid).', -1)';
+                            $sql = 'INSERT INTO '.$db->prefix('block_module_link').' (block_id, module_id,page_id) VALUES ('.intval($newbid).', 0,1)';
                             $db->query($sql);
                             if ($template != '') {
                                 $tplfile =& $tplfile_handler->create();
@@ -516,8 +478,7 @@ function xoops_module_install($dirname)
     }
 }
 
-function &xoops_module_gettemplate($dirname, $template, $block=false)
-{
+function &xoops_module_gettemplate($dirname, $template, $block=false) {
     global $xoopsConfig;
     $ret = '';
     if ($block) {
@@ -540,8 +501,7 @@ function &xoops_module_gettemplate($dirname, $template, $block=false)
     return $ret;
 }
 
-function xoops_module_uninstall($dirname)
-{
+function xoops_module_uninstall($dirname) {
     global $xoopsConfig;
     $reservedTables = array('avatar', 'avatar_users_link', 'block_module_link', 'xoopscomments', 'config', 'configcategory', 'configoption', 'image', 'imagebody', 'imagecategory', 'imgset', 'imgset_tplset_link', 'imgsetimg', 'groups','groups_users_link','group_permission', 'online', 'bannerclient', 'banner', 'bannerfinish', 'priv_msgs', 'ranks', 'session', 'smiles', 'users', 'newblocks', 'modules', 'tplfile', 'tplset', 'tplsource', 'xoopsnotifications', 'banner', 'bannerclient', 'bannerfinish');
     $db =& Database::getInstance();
@@ -693,8 +653,7 @@ function xoops_module_uninstall($dirname)
     }
 }
 
-function xoops_module_activate($mid)
-{
+function xoops_module_activate($mid) {
     $module_handler =& xoops_gethandler('module');
     $module =& $module_handler->get($mid);
     include_once XOOPS_ROOT_PATH.'/class/template.php';
@@ -713,8 +672,7 @@ function xoops_module_activate($mid)
     return "<p>".sprintf(_MD_AM_OKACT, "<b>".$module->getVar('name')."</b>")."</p>";
 }
 
-function xoops_module_deactivate($mid)
-{
+function xoops_module_deactivate($mid) {
     global $xoopsConfig;
     $module_handler =& xoops_gethandler('module');
     $module =& $module_handler->get($mid);
@@ -740,8 +698,7 @@ function xoops_module_deactivate($mid)
     }
 }
 
-function xoops_module_change($mid, $weight, $name)
-{
+function xoops_module_change($mid, $weight, $name) {
     $module_handler =& xoops_gethandler('module');
     $module =& $module_handler->get($mid);
     $module->setVar('weight', $weight);

@@ -101,7 +101,7 @@ class XoopsBlock extends XoopsObject
             }
             $sql .= ", isactive='".intval($isactive)."', title=".$this->db->quoteString($title).", content=".$this->db->quoteString($content).", side='".intval($side)."', weight='".intval($weight)."', visible='".intval($visible)."', c_type=".$this->db->quoteString($c_type).", template=".$this->db->quoteString($template).", bcachetime='".intval($bcachetime)."', last_modified='".time()."' WHERE bid='".intval($bid)."'";
         }
-        if ( !$this->db->query($sql) ) {
+        if ( !$this->db->queryF($sql) ) {
             $this->setErrors("Could not save block data into database");
             return false;
         }
@@ -172,7 +172,7 @@ class XoopsBlock extends XoopsObject
         global $xoopsConfig, $xoopsOption;
         $block = array();
         // M for module block, S for system block C for Custom
-        if ( $this->getVar("block_type") != "C" ) {
+        if ( !$this->isCustom() ) {
             // get block display function
             $show_func = $this->getVar('show_func');
             if ( !$show_func ) {
@@ -238,7 +238,7 @@ class XoopsBlock extends XoopsObject
 
     function isCustom()
     {
-        if ( $this->getVar("block_type") == "C" ) {
+        if ( $this->getVar("block_type") == "C" || $this->getVar("block_type") == "E" ) {
             return true;
         }
         return false;
@@ -251,7 +251,7 @@ class XoopsBlock extends XoopsObject
     function getOptions()
     {
         global $xoopsConfig;
-        if ( $this->getVar("block_type") != "C" ) {
+        if ( !$this->isCustom() ) {
             $edit_func = $this->getVar('edit_func');
             if ( !$edit_func ) {
                 return false;
@@ -421,7 +421,7 @@ class XoopsBlock extends XoopsObject
             $result = $db->query($sql);
             while ( $myrow = $db->fetchArray($result) ) {
                 $block = new XoopsBlock($myrow);
-                $name = ($block->getVar("block_type") != "C") ? $block->getVar("name") : $block->getVar("title");
+                $name = $block->getVar("title");
                 $ret[$block->getVar("bid")] = $name;
             }
             break;
@@ -458,15 +458,15 @@ class XoopsBlock extends XoopsObject
         return $ret;
     }
 
-    function getAllByGroupModule($groupid, $module_id=0, $toponlyblock=false, $visible=null, $orderby='b.weight,b.bid', $isactive=1)
-    {
+    function getAllByGroupModule($groupid, $module_id='0-0', $toponlyblock=false, $visible=null, $orderby='b.weight,b.bid', $isactive=1)
+    { 	
     	$isactive = intval($isactive);
         $db =& Database::getInstance();
         $ret = array();
         $sql = "SELECT DISTINCT gperm_itemid FROM ".$db->prefix('group_permission')." WHERE gperm_name = 'block_read' AND gperm_modid = '1'";
         if ( is_array($groupid) ) {
-        	//TODO: Add intval verification... maybe making a manual implode with a foreach.
-        	$sql .= " AND gperm_groupid IN ('".implode(',', $groupid)."')";
+            $gid = array_map(create_function('$a', '$r = "\'" . intval($a) . "\'"; return($r);'), $groupid);
+            $sql .= " AND gperm_groupid IN (".implode(',', $gid).")";
         } else {
             if (intval($groupid) > 0) {
                 $sql .= " AND gperm_groupid='".intval($groupid)."'";
@@ -477,26 +477,31 @@ class XoopsBlock extends XoopsObject
         while ( $myrow = $db->fetchArray($result) ) {
             $blockids[] = $myrow['gperm_itemid'];
         }
+          
         if (!empty($blockids)) {
             $sql = "SELECT b.* FROM ".$db->prefix('newblocks')." b, ".$db->prefix('block_module_link')." m WHERE m.block_id=b.bid";
             $sql .= " AND b.isactive='".$isactive."'";
             if (isset($visible)) {
                 $sql .= " AND b.visible='".intval($visible)."'";
             }
-            $module_id = intval($module_id);
-            if (!empty($module_id)) {
-                $sql .= " AND m.module_id IN ('0','".$module_id."'";
-                if ($toponlyblock) {
-                    $sql .= ",'-1'";
-                }
-                $sql .= ")";
-            } else {
-                if ($toponlyblock) {
-                    $sql .= " AND m.module_id IN ('0','-1')";
-                } else {
-                    $sql .= " AND m.module_id='0'";
-                }
+            
+            $arr = explode('-',$module_id);
+            $module_id = intval($arr[0]);
+            $page_id = intval($arr[1]);            
+            if ($module_id == 0){ //Entire Site
+            	if ($page_id == 0){ //All pages
+            		$sql .= " AND m.module_id='0' AND m.page_id=0";
+            	}elseif ($page_id == 1){ //Top Page
+            		$sql .= " AND ((m.module_id='0' AND m.page_id=0) OR (m.module_id='0' AND m.page_id=1))";
+            	}
+            }else{ //Specific Module (including system)
+            	if ($page_id == 0){ //All pages of this module
+            		$sql .= " AND ((m.module_id='0' AND m.page_id=0) OR (m.module_id='$module_id' AND m.page_id=0))";
+            	}else{ //Specific Page of this module
+            		$sql .= " AND ((m.module_id='0' AND m.page_id=0) OR (m.module_id='$module_id' AND m.page_id=0) OR (m.module_id='$module_id' AND m.page_id=$page_id))";
+            	}
             }
+            
             $sql .= " AND b.bid IN (".implode(',', $blockids).")";
             $sql .= " ORDER BY ".$orderby;
             $result = $db->query($sql);

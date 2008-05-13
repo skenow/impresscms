@@ -16,12 +16,16 @@ define('_MD_AM_RANK','User Ranks');
 define('_MD_AM_USER','Edit Users');
 define('_MD_AM_FINDUSER', 'Find Users');
 define('_MD_AM_PREF','Preferences');
-define('_MD_AM_VRSN','Version');
+define('_MD_AM_VRSN','Version Checker');
 define('_MD_AM_MLUS', 'Mail Users');
 define('_MD_AM_IMAGES', 'Image Manager');
 define('_MD_AM_AVATARS', 'Avatars');
 define('_MD_AM_TPLSETS', 'Templates');
 define('_MD_AM_COMMENTS', 'Comments');
+define('_MD_AM_CONTENT', 'Content Manager');
+define('_MD_AM_BKPOSAD','Block Positions');
+define('_MD_AM_PAGES','Links Manager');
+define('_MD_AM_CUSTOMTAGS', 'Custom Tags');
 
 // Group permission phrases
 define('_MD_AM_PERMADDNG', 'Could not add %s permission to %s for group %s');

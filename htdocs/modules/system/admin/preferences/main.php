@@ -51,7 +51,6 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
         $catcount = count($confcats);
         xoops_cp_header();
         echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/preferences/images/preferences_big.png)">'._MD_AM_SITEPREF.'</div><br />';
-        //echo '<h4 style="text-align:left">'._MD_AM_SITEPREF.'</h4><ul>';
         for ($i = 0; $i < $catcount; $i++) {
             echo '<li>'.constant($confcats[$i]->getVar('confcat_name')).' [<a href="admin.php?fct=preferences&amp;op=show&amp;confcat_id='.$confcats[$i]->getVar('confcat_id').'">'._EDIT.'</a>]</li>';
         }
@@ -87,7 +86,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
                     // this is exceptional.. only when value type is arrayneed a smarter way for this
                     $ele = ($config[$i]->getVar('conf_value') != '') ? new XoopsFormTextArea($title, $config[$i]->getVar('conf_name'), $myts->htmlspecialchars(implode('|', $config[$i]->getConfValueForOutput())), 5, 50) : new XoopsFormTextArea($title, $config[$i]->getVar('conf_name'), '', 5, 50);
                 } else {
-                    $ele = new XoopsFormTextArea($title, $config[$i]->getVar('conf_name'), $myts->htmlspecialchars($config[$i]->getConfValueForOutput()), 5, 50);
+                    $ele = new XoopsFormDhtmlTextArea($title, $config[$i]->getVar('conf_name'), $myts->htmlspecialchars($config[$i]->getConfValueForOutput()));
                 }
                 break;
             case 'select':
@@ -131,6 +130,28 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
                 // old theme value is used to determine whether to update cache or not. kind of dirty way
                 $form->addElement(new XoopsFormHidden('_old_theme', $config[$i]->getConfValueForOutput()));
                 break;
+            case 'editor':
+            case 'editor_multi':
+                $ele = ($config[$i]->getVar('conf_formtype') != 'editor_multi') ? new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput()) : new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput(), 5, true);
+				$ele->addOption("default");
+				require_once XOOPS_ROOT_PATH."/class/xoopslists.php";
+				$dirlist = XoopsLists::getEditorsList();
+
+                if (!empty($dirlist)) {
+                    asort($dirlist);
+                    $ele->addOptionArray($dirlist);
+                }
+                break;
+            case 'select_font':
+            	$ele = new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
+            	require_once XOOPS_ROOT_PATH."/class/xoopslists.php";
+            	$dirlist = XoopsLists::getFileListAsArray(ICMS_ROOT_PATH."/libraries/captcha/fonts/");
+            	if (!empty($dirlist)) {
+            		asort($dirlist);
+            		$ele->addOptionArray($dirlist);
+            	}
+            	$form->addElement(new XoopsFormHidden('_old_theme', $config[$i]->getConfValueForOutput()));
+            	break;
             case 'tplset':
                 $ele = new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
                 $tplset_handler =& xoops_gethandler('tplset');
@@ -155,7 +176,14 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
                 $criteria->add(new Criteria('isactive', 1));
                 $moduleslist = $module_handler->getList($criteria, true);
                 $moduleslist['--'] = _MD_AM_NONE;
-                $ele->addOptionArray($moduleslist);
+                //Adding support to select custom links to be the start page
+                $page_handler =& xoops_gethandler('page');
+                $criteria = new CriteriaCompo(new Criteria('page_status', 1));
+                $criteria->add(new Criteria('page_url', '%*','NOT LIKE'));
+                $pagelist = $page_handler->getList($criteria);
+                $list = array_merge($moduleslist,$pagelist);
+                asort($list);
+                $ele->addOptionArray($list);
                 break;
             case 'group':
                 $ele = new XoopsFormSelectGroup($title, $config[$i]->getVar('conf_name'), false, $config[$i]->getConfValueForOutput(), 1, false);
@@ -204,6 +232,20 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
                 $myts =& MyTextSanitizer::getInstance();
                 $ele = new XoopsFormHidden( $config[$i]->getVar('conf_name'), $myts->htmlspecialchars( $config[$i]->getConfValueForOutput() ) );
                 break;
+            case 'select_pages':
+                $myts =& MyTextSanitizer::getInstance();
+                $content_handler =& xoops_gethandler('content');
+                $ele = new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
+                $ele->addOptionArray($content_handler->getContentList());
+                break;
+                ##############################################################################################
+                # Added by Fábio Egas in XTXM version
+                ##############################################################################################
+            case 'select_image':
+            	include_once XOOPS_ROOT_PATH."/class/xoopsform/formimage.php";
+            	$myts =& MyTextSanitizer::getInstance();
+            	$ele = new MastopFormSelectImage($title, $config[$i]->getVar('conf_name'),$config[$i]->getConfValueForOutput());
+            	break;
             case 'textbox':
             default:
                 $myts =& MyTextSanitizer::getInstance();
@@ -220,7 +262,6 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
         $form->addElement(new XoopsFormButton('', 'button', _GO, 'submit'));
         xoops_cp_header();
         echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/preferences/images/preferences_big.png)"><a href="admin.php?fct=preferences">'. _MD_AM_PREFMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'.constant($confcat->getVar('confcat_name')).'<br /><br /></div><br />';
-        //echo '<a href="admin.php?fct=preferences">'. _MD_AM_PREFMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'.constant($confcat->getVar('confcat_name')).'<br /><br />';
         $form->display();
         xoops_cp_footer();
         exit();
@@ -324,6 +365,12 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
                 $myts =& MyTextSanitizer::getInstance();
                 $ele = new XoopsFormHidden( $config[$i]->getVar('conf_name'), $myts->htmlspecialchars( $config[$i]->getConfValueForOutput() ) );
                 break;
+            case 'select_pages':
+                $myts =& MyTextSanitizer::getInstance();
+                $content_handler =& xoops_gethandler('content');
+                $ele = new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
+                $ele->addOptionArray($content_handler->getContentList());
+                break;
             case 'textbox':
             default:
                 $myts =& MyTextSanitizer::getInstance();
@@ -421,11 +468,19 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
                         $groups =& $member_handler->getGroupList();
                         $moduleperm_handler =& xoops_gethandler('groupperm');
                         $module_handler =& xoops_gethandler('module');
-                        $module =& $module_handler->getByDirname($new_value);
-                        foreach ($groups as $groupid => $groupname) {
-                            if (!$moduleperm_handler->checkRight('module_read', $module->getVar('mid'), $groupid)) {
-                                $moduleperm_handler->addRight('module_read', $module->getVar('mid'), $groupid);
-                            }
+                        $arr = explode('-',$new_value);
+                        if (count($arr) > 1){
+                        	$mid = $arr[0];
+                        	$module =& $module_handler->get($mid);
+                        }else{
+                        	$module =& $module_handler->getByDirname($new_value);
+                        }
+                        if (is_object($module)){
+                        	foreach ($groups as $groupid => $groupname) {
+                        		if (!$moduleperm_handler->checkRight('module_read', $module->getVar('mid'), $groupid)) {
+                        			$moduleperm_handler->addRight('module_read', $module->getVar('mid'), $groupid);
+                        		}
+                        	}
                         }
                         $startmod_updated = true;
                     }

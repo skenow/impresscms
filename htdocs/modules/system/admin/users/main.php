@@ -58,7 +58,7 @@ case "updateUser":
     $user_avatar = $theme = null;
 	if ( !isset( $attachsig ) ) $attachsig = null;
 	if ( !isset( $user_viewemail ) ) $user_viewemail = null;
-    updateUser($uid, $username, $name, $url, $email, $user_icq, $user_aim, $user_yim, $user_msnm, $user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar, $user_sig, $attachsig, $theme, $password, $pass2, $rank, $bio, $uorder, $umode, $notify_method, $notify_mode, $timezone_offset, $user_mailok, $groups);
+    updateUser($uid, $username, $name, $url, $email, $user_icq, $user_aim, $user_yim, $user_msnm, $user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar, $user_sig, $attachsig, $theme, $password, $pass2, $rank, $bio, $uorder, $umode, $notify_method, $notify_mode, $timezone_offset, $user_mailok, $language, $salt, $groups);
     break;
 case "delUser":
     xoops_cp_header();
@@ -71,10 +71,10 @@ case "delete_many":
     xoops_cp_header();
     $count = count($memberslist_id);
     if ( $count > 0 ) {
-        $list = "<a href='".XOOPS_URL."/userinfo.php?uid=".$memberslist_id[0]."' target='_blank'>".$memberslist_uname[$memberslist_id[0]]."</a>";
+        $list = "<a href='".XOOPS_URL."/userinfo.php?uid=".$memberslist_id[0]."' rel='external'>".$memberslist_uname[$memberslist_id[0]]."</a>";
         $hidden = "<input type='hidden' name='memberslist_id[]' value='".$memberslist_id[0]."' />\n";
         for ( $i = 1; $i < $count; $i++ ) {
-            $list .= ", <a href='".XOOPS_URL."/userinfo.php?uid=".$memberslist_id[$i]."' target='_blank'>".$memberslist_uname[$memberslist_id[$i]]."</a>";
+            $list .= ", <a href='".XOOPS_URL."/userinfo.php?uid=".$memberslist_id[$i]."' rel='external'>".$memberslist_uname[$memberslist_id[$i]]."</a>";
             $hidden .= "<input type='hidden' name='memberslist_id[]' value='".$memberslist_id[$i]."' />\n";
         }
         echo "<div><h4>".sprintf(_AM_AYSYWTDU," ".$list." ")."</h4>";
@@ -179,7 +179,9 @@ case "addUser":
                     xoops_cp_footer();
                     exit();
                 }
-                $newuser->setVar("pass", md5($password));
+                $newuser->setVar("salt", $salt);
+		$password = icms_encryptPass($password, $salt);
+                $newuser->setVar("pass", $password);
             }
             $newuser->setVar("timezone_offset", $timezone_offset);
             $newuser->setVar("uorder", $uorder);
@@ -193,6 +195,7 @@ case "addUser":
             $newuser->setVar("user_occ", $user_occ);
             $newuser->setVar("user_intrest", $user_intrest);
             $newuser->setVar('user_mailok', $user_mailok);
+            $newuser->setVar('language', $language);
             if (!$member_handler->insertUser($newuser)) {
                 $adduser_errormsg = _AM_CNRNU;
             } else {
@@ -206,6 +209,32 @@ case "addUser":
 					$group_names = $member_handler->getGroupList(new Criteria('groupid', "(".implode(", ", $groups_failed).")", 'IN'));
 					$adduser_errormsg = sprintf(_AM_CNRNU2, implode(", ", $group_names));
 				} else {
+					
+					/* Hack by marcan <INBOX>
+					 * Sending a confirmation email to the newly registered user
+					 */
+					
+					 /**
+					  * @todo this has been commented out for now as we need to add a check box on the
+					  * form to ask the admin if he wants to send the welcome message or not 
+					  */
+					/*
+					$myts =& MyTextSanitizer::getInstance();
+					$xoopsMailer =& getMailer();
+					$xoopsMailer->useMail();
+					$xoopsMailer->setTemplate('welcome.tpl');
+					$xoopsMailer->assign('UNAME', $uname);
+		  			$xoopsMailer->assign('PASSWORD', $vpass);
+					$xoopsMailer->assign('X_UEMAIL', $email);			
+		      		$xoopsMailer->setToEmails($email);
+					$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
+					$xoopsMailer->setFromName($xoopsConfig['sitename']);
+					$xoopsMailer->setSubject(sprintf(_US_YOURREGISTRATION,$myts->stripSlashesGPC($xoopsConfig['sitename'])));
+					$xoopsMailer->send();
+					/* Hack by marcan <INBOX>
+					 * Sending a confirmation email to the newly registered user
+					 */			
+
                     redirect_header("admin.php?fct=users",1,_AM_DBUPDATED);
                 }
             }
@@ -226,7 +255,7 @@ case "reactivate":
     if(!$result){
         exit();
     }
-    redirect_header("admin.php?fct=users&amp;op=modifyUser&amp;uid=".$uid,1,_AM_DBUPDATED);
+    redirect_header("admin.php?fct=users&amp;op=modifyUser&amp;uid=".intval($uid),1,_AM_DBUPDATED);
     break;
 case "mod_users":
 default:

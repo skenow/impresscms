@@ -1,10 +1,157 @@
 ImpressCMS ChangeLog
 
 =============================================
-Unreleased : ImpressCMS 1.0 "Janus" RC
+Unreleased : ImpressCMS 1.1 "???" Alpha
 =============================================
 
+- Added : New rights category in the group admin, now a group can admin some groups and other not... (nekro)
+- Added : icmsFeed for module developers (nachenko)
+- Added : Icms Uses UTF-8 encoding as default encoding.  (stranger)
+- Added : icms_createSalt function to generate a unique random salt key. (vaughan)
+- Added : icms_getUserSaltFromUname function to get the users unique salt key for logging in. (vaughan)
+- Added : icms_encryptPass function to add the salts & encrypt password using sha256 (vaughan)
+- Added : Unique Salt key to users table. (vaughan)
+- Added : Unique Salt key to mainfile/sdata trust path for use with Password encryption. (vaughan)
+- Added : enable sha256 choice in admin preferences user settings. default = yes sha256, no = md5 (basic). (vaughan)
+- Added : Prototype Library (Updated to the last version , and removed old prototype files from other places like install and scriptaculous library). (nekro)
+- Added : Projax Library to integrate better Scriptaculous in php. (nekro)
+- Added : The configuration to enable or disable the userinfo.php view by annonymous users. (nekro)
+- Added : Feature to select rights for different groups and modules for the debug. (nekro)
+- Added : IcmsLibrariesHandler - New feature allowing easy inclusion of third party libraries without hacking any core file (malanciault/davidl2)
+- Added : Including Scriptaculous library
+- Added : Feature to select the editor in the preferences. (nekro)
+- Added : The XOOPS_EDITOR_PATH and XOOPS_EDITOR_URL constants. (nekro)
+- Added : The /editors folder. (nekro)
+- Added : The TinyMCE editor. (nekro)
+- Added : Feature to select in which modules the groups can use the editor. (real_therplima)
+- Added : Autoselection of system language depending the browser language configuration. (if multilanguage enabled). (nekro)
+- Added : New User Info config option to enable the mailing of a welcome message to new activated user (malanciault)
+- Added : New User Info config option to customize the welcome message to be send to new activated user (malanciault)
+- Added : IcmsDatabaseUpdater object to easily perform database upgrade procedure (malanciault)
+- Added : New field in the XoopsModule object, dbversion, which will track the version of the tables related to a module (malanciault)
+- Added : Implementation of the onUpdate event for the System module to allow easy database upgrades performed automatically while updating the System module (malanciault)
+- Added : Upgrade script from ImpressCMS 1.0 to ImpressCMS 1.1 which only adds the dbversion field to the modules table; after this upgrade has been performed, all database upgrades will be done automatically when updating the System module (malanciault/stranger) 
+- Added : Addition of assigning language's css & Javascripts files to the template. (stranger)
+- Added : Addition of assigning/integrating a local date function in to the core, configurable through administration menu. (stranger)
+- Added : New module added in admin: Content manager that allow create content pages out of the box. (real_therplima)
+- Added : New module added in admin: Links manager that allow the admin create shortcuts to be used to show blocks and as start page of the site. (real_therplima)
+- Added : Addition of the editor select field in block form. Now you can select the editor you want to use into the allowed editors. (real_therplima)
+- Added : Enable a local date function in admin preferences settings. default = no. (stranger)
+- Added : Customized admin footer. (stranger/GibaPhp/Fabio Egas)
+- Added : Multilogin prohibition, this will check if somebody had previously logged in the site with your account. (stranger/real_therplima)
+- Added : Implementation of adding google analytics code (like smarty). (stranger)
+- Added : Implementation of adding google meta tag (like smarty). (stranger)
+- Added : Protecting Emails against SPAMMIng . (stranger/real_therplima)
+- Added : RSS URL for admin, with this option, you can define a local site on the list of . (stranger)
+- Added : CAPTCHA (task #145604). (stranger)
+- Added : using CAPTCHA on register/comment forms for guests/anonymous. (stranger)
+- Added : Password meter op on edit user and register form. (stranger/real_therplima/vaughan?)
+- Added : Addition for allowing webmaster to disable/enable signature of users on a site. (stranger)
+- Added : Addition for allowing webmaster to disable/enable of using html and external images on signatures of users of a site. (stranger/Hervet)
+- Added : Using GRAVATAR in Impresscms. (real_therplima)
+- Added : Option in System Preference to use GRAVATAR. (stranger)
+- Added : Option in System Preference to use extended date function. (stranger)
+- Added : Option in System Preference to use CAPTCHA in registration form. (stranger)
+- Added : Option in System Preference to use CAPTCHA in comments form form. (stranger)
+- Added : Option in System Preference to use custom footer for admin menu. (stranger)
+- Added : Option in System Preference to use html/image purifier for signatures. (stranger)
+- Added : Option in System Preference to enable/disable signatures. (stranger)
+- Added : Built in RTL style for administration menu. (stranger)
+- Added : Option in System Preference to Select the Admin Panel left Logo (real_therplima/marcan)
+- Added : Option in System Preference to Select the Admin Panel Right Logo (real_therplima/marcan)
+- Added : Option in System Preference to enable/disable the ImpressCMS Project drop down menu (real_therplima/marcan)
+- Added : Option in System Preference to enable/disable shortcut icons for block editing on block titles (stranger)
+- Added : Option in System Preference to Truncate url's (stranger)
+- Added : Option in System Preference to Select truncated url's length (stranger)
+- Added : Option in System Preference to Select truncated url's pre characteres length (stranger)
+- Added : Option in System Preference to Select truncated url's last characteres length (stranger)
+
+- Improved : The pm form to use the selected editor. (real_therplima)
+- Improved : XoopsTree::getNicePathFromId has new parameter, allowing specification of the separator between links (skenow)
+- Improved : System admin page markup (skenow)
+- Improved : Revamping the modules list in System Admin > Modules (mcdonald/real_therplima/davidl2/mrtheme)
+- Improved : Added templates support for the blocks admin area and some icons to improve the userfriendly (real_therplima)
+- Improved : Improve the System dropdown menu including subitems for the preferences (real_therplima)
+- Improved : Smarty library (Updated to the lastest version 2.6.19) (real_therplima)
+- Improved : The Block Positons feature was separeted from the blocks admin and added to system as a new system module (real_therplima)
+- Improved : Added possibility to change current encoding while upgrading. (stranger)
+- Improved : Libraries default encoding is now UTF-8. (stranger)
+- Improved : New smartiy variables on themes for "google analytics code" and "google meta tag". (stranger)
+- Improved : Changing fiih link (after upgrading) to a new place for updating system module, right after upgrading is done. (stranger)
+
+- Changed : Moved the Smarty library from /class to /libraries. (nekro)
+- Changed : Moved the PHPmailer library from /class to /libraries. (nekro)
+- Changed : Textarea is now widely. Better to create blocks and editing of templates. (sato-san)
+- Changed : Password encryption method from md5 to more secure SHA256 + 2 unique salt keys. (vaughan)
+- Changed : PM-Popup size bigger. (sato-san)
+- Changed : All instances of target="_blank" replaced with rel="external". (vaughan)
+
+- Fixed #1899685 : Parse error: banners.php on line 226 (kurak_bu/nekro)
+- Fixed #1932374 : Changing the 100% width of table in xoops.css to make it 100% only for table.outer (malanciault/real_therplima)  
+- Fixed : Removing a notice in debug when update the system module. (real_therplima)
+- Fixed : Addition of ".outer {}" was missed. (stranger)
+
+=========================================
+2008-03-10 : ImpressCMS 1.0 "Janus" Final
+=========================================
+
+- Improved : Updating the VersionChecker to handle situation where the impresscms_xml feed cann not be read (firewall, no internet access, etc...) (malanciault)
+- Improved : In the VersionChecker, changed errors to an array and provided a the language constant as the error message - the version checker now reports correctly when it cannot find a valid version_xml (skenow) 
+- Improved : admin_version template (sato-san/davidl2)
+- Improved : Syntax/grammar check in install wizard (andrewvincent/xoops-magazine)
+- Improved : Syntax/grammar check in preferences (andrewvincent)
+- Improved : Changing the links in About ImpressCMS admin menu for the links to open in new window (malanciaut)
+- Fixed : Fixing the version checker to reinstate the code about module info popup (malanciault)
+- Added : htmlspecialchars to $_GET['xoops_redirect'] parameter in user.php to prevent XSS. (vaughan/skenow)
+
+=========================================
+2008-03-04 : ImpressCMS 1.0 "Janus" RC 3
+=========================================
+
+- Improved : Improved system_redirect template in impresstheme theme (Snow/malanciault/Underdogg/davidl2)
+- Improved : Improved system_siteclose template in impresstheme theme (Snow/malanciault/Underdogg/davidl2)
+- Improved : Upgrade script has been improved to also clean the cache folder (malanciault/real_therplima) 
+- Fixed : #1905281 Redirect function not using the user selected theme (malanciault)
+- Fixed : the ImpressCMS logo used on impresstheme as well as in the admin section have been updated (nekro/MrTheme)
+- Added : Addition of the global navigationlink in impresstheme theme (mcdonald/skenow/malanciault)
+- Added : Addition of the danish flag (anderssk)
+- Added : Addition of the persian flag (malanciault)
+- Added : definitions for ul and li in impresstheme (McDonald/snow/malanciault)
+- Added : New module added in admin: ImpressCMS Version Checker (malanciault/nekro/MrTheme/davidl2)
+- Added : A new Welcome custom block is now added by the install wizard to welcome the "not-yet-loged" user on the new site (malanciault/MrTheme/davidl2)
+- Added : A new Welcome custom block is now added by the install wizard to welcome the webmaster when loged in and to remind him some useful links to start his new ImpressCMS website (malanciault/MrTheme/davidl2)
+- Added : #1904910 A small anchor "new" in System Admin > Blocks so it becomes possible to link to modules/system/admin.php?fct=blocksadmin#new and get the user at the begining of the new block form (malanciault/drummond2) 
+
+=========================================
+2008-02-24 : ImpressCMS 1.0 "Janus" RC 2
+=========================================
+
+- Added : New smarty variable now available, <{$icmsLang}> representing the selected language. For example, if French is the current language selected by the user, then the value of this variable will be "french". (malanciault/davidl2)
+- Fixed : Revision 955: Display issues with impresstheme. (Snow)
+- Fixed : #1891588: Timezone offset empty (compatibility issue with versions of PHP aswell as operating system when using floats. (changed to an integer value instead). (vaughan</jegelstaff)
+- Fixed : #1892430: Typo in language/english/user.php (malanciault/jegelstaff)
+
+
+======================================
+2008-02-10 : ImpressCMS 1.0 "Janus" RC
+======================================
+
+- Fixed : #1890400 Can't register new user (mysql version compatibility issue) (vaughan)
+
+==========================================
+2008-02-01 : ImpressCMS 1.0 "Janus" Beta 2
+==========================================
+
+- Fixed : w3c validation in impresstheme and impresstheme_light (sato-san)
+- Fixed : #1870346 System blocks not visible to added group (skenow/dave_l)
 - Fixed : #1867922 No nice path from getNicePathFromId (MacDonald/malanciault)
+- Fixed : #1876797 the $tpl XoopsTpl object used in htdocs/cp_functions.php and htdocs/admin.php had a too generic name which was creating conflict (with AltSys for example). The variable name was renamed for $icsmAdminTpl (malanciault)
+- Fixed : #1875382 error in xoops.css (display: inline-block) (MacDonald/malanciault)
+- Fixed : #1881367 Problems in the queries executed when editing User Ranks (malanciault/vaughan)
+- Fixed : Adding a few @ in install/page_pathsettings.php to prevent the display of some errors that would confuse users (real_therplima/malanciault)
+- Fixed : #1872191 Small display bug in user.php (incama/malanciault)
+- Fixed : Local file inclusion (DSecRG/malanciault)
+- Fixed : URL Redirection Phishing (DSecRG/malanciault/fx2024)
 
 ========================================
 2008-01-08 : ImpressCMS 1.0 "Janus" Beta
@@ -16,7 +163,7 @@ Unreleased : ImpressCMS 1.0 "Janus" RC
 - Added : Integration of the Easiest Multilanguage originally created by GIJOE (malanciault)
 - Added : Addition of Gijoe Remember me hack (malanciault)
 - Added : Added a new Database Driver (MySQLi). (young-pee)
-- Added : New feature to add/edit/delete blocks positions. (rplima/young-pee)
+- Added : New feature to add/edit/delete blocks positions. (real_therplima/young-pee)
 - Added : New installer (skalpa/wtravel)
 - Added : Configuration of XOOPS_TRUST_PATH in intall wizard (malanciault)
 - Added : Saving the database information in a file inside trust_path if possible (malanciault)

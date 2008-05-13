@@ -201,6 +201,24 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 			return $lang_list;
 		}
 
+		/*
+		 * gets list of editors folders inside editors directory
+		 */
+		function getEditorsList(){
+			$editor_list = array();
+			$editor_list = XoopsLists::getDirListAsArray(XOOPS_EDITOR_PATH);
+			$editor_list = array_merge(array('default'=>'default'),$editor_list);
+			return $editor_list;
+		}
+		
+		/*
+		 * gets list of editors folders inside editors directory
+		 */
+		function getEnabledEditorsList(){
+			global $xoopsConfig;
+			return $xoopsConfig['editor_enabled'];
+		}
+
 		function getCountryList()
 		{
 			$country_list = array (

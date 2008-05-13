@@ -1,43 +1,20 @@
 <?php
-// $Id: mysqldatabase.php 694 2006-09-04 11:33:22Z skalpa $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu)                                          //
-// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
-// Project: The XOOPS Project                                                //
-// ------------------------------------------------------------------------- //
+/**
+ * MySQLi Database Driver file.
+ * 
+ * @package database
+ * @subpackage mysqli
+ * @version $Id$
+ * @since ImpressCMS 1.0
+ * @author Gustavo Pilla <nekro@impresscms.org>
+ * @copyright The ImpressCMS Project http://www.impresscms.org/
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ */
+
 if (!defined("XOOPS_ROOT_PATH")) {
     die("XOOPS root path not defined");
 }
-/**
- * @package     kernel
- * @subpackage  database
- *
- * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
- */
+
 
 /**
  * base class
@@ -45,15 +22,16 @@ if (!defined("XOOPS_ROOT_PATH")) {
 include_once XOOPS_ROOT_PATH."/class/database/database.php";
 
 /**
- * connection to a mysql database
+ * Database Object for a MySQL database.
  *
  * @abstract
  *
- * @author      Kazumi Ono  <onokazu@xoops.org>
- * @copyright   copyright (c) 2000-2003 XOOPS.org
+ * @package     database
+ * @subpackage  mysqli
+ * @since ImpressCMS 1.0
  *
- * @package     kernel
- * @subpackage  database
+ * @author      Gustavo Pilla  <nekro@impresscms.org>
+ * @copyright   copyright (c) 2008 ImpressCMS
  */
 class XoopsMySQLiDatabase extends XoopsDatabase
 {
@@ -71,10 +49,15 @@ class XoopsMySQLiDatabase extends XoopsDatabase
 	 */
 	function connect($selectdb = true)
 	{
+		static $db_charset_set;
+		
+		$this->allowWebChanges = ( $_SERVER['REQUEST_METHOD'] != 'GET' );
+		
 		if ( !extension_loaded( 'mysql' ) ) {
 			trigger_error( 'notrace:mysql extension not loaded', E_USER_ERROR );
 			return false;
 		}
+
 		if (XOOPS_DB_PCONNECT == 1) {
 			//$this->conn = @mysql_pconnect(XOOPS_DB_HOST, XOOPS_DB_USER, XOOPS_DB_PASS);
 			$this->conn = new mysqli( XOOPS_DB_HOST, XOOPS_DB_USER, XOOPS_DB_PASS );
@@ -84,7 +67,6 @@ class XoopsMySQLiDatabase extends XoopsDatabase
 		}
 
 		if (mysqli_connect_errno()) {
-			echo "entre";
 			$this->logger->addQuery('', $this->error(), $this->errno());
 			return false;
 		}
@@ -95,6 +77,12 @@ class XoopsMySQLiDatabase extends XoopsDatabase
 				return false;
 			}
 		}
+		
+		if (!isset($db_charset_set) && defined('XOOPS_DB_CHARSET') && XOOPS_DB_CHARSET) {
+			$this->queryF( "SET NAMES '" . XOOPS_DB_CHARSET . "'" );
+		}
+		$db_charset_set = 1;
+		
 		return true;
 	}
 
@@ -229,9 +217,20 @@ class XoopsMySQLiDatabase extends XoopsDatabase
      */
     function quoteString($str)
     {
-         $str = "'".str_replace('\\"', '"', addslashes($str))."'";
-         return $str;
+        return $this->quote($str);
+        $str = "'".str_replace('\\"', '"', addslashes($str))."'";
+        return $str;
     }
+    
+	/**
+	 * Quotes a string for use in a query.
+	 * 
+	 */
+	function quote( $string )
+	{
+        return "'" . mysql_real_escape_string( $string, $this->conn ) . "'";
+	}
+
 
     /**
      * perform a query on the database
@@ -325,7 +324,6 @@ class XoopsMySQLiDatabase extends XoopsDatabase
 	 */
     function getFieldType($result, $offset)
 	{
-		//return mysql_field_type($result, $offset);
 		$field = $result->fetch_field();
 		return $field->type;
 	}
@@ -338,20 +336,19 @@ class XoopsMySQLiDatabase extends XoopsDatabase
 	 */
 	function getFieldsNum($result)
 	{
-		//return mysql_num_fields($result);
 		return $result->field_count;
 	}
 }
 
 /**
- * Safe Connection to a MySQL database.
+ *	Safe Connection to a MySQL database.
  *
+ * @package database
+ * @subpackage mysqli
+ * @since ImpressCMS 1.0
  *
- * @author Kazumi Ono <onokazu@xoops.org>
- * @copyright copyright (c) 2000-2003 XOOPS.org
- *
- * @package kernel
- * @subpackage database
+ * @author Gustavo Alejandro Pilla <nekro@impresscms.org>
+ * @copyright copyright (c) 2008 ImpressCMS
  */
 class XoopsMySQLiDatabaseSafe extends XoopsMySQLiDatabase
 {
@@ -377,12 +374,12 @@ class XoopsMySQLiDatabaseSafe extends XoopsMySQLiDatabase
  * This class allows only SELECT queries to be performed through its
  * {@link query()} method for security reasons.
  *
+ * @package database
+ * @subpackage mysqli
+ * @since ImpressCMS 1.0
  *
- * @author Kazumi Ono <onokazu@xoops.org>
- * @copyright copyright (c) 2000-2003 XOOPS.org
- *
- * @package kernel
- * @subpackage database
+ * @author Gustavo Alejandro Pilla <nekro@impresscms.org>
+ * @copyright copyright (c) 2008 ImpressCMS
  */
 class XoopsMySQLiDatabaseProxy extends XoopsMySQLiDatabase
 {
@@ -399,13 +396,19 @@ class XoopsMySQLiDatabaseProxy extends XoopsMySQLiDatabase
      */
 	function query($sql, $limit=0, $start=0)
 	{
-	    $sql = ltrim($sql);
-		if (strtolower(substr($sql, 0, 6)) == 'select') {
-		//if (preg_match("/^SELECT.*/i", $sql)) {
-			return $this->queryF($sql, $limit, $start);
+		// Hack by marcan to track query count
+		global $smartfactory_query_count_activated, $smartfactory_query_count;
+		if (isset($smartfactory_query_count_activated) && $smartfactory_query_count_activated) {
+			$smartfactory_query_count++;
 		}
-		$this->logger->addQuery($sql, 'Database update not allowed during processing of a GET request', 0);
-		return false;
+		// End of Hack by marcan to track query count
+	    $sql = ltrim($sql);
+		if ( !$this->allowWebChanges && strtolower( substr($sql, 0, 6) ) != 'select' )  {
+			trigger_error( 'Database updates are not allowed during processing of a GET request', E_USER_WARNING );
+			return false;
+		}
+    	
+		return $this->queryF($sql, $limit, $start);
 	}
 }
 ?>

@@ -33,6 +33,16 @@ if (!defined('XOOPS_ROOT_PATH')) {
 	exit();
 }
 
+
+/**
+ *
+ *
+ * @package     kernel
+ *
+ * @author	    Kazumi Ono	<onokazu@xoops.org>
+ * @copyright	copyright (c) 2000-2003 XOOPS.org
+ */
+
 /**
  * An Image
  *
@@ -42,6 +52,13 @@ if (!defined('XOOPS_ROOT_PATH')) {
  */
 class XoopsImage extends XoopsObject
 {
+	/**
+	 * Info of Image file (width, height, bits, mimetype)
+	 *
+	 * @var array
+	 */
+	var $image_info = array();
+	
 	/**
 	 * Constructor
 	 **/
@@ -58,7 +75,27 @@ class XoopsImage extends XoopsObject
 		$this->initVar('image_body', XOBJ_DTYPE_SOURCE, null, true);
 		$this->initVar('imgcat_id', XOBJ_DTYPE_INT, 0, false);
 	}
+	
+	function getInfo($path,$type='url',$ret=false){
+        if ($type == 'url'){
+        	$img = $path.'/'.$this->getVar('image_name');
+        }else{
+        	$img = $path;
+        }
+		$get_size = getimagesize($img);
+		$this->image_info = array(
+			'width' => $get_size[0],
+			'height' => $get_size[1],
+			'bits' => $get_size['bits'],
+			'mime' => $get_size['mime']
+		);
+		if ($ret){
+			return $this->image_info;
+		}
+	}
 }
+
+
 
 /**
  * XOOPS image handler class.
@@ -278,4 +315,6 @@ class XoopsImageHandler extends XoopsObjectHandler
         return $ret;
     }
 }
+
+
 ?>

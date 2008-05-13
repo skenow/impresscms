@@ -75,14 +75,17 @@ $queries = array();
 if ($action == "results") {
     if ($query == "") {
          redirect_header("search.php",1,_SR_PLZENTER);
+        exit();
     }
 } elseif ($action == "showall") {
     if ($query == "" || empty($mid)) {
         redirect_header("search.php",1,_SR_PLZENTER);
+        exit();
     }
 } elseif ($action == "showallbyuser") {
     if (empty($mid) || empty($uid)) {
         redirect_header("search.php",1,_SR_PLZENTER);
+        exit();
     }
 }
 
@@ -106,8 +109,36 @@ if ( $andor != "OR" && $andor != "exact" && $andor != "AND" ) {
 $myts =& MyTextSanitizer::getInstance();
 if ($action != 'showallbyuser') {
     if ( $andor != "exact" ) {
-        $ignored_queries = array(); // holds kewords that are shorter than allowed minmum length
-        $temp_queries = preg_split('/[\s,]+/', $query);
+        $ignored_queries = array(); // holds kewords that are shorter than allowed minmum length  
+        
+        preg_match_all('/(?:").*?(?:")|(?:\').*?(?:\')/', $query,$compostas);
+        $res = $simpl = array();
+        foreach ($compostas[0] as $comp){
+        	$res[] = substr($comp,1,strlen($comp)-3);
+        }
+        $compostas = $res;
+        
+        $simples = preg_replace('/(?:").*?(?:")|(?:\').*?(?:\')/', '', $query);
+        $simples = preg_split('/[\s,]+/', $simples);
+        if (count($simples) > 0){
+        	foreach ($simples as $k=>$v){
+        		if ($v != "\\"){
+        			$simpl[] = $v;
+        		}
+        	}
+        	$simples = $simpl;
+        }        
+
+        if (count($compostas) > 0 && count($simples) > 0){
+          $temp_queries = array_merge($simples,$compostas);
+        }elseif (count($compostas) <= 0 && count($simples) > 0){
+        	$temp_queries = $simples;
+        }elseif (count($compostas) > 0 && count($simples) <= 0){
+        	$temp_queries = $compostas;
+        }else{
+        	$temp_queries = array();
+        }
+        
         foreach ($temp_queries as $q) {
             $q = trim($q);
             if (strlen($q) >= $xoopsConfigSearch['keyword_min']) {
@@ -118,11 +149,13 @@ if ($action != 'showallbyuser') {
         }
         if (count($queries) == 0) {
             redirect_header('search.php', 2, sprintf(_SR_KEYTOOSHORT, $xoopsConfigSearch['keyword_min']));
+            exit();
         }
     } else {
         $query = trim($query);
         if (strlen($query) < $xoopsConfigSearch['keyword_min']) {
             redirect_header('search.php', 2, sprintf(_SR_KEYTOOSHORT, $xoopsConfigSearch['keyword_min']));
+            exit();
         }
         $queries = array($myts->addSlashes($query));
     }
@@ -161,32 +194,38 @@ switch ($action) {
         $mid = intval($mid);
         if ( in_array($mid, $available_modules) ) {
             $module =& $modules[$mid];
-            $results =& $module->search($queries, $andor, 5, 0);
-            echo "<h4>".$myts->makeTboxData4Show($module->getVar('name'))."</h4>";
-            $count = count($results);
-            if (!is_array($results) || $count == 0) {
-                echo "<p>"._SR_NOMATCH."</p>";
+            $results =& $module->search($queries, $andor, intval($xoopsConfigSearch['search_per_page']), 0);
+           $count = count($results);
+            if (!is_array($results) || $count == 0 ) {
+                 if( $xoopsConfigSearch['search_no_res_mod']){
+               		 echo "<h4>".$myts->makeTboxData4Show($module->getVar('name'))."</h4>";
+                     echo "<p>"._SR_NOMATCH."</p>";
+           		}
             } else {
+               	echo "<h4>".$myts->makeTboxData4Show($module->getVar('name'))."</h4>";
                 for ($i = 0; $i < $count; $i++) {
                     if (isset($results[$i]['image']) && $results[$i]['image'] != "") {
-                        echo "<img src='modules/".$module->getVar('dirname')."/".$results[$i]['image']."' alt='".$myts->makeTboxData4Show($module->getVar('name'))."' />&nbsp;";
+                        echo "<img style='vertical-align:middle;' src='modules/".$module->getVar('dirname')."/".$results[$i]['image']."' alt='".$myts->makeTboxData4Show($module->getVar('name'))."' />&nbsp;";
                     } else {
-                        echo "<img src='images/icons/posticon2.gif' alt='".$myts->makeTboxData4Show($module->getVar('name'))."' width='26' height='26' />&nbsp;";
+                        echo "<img style='vertical-align:middle;' src='images/icons/posticon2.gif' alt='".$myts->makeTboxData4Show($module->getVar('name'))."' width='26' height='26' />&nbsp;";
                     }
                     if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
                         $results[$i]['link'] = "modules/".$module->getVar('dirname')."/".$results[$i]['link'];
                     }
                     echo "<b><a href='".$results[$i]['link']."'>".$myts->makeTboxData4Show($results[$i]['title'])."</a></b><br />\n";
-                    echo "<small>";
-                    $results[$i]['uid'] = @intval($results[$i]['uid']);
-                    if ( !empty($results[$i]['uid']) ) {
-                        $uname = XoopsUser::getUnameFromId($results[$i]['uid']);
-                        echo "&nbsp;&nbsp;<a href='".XOOPS_URL."/userinfo.php?uid=".$results[$i]['uid']."'>".$uname."</a>\n";
-                    }
-                    echo !empty($results[$i]['time']) ? " (". formatTimestamp(intval($results[$i]['time'])).")" : "";
-                    echo "</small><br />\n";
+	                if( $xoopsConfigSearch['search_user_date']){
+	                    echo "<small>";
+	                    $results[$i]['uid'] = @intval($results[$i]['uid']);
+	                    if ( !empty($results[$i]['uid']) ) {
+	                        $uname = XoopsUser::getUnameFromId($results[$i]['uid']);
+	                        echo "&nbsp;&nbsp;<a href='".XOOPS_URL."/userinfo.php?uid=".$results[$i]['uid']."'>".$uname."</a>\n";
+	                    }
+	                    echo !empty($results[$i]['time']) ? " (". formatTimestamp(intval($results[$i]['time'])).")" : "";
+	                    echo "</small>";
+	                }
+	                 echo "<br />\n";
                 }
-                if ( $count >= 5 ) {
+                if ( $count >= intval($xoopsConfigSearch['search_per_page']) ) {
                     $search_url = XOOPS_URL.'/search.php?query='.urlencode(stripslashes(implode(' ', $queries)));
                     $search_url .= "&mid=$mid&action=showall&andor=$andor";
                     echo '<br /><a href="'.htmlspecialchars($search_url).'">'._SR_SHOWALLR.'</a></p>';
@@ -198,7 +237,7 @@ switch ($action) {
     }
     include "include/searchform.php";
     $search_form->display();
-    $xoopsTpl->assign('xoops_pagetitle', _SR_SEARCHRESULTS); 
+    $xoopsTpl->assign('xoops_pagetitle', _SR_SEARCHRESULTS);
     break;
     case "showall":
     case 'showallbyuser':
@@ -233,22 +272,25 @@ switch ($action) {
         echo "<h5>".$myts->makeTboxData4Show($module->getVar('name'))."</h5>";
         for ($i = 0; $i < $count; $i++) {
             if (isset($results[$i]['image']) && $results[$i]['image'] != '') {
-                echo "<img src='modules/".$module->getVar('dirname')."/".$results[$i]['image']."' alt='".$myts->makeTboxData4Show($module->getVar('name'))."' />&nbsp;";
+                echo "<img style='vertical-align:middle;' src='modules/".$module->getVar('dirname')."/".$results[$i]['image']."' alt='".$myts->makeTboxData4Show($module->getVar('name'))."' />&nbsp;";
             } else {
-                echo "<img src='images/icons/posticon2.gif' alt='".$myts->makeTboxData4Show($module->name())."' width='26' height='26' />&nbsp;";
+                echo "<img style='vertical-align:middle;' src='images/icons/posticon2.gif' alt='".$myts->makeTboxData4Show($module->name())."' width='26' height='26' />&nbsp;";
             }
             if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
                 $results[$i]['link'] = "modules/".$module->getVar('dirname')."/".$results[$i]['link'];
             }
             echo "<b><a href='".$results[$i]['link']."'>".$myts->makeTboxData4Show($results[$i]['title'])."</a></b><br />\n";
-            echo "<small>";
-            $results[$i]['uid'] = @intval($results[$i]['uid']);
-            if ( !empty($results[$i]['uid']) ) {
-                $uname = XoopsUser::getUnameFromId($results[$i]['uid']);
-                echo "&nbsp;&nbsp;<a href='".XOOPS_URL."/userinfo.php?uid=".$results[$i]['uid']."'>".$uname."</a>\n";
-            }
-            echo !empty($results[$i]['time']) ? " (". formatTimestamp(intval($results[$i]['time'])).")" : "";
-            echo "</small><br />\n";
+	        if( $xoopsConfigSearch['search_user_date']){
+	            echo "<small>";
+	            $results[$i]['uid'] = @intval($results[$i]['uid']);
+	            if ( !empty($results[$i]['uid']) ) {
+	                $uname = XoopsUser::getUnameFromId($results[$i]['uid']);
+	                echo "&nbsp;&nbsp;<a href='".XOOPS_URL."/userinfo.php?uid=".$results[$i]['uid']."'>".$uname."</a>\n";
+	            }
+	            echo !empty($results[$i]['time']) ? " (". formatTimestamp(intval($results[$i]['time'])).")" : "";
+	            echo "</small>";
+	        }
+	        echo "<br />\n";
         }
         echo '
         <table>

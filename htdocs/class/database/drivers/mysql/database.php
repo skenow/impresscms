@@ -32,11 +32,14 @@ if (!defined("XOOPS_ROOT_PATH")) {
     die("XOOPS root path not defined");
 }
 /**
- * @package     kernel
- * @subpackage  database
+ * @package    database
+ * @subpackage  mysql
+ * @version $Id: $
+ * @since XOOPS
  *
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
 
 /**
@@ -49,11 +52,13 @@ include_once XOOPS_ROOT_PATH."/class/database/database.php";
  *
  * @abstract
  *
+ * @package     database
+ * @subpackage  mysql
+ * @since XOOPS
+ *
  * @author      Kazumi Ono  <onokazu@xoops.org>
  * @copyright   copyright (c) 2000-2003 XOOPS.org
- *
- * @package     kernel
- * @subpackage  database
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
 class XoopsMySQLDatabase extends XoopsDatabase
 {
@@ -71,26 +76,37 @@ class XoopsMySQLDatabase extends XoopsDatabase
 	 */
 	function connect($selectdb = true)
 	{
+		static $db_charset_set;
+		
+		$this->allowWebChanges = ( $_SERVER['REQUEST_METHOD'] != 'GET' );
+		
 		if ( !extension_loaded( 'mysql' ) ) {
 			trigger_error( 'notrace:mysql extension not loaded', E_USER_ERROR );
 			return false;
 		}
+		
 		if (XOOPS_DB_PCONNECT == 1) {
 			$this->conn = @mysql_pconnect(XOOPS_DB_HOST, XOOPS_DB_USER, XOOPS_DB_PASS);
 		} else {
 			$this->conn = @mysql_connect(XOOPS_DB_HOST, XOOPS_DB_USER, XOOPS_DB_PASS);
 		}
-
+	
 		if (!$this->conn) {
 			$this->logger->addQuery('', $this->error(), $this->errno());
 			return false;
 		}
-		if($selectdb != false){
+		if ($selectdb != false) {
 			if (!mysql_select_db(XOOPS_DB_NAME)) {
 				$this->logger->addQuery('', $this->error(), $this->errno());
 				return false;
 			}
 		}
+		
+		if (!isset($db_charset_set) && defined('XOOPS_DB_CHARSET') && XOOPS_DB_CHARSET) {
+			$this->queryF( "SET NAMES '" . XOOPS_DB_CHARSET . "'" );
+		}
+		$db_charset_set = 1;
+		
 		return true;
 	}
 
@@ -218,9 +234,19 @@ class XoopsMySQLDatabase extends XoopsDatabase
      */
     function quoteString($str)
     {
-         $str = "'".str_replace('\\"', '"', addslashes($str))."'";
-         return $str;
+        return $this->quote($str);
+        $str = "'".str_replace('\\"', '"', addslashes($str))."'";
+        return $str;
     }
+    
+	/**
+	 * Quotes a string for use in a query.
+	 * 
+	 */
+	function quote( $string )
+	{
+        return "'" . mysql_real_escape_string( $string, $this->conn ) . "'";
+	}
 
     /**
      * perform a query on the database
@@ -330,12 +356,13 @@ class XoopsMySQLDatabase extends XoopsDatabase
 /**
  * Safe Connection to a MySQL database.
  *
+ * @package     database
+ * @subpackage  mysql
+ * @since XOOPS
  *
- * @author Kazumi Ono <onokazu@xoops.org>
- * @copyright copyright (c) 2000-2003 XOOPS.org
- *
- * @package kernel
- * @subpackage database
+ * @author      Kazumi Ono  <onokazu@xoops.org>
+ * @copyright   copyright (c) 2000-2003 XOOPS.org
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
 class XoopsMySQLDatabaseSafe extends XoopsMySQLDatabase
 {
@@ -361,12 +388,13 @@ class XoopsMySQLDatabaseSafe extends XoopsMySQLDatabase
  * This class allows only SELECT queries to be performed through its
  * {@link query()} method for security reasons.
  *
+ * @package     database
+ * @subpackage  mysql
+ * @since XOOPS
  *
- * @author Kazumi Ono <onokazu@xoops.org>
- * @copyright copyright (c) 2000-2003 XOOPS.org
- *
- * @package kernel
- * @subpackage database
+ * @author      Kazumi Ono  <onokazu@xoops.org>
+ * @copyright   copyright (c) 2000-2003 XOOPS.org
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
 class XoopsMySQLDatabaseProxy extends XoopsMySQLDatabase
 {
@@ -383,13 +411,19 @@ class XoopsMySQLDatabaseProxy extends XoopsMySQLDatabase
      */
 	function query($sql, $limit=0, $start=0)
 	{
-	    $sql = ltrim($sql);
-		if (strtolower(substr($sql, 0, 6)) == 'select') {
-		//if (preg_match("/^SELECT.*/i", $sql)) {
-			return $this->queryF($sql, $limit, $start);
+		// Hack by marcan to track query count
+		global $smartfactory_query_count_activated, $smartfactory_query_count;
+		if (isset($smartfactory_query_count_activated) && $smartfactory_query_count_activated) {
+			$smartfactory_query_count++;
 		}
-		$this->logger->addQuery($sql, 'Database update not allowed during processing of a GET request', 0);
-		return false;
+		// End of Hack by marcan to track query count
+	    $sql = ltrim($sql);
+		if ( !$this->allowWebChanges && strtolower( substr($sql, 0, 6) ) != 'select' )  {
+			trigger_error( 'Database updates are not allowed during processing of a GET request', E_USER_WARNING );
+			return false;
+		}
+    	
+		return $this->queryF($sql, $limit, $start);
 	}
 }
 ?>

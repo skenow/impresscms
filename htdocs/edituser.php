@@ -24,7 +24,11 @@
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
-
+/**
+ * Generates form and validation for editing users
+ * @package kernel 
+ * @subpackage users
+ */
 $xoopsOption['pagetype'] = 'user';
 include 'mainfile.php';
 include_once XOOPS_ROOT_PATH.'/class/xoopsformloader.php';
@@ -103,14 +107,23 @@ if ($op == 'saveuser') {
         $edituser->setVar('url', formatURL($_POST['url']));
         $edituser->setVar('user_icq', $_POST['user_icq']);
         $edituser->setVar('user_from', $_POST['user_from']);
-        $edituser->setVar('user_sig', xoops_substr($_POST['user_sig'], 0, 255));
+ 		if ($xoopsConfigUser['allwshow_sig'] == 1) {
+        if ($xoopsConfigUser['allow_htsig'] == 0) {
+		$signature = strip_tags($myts->xoopsCodeDecode($_POST['user_sig'], 1));
+        $edituser->setVar('user_sig', xoops_substr($signature, 0, 1000));
+        }elseif ($xoopsConfigUser['allwshow_sig'] == 1) {
+        $edituser->setVar('user_sig', xoops_substr($_POST['user_sig'], 0, 1000));
+        }}
         $user_viewemail = (!empty($_POST['user_viewemail'])) ? 1 : 0;
         $edituser->setVar('user_viewemail', $user_viewemail);
         $edituser->setVar('user_aim', $_POST['user_aim']);
         $edituser->setVar('user_yim', $_POST['user_yim']);
         $edituser->setVar('user_msnm', $_POST['user_msnm']);
         if ($password != '') {
-            $edituser->setVar('pass', md5($password), true);
+        		$salt = icms_createSalt();
+        		$edituser->setVar('salt', $salt, true);
+        		$pass = icms_encryptPass($password, $salt);
+            $edituser->setVar('pass', $pass, true);
         }
         $attachsig = !empty($_POST['attachsig']) ? 1 : 0;
         $edituser->setVar('attachsig', $attachsig);
@@ -150,7 +163,7 @@ if ($op == 'saveuser') {
 if ($op == 'editprofile') {
     include_once XOOPS_ROOT_PATH.'/header.php';
     include_once XOOPS_ROOT_PATH.'/include/comment_constants.php';
-    echo '<a href="userinfo.php?uid='.$xoopsUser->getVar('uid').'">'. _US_PROFILE .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'. _US_EDITPROFILE .'<br /><br />';
+    echo '<a href="userinfo.php?uid='.intval($xoopsUser->getVar('uid')).'">'. _US_PROFILE .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'. _US_EDITPROFILE .'<br /><br />';
     $form = new XoopsThemeForm(_US_EDITPROFILE, 'userinfo', 'edituser.php', 'post', true);
     $uname_label = new XoopsFormLabel(_US_NICKNAME, $xoopsUser->getVar('uname'));
     $form->addElement($uname_label);
@@ -179,14 +192,27 @@ if ($op == 'editprofile') {
     $location_text = new XoopsFormText(_US_LOCATION, 'user_from', 30, 100, $xoopsUser->getVar('user_from', 'E'));
     $occupation_text = new XoopsFormText(_US_OCCUPATION, 'user_occ', 30, 100, $xoopsUser->getVar('user_occ', 'E'));
     $interest_text = new XoopsFormText(_US_INTEREST, 'user_intrest', 30, 150, $xoopsUser->getVar('user_intrest', 'E'));
-    $sig_tray = new XoopsFormElementTray(_US_SIGNATURE, '<br />');
     include_once 'include/xoopscodes.php';
+ 		if ($xoopsConfigUser['allwshow_sig'] == 1) {
+        if ($xoopsConfigUser['allow_htsig'] == 0) {
+    $sig_tray = new XoopsFormElementTray(_US_SIGNATURE, '<br />');
+    $sig_tarea = new XoopsFormTextArea('', 'user_sig', $xoopsUser->getVar('user_sig', 'E'));
+    $sig_tray->addElement($sig_tarea);
+    $sig_cbox_value = $xoopsUser->getVar('attachsig') ? 1 : 0;
+    $sig_cbox = new XoopsFormCheckBox('', 'attachsig', $sig_cbox_value);
+    $sig_cbox->addOption(1, _US_SHOWSIG);
+    $sig_tray->addElement($sig_cbox);
+    }elseif ($xoopsConfigUser['allwshow_sig'] == 1) {
+    $sig_tray = new XoopsFormElementTray(_US_SIGNATURE, '<br />');
     $sig_tarea = new XoopsFormDhtmlTextArea('', 'user_sig', $xoopsUser->getVar('user_sig', 'E'));
     $sig_tray->addElement($sig_tarea);
     $sig_cbox_value = $xoopsUser->getVar('attachsig') ? 1 : 0;
     $sig_cbox = new XoopsFormCheckBox('', 'attachsig', $sig_cbox_value);
     $sig_cbox->addOption(1, _US_SHOWSIG);
     $sig_tray->addElement($sig_cbox);
+        }
+    }
+
     $umode_select = new XoopsFormSelect(_US_CDISPLAYMODE, 'umode', $xoopsUser->getVar('umode'));
     $umode_select->addOptionArray(array('nest'=>_NESTED, 'flat'=>_FLAT, 'thread'=>_THREADED));
     $uorder_select = new XoopsFormSelect(_US_CSORTORDER, 'uorder', $xoopsUser->getVar('uorder'));
@@ -195,9 +221,14 @@ if ($op == 'editprofile') {
     foreach ( $xoopsConfig['theme_set_allowed'] as $theme ){
     	$selected_theme->addOption( $theme , $theme );
 	}
+	$selected_language = new XoopsFormSelect(_US_SELECT_LANG, 'language_selected' , $xoopsUser->language() );
+	include_once(XOOPS_ROOT_PATH."/class/xoopslists.php");
+	foreach ( XoopsLists::getLangList() as $language ){
+    	$selected_language->addOption( $language , $language );
+	}
     // RMV-NOTIFY
     // TODO: add this to admin user-edit functions...
-    include_once XOOPS_ROOT_PATH . "/language/" . $xoopsConfig['language'] . '/notification.php';
+    include_once XOOPS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/notification.php';
     include_once XOOPS_ROOT_PATH . '/include/notification_constants.php';
     $notify_method_select = new XoopsFormSelect(_NOT_NOTIFYMETHOD, 'notify_method', $xoopsUser->getVar('notify_method'));
     $notify_method_select->addOptionArray(array(XOOPS_NOTIFICATION_METHOD_DISABLE=>_NOT_METHOD_DISABLE, XOOPS_NOTIFICATION_METHOD_PM=>_NOT_METHOD_PM, XOOPS_NOTIFICATION_METHOD_EMAIL=>_NOT_METHOD_EMAIL));
@@ -206,13 +237,22 @@ if ($op == 'editprofile') {
     $bio_tarea = new XoopsFormTextArea(_US_EXTRAINFO, 'bio', $xoopsUser->getVar('bio', 'E'));
     $cookie_radio_value = empty($_COOKIE[$xoopsConfig['usercookie']]) ? 0 : 1;
     $cookie_radio = new XoopsFormRadioYN(_US_USECOOKIE, 'usecookie', $cookie_radio_value, _YES, _NO);
-    $pwd_text = new XoopsFormPassword('', 'password', 10, 32);
-    $pwd_text2 = new XoopsFormPassword('', 'vpass', 10, 32);
+	$pwd_change_radio = new XoopsFormRadioYN(_US_CHANGE_PASSWORD, 'change_pass', 0, _YES, _NO);
+	$pwd_change_radio->setExtra('onchange="initQualityMeter(this.value);"');
+	$config_handler =& xoops_gethandler('config');
+	$passConfig =& $config_handler->getConfigsByCat(2);
+	if ($passConfig['pass_level'] <= 20){
+		$pwd_text = new XoopsFormPassword('', 'password', 10, 72);
+	}else{
+		include_once XOOPS_ROOT_PATH."/include/passwordquality.php";
+	}
+    $pwd_text2 = new XoopsFormPassword('', 'vpass', 10, 72);
     $pwd_tray = new XoopsFormElementTray(_US_PASSWORD.'<br />'._US_TYPEPASSTWICE);
     $pwd_tray->addElement($pwd_text);
     $pwd_tray->addElement($pwd_text2);
     $mailok_radio = new XoopsFormRadioYN(_US_MAILOK, 'user_mailok', intval($xoopsUser->getVar('user_mailok')));
-    $uid_hidden = new XoopsFormHidden('uid', $xoopsUser->getVar('uid'));
+    $salt_hidden = new XoopsFormHidden('salt', $xoopsUser->getVar('salt'));
+    $uid_hidden = new XoopsFormHidden('uid', intval($xoopsUser->getVar('uid')));
     $op_hidden = new XoopsFormHidden('op', 'saveuser');
     $submit_button = new XoopsFormButton('', 'submit', _US_SAVECHANGES, 'submit');
 
@@ -227,14 +267,18 @@ if ($op == 'editprofile') {
     $form->addElement($sig_tray);
     if ( count( $xoopsConfig['theme_set_allowed'] ) > 1 )
    		$form->addElement($selected_theme);
+   	if ( $im_multilanguageConfig['ml_enable'] )
+   		$form->addElement($selected_language);
     $form->addElement($umode_select);
     $form->addElement($uorder_select);
     $form->addElement($notify_method_select);
     $form->addElement($notify_mode_select);
     $form->addElement($bio_tarea);
+    $form->addElement($pwd_change_radio);
     $form->addElement($pwd_tray);
     $form->addElement($cookie_radio);
     $form->addElement($mailok_radio);
+    $form->addElement($salt_hidden);
     $form->addElement($uid_hidden);
     $form->addElement($op_hidden);
     $form->addElement($token_hidden);
@@ -249,7 +293,7 @@ if ($op == 'editprofile') {
 
 if ($op == 'avatarform') {
     include XOOPS_ROOT_PATH.'/header.php';
-    echo '<a href="userinfo.php?uid='.$xoopsUser->getVar('uid').'">'. _US_PROFILE .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'. _US_UPLOADMYAVATAR .'<br /><br />';
+    echo '<a href="userinfo.php?uid='.intval($xoopsUser->getVar('uid')).'">'. _US_PROFILE .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'. _US_UPLOADMYAVATAR .'<br /><br />';
     $oldavatar = $xoopsUser->getVar('user_avatar');
     if (!empty($oldavatar) && $oldavatar != 'blank.gif') {
         echo '<div style="text-align:center;"><h4 style="color:#ff0000; font-weight:bold;">'._US_OLDDELETED.'</h4>';
@@ -259,11 +303,16 @@ if ($op == 'avatarform') {
         include_once 'class/xoopsformloader.php';
         $form = new XoopsThemeForm(_US_UPLOADMYAVATAR, 'uploadavatar', 'edituser.php', 'post', true);
         $form->setExtra('enctype="multipart/form-data"');
+/* the avatar resizer shall later be included
+        if ($xoopsConfigUser['avatar_auto_resize']){
+        	$form->addElement(new XoopsFormLabel(_US_AUTORESIZE_ATV, sprintf(_US_AUTORESIZE_ATV_DESC,$xoopsConfigUser['avatar_width'],$xoopsConfigUser['avatar_height'])));
+        }
+*/
         $form->addElement(new XoopsFormLabel(_US_MAXPIXEL, $xoopsConfigUser['avatar_width'].' x '.$xoopsConfigUser['avatar_height']));
         $form->addElement(new XoopsFormLabel(_US_MAXIMGSZ, $xoopsConfigUser['avatar_maxsize']));
         $form->addElement(new XoopsFormFile(_US_SELFILE, 'avatarfile', $xoopsConfigUser['avatar_maxsize']), true);
         $form->addElement(new XoopsFormHidden('op', 'avatarupload'));
-        $form->addElement(new XoopsFormHidden('uid', $xoopsUser->getVar('uid')));
+        $form->addElement(new XoopsFormHidden('uid', intval($xoopsUser->getVar('uid'))));
         $form->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
             $form->display();
     }
@@ -276,7 +325,7 @@ if ($op == 'avatarform') {
     $avatar_tray->addElement($avatar_select);
     $avatar_tray->addElement(new XoopsFormLabel('', "<img src='".XOOPS_UPLOAD_URL."/".$xoopsUser->getVar("user_avatar", "E")."' name='avatar' id='avatar' alt='' /> <a href=\"javascript:openWithSelfMain('".XOOPS_URL."/misc.php?action=showpopups&amp;type=avatars','avatars',600,400);\">"._LIST."</a>"));
     $form2->addElement($avatar_tray);
-    $form2->addElement(new XoopsFormHidden('uid', $xoopsUser->getVar('uid')));
+    $form2->addElement(new XoopsFormHidden('uid', intval($xoopsUser->getVar('uid'))));
     $form2->addElement(new XoopsFormHidden('op', 'avatarchoose'));
     $form2->addElement(new XoopsFormButton('', 'submit2', _SUBMIT, 'submit'));
     $form2->display();
@@ -327,8 +376,8 @@ if ($op == 'avatarupload') {
                     }
                     $sql = sprintf("UPDATE %s SET user_avatar = %s WHERE uid = '%u'", $xoopsDB->prefix('users'), $xoopsDB->quoteString($uploader->getSavedFileName()), intval($xoopsUser->getVar('uid')));
                     $xoopsDB->query($sql);
-                    $avt_handler->addUser($avatar->getVar('avatar_id'), $xoopsUser->getVar('uid'));
-                    redirect_header('userinfo.php?t='.time().'&amp;uid='.$xoopsUser->getVar('uid'),0, _US_PROFUPDATED);
+                    $avt_handler->addUser($avatar->getVar('avatar_id'), intval($xoopsUser->getVar('uid')));
+                    redirect_header('userinfo.php?t='.time().'&amp;uid='.intval($xoopsUser->getVar('uid')),0, _US_PROFUPDATED);
                 }
             }
         }

@@ -1,10 +1,35 @@
 <?php
-class XoopsDatabaseFactory
-{
+/**
+ * @package database
+ * @subpackage  main
+ * @since XOOPS
+ * @version $Id: $
+ *
+ * @author ?
+ * @copyright   copyright (c) 2000-2003 XOOPS.org
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ */
 
-	function XoopsDatabaseFactory()
-	{
-	}
+/**
+ * XoopsDatabseFactory Class
+ *
+ * @package database
+ * @subpackage  main
+ * @since XOOPS
+ * @version $Id: $
+ *
+ * @author ?
+ * @copyright   copyright (c) 2000-2003 XOOPS.org
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ */
+class XoopsDatabaseFactory{
+
+	/**
+	 * Constructor
+	 *
+	 * Makes nothing.
+	 */
+	function XoopsDatabaseFactory(){}
 
 	/**
 	 * Get a reference to the only instance of database class and connects to DB
@@ -61,6 +86,18 @@ class XoopsDatabaseFactory
 		return $database;
 	}
 
-
+	/**
+	 * Gets the databaseupdater object.
+	 *
+     * @return	object  @link IcmsDatabaseUpdater
+	 */
+	function getDatabaseUpdater()
+	{
+		$file = XOOPS_ROOT_PATH.'/class/database/drivers/'.XOOPS_DB_TYPE.'/databaseupdater.php';
+		require_once $file;
+		$class = 'Icms'.ucfirst(XOOPS_DB_TYPE).'Databaseupdater';
+		$databaseUpdater =& new $class();
+		return $databaseUpdater;
+	}
 }
 ?>

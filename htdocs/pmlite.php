@@ -67,15 +67,15 @@ if ($xoopsUser) {
             $pm =& $pm_handler->create();
             $pm->setVar("subject", $_POST['subject']);
             $pm->setVar("msg_text", $_POST['message']);
-            $pm->setVar("to_userid", $_POST['to_userid']);
-            $pm->setVar("from_userid", $xoopsUser->getVar("uid"));
+            $pm->setVar("to_userid", intval($_POST['to_userid']));
+            $pm->setVar("from_userid", intval($xoopsUser->getVar("uid")));
             if (!$pm_handler->insert($pm)) {
                 echo $pm->getHtmlErrors();
                 echo "<br /><a href='javascript:history.go(-1)'>"._PM_GOBACK."</a>";
             } else {
 				// Send a Private Message email notification
 				$userHandler =& xoops_gethandler('user');
-				$toUser =& $userHandler->get($_POST['to_userid']);
+				$toUser =& $userHandler->get(intval($_POST['to_userid']));
 				// Only send email notif if notification method is mail
 				if ($toUser->notify_method() == 2) {
 					$xoopsMailer =& getMailer();
@@ -99,11 +99,11 @@ if ($xoopsUser) {
             }
         }
     } elseif ($reply == 1 || $send == 1 || $send2 == 1) {
-        include_once XOOPS_ROOT_PATH."/include/xoopscodes.php";
+        include_once XOOPS_ROOT_PATH."/class/xoopsformloader.php";
         if ($reply == 1) {
             $pm_handler =& xoops_gethandler('privmessage');
             $pm =& $pm_handler->get($msg_id);
-            if ($pm->getVar("to_userid") == $xoopsUser->getVar('uid')) {
+            if ($pm->getVar("to_userid") == intval($xoopsUser->getVar('uid'))) {
                 $pm_uname = XoopsUser::getUnameFromId($pm->getVar("from_userid"));
                 $message  = "[quote]\n";
                 $message .= sprintf(_PM_USERWROTE,$pm_uname);
@@ -143,8 +143,8 @@ if ($xoopsUser) {
         echo "</tr>";
         echo "<tr valign='top'><td class='head' width='25%'>"._PM_MESSAGEC."</td>";
         echo "<td class='even'>";
-        xoopsCodeTarea("message",37,8);
-        xoopsSmilies("message");
+		$textarea = new XoopsFormDhtmlTextArea(_PM_MESSAGEC, 'message', $message);
+		echo $textarea->render();
         echo "</td>";
         echo "</tr>";
         echo "<tr><td class='head'>&nbsp;</td><td class='even'>

@@ -28,13 +28,18 @@
 // URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
-
+/**
+ * Banner administration functions
+ * 
+ * Functions to allow adminstrators to add, edit, delete banners and clients
+ * @package banners
+ */     
 if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid()) ) {
     exit("Access Denied");
 } else {
-/*********************************************************/
-/* Banners Administration Functions                      */
-/*********************************************************/
+/**
+/* Banners Administration Functions                      
+*/
 function BannersAdmin()
 {
     global $xoopsConfig, $xoopsModule;
@@ -163,11 +168,11 @@ function BannersAdmin()
             "._AM_IMPPURCHT."<input type='text' name='imptotal' size='12' maxlength='11' /> 0 = "._AM_UNLIMIT."<br />
             "._AM_IMGURLT."<input type='text' name='imageurl' size='50' maxlength='255' /><br />
             "._AM_CLICKURLT."<input type='text' name='clickurl' size='50' maxlength='255' /><br />
-            "._AM_USEHTML." <input type='checkbox' name='htmlbanner' value='1'>
+            "._AM_USEHTML." <input type='checkbox' name='htmlbanner' value='1' />
             <br />
             "._AM_CODEHTML."
             <br />
-            <textarea name='htmlcode' rows='6'></textarea>
+            <textarea name='htmlcode' rows='6' cols='60'></textarea>
             <br />
             <input type='hidden' name='fct' value='banners' />
             <input type='hidden' name='op' value='BannersAdd' />
@@ -197,7 +202,11 @@ function BannersAdmin()
     xoops_cp_footer();
 }
 
-
+/**
+ * Deletes a banner
+ * 
+ * @param int $bid banner id
+ */    
 function BannerDelete($bid)
 {
     global $xoopsConfig, $xoopsModule;
@@ -214,14 +223,12 @@ function BannerDelete($bid)
         echo $myts->displayTarea($htmlcode,1);
     }else{
         if(strtolower(substr($imageurl,strrpos($imageurl,".")))==".swf") {
-            echo "<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/ swflash.cab#version=6,0,40,0\" width=\"468\" height=\"60\">";
-            echo "<param name=movie value=\"$imageurl\">";
-            echo "<param name=quality value=high>";
-            echo "<embed src=\"$imageurl\" quality=high pluginspage=\"http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash\"  type=\"application/x-shockwave-flash\" width=\"468\" height=\"60\">";
-            echo "</embed>";
-            echo "</object>";
+            echo '<object type="application/x-shockwave-flash" data="'.$imageurl.'" width="468" height="60">';
+            echo '<param name="movie" value="'.$imageurl.'" />';
+            echo '<param name="quality" value="high" />';
+            echo '</object>';
         } else {
-            echo "<img src='$imageurl' alt='' />";
+            echo '<img src="'.$imageurl.'" alt="" />';
         }
     }
     echo "<a href='$clickurl'>$clickurl</a><br /><br /><table width='100%' border='0'><tr align='center'><td align='center'>"._AM_BANNERID."</td><td align='center'>"._AM_IMPRESION."</td><td align='center'>"._AM_IMPLEFT."</td><td align='center'>"._AM_CLICKS."</td><td align='center'>"._AM_NCLICKS."</td><td align='center'>"._AM_CLINAME."</td></tr><tr align='center'>";
@@ -246,7 +253,10 @@ function BannerDelete($bid)
     echo"</td></tr></table>";
     xoops_cp_footer();
 }
-
+/**
+ * Edit the banner
+ * @param int $bid banner id
+ */   
 function BannerEdit($bid)
 {
     global $xoopsConfig, $xoopsModule;
@@ -262,14 +272,12 @@ function BannerEdit($bid)
         echo $myts->displayTarea($htmlcode, 1, 0, 0, 0, 0);
     }else{
         if(strtolower(substr($imageurl,strrpos($imageurl,".")))==".swf") {
-            echo "<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/ swflash.cab#version=6,0,40,0\" width=\"468\" height=\"60\">";
-            echo "<param name=movie value=\"$imageurl\">";
-            echo "<param name=quality value=high>";
-            echo "<embed src=\"$imageurl\" quality=high pluginspage=\"http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash\"  type=\"application/x-shockwave-flash\" width=\"468\" height=\"60\">";
-            echo "</embed>";
-            echo "</object>";
+            echo '<object type="application/x-shockwave-flash" data="'.$imageurl.'" width="468" height="60">';
+            echo '<param name="movie" value="'.$imageurl.'" />';
+            echo '<param name="quality" value="high" />';
+            echo '</object>';
         } else {
-            echo "<img src='$imageurl' alt='' />";
+            echo '<img src="'.$imageurl.'" alt="" />';
         }
     }
     echo "<form action='admin.php' method='post'>
@@ -294,7 +302,7 @@ function BannerEdit($bid)
     }
     echo "
     "._AM_ADDIMPT."<input type='text' name='impadded' size='12' maxlength='11' /> "._AM_PURCHT."<b>$impressions</b> "._AM_MADET."<b>$impmade</b><br />
-    "._AM_IMGURLT."<input type='text' name='imageurl' size='50' maxlength='200' value='".htmlspecialchars($imageurl, ENT_QUOTES)."'><br />
+    "._AM_IMGURLT."<input type='text' name='imageurl' size='50' maxlength='200' value='".htmlspecialchars($imageurl, ENT_QUOTES)."' /><br />
     "._AM_CLICKURLT."<input type='text' name='clickurl' size='50' maxlength='200' value='".htmlspecialchars($clickurl, ENT_QUOTES)."' /><br />
     "._AM_USEHTML;
     if ($htmlbanner){
@@ -306,7 +314,7 @@ function BannerEdit($bid)
     <br />
     "._AM_CODEHTML."
     <br />
-    <textarea name='htmlcode' rows='6'>".$myts->displayTarea($htmlcode, $htmlbanner, 0, 0, 0, 0)."</textarea>
+    <textarea name='htmlcode' rows='6' cols='60'>".$myts->displayTarea($htmlcode, $htmlbanner, 0, 0, 0, 0)."</textarea>
     <br />
     <input type='hidden' name='bid' value='$bid' />
     <input type='hidden' name='imptotal' value='$imptotal' />
@@ -318,7 +326,10 @@ function BannerEdit($bid)
     echo"</td></tr></table>";
     xoops_cp_footer();
 }
-
+/**
+ * Deletes a client
+ * @param int $cid client id
+ */  
 function BannerClientDelete($cid)
 {
     global $xoopsConfig, $xoopsModule;
@@ -344,15 +355,13 @@ function BannerClientDelete($cid)
         if ($htmlbanner){
             $bannerobject = $myts->displayTarea($htmlcode,1);
         } else {
-            $bannerobject = '<div><a href="'.$clickurl.'" target="_blank">';
+            $bannerobject = '<div><a href="'.$clickurl.'" rel="external">';
             if(strtolower(substr($imageurl,strrpos($imageurl,".")))==".swf") {
-                $bannerobject = $bannerobject
-                        .'<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0" width="468" height="60">'
-                        .'<param name="movie" value="'.$imageurl.'"></param>'
-                        .'<param name="quality" value="high"></param>'
-                        .'<embed src="'.$imageurl.'" quality="high" pluginspage="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash" type="application/x-shockwave-flash" width="468" height="60">'
-                        .'</embed>'
-                        .'</object>';
+                $bannerobject = $bannerobject;
+                echo '<object type="application/x-shockwave-flash" data="'.$imageurl.'" width="468" height="60">';
+                echo '<param name="movie" value="'.$imageurl.'" />';
+                echo '<param name="quality" value="high" />';
+                echo '</object>';
             } else {
                 $bannerobject = $bannerobject.'<img src="'.$imageurl.'" alt="" />';
             }
@@ -364,7 +373,10 @@ function BannerClientDelete($cid)
     echo "</td></tr></table>";
     xoops_cp_footer();
 }
-
+/**
+ * Edits a client's information
+ * @param int $cid client id
+ */  
 function BannerClientEdit($cid)
 {
     global $xoopsConfig, $xoopsModule;

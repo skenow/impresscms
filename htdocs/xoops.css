@@ -1,4 +1,4 @@
-table {
+table.outer {
     width:      100%;
 }
 
@@ -42,8 +42,6 @@ acronym, abbr, dfn {
     background-image:   url(./images/paginact.gif);
 }
 
-
-
 /* For required elements in XOOPS form, can be overwritten in theme styles */
 .xo-theme-form td.head {
     width: 30%;
@@ -65,29 +63,7 @@ acronym, abbr, dfn {
     font-weight:        normal;
 }
 
-/* class XoopsPageNav::renderImageNav */
-.pagneutral {
-	font-size: 						10px;
-	width:							16px;
-	height:							19px;
-	text-align:						center;
-	background-image:				url(./images/pagneutral.gif);
-}
-.pagact {
-	font-size: 						10px;
-	width: 							16px;
-	height: 							19px;
-	text-align: 					center;
-	background-image: 			url(./images/pagact.gif);
-}
-
-.paginact {
-	font-size: 						10px;
-	width: 							16px;
-	height: 							19px;
-	text-align: 					center;
-	background-image: 			url(./images/paginact.gif);
-}
+#xo-logger-output{ font-size: .8em;} /* only needed until logger.php and logger_render.php are modified */
 
 /* For banners.php */
 #bannerstats {}
@@ -111,7 +87,7 @@ acronym, abbr, dfn {
 	color:							inherit;
 }
 .login_form  .credentials label {
-	display:							inline-block;
+	display:						block;
 	width:							33%;
 	margin:							1px;
 }
@@ -138,11 +114,6 @@ acronym, abbr, dfn {
 #bannerstats td {
 	text-align: 					center;
 }
-
-.pagneutral {font-size: 10px; width: 16px; height: 19px;text-align: center; background-image: url(./images/pagneutral.gif);}
-.pagact {font-size: 10px; width: 16px; height: 19px;text-align: center; background-image: url(./images/pagact.gif);}
-.paginact {font-size: 10px; width: 16px; height: 19px;text-align: center; background-image: url(./images/paginact.gif);}
-
 
 .CPbigTitle{
 	font-size: 20px;
@@ -187,7 +158,6 @@ div.cpicon a:hover{
 	border: 1px solid #FF9900;
 	color: #1E90FF;
 }
-
 
 div.cpicon img { margin-top: 4px; margin-bottom: 4px; width: 32px; height: 32px;}
 div.cpicon span {

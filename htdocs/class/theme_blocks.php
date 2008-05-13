@@ -52,17 +52,60 @@ class xos_logos_PageBuilder {
 	}	
 	
 	function retrieveBlocks() {
-		global $xoopsUser, $xoopsModule, $xoopsConfig;
+		global $xoops, $xoopsUser, $xoopsModule, $xoopsConfig;
 
-		$startMod = ( $xoopsConfig['startpage'] == '--' ) ? 'system' : $xoopsConfig['startpage'];
-		if ( @is_object( $xoopsModule ) ) {
-			list( $mid, $dirname ) = array( $xoopsModule->getVar('mid'), $xoopsModule->getVar('dirname') );
-			$isStart = ( substr( $_SERVER['PHP_SELF'], -9 ) == 'index.php' && $xoopsConfig['startpage'] == $dirname );
-		} else {
-			list( $mid, $dirname ) = array( 0, 'system' );
-			$isStart = !@empty( $GLOBALS['xoopsOption']['show_cblock'] );
+		$startMod = ( $xoopsConfig['startpage'] == '--' ) ? 'system' : $xoopsConfig['startpage']; //Getting the top page
+
+		$fullurl = "http://".$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+		$url = substr(str_replace(XOOPS_URL,'',$fullurl),1);
+
+		$arr = explode('-',$startMod);
+		if (count($arr) > 1){
+			$page_handler =& xoops_gethandler('page');
+			$page = $page_handler->get($arr[1]);
+			if (is_object($page)){
+				$mid = $page->getVar('page_moduleid');
+				$module_handler =& xoops_gethandler('module');
+				$module =& $module_handler->get($mid);
+				$dirname = $module->getVar('dirname');
+				$purl = $page->getVar('page_url');
+				$isStart = ($purl == $url || $purl == $fullurl);
+			}
+		}else{
+			if ( @is_object( $xoopsModule ) ) {
+				list( $mid, $dirname ) = array( $xoopsModule->getVar('mid'), $xoopsModule->getVar('dirname') );
+				$isStart = ( substr( $_SERVER['PHP_SELF'], -9 ) == 'index.php' && $xoopsConfig['startpage'] == $dirname );
+			} else {
+				list( $mid, $dirname ) = array( 1, 'system' );
+				$isStart = !@empty( $GLOBALS['xoopsOption']['show_cblock'] );
+			}
 		}
-		
+
+		if ($isStart){
+			$modid = '0-1';
+		}else{
+			$page_handler =& xoops_gethandler('page');
+			$criteria = new CriteriaCompo(new Criteria('page_status', 1));
+			$pages = $page_handler->getObjects($criteria);
+			$pid = 0;
+			foreach ($pages as $page){
+				$purl = $page->getVar('page_url');
+				if (substr($purl,-1) == '*'){
+					$purl = substr($purl,0,-1);
+					if (substr($url,0,strlen($purl)) == $purl || substr($fullurl,0,strlen($purl)) == $purl) {
+						$pid = $page->getVar('page_id');
+						break;
+					}
+				}else{
+					if ($purl == $url || $purl == $fullurl){
+						$pid = $page->getVar('page_id');
+						break;
+					}
+				}
+			}
+			$modid = $mid.'-'.$pid;
+		}
+
 		$groups = @is_object( $xoopsUser ) ? $xoopsUser->getGroups() : array( XOOPS_GROUP_ANONYMOUS );
 		
 		# Adding dynamic block area/position system - TheRpLima - 2007-10-21
@@ -92,7 +135,7 @@ class xos_logos_PageBuilder {
 		}
 		$xoopsblock = new XoopsBlock();
     	$block_arr = array();
-	    $block_arr = $xoopsblock->getAllByGroupModule( $groups, $mid, $isStart, XOOPS_BLOCK_VISIBLE);
+	    $block_arr = $xoopsblock->getAllByGroupModule( $groups, $modid, $isStart, XOOPS_BLOCK_VISIBLE);
 	    foreach ( $block_arr as $block ) {
 	    	$side = $oldzones[ $block->getVar('side') ];
 	    	if ( $var = $this->buildBlock( $block, $template ) ) {
@@ -111,10 +154,29 @@ class xos_logos_PageBuilder {
 		return $cache_id;
 	}
 	
-	function buildBlock( $xobject, &$template ) {
-		// The lame type workaround will change
-		// bid is added temporarily as workaround for specific block manipulation
-		$block = array(
+function buildBlock( $xobject, &$template ) {
+        // The lame type workaround will change
+        // bid is added temporarily as workaround for specific block manipulation
+    global $xoopsUser, $xoopsConfigPersona;
+    if ($xoopsConfigPersona['editre_block'] == 1 ) {
+ 	    if ($xoopsUser && $xoopsUser->isAdmin()){
+ 		    $titlebtns = "<a href=".XOOPS_URL."/modules/system/admin.php?fct=blocksadmin&op=edit&bid=".$xobject->getVar('bid')."> <img src=".XOOPS_URL."/images/icons/edit_block.gif"." title="._EDIT." alt="._EDIT."  /></a>";
+ 		    if ($xobject->getVar( 'dirname' ) == ''){
+ 		        $titlebtns .= "<a href=".XOOPS_URL."/modules/system/admin.php?fct=blocksadmin&op=delete&bid=".$xobject->getVar('bid')."> <img src=".XOOPS_URL."/images/icons/delete_block.gif"." title="._DELETE." alt="._DELETE."  /> </a>";
+ 		    }
+ 	    }else{
+ 	    	$titlebtns = '';
+ 	    }
+ 	        $block = array(
+            'id'        => $xobject->getVar( 'bid' ),
+            'module'    => $xobject->getVar( 'dirname' ),
+            'title'        =>  $xobject->getVar( 'title' ) . $titlebtns,         
+             //'name'        => strtolower( preg_replace( '/[^0-9a-zA-Z_]/', '', str_replace( ' ', '_', $xobject->getVar( 'name' ) ) ) ),
+            'weight'    => $xobject->getVar( 'weight' ),
+            'lastmod'    => $xobject->getVar( 'last_modified' ),
+        );
+       }else{
+       	   		$block = array(
 			'id'	    => $xobject->getVar( 'bid' ),
 			'module'	=> $xobject->getVar( 'dirname' ),
 			'title'		=> $xobject->getVar( 'title' ),
@@ -122,7 +184,7 @@ class xos_logos_PageBuilder {
 			'weight'	=> $xobject->getVar( 'weight' ),
 			'lastmod'	=> $xobject->getVar( 'last_modified' ),
 		);
-
+	    }
 		//global $xoopsLogger;
 		
 		$xoopsLogger =& XoopsLogger::instance();

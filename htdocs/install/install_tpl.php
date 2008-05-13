@@ -1,4 +1,22 @@
 <?php
+/**
+* Installer tables creation page
+*
+* See the enclosed file license.txt for licensing information.
+* If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
+*
+* @copyright    The ImpressCMS project http://www.impresscms.org/
+* @license      http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
+* @package		installer
+* @since        1.0
+* @author		Haruki Setoyama  <haruki@planewave.org>
+* @author 		Kazumi Ono <webmaster@myweb.ne.jp>
+* @author		Skalpa Keo <skalpa@xoops.org>
+* @version		$Id: install_tpl.php 404 2007-12-29 19:26:33Z malanciault $
+*/
+/**
+ *
+ */ 
 	defined( 'XOOPS_INSTALL' ) or die();
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -10,7 +28,7 @@
 	</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo _INSTALL_CHARSET ?>" />
 	<link rel="stylesheet" type="text/css" media="all" href="style.css" />
-	<script type="text/javascript" src="prototype.js"></script>
+	<script type="text/javascript" src="../libraries/prototype/prototype.js"></script>
 	<script type="text/javascript">
 	function showHideHelp( butt ) {
 		butt.className = ( butt.className == 'on' ) ? 'off': 'on';
@@ -49,12 +67,12 @@
 				<?php echo $content; ?>
 			</div>
 			<div id="buttons">
-				<?php if ( $wizard->currentPage != 0  && ( $wizard->currentPage != 9 )) { ?>
+				<?php if ( $wizard->currentPage != 0  && ( $wizard->currentPage != 10 )) { ?>
 				<button type="button" onclick="history.back()">
 					<?php echo BUTTON_PREVIOUS; ?>
 				</button>
 				<?php } ?>
-				<?php if ( $wizard->currentPage == 9 ) { ?>
+				<?php if ( $wizard->currentPage == 10 ) { ?>
 				<button type="button" onclick="location.href='../index.php'">
 					<?php echo BUTTON_SHOW_SITE; ?>
 				</button>

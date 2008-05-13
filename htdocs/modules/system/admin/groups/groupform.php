@@ -63,37 +63,28 @@ $criteria = new CriteriaCompo(new Criteria('hasmain', 1));
 $criteria->add(new Criteria('isactive', 1));
 $r_mod_checkbox->addOptionArray($module_handler->getList($criteria));
 
-# Adding dynamic block area/position system - TheRpLima - 2007-10-21
-/*
-$r_lblock_checkbox = new XoopsFormCheckBox('<b>'._LEFT.'</b><br />', "read_bids[]", $r_block_value);
-$new_blocks_array = array();
-$blocks_array = XoopsBlock::getAllBlocks("list", XOOPS_SIDEBLOCK_LEFT);
-foreach ($blocks_array as $key=>$value) {
-    $new_blocks_array[$key] = "<a href='".XOOPS_URL."/modules/system/admin.php?fct=blocksadmin&amp;op=edit&amp;bid=".$key."'>".$value." (ID: ".$key.")</a>";
-}
-$r_lblock_checkbox->addOptionArray($new_blocks_array);
+$ed_mod_checkbox = new XoopsFormCheckBox(_AM_EDPERM, "useeditor_mids[]", $ed_mod_value);
+$criteria = new CriteriaCompo(new Criteria('isactive', 1));
+$ed_mod_checkbox->addOptionArray($module_handler->getList($criteria));
 
-$r_cblock_checkbox = new XoopsFormCheckBox("<b>"._CENTER."</b><br />", "read_bids[]", $r_block_value);
-$new_blocks_array = array();
-$blocks_array = XoopsBlock::getAllBlocks("list", XOOPS_CENTERBLOCK_ALL);
-foreach ($blocks_array as $key=>$value) {
-    $new_blocks_array[$key] = "<a href='".XOOPS_URL."/modules/system/admin.php?fct=blocksadmin&amp;op=edit&amp;bid=".$key."'>".$value." (ID: ".$key.")</a>";
-}
-$r_cblock_checkbox->addOptionArray($new_blocks_array);
+$debug_mod_checkbox = new XoopsFormCheckBox(_AM_DEBUG_PERM, "enabledebug_mids[]", $debug_mod_value);
+$criteria = new CriteriaCompo(new Criteria('isactive', 1));
+$debug_mod_checkbox->addOptionArray($module_handler->getList($criteria));
 
-$r_rblock_checkbox = new XoopsFormCheckBox("<b>"._RIGHT."</b><br />", "read_bids[]", $r_block_value);
-$new_blocks_array = array();
-$blocks_array = XoopsBlock::getAllBlocks("list", XOOPS_SIDEBLOCK_RIGHT);
-foreach ($blocks_array as $key=>$value) {
-    $new_blocks_array[$key] = "<a href='".XOOPS_URL."/modules/system/admin.php?fct=blocksadmin&amp;op=edit&amp;bid=".$key."'>".$value." (ID: ".$key.")</a>";
+/**
+ * @todo: Needs to be improved... is a test of concept... and works!
+ * @todo: Create the language constant.
+ */
+$group_manager_checkbox = new XoopsFormCheckBox(_AM_GROUPMANAGER_PERM, "groupmanager_gids[]", $group_manager_value);
+$criteria = new CriteriaCompo(new Criteria('isactive', 1));
+$groups = $member_handler->getGroups();
+$gperm_handler =& xoops_gethandler('groupperm');
+global $xoopsUser;
+foreach($groups as $group){
+	if($gperm_handler->checkRight('group_manager', $group->getVar('groupid'), $xoopsUser->getGroups()))
+		$group_manager_checkbox->addOption($group->getVar('groupid'),$group->getVar('name'));	
 }
-$r_rblock_checkbox->addOptionArray($new_blocks_array);
 
-$r_block_tray = new XoopsFormElementTray(_AM_BLOCKRIGHTS, "<br /><br />");
-$r_block_tray->addElement($r_lblock_checkbox);
-$r_block_tray->addElement($r_cblock_checkbox);
-$r_block_tray->addElement($r_rblock_checkbox);
-*/
 $posarr = XoopsBlock::getBlockPositions(true);
 $block_checkbox = array();
 $i = 0;
@@ -111,7 +102,7 @@ foreach ($posarr as $k=>$v){
 $r_block_tray = new XoopsFormElementTray(_AM_BLOCKRIGHTS, "<br /><br />");
 foreach ($block_checkbox as $k=>$v){
   $r_block_tray->addElement($block_checkbox[$k]);
-}  
+}
 #
 
 $op_hidden = new XoopsFormHidden("op", $op_value);
@@ -121,8 +112,18 @@ $form = new XoopsThemeForm($form_title, "groupform", "admin.php", "post", true);
 $form->addElement($name_text);
 $form->addElement($desc_text);
 $form->addElement($s_cat_checkbox);
+if (!isset($g_id) || ($g_id != 1 && $g_id != 3)){
+	$form->addElement($group_manager_checkbox);
+}
 $form->addElement($a_mod_checkbox);
 $form->addElement($r_mod_checkbox);
+if (!isset($g_id) || ($g_id != 1 && $g_id != 3)){
+    $form->addElement($ed_mod_checkbox);
+}
+if( !isset($g_id) || $g_id != 1 ){
+	$form->addElement($debug_mod_checkbox);
+}
+
 $form->addElement($r_block_tray);
 $form->addElement($op_hidden);
 $form->addElement($fct_hidden);

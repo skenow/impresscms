@@ -1,21 +1,42 @@
 <?php
+
 /**
  * user select with page navigation
  *
- * limit: Only work with javascript enabled
+ * limit: Only works with javascript enabled
  *
  * @copyright	The XOOPS project http://www.xoops.org/
  * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since		1.00
  * @version		$Id: formselectuser.php 1083 2007-10-16 16:42:51Z phppp $
- * @package		kernal
+ * @package		kernel
  */
+
 if (!defined('XOOPS_ROOT_PATH')) {
-	die("XOOPS root path not defined");
+	die('XOOPS root path not defined');
 }
-include_once XOOPS_ROOT_PATH."/class/xoopsform/formelementtray.php";
-include_once XOOPS_ROOT_PATH."/class/xoopsform/formselect.php";
+
+
+/**
+ * @package     kernel
+ * @subpackage  form
+ * 
+ * @author	    Kazumi Ono	<onokazu@xoops.org>
+ * @copyright	copyright (c) 2000-2003 XOOPS.org
+ */
+/**
+ * user select with page navigation
+ * 
+ * @package     kernel
+ * @subpackage  form
+ * 
+ * @author	    Kazumi Ono	<onokazu@xoops.org>
+ * @copyright	copyright (c) 2000-2003 XOOPS.org
+ */
+
+include_once XOOPS_ROOT_PATH.'/class/xoopsform/formelementtray.php';
+include_once XOOPS_ROOT_PATH.'/class/xoopsform/formselect.php';
 
 class XoopsFormSelectUser extends XoopsFormElementTray
 {
@@ -28,17 +49,17 @@ class XoopsFormSelectUser extends XoopsFormElementTray
 	 *									For an item with massive members, such as "Registered Users", "$value" should be used to store selected temporary users only instead of all members of that item
 	 * @param	bool	$include_anon	Include user "anonymous"?
 	 * @param	int		$size	        Number or rows. "1" makes a drop-down-list.
-     * @param	bool    $multiple       Allow multiple selections?
+   * @param	bool    $multiple       Allow multiple selections?
 	 */
 	function XoopsFormSelectUser($caption, $name, $include_anon = false, $value = null, $size = 1, $multiple = false)
 	{
     	$limit = 200;
-        $select_element = new XoopsFormSelect("", $name, $value, $size, $multiple);
+        $select_element = new XoopsFormSelect('', $name, $value, $size, $multiple);
         if ($include_anon) {
-            $select_element->addOption(0, $GLOBALS["xoopsConfig"]['anonymous']);
+            $select_element->addOption(0, $GLOBALS['xoopsConfig']['anonymous']);
         }
-		$member_handler =& xoops_gethandler('member');
-		$user_count = $member_handler->getUserCount();
+    		$member_handler =& xoops_gethandler('member');
+    		$user_count = $member_handler->getUserCount();
         $value = is_array($value) ? $value : ( empty($value) ? array() : array($value) );
 	    if ($user_count > $limit && count($value) > 0) {
         	$criteria = new CriteriaCompo(new Criteria("uid", "(".implode(",", $value).")", "IN"));
@@ -48,7 +69,7 @@ class XoopsFormSelectUser extends XoopsFormElementTray
 	    }
         $criteria->setSort('uname');
         $criteria->setOrder('ASC');
-		$users = $member_handler->getUserList($criteria);
+    		$users = $member_handler->getUserList($criteria);
     	$select_element->addOptionArray($users);
     	if ($user_count <= $limit) {
     	    $this->XoopsFormElementTray($caption, "", $name);
@@ -57,8 +78,8 @@ class XoopsFormSelectUser extends XoopsFormElementTray
     	}
     	
 		
-		if (!@include_once XOOPS_ROOT_PATH."/language/".$GLOBALS["xoopsConfig"]["language"]."/findusers.php") {
-			include_once XOOPS_ROOT_PATH."/language/english/findusers.php";
+		if (!@include_once XOOPS_ROOT_PATH.'/language/'.$GLOBALS['xoopsConfig']['language'].'/findusers.php') {
+			include_once XOOPS_ROOT_PATH.'/language/english/findusers.php';
 		}
 		
 		$js_addusers =
@@ -96,9 +117,10 @@ class XoopsFormSelectUser extends XoopsFormElementTray
 	    $action_tray->addElement(new XoopsFormLabel('', "<a href='#' onclick='var sel = xoopsGetElementById(\"" . $name . ( $multiple ? "[]" : "" ) . "\");for (var i = sel.options.length-1; i >= 0; i--) {if (!sel.options[i].selected) {sel.options[i] = null;}}; return false;'>"._MA_USER_REMOVE."</a>"));
 	    $action_tray->addElement(new XoopsFormLabel('', "<a href='#' onclick='openWithSelfMain(\"".XOOPS_URL."/include/findusers.php?target={$name}&amp;multiple={$multiple}&amp;token={$token}\", \"userselect\", 800, 600, null); return false;' >"._MA_USER_MORE."</a>".$js_addusers));
 
-	    $this->XoopsFormElementTray($caption, "<br /><br />", $name);
+	    $this->XoopsFormElementTray($caption, '<br /><br />', $name);
 	    $this->addElement($select_element);
 	    $this->addElement($action_tray);
     }
 }
+
 ?>

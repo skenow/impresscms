@@ -25,33 +25,38 @@
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
+
+
 /**
+ * Authentification base class
+ *  
  * @package     kernel
  * @subpackage  auth
- * @description	Authentification base class
  * @author	    Pierre-Eric MENUET	<pemphp@free.fr>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
 class XoopsAuth {
 
-	var	$_dao;
+  	var	$_dao;
+  
+  	var	$_errors;
 
-	var	$_errors;
-	/**
-	 * Authentication Service constructor
-	 */
-	function XoopsAuth (&$dao){
-		$this->_dao = $dao;
-	}
 
-	/**
-	 * @abstract need to be write in the dervied class
-	 */	
-	function authenticate() {
-		$authenticated = false;
-				
-		return $authenticated;
-	}		
+  	/**
+  	 * Authentication Service constructor
+  	 */
+  	function XoopsAuth (&$dao){
+  		$this->_dao = $dao;
+  	}
+  
+  	/**
+  	 * @abstract need to be write in the derived class
+  	 */	
+  	function authenticate() {
+  		$authenticated = false;
+  				
+  		return $authenticated;
+  	}		
 	
     /**
      * add an error 
@@ -78,13 +83,13 @@ class XoopsAuth {
     /**
      * return the errors for this object as html
      * 
-     * @return string html listing the errors
+     * @return string $ret html listing the errors
      * @access public
      */
     function getHtmlErrors()
     {
     	global $xoopsConfig;
-        $ret = '<br>';
+        $ret = '<br />';
         if ( $xoopsConfig['debug_mode'] == 1 || $xoopsConfig['debug_mode'] == 2 ) 
         {	       
 	        if (!empty($this->_errors)) {

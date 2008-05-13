@@ -33,6 +33,10 @@ if (!defined('XOOPS_ROOT_PATH')) {
 	exit();
 }
 
+
+
+
+
 /**
  * a group of users
  *
@@ -73,7 +77,7 @@ class XoopsGroupHandler extends XoopsObjectHandler
      * create a new {@link XoopsGroup} object
      *
      * @param bool $isNew mark the new object as "new"?
-     * @return object XoopsGroup reference to the new object
+     * @return object XoopsGroup {@link XoopsGroup} reference to the new object
      *
      */
     function &create($isNew = true)
@@ -89,7 +93,7 @@ class XoopsGroupHandler extends XoopsObjectHandler
      * retrieve a specific group
      *
      * @param int $id ID of the group to get
-     * @return object XoopsGroup reference to the group object, FALSE if failed
+     * @return object XoopsGroup {@link XoopsGroup} reference to the group object, FALSE if failed
      */
     function &get($id)
     {
@@ -204,6 +208,12 @@ class XoopsGroupHandler extends XoopsObjectHandler
     }
 }
 
+
+
+
+
+
+
 /**
  * membership of a user in a group
  *
@@ -225,6 +235,9 @@ class XoopsMembership extends XoopsObject
     }
 }
 
+
+
+
 /**
 * XOOPS membership handler class. (Singleton)
 *
@@ -242,7 +255,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
      * create a new membership
      *
      * @param bool $isNew should the new object be set to "new"?
-     * @return object XoopsMembership
+     * @return object XoopsMembership {@link XoopsMembership}
      */
     function &create($isNew = true)
     {

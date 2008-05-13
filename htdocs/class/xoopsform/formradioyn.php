@@ -31,6 +31,7 @@
 if (!defined('XOOPS_ROOT_PATH')) {
 	die("XOOPS root path not defined");
 }
+
 /**
  * @package     kernel
  * @subpackage  form
@@ -47,7 +48,7 @@ include_once XOOPS_ROOT_PATH."/class/xoopsform/formradio.php";
 /**
  * Yes/No radio buttons.
  * 
- * A pair of radio buttons labelled _YES and _NO with values 1 and 0
+ * A pair of radio buttons labeled _YES and _NO with values 1 and 0
  * 
  * @package     kernel
  * @subpackage  form
@@ -73,4 +74,5 @@ class XoopsFormRadioYN extends XoopsFormRadio
 		$this->addOption(0, $no);
 	}
 }
+
 ?>

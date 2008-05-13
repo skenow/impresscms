@@ -24,7 +24,15 @@
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
-
+/**
+ *  Registration process for new users
+ *  Gathers required information and validates the new user
+ *  @package kernel
+ *  @subpackage users
+ */
+/**
+ *
+ */       
 $xoopsOption['pagetype'] = 'user';
 
 include 'mainfile.php';
@@ -33,10 +41,20 @@ $myts =& MyTextSanitizer::getInstance();
 $config_handler =& xoops_gethandler('config');
 $xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 
-if (empty($xoopsConfigUser['allow_register'])) {
+if ($xoopsConfigUser['allow_register'] == 0 && $xoopsConfigUser['activation_type'] != 3) {
 	redirect_header('index.php', 6, _US_NOREGISTER);
 }
-
+/**
+ *  Validates username, email address and password entries during registration
+ *  Username is validated for uniqueness and length, password is validated for length and strictness,
+ *  email is validated as a proper email address pattern  
+ *  
+ *  @param string $uname Username entered by the user
+ *  @param string $email Email address entered by the user   
+ *  @param string $pass Password entered by the user
+ *  @param string $vpass Password verification entered by the user
+ *  @return string of errors encountered while validating the user information, will be blank if successful 
+ */     
 function userCheck($uname, $email, $pass, $vpass)
 {
 	global $xoopsConfigUser;
@@ -119,10 +137,12 @@ $email = isset($_POST['email']) ? trim($myts->stripSlashesGPC($_POST['email'])) 
 $url = isset($_POST['url']) ? trim($myts->stripSlashesGPC($_POST['url'])) : '';
 $pass = isset($_POST['pass']) ? $myts->stripSlashesGPC($_POST['pass']) : '';
 $vpass = isset($_POST['vpass']) ? $myts->stripSlashesGPC($_POST['vpass']) : '';
-$timezone_offset = isset($_POST['timezone_offset']) ? intval($_POST['timezone_offset']) : $xoopsConfig['default_TZ'];
+$timezone_offset = isset($_POST['timezone_offset']) ? floatval($_POST['timezone_offset']) : $xoopsConfig['default_TZ'];
 $user_viewemail = (isset($_POST['user_viewemail']) && intval($_POST['user_viewemail'])) ? 1 : 0;
 $user_mailok = (isset($_POST['user_mailok']) && intval($_POST['user_mailok'])) ? 1 : 0;
 $agree_disc = (isset($_POST['agree_disc']) && intval($_POST['agree_disc'])) ? 1 : 0;
+$actkey = isset($_POST['actkey']) ? trim($myts->stripSlashesGPC($_POST['actkey'])) : '';
+$salt = isset($_POST['salt']) ? trim($myts->stripSlashesGPC($_POST['salt'])) : '';
 switch ( $op ) {
 case 'newuser':
 	include 'header.php';
@@ -149,11 +169,13 @@ case 'newuser':
 		<input type='hidden' name='uname' value='".$myts->htmlSpecialChars($uname)."' />
 		<input type='hidden' name='email' value='".$myts->htmlSpecialChars($email)."' />";
 		echo "<input type='hidden' name='user_viewemail' value='".$user_viewemail."' />
-		<input type='hidden' name='timezone_offset' value='".(float)$timezone_offset."' />
+		<input type='hidden' name='timezone_offset' value='".$timezone_offset."' />
 		<input type='hidden' name='url' value='".$myts->htmlSpecialChars($url)."' />
 		<input type='hidden' name='pass' value='".$myts->htmlSpecialChars($pass)."' />
 		<input type='hidden' name='vpass' value='".$myts->htmlSpecialChars($vpass)."' />
 		<input type='hidden' name='user_mailok' value='".$user_mailok."' />
+		<input type='hidden' name='actkey' value='".$myts->htmlSpecialChars($actkey)."' />
+		<input type='hidden' name='salt' value='".$myts->htmlSpecialChars($salt)."' />
 		<br /><br /><input type='hidden' name='op' value='finish' />".$GLOBALS['xoopsSecurity']->getTokenHTML()."<input type='submit' value='". _US_FINISH ."' /></form>";
 	} else {
 		echo "<span style='color:#ff0000;'>$stop</span>";
@@ -169,6 +191,23 @@ case 'finish':
 	if (!$GLOBALS['xoopsSecurity']->check()) {
 	    $stop .= implode('<br />', $GLOBALS['xoopsSecurity']->getErrors())."<br />";
 	}
+  if(@include_once XOOPS_ROOT_PATH."/libraries/captcha/captcha.php") {
+	include_once(XOOPS_ROOT_PATH ."/class/xoopsformloader.php");
+	if ($xoopsConfigUser['use_captcha'] == 1) {
+            $xoopsCaptcha = XoopsCaptcha::instance();
+            if(! $xoopsCaptcha->verify() ) {
+                   $stop = $xoopsCaptcha->getMessage();
+                    
+            }
+    }
+}
+
+	if ($xoopsConfigUser['reg_dispdsclmr'] != 0 && $xoopsConfigUser['reg_disclaimer'] != '') {
+		if (empty($agree_disc)) {
+			$stop .= _US_UNEEDAGREE.'<br />';
+		}
+	}
+
 	if ( empty($stop) ) {
 		$member_handler =& xoops_gethandler('member');
 		$newuser =& $member_handler->createUser();
@@ -179,15 +218,20 @@ case 'finish':
 			$newuser->setVar('url', formatURL($url), true);
 		}
 		$newuser->setVar('user_avatar','blank.gif', true);
-		$actkey = substr(md5(uniqid(mt_rand(), 1)), 0, 8);
-		$newuser->setVar('actkey', $actkey, true);
-		$newuser->setVar('pass', md5($pass), true);
+		include_once 'include/checkinvite.php';
+		$valid_actkey = check_invite_code($actkey);
+		$newuser->setVar('actkey', $valid_actkey ? $actkey : substr(md5(uniqid(mt_rand(), 1)), 0, 8), true);
+		$salt = icms_createSalt();
+		$newuser->setVar('salt', $salt, true);
+		$pass = icms_encryptPass($pass, $salt);
+		$newuser->setVar('pass', $pass, true);
 		$newuser->setVar('timezone_offset', $timezone_offset, true);
 		$newuser->setVar('user_regdate', time(), true);
 		$newuser->setVar('uorder',$xoopsConfig['com_order'], true);
 		$newuser->setVar('umode',$xoopsConfig['com_mode'], true);
 		$newuser->setVar('user_mailok',$user_mailok, true);
-		if ($xoopsConfigUser['activation_type'] == 1) {
+		$newuser->setVar('notify_method', 2);
+		if ($valid_actkey || $xoopsConfigUser['activation_type'] == 1) {
 			$newuser->setVar('level', 1, true);
 		}
 		if (!$member_handler->insertUser($newuser)) {
@@ -195,15 +239,29 @@ case 'finish':
 			include 'footer.php';
 			exit();
 		}
-		$newid = $newuser->getVar('uid');
+		$newid = intval($newuser->getVar('uid'));
 		if (!$member_handler->addUserToGroup(XOOPS_GROUP_USERS, $newid)) {
 			echo _US_REGISTERNG;
 			include 'footer.php';
 			exit();
 		}
-		if ($xoopsConfigUser['activation_type'] == 1) {
-			redirect_header('index.php', 4, _US_ACTLOGIN);
+		// Activate automatically
+		if ($xoopsConfigUser['new_user_notify'] == 1) {
+			$newuser->sendWelcomeMessage();		
+			$newuser->newUserNotifyAdmin();	
 		}
+		// update invite_code (if any)
+		if ($valid_actkey) {
+			update_invite_code($actkey, $newid);
+		}
+		if ($xoopsConfigUser['activation_type'] == 1 || $xoopsConfigUser['activation_type'] == 3) {
+			redirect_header('index.php', 4, _US_ACTLOGIN);
+			exit();
+		}
+
+		$thisuser = new XoopsUser($newid);
+
+		// Activation by user
 		if ($xoopsConfigUser['activation_type'] == 0) {
 			$xoopsMailer =& getMailer();
 			$xoopsMailer->useMail();
@@ -220,6 +278,8 @@ case 'finish':
 			} else {
 				echo _US_YOURREGISTERED;
 			}
+			$thisuser->newUserNotifyAdmin();
+		// activation by admin
 		} elseif ($xoopsConfigUser['activation_type'] == 2) {
 			$xoopsMailer =& getMailer();
 			$xoopsMailer->useMail();
@@ -241,17 +301,6 @@ case 'finish':
 				echo _US_YOURREGISTERED2;
 			}
 		}
-		if ($xoopsConfigUser['new_user_notify'] == 1 && !empty($xoopsConfigUser['new_user_notify_group'])) {
-			$xoopsMailer =& getMailer();
-			$xoopsMailer->useMail();
-			$member_handler =& xoops_gethandler('member');
-			$xoopsMailer->setToGroups($member_handler->getGroup($xoopsConfigUser['new_user_notify_group']));
-			$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
-			$xoopsMailer->setFromName($xoopsConfig['sitename']);
-			$xoopsMailer->setSubject(sprintf(_US_NEWUSERREGAT,$xoopsConfig['sitename']));
-			$xoopsMailer->setBody(sprintf(_US_HASJUSTREG, $uname));
-			$xoopsMailer->send();
-		}
 	} else {
 		echo "<span style='color:#ff0000; font-weight:bold;'>$stop</span>";
 		include 'include/registerform.php';
@@ -262,6 +311,12 @@ case 'finish':
 	break;
 case 'register':
 default:
+	$invite_code = isset($_GET['code'])?$_GET['code']:null;
+	if ($xoopsConfigUser['activation_type'] == 3 || !empty($invite_code)) {
+		include 'include/checkinvite.php';
+		load_invite_code($invite_code);
+	}
+	// invite is ok, show register form
 	include 'header.php';
 	include 'include/registerform.php';
 	$reg_form->display();

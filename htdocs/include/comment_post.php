@@ -137,6 +137,15 @@ case "preview":
     }
     break;
 case "post":
+    // Captcha Hack
+    if(@include_once XOOPS_ROOT_PATH . "/libraries/captcha/captcha.php") {
+        if ( $xoopsConfig['use_captchaf'] == 1 ) {$xoopsCaptcha = XoopsCaptcha::instance();
+        if(! $xoopsCaptcha->verify(true) ) {
+            redirect_header($redirect_page.'='.$com_itemid.'&com_id='.$com_id.'&com_mode='.$com_mode.'&com_order='.$com_order, 2, $xoopsCaptcha->getMessage());
+        }
+    }
+}
+    // Captcha Hack
     $doimage = 1;
     $comment_handler =& xoops_gethandler('comment');
     $add_userpost = false;
@@ -183,6 +192,7 @@ case "post":
         }
         if (false != $accesserror) {
             redirect_header($redirect_page.'='.$com_itemid.'&amp;com_id='.$com_id.'&amp;com_mode='.$com_mode.'&amp;com_order='.$com_order, 1, _NOPERM);
+            exit();
         }
     } else {
         $comment = $comment_handler->create();
@@ -229,6 +239,7 @@ case "post":
             $uid = 0;
             if ($xoopsModuleConfig['com_anonpost'] != 1) {
                 redirect_header($redirect_page.'='.$com_itemid.'&amp;com_id='.$com_id.'&amp;com_mode='.$com_mode.'&amp;com_order='.$com_order, 1, _NOPERM);
+                exit();
             }
         }
         if ($uid == 0) {

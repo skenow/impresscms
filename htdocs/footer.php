@@ -30,10 +30,14 @@ if (!defined("XOOPS_ROOT_PATH")) {
 if ( !defined("XOOPS_FOOTER_INCLUDED") ) {
 	define("XOOPS_FOOTER_INCLUDED",1);
 
+	// ################# Preload Trigger beforeFooter ##############
+	$icmsPreloadHandler->triggerEvent('beforeFooter');
+	
 	$xoopsLogger->stopTime( 'Module display' );
 	if ($xoopsOption['theme_use_smarty'] == 0) {
 		// the old way
-		$footer = htmlspecialchars( $xoopsConfigMetaFooter['footer'] ) . '<br /><div style="text-align:center">Powered by XOOPS &copy; <a href="http://xoops.sourceforge.net/" target="_blank">The XOOPS Project</a></div>';
+		$footer = htmlspecialchars( $xoopsConfigMetaFooter['footer'] ) . '<br /><div style="text-align:center">Powered by&nbsp;'.XOOPS_VERSION.' &copy; 2007-'.date('Y').' <a href="http://www.impresscms.org/" rel="external">ImpressCMS</a></div>';
+
 		if (isset($xoopsOption['template_main'])) {
 			$xoopsTpl->xoops_setCaching(0);
 			$xoopsTpl->display('db:'.$xoopsOption['template_main']);
@@ -72,6 +76,14 @@ if ( !defined("XOOPS_FOOTER_INCLUDED") ) {
 				$xoTheme->contentTemplate = $xoopsOption['template_main'];
 			}
 		}
+				     	// Start addition: assign the language css&Javascripts file to the template, if required
+        if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL && file_exists(XOOPS_ROOT_PATH."/xoops_rtl.css") ) {
+            $xoTheme->addStylesheet( "/xoops_rtl.css", array( "media" => "screen" ) );
+        }
+        if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL && file_exists(XOOPS_ROOT_PATH."/include/xoops_rtl.js") ) {
+            $xoTheme->addScript( "/include/xoops_rtl.js", array( "type" => "text/javascript" ) );
+        }
+        // End addition
 		$xoTheme->render();
 	}
 	$xoopsLogger->stopTime();

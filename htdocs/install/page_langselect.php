@@ -14,7 +14,9 @@
 * @author		Skalpa Keo <skalpa@xoops.org>
 * @version		$Id$
 */
-
+/**
+ *
+ */ 
 require_once 'common.inc.php';
 if ( !defined( 'XOOPS_INSTALL' ) )	exit();
 
@@ -41,6 +43,11 @@ function getDirList($dirname) {
 
 if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	$lang = $_REQUEST['lang'];
+
+	$languages = getDirList( "./language/" );
+	if (!in_array($lang, $languages)) {
+		$lang = 'english';
+	}
 	setcookie( 'xo_install_lang', $lang, null, null, null );
 
 	$wizard->redirectToPage( '+1' );
@@ -50,7 +57,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	$pageHasForm = true;
 	$title = LANGUAGE_SELECTION;
 	$content = '<select name="lang" size="10" style="min-width:10em">';
-	
+
 	$languages = getDirList( "./language/" );
 	foreach ( $languages as $lang ) {
 		$sel = ( $lang == $wizard->language ) ? ' selected="selected"' : '';
