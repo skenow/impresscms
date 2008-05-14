@@ -90,6 +90,9 @@ install/language/english/welcome.php
 +  language/english/databaseupdater.php  (added)
 ------------------------------------------------
 
++  language/english/theme.php  (added)
+------------------------------------------------
+
 language/english/global.php
 ---------------------------
 
@@ -107,6 +110,9 @@ language/english/global.php
 +  define('_IMPRESSCMS_BLOG','Blog');
 +  define('_IMPRESSCMS_DONATE','Donate!');
 +  define('_RECREATE_ADMINMENU_FILE', 'This is your first time to enter the administration section. Press the button below to proceed.');
++  define("_IMPRESSCMS_Support","Support the project !");
++  define("_ADM_USE_RTL","0");
++  define("_EXT_DATE_FUNC","0");
 
 language/english/moduleabout.php
 --------------------------------
