@@ -31,6 +31,7 @@ install/language/english/install.php
 +  define( "ERR_INVALID_DBCHARSET", "The charset '%s' is not supported." );
 +  define( "ERR_INVALID_DBCOLLATION", "The collation '%s' is not supported." );
 +  define( "ERR_CHARSET_NOT_SET", "Default character set is not set for ImpressCMS database." );
++  define("_ADM_USE_RTL","0"); // turn this to 1 if your language is right to left
 
 install/language/english/install2.php
 -------------------------------------
