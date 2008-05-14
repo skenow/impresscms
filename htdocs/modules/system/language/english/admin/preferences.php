@@ -305,8 +305,26 @@ define("_MD_AM_ML_AUTOSELECT_ENABLED","Autoselect the language depending the bro
 
 define("_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE","Allow anonymous users to see user profiles.");
 
-define("_MD_AM_USE_SHA256","Use SHA256 Encryption for Passwords (Recommended)");
-define("_MD_AM_USE_SHA256DSC","Select 'yes' for SHA256. Select 'no' for MD5 (not recommended).<br />Changing this will render all passwords invalid!");
+define("_MD_AM_ENC_TYPE","Change Password Encryption (default is SHA256)");
+define("_MD_AM_ENC_TYPEDSC","Changes the Algorithm used for encrypting user passwords.<br />Changing this will render all passwords invalid! all users will need to reset their passwords after changing this preference");
+define("_MD_AM_ENC_MD5","MD5 (not recommended)");
+define("_MD_AM_ENC_SHA256","SHA 256 (recommended)");
+define("_MD_AM_ENC_SHA384","SHA 384");
+define("_MD_AM_ENC_SHA512","SHA 512");
+define("_MD_AM_ENC_RIPEMD128","RIPEMD 128");
+define("_MD_AM_ENC_RIPEMD160","RIPEMD 160");
+define("_MD_AM_ENC_WHIRLPOOL","WHIRLPOOL");
+define("_MD_AM_ENC_HAVAL1284","HAVAL 128,4");
+define("_MD_AM_ENC_HAVAL1604","HAVAL 160,4");
+define("_MD_AM_ENC_HAVAL1924","HAVAL 192,4");
+define("_MD_AM_ENC_HAVAL2244","HAVAL 224,4");
+define("_MD_AM_ENC_HAVAL2564","HAVAL 256,4");
+define("_MD_AM_ENC_HAVAL1285","HAVAL 128,5");
+define("_MD_AM_ENC_HAVAL1605","HAVAL 160,5");
+define("_MD_AM_ENC_HAVAL1925","HAVAL 192,5");
+define("_MD_AM_ENC_HAVAL2245","HAVAL 224,5");
+define("_MD_AM_ENC_HAVAL2565","HAVAL 256,5");
+
 //Content Manager
 define("_MD_AM_CONTMANAGER","Content Manager");
 define("_MD_AM_DEFAULT_CONTPAGE","Default Page");
