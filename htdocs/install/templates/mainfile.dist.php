@@ -100,6 +100,10 @@ if ( !defined("XOOPS_MAINFILE_INCLUDED") ) {
 	// Default is 'Yes'. Choose 'Yes' if you are unsure.
 	define('XOOPS_DB_PCONNECT', 0);
 
+	// (optional) Physical path to script that logs database queries.
+	// Example: define('ICMS_LOGGING_HOOK', XOOPS_ROOT_PATH . '/modules/foobar/logging_hook.php');
+	define('ICMS_LOGGING_HOOK', '');
+
 	define("XOOPS_GROUP_ADMIN", "1");
 	define("XOOPS_GROUP_USERS", "2");
 	define("XOOPS_GROUP_ANONYMOUS", "3");
