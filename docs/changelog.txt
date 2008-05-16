@@ -82,6 +82,7 @@ Unreleased : ImpressCMS 1.1 "???" Alpha
 - Improved : Libraries default encoding is now UTF-8. (stranger)
 - Improved : New smartiy variables on themes for "google analytics code" and "google meta tag". (stranger)
 - Improved : Changing fiih link (after upgrading) to a new place for updating system module, right after upgrading is done. (stranger)
+- Improved : Improving the language constants of Sytem Admin > Groups (malanciault)
 - Improved : Added theme_rtl.html to all themes. (stranger)
 - Improved : Admin templates to use their style from style files, to make icms more compatible with rtl languages. (stranger)
 
