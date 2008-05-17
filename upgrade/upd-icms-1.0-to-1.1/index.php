@@ -185,7 +185,7 @@ class upgrade_impcms06 {
             		$sql = "INSERT INTO " . $GLOBALS['xoopsDB']->prefix('config') . 
                     	" (conf_id, conf_modid, conf_catid, conf_name, conf_title, conf_value, conf_desc, conf_formtype, conf_valuetype, conf_order) " .
                     	" VALUES " .
-                    	" (NULL, 0, 2, 'enc_type', '_MD_AM_ENC_TYPE', '1', '_MD_AM_ENC_TYPEDSC', 'select', 'int', 50)";
+                    	" (NULL, 0, 2, 'enc_type', '_MD_AM_ENC_TYPE', '0', '_MD_AM_ENC_TYPEDSC', 'select', 'int', 50)";
 
             		if (!$GLOBALS['xoopsDB']->queryF( $sql ))
 			{
