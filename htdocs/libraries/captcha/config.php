@@ -24,7 +24,7 @@ $config = array(
 	"mode"				=> 'image', 
 	"name"				=> 'xoopscaptcha', 
 	"skipmember"		=> false,					// Skip CAPTCHA check for members
-	"maxattempt"		=> 800,  					// Maximum attempts for each session
+	"maxattempt"		=> 8,  					// Maximum attempts for each session
 	
 	"num_chars"			=> 8,  						// Maximum characters
 	
