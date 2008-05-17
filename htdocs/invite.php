@@ -71,13 +71,13 @@ case 'finish':
 			$xoopsMailer->setTemplate('invite.tpl');
 			$xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
 			$xoopsMailer->assign('ADMINMAIL', $xoopsConfig['adminmail']);
-			$xoopsMailer->assign('SITEURL', XOOPS_URL."/");
+			$xoopsMailer->assign('SITEURL', ICMS_URL."/");
 			$xoopsMailer->assign('USEREMAIL', $email);
-			$xoopsMailer->assign('REGISTERLINK', XOOPS_URL.'/register.php?code='.$invite_code);
+			$xoopsMailer->assign('REGISTERLINK', ICMS_URL.'/register.php?code='.$invite_code);
 			$xoopsMailer->setToEmails($email);
 			$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
 			$xoopsMailer->setFromName($xoopsConfig['sitename']);
-			$xoopsMailer->setSubject(sprintf(_US_INVITEREGLINK,XOOPS_URL));
+			$xoopsMailer->setSubject(sprintf(_US_INVITEREGLINK,ICMS_URL));
 			if ( !$xoopsMailer->send() ) {
 				$stop .= _US_INVITEMAILERR;
 			} else {

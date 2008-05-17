@@ -41,7 +41,7 @@ if ( isset($xoopsConfig['startpage']) && $xoopsConfig['startpage'] != "" && $xoo
 		$page_handler =& xoops_gethandler('page');
 		$page = $page_handler->get($arr[1]);
 		if (is_object($page)){
-			$url = (substr($page->getVar('page_url'),0,7) == 'http://')?$page->getVar('page_url'):XOOPS_URL.'/'.$page->getVar('page_url');
+			$url = (substr($page->getVar('page_url'),0,7) == 'http://')?$page->getVar('page_url'):ICMS_URL.'/'.$page->getVar('page_url');
 			header('Location: '.$url);
 		}else{
 			$xoopsConfig['startpage'] = '--';
@@ -50,7 +50,7 @@ if ( isset($xoopsConfig['startpage']) && $xoopsConfig['startpage'] != "" && $xoo
 			include "footer.php";
 		}
 	}else{
-		header('Location: '.XOOPS_URL.'/modules/'.$xoopsConfig['startpage'].'/');
+		header('Location: '.ICMS_URL.'/modules/'.$xoopsConfig['startpage'].'/');
 	}
 	exit();
 } else {

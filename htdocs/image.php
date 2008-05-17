@@ -32,22 +32,22 @@ if (function_exists('mb_http_output')) {
 $image_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 if (empty($image_id)) {
 	header('Content-type: image/gif');
-	readfile(XOOPS_UPLOAD_PATH.'/blank.gif');
+	readfile(ICMS_UPLOAD_PATH.'/blank.gif');
 	exit();
 }
 $xoopsOption['nocommon'] = 1;
 include './mainfile.php';
-include XOOPS_ROOT_PATH.'/include/functions.php';
-include_once XOOPS_ROOT_PATH.'/class/logger.php';
-include_once XOOPS_ROOT_PATH."/class/module.textsanitizer.php";
+include ICMS_ROOT_PATH.'/include/functions.php';
+include_once ICMS_ROOT_PATH.'/class/logger.php';
+include_once ICMS_ROOT_PATH."/class/module.textsanitizer.php";
 $xoopsLogger =& XoopsLogger::instance();
 $xoopsLogger->startTime();
-include_once XOOPS_ROOT_PATH.'/class/database/databasefactory.php';
+include_once ICMS_ROOT_PATH.'/class/database/databasefactory.php';
 define('XOOPS_DB_PROXY', 1);
 $xoopsDB =& XoopsDatabaseFactory::getDatabaseConnection();
 // ################# Include class manager file ##############
-require_once XOOPS_ROOT_PATH.'/kernel/object.php';
-require_once XOOPS_ROOT_PATH.'/class/criteria.php';
+require_once ICMS_ROOT_PATH.'/kernel/object.php';
+require_once ICMS_ROOT_PATH.'/class/criteria.php';
 $imagehandler =& xoops_gethandler('image');
 $criteria = new CriteriaCompo(new Criteria('i.image_display', 1));
 $criteria->add(new Criteria('i.image_id', $image_id));
@@ -62,7 +62,7 @@ if (count($image) > 0) {
 	echo $image[0]->getVar('image_body');
 } else {
 	header('Content-type: image/gif');
-	readfile(XOOPS_UPLOAD_PATH.'/blank.gif');
+	readfile(ICMS_UPLOAD_PATH.'/blank.gif');
 	exit();
 }
 ?>

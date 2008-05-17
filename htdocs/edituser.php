@@ -31,7 +31,7 @@
  */
 $xoopsOption['pagetype'] = 'user';
 include 'mainfile.php';
-include_once XOOPS_ROOT_PATH.'/class/xoopsformloader.php';
+include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 
 // If not a user, redirect
 if (!is_object($xoopsUser)) {
@@ -90,7 +90,7 @@ if ($op == 'saveuser') {
         }
     }
     if (count($errors) > 0) {
-        include XOOPS_ROOT_PATH.'/header.php';
+        include ICMS_ROOT_PATH.'/header.php';
         echo '<div>';
         foreach ($errors as $er) {
             echo '<span style="color: #ff0000; font-weight: bold;">'.$er.'</span><br />';
@@ -149,9 +149,9 @@ if ($op == 'saveuser') {
             setcookie($xoopsConfig['usercookie']);
         }
         if (!$member_handler->insertUser($edituser)) {
-            include XOOPS_ROOT_PATH.'/header.php';
+            include ICMS_ROOT_PATH.'/header.php';
             echo $edituser->getHtmlErrors();
-            include XOOPS_ROOT_PATH.'/footer.php';
+            include ICMS_ROOT_PATH.'/footer.php';
         } else {
             redirect_header('userinfo.php?uid='.$uid, 1, _US_PROFUPDATED);
         }
@@ -161,8 +161,8 @@ if ($op == 'saveuser') {
 
 
 if ($op == 'editprofile') {
-    include_once XOOPS_ROOT_PATH.'/header.php';
-    include_once XOOPS_ROOT_PATH.'/include/comment_constants.php';
+    include_once ICMS_ROOT_PATH.'/header.php';
+    include_once ICMS_ROOT_PATH.'/include/comment_constants.php';
     echo '<a href="userinfo.php?uid='.intval($xoopsUser->getVar('uid')).'">'. _US_PROFILE .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'. _US_EDITPROFILE .'<br /><br />';
     $form = new XoopsThemeForm(_US_EDITPROFILE, 'userinfo', 'edituser.php', 'post', true);
     $uname_label = new XoopsFormLabel(_US_NICKNAME, $xoopsUser->getVar('uname'));
@@ -222,14 +222,14 @@ if ($op == 'editprofile') {
     	$selected_theme->addOption( $theme , $theme );
 	}
 	$selected_language = new XoopsFormSelect(_US_SELECT_LANG, 'language_selected' , $xoopsUser->language() );
-	include_once(XOOPS_ROOT_PATH."/class/xoopslists.php");
+	include_once(ICMS_ROOT_PATH."/class/xoopslists.php");
 	foreach ( XoopsLists::getLangList() as $language ){
     	$selected_language->addOption( $language , $language );
 	}
     // RMV-NOTIFY
     // TODO: add this to admin user-edit functions...
-    include_once XOOPS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/notification.php';
-    include_once XOOPS_ROOT_PATH . '/include/notification_constants.php';
+    include_once ICMS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/notification.php';
+    include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
     $notify_method_select = new XoopsFormSelect(_NOT_NOTIFYMETHOD, 'notify_method', $xoopsUser->getVar('notify_method'));
     $notify_method_select->addOptionArray(array(XOOPS_NOTIFICATION_METHOD_DISABLE=>_NOT_METHOD_DISABLE, XOOPS_NOTIFICATION_METHOD_PM=>_NOT_METHOD_PM, XOOPS_NOTIFICATION_METHOD_EMAIL=>_NOT_METHOD_EMAIL));
     $notify_mode_select = new XoopsFormSelect(_NOT_NOTIFYMODE, 'notify_mode', $xoopsUser->getVar('notify_mode'));
@@ -244,7 +244,7 @@ if ($op == 'editprofile') {
 	if ($passConfig['pass_level'] <= 20){
 		$pwd_text = new XoopsFormPassword('', 'password', 10, 72);
 	}else{
-		include_once XOOPS_ROOT_PATH."/include/passwordquality.php";
+		include_once ICMS_ROOT_PATH."/include/passwordquality.php";
 	}
     $pwd_text2 = new XoopsFormPassword('', 'vpass', 10, 72);
     $pwd_tray = new XoopsFormElementTray(_US_PASSWORD.'<br />'._US_TYPEPASSTWICE);
@@ -287,17 +287,17 @@ if ($op == 'editprofile') {
         $form->setRequired($email_text);
     }
     $form->display();
-    include XOOPS_ROOT_PATH.'/footer.php';
+    include ICMS_ROOT_PATH.'/footer.php';
 }
 
 
 if ($op == 'avatarform') {
-    include XOOPS_ROOT_PATH.'/header.php';
+    include ICMS_ROOT_PATH.'/header.php';
     echo '<a href="userinfo.php?uid='.intval($xoopsUser->getVar('uid')).'">'. _US_PROFILE .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'. _US_UPLOADMYAVATAR .'<br /><br />';
     $oldavatar = $xoopsUser->getVar('user_avatar');
     if (!empty($oldavatar) && $oldavatar != 'blank.gif') {
         echo '<div style="text-align:center;"><h4 style="color:#ff0000; font-weight:bold;">'._US_OLDDELETED.'</h4>';
-        echo '<img src="'.XOOPS_UPLOAD_URL.'/'.$oldavatar.'" alt="" /></div>';
+        echo '<img src="'.ICMS_UPLOAD_URL.'/'.$oldavatar.'" alt="" /></div>';
     }
     if ($xoopsConfigUser['avatar_allow_upload'] == 1 && $xoopsUser->getVar('posts') >= $xoopsConfigUser['avatar_minposts']) {
         include_once 'class/xoopsformloader.php';
@@ -320,16 +320,16 @@ if ($op == 'avatarform') {
     $form2 = new XoopsThemeForm(_US_CHOOSEAVT, 'uploadavatar', 'edituser.php', 'post', true);
     $avatar_select = new XoopsFormSelect('', 'user_avatar', $xoopsUser->getVar('user_avatar'));
     $avatar_select->addOptionArray($avatar_handler->getList('S'));
-    $avatar_select->setExtra("onchange='showImgSelected(\"avatar\", \"user_avatar\", \"uploads\", \"\", \"".XOOPS_URL."\")'");
+    $avatar_select->setExtra("onchange='showImgSelected(\"avatar\", \"user_avatar\", \"uploads\", \"\", \"".ICMS_URL."\")'");
     $avatar_tray = new XoopsFormElementTray(_US_AVATAR, '&nbsp;');
     $avatar_tray->addElement($avatar_select);
-    $avatar_tray->addElement(new XoopsFormLabel('', "<img src='".XOOPS_UPLOAD_URL."/".$xoopsUser->getVar("user_avatar", "E")."' name='avatar' id='avatar' alt='' /> <a href=\"javascript:openWithSelfMain('".XOOPS_URL."/misc.php?action=showpopups&amp;type=avatars','avatars',600,400);\">"._LIST."</a>"));
+    $avatar_tray->addElement(new XoopsFormLabel('', "<img src='".ICMS_UPLOAD_URL."/".$xoopsUser->getVar("user_avatar", "E")."' name='avatar' id='avatar' alt='' /> <a href=\"javascript:openWithSelfMain('".ICMS_URL."/misc.php?action=showpopups&amp;type=avatars','avatars',600,400);\">"._LIST."</a>"));
     $form2->addElement($avatar_tray);
     $form2->addElement(new XoopsFormHidden('uid', intval($xoopsUser->getVar('uid'))));
     $form2->addElement(new XoopsFormHidden('op', 'avatarchoose'));
     $form2->addElement(new XoopsFormButton('', 'submit2', _SUBMIT, 'submit'));
     $form2->display();
-    include XOOPS_ROOT_PATH.'/footer.php';
+    include ICMS_ROOT_PATH.'/footer.php';
 }
 
 if ($op == 'avatarupload') {
@@ -348,8 +348,8 @@ if ($op == 'avatarupload') {
         redirect_header('index.php',3,_US_NOEDITRIGHT);
     }
     if ($xoopsConfigUser['avatar_allow_upload'] == 1 && $xoopsUser->getVar('posts') >= $xoopsConfigUser['avatar_minposts']) {
-        include_once XOOPS_ROOT_PATH.'/class/uploader.php';
-        $uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png'), $xoopsConfigUser['avatar_maxsize'], $xoopsConfigUser['avatar_width'], $xoopsConfigUser['avatar_height']);
+        include_once ICMS_ROOT_PATH.'/class/uploader.php';
+        $uploader = new XoopsMediaUploader(ICMS_UPLOAD_PATH, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png'), $xoopsConfigUser['avatar_maxsize'], $xoopsConfigUser['avatar_width'], $xoopsConfigUser['avatar_height']);
         if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
             $uploader->setPrefix('cavt');
             if ($uploader->upload()) {
@@ -368,8 +368,8 @@ if ($op == 'avatarupload') {
                         $avatars =& $avt_handler->getObjects(new Criteria('avatar_file', $oldavatar));
 			            if (!empty($avatars) && count($avatars) == 1 && is_object($avatars[0])) {
 			                $avt_handler->delete($avatars[0]);
-				            $oldavatar_path = str_replace("\\", "/", realpath(XOOPS_UPLOAD_PATH.'/'.$oldavatar));
-				            if (0 === strpos($oldavatar_path, XOOPS_UPLOAD_PATH) && is_file($oldavatar_path)) {
+				            $oldavatar_path = str_replace("\\", "/", realpath(ICMS_UPLOAD_PATH.'/'.$oldavatar));
+				            if (0 === strpos($oldavatar_path, ICMS_UPLOAD_PATH) && is_file($oldavatar_path)) {
 				                unlink($oldavatar_path);
 				            }
 			            }
@@ -381,9 +381,9 @@ if ($op == 'avatarupload') {
                 }
             }
         }
-        include XOOPS_ROOT_PATH.'/header.php';
+        include ICMS_ROOT_PATH.'/header.php';
         echo $uploader->getErrors();
-        include XOOPS_ROOT_PATH.'/footer.php';
+        include ICMS_ROOT_PATH.'/footer.php';
     }
 }
 
@@ -410,23 +410,23 @@ if ($op == 'avatarchoose') {
         }
         unset($avatars, $criteria_avatar);
     }
-    $user_avatarpath = str_replace("\\", "/", realpath(XOOPS_UPLOAD_PATH.'/'.$user_avatar));
-    if (0 === strpos($user_avatarpath, XOOPS_UPLOAD_PATH) && is_file($user_avatarpath)) {
+    $user_avatarpath = str_replace("\\", "/", realpath(ICMS_UPLOAD_PATH.'/'.$user_avatar));
+    if (0 === strpos($user_avatarpath, ICMS_UPLOAD_PATH) && is_file($user_avatarpath)) {
         $oldavatar = $xoopsUser->getVar('user_avatar');
         $xoopsUser->setVar('user_avatar', $user_avatar);
         $member_handler =& xoops_gethandler('member');
         if (!$member_handler->insertUser($xoopsUser)) {
-            include XOOPS_ROOT_PATH.'/header.php';
+            include ICMS_ROOT_PATH.'/header.php';
             echo $xoopsUser->getHtmlErrors();
-            include XOOPS_ROOT_PATH.'/footer.php';
+            include ICMS_ROOT_PATH.'/footer.php';
             exit();
         }
         if ($oldavatar && preg_match("/^cavt/", strtolower($oldavatar))) {
             $avatars =& $avt_handler->getObjects(new Criteria('avatar_file', $oldavatar));
             if (!empty($avatars) && count($avatars) == 1 && is_object($avatars[0])) {
                 $avt_handler->delete($avatars[0]);
-	            $oldavatar_path = str_replace("\\", "/", realpath(XOOPS_UPLOAD_PATH.'/'.$oldavatar));
-	            if (0 === strpos($oldavatar_path, XOOPS_UPLOAD_PATH) && is_file($oldavatar_path)) {
+	            $oldavatar_path = str_replace("\\", "/", realpath(ICMS_UPLOAD_PATH.'/'.$oldavatar));
+	            if (0 === strpos($oldavatar_path, ICMS_UPLOAD_PATH) && is_file($oldavatar_path)) {
 	                unlink($oldavatar_path);
 	            }
             }

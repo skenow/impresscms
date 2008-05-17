@@ -26,7 +26,7 @@
 //  ------------------------------------------------------------------------ //
 
 include "mainfile.php";
-include_once XOOPS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/misc.php';
+include_once ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/misc.php';
 $action = isset($_GET['action']) ? trim($_GET['action']) : '';
 $action = isset($_POST['action']) ? trim($_POST['action']) : $action;
 $type = isset($_GET['type']) ? trim($_GET['type']) : '';
@@ -60,7 +60,7 @@ if ( $action == "showpopups" ) {
             if ($count > 0) {
                 $rcolor = 'even';
                 for ($i = 0; $i < $count; $i++) {
-                    echo "<tr class='$rcolor'><td>".$smiles[$i]['code']."</td><td>".$smiles[$i]['emotion']."</td><td><img onmouseover='style.cursor=\"hand\"' onclick='doSmilie(\" ".$smiles[$i]['code']." \");' src='".XOOPS_UPLOAD_URL."/".$smiles[$i]['smile_url']."' alt='' /></td></tr>";
+                    echo "<tr class='$rcolor'><td>".$smiles[$i]['code']."</td><td>".$smiles[$i]['emotion']."</td><td><img onmouseover='style.cursor=\"hand\"' onclick='doSmilie(\" ".$smiles[$i]['code']." \");' src='".ICMS_UPLOAD_URL."/".$smiles[$i]['smile_url']."' alt='' /></td></tr>";
                     $rcolor = ($rcolor == 'even') ? 'odd' : 'even';
                 }
             } else {
@@ -80,7 +80,7 @@ if ( $action == "showpopups" ) {
             window.close();
         }
         function showAvatar() {
-            window.opener.xoopsGetElementById("avatar").src='<?php echo XOOPS_UPLOAD_URL;?>/' + window.opener.xoopsGetElementById("user_avatar").options[window.opener.xoopsGetElementById("user_avatar").selectedIndex].value;
+            window.opener.xoopsGetElementById("avatar").src='<?php echo ICMS_UPLOAD_URL;?>/' + window.opener.xoopsGetElementById("user_avatar").options[window.opener.xoopsGetElementById("user_avatar").selectedIndex].value;
         }
         //-->
         </script>
@@ -121,7 +121,7 @@ if ( $action == "showpopups" ) {
             echo '</head><body>';
             echo "<div class='errorMsg'>".implode('<br />', $GLOBALS['xoopsSecurity']->getErrors())."</div>";
             echo '
-            <form action="'.XOOPS_URL.'/misc.php" method="post" onsubmit="return checkForm();"><table  width="100%" class="outer" cellspacing="1"><tr><th colspan="2">'._MSC_RECOMMENDSITE.'</th></tr>';
+            <form action="'.ICMS_URL.'/misc.php" method="post" onsubmit="return checkForm();"><table  width="100%" class="outer" cellspacing="1"><tr><th colspan="2">'._MSC_RECOMMENDSITE.'</th></tr>';
             echo "<tr><td class='head'>
                 <input type='hidden' name='op' value='sendsite' />
                 <input type='hidden' name='action' value='showpopups' />
@@ -141,20 +141,20 @@ if ( $action == "showpopups" ) {
                 $ymail = isset($_POST['ymail']) ? $myts->stripSlashesGPC(trim($_POST['ymail'])) : '';
             }
             if ( !isset($_POST['yname']) || trim($_POST['yname']) == "" || $ymail == '' || !isset($_POST['fname']) || trim($_POST['fname']) == ""  || !isset($_POST['fmail']) || trim($_POST['fmail']) == '' ) {
-                redirect_header(XOOPS_URL."/misc.php?action=showpopups&amp;type=friend&amp;op=sendform",2,_MSC_NEEDINFO);
+                redirect_header(ICMS_URL."/misc.php?action=showpopups&amp;type=friend&amp;op=sendform",2,_MSC_NEEDINFO);
             }
             $yname = $myts->stripSlashesGPC(trim($_POST['yname']));
             $fname = $myts->stripSlashesGPC(trim($_POST['fname']));
             $fmail = $myts->stripSlashesGPC(trim($_POST['fmail']));
             if (!checkEmail($fmail) || !checkEmail($ymail)  || preg_match( "/[\\0-\\31]/", $yname ) ) {
                 $errormessage = _MSC_INVALIDEMAIL1."<br />"._MSC_INVALIDEMAIL2."";
-                redirect_header(XOOPS_URL."/misc.php?action=showpopups&amp;type=friend&amp;op=sendform",2,$errormessage);
+                redirect_header(ICMS_URL."/misc.php?action=showpopups&amp;type=friend&amp;op=sendform",2,$errormessage);
             }
             $xoopsMailer =& getMailer();
             $xoopsMailer->setTemplate("tellfriend.tpl");
             $xoopsMailer->assign("SITENAME", $xoopsConfig['sitename']);
             $xoopsMailer->assign("ADMINMAIL", $xoopsConfig['adminmail']);
-            $xoopsMailer->assign("SITEURL", XOOPS_URL."/");
+            $xoopsMailer->assign("SITEURL", ICMS_URL."/");
             $xoopsMailer->assign("YOUR_NAME", $yname);
             $xoopsMailer->assign("FRIEND_NAME", $fname);
             $xoopsMailer->setToEmails($fmail);
@@ -199,8 +199,8 @@ if ( $action == "showpopups" ) {
             $class = ($class == 'odd') ? 'even' : 'odd';
             echo '<tr valign="middle" align="center" class="'.$class.'">';
             if (is_object($onlineUsers[$i]['user'])) {
-                $avatar = $onlineUsers[$i]['user']->getVar('user_avatar') ? '<img src="'.XOOPS_UPLOAD_URL.'/'.$onlineUsers[$i]['user']->getVar('user_avatar').'" alt="" />' : '&nbsp;';
-                echo '<td>'.$avatar."</td><td><a href=\"javascript:window.opener.location='".XOOPS_URL."/userinfo.php?uid=".$onlineUsers[$i]['user']->getVar('uid')."';window.close();\">".$onlineUsers[$i]['user']->getVar('uname')."</a>";
+                $avatar = $onlineUsers[$i]['user']->getVar('user_avatar') ? '<img src="'.ICMS_UPLOAD_URL.'/'.$onlineUsers[$i]['user']->getVar('user_avatar').'" alt="" />' : '&nbsp;';
+                echo '<td>'.$avatar."</td><td><a href=\"javascript:window.opener.location='".ICMS_URL."/userinfo.php?uid=".$onlineUsers[$i]['user']->getVar('uid')."';window.close();\">".$onlineUsers[$i]['user']->getVar('uname')."</a>";
             } else {
                 echo '<td>&nbsp;</td><td>'.$xoopsConfig['anonymous'];
             }
@@ -211,14 +211,14 @@ if ( $action == "showpopups" ) {
         }
         echo '</table><br />';
         if ($online_total > 20) {
-            include_once XOOPS_ROOT_PATH.'/class/pagenav.php';
+            include_once ICMS_ROOT_PATH.'/class/pagenav.php';
             $nav = new XoopsPageNav($online_total, 20, $start, 'start', 'action=showpopups&amp;type=online');
             echo '<div style="text-align: right;">'.$nav->renderNav().'</div>';
         }
         break;
     case 'ssllogin':
         if ($xoopsConfig['use_ssl'] && isset($_POST[$xoopsConfig['sslpost_name']]) && is_object($xoopsUser)) {
-            include_once XOOPS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/user.php';
+            include_once ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/user.php';
             echo sprintf(_US_LOGGINGU, $xoopsUser->getVar('uname'));
             echo '<div style="text-align:center;"><input class="formButton" value="'._CLOSE.'" type="button" onclick="window.opener.location.reload();window.close();" /></div>';
             $closebutton = false;

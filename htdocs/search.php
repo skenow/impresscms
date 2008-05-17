@@ -32,7 +32,7 @@ $config_handler =& xoops_gethandler('config');
 $xoopsConfigSearch =& $config_handler->getConfigsByCat(XOOPS_CONF_SEARCH);
 
 if ($xoopsConfigSearch['enable_search'] != 1) {
-    header('Location: '.XOOPS_URL.'/index.php');
+    header('Location: '.ICMS_URL.'/index.php');
     exit();
 }
 $action = "search";
@@ -94,11 +94,11 @@ $gperm_handler = & xoops_gethandler( 'groupperm' );
 $available_modules = $gperm_handler->getItemIds('module_read', $groups);
 
 if ($action == 'search') {
-    include XOOPS_ROOT_PATH.'/header.php';
+    include ICMS_ROOT_PATH.'/header.php';
     include 'include/searchform.php';
     $search_form->display();
     $xoopsTpl->assign('xoops_pagetitle', _SEARCH);
-    include XOOPS_ROOT_PATH.'/footer.php';
+    include ICMS_ROOT_PATH.'/footer.php';
     exit();
 }
 
@@ -172,7 +172,7 @@ switch ($action) {
         unset($mids);
         $mids = array_keys($modules);
     }
-    include XOOPS_ROOT_PATH."/header.php";
+    include ICMS_ROOT_PATH."/header.php";
     echo "<h3>"._SR_SEARCHRESULTS."</h3>\n";
     echo _SR_KEYWORDS.':';
     if ($andor != 'exact') {
@@ -218,7 +218,7 @@ switch ($action) {
 	                    $results[$i]['uid'] = @intval($results[$i]['uid']);
 	                    if ( !empty($results[$i]['uid']) ) {
 	                        $uname = XoopsUser::getUnameFromId($results[$i]['uid']);
-	                        echo "&nbsp;&nbsp;<a href='".XOOPS_URL."/userinfo.php?uid=".$results[$i]['uid']."'>".$uname."</a>\n";
+	                        echo "&nbsp;&nbsp;<a href='".ICMS_URL."/userinfo.php?uid=".$results[$i]['uid']."'>".$uname."</a>\n";
 	                    }
 	                    echo !empty($results[$i]['time']) ? " (". formatTimestamp(intval($results[$i]['time'])).")" : "";
 	                    echo "</small>";
@@ -226,7 +226,7 @@ switch ($action) {
 	                 echo "<br />\n";
                 }
                 if ( $count >= intval($xoopsConfigSearch['search_per_page']) ) {
-                    $search_url = XOOPS_URL.'/search.php?query='.urlencode(stripslashes(implode(' ', $queries)));
+                    $search_url = ICMS_URL.'/search.php?query='.urlencode(stripslashes(implode(' ', $queries)));
                     $search_url .= "&mid=$mid&action=showall&andor=$andor";
                     echo '<br /><a href="'.htmlspecialchars($search_url).'">'._SR_SHOWALLR.'</a></p>';
                 }
@@ -241,7 +241,7 @@ switch ($action) {
     break;
     case "showall":
     case 'showallbyuser':
-    include XOOPS_ROOT_PATH."/header.php";
+    include ICMS_ROOT_PATH."/header.php";
     $module_handler =& xoops_gethandler('module');
     $module =& $module_handler->get($mid);
     $results =& $module->search($queries, $andor, 20, $start, $uid);
@@ -285,7 +285,7 @@ switch ($action) {
 	            $results[$i]['uid'] = @intval($results[$i]['uid']);
 	            if ( !empty($results[$i]['uid']) ) {
 	                $uname = XoopsUser::getUnameFromId($results[$i]['uid']);
-	                echo "&nbsp;&nbsp;<a href='".XOOPS_URL."/userinfo.php?uid=".$results[$i]['uid']."'>".$uname."</a>\n";
+	                echo "&nbsp;&nbsp;<a href='".ICMS_URL."/userinfo.php?uid=".$results[$i]['uid']."'>".$uname."</a>\n";
 	            }
 	            echo !empty($results[$i]['time']) ? " (". formatTimestamp(intval($results[$i]['time'])).")" : "";
 	            echo "</small>";
@@ -296,7 +296,7 @@ switch ($action) {
         <table>
           <tr>
         ';
-        $search_url = XOOPS_URL.'/search.php?query='.urlencode(stripslashes(implode(' ', $queries)));
+        $search_url = ICMS_URL.'/search.php?query='.urlencode(stripslashes(implode(' ', $queries)));
         $search_url .= "&mid=$mid&action=$action&andor=$andor";
         if ($action=='showallbyuser') {
             $search_url .= "&uid=$uid";
@@ -331,5 +331,5 @@ switch ($action) {
     ';
     break;
 }
-include XOOPS_ROOT_PATH."/footer.php";
+include ICMS_ROOT_PATH."/footer.php";
 ?>

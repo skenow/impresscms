@@ -45,7 +45,7 @@ if (!$result) {
     echo "<h2>".htmlspecialchars($xoopsConfig['slogan'])."</h2>";
     echo "<div>";
     while (list($storyid, $title) = $xoopsDB->fetchRow($result)) {
-        echo "<a href='".XOOPS_URL."/modules/news/print.php?storyid=$storyid'>".htmlspecialchars($title)."</a><br />";
+        echo "<a href='".ICMS_URL."/modules/news/print.php?storyid=$storyid'>".htmlspecialchars($title)."</a><br />";
 
     }
     echo "</div>";

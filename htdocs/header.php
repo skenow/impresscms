@@ -24,9 +24,9 @@
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
-defined("XOOPS_ROOT_PATH") or die( 'XOOPS root path not defined' );
+defined("ICMS_ROOT_PATH") or die( 'XOOPS root path not defined' );
 
-include_once XOOPS_ROOT_PATH.'/class/xoopsblock.php';
+include_once ICMS_ROOT_PATH.'/class/xoopsblock.php';
 
 //global $xoopsLogger;
 
@@ -36,17 +36,17 @@ $xoopsLogger->stopTime( 'Module init' );
 $xoopsLogger->startTime( 'XOOPS output init' );
 
 
-if ($xoopsConfig['theme_set'] != 'default' && file_exists(XOOPS_THEME_PATH.'/'.$xoopsConfig['theme_set'].'/theme.php')) {
-	require_once XOOPS_ROOT_PATH . '/include/xoops13_header.php';
+if ($xoopsConfig['theme_set'] != 'default' && file_exists(ICMS_THEME_PATH.'/'.$xoopsConfig['theme_set'].'/theme.php')) {
+	require_once ICMS_ROOT_PATH . '/include/xoops13_header.php';
 } else {
 	global $xoopsOption, $xoopsConfig, $xoopsModule;
 
     $xoopsOption['theme_use_smarty'] = 1;
 
     // include Smarty template engine and initialize it
-    require_once XOOPS_ROOT_PATH . '/class/template.php';
-    require_once XOOPS_ROOT_PATH . '/class/theme.php';
-    require_once XOOPS_ROOT_PATH . '/class/theme_blocks.php';
+    require_once ICMS_ROOT_PATH . '/class/template.php';
+    require_once ICMS_ROOT_PATH . '/class/theme.php';
+    require_once ICMS_ROOT_PATH . '/class/theme_blocks.php';
 
 	if ( @$xoopsOption['template_main'] ) {
 		if ( false === strpos( $xoopsOption['template_main'], ':' ) ) {
@@ -71,8 +71,8 @@ if ($xoopsConfig['theme_set'] != 'default' && file_exists(XOOPS_THEME_PATH.'/'.$
 	$xoTheme->addScript( '/include/linkexternal.js', array( 'type' => 'text/javascript' ) );
 
     // Weird, but need extra <script> tags for 2.0.x themes
-    //$xoopsTpl->assign('xoops_js', '//--></script><script type="text/javascript" src="'.XOOPS_URL.'/include/xoops.js"></script><script type="text/javascript"><!--');
-	//$xoopsTpl->assign('linkexternal_js', '//--></script><script type="text/javascript" src="'.XOOPS_URL.'/include/linkexternal.js"></script><script type="text/javascript"><!--');
+    //$xoopsTpl->assign('xoops_js', '//--></script><script type="text/javascript" src="'.ICMS_URL.'/include/xoops.js"></script><script type="text/javascript"><!--');
+	//$xoopsTpl->assign('linkexternal_js', '//--></script><script type="text/javascript" src="'.ICMS_URL.'/include/linkexternal.js"></script><script type="text/javascript"><!--');
 
 	if ( @is_object( $xoTheme->plugins['xos_logos_PageBuilder'] ) ) {
 		$aggreg =& $xoTheme->plugins['xos_logos_PageBuilder'];
@@ -100,7 +100,7 @@ if ($xoopsConfig['theme_set'] != 'default' && file_exists(XOOPS_THEME_PATH.'/'.$
 
     if ( !isset($xoopsOption['template_main']) && $xoopsModule ) {
         // new themes using Smarty does not have old functions that are required in old modules, so include them now
-        include XOOPS_ROOT_PATH.'/include/old_theme_functions.php';
+        include ICMS_ROOT_PATH.'/include/old_theme_functions.php';
         // need this also
         $xoopsTheme['thename'] = $xoopsConfig['theme_set'];
         ob_start();

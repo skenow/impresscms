@@ -24,7 +24,7 @@
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
-if (!defined("XOOPS_ROOT_PATH")) {
+if (!defined("ICMS_ROOT_PATH")) {
     die("XOOPS root path not defined");
 }
 if ( !defined("XOOPS_FOOTER_INCLUDED") ) {
@@ -49,7 +49,7 @@ if ( !defined("XOOPS_FOOTER_INCLUDED") ) {
 		xoops_footer();
 	} else {
 		// RMV-NOTIFY
-		include_once XOOPS_ROOT_PATH . '/include/notification_select.php';
+		include_once ICMS_ROOT_PATH . '/include/notification_select.php';
 		
 		if (!headers_sent()) {
 			header('Content-Type:text/html; charset='._CHARSET);
@@ -77,10 +77,10 @@ if ( !defined("XOOPS_FOOTER_INCLUDED") ) {
 			}
 		}
 				     	// Start addition: assign the language css&Javascripts file to the template, if required
-        if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL && file_exists(XOOPS_ROOT_PATH."/xoops_rtl.css") ) {
+        if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL && file_exists(ICMS_ROOT_PATH."/xoops_rtl.css") ) {
             $xoTheme->addStylesheet( "/xoops_rtl.css", array( "media" => "screen" ) );
         }
-        if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL && file_exists(XOOPS_ROOT_PATH."/include/xoops_rtl.js") ) {
+        if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL && file_exists(ICMS_ROOT_PATH."/include/xoops_rtl.js") ) {
             $xoTheme->addScript( "/include/xoops_rtl.js", array( "type" => "text/javascript" ) );
         }
         // End addition

@@ -191,8 +191,8 @@ case 'finish':
 	if (!$GLOBALS['xoopsSecurity']->check()) {
 	    $stop .= implode('<br />', $GLOBALS['xoopsSecurity']->getErrors())."<br />";
 	}
-  if(@include_once XOOPS_ROOT_PATH."/libraries/captcha/captcha.php") {
-	include_once(XOOPS_ROOT_PATH ."/class/xoopsformloader.php");
+  if(@include_once ICMS_ROOT_PATH."/libraries/captcha/captcha.php") {
+	include_once(ICMS_ROOT_PATH ."/class/xoopsformloader.php");
 	if ($xoopsConfigUser['use_captcha'] == 1) {
             $xoopsCaptcha = XoopsCaptcha::instance();
             if(! $xoopsCaptcha->verify() ) {
@@ -268,7 +268,7 @@ case 'finish':
 			$xoopsMailer->setTemplate('register.tpl');
 			$xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
 			$xoopsMailer->assign('ADMINMAIL', $xoopsConfig['adminmail']);
-			$xoopsMailer->assign('SITEURL', XOOPS_URL."/");
+			$xoopsMailer->assign('SITEURL', ICMS_URL."/");
 			$xoopsMailer->setToUsers(new XoopsUser($newid));
 			$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
 			$xoopsMailer->setFromName($xoopsConfig['sitename']);
@@ -286,10 +286,10 @@ case 'finish':
 			$xoopsMailer->setTemplate('adminactivate.tpl');
 			$xoopsMailer->assign('USERNAME', $uname);
 			$xoopsMailer->assign('USEREMAIL', $email);
-			$xoopsMailer->assign('USERACTLINK', XOOPS_URL.'/user.php?op=actv&id='.$newid.'&actkey='.$actkey);
+			$xoopsMailer->assign('USERACTLINK', ICMS_URL.'/user.php?op=actv&id='.$newid.'&actkey='.$actkey);
 			$xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
 			$xoopsMailer->assign('ADMINMAIL', $xoopsConfig['adminmail']);
-			$xoopsMailer->assign('SITEURL', XOOPS_URL."/");
+			$xoopsMailer->assign('SITEURL', ICMS_URL."/");
 			$member_handler =& xoops_gethandler('member');
 			$xoopsMailer->setToGroups($member_handler->getGroup($xoopsConfigUser['activation_group']));
 			$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
