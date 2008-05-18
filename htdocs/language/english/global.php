@@ -122,6 +122,7 @@ define('_FAILFETCHIMG', 'Could not get uploaded file %s');
 define('_FAILSAVEIMG', 'Failed storing image %s into the database');
 define('_NOCACHE', 'No Cache');
 define('_CLONE', 'Clone');
+define('_INVISIBLE', 'Invisible');
 
 //%%%%%	File Name class/xoopsform/formmatchoption.php 	%%%%%
 define("_STARTSWITH", "Starts with");
