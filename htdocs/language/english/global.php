@@ -146,7 +146,7 @@ define("_ERRORIMGPOS","ERROR! Enter the position of the image.");
 define("_ENTEREMAIL","Enter the email address you want to add.");
 define("_ENTERCODE","Enter the codes that you want to add.");
 define("_ENTERQUOTE","Enter the text that you want to be quoted.");
-define("_ENTERHIDDEN","Enter the text that you want to be hidden for anonymous.");
+define("_ENTERHIDDEN","Enter the text that you want to be hidden for anonymous users.");
 define("_ENTERTEXTBOX","Please input text into the textbox.");
 define("_ALLOWEDCHAR","Allowed max chars length: ");
 define("_CURRCHAR","Current chars length: ");
