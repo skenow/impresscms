@@ -326,7 +326,7 @@ define("_MD_AM_ENC_HAVAL2245","HAVAL 224,5");
 define("_MD_AM_ENC_HAVAL2565","HAVAL 256,5");
 
 //Content Manager
-define("_MD_AM_CONTMANAGER","02 - Content Manager");
+define("_MD_AM_CONTMANAGER","Content Manager");
 define("_MD_AM_DEFAULT_CONTPAGE","Default Page");
 define("_MD_AM_DEFAULT_CONTPAGEDSC","Select the default page to be displayed to the user in Content Manager. Leave blank to have Content Manager default to the most recently created page.");
 define("_MD_AM_CONT_SHOWNAV","Display navigation menu on user side?");
