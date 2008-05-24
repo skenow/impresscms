@@ -60,6 +60,10 @@ if ( !defined("XOOPS_MAINFILE_INCLUDED") ) {
 	// Database
 	// Choose the database to be used
 	define('XOOPS_DB_TYPE', 'mysql');
+ 
+    // Set the database charset if applicable
+    if (defined('XOOPS_DB_CHARSET')) die();
+    define('XOOPS_DB_CHARSET', '');
 
 	// Table Prefix
 	// This prefix will be added to all new tables created to avoid name conflict in the database. If you are unsure, just use the default 'icms'.
