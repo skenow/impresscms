@@ -46,7 +46,7 @@ function doIncludes() {
 }
 
 doIncludes();
-require_once('header.php');
+//require_once('header.php');
 
 global $pape_policy_uris;
 $pape_policy_uris = array(
