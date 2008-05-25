@@ -8,6 +8,7 @@ Unreleased : ImpressCMS 1.1 Alpha 1
 
 - Fixed : In the control panel, changing the top-left logo link to default to the home page of the site as discussed here http://lnk.in/5zvw (stranger/malanciault))
 - Fixed : #1971839 - Undefined variable: key in \kernel\icmskernel.php on line 88 (trabis/malanciault)
+- Fixed : #1971844 - Undefined variable: urls in kernel\icmskernel.php on line 93 (trabis/malanciault)
 
 =============================================
 2008-05-22 : ImpressCMS 1.1 Alpha 1

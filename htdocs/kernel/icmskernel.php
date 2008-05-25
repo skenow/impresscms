@@ -87,7 +87,7 @@ class IcmsKernel {
 		    }
 			//$this->urls['isHomePage'] = (XOOPS_URL . "/index.php") == ($http . $httphost . $phpself);
 		}
-		return $urls;
+		return $this->urls;
 	}
 	
 
