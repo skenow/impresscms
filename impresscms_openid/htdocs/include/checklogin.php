@@ -35,27 +35,24 @@ if (!defined('XOOPS_ROOT_PATH')) {
 include_once XOOPS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/user.php';
 $uname = !isset($_POST['uname']) ? '' : trim($_POST['uname']);
 $pass = !isset($_POST['pass']) ? '' : trim($_POST['pass']);
+if ($uname == '' || $pass == '') {
+    redirect_header(XOOPS_URL.'/user.php', 1, _US_INCORRECTLOGIN);
+    exit();
+}
 $member_handler =& xoops_gethandler('member');
 $myts =& MyTextsanitizer::getInstance();
 
 include_once XOOPS_ROOT_PATH.'/class/auth/authfactory.php';
 include_once XOOPS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/auth.php';
-
 $xoopsAuth =& XoopsAuthFactory::getAuthConnection($myts->addSlashes($uname));
-
 //$user = $xoopsAuth->authenticate($myts->addSlashes($uname), $myts->addSlashes($pass));
 // uname&email hack GIJ
 $uname4sql = addslashes( $myts->stripSlashesGPC($uname) ) ;
 $pass4sql = addslashes( $myts->stripSlashesGPC($pass) ) ;
-
-if(strstr( $uname , '@' )) {
-	if ($uname == '' || $pass == '') {
-	    redirect_header(XOOPS_URL.'/user.php', 1, _US_INCORRECTLOGIN);
-	}
-
+if( strstr( $uname , '@' ) ) {
 	// check by email if uname includes '@'
 	$criteria = new CriteriaCompo(new Criteria('email', $uname4sql ));
-	$criteria->add(new Criteria('pass', md5( $pass4sql )));
+	$criteria->add(new Criteria('pass', $pass4sql));
 	$user_handler =& xoops_gethandler('user');
 	$users =& $user_handler->getObjects($criteria, false);
 	if( empty( $users ) || count( $users ) != 1 ) $user = false ;
@@ -68,13 +65,29 @@ if( empty( $user ) || ! is_object( $user ) ) {
 // end of uname&email hack GIJ
 
 if (false != $user) {
-	/**
-	 * @todo this REALLY needs to be moved in a XoopsUser method call
-	 */
-	
     if (0 == $user->getVar('level')) {
         redirect_header(XOOPS_URL.'/index.php', 5, _US_NOACTTPADM);
+        exit();
     }
+    $config_handler =& xoops_gethandler('config');
+	$xoopsConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
+	if ($xoopsConfigPersona['multi_login']){
+		if( is_object( $user ) ) {
+			$online_handler =& xoops_gethandler('online');
+			$online_handler->gc(300);
+			$onlines =& $online_handler->getAll();
+			foreach( $onlines as $online ) {
+				if( $online['online_uid'] == $user->uid() ) {
+					$user = false;
+					redirect_header(XOOPS_URL.'/index.php',3,_US_MULTLOGIN);
+				}
+			}
+			if( is_object( $user ) ) {
+				$online_handler->write($user->uid(), $user->uname(),
+				time(),0,$HTTP_SERVER_VARS['REMOTE_ADDR']);
+			}
+		}
+	}
     if ($xoopsConfig['closesite'] == 1) {
         $allowed = false;
         foreach ($user->getGroups() as $group) {
@@ -85,10 +98,11 @@ if (false != $user) {
         }
         if (!$allowed) {
             redirect_header(XOOPS_URL.'/index.php', 1, _NOPERM);
+            exit();
         }
     }
     $user->setVar('last_login', time());
-    if (!$member_handler->insertUser($user, true)) {
+    if (!$member_handler->insertUser($user)) {
     }
     // Regenrate a new session id and destroy old session
     session_regenerate_id(true);
@@ -97,6 +111,9 @@ if (false != $user) {
     $_SESSION['xoopsUserGroups'] = $user->getGroups();
     if ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '') {
         setcookie($xoopsConfig['session_name'], session_id(), time()+(60 * $xoopsConfig['session_expire']), '/',  '', 0);
+    }
+    $_SESSION['xoopsUserLastLogin'] = $user->getVar('last_login');
+    if (!$member_handler->updateUserByField($user, 'last_login', time())) {
     }
     $user_theme = $user->getVar('theme');
     if (in_array($user_theme, $xoopsConfig['theme_set_allowed'])) {
@@ -123,6 +140,18 @@ if (false != $user) {
     } else {
         $url = XOOPS_URL.'/index.php';
     }
+	if ($pos = strpos( $url, '://' )) {
+		$xoopsLocation = substr( XOOPS_URL, strpos( XOOPS_URL, '://' ) + 3 );
+	    if ( substr($url, $pos + 3, strlen($xoopsLocation)) != $xoopsLocation)  {
+			$url = XOOPS_URL;
+	     }elseif(substr($url, $pos + 3, strlen($xoopsLocation)+1) == $xoopsLocation.'.') {
+	        $url = XOOPS_URL;
+	     }
+	     if( substr($url, 0, strlen(XOOPS_URL)*2) ==  XOOPS_URL.XOOPS_URL){
+	     	$url = substr($url, strlen(XOOPS_URL));
+
+	     }
+	}
 
 	// autologin hack V3.1 GIJ (set cookie)
 	$xoops_cookie_path = defined('XOOPS_COOKIE_PATH') ? XOOPS_COOKIE_PATH : preg_replace( '?http://[^/]+(/.*)$?' , "$1" , XOOPS_URL ) ;

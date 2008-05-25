@@ -17,7 +17,11 @@ define('_AM_PBNAME_DESC',"Name of Block Position, it is with this name that will
 define('_AM_BPMSG1',"Successfully carried through operation!");
 define('_AM_BPMSG2',"Problems had occurred to carry through them the operations.");
 define('_AM_BPMSG3',"Are you sure you wish to deleted this block position ?");
-define('_AM_BPHELP','To include the new block positions on the theme, put the code bellow in the place where it desires that the blocks appear.');
+define('_AM_BPHELP','To include the new block positions on the theme, put the code bellow in the place where it desires that the blocks appear.
+<div style="border: 1px dashed #AABBCC; padding:10px; width:86%;">
+<{foreach from=$xoBlocks.<b>name_of_position</b> item=block}><br /><{include file="<b>path_to_theme_folder/file_to_show_blocks</b>"}><br /><{/foreach}>
+</div>
+');
 
 define("_AM_ADDBLOCK","Add a new block");
 define("_AM_LISTBLOCK","List all blocks");
@@ -61,7 +65,7 @@ define("_AM_SAVECHANGES","Save Changes");
 define("_AM_EDITBLOCK","Edit a block");
 define("_AM_SYSTEMCANT","System blocks cannot be deleted!");
 define("_AM_MODULECANT","This block cannot be deleted directly! If you wish to disable this block, deactivate the module.");
-define("_AM_RUSUREDEL","Are you sure you want to delete block <b>%s</b>?");
+define("_AM_RUSUREDEL","Are you sure you want to delete block '%s'?");
 define("_AM_NAME","Name");
 define("_AM_USEFULTAGS","Useful Tags:");
 define("_AM_BLOCKTAG1","%s will print %s");
@@ -81,4 +85,6 @@ define('_AM_EDITTPL', 'Edit Template');
 define('_AM_MODULE', 'Module');
 define('_AM_GROUP', 'Group');
 define('_AM_UNASSIGNED', 'Unassigned');
+
+define('_AM_CHANGESTS', 'Change the block visibility');
 ?>

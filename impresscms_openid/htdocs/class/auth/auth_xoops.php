@@ -26,9 +26,10 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 /**
+ * Authentification class for Native XOOPS
+ *  
  * @package     kernel
  * @subpackage  auth
- * @description	Authentification class for Native XOOPS
  * @author	    Pierre-Eric MENUET	<pemphp@free.fr>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */

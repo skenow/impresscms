@@ -26,9 +26,10 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 /**
+ * Authentification base class
+ *  
  * @package     kernel
  * @subpackage  auth
- * @description	Authentification base class
  * @author	    Pierre-Eric MENUET	<pemphp@free.fr>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
@@ -84,7 +85,7 @@ class XoopsAuth {
     function getHtmlErrors()
     {
     	global $xoopsConfig;
-        $ret = '<br>';
+        $ret = '<br />';
         if ( $xoopsConfig['debug_mode'] == 1 || $xoopsConfig['debug_mode'] == 2 ) 
         {	       
 	        if (!empty($this->_errors)) {

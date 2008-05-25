@@ -1,29 +1,16 @@
 <?php
-// $Id: viewpmsg.php 506 2006-05-26 23:10:37Z skalpa $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
+/**
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @package		core
+* @since		XOOPS
+* @author		http://www.xoops.org The XOOPS Project
+* @author		modified by stranger <stranger@impresscms.ir>
+* @version		$Id$
+*/
 
 $xoopsOption['pagetype'] = "pmsg";
 include_once "mainfile.php";
@@ -48,18 +35,20 @@ if (!is_object($xoopsUser)) {
             unset($pm);
         }
         redirect_header("viewpmsg.php",1,_PM_DELETED);
+        exit();
     }
-    include XOOPS_ROOT_PATH.'/header.php';
-	$criteria = new Criteria('to_userid', $xoopsUser->getVar('uid'));
+    include ICMS_ROOT_PATH.'/header.php';
+	$criteria = new Criteria('to_userid', intval($xoopsUser->getVar('uid')));
 	$criteria->setOrder('DESC');
 	$pm_arr =& $pm_handler->getObjects($criteria);
-    echo "<h4 style='text-align:center;'>". _PM_PRIVATEMESSAGE ."</h4><br /><a href='userinfo.php?uid=". $xoopsUser->getVar("uid")."'>". _PM_PROFILE ."</a>&nbsp;<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;". _PM_INBOX ."<br /><br /><table border='0' cellspacing='1' cellpadding='4' width='100%' class='outer'>\n";
+    echo "<h4 style='text-align:center;'>". _PM_PRIVATEMESSAGE ."</h4><br /><a href='userinfo.php?uid=". intval($xoopsUser->getVar("uid"))."'>". _PM_PROFILE ."</a>&nbsp;<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;". _PM_INBOX ."<br /><br />";
     echo "<form name='prvmsg' method='post' action='viewpmsg.php'>";
+	echo "<table border='0' cellspacing='1' cellpadding='4' width='100%' class='outer'>\n";
     echo "<tr align='center' valign='middle'><th><input name='allbox' id='allbox' onclick='xoopsCheckAll(\"prvmsg\", \"allbox\");' type='checkbox' value='Check All' /></th><th><img src='images/download.gif' alt='' border='0' /></th><th>&nbsp;</th><th>". _PM_FROM ."</th><th>". _PM_SUBJECT ."</th><th align='center'>". _PM_DATE ."</th></tr>\n";
     $total_messages = count($pm_arr);
     if ( $total_messages == 0 ) {
         echo "<tr><td class='even' colspan='6' align='center'>"._PM_YOUDONTHAVE."</td></tr> ";
-        $display= 0;
+        $display = 0;
     } else {
 
         $display = 1;
@@ -77,21 +66,20 @@ if (!is_object($xoopsUser)) {
         echo "<td valign='middle' width='10%'>";
         // no need to show deleted users
         if ($postername) {
-            echo "<a href='userinfo.php?uid=".$pm_arr[$i]->getVar("from_userid")."'>".$postername."</a>";
+            echo "<a href='userinfo.php?uid=".intval($pm_arr[$i]->getVar("from_userid"))."'>".$postername."</a>";
         } else {
             echo $xoopsConfig['anonymous'];
         }
         echo "</td>\n";
-		echo "<td valign='middle'><a href='readpmsg.php?start=".($total_messages-$i-1),"&amp;total_messages=$total_messages'>".$pm_arr[$i]->getVar("subject")."</a></td>";
+		echo "<td valign='middle'><a href='readpmsg.php?start=".intval(($total_messages-$i-1)),"&amp;total_messages=".intval($total_messages)."'>".$pm_arr[$i]->getVar("subject")."</a></td>";
         echo "<td valign='middle' align='center' width='20%'>".formatTimestamp($pm_arr[$i]->getVar("msg_time"))."</td></tr>";
     }
 
     if ( $display == 1 ) {
-        echo "<tr class='foot' align='left'><td colspan='6' align='left'><input type='button' class='formButton' onclick='javascript:openWithSelfMain(\"".XOOPS_URL."/pmlite.php?send=1\",\"pmlite\",450,380);' value='"._PM_SEND."' />&nbsp;<input type='submit' class='formButton' name='delete_messages' value='"._PM_DELETE."' />".$GLOBALS['xoopsSecurity']->getTokenHTML()."</td></tr></form>";
+        echo "<tr class='foot' align='left'><td colspan='6' align='left'><input type='button' class='formButton' onclick='javascript:openWithSelfMain(\"".ICMS_URL."/pmlite.php?send=1\",\"pmlite\",800,680);' value='"._PM_SEND."' />&nbsp;<input type='submit' class='formButton' name='delete_messages' value='"._PM_DELETE."' />".$GLOBALS['xoopsSecurity']->getTokenHTML()."</td></tr></table></form>";
     } else {
-        echo "<tr class='bg2' align='left'><td colspan='6' align='left'><input type='button' class='formButton' onclick='javascript:openWithSelfMain(\"".XOOPS_URL."/pmlite.php?send=1\",\"pmlite\",450,380);' value='"._PM_SEND."' /></td></tr></form>";
+        echo "<tr class='bg2' align='left'><td colspan='6' align='left'><input type='button' class='formButton' onclick='javascript:openWithSelfMain(\"".ICMS_URL."/pmlite.php?send=1\",\"pmlite\",800,680);' value='"._PM_SEND."' /></td></tr></table></form>";
     }
-    echo "</table>";
     include "footer.php";
 }
 ?>

@@ -1,29 +1,17 @@
 <?php
-// $Id: functions.php 1099 2007-10-19 01:08:14Z dugris $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
+/**
+* Helper functions available in the ImpressCMS process
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @package		core
+* @since		XOOPS
+* @author		http://www.xoops.org The XOOPS Project
+* @author		modified by marcan <marcan@impresscms.org>
+* @version		$Id: functions.php 1683 2008-04-19 13:50:00Z malanciault $
+*/
 
 // ################## Various functions from here ################
 
@@ -44,6 +32,7 @@ function xoops_header($closehead=true)
     <head>
     <meta http-equiv="content-type" content="text/html; charset='._CHARSET.'" />
     <meta http-equiv="content-language" content="'._LANGCODE.'" />
+    '.htmlspecialchars($xoopsConfigMetaFooter['google_meta']).'
     <meta name="robots" content="'.htmlspecialchars($xoopsConfigMetaFooter['meta_robots']).'" />
     <meta name="keywords" content="'.htmlspecialchars($xoopsConfigMetaFooter['meta_keywords']).'" />
     <meta name="description" content="'.htmlspecialchars($xoopsConfigMetaFooter['meta_desc']).'" />
@@ -52,10 +41,10 @@ function xoops_header($closehead=true)
     <meta name="copyright" content="'.htmlspecialchars($xoopsConfigMetaFooter['meta_copyright']).'" />
     <meta name="generator" content="ImpressCMS" />
     <title>'.htmlspecialchars($xoopsConfig['sitename']).'</title>
-    <script type="text/javascript" src="'.XOOPS_URL.'/include/xoops.js"></script>
+    <script type="text/javascript" src="'.ICMS_URL.'/include/xoops.js"></script>
     ';
     $themecss = getcss($xoopsConfig['theme_set']);
-    echo '<link rel="stylesheet" type="text/css" media="all" href="'.XOOPS_URL.'/xoops.css" />';
+    echo '<link rel="stylesheet" type="text/css" media="all" href="'.ICMS_URL.'/xoops.css" />';
     if ($themecss) {
         echo '<link rel="stylesheet" type="text/css" media="all" href="'.$themecss.'" />';
         //echo '<style type="text/css" media="all"><!-- @import url('.$themecss.'); --></style>';
@@ -67,7 +56,8 @@ function xoops_header($closehead=true)
 
 function xoops_footer()
 {
-    echo '</body></html>';
+	global $xoopsConfigMetaFooter;
+   echo ''.htmlspecialchars($xoopsConfigMetaFooter['google_analytics']).'</body></html>';
     ob_end_flush();
 }
 
@@ -205,7 +195,14 @@ function formatTimestamp($time, $format="l", $timeoffset="")
         }
         break;
     }
-    return ucfirst(date($datestring, $usertimestamp));
+//Start addition including extended date function
+	if ( defined('_EXT_DATE_FUNC') && $xoopsConfig['use_ext_date'] == 1 && _EXT_DATE_FUNC && $format != 'mysql' && file_exists(ICMS_ROOT_PATH."/language/".$xoopsConfig['language']."/ext/ext_date_function.php") ){
+         include_once ICMS_ROOT_PATH."/language/".$xoopsConfig['language']."/ext/ext_date_function.php";
+       return ucfirst(ext_date($datestring,$usertimestamp));
+	   } else {
+		return ucfirst(date($datestring,$usertimestamp));
+           }
+// End addition including extended date function
 }
 
 /*
@@ -243,7 +240,7 @@ function OpenWaitBox()
     echo "<div id='waitDiv' style='position:absolute;left:40%;top:50%;visibility:hidden;text-align: center;'>
     <table cellpadding='6' border='2' class='bg2'>
       <tr>
-        <td align='center'><b><big>" ._FETCHING."</big></b><br /><img src='".XOOPS_URL."/images/await.gif' alt='' /><br />" ._PLEASEWAIT."</td>
+        <td align='center'><b><big>" ._FETCHING."</big></b><br /><img src='".ICMS_URL."/images/await.gif' alt='' /><br />" ._PLEASEWAIT."</td>
       </tr>
     </table>
     </div>
@@ -352,7 +349,7 @@ function xoops_getbanner()
         if ($htmlbanner){
             $bannerobject = $htmlcode;
         }else{
-            $bannerobject = '<div><a href="'.XOOPS_URL.'/banners.php?op=click&amp;bid='.$bid.'" target="_blank">';
+            $bannerobject = '<div><a href="'.ICMS_URL.'/banners.php?op=click&amp;bid='.$bid.'" rel="external">';
             if (stristr($imageurl, '.swf')) {
                 $bannerobject = $bannerobject
                     .'<object type="application/x-shockwave-flash" data="'.$imageurl.'" width="468" height="60">'
@@ -372,13 +369,24 @@ function xoops_getbanner()
 /*
 * Function to redirect a user to certain pages
 */
-function redirect_header($url, $time = 3, $message = '', $addredirect = true)
+function redirect_header($url, $time = 3, $message = '', $addredirect = true, $allowExternalLink = false)
 {
-    global $xoopsConfig, $xoopsRequestUri, $xoopsLogger, $xoopsUserIsAdmin;
+    global $xoopsConfig, $xoopsLogger, $xoopsUserIsAdmin;
     if ( preg_match( "/[\\0-\\31]|about:|script:/i", $url) ) {
         if (!preg_match('/^\b(java)?script:([\s]*)history\.go\(-[0-9]*\)([\s]*[;]*[\s]*)$/si', $url) ) {
-            $url = XOOPS_URL;
+            $url = ICMS_URL;
         }
+    }
+    if ( !$allowExternalLink && $pos = strpos( $url, '://' ) ) {
+        $xoopsLocation = substr( ICMS_URL, strpos( ICMS_URL, '://' ) + 3 );
+        if ( substr($url, $pos + 3, strlen($xoopsLocation)) != $xoopsLocation)  {
+			$url = ICMS_URL;
+	     }elseif(substr($url, $pos + 3, strlen($xoopsLocation)+1) == $xoopsLocation.'.') {
+	        $url = ICMS_URL;
+	     }
+       /* if (strcasecmp(substr($url, $pos + 3, strlen($xoopsLocation)), $xoopsLocation)) {
+            $url = ICMS_URL;
+        }*/
     }
     $theme = $xoopsConfig['theme_set'];
     // if the user selected a theme in the theme block, let's use this theme
@@ -386,8 +394,8 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true)
 		$theme = $_SESSION['xoopsUserTheme'];
 	} 
 
-    require_once XOOPS_ROOT_PATH . '/class/template.php';
-    require_once XOOPS_ROOT_PATH . '/class/theme.php';
+    require_once ICMS_ROOT_PATH . '/class/template.php';
+    require_once ICMS_ROOT_PATH . '/class/theme.php';
 
 	$xoopsThemeFactory =& new xos_opal_ThemeFactory();
 	$xoopsThemeFactory->allowedThemes = $xoopsConfig['theme_set_allowed'];
@@ -413,11 +421,11 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true)
     } else {
         $xoopsTpl->assign('time', intval($time));
     }
-    if ($xoopsRequestUri && $addredirect && strstr($url, 'user.php')) {
+    if (!empty($_SERVER['REQUEST_URI']) && $addredirect && strstr($url, 'user.php')) {
         if (!strstr($url, '?')) {
-            $url .= '?xoops_redirect='.urlencode($xoopsRequestUri);
+            $url .= '?xoops_redirect='.urlencode($_SERVER['REQUEST_URI']);
         } else {
-            $url .= '&amp;xoops_redirect='.urlencode($xoopsRequestUri);
+            $url .= '&amp;xoops_redirect='.urlencode($_SERVER['REQUEST_URI']);
         }
     }
     if (defined('SID') && SID && (! isset($_COOKIE[session_name()]) || ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '' && !isset($_COOKIE[$xoopsConfig['session_name']])))) {
@@ -504,9 +512,9 @@ function &getMailer()
 {
     global $xoopsConfig;
     $inst = false;
-    include_once XOOPS_ROOT_PATH."/class/xoopsmailer.php";
-    if ( file_exists(XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/xoopsmailerlocal.php") ) {
-        include_once XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/xoopsmailerlocal.php";
+    include_once ICMS_ROOT_PATH."/class/xoopsmailer.php";
+    if ( file_exists(ICMS_ROOT_PATH."/language/".$xoopsConfig['language']."/xoopsmailerlocal.php") ) {
+        include_once ICMS_ROOT_PATH."/language/".$xoopsConfig['language']."/xoopsmailerlocal.php";
         if ( class_exists("XoopsMailerLocal") ) {
             $inst =& new XoopsMailerLocal();
         }
@@ -522,12 +530,21 @@ function &xoops_gethandler($name, $optional = false )
     static $handlers;
     $name = strtolower(trim($name));
     if (!isset($handlers[$name])) {
-        if ( file_exists( $hnd_file = XOOPS_ROOT_PATH.'/kernel/'.$name.'.php' ) ) {
+        if ( file_exists( $hnd_file = ICMS_ROOT_PATH.'/kernel/'.$name.'.php' ) ) {
             require_once $hnd_file;
+        } else {
+	        if ( file_exists( $hnd_file = ICMS_ROOT_PATH.'/class/'.$name.'.php' ) ) {
+	            require_once $hnd_file;
+	        }
         }
         $class = 'Xoops'.ucfirst($name).'Handler';
         if (class_exists($class)) {
             $handlers[$name] =& new $class($GLOBALS['xoopsDB']);
+        } else {
+	        $class = 'Icms'.ucfirst($name).'Handler';
+	        if (class_exists($class)) {
+	            $handlers[$name] =& new $class($GLOBALS['xoopsDB']);     
+	        }   	
         }
     }
     if (!isset($handlers[$name]) && !$optional ) {
@@ -556,7 +573,13 @@ function &xoops_getmodulehandler($name = null, $module_dir = null, $optional = f
     }
     $name = (!isset($name)) ? $module_dir : trim($name);
     if (!isset($handlers[$module_dir][$name])) {
-        if ( file_exists( $hnd_file = XOOPS_ROOT_PATH . "/modules/{$module_dir}/class/{$name}.php" ) ) {
+    	if ($module_dir != 'system') {
+			$hnd_file = ICMS_ROOT_PATH . "/modules/{$module_dir}/class/{$name}.php";
+		} else {
+			$hnd_file = ICMS_ROOT_PATH . "/modules/{$module_dir}/admin/{$name}/class/{$name}.php";
+		}
+
+        if ( file_exists($hnd_file) ) {
             include_once $hnd_file;
         }
         $class = ucfirst(strtolower($module_dir)).ucfirst($name).'Handler';
@@ -594,7 +617,22 @@ function xoops_getrank($rank_id =0, $posts = 0)
 
 
 /**
-* Returns the portion of string specified by the start and length parameters. If $trimmarker is supplied, it is appended to the return string. This function works fine with multi-byte characters if mb_* functions exist on the server.
+ * Function maintained only for compatibility
+ *
+ * @todo Search all places that this function is called
+ *       and rename it to icms_substr.
+ *       After this function can be removed.
+ *
+ */
+function xoops_substr($str, $start, $length, $trimmarker = '...')
+{
+	return icms_substr($str, $start, $length, $trimmarker);
+}
+
+/**
+* Returns the portion of string specified by the start and length parameters. 
+* If $trimmarker is supplied, it is appended to the return string. 
+* This function works fine with multi-byte characters if mb_* functions exist on the server.
 *
 * @param    string    $str
 * @param    int       $start
@@ -603,32 +641,64 @@ function xoops_getrank($rank_id =0, $posts = 0)
 *
 * @return   string
 */
-function xoops_substr($str, $start, $length, $trimmarker = '...')
+function icms_substr($str, $start, $length, $trimmarker = '...')
 {
-    if ( !XOOPS_USE_MULTIBYTES ) {
-        return ( strlen($str) - $start <= $length ) ? substr( $str, $start, $length ) : substr( $str, $start, $length - strlen($trimmarker) ) . $trimmarker;
-    }
-    if (function_exists('mb_internal_encoding') && @mb_internal_encoding(_CHARSET)) {
-        $str2 = mb_strcut( $str , $start , $length - strlen( $trimmarker ) );
-        return $str2 . ( mb_strlen($str)!=mb_strlen($str2) ? $trimmarker : '' );
-    }
-    // phppp patch
-    $DEP_CHAR=127;
-    $pos_st=0;
-    $action = false;
-    for ( $pos_i = 0; $pos_i < strlen($str); $pos_i++ ) {
-        if ( ord( substr( $str, $pos_i, 1) ) > 127 ) {
-            $pos_i++;
-        }
-        if ($pos_i<=$start) {
-            $pos_st=$pos_i;
-        }
-        if ($pos_i>=$pos_st+$length) {
-            $action = true;
-            break;
-        }
-    }
-    return ($action) ? substr( $str, $pos_st, $pos_i - $pos_st - strlen($trimmarker) ) . $trimmarker : $str;
+	$config_handler =& xoops_gethandler('config');
+	$im_multilanguageConfig =& $config_handler->getConfigsByCat(IM_CONF_MULILANGUAGE);
+    
+	if ($im_multilanguageConfig['ml_enable']) {
+		$tags = explode(',',$im_multilanguageConfig['ml_tags']);
+		$strs = array();
+		$hasML = false;
+		foreach ($tags as $tag){
+			if (preg_match("/\[".$tag."](.*)\[\/".$tag."\]/sU",$str,$matches)){
+				if (count($matches) > 0){
+					$hasML = true;
+					$strs[] = $matches[1];
+				}
+			}
+		}
+	}else{
+		$hasML = false;
+	}
+	
+	if (!$hasML){
+        $strs = array($str);
+	}
+	
+	for ($i = 0; $i <= count($strs)-1; $i++){
+		if ( !XOOPS_USE_MULTIBYTES ) {
+			$strs[$i] = ( strlen($strs[$i]) - $start <= $length ) ? substr( $strs[$i], $start, $length ) : substr( $strs[$i], $start, $length - strlen($trimmarker) ) . $trimmarker;
+		}
+
+		if (function_exists('mb_internal_encoding') && @mb_internal_encoding(_CHARSET)) {
+			$str2 = mb_strcut( $strs[$i] , $start , $length - strlen( $trimmarker ) );
+			$strs[$i] = $str2 . ( mb_strlen($strs[$i])!=mb_strlen($str2) ? $trimmarker : '' );
+		}
+
+		// phppp patch
+		$DEP_CHAR=127;
+		$pos_st=0;
+		$action = false;
+		for ( $pos_i = 0; $pos_i < strlen($strs[$i]); $pos_i++ ) {
+			if ( ord( substr( $strs[$i], $pos_i, 1) ) > 127 ) {
+				$pos_i++;
+			}
+			if ($pos_i<=$start) {
+				$pos_st=$pos_i;
+			}
+			if ($pos_i>=$pos_st+$length) {
+				$action = true;
+				break;
+			}
+		}
+		$strs[$i] = ($action) ? substr( $strs[$i], $pos_st, $pos_i - $pos_st - strlen($trimmarker) ) . $trimmarker : $strs[$i];
+
+		$strs[$i] = ($hasML)?'['.$tags[$i].']'.$strs[$i].'[/'.$tags[$i].']':$strs[$i];
+	}
+	$str = implode('',$strs);
+
+	return $str;
 }
 
 // RMV-NOTIFY
@@ -733,7 +803,7 @@ function xoops_getLinkedUnameFromId($userid)
         $member_handler =& xoops_gethandler('member');
         $user =& $member_handler->getUser($userid);
         if (is_object($user)) {
-            $linkeduser = '<a href="'.XOOPS_URL.'/userinfo.php?uid='.$userid.'">'. $user->getVar('uname').'</a>';
+            $linkeduser = '<a href="'.ICMS_URL.'/userinfo.php?uid='.$userid.'">'. $user->getVar('uname').'</a>';
             return $linkeduser;
         }
     }
@@ -824,6 +894,281 @@ function icms_chmod($target, $mode = 0777) {
 }
 
 /**
+ * Get the XoopsModule object of a specified module
+ *
+ * @param string $moduleName dirname of the module
+ * @return object XoopsModule object of the specified module 
+ */
+function &icms_getModuleInfo($moduleName = false) {
+	static $icmsModules;
+	if (isset ($icmsModules[$moduleName])) {
+		$ret =& $icmsModules[$moduleName];
+		return $ret;
+	}
+	global $xoopsModule;
+	if (!$moduleName) {
+		if (isset ($xoopsModule) && is_object($xoopsModule)) {
+			$icmsModules[$xoopsModule->getVar('dirname')] = & $xoopsModule;
+			return $icmsModules[$xoopsModule->getVar('dirname')];
+		}
+	}
+	if (!isset ($icmsModules[$moduleName])) {
+		if (isset ($xoopsModule) && is_object($xoopsModule) && $xoopsModule->getVar('dirname') == $moduleName) {
+			$icmsModules[$moduleName] = & $xoopsModule;
+		} else {
+			$hModule = & xoops_gethandler('module');
+			if ($moduleName != 'icms') {
+				$icmsModules[$moduleName] = & $hModule->getByDirname($moduleName);
+
+			} else {
+				$icmsModules[$moduleName] = & $hModule->getByDirname('system');
+			}
+		}
+	}
+	return $icmsModules[$moduleName];
+}
+
+/**
+ * Get the config array of a specified module
+ *
+ * @param string $moduleName dirname of the module
+ * @return array of configs
+ */
+function &icms_getModuleConfig($moduleName = false) {
+	static $icmsConfigs;
+		if (isset ($icmsConfigs[$moduleName])) {
+		$ret = & $icmsConfigs[$moduleName];
+		return $ret;
+	}
+	global $xoopsModule, $xoopsModuleConfig;
+	if (!$moduleName) {
+		if (isset ($xoopsModule) && is_object($xoopsModule)) {
+			$icmsConfigs[$xoopsModule->getVar('dirname')] = & $xoopsModuleConfig;
+			return $icmsConfigs[$xoopsModule->getVar('dirname')];
+		}
+	}
+	// if we still did not found the xoopsModule, this is because there is none
+	if (!$moduleName) {
+		$ret = false;
+		return $ret;
+	}
+	if (isset ($xoopsModule) && is_object($xoopsModule) && $xoopsModule->getVar('dirname') == $moduleName) {
+		$icmsConfigs[$moduleName] = & $xoopsModuleConfig;
+	} else {
+		$module = & icms_getModuleInfo($moduleName);
+		if (!is_object($module)) {
+			$ret = false;
+			return $ret;
+		}
+		$hModConfig = & xoops_gethandler('config');
+		$icmsConfigs[$moduleName] = & $hModConfig->getConfigsByCat(0, $module->getVar('mid'));
+	}
+	return $icmsConfigs[$moduleName];
+}
+/**
+ * Get a specific module config value
+ *
+ * @param string $key
+ * @param string $moduleName
+ * @param mixed $default
+ * @return mixed
+ */
+function icms_getConfig($key, $moduleName = false, $default = 'default_is_undefined') {
+	if (!$moduleName) {
+		$moduleName = icms_getCurrentModuleName();
+	}
+	$configs = icms_getModuleConfig($moduleName);
+	if (isset ($configs[$key])) {
+		return $configs[$key];
+	} else {
+		if ($default === 'default_is_undefined') {
+			return null;
+		} else {
+			return $default;
+		}
+	}
+}
+
+ /**
+ * Get the dirname of the current module 
+ *
+ * @return mixed dirname of the current module or false if no module loaded
+ */
+function icms_getCurrentModuleName() {
+	global $xoopsModule;
+	if (is_object($xoopsModule)) {
+		return $xoopsModule->getVar('dirname');
+	} else {
+		return false;
+	}
+}
+/**
+ * Load a module language file
+ * 
+ * If $module = core, file will be loaded from ICMS_ROOT_PATH/language/
+ *
+ * @param string $module dirname of the module
+ * @param string $file name of the file without ".php"
+ * @param bool $admin is this for a core admin side feature ?
+ */
+function icms_loadLanguageFile($module, $file, $admin=false) {
+	global $xoopsConfig;
+	
+	if ($module == 'core') {
+		$languagePath = ICMS_ROOT_PATH . '/language/';
+	} else {
+		$languagePath = ICMS_ROOT_PATH . '/modules/' . $module . '/language/';
+	}
+	
+	$extraPath = $admin ? 'admin/' : '';
+
+	$filename = $languagePath . $xoopsConfig['language'] . '/' . $extraPath . $file . '.php';
+
+	if (!file_exists($filename)) {
+		$filename = $languagePath . 'english/' . $file . '.php';
+	}
+
+	if (file_exists($filename)) {
+		include_once($filename);
+	}
+}
+/**
+ * @author pillepop2003 at yahoo dot de
+ *
+ * Use this snippet to extract any float out of a string. You can choose how a single dot is treated with the (bool) 'single_dot_as_decimal' directive.
+ * This function should be able to cover almost all floats that appear in an european environment.
+ */
+function icms_getfloat($str, $set=FALSE){
+	if(preg_match("/([0-9\.,-]+)/", $str, $match)) {
+		// Found number in $str, so set $str that number
+		$str = $match[0];
+		if(strstr($str, ',')){
+			// A comma exists, that makes it easy, cos we assume it separates the decimal part.
+			$str = str_replace('.', '', $str);    // Erase thousand seps
+			$str = str_replace(',', '.', $str);    // Convert , to . for floatval command
+			return floatval($str);
+		}else{
+			// No comma exists, so we have to decide, how a single dot shall be treated
+			if(preg_match("/^[0-9\-]*[\.]{1}[0-9-]+$/", $str) == TRUE && $set['single_dot_as_decimal'] == TRUE){
+				// Treat single dot as decimal separator
+
+				return floatval($str);
+			} else {//echo "str: ".$str; echo "ret: ".str_replace('.', '', $str); echo "<br/><br/> ";
+				 // Else, treat all dots as thousand seps
+				$str = str_replace('.', '', $str);    // Erase thousand seps
+				return floatval($str);
+			}
+		}
+	}else{
+		// No number found, return zero
+	    return 0;
+	}
+}
+
+function icms_currency($var, $currencyObj=false) {
+	$ret = icms_getfloat($var,  array('single_dot_as_decimal'=> TRUE));
+	$ret = round($ret, 2);
+	// make sur we have at least .00 in the $var
+	$decimal_section_original = strstr($ret, '.');
+	$decimal_section = $decimal_section_original;
+	if ($decimal_section) {
+		if (strlen($decimal_section) == 1) {
+			$decimal_section = '.00';
+	} elseif(strlen($decimal_section) == 2) {
+		$decimal_section = $decimal_section . '0';
+		}
+		$ret = str_replace($decimal_section_original, $decimal_section, $ret);
+	} else {
+		$ret = $ret . '.00';
+	}
+	if ($currencyObj) {
+		$ret = $ret . ' ' . $currencyObj->getCode();
+	}
+   	return $ret;
+}
+
+function icms_float($var) {
+	return icms_currency($var);
+}
+
+function icms_purifyText($text, $keyword = false)
+{
+	global $myts;
+	$text = str_replace('&nbsp;', ' ', $text);
+	$text = str_replace('<br />', ' ', $text);
+	$text = str_replace('<br/>', ' ', $text);
+	$text = str_replace('<br', ' ', $text);
+	$text = strip_tags($text);
+	$text = html_entity_decode($text);
+	$text = $myts->undoHtmlSpecialChars($text);
+	$text = str_replace(')', ' ', $text);
+	$text = str_replace('(', ' ', $text);
+	$text = str_replace(':', ' ', $text);
+	$text = str_replace('&euro', ' euro ', $text);
+	$text = str_replace('&hellip', '...', $text);
+	$text = str_replace('&rsquo', ' ', $text);
+	$text = str_replace('!', ' ', $text);
+	$text = str_replace('?', ' ', $text);
+	$text = str_replace('"', ' ', $text);
+	$text = str_replace('-', ' ', $text);
+	$text = str_replace('\n', ' ', $text);
+	$text = str_replace('&#8213;', ' ', $text);
+
+	if ($keyword){
+		$text = str_replace('.', ' ', $text);
+		$text = str_replace(',', ' ', $text);
+		$text = str_replace('\'', ' ', $text);
+	}
+	$text = str_replace(';', ' ', $text);
+
+	return $text;
+		
+}
+
+
+function icms_html2text($document)
+{
+	// PHP Manual:: function preg_replace
+	// $document should contain an HTML document.
+	// This will remove HTML tags, javascript sections
+	// and white space. It will also convert some
+	// common HTML entities to their text equivalent.
+	// Credits : newbb2
+	$search = array ("'<script[^>]*?>.*?</script>'si",  // Strip out javascript
+	"'<img.*?/>'si",       // Strip out img tags
+	"'<[\/\!]*?[^<>]*?>'si",          // Strip out HTML tags
+	"'([\r\n])[\s]+'",                // Strip out white space
+	"'&(quot|#34);'i",                // Replace HTML entities
+	"'&(amp|#38);'i",
+	"'&(lt|#60);'i",
+	"'&(gt|#62);'i",
+	"'&(nbsp|#160);'i",
+	"'&(iexcl|#161);'i",
+	"'&(cent|#162);'i",
+	"'&(pound|#163);'i",
+	"'&(copy|#169);'i",
+	"'&#(\d+);'e");                    // evaluate as php
+
+	$replace = array ("",
+	"",
+	"",
+	"\\1",
+	"\"",
+	"&",
+	"<",
+	">",
+	" ",
+	chr(161),
+	chr(162),
+	chr(163),
+	chr(169),
+	"chr(\\1)");
+
+	$text = preg_replace($search, $replace, $document);
+	return $text;
+		
+}
+/**
  * php 4 compat for array_combine
  */
 if (!function_exists('array_combine')) {
@@ -834,5 +1179,275 @@ if (!function_exists('array_combine')) {
 	   }
 	   return $out;
 	}
+}
+
+// ----- New Password System
+function icms_createSalt($slength=64)
+{   
+	$salt= '';   
+	$base = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'; 
+	$microtime = function_exists('microtime') ? microtime() : time();   
+    srand((double)$microtime * 1000000);   
+    for ($i=0; $i<=$slength; $i++)   
+		$salt.= substr($base, rand() % strlen($base), 1);   
+    return $salt;   
+}
+
+function icms_getUserSaltFromUname($uname = '')
+{
+	$db =& Database::getInstance();
+
+	if ($uname !== '')
+	{
+	    $sql = $db->query("SELECT uname, salt FROM ".$db->prefix('users')." WHERE uname = '".htmlspecialchars($uname, ENT_QUOTES)."'");
+		list($uname, $salt) = $db->fetchRow($sql);
+	}
+	else
+	{
+		trigger_error('ERROR: No User Selected', E_USER_ERROR);
+	}
+	return $salt;
+}
+
+function icms_encryptPass($pass, $salt)
+{
+	$config_handler =& xoops_gethandler('config');
+	$xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
+	$mainSalt = XOOPS_DB_SALT;
+
+	if (function_exists('hash'))
+	{
+		if ($xoopsConfigUser['enc_type'] == 0)
+		{
+			$pass = hash('md5', md5($pass)); // no salt used for compatibility with external scripts such as ipb/phpbb etc.
+		}
+		elseif ($xoopsConfigUser['enc_type'] == 1)
+		{
+			$pass = hash('sha256', $salt.md5($pass).$mainSalt);
+		}
+		elseif ($xoopsConfigUser['enc_type'] == 2)
+		{
+			$pass = hash('sha384', $salt.md5($pass).$mainSalt);
+		}
+		elseif ($xoopsConfigUser['enc_type'] == 3)
+		{
+			$pass = hash('sha512', $salt.md5($pass).$mainSalt);
+		}
+		elseif ($xoopsConfigUser['enc_type'] == 4)
+		{
+			$pass = hash('ripemd128', $salt.md5($pass).$mainSalt);
+		}
+		elseif ($xoopsConfigUser['enc_type'] == 5)
+		{
+			$pass = hash('ripemd160', $salt.md5($pass).$mainSalt);
+		}
+		elseif ($xoopsConfigUser['enc_type'] == 6)
+		{
+			$pass = hash('whirlpool', $salt.md5($pass).$mainSalt);
+		}
+		elseif ($xoopsConfigUser['enc_type'] == 7)
+		{
+			$pass = hash('haval128,4', $salt.md5($pass).$mainSalt);
+		}
+		elseif ($xoopsConfigUser['enc_type'] == 8)
+		{
+			$pass = hash('haval160,4', $salt.md5($pass).$mainSalt);
+		}
+		elseif ($xoopsConfigUser['enc_type'] == 9)
+		{
+			$pass = hash('haval192,4', $salt.md5($pass).$mainSalt);
+		}
+		elseif ($xoopsConfigUser['enc_type'] == 10)
+		{
+			$pass = hash('haval224,4', $salt.md5($pass).$mainSalt);
+		}
+		elseif ($xoopsConfigUser['enc_type'] == 11)
+		{
+			$pass = hash('haval256,4', $salt.md5($pass).$mainSalt);
+		}
+		elseif ($xoopsConfigUser['enc_type'] == 12)
+		{
+			$pass = hash('haval128,5', $salt.md5($pass).$mainSalt);
+		}
+		elseif ($xoopsConfigUser['enc_type'] == 13)
+		{
+			$pass = hash('haval160,5', $salt.md5($pass).$mainSalt);
+		}
+		elseif ($xoopsConfigUser['enc_type'] == 14)
+		{
+			$pass = hash('haval192,5', $salt.md5($pass).$mainSalt);
+		}
+		elseif ($xoopsConfigUser['enc_type'] == 15)
+		{
+			$pass = hash('haval224,5', $salt.md5($pass).$mainSalt);
+		}
+		elseif ($xoopsConfigUser['enc_type'] == 16)
+		{
+			$pass = hash('haval256,5', $salt.md5($pass).$mainSalt);
+		}
+	}
+	elseif (!function_exists('hash'))
+	{
+		if ($xoopsConfigUser['enc_type'] == 0)
+		{
+			$pass = md5($pass); // no salt used for compatibility with external scripts such as ipb/phpbb etc. no idea why this was requested though, but not recommended to use.
+		}
+		elseif ($xoopsConfigUser['enc_type'] == 1 || $xoopsConfigUser['enc_type'] > 1)
+		{
+			include_once ICMS_ROOT_PATH.'/class/sha256.inc.php';
+			$pass = SHA256::hash($salt.md5($pass).$mainSalt);
+		}
+	}
+
+	unset($mainSalt);
+	return $pass;
+}
+
+// ----- End New Password System
+
+/**
+ * Function to keeps the code clean while removing unwanted attributes and tags.
+ * This function was got from http://www.php.net/manual/en/function.strip-tags.php#81553
+ * 
+ * @var $sSource - string - text to remove the tags
+ * @var $aAllowedTags - array - tags that dont will be striped
+ * @var $aDisabledAttributes - array - attributes not allowed, will be removed from the text
+ * 
+ * return string
+ */
+function icms_cleanTags($sSource, $aAllowedTags = array('<h1>','<b>','<u>','<a>','<ul>','<li>'), $aDisabledAttributes = array('onabort', 'onblue', 'onchange', 'onclick', 'ondblclick', 'onerror', 'onfocus', 'onkeydown', 'onkeyup', 'onload', 'onmousedown', 'onmousemove', 'onmouseover', 'onmouseup', 'onreset', 'onresize', 'onselect', 'onsubmit', 'onunload'))
+{
+	if (empty($aDisabledAttributes)) return strip_tags($sSource, implode('', $aAllowedTags));
+
+	return preg_replace('/<(.*?)>/ie', "'<' . preg_replace(array('/javascript:[^\"\']*/i', '/(" . implode('|', $aDisabledAttributes) . ")[ \\t\\n]*=[ \\t\\n]*[\"\'][^\"\']*[\"\']/i', '/\s+/'), array('', '', ' '), stripslashes('\\1')) . '>'", strip_tags($sSource, implode('', $aAllowedTags)));
+}
+
+/**
+ * Store a cookie
+ *
+ * @param string $name name of the cookie
+ * @param string $value value of the cookie
+ * @param int $time duration of the cookie   
+ */
+function icms_setCookieVar($name, $value, $time = 0) {
+	if ($time == 0) {
+		$time = time() + 3600 * 24 * 365;
+	}
+	setcookie($name, $value, $time, '/');
+}
+
+/**
+ * Get a cookie value
+ *
+ * @param string $name name of the cookie
+ * @param string $default value to return if cookie not found
+ *
+ * @return string value of the cookie or default value   
+ */
+function icms_getCookieVar($name, $default = '') {
+	$name = str_replace('.', '_', $name);
+	if ((isset ($_COOKIE[$name])) && ($_COOKIE[$name] > '')) {
+		return $_COOKIE[$name];
+	} else {
+		return $default;
+	}
+}
+/**
+ * Get URL of the page before the form to be able to redirect their after the form has been posted
+ * 
+ * return string url before form
+ */
+function icms_get_page_before_form() {
+	global $impresscms;
+	
+	return isset ($_POST['icms_page_before_form']) ? $_POST['icms_page_before_form'] : $impresscms->urls['previouspage'];
+}
+
+function icms_sanitizeCustomtags_callback($matches) {
+	global $icms_customtag_handler;
+	if (isset($icms_customtag_handler->objects[$matches[1]])){
+		$customObj = $icms_customtag_handler->objects[$matches[1]];
+		$ret = $customObj->renderWithPhp();
+		return $ret;
+	} else {
+		return '';
+	}
+}
+
+function icms_sanitizeCustomtags($text) {
+	$patterns = array ();
+	$replacements = array ();
+
+	global $icms_customtag_handler;
+		
+	$patterns[] = "/\[customtag](.*)\[\/customtag\]/sU";
+	$text = preg_replace_callback($patterns, 'icms_sanitizeCustomtags_callback', $text);
+	return $text;
+}
+
+/**
+ * Function to create a navigation menu in content pages.
+ * This function was based on the function that do the same in mastop publish module
+ * 
+ * @param integer $id
+ * @param string $separador
+ * @param string $style
+ * @return string
+ */
+function showNav($id = null, $separador = "/", $style="style='font-weight:bold'"){
+	$url = XOOPS_URL."/content.php";
+	if ($id == false) {
+		return false;
+	}else{
+		if ($id > 0) {
+			$content_handler =& xoops_gethandler('content');
+			$cont = $content_handler->get($id);
+			if ($cont->getVar('content_id') > 0) {
+				$seo = $content_handler->makeLink($cont);
+				$ret = "<a href='".$url."?page=".$seo."'>".$cont->getVar('content_title')."</a>";
+				if ($cont->getVar('content_supid') == 0) {
+					return "<a href='".XOOPS_URL."'>"._CT_NAV."</a> $separador ".$ret;
+				}elseif ($cont->getVar('content_supid') > 0){
+					$ret = showNav($cont->getVar('content_supid'), $separador)." $separador ". $ret;
+				}
+			}
+		}else{
+			return false;
+		}
+	}
+	return $ret;
+}
+
+function StopXSS($text){
+	if (!is_array($text)){
+		$text = preg_replace("/\(\)/si", "", $text);
+		$text = strip_tags($text);
+		$text = str_replace(array("'","\"",">","<","\\"), "", $text);
+	}else{
+		foreach ($text as $k=>$t){
+			$t = preg_replace("/\(\)/si", "", $t);
+			$t = strip_tags($t);
+			$t = str_replace(array("'","\"",">","<","\\"), "", $t);
+			$text[$k] = $t;
+		}
+	}
+	return $text;
+}
+
+function sanitizeContentCss($text){
+	if (preg_match_all('/(.*?)\{(.*?)\}/ie',$text,$css)){
+		$css = $css[0];
+		$perm = $not_perm = array();
+		foreach ($css as $k=>$v){
+			if (!preg_match('/^\#impress_content(.*?)/ie',$v)){
+				$css[$k] = '#impress_content '.icms_cleanTags(trim($v),array())."\r\n";
+			}else{
+				$css[$k] = icms_cleanTags(trim($v),array())."\r\n";
+			}
+		}
+		$text = implode($css);
+	}
+
+	return $text;
 }
 ?>

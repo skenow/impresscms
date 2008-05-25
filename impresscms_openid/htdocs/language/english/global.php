@@ -90,6 +90,8 @@ define('_ALL', 'All');
 define('_TITLE', 'Title');
 define('_OPTIONS', 'Options');
 define('_QUOTE', 'Quote');
+define('_HIDDENC', 'Hidden Content:');
+define('_HIDDENTEXT', 'This content is hidden for anonymous users, please <a href="'.ICMS_URL.'/register.php" title="Registeration at ' . htmlspecialchars ( $xoopsConfig ['sitename'], ENT_QUOTES ) . '">register</a> to be able to see it.');
 define('_LIST', 'List');
 define('_LOGIN','User Login');
 define('_USERNAME','Username: ');
@@ -120,6 +122,7 @@ define('_FAILFETCHIMG', 'Could not get uploaded file %s');
 define('_FAILSAVEIMG', 'Failed storing image %s into the database');
 define('_NOCACHE', 'No Cache');
 define('_CLONE', 'Clone');
+define('_INVISIBLE', 'Invisible');
 
 //%%%%%	File Name class/xoopsform/formmatchoption.php 	%%%%%
 define("_STARTSWITH", "Starts with");
@@ -144,6 +147,7 @@ define("_ERRORIMGPOS","ERROR! Enter the position of the image.");
 define("_ENTEREMAIL","Enter the email address you want to add.");
 define("_ENTERCODE","Enter the codes that you want to add.");
 define("_ENTERQUOTE","Enter the text that you want to be quoted.");
+define("_ENTERHIDDEN","Enter the text that you want to be hidden for anonymous users.");
 define("_ENTERTEXTBOX","Please input text into the textbox.");
 define("_ALLOWEDCHAR","Allowed max chars length: ");
 define("_CURRCHAR","Current chars length: ");
@@ -197,11 +201,15 @@ Z - timezone offset in seconds (i.e. "-43200" to "43200")
 
 
 //%%%%%		LANGUAGE SPECIFIC SETTINGS   %%%%%
-define('_CHARSET', 'ISO-8859-1');
+define('_CHARSET', 'utf-8');
 define('_LANGCODE', 'en');
 
 // change 0 to 1 if this language is a multi-bytes language
 define("XOOPS_USE_MULTIBYTES", "0");
+// change 0 to 1 if this language is a RTL (right to left) language
+define("_ADM_USE_RTL","0");
+// change 0 to 1 if this language has an extended date function
+define("_EXT_DATE_FUNC","0");
 
 define('_MODULES','Modules');
 define('_IMPRESSCMS_PREFS','Preferences');
@@ -214,6 +222,21 @@ define('_IMPRESSCMS_ADDONS','Addons');
 define('_IMPRESSCMS_WIKI','Wiki');
 define('_IMPRESSCMS_BLOG','Blog');
 define('_IMPRESSCMS_DONATE','Donate!');
+define("_IMPRESSCMS_Support","Support the project !");
 define('_IMPRESSCMS_SOURCEFORGE','SourceForge Project');
 define('_RECREATE_ADMINMENU_FILE', 'This is your first time to enter the administration section. Press the button below to proceed.');
+define('_IMPRESSCMS_ADMIN','Administration of');
+/** The default separator used in XoopsTree::getNicePathFromId */
+define('_BRDDRMB_SEP','&nbsp;:&nbsp;');
+//Content Manager
+define('_CT_NAV','Home');
+define('_CT_RELATEDS','Related pages');
+//Security image (captcha)
+define("_SECURITYIMAGE_CODE","Security code");
+define("_SECURITYIMAGE_GETCODE","Enter the security code");
+/*
+define("_SECURITYIMAGE_ERROR","Invalid security code");
+define("_SECURITYIMAGE_GDERROR","<b><font color='#CC0000'>Library GD not installed</font> : <a target='php' href='http://fr2.php.net/manual/fr/ref.image.php'>Manual PHP</a></b><br>");
+define("_SECURITYIMAGE_FONTERROR","<b><font color='#CC0000'>No true type fonts found</font>, verify your installation</b><br>");
+*/
 ?>

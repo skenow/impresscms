@@ -47,6 +47,8 @@ define( "CONFIGURATION_CHECK", "Configuration check" );
 define( "CONFIGURATION_CHECK_TITLE", "Checking your server configuration" );
 define( "PATHS_SETTINGS", "Paths settings" );
 define( "PATHS_SETTINGS_TITLE", "Paths settings" );
+define( "DATABASE_CONNECTION", "Database connection" );
+define( "DATABASE_CONNECTION_TITLE", "Database connection" );
 define( "DATABASE_CONFIG", "Database configuration" );
 define( "DATABASE_CONFIG_TITLE", "Database configuration" );
 define( "CONFIG_SAVE", "Configuration save" );
@@ -81,16 +83,24 @@ define( "DB_PASS_LABEL", "Password" );	// L52
 define( "DB_PASS_HELP",  "Password of your database user account"); // L68
 define( "DB_NAME_LABEL", "Database name" );	// L29
 define( "DB_NAME_HELP",  "The name of database on the host. The installer will attempt to create a database if one does not exist"); // L64
+define( "DB_CHARSET_LABEL", "Database character set, we STRONGLY recommend you to use UTF-8 as default." );
+define( "DB_CHARSET_HELP",  "MySQL includes character set support that enables you to store data using a variety of character sets and perform comparisons according to a variety of collations.");
+define( "DB_COLLATION_LABEL", "Database collation" );
+define( "DB_COLLATION_HELP",  "A collation is a set of rules for comparing characters in a character set.");
 define( "DB_PREFIX_LABEL", "Table prefix" );	// L30
 define( "DB_PREFIX_HELP",  "This prefix will be added to all new tables created to avoid name conflicts in the database. If you are unsure, just keep the default"); // L63
 define( "DB_PCONNECT_LABEL", "Use persistent connection" );	// L54
 define( "DB_PCONNECT_HELP",  "Default is 'NO'. Choose 'NO' if you are unsure"); // L69
+
+define( "DB_SALT_LABEL", "Password Salt Key" );	// L98
+define( "DB_SALT_HELP",  "This salt key will be appended to passwords in function icms_encryptPass(), and is used to create a totally unique secure password. Do Not change this key once your site is live, doing so will render ALL passwords invalid. If you are unsure, just keep the default"); // L97
 
 define( "LEGEND_ADMIN_ACCOUNT", "Administrator account" );
 define( "ADMIN_LOGIN_LABEL", "Admin login" ); // L37
 define( "ADMIN_EMAIL_LABEL", "Admin e-mail" ); // L38
 define( "ADMIN_PASS_LABEL", "Admin password" ); // L39
 define( "ADMIN_CONFIRMPASS_LABEL", "Confirm password" ); // L74
+define( "ADMIN_SALT_LABEL", "Password Salt Key" ); // L99
 
 // Buttons
 define( "BUTTON_PREVIOUS", "Previous" ); // L42
@@ -142,6 +152,9 @@ define( "ERR_READ_MAINFILE", "Could not open mainfile.php for reading" );
 
 define( "ERR_WRITE_SDATA", "Could not write into sdata.php. Please check the file permission and try again.");
 define( "ERR_READ_SDATA", "Could not open sdata.php for reading" );
+define( "ERR_INVALID_DBCHARSET", "The charset '%s' is not supported." );
+define( "ERR_INVALID_DBCOLLATION", "The collation '%s' is not supported." );
+define( "ERR_CHARSET_NOT_SET", "Default character set is not set for ImpressCMS database." );
 
 
 //
@@ -173,7 +186,7 @@ define("_INSTALL_TRUST_PATH_FOUND", "Trust path found.");
 define("_INSTALL_ERR_NO_TRUST_PATH_FOUND", "Trust path was not found.");
 
 define("_INSTALL_COULD_NOT_INSERT", "The wizard was unable to install module %s the database.");
-define("_INSTALL_CHARSET","ISO-8859-1");
+define("_INSTALL_CHARSET","utf-8");
 
 define("_INSTALL_PHYSICAL_PATH","Physical path");
 
@@ -185,4 +198,19 @@ define("TRUST_PATH_SUCCESSFULLY_CREATED", "The trust path was successfully creat
 // welcome custom blocks
 define("WELCOME_WEBMASTER","Welcome Webmaster !");
 define("WELCOME_ANONYMOUS","Welcome to an ImpressCMS powered website !");
+define("_MD_AM_MULTLOGINMSG_TXT",'It was not possible to login on the site!! <br />
+        <p align="left" style="color:red;">
+        Possible causes:<br />
+         - You are already logged in on the site.<br />
+         - Someone else logged in on the site using your username and password.<br />
+         - You left the site or close the browser window without clicking the logout button.<br />
+        </p>
+        Wait a few minutes and try again later. If the problems still persists contact the site administrator.');
+define("_MD_AM_RSSLOCALLINK_DESC",'http://www.impresscms.org/modules/smartsection/backend.php'); //Link to the rrs of local support site
+define("_INSTALL_LOCAL_SITE",'http://www.impresscms.org/'); //Link to local support site
+define("_LOCAOL_STNAME",'ImpressCMS'); //Link to local support site
+define("_LOCAL_SLOCGAN",'Make a lasting impression'); //Link to local support site
+define("_LOCAL_FOOTER",'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"http://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a>'); //footer Link to local support site
+define("_LOCAL_SENSORTXT",'#OOPS#'); //Add local translation
+define("_ADM_USE_RTL","0"); // turn this to 1 if your language is right to left
 ?>

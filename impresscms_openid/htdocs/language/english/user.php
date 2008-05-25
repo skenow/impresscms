@@ -22,8 +22,6 @@ define('_US_REMOVEINFO','This will remove all your info from our database.');
 define('_US_BEENDELED','Your account has been deleted.');
 define('_US_REMEMBERME', 'Remember me');
 
-//
-
 //%%%%%%		File Name register.php 		%%%%%
 define('_US_USERREG','User Registration');
 define('_US_NICKNAME','Username');
@@ -144,11 +142,19 @@ define('_US_SELFILE','Select file');
 define('_US_OLDDELETED','Your old avatar will be deleted!');
 define('_US_CHOOSEAVT', 'Choose avatar from the available list');
 define('_US_SELECT_THEME', 'Default Theme');
+define('_US_SELECT_LANG', 'Default Language');
 
 define('_US_PRESSLOGIN', 'Press the button below to login');
 
 define('_US_ADMINNO', 'User in the webmasters group cannot be removed');
 define('_US_GROUPS', 'User\'s Groups');
+
+define('_US_YOURREGISTRATION', 'Your registration at %s');
+define('_US_WELCOMEMSGFAILED', 'Error while sending the welcome email.');
+define('_US_NEWUSERNOTIFYADMINFAIL', 'Notification to admin about new user registration failed.');
+define('_US_REGFORM_NOJAVASCRIPT', 'To log in at the site it\'s necessary that your browser has javascript enabled.');
+define('_US_REGFORM_WARNING', 'To register at the site you need to use a secure password. Try to create your password by using a mixture of letters (upper and lowercase), numbers and symbols. Try to create a password the more complex as possible although you can remember it.');
+define('_US_CHANGE_PASSWORD', 'Change Password?');
 
 // openid
 define('_US_OPENID_NOPERM', 'No permission.');
@@ -170,4 +176,8 @@ define('_US_OPENID_NEW_USER_AUTH_NOT_ACTIVATED', 'The newly created user has not
 define('_US_OPENID_NEW_USER_CREATED', 'A new user was created with the username %s. Automatically logging you in...');
 define('_US_OPENID_LINKED_DONE', 'Your OpenID has been linked with the user %S. Logging you in...');
 
+/*
+define('_US_AUTORESIZE_ATV', 'Automatic resizing enabled');
+define('_US_AUTORESIZE_ATV_DESC', 'Images larger than %u x %u will be automatically resized, keeping the aspect ratio, so that it is within the maximum pixels set. The function accepts images JPG, PNG and GIF (including animated gif), but yet does not function satisfactorily for animated gifs with transparent background.');
+*/
 ?>

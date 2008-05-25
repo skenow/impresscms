@@ -39,22 +39,25 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
 function displayGroups()
 {
     xoops_cp_header();
-    //OpenTable();
+    global $xoopsUser;
     echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/groups/images/groups_big.png)">'._AM_EDITADG.'</div><br />';
-    //echo "<h4 style='text-align:left'>"._AM_EDITADG."</h4>";
     $member_handler =& xoops_gethandler('member');
     $groups =& $member_handler->getGroups();
         echo "<table class='outer' width='40%' cellpadding='4' cellspacing='1'><tr><th colspan='2'>"._AM_EDITADG."</th></tr>";
     $count = count($groups);
+    $gperm_handler =& xoops_gethandler('groupperm');
+    $ugroups  = (is_object($xoopsUser)) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
     for ($i = 0; $i < $count; $i++) {
-        $id = $groups[$i]->getVar('groupid');
-                echo '<tr><td class="head">'.$groups[$i]->getVar('name').'</td>';
-        echo '<td class="even"><a href="admin.php?fct=groups&amp;op=modify&amp;g_id='.$id.'">'._AM_MODIFY.'</a>';
-        if (XOOPS_GROUP_ADMIN == $id || XOOPS_GROUP_USERS == $id || XOOPS_GROUP_ANONYMOUS == $id) {
-            echo '</td></tr>';
-        } else {
-            echo '&nbsp;<a href="admin.php?fct=groups&amp;op=del&amp;g_id='.$id.'">'._AM_DELETE.'</a></td></tr>';
-        }
+    	$id = $groups[$i]->getVar('groupid');
+    	if($gperm_handler->checkRight('group_manager', $id, $ugroups)){
+	        echo '<tr><td class="head">'.$groups[$i]->getVar('name').'</td>';
+	        echo '<td class="even"><a href="admin.php?fct=groups&amp;op=modify&amp;g_id='.$id.'">'._AM_MODIFY.'</a>';
+	        if (XOOPS_GROUP_ADMIN == $id || XOOPS_GROUP_USERS == $id || XOOPS_GROUP_ANONYMOUS == $id) {
+	            echo '</td></tr>';
+	        } else {
+	            echo '&nbsp;<a href="admin.php?fct=groups&amp;op=del&amp;g_id='.$id.'">'._AM_DELETE.'</a></td></tr>';
+	        }
+    	}
     }
     echo "</table><br />";
     $name_value = "";
@@ -62,6 +65,9 @@ function displayGroups()
     $s_cat_value = '';
     $a_mod_value = array();
     $r_mod_value = array();
+	$ed_mod_value = array();
+	$group_manager_value = array();
+    $debug_mod_value = array();
     $r_block_value = array();
     $op_value = "add";
     $submit_value = _AM_CREATENEWADG;
@@ -87,9 +93,7 @@ function modifyGroup($g_id)
         $memstart = intval($_GET['memstart']);
     }
     xoops_cp_header();
-    //OpenTable();
     echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/groups/images/groups_big.png)"><a href="admin.php?fct=groups">'. _AM_GROUPSMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'. _AM_MODIFYADG.'</div><br />';
-    //echo '<a href="admin.php?fct=groups">'. _AM_GROUPSMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'. _AM_MODIFYADG.'<br /><br />';
     $member_handler =& xoops_gethandler('member');
     $thisgroup =& $member_handler->getGroup($g_id);
     $name_value = $thisgroup->getVar("name", "E");
@@ -97,7 +101,9 @@ function modifyGroup($g_id)
     $moduleperm_handler =& xoops_gethandler('groupperm');
     $a_mod_value =& $moduleperm_handler->getItemIds('module_admin', $thisgroup->getVar('groupid'));
     $r_mod_value =& $moduleperm_handler->getItemIds('module_read', $thisgroup->getVar('groupid'));
-
+	$ed_mod_value =& $moduleperm_handler->getItemIds('use_wysiwygeditor', $thisgroup->getVar('groupid'));
+	$debug_mod_value =& $moduleperm_handler->getItemIds('enable_debug', $thisgroup->getVar('groupid'));
+	$group_manager_value =& $moduleperm_handler->getItemIds('group_manager', $thisgroup->getVar('groupid'));
     $gperm_handler =& xoops_gethandler('groupperm');
     $r_block_value =& $gperm_handler->getItemIds('block_read', $g_id);
     $op_value = "update";

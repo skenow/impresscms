@@ -1,29 +1,16 @@
 <?php
-// $Id: search.php 506 2006-05-26 23:10:37Z skalpa $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
+/**
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @package		core
+* @since		XOOPS
+* @author		http://www.xoops.org The XOOPS Project
+* @author		modified by stranger <stranger@impresscms.ir>
+* @version		$Id$
+*/
 
 $xoopsOption['pagetype'] = "search";
 
@@ -32,7 +19,7 @@ $config_handler =& xoops_gethandler('config');
 $xoopsConfigSearch =& $config_handler->getConfigsByCat(XOOPS_CONF_SEARCH);
 
 if ($xoopsConfigSearch['enable_search'] != 1) {
-    header('Location: '.XOOPS_URL.'/index.php');
+    header('Location: '.ICMS_URL.'/index.php');
     exit();
 }
 $action = "search";
@@ -75,14 +62,17 @@ $queries = array();
 if ($action == "results") {
     if ($query == "") {
          redirect_header("search.php",1,_SR_PLZENTER);
+        exit();
     }
 } elseif ($action == "showall") {
     if ($query == "" || empty($mid)) {
         redirect_header("search.php",1,_SR_PLZENTER);
+        exit();
     }
 } elseif ($action == "showallbyuser") {
     if (empty($mid) || empty($uid)) {
         redirect_header("search.php",1,_SR_PLZENTER);
+        exit();
     }
 }
 
@@ -91,11 +81,11 @@ $gperm_handler = & xoops_gethandler( 'groupperm' );
 $available_modules = $gperm_handler->getItemIds('module_read', $groups);
 
 if ($action == 'search') {
-    include XOOPS_ROOT_PATH.'/header.php';
+    include ICMS_ROOT_PATH.'/header.php';
     include 'include/searchform.php';
     $search_form->display();
     $xoopsTpl->assign('xoops_pagetitle', _SEARCH);
-    include XOOPS_ROOT_PATH.'/footer.php';
+    include ICMS_ROOT_PATH.'/footer.php';
     exit();
 }
 
@@ -106,8 +96,36 @@ if ( $andor != "OR" && $andor != "exact" && $andor != "AND" ) {
 $myts =& MyTextSanitizer::getInstance();
 if ($action != 'showallbyuser') {
     if ( $andor != "exact" ) {
-        $ignored_queries = array(); // holds kewords that are shorter than allowed minmum length
-        $temp_queries = preg_split('/[\s,]+/', $query);
+        $ignored_queries = array(); // holds kewords that are shorter than allowed minmum length  
+        
+        preg_match_all('/(?:").*?(?:")|(?:\').*?(?:\')/', $query,$compostas);
+        $res = $simpl = array();
+        foreach ($compostas[0] as $comp){
+        	$res[] = substr($comp,1,strlen($comp)-3);
+        }
+        $compostas = $res;
+        
+        $simples = preg_replace('/(?:").*?(?:")|(?:\').*?(?:\')/', '', $query);
+        $simples = preg_split('/[\s,]+/', $simples);
+        if (count($simples) > 0){
+        	foreach ($simples as $k=>$v){
+        		if ($v != "\\"){
+        			$simpl[] = $v;
+        		}
+        	}
+        	$simples = $simpl;
+        }        
+
+        if (count($compostas) > 0 && count($simples) > 0){
+          $temp_queries = array_merge($simples,$compostas);
+        }elseif (count($compostas) <= 0 && count($simples) > 0){
+        	$temp_queries = $simples;
+        }elseif (count($compostas) > 0 && count($simples) <= 0){
+        	$temp_queries = $compostas;
+        }else{
+        	$temp_queries = array();
+        }
+        
         foreach ($temp_queries as $q) {
             $q = trim($q);
             if (strlen($q) >= $xoopsConfigSearch['keyword_min']) {
@@ -118,11 +136,13 @@ if ($action != 'showallbyuser') {
         }
         if (count($queries) == 0) {
             redirect_header('search.php', 2, sprintf(_SR_KEYTOOSHORT, $xoopsConfigSearch['keyword_min']));
+            exit();
         }
     } else {
         $query = trim($query);
         if (strlen($query) < $xoopsConfigSearch['keyword_min']) {
             redirect_header('search.php', 2, sprintf(_SR_KEYTOOSHORT, $xoopsConfigSearch['keyword_min']));
+            exit();
         }
         $queries = array($myts->addSlashes($query));
     }
@@ -139,7 +159,7 @@ switch ($action) {
         unset($mids);
         $mids = array_keys($modules);
     }
-    include XOOPS_ROOT_PATH."/header.php";
+    include ICMS_ROOT_PATH."/header.php";
     echo "<h3>"._SR_SEARCHRESULTS."</h3>\n";
     echo _SR_KEYWORDS.':';
     if ($andor != 'exact') {
@@ -161,33 +181,39 @@ switch ($action) {
         $mid = intval($mid);
         if ( in_array($mid, $available_modules) ) {
             $module =& $modules[$mid];
-            $results =& $module->search($queries, $andor, 5, 0);
-            echo "<h4>".$myts->makeTboxData4Show($module->getVar('name'))."</h4>";
-            $count = count($results);
-            if (!is_array($results) || $count == 0) {
-                echo "<p>"._SR_NOMATCH."</p>";
+            $results =& $module->search($queries, $andor, intval($xoopsConfigSearch['search_per_page']), 0);
+           $count = count($results);
+            if (!is_array($results) || $count == 0 ) {
+                 if( $xoopsConfigSearch['search_no_res_mod']){
+               		 echo "<h4>".$myts->makeTboxData4Show($module->getVar('name'))."</h4>";
+                     echo "<p>"._SR_NOMATCH."</p>";
+           		}
             } else {
+               	echo "<h4>".$myts->makeTboxData4Show($module->getVar('name'))."</h4>";
                 for ($i = 0; $i < $count; $i++) {
                     if (isset($results[$i]['image']) && $results[$i]['image'] != "") {
-                        echo "<img src='modules/".$module->getVar('dirname')."/".$results[$i]['image']."' alt='".$myts->makeTboxData4Show($module->getVar('name'))."' />&nbsp;";
+                        echo "<img style='vertical-align:middle;' src='modules/".$module->getVar('dirname')."/".$results[$i]['image']."' alt='".$myts->makeTboxData4Show($module->getVar('name'))."' />&nbsp;";
                     } else {
-                        echo "<img src='images/icons/posticon2.gif' alt='".$myts->makeTboxData4Show($module->getVar('name'))."' width='26' height='26' />&nbsp;";
+                        echo "<img style='vertical-align:middle;' src='images/icons/posticon2.gif' alt='".$myts->makeTboxData4Show($module->getVar('name'))."' width='26' height='26' />&nbsp;";
                     }
                     if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
                         $results[$i]['link'] = "modules/".$module->getVar('dirname')."/".$results[$i]['link'];
                     }
                     echo "<b><a href='".$results[$i]['link']."'>".$myts->makeTboxData4Show($results[$i]['title'])."</a></b><br />\n";
-                    echo "<small>";
-                    $results[$i]['uid'] = @intval($results[$i]['uid']);
-                    if ( !empty($results[$i]['uid']) ) {
-                        $uname = XoopsUser::getUnameFromId($results[$i]['uid']);
-                        echo "&nbsp;&nbsp;<a href='".XOOPS_URL."/userinfo.php?uid=".$results[$i]['uid']."'>".$uname."</a>\n";
-                    }
-                    echo !empty($results[$i]['time']) ? " (". formatTimestamp(intval($results[$i]['time'])).")" : "";
-                    echo "</small><br />\n";
+	                if( $xoopsConfigSearch['search_user_date']){
+	                    echo "<small>";
+	                    $results[$i]['uid'] = @intval($results[$i]['uid']);
+	                    if ( !empty($results[$i]['uid']) ) {
+	                        $uname = XoopsUser::getUnameFromId($results[$i]['uid']);
+	                        echo "&nbsp;&nbsp;<a href='".ICMS_URL."/userinfo.php?uid=".$results[$i]['uid']."'>".$uname."</a>\n";
+	                    }
+	                    echo !empty($results[$i]['time']) ? " (". formatTimestamp(intval($results[$i]['time'])).")" : "";
+	                    echo "</small>";
+	                }
+	                 echo "<br />\n";
                 }
-                if ( $count >= 5 ) {
-                    $search_url = XOOPS_URL.'/search.php?query='.urlencode(stripslashes(implode(' ', $queries)));
+                if ( $count >= intval($xoopsConfigSearch['search_per_page']) ) {
+                    $search_url = ICMS_URL.'/search.php?query='.urlencode(stripslashes(implode(' ', $queries)));
                     $search_url .= "&mid=$mid&action=showall&andor=$andor";
                     echo '<br /><a href="'.htmlspecialchars($search_url).'">'._SR_SHOWALLR.'</a></p>';
                 }
@@ -198,11 +224,11 @@ switch ($action) {
     }
     include "include/searchform.php";
     $search_form->display();
-    $xoopsTpl->assign('xoops_pagetitle', _SR_SEARCHRESULTS); 
+    $xoopsTpl->assign('xoops_pagetitle', _SR_SEARCHRESULTS);
     break;
     case "showall":
     case 'showallbyuser':
-    include XOOPS_ROOT_PATH."/header.php";
+    include ICMS_ROOT_PATH."/header.php";
     $module_handler =& xoops_gethandler('module');
     $module =& $module_handler->get($mid);
     $results =& $module->search($queries, $andor, 20, $start, $uid);
@@ -233,28 +259,31 @@ switch ($action) {
         echo "<h5>".$myts->makeTboxData4Show($module->getVar('name'))."</h5>";
         for ($i = 0; $i < $count; $i++) {
             if (isset($results[$i]['image']) && $results[$i]['image'] != '') {
-                echo "<img src='modules/".$module->getVar('dirname')."/".$results[$i]['image']."' alt='".$myts->makeTboxData4Show($module->getVar('name'))."' />&nbsp;";
+                echo "<img style='vertical-align:middle;' src='modules/".$module->getVar('dirname')."/".$results[$i]['image']."' alt='".$myts->makeTboxData4Show($module->getVar('name'))."' />&nbsp;";
             } else {
-                echo "<img src='images/icons/posticon2.gif' alt='".$myts->makeTboxData4Show($module->name())."' width='26' height='26' />&nbsp;";
+                echo "<img style='vertical-align:middle;' src='images/icons/posticon2.gif' alt='".$myts->makeTboxData4Show($module->name())."' width='26' height='26' />&nbsp;";
             }
             if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
                 $results[$i]['link'] = "modules/".$module->getVar('dirname')."/".$results[$i]['link'];
             }
             echo "<b><a href='".$results[$i]['link']."'>".$myts->makeTboxData4Show($results[$i]['title'])."</a></b><br />\n";
-            echo "<small>";
-            $results[$i]['uid'] = @intval($results[$i]['uid']);
-            if ( !empty($results[$i]['uid']) ) {
-                $uname = XoopsUser::getUnameFromId($results[$i]['uid']);
-                echo "&nbsp;&nbsp;<a href='".XOOPS_URL."/userinfo.php?uid=".$results[$i]['uid']."'>".$uname."</a>\n";
-            }
-            echo !empty($results[$i]['time']) ? " (". formatTimestamp(intval($results[$i]['time'])).")" : "";
-            echo "</small><br />\n";
+	        if( $xoopsConfigSearch['search_user_date']){
+	            echo "<small>";
+	            $results[$i]['uid'] = @intval($results[$i]['uid']);
+	            if ( !empty($results[$i]['uid']) ) {
+	                $uname = XoopsUser::getUnameFromId($results[$i]['uid']);
+	                echo "&nbsp;&nbsp;<a href='".ICMS_URL."/userinfo.php?uid=".$results[$i]['uid']."'>".$uname."</a>\n";
+	            }
+	            echo !empty($results[$i]['time']) ? " (". formatTimestamp(intval($results[$i]['time'])).")" : "";
+	            echo "</small>";
+	        }
+	        echo "<br />\n";
         }
         echo '
         <table>
           <tr>
         ';
-        $search_url = XOOPS_URL.'/search.php?query='.urlencode(stripslashes(implode(' ', $queries)));
+        $search_url = ICMS_URL.'/search.php?query='.urlencode(stripslashes(implode(' ', $queries)));
         $search_url .= "&mid=$mid&action=$action&andor=$andor";
         if ($action=='showallbyuser') {
             $search_url .= "&uid=$uid";
@@ -289,5 +318,5 @@ switch ($action) {
     ';
     break;
 }
-include XOOPS_ROOT_PATH."/footer.php";
+include ICMS_ROOT_PATH."/footer.php";
 ?>

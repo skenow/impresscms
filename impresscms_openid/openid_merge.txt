@@ -1,0 +1,1581 @@
+1.1 branch merge over OpenID branch, from rev 1367 to 2411
+==================================================
+
+Added: C:\INBOX\Dev\inbox2\icms_openid\XOOPS_copyrights.txt  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\error.php  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\pmlite.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\kernel\icmsmoduleabout.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\kernel\icmspersistablecontroller.php  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\kernel\member.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\kernel\content.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\kernel\configitem.php  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\kernel\module.php  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\kernel\block.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\kernel\icmskernel.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\kernel\icmsmetagen.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\kernel\icmspreloadhandler.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\kernel\icmspersistabletable.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\kernel\icmspersistablepermission.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\kernel\page.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\kernel\icmspersistableobjecthandler.php  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\kernel\user.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\kernel\icmspersistableobject.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\kernel\image.php  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\userinfo.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\xoops_rtl.css  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\language\english\error.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\language\english\databaseupdater.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\language\english\global.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\language\english\auth.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\language\english\theme.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\language\english\captcha.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\language\english\content.php  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\language\english\user.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\language\english\moduleabout.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\language\english\admin.php  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\footer.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme\rtl  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme\rtl\content.css  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme\rtl\blocks.css  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme\rtl\layout.css  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme\rtl\style.css  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme\shot.gif  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme\theme.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme\theme_rtl.html  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme\modules\system\system_redirect.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme\img\logo_rtl.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme\img\poweredby_rtl.gif  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\shot.gif  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\centerblocks.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\theme_rtl.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\scripts  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\scripts\dw_cookies.js  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\scripts\styleswitcher.js  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\scripts\dw_sizerdx.js  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\green.css  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\style.css  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\pink.css  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\corp.css  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\rtl  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\rtl\content.css  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\rtl\blocks.css  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\rtl\layout.css  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\rtl\green.css  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\rtl\style.css  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\rtl\pink.css  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\rtl\sunset.css  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\rtl\corp.css  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\content.css  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\layout.css  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\blocks.css  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\theme.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\modules  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\modules\system  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\modules\system\system_siteclosed.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\modules\system\system_redirect.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\sunset.css  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\index.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\icons  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\icons\index.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\icons\icon.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\icons\favicon.ico  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\README.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\img  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\img\header_bg.jpg  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\img\green  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\img\green\header_bg.jpg  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\img\green\body_bg.jpg  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\img\green\right_bg.jpg  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\img\green\foot_bg.jpg  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\img\nav_bg.gif  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\img\pink  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\img\pink\header_bg.jpg  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\img\pink\body_bg.jpg  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\img\pink\right_bg.jpg  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\img\pink\foot_bg.jpg  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\img\sunset  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\img\sunset\header_bg.jpg  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\img\sunset\body_bg.jpg  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\img\sunset\right_bg.jpg  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\img\sunset\foot_bg.jpg  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\img\corp  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\img\corp\header_bg.jpg  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\img\corp\body_bg.jpg  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\img\corp\right_bg.jpg  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\img\corp\foot_bg.jpg  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\img\logo.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\img\body_bg.jpg  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\img\right_bg.jpg  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\img\index.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\img\icons  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\img\icons\green_icon.jpg  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\img\icons\pink_icon.jpg  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\img\icons\sunset_icon.jpg  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\img\icons\corp_icon.jpg  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\img\icons\blue_icon.jpg  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\img\nav_bg_right.gif  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\img\foot_bg.jpg  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\iTheme\blockszone.html  
+Deleted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\theme.html  
+Deleted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\xotpl\theme_blockcenter_r.html  
+Deleted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\xotpl\theme_blockcenter_c.html  
+Deleted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\xotpl\index.html  
+Deleted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\xotpl\theme_blockleft.html  
+Deleted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\xotpl\theme_blockcenter_l.html  
+Deleted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\xotpl\theme_blockright.html  
+Deleted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\xotpl  
+Deleted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\css\style.css  
+Deleted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\css\index.html  
+Deleted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\css  
+Deleted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\modules\system\system_siteclosed.html  
+Deleted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\modules\system\system_redirect.html  
+Deleted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\modules\system\index.html  
+Deleted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\modules\system  
+Deleted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\modules\index.html  
+Deleted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\modules  
+Deleted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\index.html  
+Deleted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\icons\index.html  
+Deleted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\icons\icon.png  
+Deleted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\icons\favicon.ico  
+Deleted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\icons  
+Deleted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\img\hbar.gif  
+Deleted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\img\form-input.png  
+Deleted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\img\logo.png  
+Deleted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\img\poweredby.gif  
+Deleted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\img\bg-lr-titles.gif  
+Deleted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\img\table-caption-grey.png  
+Deleted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\img\index.html  
+Deleted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\img\bghead.png  
+Deleted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\img  
+Deleted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\centerblocks.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\content.css  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\rtl  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\rtl\content.css  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\rtl\blocks.css  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\rtl\layout.css  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\rtl\style.css  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\shot.gif  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\blocks.css  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\layout.css  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\theme.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\theme_rtl.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\style.css  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\modules  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\modules\system  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\modules\system\system_siteclosed.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\modules\system\system_redirect.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\modules\system\index.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\modules\index.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\index.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\icons  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\icons\index.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\icons\icon.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\icons\favicon.ico  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\blockszone.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\img  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\img\hbar.gif  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\img\form-input.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\img\logo.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\img\logo_rtl.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\img\poweredby.gif  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\img\poweredby_rtl.gif  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\img\bg-lr-titles.gif  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\img\table-caption-grey.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\img\index.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\themes\impresstheme_light\img\bghead.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\privpolicy.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\preload  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\preload\htmlpurifier.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\preload\userinfo.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\preload\scriptaculous.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\preload\protector.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\preload\projax.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\preload\prototype.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\preload\customtag.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\readpmsg.php  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\search.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\xmlrpc.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\notifications.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\content.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\imagemanager.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\fileprint.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\mail_replay.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\message_reply.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\viewmag.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\editcut.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\fileopen.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\reload_page.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\mail_find2.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\button_ok.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\bookmark.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\undo.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\view_detailed.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\make_kdevelop.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\reload.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\view_right.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\fileprint.gif  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\mail_send2.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\mail_generic.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\view_text.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\filesaveas.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\editpaste.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\personal.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\people.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\edit.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\mail_delete2.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\cd.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\mail_replyall.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\rebuild.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\mail_replayall.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\reload3.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\window_fullscreen.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\openterm.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\redo.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\misc.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\show_clips.gif  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\about_kde.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\encrypted.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\mail_generic2.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\wizard.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\signature.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\filesaveas2.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\attach.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\edit.gif  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\mail_replyall2.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\exit.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\view_choose.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\viewmag+.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\mail_replylist2.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\viewmag-.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\gohome.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\desc.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\next.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\button_cancel.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\editcopy.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\view_top_bottom.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\viewmag1.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\configure.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\back1.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\back2.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\view_icon.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\decrypted.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\thumbnail.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\folder_new.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\forward1.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\stop.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\forward2.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\window_nofullscreen.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\project_open.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\view_remove.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\lock.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\filequickprint.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\mail_replylist.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\mail_new.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\unlock.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\compfile.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\view_bottom.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\mail_delete.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\fileclose.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\up1.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\mail_forward.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\klipper_dock.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\asc.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\up2.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\down.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\editdelete.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\folder.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\previous.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\mail_reply2.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\find.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\queue.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\edittrash.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\mail_forward2.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\klipper_dock2.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\help.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\editdelete.gif  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\view_tree.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\mail_send.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\contents.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\mail_reply.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\filesave.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\view_sidetree.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\back.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\view_multicolumn.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\viewmagfit.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\mail_get2.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\forward.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\run.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\frameprint.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\filenew2.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\locationbar_erase.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\mail_send.gif  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\bookmark_add.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\mail_new2.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\mail_new3.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\filesave2.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\filefind.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\window_new.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\mail_get.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\view_left_right.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\mail_find.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\toggle_log.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\up.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\index.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\crystal\actions\filenew.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\logout.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\arrow.gif  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\hide.gif  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\arrow1.gif  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\icons\delete_block.gif  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\images\icons\edit_block.gif  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\uploads\img482278e29e81c.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\constants.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\include\search.inc.php  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\include\update.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\language\english\modinfo.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\language\english\blocks.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\language\english\admin\pages.php  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\language\english\admin\preferences.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\language\english\admin\mailusers.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\language\english\admin\customtag.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\language\english\admin\blockspadmin.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\language\english\admin\content.php  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\language\english\admin\groups.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\language\english\admin\modulesadmin.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\language\english\admin\content_css_doc.html  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\language\english\admin\blocksadmin.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\language\english\admin\banners.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\language\english\admin.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\language\english\common.php  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\xoops_version.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\images\modules.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\images\bg.gif  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\images\right_both.gif  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\images\clone_big_off.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\images\clone_big.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\images\update.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\images\clone_med.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\images\view_big_off.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\images\left_both.gif  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\images\view_big.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\images\0.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\images\1.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\images\edit_big_off.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\images\cp.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\images\edit_big.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\images\edit_med.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\images\off.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\images\support.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\images\delete_big_off.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\images\mini_cp.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\images\item_rtl.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\images\delete_big.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\images\delete_med.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\images\system_slogo.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\images\home.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\images\viewsubs.gif  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\images\info.png  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\style.css  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\groups\groups.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\groups\images\groups.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\groups\images\groups_big.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\groups\images\groups_small.png  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\groups\groupform.php  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\groups\main.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\modulesadmin\xoops_version.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\modulesadmin\images\modulesadmin.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\modulesadmin\images\modulesadmin_big.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\modulesadmin\images\modulesadmin_small.png  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\modulesadmin\modulesadmin.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\modulesadmin\main.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\comments\xoops_version.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\comments\images\comments_small.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\comments\images\comments.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\comments\images\comments_big.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\version\images\version_small.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\version\images\version.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\version\images\version_big.png  
+Deleted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\blocksadmin\pblockform.php  
+Deleted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\blocksadmin\blockspadmin.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\blocksadmin\blockform.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\blocksadmin\images\blocksadmin_small.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\blocksadmin\images\blocksadmin.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\blocksadmin\images\blocksadmin_big.png  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\blocksadmin\main.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\blocksadmin\blocksadmin.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\banners\xoops_version.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\banners\images\banners_small.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\banners\images\banners.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\banners\images\banners_big.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\banners\banners.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\userrank\images\userrank_small.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\userrank\images\userrank.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\userrank\images\userrank_big.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\tplsets\xoops_version.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\tplsets\images\tplsets.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\tplsets\images\tplsets_big.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\tplsets\images\tplsets_small.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\tplsets\main.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\pages  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\pages\xoops_version.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\pages\images  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\pages\images\pages.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\pages\images\pages_big.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\pages\images\index.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\pages\images\pages_small.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\pages\style.css  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\pages\index.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\pages\main.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\preferences\xoops_version.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\preferences\images\preferences.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\preferences\images\preferences_big.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\preferences\images\preferences_small.png  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\preferences\main.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\avatars\xoops_version.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\avatars\images\avatars.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\avatars\images\avatars_big.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\avatars\images\avatars_small.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\users\xoops_version.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\users\images\users.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\users\images\users_big.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\users\images\users_small.png  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\users\users.php  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\users\userform.php  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\users\main.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\findusers\xoops_version.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\findusers\images\findusers.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\findusers\images\findusers_big.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\findusers\images\findusers_small.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\findusers\main.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\mailusers\xoops_version.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\mailusers\images\mailusers_small.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\mailusers\images\mailusers.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\mailusers\images\mailusers_big.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\images\xoops_version.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\images\images\images_small.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\images\images\images.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\images\images\images_big.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\smilies\images\smilies_small.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\smilies\images\smilies.png  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\smilies\images\smilies_big.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\customtag  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\customtag\xoops_version.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\customtag\class  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\customtag\class\index.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\customtag\class\customtag.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\customtag\images  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\customtag\images\customtag_small.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\customtag\images\customtag.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\customtag\images\customtag_big.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\customtag\images\index.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\customtag\index.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\customtag\main.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\blockspadmin  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\blockspadmin\xoops_version.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\blockspadmin\pblockform.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\blockspadmin\images  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\blockspadmin\images\blockspadmin_small.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\blockspadmin\images\blockspadmin.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\blockspadmin\images\blockspadmin_big.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\blockspadmin\images\index.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\blockspadmin\index.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\blockspadmin\main.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\content  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\content\xoops_version.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\content\images  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\content\images\content-help.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\content\images\content_small.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\content\images\index.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\content\images\content.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\content\images\content_big.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\content\style.css  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\content\index.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin\content\main.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\style_rtl.css  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\menu.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\blocks\system_blocks.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\blocks\content_blocks.php  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\admin.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\templates\system_content.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\templates\system_persistabletable_display.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\templates\system_common_form.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\templates\admin\pages  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\templates\admin\pages\system_adm_pagemanager_index.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\templates\admin\modulesadmin  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\templates\admin\modulesadmin\system_adm_modulesadmin.html  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\templates\admin\system_adm_navbar.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\templates\admin\system_adm_modulemenu.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\templates\admin\blocksadmin  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\templates\admin\blocksadmin\index.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\templates\admin\blocksadmin\system_adm_blocksadmin.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\templates\admin\blockspadmin  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\templates\admin\blockspadmin\system_adm_blockspadmin.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\templates\admin\customtag  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\templates\admin\customtag\system_adm_customtag.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\templates\admin\system_adm_moduleabout.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\templates\admin\content  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\templates\admin\content\system_adm_contentmanager_index.html  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\templates\admin\system_adm_version.html  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\templates\system_userinfo.html  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\templates\system_userform.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\templates\blocks\system_block_contentmenu.html  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\templates\blocks\system_block_mainmenu.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\templates\blocks\system_block_content.html  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\templates\blocks\system_block_user.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules\system\templates\blocks\system_block_contentmenu_structure.html  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\modules  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\edituser.php  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\admin.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\header.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\misc.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\include\xoops.js  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\include\passwordquality.js  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\include\comment_post.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\include\comment_form.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\include\protection.php  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\include\common.php  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\include\cp_functions.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\include\customtag.php  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\include\checklogin.php  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\include\functions.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\include\registerform.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\include\percent_bar.js  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\include\passwordquality.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\include\site-closed.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\include\xoops_rtl.js  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\include\linkexternal.js  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\invite.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\robots.txt  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\session_confirm.php  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\viewpmsg.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\pda.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\index.php  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\lostpass.php  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\xoops.css  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\user.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\module.textsanitizer.php  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\xoopsform\formdhtmltextarea.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\xoopsform\formselecteditor.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\xoopsform\formpassword.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\xoopsform\formimage.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\xoopsform\formelement.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\xoopsform\formhidden.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\xoopsform\formimage_browse.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\auth\auth_xoops.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\auth\authfactory.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\auth\auth.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\auth\auth_ldap.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\auth\auth_provisionning.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\auth\auth_ads.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\xoopscomments.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\database\databaseupdater.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\database\mysqldatabase.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\database\database.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\database\drivers\mysql\database.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\database\drivers\mysqli\database.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\icmsfeed.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\sha256.inc.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\xoopsblock.php  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\icmslibrarieshandler.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\xoopseditor.inc.php  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\xoopstree.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\icmsform  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\icmsform\icmsform.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\icmsform\elements  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\icmsform\elements\icmsformfileelement.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\icmsform\elements\icmsformselectelement.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\icmsform\elements\icmsformsectionclose.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\icmsform\elements\icmsformurllinkelement.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\icmsform\elements\icmsformuser_sigelement.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\icmsform\elements\icmsformhidden.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\icmsform\elements\icmsformimageelement.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\icmsform\elements\icmsformlanguageelement.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\icmsform\elements\icmsformfileuploadelement.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\icmsform\elements\icmsformtextelement.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\icmsform\elements\icmsformuploadelement.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\icmsform\elements\icmsformrichfileelement.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\icmsform\elements\icmsformparentcategoryelement.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\icmsform\elements\icmsformimageuploadelement.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\icmsform\elements\icmsformselect_multielement.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\icmsform\elements\icmsformsection.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\icmsform\elements\icmsformdate_timeelement.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\icmsform\elements\icmsformyesnoelement.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\icmsform\elements\icmsformradioelement.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\icmsform\elements\icmsformtimeelement.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\icmsform\elements\icmsformautocompleteelement.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\icmsform\elements\icmsformdateelement.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\icmsform\elements\icmsformcheckelement.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\icmsform\elements\icmsautocompleteelement.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\icmsform\elements\icmsformset_passwordelement.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\icmsform\elements\icmsformuserelement.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\mail\xoopsmultimailer.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\theme_blocks.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\theme.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\sha256_base.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\xml\xmltaghandler.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\xml\saxparser.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\template.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\logger.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\xoopsformloader.php  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\class\xoopslists.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\install\page_start.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\install\page_tablescreate.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\install\page_modulesinstall.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\install\language\english\welcome.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\install\language\english\install.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\install\language\english\install2.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\install\include\functions.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\install\common.inc.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\install\page_dbconnection.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\install\passwd.php  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\install\style.css  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\install\page_end.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\install\page_dbsettings.php  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\install\makedata.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\install\templates\sdata.dist.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\install\templates\mainfile.dist.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\install\page_modcheck.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\install\page_pathsettings.php  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\install\sql\mysql.structure.sql  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\install\sql\mysqli.data.sql  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\install\sql\upgrade\mysql.structure.sql  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\install\sql\mysql.data.sql  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\install\sql\mysqli.structure.sql  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\install\page_langselect.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\install\page_tablesfill.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\install\class\sha256.inc.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\install\class\sha256_base.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\install\page_configsave.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\install\modulesadmin.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\install\style_rtl.css  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\install\page_siteinit.php  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\install\install_tpl.php  
+Deleted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\install\img\yes.gif  
+Deleted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\install\img\bg_darkblue.gif  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\install\common.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\image.php  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\dhtmltextarea  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\dhtmltextarea\language  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\dhtmltextarea\language\english.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\dhtmltextarea\language\index.html  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\dhtmltextarea\language  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\dhtmltextarea\editor_registry.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\dhtmltextarea\index.html  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\dhtmltextarea\dhtmltextarea.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\dhtmltextarea  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\license.txt  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\license.txt  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\utils  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\utils\mctabs.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\utils\validate.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\utils\editable_selects.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\utils\form_utils.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\utils  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\media  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\media\editor_plugin.js  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\media\langs  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\media\langs\en_dlg.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\media\langs  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\media\media.htm  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\media\css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\media\css\content.css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\media\css\media.css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\media\css  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\media\img  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\media\img\quicktime.gif  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\media\img\flash.gif  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\media\img\flv_player.swf  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\media\img\realmedia.gif  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\media\img\trans.gif  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\media\img\shockwave.gif  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\media\img\windowsmedia.gif  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\media\img  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\media\js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\media\js\embed.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\media\js\media.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\media\js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\media  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\pagebreak  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\pagebreak\editor_plugin.js  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\pagebreak\css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\pagebreak\css\content.css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\pagebreak\css  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\pagebreak\img  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\pagebreak\img\pagebreak.gif  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\pagebreak\img\trans.gif  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\pagebreak\img  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\pagebreak  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\insertdatetime  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\insertdatetime\editor_plugin.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\insertdatetime  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\noneditable  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\noneditable\editor_plugin.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\noneditable  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\inlinepopups  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\inlinepopups\editor_plugin.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\inlinepopups\template.htm  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\inlinepopups\skins  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\inlinepopups\skins\clearlooks2  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\inlinepopups\skins\clearlooks2\img  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\inlinepopups\skins\clearlooks2\img\button.gif  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\inlinepopups\skins\clearlooks2\img\corners.gif  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\inlinepopups\skins\clearlooks2\img\confirm.gif  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\inlinepopups\skins\clearlooks2\img\buttons.gif  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\inlinepopups\skins\clearlooks2\img\alert.gif  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\inlinepopups\skins\clearlooks2\img\horizontal.gif  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\inlinepopups\skins\clearlooks2\img\vertical.gif  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\inlinepopups\skins\clearlooks2\img  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\inlinepopups\skins\clearlooks2\window.css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\inlinepopups\skins\clearlooks2  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\inlinepopups\skins  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\inlinepopups  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\example  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\example\editor_plugin.js  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\example\langs  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\example\langs\en_dlg.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\example\langs\en.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\example\langs  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\example\dialog.htm  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\example\img  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\example\img\example.gif  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\example\img  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\example\js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\example\js\dialog.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\example\js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\example  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\compat2x  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\compat2x\editor_plugin.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\compat2x  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\emotions  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\emotions\editor_plugin.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\emotions\emotions.htm  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\emotions\langs  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\emotions\langs\en_dlg.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\emotions\langs  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\emotions\img  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\emotions\img\smiley-innocent.gif  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\emotions\img\smiley-surprised.gif  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\emotions\img\smiley-money-mouth.gif  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\emotions\img\smiley-undecided.gif  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\emotions\img\smiley-frown.gif  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\emotions\img\smiley-cool.gif  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\emotions\img\smiley-sealed.gif  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\emotions\img\smiley-cry.gif  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\emotions\img\smiley-laughing.gif  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\emotions\img\smiley-yell.gif  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\emotions\img\smiley-foot-in-mouth.gif  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\emotions\img\smiley-tongue-out.gif  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\emotions\img\smiley-embarassed.gif  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\emotions\img\smiley-wink.gif  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\emotions\img\smiley-smile.gif  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\emotions\img\smiley-kiss.gif  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\emotions\img  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\emotions\js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\emotions\js\emotions.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\emotions\js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\emotions  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\iespell  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\iespell\editor_plugin.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\iespell  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\save  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\save\editor_plugin.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\save  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\advhr  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\advhr\editor_plugin.js  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\advhr\langs  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\advhr\langs\en_dlg.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\advhr\langs  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\advhr\css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\advhr\css\advhr.css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\advhr\css  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\advhr\js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\advhr\js\rule.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\advhr\js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\advhr\rule.htm  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\advhr  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\safari  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\safari\editor_plugin.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\safari\blank.htm  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\safari  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\layer  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\layer\editor_plugin.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\layer  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\advimage  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\advimage\editor_plugin.js  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\advimage\langs  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\advimage\langs\en_dlg.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\advimage\langs  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\advimage\css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\advimage\css\advimage.css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\advimage\css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\advimage\image.htm  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\advimage\img  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\advimage\img\sample.gif  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\advimage\img  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\advimage\js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\advimage\js\image.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\advimage\js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\advimage  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\preview  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\preview\editor_plugin.js  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\preview\jscripts  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\preview\jscripts\embed.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\preview\jscripts  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\preview\example.html  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\preview  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\directionality  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\directionality\editor_plugin.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\directionality  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\visualchars  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\visualchars\editor_plugin.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\visualchars  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\table  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\table\editor_plugin.js  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\table\langs  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\table\langs\en_dlg.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\table\langs  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\table\cell.htm  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\table\css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\table\css\cell.css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\table\css\row.css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\table\css\table.css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\table\css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\table\merge_cells.htm  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\table\js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\table\js\row.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\table\js\table.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\table\js\cell.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\table\js\merge_cells.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\table\js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\table\row.htm  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\table\table.htm  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\table  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\autosave  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\autosave\editor_plugin.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\autosave  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\advlink  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\advlink\editor_plugin.js  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\advlink\langs  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\advlink\langs\en_dlg.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\advlink\langs  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\advlink\link.htm  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\advlink\css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\advlink\css\advlink.css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\advlink\css  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\advlink\js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\advlink\js\advlink.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\advlink\js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\advlink  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\print  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\print\editor_plugin.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\print  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\nonbreaking  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\nonbreaking\editor_plugin.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\nonbreaking  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\fullpage  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\fullpage\editor_plugin.js  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\fullpage\langs  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\fullpage\langs\en_dlg.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\fullpage\langs  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\fullpage\fullpage.htm  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\fullpage\css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\fullpage\css\fullpage.css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\fullpage\css  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\fullpage\js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\fullpage\js\fullpage.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\fullpage\js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\fullpage  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\style  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\style\editor_plugin.js  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\style\langs  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\style\langs\en_dlg.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\style\langs  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\style\css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\style\css\props.css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\style\css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\style\props.htm  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\style\js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\style\js\props.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\style\js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\style  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\searchreplace  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\searchreplace\editor_plugin.js  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\searchreplace\langs  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\searchreplace\langs\en_dlg.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\searchreplace\langs  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\searchreplace\css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\searchreplace\css\searchreplace.css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\searchreplace\css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\searchreplace\searchreplace.htm  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\searchreplace\js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\searchreplace\js\searchreplace.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\searchreplace\js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\searchreplace  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\fullscreen  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\fullscreen\editor_plugin.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\fullscreen\fullscreen.htm  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\fullscreen  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\spellchecker  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\spellchecker\editor_plugin.js  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\spellchecker\css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\spellchecker\css\content.css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\spellchecker\css  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\spellchecker\img  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\spellchecker\img\wline.gif  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\spellchecker\img  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\spellchecker  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\contextmenu  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\contextmenu\editor_plugin.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\contextmenu  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\template  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\template\editor_plugin.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\template\template.htm  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\template\langs  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\template\langs\en_dlg.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\template\langs  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\template\css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\template\css\template.css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\template\css  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\template\js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\template\js\template.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\template\js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\template\blank.htm  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\template  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\paste  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\paste\editor_plugin.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\paste\pasteword.htm  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\paste\langs  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\paste\langs\en_dlg.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\paste\langs  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\paste\css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\paste\css\pasteword.css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\paste\css\blank.css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\paste\css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\paste\pastetext.htm  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\paste\js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\paste\js\pasteword.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\paste\js\pastetext.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\paste\js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\paste\blank.htm  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\paste  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\xhtmlxtras  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\xhtmlxtras\acronym.htm  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\xhtmlxtras\editor_plugin.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\xhtmlxtras\ins.htm  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\xhtmlxtras\langs  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\xhtmlxtras\langs\en_dlg.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\xhtmlxtras\langs  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\xhtmlxtras\css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\xhtmlxtras\css\xhtmlxtras.css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\xhtmlxtras\css\popup.css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\xhtmlxtras\css\attributes.css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\xhtmlxtras\css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\xhtmlxtras\cite.htm  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\xhtmlxtras\del.htm  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\xhtmlxtras\js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\xhtmlxtras\js\cite.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\xhtmlxtras\js\del.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\xhtmlxtras\js\abbr.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\xhtmlxtras\js\attributes.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\xhtmlxtras\js\acronym.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\xhtmlxtras\js\ins.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\xhtmlxtras\js\element_common.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\xhtmlxtras\js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\xhtmlxtras\abbr.htm  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\xhtmlxtras\attributes.htm  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\xhtmlxtras  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\bbcode  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\bbcode\editor_plugin.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins\bbcode  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\plugins  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\tiny_mce.js  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\langs  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\langs\en.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\langs  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\about.htm  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\anchor.htm  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\charmap.htm  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\color_picker.htm  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\langs  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\langs\en_dlg.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\langs\en.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\langs  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\link.htm  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\skins  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\skins\o2k7  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\skins\o2k7\ui_black.css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\skins\o2k7\content.css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\skins\o2k7\ui.css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\skins\o2k7\dialog.css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\skins\o2k7\ui_silver.css  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\skins\o2k7\img  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\skins\o2k7\img\button_bg_black.png  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\skins\o2k7\img\button_bg.png  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\skins\o2k7\img\button_bg_silver.png  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\skins\o2k7\img  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\skins\o2k7  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\skins\default  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\skins\default\content.css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\skins\default\ui.css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\skins\default\dialog.css  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\skins\default\img  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\skins\default\img\buttons.png  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\skins\default\img\menu_arrow.gif  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\skins\default\img\items.gif  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\skins\default\img\menu_check.gif  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\skins\default\img\progress.gif  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\skins\default\img\tabs.gif  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\skins\default\img  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\skins\default  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\skins  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\image.htm  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\editor_template.js  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\img  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\img\icons.gif  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\img\colorpicker.jpg  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\img  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\js\source_editor.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\js\about.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\js\anchor.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\js\charmap.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\js\color_picker.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\js\link.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\js\image.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced\source_editor.htm  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes\advanced  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\themes  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts\tiny_mce_popup.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\jscripts  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\formtinymce.php  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\language  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\language\english.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\language  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\xoops_version.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\editor_registry.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\changelog.txt  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\form_test.php  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\uploaded  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\uploaded\File  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\uploaded\File  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\uploaded\Media  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\uploaded\Media  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\uploaded\Image  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\uploaded\Image  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\uploaded  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\examples  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\examples\media  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\examples\media  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\examples\css  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\examples\css  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\examples\lists  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\examples\lists  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\examples\templates  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\examples\templates  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\examples  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce\tinymce.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors\tinymce  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\editors  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\register.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\jquery  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\jquery\jquery.pngFix.js  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\jquery\jquery.color.js  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\jquery\jquery.js  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\internals\core.assign_smarty_interface.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\internals\core.display_debug_console.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\internals  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\function.html_image.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\modifier.spacify.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\modifier.count_sentences.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\modifier.escape.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\modifier.count_paragraphs.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\compiler.assign.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\modifier.strip.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\modifier.count_words.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\modifier.cat.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\modifier.debug_print_var.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\modifier.replace.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\function.eval.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\modifier.string_format.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\modifier.nl2br.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\modifier.strip_tags.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\modifier.default.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\modifier.date_format.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\modifier.capitalize.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\function.cycle.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\modifier.count_characters.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\modifier.lower.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\block.textformat.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\function.popup.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\function.assign_debug_info.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\function.html_radios.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\outputfilter.trimwhitespace.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\function.html_table.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\modifier.regex_replace.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\modifier.wordwrap.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\function.counter.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\function.html_options.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\function.html_select_time.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\shared.make_timestamp.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\function.mailto.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\function.popup_init.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\function.debug.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\function.math.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\function.fetch.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\modifier.indent.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\modifier.truncate.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\function.html_select_date.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\shared.escape_special_chars.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\function.html_checkboxes.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\function.config_load.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins\modifier.upper.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\plugins  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\icms_plugins\compiler.xoAppUrl.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\icms_plugins\modifier.debug_print_var.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty\icms_plugins  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\smarty  
+Deleted: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\scriptaculous\icms.library.scriptaculous.php  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\phpmailer\ChangeLog.txt  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\phpmailer\ChangeLog_BETA.txt  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\phpmailer\codeworxtech.html  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\phpmailer\language\phpmailer.lang-ja.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\phpmailer\language\phpmailer.lang-fi.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\phpmailer\language\phpmailer.lang-dk.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\phpmailer\language\phpmailer.lang-en.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\phpmailer\language\phpmailer.lang-br.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\phpmailer\language\phpmailer.lang-fo.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\phpmailer\language\phpmailer.lang-fr.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\phpmailer\language\phpmailer.lang-es.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\phpmailer\language\phpmailer.lang-se.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\phpmailer\language\phpmailer.lang-et.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\phpmailer\language\phpmailer.lang-nl.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\phpmailer\language\phpmailer.lang-pl.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\phpmailer\language\phpmailer.lang-no.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\phpmailer\language\phpmailer.lang-it.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\phpmailer\language\phpmailer.lang-hu.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\phpmailer\language\phpmailer.lang-cz.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\phpmailer\language\phpmailer.lang-ro.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\phpmailer\language\phpmailer.lang-ca.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\phpmailer\language\phpmailer.lang-tr.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\phpmailer\language\phpmailer.lang-ru.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\phpmailer\language\phpmailer.lang-de.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\phpmailer\language  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\phpmailer\class.phpmailer.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\phpmailer\class.pop3.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\phpmailer\README  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\phpmailer\class.smtp.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\phpmailer  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\captcha  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\captcha\functions.cache.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\captcha\backgrounds  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\captcha\backgrounds\background00.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\captcha\backgrounds\background01.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\captcha\backgrounds\background10.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\captcha\backgrounds\background02.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\captcha\backgrounds\background03.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\captcha\backgrounds\background04.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\captcha\backgrounds\background05.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\captcha\backgrounds\background06.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\captcha\backgrounds\background07.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\captcha\backgrounds\background08.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\captcha\backgrounds\index.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\captcha\backgrounds\background09.png  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\captcha\scripts  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\captcha\scripts\img.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\captcha\image.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\captcha\captcha.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\captcha\fonts  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\captcha\fonts\VeraBd.ttf  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\captcha\fonts\VeraMoBI.ttf  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\captcha\fonts\VeraSe.ttf  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\captcha\fonts\VeraMoIt.ttf  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\captcha\fonts\VeraMono.ttf  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\captcha\fonts\VeraBI.ttf  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\captcha\fonts\arial.ttf  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\captcha\fonts\VeraIt.ttf  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\captcha\fonts\verasebd.ttf  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\captcha\fonts\Vera.ttf  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\captcha\fonts\index.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\captcha\fonts\VeraMoBd.ttf  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\captcha\index.html  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\captcha\text.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\captcha\config.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\captcha\functions.ini.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\captcha\formcaptcha.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\captcha\functions.php  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\projax\icms.library.projax.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\projax  
+Skipped: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\prototype\icms.library.prototype.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\prototype  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier.safe-includes.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier.kses.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier.includes.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier.auto.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier.autoload.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Lexer  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Lexer\PH5P.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Lexer\DirectLex.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Lexer\PEARSax3.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Lexer\DOMLex.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrDef.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Token  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Token\Tag.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Token\Start.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Token\Empty.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Token\Comment.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Token\Text.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Token\End.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Printer  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Printer\ConfigForm.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Printer\ConfigForm.css  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Printer\HTMLDefinition.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Printer\ConfigForm.js  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Printer\CSSDefinition.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigDef  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigDef\Namespace.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigDef\Directive.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigDef\DirectiveAlias.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\URIScheme  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\URIScheme\ftp.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\URIScheme\news.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\URIScheme\http.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\URIScheme\nntp.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\URIScheme\https.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\URIScheme\mailto.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Strategy.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ChildDef.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\DefinitionCacheFactory.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\HTMLModuleManager.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\URIDefinition.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\TokenFactory.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ElementDef.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\HTMLModule.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Injector.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\VarParser  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\VarParser\Flexible.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\VarParser\Native.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrTransform  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrTransform\Border.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrTransform\ImgRequired.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrTransform\EnumToCSS.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrTransform\Name.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrTransform\Lang.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrTransform\Length.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrTransform\BdoDir.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrTransform\BgColor.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrTransform\BoolToCSS.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrTransform\ImgSpace.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\EntityLookup  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\EntityLookup\entities.ser  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Generator.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Definition.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Language  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Language\messages  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Language\messages\en.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Language\messages\en-x-test.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Language\classes  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Language\classes\en-x-test.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\URI.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrTypes.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\PercentEncoder.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\Attr.DefaultTextDir.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\Core.AggressivelyFixLt.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\URI.HostBlacklist.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\URI.DefaultScheme.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\Test.ForceNoIconv.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\Core.CollectErrors.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\HTML.Doctype.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\Core.EscapeNonASCIICharacters.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\Attr.EnableID.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\Cache.DefinitionImpl.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\Filter.ExtractStyleBlocks.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\Core.HiddenElements.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\Test.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\AutoFormat.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\Output.TidyFormat.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\HTML.Proprietary.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\HTML.CoreModules.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\Filter.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\AutoFormat.Linkify.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\HTML.Allowed.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\HTML.TidyRemove.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\CSS.DefinitionRev.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\Core.ColorKeywords.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\URI.AllowedSchemes.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\URI.OverrideAllowedSchemes.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\HTML.BlockWrapper.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\Attr.IDPrefixLocal.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\CSS.AllowImportant.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\HTML.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\Core.EscapeInvalidChildren.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\Attr.DefaultInvalidImageAlt.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\Attr.IDBlacklistRegexp.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\FilterParam.ExtractStyleBlocksTidyImpl.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\URI.MakeAbsolute.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\URI.Host.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\Core.Encoding.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\HTML.AllowedModules.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\Attr.IDPrefix.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\HTML.AllowedElements.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\Core.RemoveInvalidImg.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\AutoFormat.PurifierLinkify.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\URI.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\Output.Newline.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\HTML.AllowedAttributes.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\AutoFormatParam.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\Cache.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\URI.DefinitionID.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\URI.DefinitionRev.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\Output.CommentScriptContents.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\HTML.CustomDoctype.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\Attr.AllowedFrameTargets.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\HTML.ForbiddenAttributes.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\FilterParam.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\Attr.DefaultInvalidImage.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\CSS.Proprietary.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\HTML.DefinitionID.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\FilterParam.ExtractStyleBlocksEscaping.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\URI.Base.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\Attr.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\Core.EscapeInvalidTags.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\AutoFormatParam.PurifierLinkifyDocURL.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\FilterParam.ExtractStyleBlocksScope.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\Core.LexerImpl.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\CSS.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\Cache.SerializerPath.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\AutoFormat.Custom.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\Core.MaintainLineNumbers.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\CSS.AllowTricky.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\CSS.AllowedProperties.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\HTML.Parent.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\Core.ConvertDocumentToFragment.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\Filter.Custom.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\Attr.IDBlacklist.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\URI.DisableExternalResources.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\Output.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\URI.Disable.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\Attr.AllowedRel.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\HTML.TidyLevel.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\URI.DisableExternal.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\HTML.DefinitionRev.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\URI.Munge.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\Core.Language.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\HTML.Strict.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\Attr.AllowedRev.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\AutoFormat.AutoParagraph.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\Filter.YouTube.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\HTML.TidyAdd.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\Core.RemoveScriptContents.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\Core.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\info.ini  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\HTML.ForbiddenElements.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\URI.DisableResources.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\Core.DirectLexLineNumberSyncInterval.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\HTML.Trusted.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema\HTML.XHTML.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\Exception.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\InterchangeBuilder.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\Builder  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\Builder\Xml.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\Builder\ConfigSchema.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\Interchange  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\Interchange\Id.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\Interchange\Namespace.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\Interchange\Directive.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\schema.ser  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\Validator.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\ValidatorAtom.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema\Interchange.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\TagTransform.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Doctype.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ContentSets.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\URIParser.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\DefinitionCache.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\HTMLDefinition.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\URIFilter  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\URIFilter\MakeAbsolute.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\URIFilter\DisableExternalResources.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\URIFilter\DisableExternal.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\URIFilter\HostBlacklist.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Lexer.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Encoder.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Token.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Printer.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigDef.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\URIScheme.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\VarParserException.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\StringHashParser.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Filter  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Filter\ExtractStyleBlocks.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Filter\YouTube.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\DoctypeRegistry.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrDef  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrDef\URI  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrDef\URI\Host.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrDef\URI\Email  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrDef\URI\Email\SimpleCheck.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrDef\URI\IPv4.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrDef\URI\IPv6.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrDef\URI\Email.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrDef\Integer.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrDef\HTML  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrDef\HTML\Bool.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrDef\HTML\ID.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrDef\HTML\MultiLength.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrDef\HTML\Color.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrDef\HTML\Nmtokens.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrDef\HTML\FrameTarget.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrDef\HTML\Length.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrDef\HTML\LinkTypes.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrDef\HTML\Pixels.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrDef\URI.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrDef\Lang.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrDef\CSS  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrDef\CSS\Multiple.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrDef\CSS\TextDecoration.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrDef\CSS\ListStyle.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrDef\CSS\URI.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrDef\CSS\Composite.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrDef\CSS\BackgroundPosition.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrDef\CSS\Font.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrDef\CSS\FontFamily.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrDef\CSS\Percentage.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrDef\CSS\Border.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrDef\CSS\Color.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrDef\CSS\Background.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrDef\CSS\ImportantDecorator.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrDef\CSS\Length.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrDef\CSS\AlphaValue.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrDef\CSS\Filter.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrDef\CSS\Number.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrDef\Enum.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrDef\Text.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrDef\CSS.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Config.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\VarParser.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrTransform.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\EntityLookup.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\LanguageFactory.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Strategy  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Strategy\FixNesting.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Strategy\MakeWellFormed.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Strategy\ValidateAttributes.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Strategy\Composite.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Strategy\RemoveForeignElements.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Strategy\Core.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ChildDef  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ChildDef\Custom.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ChildDef\Chameleon.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ChildDef\Empty.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ChildDef\Required.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ChildDef\StrictBlockquote.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ChildDef\Optional.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ChildDef\Table.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\URISchemeRegistry.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Language.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\HTMLModule  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\HTMLModule\NonXMLCommonAttributes.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\HTMLModule\Hypertext.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\HTMLModule\CommonAttributes.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\HTMLModule\Scripting.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\HTMLModule\Legacy.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\HTMLModule\Bdo.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\HTMLModule\Object.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\HTMLModule\Tidy.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\HTMLModule\Tables.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\HTMLModule\Presentation.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\HTMLModule\List.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\HTMLModule\Proprietary.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\HTMLModule\XMLCommonAttributes.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\HTMLModule\Ruby.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\HTMLModule\Image.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\HTMLModule\Tidy  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\HTMLModule\Tidy\XHTML.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\HTMLModule\Tidy\Proprietary.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\HTMLModule\Tidy\Transitional.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\HTMLModule\Tidy\Strict.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\HTMLModule\Tidy\XHTMLAndHTML4.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\HTMLModule\StyleAttribute.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\HTMLModule\Text.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\HTMLModule\Edit.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\HTMLModule\Target.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ConfigSchema.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Injector  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Injector\PurifierLinkify.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Injector\AutoParagraph.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Injector\Linkify.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\EntityParser.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Error.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\IDAccumulator.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Exception.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\ErrorCollector.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\CSSDefinition.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\URIFilter.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrCollections.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\StringHash.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Bootstrap.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\AttrValidator.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\TagTransform  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\TagTransform\Simple.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\TagTransform\Font.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Context.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\Filter.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\DefinitionCache  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\DefinitionCache\Serializer.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\DefinitionCache\Null.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\DefinitionCache\Decorator  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\DefinitionCache\Decorator\Template.php.in  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\DefinitionCache\Decorator\Cleanup.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\DefinitionCache\Decorator\Memory.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\DefinitionCache\Decorator.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\DefinitionCache\Serializer  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\DefinitionCache\Serializer\Test  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\DefinitionCache\Serializer\URI  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\DefinitionCache\Serializer\HTML  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier\DefinitionCache\Serializer\CSS  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier.func.php  
+Added: C:\INBOX\Dev\inbox2\icms_openid\htdocs\libraries\htmlpurifier\HTMLPurifier.path.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs\banners.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\htdocs  
+Added: C:\INBOX\Dev\inbox2\icms_openid\upgrade_working_dir  
+Added: C:\INBOX\Dev\inbox2\icms_openid\upgrade_working_dir\icms_1.0_group_permission_table.sql  
+Added: C:\INBOX\Dev\inbox2\icms_openid\upgrade_working_dir\icms_1.0_config_table.sql  
+Added: C:\INBOX\Dev\inbox2\icms_openid\upgrade_working_dir\icms_1.1_group_permission_table.sql  
+Added: C:\INBOX\Dev\inbox2\icms_openid\upgrade_working_dir\icms_1.1_config_table.sql  
+Added: C:\INBOX\Dev\inbox2\icms_openid\upgrade_working_dir\icms_1.0.sql  
+Added: C:\INBOX\Dev\inbox2\icms_openid\upgrade_working_dir\icms_1.1.sql  
+Added: C:\INBOX\Dev\inbox2\icms_openid\upgrade_working_dir\db_changes.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\upgrade_working_dir\icms_1.0_original.sql  
+Added: C:\INBOX\Dev\inbox2\icms_openid\upgrade_working_dir\icms_1.0_configoption_table.sql  
+Added: C:\INBOX\Dev\inbox2\icms_openid\upgrade_working_dir\icms_1.1_configoption_table.sql  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\release_notes.txt  
+Added: C:\INBOX\Dev\inbox2\icms_openid\upgrade\language\english\login.tpl  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\upgrade\language\english\upgrade.php  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\upgrade\check_version.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\upgrade\upd-icms-1.0-to-1.1\settings_db.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\upgrade\upd-icms-1.0-to-1.1\mainfile.dist.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\upgrade\upd-icms-1.0-to-1.1\index.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\upgrade\upd-icms-1.0-to-1.1  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\upgrade\index.php  
+Skipped missing target: C:\INBOX\Dev\inbox2\icms_openid\docs\language_changelog_793-1107.txt  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\docs\changelog.txt  
+[Fixed] Conflicted: C:\INBOX\Dev\inbox2\icms_openid\docs\language_changelog.txt  
+Updated: C:\INBOX\Dev\inbox2\icms_openid\docs\install.html  
+Updated: C:\INBOX\Dev\inbox2\icms_openid  

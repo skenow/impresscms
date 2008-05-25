@@ -9,8 +9,9 @@ define("_MD_AM_SITENAME","Site name");
 define("_MD_AM_SLOGAN","Slogan for your site");
 define("_MD_AM_ADMINML","Admin mail address");
 define("_MD_AM_LANGUAGE","Default language");
-define("_MD_AM_STARTPAGE","Module for your start page");
+define("_MD_AM_STARTPAGE","Module or Page for your start page");
 define("_MD_AM_NONE","None");
+define("_MD_CONTENTMAN","Content Manager");
 define("_MD_AM_SERVERTZ","Server timezone");
 define("_MD_AM_DEFAULTTZ","Default timezone");
 define("_MD_AM_DTHEME","Default theme");
@@ -83,7 +84,7 @@ define('_MD_AM_DEBUGMODE3','Smarty Templates Debug');
 define('_MD_AM_MINUNAME', 'Minimum length of username required');
 define('_MD_AM_MAXUNAME', 'Maximum length of username');
 define('_MD_AM_GENERAL', 'General Settings');
-define('_MD_AM_USERSETTINGS', 'User Info Settings');
+define('_MD_AM_USERSETTINGS', 'User Settings');
 define('_MD_AM_ALLWCHGMAIL', 'Allow users to change email address?');
 define('_MD_AM_ALLWCHGMAILDSC', '');
 define('_MD_AM_IPBAN', 'IP Banning');
@@ -116,10 +117,10 @@ define('_MD_AM_METACOPYR', 'Meta Copyright');
 define('_MD_AM_METACOPYRDSC', 'The copyright meta tag defines any copyright statements you wish to disclose about your web page documents.');
 define('_MD_AM_METADESC', 'Meta Description');
 define('_MD_AM_METADESCDSC', 'The description meta tag is a general description of what is contained in your web page');
-define('_MD_AM_METAFOOTER', 'Meta Tags and Footer');
+define('_MD_AM_METAFOOTER', 'Meta + Footer');
 define('_MD_AM_FOOTER', 'Footer');
 define('_MD_AM_FOOTERDSC', 'Be sure to type links in full path starting from http://, otherwise the links will not work correctly in modules pages.');
-define('_MD_AM_CENSOR', 'Word Censoring Options');
+define('_MD_AM_CENSOR', 'Word Censoring');
 define('_MD_AM_DOCENSOR', 'Enable censoring of unwanted words?');
 define('_MD_AM_DOCENSORDSC', 'Words will be censored if this option is enabled. This option may be turned off for enhanced site speed.');
 define('_MD_AM_CENSORWRD', 'Words to censor');
@@ -185,7 +186,7 @@ define("_MD_AM_THEMEOKDSC","Choose themes that users can select as the default t
 define("_MD_AM_AUTH_CONFOPTION_XOOPS", "ImpressCMS Database");
 define("_MD_AM_AUTH_CONFOPTION_LDAP", "Standard LDAP Directory");
 define("_MD_AM_AUTH_CONFOPTION_AD", "Microsoft Active Directory &copy");
-define("_MD_AM_AUTHENTICATION", "Authentication Options");
+define("_MD_AM_AUTHENTICATION", "Authentication");
 define("_MD_AM_AUTHMETHOD", "Authentication Method");
 define("_MD_AM_AUTHMETHODDESC", "Which authentication method would you like to use for signing on users.");
 define("_MD_AM_LDAP_MAIL_ATTR", "LDAP - Mail Field Name");
@@ -210,21 +211,21 @@ define("_MD_AM_LDAP_MANAGER_PASS_DESC", "The password of the user allow to make 
 define("_MD_AM_LDAP_VERSION", "LDAP Version protocol");
 define("_MD_AM_LDAP_VERSION_DESC", "The LDAP Version protocol : 2 or 3");
 define("_MD_AM_LDAP_USERS_BYPASS", " ImpressCMS User(s) bypass LDAP Authentication");
-define("_MD_AM_LDAP_USERS_BYPASS_DESC", "ImpressCMS User(s) allow to bypass the LDAP login. Login directly in ImpresssCMS<br>Separate each loginname with a |");
+define("_MD_AM_LDAP_USERS_BYPASS_DESC", "ImpressCMS User(s) allow to bypass the LDAP login. Login directly in ImpresssCMS<br />Separate each loginname with a |");
 
 define("_MD_AM_LDAP_USETLS", " Use TLS connection");
-define("_MD_AM_LDAP_USETLS_DESC", "Use a TLS (Transport Layer Security) connection. TLS use standard 389 port number<BR>" .
+define("_MD_AM_LDAP_USETLS_DESC", "Use a TLS (Transport Layer Security) connection. TLS use standard 389 port number<br />" .
 								  " and the LDAP version must be set to 3.");
 
 define("_MD_AM_LDAP_LOGINLDAP_ATTR","LDAP Attribute use to search the user");
 define("_MD_AM_LDAP_LOGINLDAP_ATTR_D","When Login name use in the DN option is set to yes, must correspond to the login name ImpressCMS");
 define("_MD_AM_LDAP_LOGINNAME_ASDN", "Login name use in the DN");
-define("_MD_AM_LDAP_LOGINNAME_ASDN_D", "The ImpressCMS login name is used in the LDAP DN (eg : uid=<loginname>,dc=impresscms,dc=org)<br>The entry is directly read in the LDAP Server without search");
+define("_MD_AM_LDAP_LOGINNAME_ASDN_D", "The ImpressCMS login name is used in the LDAP DN (eg : uid=<loginname>,dc=impresscms,dc=org)<br />The entry is directly read in the LDAP Server without search");
 
 define("_MD_AM_LDAP_FILTER_PERSON", "The search filter LDAP query to find user");
-define("_MD_AM_LDAP_FILTER_PERSON_DESC", "Special LDAP Filter to find user. @@loginname@@ is replaced by the users's login name<br> MUST BE BLANK IF YOU DON'T KNOW WHAT YOU DO' !" .
-		"<br>Ex : (&(objectclass=person)(samaccountname=@@loginname@@)) for AD" .
-		"<br>Ex : (&(objectclass=inetOrgPerson)(uid=@@loginname@@)) for LDAP");
+define("_MD_AM_LDAP_FILTER_PERSON_DESC", "Special LDAP Filter to find user. @@loginname@@ is replaced by the users's login name<br /> MUST BE BLANK IF YOU DON'T KNOW WHAT YOU DO' !" .
+		"<br />Ex : (&(objectclass=person)(samaccountname=@@loginname@@)) for AD" .
+		"<br />Ex : (&(objectclass=inetOrgPerson)(uid=@@loginname@@)) for LDAP");
 
 define("_MD_AM_LDAP_DOMAIN_NAME", "The domain name");
 define("_MD_AM_LDAP_DOMAIN_NAME_DESC", "Windows domain name. for ADS and NT Server only");
@@ -237,19 +238,29 @@ define("_MD_AM_LDAP_PROVIS_GROUP_DSC", "The new user is assigned to these groups
 
 define("_MD_AM_LDAP_FIELD_MAPPING_ATTR", "ImpressCMS-Auth server fields mapping");
 define("_MD_AM_LDAP_FIELD_MAPPING_DESC", "Describe here the mapping between the ImpressCMS database field and the LDAP Authentication system field." .
-		"<br><br>Format [ImpressCMS Database field]=[Auth system LDAP attribute]" .
-		"<br>for example : email=mail" .
-		"<br>Separate each with a |" .
-		"<br><br>!! For advanced users !!");
+		"<br /><br />Format [ImpressCMS Database field]=[Auth system LDAP attribute]" .
+		"<br />for example : email=mail" .
+		"<br />Separate each with a |" .
+		"<br /><br />!! For advanced users !!");
 
 define("_MD_AM_LDAP_PROVIS_UPD", "Maintain ImpressCMS account provisioning");
 define("_MD_AM_LDAP_PROVIS_UPD_DESC", "The ImpressCMS User account is always synchronized with the Authentication Server");
+
+//lang constants for secure password
+define("_MD_AM_PASSLEVEL","Minimum security level");		
+define("_MD_AM_PASSLEVEL_DESC","Define which level of security you want for the user's password. It's recommeded not to set it too low or too strong, be reasonable.");
+define("_MD_AM_PASSLEVEL1","Off(Insecure)");
+define("_MD_AM_PASSLEVEL2","Weak");
+define("_MD_AM_PASSLEVEL3","Reasonable");
+define("_MD_AM_PASSLEVEL4","Strong");
+define("_MD_AM_PASSLEVEL5","Secure");
+define("_MD_AM_PASSLEVEL6","No classification");
 
 define("_MD_AM_RANKW","Rank image max width (pixel)");
 define("_MD_AM_RANKH","Rank image max height (pixel)");
 define("_MD_AM_RANKMAX","Rank image max filesize (byte)");
 
-define("_MD_AM_MULTILANGUAGE","Multilanguage settings");
+define("_MD_AM_MULTILANGUAGE","Multilanguage");
 define("_MD_AM_ML_ENABLE","Enable Multilanguage");
 define("_MD_AM_ML_ENABLEDSC","Set to Yes in order to enable multilanguage throughout the site.");
 define("_MD_AM_ML_TAGS","Multilanguage tags");
@@ -269,4 +280,127 @@ define("_MD_AM_PRIVDPOLICYDSC","The 'Privacy Policy' should be tailored to your 
 define("_MD_AM_PRIVPOLICY","Enter your site 'Privacy Policy'.");
 define("_MD_AM_PRIVPOLICYDSC","");
 
+define("_MD_AM_WELCOMEMSG","Send a welcome message to newly registered user");
+define("_MD_AM_WELCOMEMSGDSC","Send a welcome message to new user when their account gets activated. The content of this message can be configured in the following option.");
+define("_MD_AM_WELCOMEMSG_CONTENT","Content of the welcome message");
+define("_MD_AM_WELCOMEMSG_CONTENTDSC","You can edit the message that is sent to the new user. Note that you can use the following tags: <br /><br />- {UNAME} = username of the user<br />- {X_UEMAIL} = email of the user<br />- {X_ADMINMAIL} = admin email address<br />- {X_SITENAME} = name of the site<br />- {X_SITEURL} = URL of the site");
+
+define("_MD_AM_SEARCH_USERDATE","Show user and date in search results");
+define("_MD_AM_SEARCH_USERDATEDSC","");
+define("_MD_AM_SEARCH_NO_RES_MOD","Show modules with no match in search results");
+define("_MD_AM_SEARCH_NO_RES_MODDSC","");
+define("_MD_AM_SEARCH_PER_PAGE","Item per page in search results");
+define("_MD_AM_SEARCH_PER_PAGEDSC","");
+
+define("_MD_AM_EXT_DATE","Do you want to use an extended/local date function?");
+define("_MD_AM_EXT_DATEDSC","Note: by activating this option, ImpressCMS will use an extended calendar script <b>ONLY</b> if you have this script running on your site.<br />Please visit <a href='http://wiki.impresscms.org/index.php?title=Extended_date_function'>extended date function</a> for more info.");
+
+define("_MD_AM_EDITOR_DEFAULT","Default Editor");
+define("_MD_AM_EDITOR_DEFAULT_DESC","Select the default Editor for all the site.");
+
+define("_MD_AM_EDITOR_ENABLED_LIST","Enabled Editors");
+define("_MD_AM_EDITOR_ENABLED_LIST_DESC","Select the selectable editors by the modules (If the module has a configuration to select the editor.)");
+
+define("_MD_AM_ML_AUTOSELECT_ENABLED","Autoselect the language depending the browser configuration");
+
+define("_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE","Allow anonymous users to see user profiles.");
+
+define("_MD_AM_ENC_TYPE","Change Password Encryption (default is SHA256)");
+define("_MD_AM_ENC_TYPEDSC","Changes the Algorithm used for encrypting user passwords.<br />Changing this will render all passwords invalid! all users will need to reset their passwords after changing this preference");
+define("_MD_AM_ENC_MD5","MD5 (not recommended)");
+define("_MD_AM_ENC_SHA256","SHA 256 (recommended)");
+define("_MD_AM_ENC_SHA384","SHA 384");
+define("_MD_AM_ENC_SHA512","SHA 512");
+define("_MD_AM_ENC_RIPEMD128","RIPEMD 128");
+define("_MD_AM_ENC_RIPEMD160","RIPEMD 160");
+define("_MD_AM_ENC_WHIRLPOOL","WHIRLPOOL");
+define("_MD_AM_ENC_HAVAL1284","HAVAL 128,4");
+define("_MD_AM_ENC_HAVAL1604","HAVAL 160,4");
+define("_MD_AM_ENC_HAVAL1924","HAVAL 192,4");
+define("_MD_AM_ENC_HAVAL2244","HAVAL 224,4");
+define("_MD_AM_ENC_HAVAL2564","HAVAL 256,4");
+define("_MD_AM_ENC_HAVAL1285","HAVAL 128,5");
+define("_MD_AM_ENC_HAVAL1605","HAVAL 160,5");
+define("_MD_AM_ENC_HAVAL1925","HAVAL 192,5");
+define("_MD_AM_ENC_HAVAL2245","HAVAL 224,5");
+define("_MD_AM_ENC_HAVAL2565","HAVAL 256,5");
+
+//Content Manager
+define("_MD_AM_CONTMANAGER","Content Manager");
+define("_MD_AM_DEFAULT_CONTPAGE","Default Page");
+define("_MD_AM_DEFAULT_CONTPAGEDSC","Select the default page to be displayed to the user in Content Manager. Leave blank to have Content Manager default to the most recently created page.");
+define("_MD_AM_CONT_SHOWNAV","Display navigation menu on user side?");
+define("_MD_AM_CONT_SHOWNAVDSC","Select yes to display the Content Manager navigation menu.");
+define("_MD_AM_CONT_SHOWSUBS","Display Related Pages?");
+define("_MD_AM_CONT_SHOWSUBSDSC","Select yes to display related pages links on Content Manager pages.");
+define("_MD_AM_CONT_SHOWPINFO","Show poster and published info?");
+define("_MD_AM_CONT_SHOWPINFODSC","Select yes to show in the page informations about the poster and publish of the page.");
+define("_MD_AM_CONT_ACTSEO","Use menu title instead the id in the url (improve seo)?");
+define("_MD_AM_CONT_ACTSEODSC","Select yes to the value of menu title instead of the id in the url of the page.");
+//Captcha (Security image)
+define('_MD_AM_USECAPTCHA', 'Do you want to use CAPTCHA on registration form?');
+define('_MD_AM_USECAPTCHADSC', 'Select yes to CAPTCHA (anti-spam) up on registration form.');
+define('_MD_AM_USECAPTCHAFORM', 'Do you want to use CAPTCHA on comment forms?');
+define('_MD_AM_USECAPTCHAFORMDSC', 'Select yes to add CAPTCHA (anti-spam) to the comments form, in order to avoid spamming.');
+define('_MD_AM_ALLWHTSIG', 'Allow to dipslay external images and HTML in the signature?');
+define('_MD_AM_ALLWHTSIGDSC', 'If some attackers post an external image using [img], he can know IPs or User-Agents of users visited your site.<br />Allowing HTML can cause Script Insertion vulnerability if malicious user change his/her signature.');
+define('_MD_AM_ALLWSHOWSIG', 'Do you want to allow your users to use a signature on their profile/posts, in your site?');
+define('_MD_AM_ALLWSHOWSIGDSC', 'By enabling this option, users will be able to use a personal signature which will be added (on their own choice) after their posts.');
+// < personalizações > fabio - Sat Apr 28 11:55:00 BRT 2007 11:55:00
+define("_MD_AM_PERSON","Personalization");		
+define("_MD_AM_GOOGLE_ANA","Google Analytics");
+define("_MD_AM_GOOGLE_ANA_DESC","Insert the script informed by Google Analytics for your site. If you don't use it, leave it blank.");
+define("_MD_AM_LLOGOADM","Admin left logo");
+define("_MD_AM_LLOGOADM_DESC"," Select an image to use in the top left corner of the admin panel. <br /><i>To select or send an image, at least one image category must be present in system > images</i> ");
+define("_MD_AM_LLOGOADM_URL","Admin left logo link URL");
+define("_MD_AM_LLOGOADM_ALT","Admin left logo link title");
+define("_MD_AM_RLOGOADM","Admin right logo");
+define("_MD_AM_RLOGOADM_DESC"," Select an image to use in the top right corner of the admin panel. <br /><i>To select or send an image, at least one image category must be present in system > images</i> ");
+define("_MD_AM_RLOGOADM_URL","Admin right logo link URL");
+define("_MD_AM_RLOGOADM_ALT","Admin right logo link title");
+define("_MD_AM_METAGOOGLE","Google Meta Tag");
+define("_MD_AM_METAGOOGLE_DESC","Code generated by Google to confirm ownership about a site so you can see the complete error page stats. Further information at http://www.google.com/webmasters");
+define("_MD_AM_RSSLOCAL","Admin News feed URL");
+define("_MD_AM_RSSLOCAL_DESC","URL of an RSS feed to be displayed under The ImpressCMS Project > News.");
+define("_MD_AM_FOOTADM","Admin Footer");
+define("_MD_AM_FOOTADM_DESC","Content to be shown at footer at the admin pages.");
+define("_MD_AM_EMAILTTF","Font used in email address protection");
+define("_MD_AM_EMAILTTF_DESC","Select which font will be used to generate the email address protection.<br /><i>This option only applies if 'Protect email addresses against SPAM?' is set to Yes.</i>");
+define("_MD_AM_EMAILLEN","Font size used in email address protection");
+define("_MD_AM_EMAILLEN_DESC","<i>This option only applies if 'Protect email addresses against SPAM?' is set to Yes.</i>");
+define("_MD_AM_EMAILCOLOR","Font color used in email address protection");
+define("_MD_AM_EMAILCOLOR_DESC","<i>This option only applies if 'Protect email addresses against SPAM?' is set to Yes.</i>");
+define("_MD_AM_EMAILSOMBRA","Shadow color used in email address protection");
+define("_MD_AM_EMAILSOMBRA_DESC","Choose a color for the shadow of the email address protection.Leave it blank if you don't wish to use any.<br /><i>This option only applies if 'Protect email addresses against SPAM?' is set to Yes.</i>");
+define("_MD_AM_SOMBRAX","X offset of shadow used in email address protection");
+define("_MD_AM_SOMBRAX_DESC","Type in a value (in px)) that will represent the horizontal offset of the shadow in the email protection.<br /><i>This option only applies if 'Shadow color used in email address protection' is not empty.</i>");
+define("_MD_AM_SOMBRAY","Y offset for shadow used in email address protection");
+define("_MD_AM_SOMBRAY_DESC","Type in a value (in px) that will represent the vertical offset of the shadow in the email protection.<br /><i>This option only applies if 'Shadow color used in email address protection' is not empty.</i>");
+define("_MD_AM_EDITREMOVEBLOCK","Edit and Remove blocks from user side?");
+define("_MD_AM_EDITREMOVEBLOCKDSC","By enabling this option, you'll see two icons on block titles with a direct access to remove or edit your block.");
+
+define("_MD_AM_EMAILPROTECT","Protect email addresses against SPAM?");
+define("_MD_AM_EMAILPROTECTDSC","Enabling this option will ensure everytime an email address is dislpayed on the site, it will be protected agains SPAM robots.");
+define("_MD_AM_MULTLOGINPREVENT","Prevent multiple login from same user?");
+define("_MD_AM_MULTLOGINPREVENTDSC","With this option enabled, if a user is already logged in on your site, the same username will not be  able to log another time until the first session is closed.");
+define("_MD_AM_MULTLOGINMSG","Multilogin redirection message:");
+define("_MD_AM_MULTLOGINMSG_DESC","Message that will be displayed to a user who tries to login with a username already loged in on the site. <br><i>This option only applies if 'Prevent multiple login from same user?' is set to Yes.</i>");
+define("_MD_AM_GRAVATARALLOW","Allow using GRAVATAR?");
+define("_MD_AM_GRAVATARALWDSC","By allowing this, user will be able to use their local avatar/gravatar linked to their email address.");
+
+define("_MD_AM_SHOW_ICMSMENU","Show ImpressCMS Project drop down menu?");
+define("_MD_AM_SHOW_ICMSMENU_DESC","Select NO to not show the drop down menu and YES to show it.");
+
+define("_MD_AM_SHORTURL","Truncate long URLs ?");
+define("_MD_AM_SHORTURLDSC","Set this option to Yes if you want all URL posted on your site to be automatically truncated to a certain number of characters. Long URLs, in a forum post for example, can often break the design...");
+define("_MD_AM_URLLEN","URL maximum length");
+define("_MD_AM_URLLEN_DESC","The maximum amount of characters of an URL. Extra characters will be truncated automatically.<br /><i>This option only applies if 'Truncate long URLs ?' is set to Yes.</i>");
+define("_MD_AM_PRECHARS","Amount of starting characters");
+define("_MD_AM_PRECHARS_DESC","How many characters should be displayed at the begining of an URL ?<br /><i>This option only applies if 'Truncate long URLs ?' is set to Yes.</i>");
+define("_MD_AM_LASTCHARS","Amoungt of ending characters");
+define("_MD_AM_LASTCHARS_DESC","How many characters should be displayed at the end of an URL ?<br /><i>This option only applies if 'Truncate long URLs ?' is set to Yes.</i>");
+/*
+define("_MD_AM_AUTORESIZE","Auto resize larger avatars?");
+define("_MD_AM_AUTORESIZE_DESC","If YES, if the avatar sent have the width or height greater than that set will be automatically resized (keeping the ratio of the image) and the upload will be allowed. The function accepts images JPG, PNG and GIF (including animated gif), but yet does not function satisfactorily for animated gifs with transparent background.");
+*/
 ?>

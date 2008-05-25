@@ -1,4 +1,4 @@
-table {
+table.outer {
     width:      100%;
 }
 
@@ -87,7 +87,7 @@ acronym, abbr, dfn {
 	color:							inherit;
 }
 .login_form  .credentials label {
-	display:							inline-block;
+	display:						block;
 	width:							33%;
 	margin:							1px;
 }
@@ -184,12 +184,23 @@ div.cpicon span.unor{
 #http_error_searchform{padding-top: 5px; line-height: 5px; padding-bottom: 0px;}
 #http_error li{color: black; padding-top: 5px; padding-bottom: 5px;}
 
-.openid_url {
-	background-image: url(./images/openid-inputicon.gif);
-	background-repeat: no-repeat;
-	background-attachment: scroll;
-	background-color: #ffffff;
-	background-x-position: 0pt;
-	background-y-position: 50%;
-	padding-left: 18px;
+.ed_block_box {
+	position:absolute;
+	display:none;
+	padding: 5px;
+	background: #FFF;
+	border: 2px solid #000;
+	text-align: left;
+	line-height: 180%;
+	font-size: 11px;
+	font-weight: normal;
+	color: #000;
+	width: 100px;
+}
+.ed_block_box img{
+    vertical-align: middle;
+}
+.ed_block_box a{
+	font-weight: normal;
+	color: #000;
 }

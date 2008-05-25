@@ -18,7 +18,6 @@ function $() {
 }
 }
 
-	
 function xoopsGetElementById(id){
 	return $(id);
 }
@@ -67,7 +66,7 @@ function setElementSize(id, size){
 
 function changeDisplay(id){
 	var elestyle = xoopsGetElementById(id).style;
-	if (elestyle.display == "") {
+	if (elestyle.display == "block") {
 		elestyle.display = "none";
 	} else {
 		elestyle.display = "block";
@@ -306,7 +305,23 @@ function xoopsCodeQuote(id, enterQuotePhrase){
 	}
 	domobj.focus();
 }
-
+function xoopsCodeHidden(id,enterHiddenPhrase){
+    if (enterHiddenPhrase == null) {
+        enterHiddenPhrase = "Enter The Text To Be Hidden:";
+    }
+    var text = prompt(enterHiddenPhrase, "");
+    var domobj = xoopsGetElementById(id);
+    if ( text != null && text != "" ) {
+        var pos = text.indexOf(unescape('%00'));
+        if(0 < pos){
+            text = text.substr(0,pos);
+        }
+        var result = "[hide]" + text + "[/hide]";
+        xoopsInsertText(domobj, result);
+    }
+        
+domobj.focus();
+}
 function xoopsCodeCode(id, enterCodePhrase){
 	if (enterCodePhrase == null) {
 		enterCodePhrase = "Enter the codes that you want to add.";
@@ -412,7 +427,14 @@ function xoopsValidate(subjectId, textareaId, submitId, plzCompletePhrase, msgTo
 	}
 }
 
-
-
-
-
+function icms_showDiv(type,id,classname){
+	divs = document.getElementsByTagName('div');
+	for (i=0; i<divs.length;i++){
+		if (/classname/.test(divs[i].className)){
+			divs[i].style.display = 'none';
+		}
+	}
+	if (!id)id = '';
+	changeDisplay(type+id);
+	document.anchors.item(type+id+'_anchor').scrollIntoView();
+}

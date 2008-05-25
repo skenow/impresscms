@@ -1,34 +1,18 @@
 <?php
-/** ---------------------------------------------------------------------------
-*  $Id: sdata.dist.php 356 2007-12-24 19:08:37Z malanciault $
-*  ---------------------------------------------------------------------------
+/**
+* All information in order to connect to database are going through here.
 *
-*  Project: ImpressCMS <http://www.impresscms.org/>
+* Be careful if you are changing data's in this file.
 *
-*  ImpressCMS is derived from XOOPS 2.0.17.1
-*  <http://www.xoops.org/> Copyright (c) 2000-2007 XOOPS.org
-*  Subsequent changes and additions: Copyright (c) 2007 ImpressCMS
-*
-*  ---------------------------------------------------------------------------
-*  This program is free software; you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation; either version 2 of the License, or
-*  (at your option) any later version.
-*
-*  You may not change or alter any portion of this comment or credits
-*  of supporting developers from this source code or any supporting
-*  source code which is considered copyrighted (c) material of the
-*  original comment or credit authors.
-*
-*  This program is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  You should have received a copy of the GNU General Public License
-*  along with this program; if not, write to the Free Software
-*  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
-*  ---------------------------------------------------------------------------
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @package		Installer
+* @since		1.0
+* @author		marcan <marcan@impresscms.org>
+* @author		modified by stranger <stranger@impresscms.ir>
+* @version		$Id$
 */
 
 // Database Hostname
@@ -47,4 +31,12 @@ define('SDATA_DB_PASS', '');
 // The name of database on the host. The installer will attempt to create the database if not exist
 define('SDATA_DB_NAME', '');
 
+// Table Prefix
+// This prefix will be added to all new tables created to avoid name conflict in the database. If you are unsure, just use the default 'icms'
+define('SDATA_DB_PREFIX', '');
+
+// Password Salt Key $mainSalt
+// This salt will be appended to passwords in the icms_encryptPass() function.
+// Do NOT change this once your site is Live, doing so will invalidate everyones Password.
+define('SDATA_DB_SALT', '');
 ?>
