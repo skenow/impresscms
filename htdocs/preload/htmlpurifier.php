@@ -35,18 +35,5 @@ class IcmsPreloadHTMLPurifier extends IcmsPreloadItem
 		}
 	}
 	
-	function eventFinishCoreBoot() {
-		var $purifier;
-		$config = HTMLPurifier_Config::createDefault();
-		if(@is_dir(ICMS_TRUST_PATH.'/cache/htmlpurifier/configs'))
-		{
-			$config->set('Cache', 'SerializerPath', ICMS_TRUST_PATH.'/cache/htmlpurifier/configs');
-		}
-		else
-		{
-			$config->set('Cache', 'SerializerPath', ICMS_ROOT_PATH.'/cache');
-		}
-		$config->set('Core', 'Encoding', _CHARSET);
-	}
 }
 ?>
