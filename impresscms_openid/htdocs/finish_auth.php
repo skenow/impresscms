@@ -15,7 +15,7 @@ $member_handler = xoops_gethandler('member');
 include_once ICMS_ROOT_PATH.'/class/auth/authfactory.php';
 include_once ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/auth.php';
 
-$xoopsAuth =& XoopsAuthFactory::getAuthConnection($myts->addSlashes($uname));
+$xoopsAuth =& XoopsAuthFactory::getAuthConnection();
 $user = $xoopsAuth->authenticate($openid_debug);
 
 if ($xoopsAuth->errorOccured()) {
@@ -33,14 +33,7 @@ switch($xoopsAuth->step) {
 		$xoopsTpl->assign('cid', $xoopsAuth->openid);
 		$xoopsTpl->assign('uname', isset($sreg['nickname']) ? $sreg['nickname'] : '');
 		$xoopsTpl->assign('email', isset($sreg['email']) ? $sreg['email'] : '');
-		$xoopsTpl->assign('existinguser',_OD_EXISTINGUSER);
-		$xoopsTpl->assign('loginbelow',_OD_LOGINBELOW);
-		$xoopsTpl->assign('xoopsuname', _OD_XOOPSUNAME);
-		$xoopsTpl->assign('xoopspass', _OD_XOOPSPASS);
-		$xoopsTpl->assign('nonmember', _OD_NONMEMBER);
-		$xoopsTpl->assign('enterwantedname', _OD_ENTERWANTEDNAME);
-		$xoopsTpl->assign('screenamelabel', _OD_SCREENNAMELABEL);
-		$xoopsTpl->assign('youropenid', _OD_YOUR_OPENID);
+
 		include_once ICMS_ROOT_PATH.'/footer.php';
 	break;
 	
