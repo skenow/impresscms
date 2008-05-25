@@ -117,11 +117,11 @@ if ( $op == "confirm" ) {
             echo $weight[$mid];
         }
         echo "
-        <input type='hidden' name='module[]' value='".$mid."' />
+        <input type='hidden' name='module[]' value='".intval($mid)."' />
         <input type='hidden' name='oldname[".$mid."]' value='".htmlspecialchars($oldname[$mid], ENT_QUOTES)."' />
         <input type='hidden' name='newname[".$mid."]' value='".htmlspecialchars($newname[$mid], ENT_QUOTES)."' />
-        <input type='hidden' name='oldstatus[".$mid."]' value='".$oldstatus[$mid]."' />
-        <input type='hidden' name='newstatus[".$mid."]' value='".$newstatus[$mid]."' />
+        <input type='hidden' name='oldstatus[".$mid."]' value='".intval($oldstatus[$mid])."' />
+        <input type='hidden' name='newstatus[".$mid."]' value='".intval($newstatus[$mid])."' />
         <input type='hidden' name='oldweight[".$mid."]' value='".intval($oldweight[$mid])."' />
         <input type='hidden' name='weight[".$mid."]' value='".intval($weight[$mid])."' />
         </td></tr>";
@@ -179,7 +179,7 @@ if ($op == 'install') {
     if ($mod->getInfo('image') != false && trim($mod->getInfo('image')) != '') {
         $msgs ='<img src="'.XOOPS_URL.'/modules/'.$mod->getVar('dirname').'/'.trim($mod->getInfo('image')).'" alt="" />';
     }
-    $msgs .= '<br /><span style="font-size:smaller;";>'.$mod->getVar('name').'</span><br /><br />'._MD_AM_RUSUREINS;
+    $msgs .= '<br /><span style="font-size:smaller;">'.$mod->getVar('name').'</span><br /><br />'._MD_AM_RUSUREINS;
     xoops_cp_header();
     xoops_confirm(array('module' => $module, 'op' => 'install_ok', 'fct' => 'modulesadmin'), 'admin.php', $msgs, _MD_AM_INSTALL);
     xoops_cp_footer();
@@ -212,7 +212,7 @@ if ($op == 'uninstall') {
     if ($mod->getInfo('image') != false && trim($mod->getInfo('image')) != '') {
         $msgs ='<img src="'.XOOPS_URL.'/modules/'.$mod->getVar('dirname').'/'.trim($mod->getInfo('image')).'" alt="" />';
     }
-    $msgs .= '<br /><span style="font-size:smaller;";>'.$mod->getVar('name').'</span><br /><br />'._MD_AM_RUSUREUNINS;
+    $msgs .= '<br /><span style="font-size:smaller;">'.$mod->getVar('name').'</span><br /><br />'._MD_AM_RUSUREUNINS;
     xoops_cp_header();
     xoops_confirm(array('module' => $module, 'op' => 'uninstall_ok', 'fct' => 'modulesadmin'), 'admin.php', $msgs, _YES);
     xoops_cp_footer();
@@ -245,7 +245,7 @@ if ($op == 'update') {
     if ($mod->getInfo('image') != false && trim($mod->getInfo('image')) != '') {
         $msgs ='<img src="'.XOOPS_URL.'/modules/'.$mod->getVar('dirname').'/'.trim($mod->getInfo('image')).'" alt="" />';
     }
-    $msgs .= '<br /><span style="font-size:smaller;";>'.$mod->getVar('name').'</span><br /><br />'._MD_AM_RUSUREUPD;
+    $msgs .= '<br /><span style="font-size:smaller;">'.$mod->getVar('name').'</span><br /><br />'._MD_AM_RUSUREUPD;
     xoops_cp_header();
     xoops_confirm(array('dirname' => $module, 'op' => 'update_ok', 'fct' => 'modulesadmin'), 'admin.php', $msgs, _MD_AM_UPDATE);
     xoops_cp_footer();
@@ -256,9 +256,9 @@ if ($op == 'update_ok') {
 	$dirname = trim($dirname);
     $module_handler =& xoops_gethandler('module');
     $module =& $module_handler->getByDirname($dirname);
+    
     // Save current version for use in the update function
     $prev_version = $module->getVar('version');
-   // var_dump($module);
     include_once XOOPS_ROOT_PATH.'/class/template.php';
     xoops_template_clear_module_cache($module->getVar('mid'));
     // we dont want to change the module name set by admin
@@ -318,7 +318,7 @@ if ($op == 'update_ok') {
                             if (!xoops_template_touch($newid)) {
                                 $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not recompile template <b>'.$tpl['file'].'</b>.</span>';
                             } else {
-                                $msgs[] = '&nbsp;&nbsp;Template <b>'.$tpl['file'].'</b> recompiled.</span>';
+                                $msgs[] = '&nbsp;&nbsp;<span>Template <b>'.$tpl['file'].'</b> recompiled.</span>';
                             }
                         }
                     }
@@ -372,7 +372,7 @@ if ($op == 'update_ok') {
                                 if (count($tplfile) == 0) {
                                     $tplfile_new =& $tplfile_handler->create();
                                     $tplfile_new->setVar('tpl_module', $dirname);
-                                    $tplfile_new->setVar('tpl_refid', $fblock['bid']);
+                                    $tplfile_new->setVar('tpl_refid', intval($fblock['bid']));
                                     $tplfile_new->setVar('tpl_tplset', 'default');
                                     $tplfile_new->setVar('tpl_file', $blocks[$i]['template'], true);
                                     $tplfile_new->setVar('tpl_type', 'block');
@@ -415,8 +415,8 @@ if ($op == 'update_ok') {
                             $gperm_handler =& xoops_gethandler('groupperm');
                             foreach ($groups as $mygroup) {
                                 $bperm =& $gperm_handler->create();
-                                $bperm->setVar('gperm_groupid', $mygroup);
-                                $bperm->setVar('gperm_itemid', $newbid);
+                                $bperm->setVar('gperm_groupid', intval($mygroup));
+                                $bperm->setVar('gperm_itemid', intval($newbid));
                                 $bperm->setVar('gperm_name', 'block_read');
                                 $bperm->setVar('gperm_modid', 1);
                                 if (!$gperm_handler->insert($bperm)) {
@@ -429,7 +429,7 @@ if ($op == 'update_ok') {
                             if ($template != '') {
                                 $tplfile =& $tplfile_handler->create();
                                 $tplfile->setVar('tpl_module', $dirname);
-                                $tplfile->setVar('tpl_refid', $newbid);
+                                $tplfile->setVar('tpl_refid', intval($newbid));
                                 $tplfile->setVar('tpl_source', $content, true);
                                 $tplfile->setVar('tpl_tplset', 'default');
                                 $tplfile->setVar('tpl_file', $blocks[$i]['template'], true);
@@ -452,7 +452,7 @@ if ($op == 'update_ok') {
                                 }
                             }
                             $msgs[] = '&nbsp;&nbsp;Block <b>'.$blocks[$i]['name'].'</b> created. Block ID: <b>'.$newbid.'</b>';
-                            $sql = "INSERT INTO ".$xoopsDB->prefix('block_module_link')." (block_id, module_id) VALUES ('".$newbid."', '-1')";
+                            $sql = "INSERT INTO ".$xoopsDB->prefix('block_module_link')." (block_id, module_id) VALUES ('".intval($newbid)."', '-1')";
                             $xoopsDB->query($sql);
                         }
                     }
@@ -565,7 +565,7 @@ if ($op == 'update_ok') {
                 // only insert ones that have been deleted previously with success
                 if (!in_array($config['name'], $config_delng)) {
                     $confobj =& $config_handler->createConfig();
-                    $confobj->setVar('conf_modid', $newmid);
+                    $confobj->setVar('conf_modid', intval($newmid));
                     $confobj->setVar('conf_catid', 0);
                     $confobj->setVar('conf_name', $config['name']);
                     $confobj->setVar('conf_title', $config['title'], true);

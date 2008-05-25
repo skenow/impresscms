@@ -36,10 +36,10 @@ class XoopsLogger {
 
     var $usePopup = false;
     var $activated = true;
-
+    
 	/**@access protected*/
     var $renderingEnabled = false;
-
+    
     function XoopsLogger() {
     }
     /**
@@ -68,6 +68,15 @@ class XoopsLogger {
     		$this->renderingEnabled = true;
 		}
     }
+    /**
+     * Disable logger output rendering.
+     */
+    function disableRendering() {
+		if ( $this->renderingEnabled ) {
+    		$this->renderingEnabled = false;
+		}
+    }
+
 	/**
 	 * Returns the current microtime in seconds.
 	 * @return float
@@ -122,7 +131,7 @@ class XoopsLogger {
 
 	/**
 	 * Error handling callback (called by the zend engine)
-	 */
+	 */  
     function handleError( $errno, $errstr, $errfile, $errline ) {
     	$errstr = $this->sanitizePath( $errstr );
     	$errfile = $this->sanitizePath( $errfile );
@@ -148,7 +157,7 @@ class XoopsLogger {
 					if ( isset( $step['file'] ) ) {
 						echo $this->sanitizePath( $step['file'] );
 						echo ' (' . $step['line'] . ")\n<br />";
-					}
+					}					
 				}
 				echo '</div>';
 			}
@@ -159,24 +168,30 @@ class XoopsLogger {
 	 * @access protected
 	 */
 	function sanitizePath( $path ) {
-		$path = str_replace(
+		$path = str_replace( 
 			array( '\\', XOOPS_ROOT_PATH, str_replace( '\\', '/', realpath( XOOPS_ROOT_PATH ) ) ),
 			array( '/', '', '' ),
 			$path
-		);
+		);		
 		return $path;
 	}
-
+	
 	/**
 	 * Output buffering callback inserting logger dump in page output
 	 */
 	function render( $output ) {
-		global $xoopsUser;
-		if ( !$this->activated || !$xoopsUser || !$xoopsUser->isAdmin() ) {
+		global $xoopsUser,$xoopsModule;
+
+	    $groups   = (is_object($xoopsUser)) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+		$moduleid = (isset($xoopsModule) && is_object($xoopsModule)) ? $xoopsModule->mid() : 1;
+
+		$gperm_handler =& xoops_gethandler('groupperm');
+
+		if ( !$this->activated || !$gperm_handler->checkRight('enable_debug', $moduleid, $groups) ) {
 			return $output;
 		}
 		$this->renderingEnabled = $this->activated = false;
-
+		
 		$log = $this->dump( $this->usePopup ? 'popup' : '' );
 
 		$pattern = '<!--{xo-logger-output}-->';

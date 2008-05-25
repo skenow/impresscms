@@ -114,6 +114,7 @@ CREATE TABLE `block_positions` (
 CREATE TABLE block_module_link (
   block_id mediumint(8) unsigned NOT NULL default '0',
   module_id smallint(5) NOT NULL default '0',
+  page_id smallint(5) NOT NULL default '0',
   KEY module_id (module_id),
   KEY block_id (block_id)
 ) TYPE=MyISAM;
@@ -149,6 +150,41 @@ CREATE TABLE xoopscomments (
   KEY com_itemid (com_itemid),
   KEY com_uid (com_uid),
   KEY com_title (com_title(40))
+) TYPE=MyISAM;
+# --------------------------------------------------------
+
+#
+# Table structure for table icmscontent
+#
+CREATE TABLE icmscontent (
+  content_id mediumint(8) unsigned NOT NULL auto_increment,
+  content_catid mediumint(8) unsigned NOT NULL default '1',
+  content_supid mediumint(8) unsigned NOT NULL default '0',
+  content_uid mediumint(5) NOT NULL default '1',
+  content_title varchar(255) NOT NULL default '',
+  content_menu varchar(100) default NULL,
+  content_body text,
+  content_css text,
+  content_visibility int(10) NOT NULL default '3',
+  content_created int(10) NOT NULL default '0',
+  content_updated int(10) NOT NULL default '0',
+  content_weight smallint(5) unsigned NOT NULL default '0',
+  content_reads int(11) NOT NULL default '0',
+  content_status tinyint(1) unsigned NOT NULL default '0',
+  PRIMARY KEY  (content_id)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+
+#
+# Table structure for table icmspage
+#
+CREATE TABLE icmspage (
+  page_id mediumint(8) unsigned NOT NULL auto_increment,
+  page_moduleid mediumint(8) unsigned NOT NULL default '1',
+  page_title varchar(255) NOT NULL default '',
+  page_url varchar(255) NOT NULL default '',
+  page_status tinyint(1) unsigned NOT NULL default '1',
+  PRIMARY KEY  (page_id)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
@@ -359,7 +395,7 @@ CREATE TABLE imgsetimg (
 CREATE TABLE modules (
   mid smallint(5) unsigned NOT NULL auto_increment,
   name varchar(150) NOT NULL default '',
-  version smallint(5) unsigned NOT NULL default '100',
+  version smallint(5) unsigned NOT NULL default '102',
   last_update int(10) unsigned NOT NULL default '0',
   weight smallint(3) unsigned NOT NULL default '0',
   isactive tinyint(1) unsigned NOT NULL default '0',
@@ -370,7 +406,7 @@ CREATE TABLE modules (
   hasconfig tinyint(1) unsigned NOT NULL default '0',
   hascomments tinyint(1) unsigned NOT NULL default '0',
   hasnotification tinyint(1) unsigned NOT NULL default '0',
-  dbversion int(11) unsigned NOT NULL default '0',
+  dbversion int(11) unsigned NOT NULL default '1',
   PRIMARY KEY  (mid),
   KEY hasmain (hasmain),
   KEY hasadmin (hasadmin),
@@ -547,20 +583,20 @@ CREATE TABLE tplsource (
 CREATE TABLE users (
   uid mediumint(8) unsigned NOT NULL auto_increment,
   name varchar(60) NOT NULL default '',
-  uname varchar(25) NOT NULL default '',
-  email varchar(60) NOT NULL default '',
-  url varchar(100) NOT NULL default '',
+  uname varchar(255) NOT NULL default '',
+  email varchar(255) NOT NULL default '',
+  url varchar(255) NOT NULL default '',
   user_avatar varchar(30) NOT NULL default 'blank.gif',
   user_regdate int(10) unsigned NOT NULL default '0',
   user_icq varchar(15) NOT NULL default '',
   user_from varchar(100) NOT NULL default '',
-  user_sig tinytext NOT NULL,
+  user_sig text NOT NULL,
   user_viewemail tinyint(1) unsigned NOT NULL default '0',
   actkey varchar(8) NOT NULL default '',
   user_aim varchar(18) NOT NULL default '',
   user_yim varchar(25) NOT NULL default '',
   user_msnm varchar(100) NOT NULL default '',
-  pass varchar(32) NOT NULL default '',
+  pass varchar(100) NOT NULL default '',
   posts mediumint(8) unsigned NOT NULL default '0',
   attachsig tinyint(1) unsigned NOT NULL default '0',
   rank smallint(5) unsigned NOT NULL default '0',
@@ -577,11 +613,12 @@ CREATE TABLE users (
   user_intrest varchar(150) NOT NULL default '',
   user_mailok tinyint(1) unsigned NOT NULL default '1',
   language varchar(100) NOT NULL default '',
+  salt varchar(255) NOT NULL default '',
   PRIMARY KEY  (uid),
   KEY uname (uname),
   KEY email (email),
   KEY uiduname (uid,uname),
-  KEY unamepass (uname,pass)
+  KEY unamepass (uname(10),pass(10))
 ) TYPE=MyISAM;
 
 #
@@ -600,4 +637,18 @@ CREATE TABLE invites (
   PRIMARY KEY (invite_id),
   KEY invite_code (invite_code),
   KEY register_id (register_id)
+) TYPE=MyISAM;
+
+#
+# Table structure for table `system_customtag`
+#
+
+CREATE TABLE system_customtag (
+  customtagid int(11) unsigned NOT NULL auto_increment,
+  name varchar(255) NOT NULL default '',
+  description text NOT NULL default '',
+  content text NOT NULL default '',
+  language varchar(100) NOT NULL default '',
+  customtag_type tinyint(1) NOT NULL default 0,
+  PRIMARY KEY (customtagid)
 ) TYPE=MyISAM;

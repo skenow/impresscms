@@ -114,6 +114,10 @@ class XoopsConfigItem extends XoopsObject
         }
     }
 
+
+
+
+
     /**
      * Set a config value
      *
@@ -138,6 +142,10 @@ class XoopsConfigItem extends XoopsObject
         }
     }
 
+
+
+
+
     /**
      * Assign one or more {@link XoopsConfigItemOption}s
      *
@@ -157,6 +165,10 @@ class XoopsConfigItem extends XoopsObject
         }
     }
 
+
+
+
+
     /**
      * Get the {@link XoopsConfigItemOption}s of this Config
      *
@@ -169,6 +181,9 @@ class XoopsConfigItem extends XoopsObject
 }
 
 
+
+
+
 /**
 * XOOPS configuration handler class.
 *
@@ -177,6 +192,8 @@ class XoopsConfigItem extends XoopsObject
 *
 * @author       Kazumi Ono <onokazu@xoops.org>
 * @copyright    copyright (c) 2000-2003 XOOPS.org
+* @package     kernel
+* @subpackage  config
 */
 class XoopsConfigItemHandler extends XoopsObjectHandler
 {
@@ -196,6 +213,9 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
         }
         return $config;
     }
+
+
+
 
     /**
      * Load a config from the database
@@ -222,8 +242,11 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
         return $config;
     }
 
+
+
+
     /**
-     * Write a config to the database
+     * Insert a config to the database
      *
      * @param	object  &$config    {@link XoopsConfigItem} object
      * @return  mixed   FALSE on fail.
@@ -261,6 +284,9 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
         return true;
     }
 
+
+
+
     /**
      * Delete a config from the database
      *
@@ -281,6 +307,9 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
         }
         return true;
     }
+
+
+
 
     /**
      * Get configs from the database
@@ -316,6 +345,9 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
         }
         return $ret;
     }
+
+
+
 
     /**
      * Count configs
