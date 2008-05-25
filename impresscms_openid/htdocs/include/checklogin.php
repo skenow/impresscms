@@ -35,10 +35,14 @@ if (!defined('XOOPS_ROOT_PATH')) {
 include_once XOOPS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/user.php';
 $uname = !isset($_POST['uname']) ? '' : trim($_POST['uname']);
 $pass = !isset($_POST['pass']) ? '' : trim($_POST['pass']);
-if ($uname == '' || $pass == '') {
+
+/**
+ * Commented out for OpenID , we need to change it to make a better validation if OpenID is used
+ */
+/*if ($uname == '' || $pass == '') {
     redirect_header(XOOPS_URL.'/user.php', 1, _US_INCORRECTLOGIN);
     exit();
-}
+}*/
 $member_handler =& xoops_gethandler('member');
 $myts =& MyTextsanitizer::getInstance();
 
@@ -47,6 +51,7 @@ include_once XOOPS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/auth.php';
 $xoopsAuth =& XoopsAuthFactory::getAuthConnection($myts->addSlashes($uname));
 //$user = $xoopsAuth->authenticate($myts->addSlashes($uname), $myts->addSlashes($pass));
 // uname&email hack GIJ
+
 $uname4sql = addslashes( $myts->stripSlashesGPC($uname) ) ;
 $pass4sql = addslashes( $myts->stripSlashesGPC($pass) ) ;
 if( strstr( $uname , '@' ) ) {

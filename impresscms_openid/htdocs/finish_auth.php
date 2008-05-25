@@ -1,4 +1,9 @@
 <?php
+/**
+ * Set this to true to troubleshoot OpenID login
+ */
+$openid_debug = false;
+
 define('ICMS_INCLUDE_OPENID', true);
 $xoopsOption['pagetype'] = 'user';
 include_once("mainfile.php");
@@ -11,7 +16,7 @@ include_once XOOPS_ROOT_PATH.'/class/auth/authfactory.php';
 include_once XOOPS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/auth.php';
 
 $xoopsAuth =& XoopsAuthFactory::getAuthConnection($myts->addSlashes($uname));
-$user = $xoopsAuth->authenticate();
+$user = $xoopsAuth->authenticate($openid_debug);
 
 if ($xoopsAuth->errorOccured()) {
 	redirect_header($redirect_url, 3, $xoopsAuth->getHtmlErrors());

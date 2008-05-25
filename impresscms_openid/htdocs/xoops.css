@@ -204,3 +204,12 @@ div.cpicon span.unor{
 	font-weight: normal;
 	color: #000;
 }
+.openid_url {
+	background-image: url(./images/openid-inputicon.gif);
+	background-repeat: no-repeat;
+	background-attachment: scroll;
+	background-color: #ffffff;
+	background-x-position: 0pt;
+	background-y-position: 50%;
+	padding-left: 18px;
+}

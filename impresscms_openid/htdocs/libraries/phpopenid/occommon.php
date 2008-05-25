@@ -9,7 +9,7 @@
 // This file is based on JanRain's Library example. 
 -------------------------------------------------------- */
 $path_extra = dirname(__FILE__);
-$path_extra2 = ICMS_LIBRARIES_ROOT_PATH . "/phpopenid/";
+$path_extra2 = ICMS_LIBRARIES_PATH . "/phpopenid/";
 $path = ini_get('include_path');
 $path = $path_extra2 . PATH_SEPARATOR . $path_extra . PATH_SEPARATOR . $path;
 
