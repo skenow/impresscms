@@ -39,6 +39,7 @@ define('ICMS_ROOT_PATH', XOOPS_ROOT_PATH);
 define('ICMS_URL', XOOPS_URL);
 define('ICMS_TRUST_PATH', XOOPS_TRUST_PATH);
 define('ICMS_PRELOAD_PATH', XOOPS_ROOT_PATH . '/preload');
+define('ICMS_PURIFIER_CACHE', ICMS_ROOT_PATH.'/cache/htmlpurifier/configs');
 
 // ################# Creation of the IcmsPreloadHandler ##############
 include_once ICMS_ROOT_PATH . '/kernel/icmspreloadhandler.php';
