@@ -741,7 +741,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'show_pinfo', '_MD_AM_CONT_SHOWPINFO', '1', '_MD_AM_CONT_SHOWPINFODSC', 'yesno', 'int', $p)");
 
 
-	// Data for Config Category 10 (Personalisation Settings)
+	// Data for Config Category 10 (Personalization Settings)
 	$c=10; // sets config category id
 	$i++;
 	$p=0;

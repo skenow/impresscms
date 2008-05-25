@@ -347,7 +347,7 @@ define('_MD_AM_ALLWHTSIGDSC', 'If some attackers post an external image using [i
 define('_MD_AM_ALLWSHOWSIG', 'Do you want to allow your users to use a signature on their profile/posts, in your site?');
 define('_MD_AM_ALLWSHOWSIGDSC', 'By enabling this option, users will be able to use a personal signature which will be added (on their own choice) after their posts.');
 // < personalizações > fabio - Sat Apr 28 11:55:00 BRT 2007 11:55:00
-define("_MD_AM_PERSON","Personalisation");		
+define("_MD_AM_PERSON","Personalization");		
 define("_MD_AM_GOOGLE_ANA","Google Analytics");
 define("_MD_AM_GOOGLE_ANA_DESC","Insert the script informed by Google Analytics for your site. If you don't use it, leave it blank.");
 define("_MD_AM_LLOGOADM","Admin left logo");

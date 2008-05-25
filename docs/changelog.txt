@@ -1,6 +1,12 @@
 ImpressCMS ChangeLog
 
 =============================================
+Unreleased : ImpressCMS 1.1 Alpha 1
+=============================================
+
+- Changed : Small change with the term "Personalization" instead of "Personalisation" (malanciault)
+
+=============================================
 2008-05-22 : ImpressCMS 1.1 Alpha 1
 =============================================
 
