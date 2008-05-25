@@ -12,8 +12,8 @@ $redirect_url = $_SESSION['frompage'];
 $myts = MyTextSanitizer::getInstance();
 $member_handler = xoops_gethandler('member');
 
-include_once XOOPS_ROOT_PATH.'/class/auth/authfactory.php';
-include_once XOOPS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/auth.php';
+include_once ICMS_ROOT_PATH.'/class/auth/authfactory.php';
+include_once ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/auth.php';
 
 $xoopsAuth =& XoopsAuthFactory::getAuthConnection($myts->addSlashes($uname));
 $user = $xoopsAuth->authenticate($openid_debug);
@@ -25,7 +25,7 @@ if ($xoopsAuth->errorOccured()) {
 switch($xoopsAuth->step) {
 	case OPENID_STEP_NO_USER_FOUND:
 		$xoopsOption['template_main'] = 'system_openid.html';
-		include_once(XOOPS_ROOT_PATH . "/header.php");
+		include_once(ICMS_ROOT_PATH . "/header.php");
 		
 		$sreg=$_SESSION['openid_sreg'];
 		
@@ -41,7 +41,7 @@ switch($xoopsAuth->step) {
 		$xoopsTpl->assign('enterwantedname', _OD_ENTERWANTEDNAME);
 		$xoopsTpl->assign('screenamelabel', _OD_SCREENNAMELABEL);
 		$xoopsTpl->assign('youropenid', _OD_YOUR_OPENID);
-		include_once XOOPS_ROOT_PATH.'/footer.php';
+		include_once ICMS_ROOT_PATH.'/footer.php';
 	break;
 	
 	case OPENID_STEP_REGISTER:
@@ -53,13 +53,13 @@ switch($xoopsAuth->step) {
 		$_SESSION['openid_step'] = OPENID_STEP_NO_USER_FOUND;
 		
 		$sreg=$_SESSION['openid_sreg'];
-		include_once(XOOPS_ROOT_PATH.'/header.php');
+		include_once(ICMS_ROOT_PATH.'/header.php');
 	
 		/**
 		 * @todo this is only temporary and it needs to be included in the template as a javascript check
 		 */
 		if (empty($_POST['email']) || empty($_POST['uname'])) {
-			redirect_header(XOOPS_URL . '/finish_auth.php', 3, 'email and username are mandatory');
+			redirect_header(ICMS_URL . '/finish_auth.php', 3, 'email and username are mandatory');
 		}
 		
 		$email = addslashes($_POST['email']) ;
@@ -69,7 +69,7 @@ switch($xoopsAuth->step) {
 		 * @todo use the related UserConfigOption
 		 */
 		if (strlen($uname)<3 ){ // Username too short.
-			redirect_header(XOOPS_URL . '/finish_auth.php', 3, _US_OPENID_NEW_USER_UNAME_TOO_SHORT);
+			redirect_header(ICMS_URL . '/finish_auth.php', 3, _US_OPENID_NEW_USER_UNAME_TOO_SHORT);
 		}
 	
 		// checking if this uname is available
@@ -78,7 +78,7 @@ switch($xoopsAuth->step) {
 		$users =& $user_handler->getObjects($criteria, false);
 		
 		if (is_array($users) && count($users) > 0) {
-			redirect_header(XOOPS_URL . '/finish_auth.php', 3, _US_OPENID_NEW_USER_UNAME_EXISTS);
+			redirect_header(ICMS_URL . '/finish_auth.php', 3, _US_OPENID_NEW_USER_UNAME_EXISTS);
 		}
 	
 		$name = addslashes($myts->stripSlashesGPC(utf8_decode($sreg['fullname'])));
@@ -121,7 +121,7 @@ switch($xoopsAuth->step) {
 			$xoopsMailer->assign('NAME', $sreg['fullname']);
 			$xoopsMailer->assign('UNAME', $sreg['nickname']);
 			$xoopsMailer->assign('X_UEMAIL', $sreg['email']);
-			$xoopsMailer->assign('SITEURL', XOOPS_URL . "/");
+			$xoopsMailer->assign('SITEURL', ICMS_URL . "/");
 			$xoopsMailer->assign('ADMINMAIL', $xoopsConfig['adminmail']);
 			$xoopsMailer->setToEmails($sreg['email']);
 			$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
@@ -139,7 +139,7 @@ switch($xoopsAuth->step) {
 				$xoopsMailer->assign('NAME', $sreg['fullname']);
 				$xoopsMailer->assign('UNAME', $sreg['nickname']);
 				$xoopsMailer->assign('X_UEMAIL', $sreg['email']);
-				$xoopsMailer->assign('SITEURL', XOOPS_URL . "/");
+				$xoopsMailer->assign('SITEURL', ICMS_URL . "/");
 				$xoopsMailer->setToGroups($member_handler->getGroup($xoopsConfigUser['new_user_notify_group']));
 				$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
 				$xoopsMailer->setFromName($xoopsConfig['sitename']);
@@ -155,7 +155,7 @@ switch($xoopsAuth->step) {
 			$xoopsMailer->assign('NAME', $sreg['fullname']);
 			$xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
 			$xoopsMailer->assign('ADMINMAIL', $xoopsConfig['adminmail']);
-			$xoopsMailer->assign('SITEURL', XOOPS_URL . "/");
+			$xoopsMailer->assign('SITEURL', ICMS_URL . "/");
 			$xoopsMailer->setToUsers(new XoopsUser($newid));
 			$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
 			$xoopsMailer->setFromName($xoopsConfig['sitename']);
@@ -169,7 +169,7 @@ switch($xoopsAuth->step) {
 				$xoopsMailer->assign('NAME', $sreg['fullname']);
 				$xoopsMailer->assign('UNAME', $sreg['nickname']);
 				$xoopsMailer->assign('X_UEMAIL', $sreg['email']);
-				$xoopsMailer->assign('SITEURL', XOOPS_URL . "/");
+				$xoopsMailer->assign('SITEURL', ICMS_URL . "/");
 				$xoopsMailer->setToGroups($member_handler->getGroup($xoopsConfigUser['new_user_notify_group']));
 				$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
 				$xoopsMailer->setFromName($xoopsConfig['sitename']);
@@ -185,10 +185,10 @@ switch($xoopsAuth->step) {
 			$xoopsMailer->assign('NAME', $sreg['fullname']);
 			$xoopsMailer->assign('USERNAME', $sreg['nickname']);
 			$xoopsMailer->assign('USEREMAIL', $sreg['email']);
-			$xoopsMailer->assign('USERACTLINK', XOOPS_URL . '/user.php?op=actv&id=' . $newid . '&actkey=' . $actkey);
+			$xoopsMailer->assign('USERACTLINK', ICMS_URL . '/user.php?op=actv&id=' . $newid . '&actkey=' . $actkey);
 			$xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
 			$xoopsMailer->assign('ADMINMAIL', $xoopsConfig['adminmail']);
-			$xoopsMailer->assign('SITEURL', XOOPS_URL . "/");
+			$xoopsMailer->assign('SITEURL', ICMS_URL . "/");
 			$member_handler = & xoops_gethandler('member');
 			$xoopsMailer->setToGroups($member_handler->getGroup($xoopsConfigUser['activation_group']));
 			$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
@@ -206,7 +206,7 @@ switch($xoopsAuth->step) {
 				$xoopsMailer->assign('NAME', $sreg['fullname']);
 				$xoopsMailer->assign('UNAME', $sreg['nickname']);
 				$xoopsMailer->assign('X_UEMAIL', $sreg['email']);
-				$xoopsMailer->assign('SITEURL', XOOPS_URL . "/");
+				$xoopsMailer->assign('SITEURL', ICMS_URL . "/");
 				$xoopsMailer->setToGroups($member_handler->getGroup($xoopsConfigUser['new_user_notify_group']));
 				$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
 				$xoopsMailer->setFromName($xoopsConfig['sitename']);
@@ -226,7 +226,7 @@ switch($xoopsAuth->step) {
 		$newUser->setVar('timesone_offset', $xoopsConfig['default_TZ']);
 		$newUser->setVar('openid', $xoopsAuth->openid);
 		if (!$member_handler->insertUser($newUser)) {
-			redirect_header(XOOPS_URL . '/finish_auth.php', 3, _US_OPENID_NEW_USER_CANNOT_INSERT . ' ' . $newUser->getHtmlErrors());
+			redirect_header(ICMS_URL . '/finish_auth.php', 3, _US_OPENID_NEW_USER_CANNOT_INSERT . ' ' . $newUser->getHtmlErrors());
 		}
 	
 		// Now, add the user to the group.
@@ -273,7 +273,7 @@ switch($xoopsAuth->step) {
 		/**
 		 * Linking an existing user with this openid
 		 */
-		include_once(XOOPS_ROOT_PATH.'/header.php');
+		include_once(ICMS_ROOT_PATH.'/header.php');
 		
 		$uname4sql = addslashes($myts->stripSlashesGPC($_POST['uname'])) ;
 		$pass4sql = addslashes( $myts->stripSlashesGPC($_POST['pass']) ) ;
