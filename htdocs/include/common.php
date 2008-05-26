@@ -78,8 +78,8 @@ global $xoopsLogger, $xoopsErrorHandler;
 include_once XOOPS_ROOT_PATH . '/class/logger.php';
 $xoopsLogger =& XoopsLogger::instance();
 $xoopsErrorHandler =& $xoopsLogger;
-$xoopsLogger->startTime();
-$xoopsLogger->startTime( 'XOOPS Boot' );
+$xoopsLogger->startTime('ICMS');
+$xoopsLogger->startTime( 'ICMS Boot' );
 
 define("XOOPS_SIDEBLOCK_LEFT",1);
 define("XOOPS_SIDEBLOCK_RIGHT",2);
@@ -462,6 +462,6 @@ if (file_exists('./xoops_version.php')) {
 // ################# Preload Trigger finishCoreBoot ##############
 $icmsPreloadHandler->triggerEvent('finishCoreBoot');
 
-$xoopsLogger->stopTime( 'XOOPS Boot' );
+$xoopsLogger->stopTime( 'ICMS Boot' );
 $xoopsLogger->startTime( 'Module init' );
 ?>
