@@ -170,12 +170,19 @@ class MyTextSanitizer
 		//$replacements[] = "'<div class=\"xoopsCode\"><code><pre>'.wordwrap(MyTextSanitizer::htmlSpecialChars('\\1'), 100).'</pre></code></div>'";
 		// RMV: added new markup for intrasite url (allows easier site moves)
 		// TODO: automatically convert other URLs to this format if ICMS_URL matches??
-		$patterns[] = "/\[hide](.*)\[\/hide\]/sU";
+			$config_handler =& xoops_gethandler('config');
+			$xoopsConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
+        if ($xoopsConfigPersona['use_hidden'] == 1) {
+        $patterns[] = "/\[hide](.*)\[\/hide\]/sU";
 		if($_SESSION['xoopsUserId']) {
 		$replacements[] = _HIDDENC.'<div class="xoopsQuote">\\1</div>';
 		}
 		else {
 		$replacements[] = _HIDDENC.'<div class="xoopsQuote">'._HIDDENTEXT.'</div>';
+		}
+		}else{
+        $patterns[] = "/\[hide](.*)\[\/hide\]/sU";
+		$replacements[] = '\\1';
 		}
 		$patterns[] = "/\[siteurl=(['\"]?)([^\"'<>]*)\\1](.*)\[\/siteurl\]/sU";
 		$replacements[] = '<a href="'.ICMS_URL.'/\\2">\\3</a>';

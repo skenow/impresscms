@@ -787,13 +787,13 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'email_cor', '_MD_AM_EMAILCOLOR', '#000000', '_MD_AM_EMAILCOLOR_DESC', 'color', 'text', $p)");
 	$i++;
 	$p++;
-	$dbm->insert('config', " VALUES ($i, 0, $c, 'email_sombra', '_MD_AM_EMAILSOMBRA', '#cccccc', '_MD_AM_EMAILSOMBRA_DESC', 'color', 'text', $p)");
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'email_shadow', '_MD_AM_EMAILSHADOW', '#cccccc', '_MD_AM_EMAILSHADOW_DESC', 'color', 'text', $p)");
 	$i++;
 	$p++;
-	$dbm->insert('config', " VALUES ($i, 0, $c, 'sombra_x', '_MD_AM_SOMBRAX', '2', '_MD_AM_SOMBRAX_DESC', 'textbox', 'int', $p)");
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'shadow_x', '_MD_AM_SHADOWX', '2', '_MD_AM_SHADOWX_DESC', 'textbox', 'int', $p)");
 	$i++;
 	$p++;
-	$dbm->insert('config', " VALUES ($i, 0, $c, 'sombra_y', '_MD_AM_SOMBRAY', '2', '_MD_AM_SOMBRAY_DESC', 'textbox', 'int', $p)");
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'shadow_y', '_MD_AM_SHADOWY', '2', '_MD_AM_SHADOWY_DESC', 'textbox', 'int', $p)");
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'shorten_url', '_MD_AM_SHORTURL', '0', '_MD_AM_SHORTURLDSC', 'yesno', 'int', $p)");
@@ -809,6 +809,9 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'show_impresscms_menu', '_MD_AM_SHOW_ICMSMENU', '1', '_MD_AM_SHOW_ICMSMENU_DESC', 'yesno', 'int', $p)");
+	$i++;
+	$p++;
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'use_hidden', '_MD_AM_HIDDENCONTENT', '0', '_MD_AM_HIDDENCONTENTDSC', 'yesno', 'int', $p)");
 
     return $gruops;
 }
