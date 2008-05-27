@@ -328,7 +328,14 @@ class MyTextSanitizer
 		else {
 			// html allowed - sanitize with html purifier
 			$config = HTMLPurifier_Config::createDefault();
-			$config->set('Cache', 'SerializerPath', ICMS_PURIFIER_CACHE);
+			if(is_dir(ICMS_PURIFIER_CACHE)
+			{
+				$config->set('Cache', 'SerializerPath', ICMS_PURIFIER_CACHE);
+			}
+			else
+			{
+				$config->set('Cache', 'SerializerPath', ICMS_ROOT_PATH.'/cache');
+			}
 			$config->set('Core', 'Encoding', _CHARSET);
 			$config->set('HTML', 'Doctype', 'XHTML 1.0 Transitional');
 			$config->set('HTML', 'TidyLevel', 'medium'); // takes code and turns deprecated tags into valid tags (depends on doctype)
@@ -385,7 +392,14 @@ class MyTextSanitizer
 		else {
 			// html allowed - sanitize with html purifier
 			$config = HTMLPurifier_Config::createDefault();
-			$config->set('Cache', 'SerializerPath', XOOPS_TRUST_PATH.'/cache/htmlpurifier/configs');
+			if(is_dir(ICMS_PURIFIER_CACHE)
+			{
+				$config->set('Cache', 'SerializerPath', ICMS_PURIFIER_CACHE);
+			}
+			else
+			{
+				$config->set('Cache', 'SerializerPath', ICMS_ROOT_PATH.'/cache');
+			}
 			$config->set('Core', 'Encoding', _CHARSET);
 			$config->set('HTML', 'Doctype', 'XHTML 1.0 Transitional');
 			$config->set('HTML', 'TidyLevel', 'medium'); // takes code and turns deprecated tags into valid tags (depends on doctype)
