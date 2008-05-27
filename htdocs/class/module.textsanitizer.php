@@ -328,7 +328,7 @@ class MyTextSanitizer
 		else {
 			// html allowed - sanitize with html purifier
 			$config = HTMLPurifier_Config::createDefault();
-			if(is_dir(ICMS_PURIFIER_CACHE)
+			if(is_dir(ICMS_PURIFIER_CACHE))
 			{
 				$config->set('Cache', 'SerializerPath', ICMS_PURIFIER_CACHE);
 			}
@@ -392,7 +392,7 @@ class MyTextSanitizer
 		else {
 			// html allowed - sanitize with html purifier
 			$config = HTMLPurifier_Config::createDefault();
-			if(is_dir(ICMS_PURIFIER_CACHE)
+			if(is_dir(ICMS_PURIFIER_CACHE))
 			{
 				$config->set('Cache', 'SerializerPath', ICMS_PURIFIER_CACHE);
 			}
