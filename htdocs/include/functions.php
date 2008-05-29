@@ -184,6 +184,9 @@ function formatTimestamp($time, $format="l", $timeoffset="")
     case 'rss':
         $datestring = "r";
         break;
+    case 'y':
+        $datestring = "Y";
+        break;
     case 'l':
         $datestring = _DATESTRING;
         break;
