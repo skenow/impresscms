@@ -125,9 +125,6 @@ class XoopsFormTinymce extends XoopsFormTextArea
 			$language = strtolower(constant("_XOOPS_EDITOR_TINYMCE_LANGUAGE"));
 		}else{
 			$language = str_replace('-', '_', strtolower($this->_language));
-			if(strtolower(_CHARSET) == "utf-8") {
-				$language .= "_utf8";
-			}
 		}
 		
 		return $language;
