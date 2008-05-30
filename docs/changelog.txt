@@ -24,7 +24,7 @@ Unreleased : ImpressCMS 1.1 Alpha 1
 - Fixed : #1964812 - e-mail protection and userinfo.php. (stranger)
 - Fixed : #1964440 - e-mail protection and content. (stranger)
 - Fixed : #1971202 - Hide Salt Key on step 9. (vaughan)
-- Fixed : Missing constant: "_BRDCRMB_SEP", changed to : "_BRDDRMB_SEP". (stranger)
+- Fixed : Corrected language constant: "_BRDDRMB_SEP", changed to : "_BRDCRMB_SEP". (stranger/skenow)
 
 =============================================
 2008-05-22 : ImpressCMS 1.1 Alpha 1

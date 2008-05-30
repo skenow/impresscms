@@ -117,6 +117,7 @@ language/english/global.php
 +  define('_HIDDENC', 'Hidden Content:');
 +  define('_HIDDENTEXT', 'This content is hidden for anonymous users, please <a href="'.ICMS_URL.'/register.php" title="Registeration at ' . htmlspecialchars ( $xoopsConfig ['sitename'], ENT_QUOTES ) . '">register</a> to be able to see it.');
 +  define("_ENTERHIDDEN","Enter the text that you want to be hidden for anonymous users.");
++  define('_BRDCRMB_SEP','&nbsp;:&nbsp;')
 
 language/english/moduleabout.php
 --------------------------------
@@ -397,7 +398,6 @@ modules/system/language/english/admin/blocksadmin.php
 +  define( "_SYS_NEED_UPGRADE", "In order to Complete the upgrade proccess, please click here, and upgrade system module." );
 
 
-
 ==========================================
 ImpressCMS 1.0 (changes from XOOPS 2.0.17)
 ==========================================
@@ -435,7 +435,6 @@ language/english/auth.php
 +  define('_IMPRESSCMS_PREFS','Preferences');
 +  define('_SYSTEM','System');
 +  define('_IMPRESSCMS_NEWS','News');
-+  define('_BRDCRMB_SEP','&nbsp;:&nbsp;')
 
 language/english/pmsg.php
 --------------------------

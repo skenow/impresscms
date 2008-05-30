@@ -236,7 +236,7 @@ class XoopsTree
    * @param string $separator Allows custom designation of separator in linked path
    * $return string $path                  
    */    
-    function getNicePathFromId($sel_id, $title, $funcURL, $path='', $separator=_BRDDRMB_SEP)
+    function getNicePathFromId($sel_id, $title, $funcURL, $path='', $separator=_BRDCRMB_SEP)
     {
         $path = !empty($path) ? $separator.$path : $path;
         $sel_id = intval($sel_id);
