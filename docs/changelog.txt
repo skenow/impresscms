@@ -31,6 +31,8 @@ Unreleased : ImpressCMS 1.1 Alpha 1
 - Fixed : #1964823 - Content Manager > Title to display in Smartcontent. (real_therplima)
 - Fixed : #1968362 - Defines duplicated in two files blocksadmin and blocspadim. (real_therplima)
 
+- Removed : All language files of phpmailer, except English, have been removed. (stranger)
+
 =============================================
 2008-05-22 : ImpressCMS 1.1 Alpha 1
 =============================================
