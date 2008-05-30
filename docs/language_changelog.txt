@@ -85,7 +85,7 @@ install/language/english/welcome.php
 # Directory: language
 =====================
 
-+  libraries/captcha/language/english.php (added)
++  language/english/captcha.php (added)
 --------------------------------------
 
 +  language/english/databaseupdater.php  (added)
@@ -174,13 +174,6 @@ newuser_notify.tpl
 
 +- register.tpl (modified to use {X_ADMINMAIL} and not {ADMINMAIL})
 
-
-==============================
-# Directory: libraries (added)
-==============================
-
-+  libraries/captcha/language/english.php
------------------------------------------
 
 =============================================
 # Directory: modules/system/language/english/
