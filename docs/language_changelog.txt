@@ -362,6 +362,10 @@ modules/system/language/english/admin/blocksadmin.php
 +  modules/system/language/english/admin/content.php
 ---------------------------------------------------------
 
++-define('_MD_CONTENT_MENU','SEO ID');
++-define('_MD_CONTENT_MENU_DSC','Use a short phrase or word related to the content of the page. The content of this field will be used in place of the page ID to improve the indexing in search engines.');
+
+
 +  modules/system/language/english/admin/blockspadmin.php
 ---------------------------------------------------------
 
