@@ -17,7 +17,8 @@ include_once ICMS_ROOT_PATH.'/class/xoopsblock.php';
 
 //global $xoopsLogger;
 
-if ( !isset( $xoopsLogger ) ) {		$xoopsLogger =& $GLOBALS['xoopsLogger'];	}
+if ( !isset( $xoopsLogger ) ) { $xoopsLogger =& $GLOBALS['xoopsLogger']; }
+if ( !isset( $icmsPreloadHandler ) ) { $icmsPreloadHandler =& $GLOBALS['icmsPreloadHandler'];	}
 
 $xoopsLogger->stopTime( 'Module init' );
 $xoopsLogger->startTime( 'ICMS output init' );
