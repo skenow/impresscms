@@ -36,6 +36,7 @@ Unreleased : ImpressCMS 1.1 Alpha 1
 - Fixed : #1980999 - 1st Update in Multilanguage (undefined _MD_AM_DBUPDATED). (stranger)
 - Fixed : #1982512 - Undefined message in file /pmlite.php line 134. (stranger)
 - Fixed : #1982601 - Signature length needs to be defined by users. (stranger)
+- Fixed : #1871202 - Avatar and Karma. (stranger)
 
 - Removed : All language files of phpmailer, except English, have been removed. (stranger)
 
