@@ -34,6 +34,7 @@ Unreleased : ImpressCMS 1.1 Alpha 1
 - Fixed : #1964824 - tinymce does not use a language file. (real_therplima)
 - Fixed : #1980853 - Backend > Personalisation > JavaScript Error. (real_therplima)
 - Fixed : #1980999 - 1st Update in Multilanguage (undefined _MD_AM_DBUPDATED). (stranger)
+- Fixed : #1982512 - Undefined message in file /pmlite.php line 134. (stranger)
 
 - Removed : All language files of phpmailer, except English, have been removed. (stranger)
 
