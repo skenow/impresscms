@@ -58,6 +58,20 @@ class MyTextSanitizer
 
 	}
 
+	// sets default config settings for htmpurifier
+	// html allowed - sanitize with html purifier
+	$icms_PurifyConfig = HTMLPurifier_Config::createDefault();
+	if(is_dir(ICMS_PURIFIER_CACHE))
+	{
+		$icms_PurifyConfig->set('Cache', 'SerializerPath', ICMS_PURIFIER_CACHE);
+	}
+	else
+	{
+		$icms_PurifyConfig->set('Cache', 'SerializerPath', ICMS_ROOT_PATH.'/cache');
+	}
+	$icms_PurifyConfig->set('Core', 'Encoding', _CHARSET);
+	$icms_PurifyConfig->set('HTML', 'Doctype', 'XHTML 1.0 Transitional');
+
 	/**
 	 * Access the only instance of this class
      *
@@ -299,9 +313,14 @@ class MyTextSanitizer
 	 * @param   string  $text
 	 * @return  string
 	 **/
-	function undoHtmlSpecialChars( $text )
+	function undoHtmlSpecialChars( $text ) // not needed with PHP 5.1, use htmlspecialchars_decode() instead
 	{
 		return preg_replace(array("/&gt;/i", "/&lt;/i", "/&quot;/i", "/&#039;/i", '/&amp;nbsp;/i'), array(">", "<", "\"", "'", "&nbsp;"), $text);
+	}
+
+	function icms_htmlEntities($text)
+	{
+		return preg_replace(array("/&amp;/i", "/&nbsp;/i"), array('&', '&amp;nbsp;'), htmlentities($text, ENT_QUOTES));
 	}
 
 	/**
@@ -323,24 +342,12 @@ class MyTextSanitizer
 		
 		if ($html != 1) {
 			// html not allowed
-			$text = $this->htmlSpecialChars($text);
+			$text = $this->icms_htmlEntities($text);
 		}
 		else {
-			// html allowed - sanitize with html purifier
-			$config = HTMLPurifier_Config::createDefault();
-			if(is_dir(ICMS_PURIFIER_CACHE))
-			{
-				$config->set('Cache', 'SerializerPath', ICMS_PURIFIER_CACHE);
-			}
-			else
-			{
-				$config->set('Cache', 'SerializerPath', ICMS_ROOT_PATH.'/cache');
-			}
-			$config->set('Core', 'Encoding', _CHARSET);
-			$config->set('HTML', 'Doctype', 'XHTML 1.0 Transitional');
-			$config->set('HTML', 'TidyLevel', 'medium'); // takes code and turns deprecated tags into valid tags (depends on doctype)
+			$icms_PurifyConfig->set('HTML', 'TidyLevel', 'medium'); // takes code and turns deprecated tags into valid tags (depends on doctype), cleans malicious code.
 
-			$this->purifier = new HTMLPurifier($config);
+			$this->purifier = new HTMLPurifier($icms_PurifyConfig);
 
 			$text = $this->purifier->purify($text);
 		}
@@ -387,24 +394,12 @@ class MyTextSanitizer
 		$text = $this->stripSlashesGPC($text);
 		if ($html != 1) {
 			// html not allowed
-			$text = $this->htmlSpecialChars($text);
+			$text = $this->icms_htmlEntities($text);
 		}
 		else {
-			// html allowed - sanitize with html purifier
-			$config = HTMLPurifier_Config::createDefault();
-			if(is_dir(ICMS_PURIFIER_CACHE))
-			{
-				$config->set('Cache', 'SerializerPath', ICMS_PURIFIER_CACHE);
-			}
-			else
-			{
-				$config->set('Cache', 'SerializerPath', ICMS_ROOT_PATH.'/cache');
-			}
-			$config->set('Core', 'Encoding', _CHARSET);
-			$config->set('HTML', 'Doctype', 'XHTML 1.0 Transitional');
-			$config->set('HTML', 'TidyLevel', 'medium'); // takes code and turns deprecated tags into valid tags (depends on doctype)
+			$icms_PurifyConfig->set('HTML', 'TidyLevel', 'medium'); // takes code and turns deprecated tags into valid tags (depends on doctype), cleans malicious code.
 
-			$this->purifier = new HTMLPurifier($config);
+			$this->purifier = new HTMLPurifier($icms_PurifyConfig);
 
 			$text = $this->purifier->purify($text);
 		}
