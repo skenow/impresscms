@@ -97,9 +97,9 @@ if ($op == 'saveuser') {
  		if ($xoopsConfigUser['allwshow_sig'] == 1) {
         if ($xoopsConfigUser['allow_htsig'] == 0) {
 		$signature = strip_tags($myts->xoopsCodeDecode($_POST['user_sig'], 1));
-        $edituser->setVar('user_sig', xoops_substr($signature, 0, 1000));
+        $edituser->setVar('user_sig', xoops_substr($signature, 0, intval($xoopsConfigUser['sig_max_length'])));
         }elseif ($xoopsConfigUser['allwshow_sig'] == 1) {
-        $edituser->setVar('user_sig', xoops_substr($_POST['user_sig'], 0, 1000));
+        $edituser->setVar('user_sig', xoops_substr($_POST['user_sig'], 0, intval($xoopsConfigUser['sig_max_length'])));
         }}
         $user_viewemail = (!empty($_POST['user_viewemail'])) ? 1 : 0;
         $edituser->setVar('user_viewemail', $user_viewemail);
