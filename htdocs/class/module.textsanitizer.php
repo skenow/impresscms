@@ -55,22 +55,7 @@ class MyTextSanitizer
 	*/
 	function MyTextSanitizer()
 	{
-
 	}
-
-	// sets default config settings for htmpurifier
-	// html allowed - sanitize with html purifier
-	$icms_PurifyConfig = HTMLPurifier_Config::createDefault();
-	if(is_dir(ICMS_PURIFIER_CACHE))
-	{
-		$icms_PurifyConfig->set('Cache', 'SerializerPath', ICMS_PURIFIER_CACHE);
-	}
-	else
-	{
-		$icms_PurifyConfig->set('Cache', 'SerializerPath', ICMS_ROOT_PATH.'/cache');
-	}
-	$icms_PurifyConfig->set('Core', 'Encoding', _CHARSET);
-	$icms_PurifyConfig->set('HTML', 'Doctype', 'XHTML 1.0 Transitional');
 
 	/**
 	 * Access the only instance of this class
@@ -345,6 +330,19 @@ class MyTextSanitizer
 			$text = $this->icms_htmlEntities($text);
 		}
 		else {
+			// sets default config settings for htmpurifier
+			// html allowed - sanitize with html purifier
+			$icms_PurifyConfig = HTMLPurifier_Config::createDefault();
+			if(is_dir(ICMS_PURIFIER_CACHE))
+			{
+				$icms_PurifyConfig->set('Cache', 'SerializerPath', ICMS_PURIFIER_CACHE);
+			}
+			else
+			{
+				$icms_PurifyConfig->set('Cache', 'SerializerPath', ICMS_ROOT_PATH.'/cache');
+			}
+			$icms_PurifyConfig->set('Core', 'Encoding', _CHARSET);
+			$icms_PurifyConfig->set('HTML', 'Doctype', 'XHTML 1.0 Transitional');
 			$icms_PurifyConfig->set('HTML', 'TidyLevel', 'medium'); // takes code and turns deprecated tags into valid tags (depends on doctype), cleans malicious code.
 
 			$this->purifier = new HTMLPurifier($icms_PurifyConfig);
@@ -397,6 +395,19 @@ class MyTextSanitizer
 			$text = $this->icms_htmlEntities($text);
 		}
 		else {
+			// sets default config settings for htmpurifier
+			// html allowed - sanitize with html purifier
+			$icms_PurifyConfig = HTMLPurifier_Config::createDefault();
+			if(is_dir(ICMS_PURIFIER_CACHE))
+			{
+				$icms_PurifyConfig->set('Cache', 'SerializerPath', ICMS_PURIFIER_CACHE);
+			}
+			else
+			{
+				$icms_PurifyConfig->set('Cache', 'SerializerPath', ICMS_ROOT_PATH.'/cache');
+			}
+			$icms_PurifyConfig->set('Core', 'Encoding', _CHARSET);
+			$icms_PurifyConfig->set('HTML', 'Doctype', 'XHTML 1.0 Transitional');
 			$icms_PurifyConfig->set('HTML', 'TidyLevel', 'medium'); // takes code and turns deprecated tags into valid tags (depends on doctype), cleans malicious code.
 
 			$this->purifier = new HTMLPurifier($icms_PurifyConfig);
