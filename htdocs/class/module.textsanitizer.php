@@ -56,6 +56,7 @@ class MyTextSanitizer
 	function MyTextSanitizer()
 	{
 
+	}
 
 	// sets default config settings for htmpurifier
 	// html allowed - sanitize with html purifier
@@ -70,7 +71,6 @@ class MyTextSanitizer
 	}
 	$icms_PurifyConfig->set('Core', 'Encoding', _CHARSET);
 	$icms_PurifyConfig->set('HTML', 'Doctype', 'XHTML 1.0 Transitional');
-	}
 
 	/**
 	 * Access the only instance of this class
