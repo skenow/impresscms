@@ -316,7 +316,7 @@ if ($op == 'avatarform') {
     $form2->addElement(new XoopsFormButton('', 'submit2', _SUBMIT, 'submit'));
     $form2->display();
     include ICMS_ROOT_PATH.'/footer.php';
-    }elseif ($xoopsConfigUser['avatar_allow_upload'] == 1 && $xoopsUser->getVar('posts') <= $xoopsConfigUser['avatar_minposts']) {
+    }elseif ($xoopsConfigUser['avatar_allow_upload'] == 1 && $xoopsUser->getVar('posts') < $xoopsConfigUser['avatar_minposts']) {
     $avatar_handler =& xoops_gethandler('avatar');
     $form2 = new XoopsThemeForm(_US_CHOOSEAVT, 'uploadavatar', 'edituser.php', 'post', true);
     $avatar_select = new XoopsFormSelect('', 'user_avatar', $xoopsUser->getVar('user_avatar'));
