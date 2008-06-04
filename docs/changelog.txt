@@ -1,7 +1,7 @@
 ImpressCMS ChangeLog
 
 =============================================
-Unreleased : ImpressCMS 1.1 Alpha 1
+Unreleased : ImpressCMS 1.1 Alpha 2
 =============================================
 
 - Added: New encryption methods, admin can now select from multiple PW encryptions, such as: SHA256, SHA384, SHA512, Whirlpool etc. (vaughan)
