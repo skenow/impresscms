@@ -570,10 +570,7 @@ CREATE TABLE users (
   user_mailok tinyint(1) unsigned NOT NULL default '1',
   language varchar(100) NOT NULL default '',
   PRIMARY KEY  (uid),
-  KEY uname (uname),
-  KEY email (email),
-  KEY uiduname (uid,uname),
-  KEY unamepass (uname,pass)
+  UNIQUE KEY uname (uname),
 ) TYPE=MyISAM;
 
 #
