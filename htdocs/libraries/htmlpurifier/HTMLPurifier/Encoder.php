@@ -15,6 +15,11 @@ class HTMLPurifier_Encoder
     }
     
     /**
+     * Error-handler that mutes errors, alternative to shut-up operator.
+     */
+    private static function muteErrorHandler() {}
+    
+    /**
      * Cleans a UTF-8 string for well-formedness and SGML validity
      * 
      * It will parse according to UTF-8 and return a valid UTF8 string, with
@@ -57,9 +62,18 @@ class HTMLPurifier_Encoder
         static $iconv = null;
         if ($iconv === null) $iconv = function_exists('iconv');
         
+        // UTF-8 validity is checked since PHP 4.3.5
+        // This is an optimization: if the string is already valid UTF-8, no
+        // need to do iconv/php stuff. 99% of the time, this will be the case.
+        if (preg_match('/^.{1}/us', $str)) {
+            return strtr($str, $non_sgml_chars);
+        }
+        
         if ($iconv && !$force_php) {
             // do the shortcut way
-            $str = @iconv('UTF-8', 'UTF-8//IGNORE', $str);
+            set_error_handler(array('HTMLPurifier_Encoder', 'muteErrorHandler'));
+            $str = iconv('UTF-8', 'UTF-8//IGNORE', $str);
+            restore_error_handler();
             return strtr($str, $non_sgml_chars);
         }
         
@@ -267,9 +281,15 @@ class HTMLPurifier_Encoder
         $encoding = $config->get('Core', 'Encoding');
         if ($encoding === 'utf-8') return $str;
         if ($iconv && !$config->get('Test', 'ForceNoIconv')) {
-            return @iconv($encoding, 'utf-8//IGNORE', $str);
+            set_error_handler(array('HTMLPurifier_Encoder', 'muteErrorHandler'));
+            $str = iconv($encoding, 'utf-8//IGNORE', $str);
+            restore_error_handler();
+            return $str;
         } elseif ($encoding === 'iso-8859-1') {
-            return @utf8_encode($str);
+            set_error_handler(array('HTMLPurifier_Encoder', 'muteErrorHandler'));
+            $str = utf8_encode($str);
+            restore_error_handler();
+            return $str;
         }
         trigger_error('Encoding not supported', E_USER_ERROR);
     }
@@ -288,9 +308,15 @@ class HTMLPurifier_Encoder
             $str = HTMLPurifier_Encoder::convertToASCIIDumbLossless($str);
         }
         if ($iconv && !$config->get('Test', 'ForceNoIconv')) {
-            return @iconv('utf-8', $encoding . '//IGNORE', $str);
+            set_error_handler(array('HTMLPurifier_Encoder', 'muteErrorHandler'));
+            $str = iconv('utf-8', $encoding . '//IGNORE', $str);
+            restore_error_handler();
+            return $str;
         } elseif ($encoding === 'iso-8859-1') {
-            return @utf8_decode($str);
+            set_error_handler(array('HTMLPurifier_Encoder', 'muteErrorHandler'));
+            $str = utf8_decode($str);
+            restore_error_handler();
+            return $str;
         }
         trigger_error('Encoding not supported', E_USER_ERROR);
     }

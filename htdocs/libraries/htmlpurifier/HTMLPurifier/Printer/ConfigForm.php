@@ -55,14 +55,14 @@ class HTMLPurifier_Printer_ConfigForm extends HTMLPurifier_Printer
     /**
      * Retrieves styling, in case it is not accessible by webserver
      */
-    public function getCSS() {
+    public static function getCSS() {
         return file_get_contents(HTMLPURIFIER_PREFIX . '/HTMLPurifier/Printer/ConfigForm.css');
     }
     
     /**
      * Retrieves JavaScript, in case it is not accessible by webserver
      */
-    public function getJavaScript() {
+    public static function getJavaScript() {
         return file_get_contents(HTMLPURIFIER_PREFIX . '/HTMLPurifier/Printer/ConfigForm.js');
     }
     
@@ -86,8 +86,8 @@ class HTMLPurifier_Printer_ConfigForm extends HTMLPurifier_Printer
         $ret .= $this->start('table', array('class' => 'hp-config'));
         $ret .= $this->start('thead');
         $ret .= $this->start('tr');
-            $ret .= $this->element('th', 'Directive');
-            $ret .= $this->element('th', 'Value');
+            $ret .= $this->element('th', 'Directive', array('class' => 'hp-directive'));
+            $ret .= $this->element('th', 'Value', array('class' => 'hp-value'));
         $ret .= $this->end('tr');
         $ret .= $this->end('thead');
         foreach ($all as $ns => $directives) {
@@ -194,6 +194,10 @@ class HTMLPurifier_Printer_ConfigForm_NullDecorator extends HTMLPurifier_Printer
             'id' => "$name:Null_$ns.$directive",
             'onclick' => "toggleWriteability('$name:$ns.$directive',checked)" // INLINE JAVASCRIPT!!!!
         );
+        if ($this->obj instanceof HTMLPurifier_Printer_ConfigForm_bool) {
+            // modify inline javascript slightly
+            $attr['onclick'] = "toggleWriteability('$name:Yes_$ns.$directive',checked);toggleWriteability('$name:No_$ns.$directive',checked)";
+        }
         if ($value === null) $attr['checked'] = 'checked';
         $ret .= $this->elementEmpty('input', $attr);
         $ret .= $this->text(' or ');
@@ -291,7 +295,8 @@ class HTMLPurifier_Printer_ConfigForm_bool extends HTMLPurifier_Printer {
             'id' => "$name:Yes_$ns.$directive",
             'value' => '1'
         );
-        if ($value) $attr['checked'] = 'checked';
+        if ($value === true) $attr['checked'] = 'checked';
+        if ($value === null) $attr['disabled'] = 'disabled';
         $ret .= $this->elementEmpty('input', $attr);
         
         $ret .= $this->start('label', array('for' => "$name:No_$ns.$directive"));
@@ -305,7 +310,8 @@ class HTMLPurifier_Printer_ConfigForm_bool extends HTMLPurifier_Printer {
             'id' => "$name:No_$ns.$directive",
             'value' => '0'
         );
-        if (!$value) $attr['checked'] = 'checked';
+        if ($value === false) $attr['checked'] = 'checked';
+        if ($value === null) $attr['disabled'] = 'disabled';
         $ret .= $this->elementEmpty('input', $attr);
                 
         $ret .= $this->end('div');

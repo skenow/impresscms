@@ -7,7 +7,7 @@
  * primary concern and you are using an opcode cache. PLEASE DO NOT EDIT THIS
  * FILE, changes will be overwritten the next time the script is run.
  * 
- * @version 3.0.0
+ * @version 3.1.0
  * 
  * @warning
  *      You must *not* include any other HTML Purifier files before this file,
@@ -41,7 +41,6 @@ require 'HTMLPurifier/ElementDef.php';
 require 'HTMLPurifier/Encoder.php';
 require 'HTMLPurifier/EntityLookup.php';
 require 'HTMLPurifier/EntityParser.php';
-require 'HTMLPurifier/Error.php';
 require 'HTMLPurifier/ErrorCollector.php';
 require 'HTMLPurifier/Exception.php';
 require 'HTMLPurifier/Filter.php';
@@ -82,6 +81,7 @@ require 'HTMLPurifier/AttrDef/CSS/BackgroundPosition.php';
 require 'HTMLPurifier/AttrDef/CSS/Border.php';
 require 'HTMLPurifier/AttrDef/CSS/Color.php';
 require 'HTMLPurifier/AttrDef/CSS/Composite.php';
+require 'HTMLPurifier/AttrDef/CSS/DenyElementDecorator.php';
 require 'HTMLPurifier/AttrDef/CSS/Filter.php';
 require 'HTMLPurifier/AttrDef/CSS/Font.php';
 require 'HTMLPurifier/AttrDef/CSS/FontFamily.php';
@@ -116,6 +116,7 @@ require 'HTMLPurifier/AttrTransform/ImgSpace.php';
 require 'HTMLPurifier/AttrTransform/Lang.php';
 require 'HTMLPurifier/AttrTransform/Length.php';
 require 'HTMLPurifier/AttrTransform/Name.php';
+require 'HTMLPurifier/AttrTransform/ScriptRequired.php';
 require 'HTMLPurifier/ChildDef/Chameleon.php';
 require 'HTMLPurifier/ChildDef/Custom.php';
 require 'HTMLPurifier/ChildDef/Empty.php';
