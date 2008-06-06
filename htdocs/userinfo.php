@@ -137,7 +137,7 @@ $xoopsTpl->assign('lang_notregistered', _US_NOTREGISTERED);
             $xoopsTpl->assign('user_showsignature', true);
 $xoopsTpl->assign('lang_signature', _US_SIGNATURE);
 $var = $thisUser->getVar('user_sig', 'N');
-$xoopsTpl->assign('user_signature', $myts->makeTareaData4Show( $var, 0, 1, 1 ) );
+$xoopsTpl->assign('user_signature', $myts->makeTareaData4Show( $var, 1, 1, 1 ) );
         }
 
 if ($thisUser->getVar('user_viewemail') == 1) {
