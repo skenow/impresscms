@@ -40,6 +40,8 @@ Unreleased : ImpressCMS 1.1 Alpha 2
 - Fixed : #1980591 - install/makedata.php is hardcode. (stranger)
 - Fixed : #1986411 - (html) text not showing in signature and pm. (stranger)
 - Fixed : #1986035 - html purifier causing (encoding) problems with utf-8 language. (stranger)
+- Fixed : #1972006 - Notice and warning on updating Anonymous Group permissions. (real_therplima)
+- Fixed : #1984932 - Undefined variable: msg in file... (real_therplima)
 
 - Removed : All language files of phpmailer, except English, have been removed. (stranger)
 
