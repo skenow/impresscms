@@ -37,7 +37,9 @@ Unreleased : ImpressCMS 1.1 Alpha 2
 - Fixed : #1982512 - Undefined message in file /pmlite.php line 134. (stranger)
 - Fixed : #1982601 - Signature length needs to be defined by users. (stranger)
 - Fixed : #1871202 - Avatar and Karma. (stranger)
-- Fixed : #1980591 install/makedata.php is hardcode. (stranger)
+- Fixed : #1980591 - install/makedata.php is hardcode. (stranger)
+- Fixed : #1986411 - (html) text not showing in signature and pm. (stranger)
+- Fixed : #1986035 - html purifier causing (encoding) problems with utf-8 language. (stranger)
 
 - Removed : All language files of phpmailer, except English, have been removed. (stranger)
 
