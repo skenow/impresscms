@@ -300,7 +300,7 @@ class MyTextSanitizer
 	 **/
 	function undoHtmlSpecialChars( $text ) // not needed with PHP 5.1, use htmlspecialchars_decode() instead
 	{
-        return htmlspecialchars_decode($text, ENT_NOQUOTES, _CHARSET);
+               return preg_replace(array("/&gt;/i", "/&lt;/i", "/&quot;/i", "/&#039;/i", '/&amp;nbsp;/i'), array(">", "<", "\"", "'", "&nbsp;"), $text, _CHARSET);
 	}
 
 	function icms_htmlEntities($text)
