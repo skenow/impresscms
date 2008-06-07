@@ -10,6 +10,7 @@ Unreleased : ImpressCMS 1.1 Alpha 2
 - Added: _CHARSET to function htmlSpecialChars() in module.textsanitizer, by default htmlspecialchars encodes/decodes using ISO unless charset is explicitly defined. (Vaughan/Stranger)
 
 - Improved : The size of pop-ups for TinyMCE. (sato-san)
+- Improved : Made a suffix for shorten date cases, for servers with O.S windows . (stranger)
 
 - Changed : Small change with the term "Personalization" instead of "Personalisation". (malanciault)
 - Changed : Encryption method in preferences to select field type instead of yesno. (vaughan)
