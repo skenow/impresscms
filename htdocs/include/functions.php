@@ -172,7 +172,7 @@ function formatTimestamp($time, $format="l", $timeoffset="")
     global $xoopsConfig, $xoopsUser;
     $usertimestamp = xoops_getUserTimestamp($time, $timeoffset);
     switch (strtolower($format)) {
-    case 'ds':
+    case 'd':
         $datestring = "d";
         break;
     case 'D':
@@ -181,13 +181,13 @@ function formatTimestamp($time, $format="l", $timeoffset="")
     case 'F':
         $datestring = "F";
         break;
-    case 'hs':
+    case 'h':
         $datestring = "h";
         break;
     case 'H':
         $datestring = "H";
         break;
-    case 'gs':
+    case 'g':
         $datestring = "g";
         break;
     case 'G':
@@ -205,13 +205,13 @@ function formatTimestamp($time, $format="l", $timeoffset="")
     case 'm':
         $datestring = _MEDIUMDATESTRING;
         break;
-    case 'ms':
+    case 'me':
         $datestring = "m";
         break;
     case 'mysql':
         $datestring = "Y-m-d H:i:s";
         break;
-    case 'Ml':
+    case 'M':
         $datestring = "M";
         break;
     case 'n':
@@ -223,10 +223,10 @@ function formatTimestamp($time, $format="l", $timeoffset="")
     case 's':
         $datestring = _SHORTDATESTRING;
         break;
-    case 'ss':
+    case 'se':
         $datestring = "s";
         break;
-    case 'Sl':
+    case 'S':
         $datestring = "S";
         break;
     case 't':
@@ -235,7 +235,7 @@ function formatTimestamp($time, $format="l", $timeoffset="")
     case 'w':
         $datestring = "w";
         break;
-    case 'ys':
+    case 'y':
         $datestring = "y";
         break;
     case 'Y':
@@ -1504,4 +1504,57 @@ function sanitizeContentCss($text){
 
 	return $text;
 }
+
+/**
+ * Function to clean & sanitize $text makes safe for DB Queries.
+ * 
+ * @param integer $html
+ * @param string $value - $variable that is being escaped for query.
+ * @param string $config - not in use yet, is here for future use only.
+ * @return string
+ */
+function icms_escapeDBValue($value, $html = 0, $quotes = true, $config = 'global')
+{
+	$myts =& MyTextSanitizer::getInstance();
+
+	if (is_string($value))
+	{
+		if($html == 0)
+		{
+			$value = htmlspecialchars($value, ENT_QUOTES, _CHARSET);
+			if(get_magic_quotes_gpc)
+			{
+				$value = stripslashes($value);
+	        	}
+        	}
+		else
+		{
+			$value = icms_html_purifier($value);
+			if(get_magic_quotes_gpc)
+			{
+				$value = stripslashes($value);
+	        	}
+		}
+		$value = mysql_real_escape_string($value);
+    	}
+    	else if ($value === null)
+	{
+        	$value = 'NULL';
+	}
+    	else if (is_bool($value))
+	{
+        	$value = $value ? 1 : 0;
+    	}
+    	else if (!is_numeric($value))
+	{
+        	$value = mysql_real_escape_string($value);
+        	if ($quotes)
+		{
+            		$value = '"' . $value . '"';
+		}
+ 	}
+
+	return $value;
+}
+
 ?>
