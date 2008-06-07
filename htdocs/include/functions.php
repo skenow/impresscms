@@ -172,7 +172,7 @@ function formatTimestamp($time, $format="l", $timeoffset="")
     global $xoopsConfig, $xoopsUser;
     $usertimestamp = xoops_getUserTimestamp($time, $timeoffset);
     switch (strtolower($format)) {
-    case 'd':
+    case 'ds':
         $datestring = "d";
         break;
     case 'D':
@@ -181,13 +181,13 @@ function formatTimestamp($time, $format="l", $timeoffset="")
     case 'F':
         $datestring = "F";
         break;
-    case 'h':
+    case 'hs':
         $datestring = "h";
         break;
     case 'H':
         $datestring = "H";
         break;
-    case 'g':
+    case 'gs':
         $datestring = "g";
         break;
     case 'G':
@@ -205,13 +205,13 @@ function formatTimestamp($time, $format="l", $timeoffset="")
     case 'm':
         $datestring = _MEDIUMDATESTRING;
         break;
-    case 'me':
+    case 'ms':
         $datestring = "m";
         break;
     case 'mysql':
         $datestring = "Y-m-d H:i:s";
         break;
-    case 'M':
+    case 'Ml':
         $datestring = "M";
         break;
     case 'n':
@@ -223,10 +223,10 @@ function formatTimestamp($time, $format="l", $timeoffset="")
     case 's':
         $datestring = _SHORTDATESTRING;
         break;
-    case 'se':
+    case 'ss':
         $datestring = "s";
         break;
-    case 'S':
+    case 'Sl':
         $datestring = "S";
         break;
     case 't':
@@ -235,7 +235,7 @@ function formatTimestamp($time, $format="l", $timeoffset="")
     case 'w':
         $datestring = "w";
         break;
-    case 'y':
+    case 'ys':
         $datestring = "y";
         break;
     case 'Y':
