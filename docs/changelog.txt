@@ -7,12 +7,14 @@ Unreleased : ImpressCMS 1.1 Alpha 2
 - Added: New encryption methods, admin can now select from multiple PW encryptions, such as: SHA256, SHA384, SHA512, Whirlpool etc. (vaughan)
 - Added: New option in control panel for hidden contents. (stranger)
 - Added: New date cases for our ext_date_function. (stranger)
+- Added: _CHARSET to function htmlSpecialChars() in module.textsanitizer, by default htmlspecialchars encodes/decodes using ISO unless charset is explicitly defined. (Vaughan/Stranger)
 
 - Improved : The size of pop-ups for TinyMCE. (sato-san)
 
 - Changed : Small change with the term "Personalization" instead of "Personalisation". (malanciault)
 - Changed : Encryption method in preferences to select field type instead of yesno. (vaughan)
 - Changed : Replacing the string on the footer in the install process with date func. (stranger)
+- Changed : updated htmlpurifier library from 3.1.0 rc1 to 3.1.0 Final (vaughan)
 
 - Fixed : In the control panel, changing the top-left logo link to default to the home page of the site as discussed here http://lnk.in/5zvw . (stranger/malanciault))
 - Fixed : #1971839 - Undefined variable: key in \kernel\icmskernel.php on line 88. (trabis/malanciault)
