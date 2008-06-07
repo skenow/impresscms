@@ -319,7 +319,7 @@ class MyTextSanitizer
 	 * @param   bool    $br     convert linebreaks?
 	 * @return  string
 	 **/
-	function &displayTarea( $text, $html = 1, $smiley = 1, $xcode = 1, $image = 1, $br = 1)
+	function &displayTarea( $text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1)
 	{
 		// ################# Preload Trigger beforeDisplayTarea ##############
 		global $icmsPreloadHandler;
@@ -387,7 +387,7 @@ class MyTextSanitizer
 	 * @param   bool    $br     convert linebreaks?
 	 * @return  string
 	 **/
-	function &previewTarea( $text, $html = 1, $smiley = 1, $xcode = 1, $image = 1, $br = 1)
+	function &previewTarea( $text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1)
 	{
 		$text = $this->stripSlashesGPC($text);
 		if ($html != 1) {
