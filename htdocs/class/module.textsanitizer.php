@@ -37,11 +37,6 @@ class MyTextSanitizer
 	 */
 	var $censorConf;
 
-	/**
-	 * variable used by htmlpurifier
-	 */
-	var $purifier;
-
 	/*
 	* Constructor of this class
     *
@@ -53,8 +48,25 @@ class MyTextSanitizer
     *
     * @todo Sofar, this does nuttin' ;-)
 	*/
-	function MyTextSanitizer()
+	function html_purifier($text, $config = 'global')
 	{
+		include_once ICMS_ROOT_PATH.'/class/icms.htmlpurifier.php';
+		$html_purifier = &icms_HTMLPurifier::getPurifierInstance();
+
+		if($config = 'global')
+		{
+			$text = $html_purifier->icms_html_purifier($text, $config);
+		}
+		elseif($config = 'global_display')
+		{
+			$text = $html_purifier->displayHTMLarea($text, $config);
+		}
+		elseif($config = 'global_preview')
+		{
+			$text = $html_purifier->previewHTMLarea($text, $config);
+		}
+
+		return $text;
 	}
 
 	/**
@@ -72,31 +84,6 @@ class MyTextSanitizer
 			$instance = new MyTextSanitizer();
 		}
 		return $instance;
-	}
-
-	function icms_html_purifier($text, $config = 'global') // $config not used yet but is here for future development.
-	{
-		// sets default config settings for htmpurifier
-		$icms_PurifyConfig = HTMLPurifier_Config::createDefault();
-		if(is_dir(ICMS_PURIFIER_CACHE))
-		{
-			$icms_PurifyConfig->set('Cache', 'SerializerPath', ICMS_PURIFIER_CACHE);
-		}
-		else
-		{
-			$icms_PurifyConfig->set('Cache', 'SerializerPath', ICMS_ROOT_PATH.'/cache');
-		}
-		$icms_PurifyConfig->set('Core', 'Encoding', _CHARSET);
-		$icms_PurifyConfig->set('HTML', 'Doctype', 'XHTML 1.0 Transitional');
-
-		$icms_PurifyConfig->set('HTML', 'TidyLevel', 'medium'); // takes code and turns deprecated tags into valid tags (depends on doctype), cleans malicious code.
-
-		$this->purifier = new HTMLPurifier($icms_PurifyConfig);
-
-		$text = $this->purifier->purify($text);
-
-		return $text;
-	
 	}
 
 	/**
@@ -356,7 +343,7 @@ class MyTextSanitizer
 		}
 		else
 		{
-			$text = $this->icms_html_purifier($text);
+			$text = $this->html_purifier($text, $config = 'global_display');
 		}
 
 		$text = $this->codePreConv($text, $xcode); // Ryuji_edit(2003-11-18)
@@ -404,7 +391,7 @@ class MyTextSanitizer
 			$text = $this->htmlSpecialChars($text);
 		}
 		else {
-			$text = $this->icms_html_purifier($text);
+			$text = $this->html_purifier($text, $config = 'global_preview');
 		}
 
 		$text = $this->codePreConv($text, $xcode); // Ryuji_edit(2003-11-18)
