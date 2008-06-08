@@ -4,9 +4,8 @@ ImpressCMS ChangeLog
 Unreleased : ImpressCMS 1.1 Alpha 2
 =============================================
 
-- Added: new function icms_escapeDBValue($text, $html) will sanitize and clean input and then escape it read for submit to DB. (vaughan)
 - Added: new icms.htmlpurifier.php class file, can now be called anytime in the same way as module.textsanitizer.php. (vaughan)
-- Added: new sanitizing functions in html purifier class. displayHTMLarea() & previewHTMLarea(). we can configure these in future. (vaughan)
+- Added: new sanitizing functions in html purifier class. displayHTMLarea(), previewHTMLarea() & icms_escapeHTMLValue(). we can configure these in future. (vaughan)
 - Added: New encryption methods, admin can now select from multiple PW encryptions, such as: SHA256, SHA384, SHA512, Whirlpool etc. (vaughan)
 - Added: New option in control panel for hidden contents. (stranger)
 - Added: New date cases for our ext_date_function. (stranger)
