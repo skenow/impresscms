@@ -141,5 +141,44 @@ class icms_HTMLPurifier
 		return $html;
 	}
 
+	/**
+	 * Function to clean & sanitize $text makes safe for DB Queries.
+	 * 
+	 * @param integer $html
+	 * @param string $value - $variable that is being escaped for query.
+	 * @param string $config - allows a custom filter set.
+	 * @return string
+	 */
+	function icms_escapeHTMLValue($value, $quotes = true, $config = 'global')
+	{
+		if (is_string($value))
+		{
+			$value = $this->icms_html_purifier($value, $config);
+			if(get_magic_quotes_gpc)
+			{
+				$value = stripslashes($value);
+	        	}
+			$value = mysql_real_escape_string($value);
+	    	}
+	    	else if ($value === null)
+		{
+	        	$value = 'NULL';
+		}
+	    	else if (is_bool($value))
+		{
+	        	$value = $value ? 1 : 0;
+	    	}
+	    	else if (!is_numeric($value))
+		{
+	        	$value = mysql_real_escape_string($value);
+	        	if ($quotes)
+			{
+	            		$value = '"' . $value . '"';
+			}
+ 		}
+
+		return $value;
+	}
+
 }
 ?>
