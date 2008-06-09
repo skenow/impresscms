@@ -3,7 +3,7 @@
 class upgrade_impcms06 {
 	
 	var $usedFiles = array ();
-    var $tasks = array('conf', 'db', 'rest_of_upgrade');
+    var $tasks = array('conf', 'db', 'rest_of_upgrade', 'new_blocks');
 	var $updater;
 	
 	function __construct() {
@@ -34,6 +34,27 @@ class upgrade_impcms06 {
         }
         return true;
     }
+    function check_new_blocks()
+    {
+		$table = new IcmsDatabasetable('modules');
+	    return $table->fieldExists('dbversion');
+            }
+	function apply_new_blocks() {
+		$db = $GLOBALS['xoopsDB'];
+		if (getDbValue($db,'newblocks','bid',' show_func="b_social_bookmarks"') != 0){return true;}
+		$this->query(" INSERT INTO " . $db->prefix("newblocks") . " VALUES ('', 1, 0, '', 'Share this page!', 'Share this page!', '', 1, 0, 0, 'S', 'H', 1, 'system', 'social_bookmarks.php', 'b_social_bookmarks', '', 'system_block_socialbookmark.html', 0, " . time() . ")");
+		$new_block_id = $db->getInsertId();
+		$this->query(" UPDATE " . $db->prefix("newblocks") . " SET func_num = " . $new_block_id . " WHERE bid=" . $new_block_id);
+		$this->query(" INSERT INTO " . $db->prefix("tplfile") . " VALUES ('', " . $new_block_id . ", 'system', 'default', 'system_block_socialbookmark.html', 'Displays image links to bookmark pages in sharing websites', " . time() . ", " . time() . ", 'block');");
+		$new_tplfile_id = $db->getInsertId();
+		$new_tpl_source = '<table cellspacing="0" class="outer">\n  <tr>\n    <td class="odd">\n		<{$block.bookmark}>\n	</td>\n  </tr>\n</table>';
+		$this->query(" INSERT INTO " . $db->prefix("tplsource") . " VALUES (" . $new_tplfile_id . ", '" . $new_tpl_source . "');");
+		$this->query(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0);");
+		$this->query(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, " . $new_block_id . ", 1, 'block_read');");
+		$this->query(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 2, " . $new_block_id . ", 1, 'block_read');");
+		$this->query(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
+		return true;
+	}
     function check_db()
     {
         $lines = file( XOOPS_ROOT_PATH . '/mainfile.php' );
