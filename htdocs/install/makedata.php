@@ -563,7 +563,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'footer', '_MD_AM_FOOTER', '"._LOCAL_FOOTER."', '_MD_AM_FOOTERDSC', 'textarea', 'text', $p)");
 	$i++;
 	$p++;
-    $dbm->insert('config', " VALUES ($i, 0, $c, 'google_analytics', '_MD_AM_GOOGLE_ANA', '', '_MD_AM_GOOGLE_ANA_DESC', 'textarea', 'text', $p)");
+    $dbm->insert('config', " VALUES ($i, 0, $c, 'google_analytics', '_MD_AM_GOOGLE_ANA', '', '_MD_AM_GOOGLE_ANA_DESC', 'textsarea', 'text', $p)");
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'footadm', '_MD_AM_FOOTADM', '"._LOCAL_FOOTER."', '_MD_AM_FOOTADM_DESC', 'textarea', 'text', $p)");
