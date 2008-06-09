@@ -55,8 +55,8 @@ Unreleased : ImpressCMS 1.1 Alpha 2
 - Fixed : #1984932 - Undefined variable: msg in file... (real_therplima)
 - Fixed : #1983318 - Bug in disclaimer + Multilanguage (user side). (real_therplima)
 - Fixed : #1986750 - Footer problems in ie6. (real_therplima)
-
-- Removed : All language files of phpmailer, except English, have been removed. (stranger)
+- Fixed : All language files of phpmailer, except English, have been removed. (stranger)
+- Fixed : All "Thumbs.db" files have been removed. (stranger/davidl2)
 
 =============================================
 2008-05-22 : ImpressCMS 1.1 Alpha 1
