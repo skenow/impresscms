@@ -57,6 +57,7 @@ Unreleased : ImpressCMS 1.1 Alpha 2
 - Fixed : #1986750 - Footer problems in ie6. (real_therplima)
 - Fixed : All language files of phpmailer, except English, have been removed. (stranger)
 - Fixed : All "Thumbs.db" files have been removed. (stranger/davidl2)
+- Fixed : Colation is not working with mysql 4.1.22 but with mysql>5. (trabis/stranger)
 
 =============================================
 2008-05-22 : ImpressCMS 1.1 Alpha 1
