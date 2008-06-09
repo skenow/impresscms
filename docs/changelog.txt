@@ -11,7 +11,7 @@ Unreleased : ImpressCMS 1.1 Alpha 2
 - Added: New date cases for our ext_date_function. (stranger)
 - Added: _CHARSET to function htmlSpecialChars() in module.textsanitizer, by default htmlspecialchars encodes/decodes using ISO unless charset is explicitly defined. (Vaughan/Stranger)
 - Added: New field type for Text Area. (stranger)
-- Added: New block for social bookmarking. (stranger)
+- Added: New block for social bookmarking. (sato-san/stranger)
 - Added: New field type in installation proccess. (stranger)
 - Added: New function to improve converting to utf-8 (upgarde proccess). (stranger)
 
