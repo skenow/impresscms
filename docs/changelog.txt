@@ -14,6 +14,9 @@ Unreleased : ImpressCMS 1.1 Alpha 2
 - Added: New block for social bookmarking. (sato-san/stranger)
 - Added: New field type in installation proccess. (stranger)
 - Added: New function to improve converting to utf-8 (upgarde proccess). (stranger)
+- Added: New library for PDF. (stranger)
+- Added: New definitions to easier include the PDF library. (stranger)
+- Added: Task # 1914769 Including PHP class for generating PDF documents, in the core. (stranger)
 
 - Improved : The size of pop-ups for TinyMCE. (sato-san)
 - Improved : Made a suffix for shorten date cases, for servers with O.S windows . (stranger)
