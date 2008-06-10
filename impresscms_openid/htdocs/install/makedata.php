@@ -110,7 +110,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
     $time = time();
 
 	// RMV-NOTIFY (updated for extra column in table)
-    $dbm->insert("modules", " VALUES (1, '"._MI_SYSTEM_NAME."', 102, ".$time.", 0, 1, 'system', 0, 1, 0, 0, 0, 0, 3)");
+    $dbm->insert("modules", " VALUES (1, '"._MI_SYSTEM_NAME."', 102, ".$time.", 0, 1, 'system', 0, 1, 0, 0, 0, 0, 1)");
 
     foreach ($modversion['templates'] as $tplfile) {
         if ($fp = fopen('../modules/system/templates/'.$tplfile['file'], 'r')) {
@@ -266,7 +266,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'session_expire', '_MD_AM_SESSEXPIRE', '15', '_MD_AM_SESSEXPIREDSC', 'textbox', 'int', $p)");
 	$i++;
 	$p++;
-    	$dbm->insert('config', " VALUES ($i, 0, $c, 'debug_mode', '_MD_AM_DEBUGMODE', '0', '_MD_AM_DEBUGMODEDSC', 'select', 'int', $p)");
+    	$dbm->insert('config', " VALUES ($i, 0, $c, 'debug_mode', '_MD_AM_DEBUGMODE', '1', '_MD_AM_DEBUGMODEDSC', 'select', 'int', $p)");
 	// Insert data for Config Options in selection field. (must be placed before $i++)
 	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_DEBUGMODE0', 0, $i)");
 	$ci++;
@@ -380,6 +380,9 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	$i++;
 	$p++;
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'allow_htsig', '_MD_AM_ALLWHTSIG', '1', '_MD_AM_ALLWHTSIGDSC', 'yesno', 'int', $p)");
+	$i++;
+	$p++;
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'sig_max_length', '_MD_AM_SIGMAXLENGTH', '255', '_MD_AM_SIGMAXLENGTHDSC', 'textbox', 'int', $p)");
 	$i++;
 	$p++;
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'new_user_notify', '_MD_AM_NEWUNOTIFY', '1', '_MD_AM_NEWUNOTIFYDSC', 'yesno', 'int', $p)");
@@ -560,7 +563,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'footer', '_MD_AM_FOOTER', '"._LOCAL_FOOTER."', '_MD_AM_FOOTERDSC', 'textarea', 'text', $p)");
 	$i++;
 	$p++;
-    $dbm->insert('config', " VALUES ($i, 0, $c, 'google_analytics', '_MD_AM_GOOGLE_ANA', '', '_MD_AM_GOOGLE_ANA_DESC', 'textarea', 'text', $p)");
+    $dbm->insert('config', " VALUES ($i, 0, $c, 'google_analytics', '_MD_AM_GOOGLE_ANA', '', '_MD_AM_GOOGLE_ANA_DESC', 'textsarea', 'text', $p)");
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'footadm', '_MD_AM_FOOTADM', '"._LOCAL_FOOTER."', '_MD_AM_FOOTADM_DESC', 'textarea', 'text', $p)");
@@ -714,13 +717,13 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
  	$dbm->insert('config', " VALUES ($i, 0, $c,'ml_autoselect_enabled', '_MD_AM_ML_AUTOSELECT_ENABLED', '0', '_MD_AM_ML_AUTOSELECT_ENABLED_DESC', 'yesno', 'int', $p)");
 	$i++;
 	$p++;
-	$dbm->insert('config', " VALUES ($i, 0, $c,'ml_tags', '_MD_AM_ML_TAGS', 'en,fr', '_MD_AM_ML_TAGSDSC', 'textbox', 'text', $p)");
+	$dbm->insert('config', " VALUES ($i, 0, $c,'ml_tags', '_MD_AM_ML_TAGS', '"._DEF_LANG_TAGS."', '_MD_AM_ML_TAGSDSC', 'textbox', 'text', $p)");
 	$i++;
 	$p++;
-	$dbm->insert('config', " VALUES ($i, 0, $c,'ml_names', '_MD_AM_ML_NAMES', 'english,french', '_MD_AM_ML_NAMESDSC', 'textbox', 'text', $p)");
+	$dbm->insert('config', " VALUES ($i, 0, $c,'ml_names', '_MD_AM_ML_NAMES', '"._DEF_LANG_NAMES."', '_MD_AM_ML_NAMESDSC', 'textbox', 'text', $p)");
 	$i++;
 	$p++;
-	$dbm->insert('config', " VALUES ($i, 0, $c,'ml_captions', '_MD_AM_ML_CAPTIONS', 'English,Francais', '_MD_AM_ML_CAPTIONSDSC', 'textbox', 'text', $p)");
+	$dbm->insert('config', " VALUES ($i, 0, $c,'ml_captions', '_MD_AM_ML_CAPTIONS', '"._LOCAL_LANG_NAMES."', '_MD_AM_ML_CAPTIONSDSC', 'textbox', 'text', $p)");
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i, 0, $c,'ml_charset', '_MD_AM_ML_CHARSET', 'UTF-8,UTF-8', '_MD_AM_ML_CHARSETDSC', 'textbox', 'text', $p)");
@@ -787,13 +790,13 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'email_cor', '_MD_AM_EMAILCOLOR', '#000000', '_MD_AM_EMAILCOLOR_DESC', 'color', 'text', $p)");
 	$i++;
 	$p++;
-	$dbm->insert('config', " VALUES ($i, 0, $c, 'email_sombra', '_MD_AM_EMAILSOMBRA', '#cccccc', '_MD_AM_EMAILSOMBRA_DESC', 'color', 'text', $p)");
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'email_shadow', '_MD_AM_EMAILSHADOW', '#cccccc', '_MD_AM_EMAILSHADOW_DESC', 'color', 'text', $p)");
 	$i++;
 	$p++;
-	$dbm->insert('config', " VALUES ($i, 0, $c, 'sombra_x', '_MD_AM_SOMBRAX', '2', '_MD_AM_SOMBRAX_DESC', 'textbox', 'int', $p)");
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'shadow_x', '_MD_AM_SHADOWX', '2', '_MD_AM_SHADOWX_DESC', 'textbox', 'int', $p)");
 	$i++;
 	$p++;
-	$dbm->insert('config', " VALUES ($i, 0, $c, 'sombra_y', '_MD_AM_SOMBRAY', '2', '_MD_AM_SOMBRAY_DESC', 'textbox', 'int', $p)");
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'shadow_y', '_MD_AM_SHADOWY', '2', '_MD_AM_SHADOWY_DESC', 'textbox', 'int', $p)");
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'shorten_url', '_MD_AM_SHORTURL', '0', '_MD_AM_SHORTURLDSC', 'yesno', 'int', $p)");
@@ -809,6 +812,9 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'show_impresscms_menu', '_MD_AM_SHOW_ICMSMENU', '1', '_MD_AM_SHOW_ICMSMENU_DESC', 'yesno', 'int', $p)");
+	$i++;
+	$p++;
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'use_hidden', '_MD_AM_HIDDENCONTENT', '0', '_MD_AM_HIDDENCONTENTDSC', 'yesno', 'int', $p)");
 
     return $gruops;
 }

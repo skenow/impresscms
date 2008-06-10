@@ -37,7 +37,7 @@ define( "FAILED", "Failed" );
 define( "XOOPS_INSTALL_WIZARD", " %s - Installation Wizard" );
 define( "INSTALL_STEP", "Step" );
 define( "INSTALL_OUTOF", " out of " );
-define( "INSTALL_COPYRIGHT", "Copyright &copy; 2007%s <a href=\"http://www.impresscms.org\">The ImpressCMS Project</a>" );
+define( "INSTALL_COPYRIGHT", "Copyright &copy; 2007-" . date('Y', time()) . " <a href=\"http://www.impresscms.org\">The ImpressCMS Project</a>" );
 
 define( "LANGUAGE_SELECTION", "Language selection" );
 define( "LANGUAGE_SELECTION_TITLE", "Choose your language");		// L128
@@ -213,4 +213,7 @@ define("_LOCAL_SLOCGAN",'Make a lasting impression'); //Link to local support si
 define("_LOCAL_FOOTER",'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"http://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a>'); //footer Link to local support site
 define("_LOCAL_SENSORTXT",'#OOPS#'); //Add local translation
 define("_ADM_USE_RTL","0"); // turn this to 1 if your language is right to left
+define("_DEF_LANG_TAGS",'en,fr'); //Add local translation
+define("_DEF_LANG_NAMES",'english,french'); //Add local translation
+define("_LOCAL_LANG_NAMES",'English,Français'); //Add local translation
 ?>

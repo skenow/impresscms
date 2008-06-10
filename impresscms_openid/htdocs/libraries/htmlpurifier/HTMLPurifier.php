@@ -15,13 +15,11 @@
  *  -# Generating HTML from the purified tokens.
  * 
  * However, most users will only need to interface with the HTMLPurifier
- * class, so this massive amount of infrastructure is usually concealed.
- * If you plan on working with the internals, be sure to include
- * HTMLPurifier_ConfigSchema and HTMLPurifier_Config.
+ * and HTMLPurifier_Config.
  */
 
 /*
-    HTML Purifier 3.1.0rc1 - Standards Compliant HTML Filtering
+    HTML Purifier 3.1.0 - Standards Compliant HTML Filtering
     Copyright (C) 2006-2008 Edward Z. Yang
 
     This library is free software; you can redistribute it and/or
@@ -57,7 +55,10 @@ class HTMLPurifier
 {
     
     /** Version of HTML Purifier */
-    public $version = '3.1.0rc1';
+    public $version = '3.1.0';
+    
+    /** Constant with version of HTML Purifier */
+    const VERSION = '3.1.0';
     
     /** Global configuration object */
     public $config;
@@ -89,7 +90,6 @@ class HTMLPurifier
         $this->config = HTMLPurifier_Config::create($config);
         
         $this->strategy     = new HTMLPurifier_Strategy_Core();
-        $this->generator    = new HTMLPurifier_Generator();
         
     }
     
@@ -123,8 +123,8 @@ class HTMLPurifier
         
         $context = new HTMLPurifier_Context();
         
-        // our friendly neighborhood generator, all primed with configuration too!
-        $this->generator->generateFromTokens(array(), $config, $context);
+        // setup HTML generator
+        $this->generator = new HTMLPurifier_Generator($config, $context);
         $context->register('Generator', $this->generator);
         
         // set up global context variables
@@ -177,8 +177,7 @@ class HTMLPurifier
                         $html, $config, $context
                     ),
                     $config, $context
-                ),
-                $config, $context
+                )
             );
         
         for ($i = $filter_size - 1; $i >= 0; $i--) {
@@ -209,9 +208,10 @@ class HTMLPurifier
     /**
      * Singleton for enforcing just one HTML Purifier in your system
      * @param $prototype Optional prototype HTMLPurifier instance to
-     *                   overload singleton with.
+     *                   overload singleton with, or HTMLPurifier_Config
+     *                   instance to configure the generated version with.
      */
-    public static function getInstance($prototype = null) {
+    public static function instance($prototype = null) {
         if (!self::$instance || $prototype) {
             if ($prototype instanceof HTMLPurifier) {
                 self::$instance = $prototype;
@@ -222,6 +222,13 @@ class HTMLPurifier
             }
         }
         return self::$instance;
+    }
+    
+    /**
+     * @note Backwards compatibility, see instance()
+     */
+    public static function getInstance($prototype = null) {
+        return HTMLPurifier::instance($prototype);
     }
     
 }

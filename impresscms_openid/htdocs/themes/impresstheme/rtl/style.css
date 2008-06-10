@@ -196,6 +196,9 @@ h6 {font-size: .8em;}
 	color:				#666;
 	margin:				0px;
 	background-image: url(../img/hbar.gif);
+        background-repeat: repeat-x;
+	clear: both;
+	height: 20px;
 }
 
 #xo-footer a {

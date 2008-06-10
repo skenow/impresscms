@@ -164,6 +164,7 @@ function contmanager_index($content_supid,$start=0){
 }
 
 function contmanager_savelist($content_supid) {
+	$err = 0;
 	if (!$GLOBALS['xoopsSecurity']->check()) {
 		redirect_header('admin.php?fct=content', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 	}
@@ -180,10 +181,13 @@ function contmanager_savelist($content_supid) {
 		}
 		$content->setVar('content_updated',time());
 		if ( !$content_handler->insert($content) ) {
-			$msg = _MD_FAILEDIT;
-		} else {
-			$msg = _MD_AM_DBUPDATED;
+			$err++;
 		}
+	}
+	if ( $err > 0 ) {
+		$msg = _MD_FAILEDIT;
+	} else {
+		$msg = _MD_AM_DBUPDATED;
 	}
 	redirect_header('admin.php?fct=content&op=list&content_supid='.$content_supid, 2, $msg);
 }

@@ -101,6 +101,15 @@ if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->
 		for($i = 0; $i < $confcount; $i ++) {
 			$title = (! defined ( $config [$i]->getVar ( 'conf_desc' ) ) || constant ( $config [$i]->getVar ( 'conf_desc' ) ) == '') ? constant ( $config [$i]->getVar ( 'conf_title' ) ) : constant ( $config [$i]->getVar ( 'conf_title' ) ) . '<br /><br /><span style="font-weight:normal;">' . constant ( $config [$i]->getVar ( 'conf_desc' ) ) . '</span>';
 			switch ( $config [$i]->getVar ( 'conf_formtype' )) {
+				case 'textsarea' :
+					$myts = & MyTextSanitizer::getInstance ();
+					if ($config [$i]->getVar ( 'conf_valuetype' ) == 'array') {
+						// this is exceptional.. only when value type is arrayneed a smarter way for this
+						$ele = ($config [$i]->getVar ( 'conf_value' ) != '') ? new XoopsFormTextArea ( $title, $config [$i]->getVar ( 'conf_name' ), $myts->htmlspecialchars ( implode ( '|', $config [$i]->getConfValueForOutput () ) ), 5, 50 ) : new XoopsFormTextArea ( $title, $config [$i]->getVar ( 'conf_name' ), '', 5, 50 );
+					} else {
+						$ele = new XoopsFormTextArea ( $title, $config [$i]->getVar ( 'conf_name' ), $myts->htmlspecialchars ( $config [$i]->getConfValueForOutput () ) );
+					}
+				break;
 				case 'textarea' :
 					$myts = & MyTextSanitizer::getInstance ();
 					if ($config [$i]->getVar ( 'conf_valuetype' ) == 'array') {
@@ -154,11 +163,17 @@ if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->
 				case 'editor' :
 				case 'editor_multi' :
 					$ele = ($config [$i]->getVar ( 'conf_formtype' ) != 'editor_multi') ? new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () ) : new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput (), 5, true );
-					$ele->addOption ( "default" );
+					//$ele->addOption ( "default" );
 					require_once XOOPS_ROOT_PATH . "/class/xoopslists.php";
 					$dirlist = XoopsLists::getEditorsList ();
 					
 					if (! empty ( $dirlist )) {
+						if ($config [$i]->getVar ( 'conf_formtype' ) != 'editor_multi') {
+						    unset($dirlist['default']);
+						}else{
+							global $xoopsConfig;
+							unset($dirlist[$xoopsConfig['editor_default']]);
+						}
 						asort ( $dirlist );
 						$ele->addOptionArray ( $dirlist );
 					}
@@ -325,13 +340,22 @@ if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->
 		for($i = 0; $i < $count; $i ++) {
 			$title = (! defined ( $config [$i]->getVar ( 'conf_desc' ) ) || constant ( $config [$i]->getVar ( 'conf_desc' ) ) == '') ? constant ( $config [$i]->getVar ( 'conf_title' ) ) : constant ( $config [$i]->getVar ( 'conf_title' ) ) . '<br /><br /><span style="font-weight:normal;">' . constant ( $config [$i]->getVar ( 'conf_desc' ) ) . '</span>';
 			switch ( $config [$i]->getVar ( 'conf_formtype' )) {
-				case 'textarea' :
+				case 'textsarea' :
 					$myts = & MyTextSanitizer::getInstance ();
 					if ($config [$i]->getVar ( 'conf_valuetype' ) == 'array') {
 						// this is exceptional.. only when value type is arrayneed a smarter way for this
 						$ele = ($config [$i]->getVar ( 'conf_value' ) != '') ? new XoopsFormTextArea ( $title, $config [$i]->getVar ( 'conf_name' ), $myts->htmlspecialchars ( implode ( '|', $config [$i]->getConfValueForOutput () ) ), 5, 50 ) : new XoopsFormTextArea ( $title, $config [$i]->getVar ( 'conf_name' ), '', 5, 50 );
 					} else {
 						$ele = new XoopsFormTextArea ( $title, $config [$i]->getVar ( 'conf_name' ), $myts->htmlspecialchars ( $config [$i]->getConfValueForOutput () ), 5, 50 );
+					}
+				break;
+				case 'textarea' :
+					$myts = & MyTextSanitizer::getInstance ();
+					if ($config [$i]->getVar ( 'conf_valuetype' ) == 'array') {
+						// this is exceptional.. only when value type is arrayneed a smarter way for this
+						$ele = ($config [$i]->getVar ( 'conf_value' ) != '') ? new XoopsFormTextArea ( $title, $config [$i]->getVar ( 'conf_name' ), $myts->htmlspecialchars ( implode ( '|', $config [$i]->getConfValueForOutput () ) ), 5, 50 ) : new XoopsFormTextArea ( $title, $config [$i]->getVar ( 'conf_name' ), '', 5, 50 );
+					} else {
+						$ele = new XoopsFormDhtmlTextArea ( $title, $config [$i]->getVar ( 'conf_name' ), $myts->htmlspecialchars ( $config [$i]->getConfValueForOutput () ), 5, 50 );
 					}
 				break;
 				case 'select' :

@@ -37,11 +37,6 @@ class MyTextSanitizer
 	 */
 	var $censorConf;
 
-	/**
-	 * variable used by htmlpurifier
-	 */
-	var $purifier;
-
 	/*
 	* Constructor of this class
     *
@@ -53,9 +48,25 @@ class MyTextSanitizer
     *
     * @todo Sofar, this does nuttin' ;-)
 	*/
-	function MyTextSanitizer()
+	function html_purifier($text, $config = 'global')
 	{
+		include_once ICMS_ROOT_PATH.'/class/icms.htmlpurifier.php';
+		$html_purifier = &icms_HTMLPurifier::getPurifierInstance();
 
+		if($config = 'global')
+		{
+			$text = $html_purifier->icms_html_purifier($text, $config);
+		}
+		elseif($config = 'global_display')
+		{
+			$text = $html_purifier->displayHTMLarea($text, $config);
+		}
+		elseif($config = 'global_preview')
+		{
+			$text = $html_purifier->previewHTMLarea($text, $config);
+		}
+
+		return $text;
 	}
 
 	/**
@@ -170,12 +181,19 @@ class MyTextSanitizer
 		//$replacements[] = "'<div class=\"xoopsCode\"><code><pre>'.wordwrap(MyTextSanitizer::htmlSpecialChars('\\1'), 100).'</pre></code></div>'";
 		// RMV: added new markup for intrasite url (allows easier site moves)
 		// TODO: automatically convert other URLs to this format if ICMS_URL matches??
-		$patterns[] = "/\[hide](.*)\[\/hide\]/sU";
+			$config_handler =& xoops_gethandler('config');
+			$xoopsConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
+        if ($xoopsConfigPersona['use_hidden'] == 1) {
+        $patterns[] = "/\[hide](.*)\[\/hide\]/sU";
 		if($_SESSION['xoopsUserId']) {
 		$replacements[] = _HIDDENC.'<div class="xoopsQuote">\\1</div>';
 		}
 		else {
 		$replacements[] = _HIDDENC.'<div class="xoopsQuote">'._HIDDENTEXT.'</div>';
+		}
+		}else{
+        $patterns[] = "/\[hide](.*)\[\/hide\]/sU";
+		$replacements[] = '\\1';
 		}
 		$patterns[] = "/\[siteurl=(['\"]?)([^\"'<>]*)\\1](.*)\[\/siteurl\]/sU";
 		$replacements[] = '<a href="'.ICMS_URL.'/\\2">\\3</a>';
@@ -283,7 +301,7 @@ class MyTextSanitizer
 	function htmlSpecialChars($text)
 	{
 		//return preg_replace("/&amp;/i", '&', htmlspecialchars($text, ENT_QUOTES));
-		return preg_replace(array("/&amp;/i", "/&nbsp;/i"), array('&', '&amp;nbsp;'), htmlspecialchars($text, ENT_QUOTES));
+		return preg_replace(array("/&amp;/i", "/&nbsp;/i"), array('&', '&amp;nbsp;'), htmlspecialchars($text, ENT_QUOTES, _CHARSET));
 	}
 
 	/**
@@ -292,9 +310,14 @@ class MyTextSanitizer
 	 * @param   string  $text
 	 * @return  string
 	 **/
-	function undoHtmlSpecialChars( $text )
+	function undoHtmlSpecialChars( $text ) // not needed with PHP 5.1, use htmlspecialchars_decode() instead
 	{
 		return preg_replace(array("/&gt;/i", "/&lt;/i", "/&quot;/i", "/&#039;/i", '/&amp;nbsp;/i'), array(">", "<", "\"", "'", "&nbsp;"), $text);
+	}
+
+	function icms_htmlEntities($text)
+	{
+		return preg_replace(array("/&amp;/i", "/&nbsp;/i"), array('&', '&amp;nbsp;'), htmlentities($text, ENT_QUOTES, _CHARSET));
 	}
 
 	/**
@@ -318,17 +341,9 @@ class MyTextSanitizer
 			// html not allowed
 			$text = $this->htmlSpecialChars($text);
 		}
-		else {
-			// html allowed - sanitize with html purifier
-			$config = HTMLPurifier_Config::createDefault();
-			$config->set('Cache', 'SerializerPath', XOOPS_TRUST_PATH.'/cache/htmlpurifier/configs');
-			$config->set('Core', 'Encoding', _CHARSET);
-			$config->set('HTML', 'Doctype', 'XHTML 1.0 Transitional');
-			$config->set('HTML', 'TidyLevel', 'medium'); // takes code and turns deprecated tags into valid tags (depends on doctype)
-
-			$this->purifier = new HTMLPurifier($config);
-
-			$text = $this->purifier->purify($text);
+		else
+		{
+			$text = $this->html_purifier($text, $config = 'global_display');
 		}
 
 		$text = $this->codePreConv($text, $xcode); // Ryuji_edit(2003-11-18)
@@ -376,16 +391,7 @@ class MyTextSanitizer
 			$text = $this->htmlSpecialChars($text);
 		}
 		else {
-			// html allowed - sanitize with html purifier
-			$config = HTMLPurifier_Config::createDefault();
-			$config->set('Cache', 'SerializerPath', XOOPS_TRUST_PATH.'/cache/htmlpurifier/configs');
-			$config->set('Core', 'Encoding', _CHARSET);
-			$config->set('HTML', 'Doctype', 'XHTML 1.0 Transitional');
-			$config->set('HTML', 'TidyLevel', 'medium'); // takes code and turns deprecated tags into valid tags (depends on doctype)
-
-			$this->purifier = new HTMLPurifier($config);
-
-			$text = $this->purifier->purify($text);
+			$text = $this->html_purifier($text, $config = 'global_preview');
 		}
 
 		$text = $this->codePreConv($text, $xcode); // Ryuji_edit(2003-11-18)

@@ -172,20 +172,74 @@ function formatTimestamp($time, $format="l", $timeoffset="")
     global $xoopsConfig, $xoopsUser;
     $usertimestamp = xoops_getUserTimestamp($time, $timeoffset);
     switch (strtolower($format)) {
-    case 's':
-        $datestring = _SHORTDATESTRING;
+    case 'ds':
+        $datestring = "d";
+        break;
+    case 'D':
+        $datestring = "D";
+        break;
+    case 'F':
+        $datestring = "F";
+        break;
+    case 'hs':
+        $datestring = "h";
+        break;
+    case 'H':
+        $datestring = "H";
+        break;
+    case 'gs':
+        $datestring = "g";
+        break;
+    case 'G':
+        $datestring = "G";
+        break;
+    case 'i':
+        $datestring = "i";
+        break;
+    case 'j':
+        $datestring = "j";
+        break;
+    case 'l':
+        $datestring = _DATESTRING;
         break;
     case 'm':
         $datestring = _MEDIUMDATESTRING;
         break;
+    case 'ms':
+        $datestring = "m";
+        break;
     case 'mysql':
         $datestring = "Y-m-d H:i:s";
+        break;
+    case 'Ml':
+        $datestring = "M";
+        break;
+    case 'n':
+        $datestring = "n";
         break;
     case 'rss':
         $datestring = "r";
         break;
-    case 'l':
-        $datestring = _DATESTRING;
+    case 's':
+        $datestring = _SHORTDATESTRING;
+        break;
+    case 'ss':
+        $datestring = "s";
+        break;
+    case 'Sl':
+        $datestring = "S";
+        break;
+    case 't':
+        $datestring = "t";
+        break;
+    case 'w':
+        $datestring = "w";
+        break;
+    case 'ys':
+        $datestring = "y";
+        break;
+    case 'Y':
+        $datestring = "Y";
         break;
     default:
         if ($format != '') {
@@ -1450,4 +1504,5 @@ function sanitizeContentCss($text){
 
 	return $text;
 }
+
 ?>
