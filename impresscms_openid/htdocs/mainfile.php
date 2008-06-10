@@ -1,116 +1,36 @@
 <?php
+// $Id: mainfile.php 1029 2007-09-09 03:49:25Z phppp $
+//  ------------------------------------------------------------------------ //
+//                XOOPS - PHP Content Management System                      //
+//                    Copyright (c) 2000 XOOPS.org                           //
+//                       <http://www.xoops.org/>                             //
+//  ------------------------------------------------------------------------ //
+//  This program is free software; you can redistribute it and/or modify     //
+//  it under the terms of the GNU General Public License as published by     //
+//  the Free Software Foundation; either version 2 of the License, or        //
+//  (at your option) any later version.                                      //
+//                                                                           //
+//  You may not change or alter any portion of this comment or credits       //
+//  of supporting developers from this source code or any supporting         //
+//  source code which is considered copyrighted (c) material of the          //
+//  original comment or credit authors.                                      //
+//                                                                           //
+//  This program is distributed in the hope that it will be useful,          //
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
+//  GNU General Public License for more details.                             //
+//                                                                           //
+//  You should have received a copy of the GNU General Public License        //
+//  along with this program; if not, write to the Free Software              //
+//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
+//  ------------------------------------------------------------------------ //
 /**
-* All information in order to connect to database are going through here.
-*
-* Be careful if you are changing data's in this file.
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		Installer
-* @since		XOOPS
-* @author		http://www.xoops.org The XOOPS Project
-* @author		modified by stranger <stranger@impresscms.ir>
-* @version		$Id$
-*/
+ * Xoops is not installed, redirect to the installer
+ **/
 
-if ( !defined("XOOPS_MAINFILE_INCLUDED") ) {
-	define("XOOPS_MAINFILE_INCLUDED",1);
-
-	// XOOPS Physical Path
-	// Physical path to your main XOOPS directory WITHOUT trailing slash
-	// Example: define( 'XOOPS_ROOT_PATH', 'C:/INBOX/Dev/inbox2/icms_openid/htdocs' );
-	define( 'XOOPS_ROOT_PATH', 'C:/INBOX/Dev/inbox2/icms_openid/htdocs' );
-
-	// XOOPS Security Physical Path
-	// Physical path to your security XOOPS directory WITHOUT trailing slash.
-	// Ideally off your server WEB folder
-	// Example: define( 'XOOPS_TRUST_PATH', 'C:/INBOX/Dev/inbox2/icms_openid/trust_path' );
-	define( 'XOOPS_TRUST_PATH', 'C:/INBOX/Dev/inbox2/icms_openid/trust_path' );
-
-	include_once(XOOPS_TRUST_PATH . '/cb2c8a118d04e0f35e658564674b3c07.php');
-
-	// XOOPS Virtual Path (URL)
-	// Virtual path to your main XOOPS directory WITHOUT trailing slash
-	// Example: define( 'XOOPS_URL', 'http://inbox2.local/icms_openid/htdocs' );
-	define( 'XOOPS_URL', 'http://inbox2.local/icms_openid/htdocs' );
-
-	define('XOOPS_CHECK_PATH', 0);
-	// Protect against external scripts execution if safe mode is not enabled
-	if ( XOOPS_CHECK_PATH && !@ini_get('safe_mode') ) {
-		if ( function_exists('debug_backtrace') ) {
-			$xoopsScriptPath = debug_backtrace();
-			if ( !count($xoopsScriptPath) ) {
-			 	die("ImpressCMS path check: this file cannot be requested directly");
-			}
-			$xoopsScriptPath = $xoopsScriptPath[0]['file'];
-		} else {
-			$xoopsScriptPath = isset($_SERVER['PATH_TRANSLATED']) ? $_SERVER['PATH_TRANSLATED'] :  $_SERVER['SCRIPT_FILENAME'];
-		}
-		if ( DIRECTORY_SEPARATOR != '/' ) {
-			// IIS6 may double the \ chars
-			$xoopsScriptPath = str_replace( strpos( $xoopsScriptPath, '\\\\', 2 ) ? '\\\\' : DIRECTORY_SEPARATOR, '/', $xoopsScriptPath);
-		}
-		if ( strcasecmp( substr($xoopsScriptPath, 0, strlen(XOOPS_ROOT_PATH)), str_replace( DIRECTORY_SEPARATOR, '/', XOOPS_ROOT_PATH)) ) {
-		 	exit("ImpressCMS path check: Script is not inside XOOPS_ROOT_PATH and cannot run.");
-		}
-	}
-
-	// Database
-	// Choose the database to be used
-	define( 'XOOPS_DB_TYPE', 'mysql' );
- 
-    // Set the database charset if applicable
-    if (defined('XOOPS_DB_CHARSET')) die();
-    define( 'XOOPS_DB_CHARSET', 'utf8' );
-
-	// Table Prefix
-	// This prefix will be added to all new tables created to avoid name conflict in the database. If you are unsure, just use the default 'icms'.
-	define( 'XOOPS_DB_PREFIX', SDATA_DB_PREFIX );
-
-	// Database Hostname
-	// Hostname of the database server. If you are unsure, 'localhost' works in most cases.
-	define( 'XOOPS_DB_HOST', SDATA_DB_HOST );
-
-	// Database Username
-	// Your database user account on the host
-	define( 'XOOPS_DB_USER', SDATA_DB_USER );
-
-	// Database Password
-	// Password for your database user account
-	define( 'XOOPS_DB_PASS', SDATA_DB_PASS );
-
-	// Database Name
-	// The name of database on the host. The installer will attempt to create the database if not exist
-	define( 'XOOPS_DB_NAME', SDATA_DB_NAME );
-
-	// Password Salt Key $mainSalt
-	// This salt will be appended to passwords in the icms_encryptPass() function.
-	// Do NOT change this once your site is Live, doing so will invalidate everyones Password.
-	define( 'XOOPS_DB_SALT', SDATA_DB_SALT );
-	
-	// Use persistent connection? (Yes=1 No=0)
-	// Default is 'Yes'. Choose 'Yes' if you are unsure.
-	define( 'XOOPS_DB_PCONNECT', 0 );
-
-	// (optional) Physical path to script that logs database queries.
-	// Example: define('ICMS_LOGGING_HOOK', XOOPS_ROOT_PATH . '/modules/foobar/logging_hook.php');
-	define('ICMS_LOGGING_HOOK', '');
-
-	define( 'XOOPS_GROUP_ADMIN', '1' );
-	define( 'XOOPS_GROUP_USERS', '2' );
-	define( 'XOOPS_GROUP_ANONYMOUS', '3' );
-
-    foreach ( array('GLOBALS', '_SESSION', 'HTTP_SESSION_VARS', '_GET', 'HTTP_GET_VARS', '_POST', 'HTTP_POST_VARS', '_COOKIE', 'HTTP_COOKIE_VARS', '_REQUEST', '_SERVER', 'HTTP_SERVER_VARS', '_ENV', 'HTTP_ENV_VARS', '_FILES', 'HTTP_POST_FILES', 'xoopsDB', 'xoopsUser', 'xoopsUserId', 'xoopsUserGroups', 'xoopsUserIsAdmin', 'xoopsConfig', 'xoopsOption', 'xoopsModule', 'xoopsModuleConfig', 'xoopsRequestUri') as $bad_global ) {
-        if ( isset( $_REQUEST[$bad_global] ) ) {
-            header( 'Location: '.XOOPS_URL.'/' );
-            exit();
-        }
-    }
-
-	if (!isset($xoopsOption['nocommon']) && XOOPS_ROOT_PATH != '') {
-		include XOOPS_ROOT_PATH."/include/common.php";
-	}
+// XOOPS is not installed yet.
+if(! defined('XOOPS_INSTALL')){
+    header('Location: install/index.php');
+	exit();
 }
 ?>
