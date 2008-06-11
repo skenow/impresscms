@@ -96,7 +96,7 @@ if ( empty($mode) || $mode == 'blocks' ) {
         }
         $class = ($class == 'odd') ? 'even' : 'odd';
     }
-    $ret .= '<tr class="foot"><td>'._TOTAL.' <span style="color:#ff0000;">'.count($this->blocks).'</span> '._BLOCKS.'</td></tr></table>';
+    $ret .= '<tr class="foot"><td>'._TOTAL.' <span style="color:#ff0000;">'.count($this->blocks).'</span> '._BLOCK.'</td></tr></table>';
 }
 if ( empty($mode) || $mode == 'extra' ) {
 	$this->addExtra( 'Included files', count ( get_included_files() ) . ' files' );
