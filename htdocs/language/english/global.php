@@ -253,4 +253,5 @@ define("_WARNING", "Warning");
 define("_STRICT", "Strict");
 define("_ERROR", "Error");
 define("_TOOKXLONG", " took %s seconds to load.");
+define("_BLOCK", "Block(s)");
 ?>
