@@ -22,7 +22,8 @@ Unreleased : ImpressCMS 1.1 Alpha 2
 - Improved : The size of pop-ups for TinyMCE. (sato-san)
 - Improved : Made a suffix for shorten date cases, for servers with O.S windows . (stranger)
 - Improved : Removing the logger out of array, now each part is running separately. (stranger)
-- Improved : xoops_rtl.css has been reformed to let the logger be rtl. (stranger)
+- Improved : Xoops_rtl.css has been reformed to let the logger be rtl. (stranger)
+- Improved : Updated PDF library to the latest version 3.1.000 (stranger)
 
 - Changed : Small change with the term "Personalization" instead of "Personalisation". (malanciault)
 - Changed : Encryption method in preferences to select field type instead of yesno. (vaughan)
