@@ -48,20 +48,20 @@ class MyTextSanitizer
     *
     * @todo Sofar, this does nuttin' ;-)
 	*/
-	function html_purifier($text, $config = 'global')
+	function html_purifier($text, $config = '1')
 	{
 		include_once ICMS_ROOT_PATH.'/class/icms.htmlpurifier.php';
 		$html_purifier = &icms_HTMLPurifier::getPurifierInstance();
 
-		if($config = 'global')
+		if($config = '1')
 		{
 			$text = $html_purifier->icms_html_purifier($text, $config);
 		}
-		elseif($config = 'global_display')
+		elseif($config = '2')
 		{
 			$text = $html_purifier->displayHTMLarea($text, $config);
 		}
-		elseif($config = 'global_preview')
+		elseif($config = '3')
 		{
 			$text = $html_purifier->previewHTMLarea($text, $config);
 		}
@@ -343,7 +343,7 @@ class MyTextSanitizer
 		}
 		else
 		{
-			$text = $this->html_purifier($text, $config = 'global_display');
+			$text = $this->html_purifier($text, $config = '2');
 		}
 
 		$text = $this->codePreConv($text, $xcode); // Ryuji_edit(2003-11-18)
@@ -391,7 +391,7 @@ class MyTextSanitizer
 			$text = $this->htmlSpecialChars($text);
 		}
 		else {
-			$text = $this->html_purifier($text, $config = 'global_preview');
+			$text = $this->html_purifier($text, $config = '3');
 		}
 
 		$text = $this->codePreConv($text, $xcode); // Ryuji_edit(2003-11-18)
