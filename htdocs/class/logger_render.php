@@ -61,7 +61,7 @@ if ( empty($mode) || $mode == 'errors' ) {
 		E_STRICT => _STRICT,
 	);
 	$class = 'even';
-	$ret .= '<table id="xo-logger-errors" class="outer"><tr><th>Errors</th></tr>';
+	$ret .= '<table id="xo-logger-errors" class="outer"><tr><th>'._ERRORS.'</th></tr>';
 	foreach ( $this->errors as $error ) {
 		$ret .= "\n<tr><td class='$class'>";
 		$ret .= isset( $types[ $error['errno'] ] ) ? $types[ $error['errno'] ] : 'Unknown';
