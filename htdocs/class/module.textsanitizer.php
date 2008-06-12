@@ -301,7 +301,7 @@ class MyTextSanitizer
 	function htmlSpecialChars($text)
 	{
 		//return preg_replace("/&amp;/i", '&', htmlspecialchars($text, ENT_QUOTES));
-		return preg_replace(array("/&amp;/i", "/&nbsp;/i"), array('&', '&amp;nbsp;'), htmlspecialchars($text, ENT_QUOTES, _CHARSET));
+		return preg_replace(array("/&amp;/i", "/&nbsp;/i"), array('&', '&amp;nbsp;'), @htmlspecialchars($text, ENT_QUOTES, _CHARSET));
 	}
 
 	/**
@@ -317,7 +317,7 @@ class MyTextSanitizer
 
 	function icms_htmlEntities($text)
 	{
-		return preg_replace(array("/&amp;/i", "/&nbsp;/i"), array('&', '&amp;nbsp;'), htmlentities($text, ENT_QUOTES, _CHARSET));
+		return preg_replace(array("/&amp;/i", "/&nbsp;/i"), array('&', '&amp;nbsp;'), @htmlentities($text, ENT_QUOTES, _CHARSET));
 	}
 
 	/**
