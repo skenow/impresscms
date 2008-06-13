@@ -17,6 +17,7 @@ Unreleased : ImpressCMS 1.1 Alpha 2
 - Added: New library for PDF. (stranger)
 - Added: New definitions to easier include the PDF library. (stranger)
 - Added: Task # 1914769 Including PHP class for generating PDF documents, in the core. (stranger)
+- Added: New Language constants for the logger. (stranger)
 - Added: New page to introduce ImpressCMS after a clean installation. (stranger)
 - Added: New custom internal page/link directed to our introduce page. (stranger)
 - Added: New start page for ImpressCMS (our custom page). (stranger)
