@@ -1544,7 +1544,7 @@ function icms_get_base_domain($url)
 	'eh','kp','me','rs','um','bv','gb','pm','sj','so','yt','su','tp','bu','cs','dd','zr');
 
 	// get domain
-	if (!$full_domain = get_url_domain($url))
+	if (!$full_domain = icms_get_url_domain($url))
 	{
 		return $base_domain;
 	}
