@@ -60,6 +60,7 @@ class icms_HTMLPurifier
 	**/
 	function icms_html_purifier($html, $config = '1')
 	{
+		$host_domain = icms_get_base_domain(ICMS_URL);
 		
 		// sets default config settings for htmpurifier
 		$icms_PurifyConfig = HTMLPurifier_Config::createDefault();
@@ -80,7 +81,7 @@ class icms_HTMLPurifier
 		$icms_PurifyConfig->set('Core', 'Encoding', _CHARSET); // sets purifier to use specified encoding. default = UTF-8
 		$icms_PurifyConfig->set('HTML', 'Doctype', 'XHTML 1.0 Transitional'); // sets purifier to use specified Doctype when tidying etc.
 		
-/*		$icms_PurifyConfig->set('URI', 'Host', parse_url(ICMS_URL)); // sets host URI for filtering. this should be the domain name in our case. ie. impresscms.org and not community.impresscms.org.
+		$icms_PurifyConfig->set('URI', 'Host', $host_domain); // sets host URI for filtering. this should be the base domain name. ie. impresscms.org and not community.impresscms.org.
 		$icms_PurifyConfig->set('URI', 'AllowedSchemes', array(	'http' => true,
 									'https' => true,
 									'mailto' => true,
@@ -89,7 +90,7 @@ class icms_HTMLPurifier
 									'news' => true,)); // sets allowed URI schemes to be allowed in Forms.
 		$icms_PurifyConfig->set('URI', 'HostBlacklist', ''); // array of domain names to filter out (blacklist).
 		$icms_PurifyConfig->set('URI', 'DisableExternal', false); // if enabled will disable all links/images from outside your domain (requires Host being set)
-*/
+
 
 		// Custom Configuration
 		// these in future could be defined from admin interface allowing more advanced customised configurations.
