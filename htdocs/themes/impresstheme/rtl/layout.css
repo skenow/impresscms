@@ -78,7 +78,7 @@
 /* ------- Top and bottom zones (3 columns) ------- */
 
 #icms-page-topblocks.icms-lcrpageblocks .icms-blockszone, #icms-page-bottomblocks.icms-lcrpageblocks .icms-blockszone {
-	float:			left;
+	float:			right;
 	clear:			none;
 	width:			31.2%;
 }
