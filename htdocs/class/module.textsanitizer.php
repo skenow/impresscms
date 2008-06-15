@@ -28,26 +28,27 @@
 class MyTextSanitizer
 {
 	/**
-	 * @var	array
-	 */
+	* @var	array
+	*/
 	var $smileys = array();
-
 	/**
-	 *
-	 */
+	*
+	*/
 	var $censorConf;
-
 	/*
 	* Constructor of this class
-    *
 	* Gets allowed html tags from admin config settings
 	* <br> should not be allowed since nl2br will be used
 	* when storing data.
-    *
-    * @access	private
-    *
-    * @todo Sofar, this does nuttin' ;-)
+    	*
+    	* @access	private
+    	*
+    	* @todo Sofar, this does nuttin' ;-)
 	*/
+	function MyTextSanitizer()
+    	{
+	}
+
 	function html_purifier($text, $config = '1')
 	{
 		include_once ICMS_ROOT_PATH.'/class/icms.htmlpurifier.php';
@@ -70,13 +71,13 @@ class MyTextSanitizer
 	}
 
 	/**
-	 * Access the only instance of this class
-     *
-     * @return	object
-     *
-     * @static
-     * @staticvar   object
-	 */
+	* Access the only instance of this class
+     	*
+     	* @return	object
+     	*
+     	* @static
+     	* @staticvar   object
+	*/
 	function &getInstance()
 	{
 		static $instance;
