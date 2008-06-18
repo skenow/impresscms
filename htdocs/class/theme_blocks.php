@@ -64,7 +64,9 @@ class xos_logos_PageBuilder {
 		$arr = explode ( '-', $startMod );
 		if (count ( $arr ) > 1) {
 			$page_handler = & xoops_gethandler ( 'page' );
-			$page = $page_handler->get ( $arr [1] );
+			$criteria = new CriteriaCompo ( new Criteria ( 'page_moduleid', $arr[0] ) );
+			$criteria->add(new Criteria ( 'page_id', $arr[1] ));
+			$pages = $page_handler->getObjects ( $criteria );
 			if (is_object ( $page )) {
 				$mid = $page->getVar ( 'page_moduleid' );
 				$module_handler = & xoops_gethandler ( 'module' );
@@ -72,6 +74,14 @@ class xos_logos_PageBuilder {
 				$dirname = $module->getVar ( 'dirname' );
 				$purl = $page->getVar ( 'page_url' );
 				$isStart = ($purl == $url || $purl == $fullurl);
+			}else{
+				if (@is_object ( $xoopsModule )) {
+					list ( $mid, $dirname ) = array ($xoopsModule->getVar ( 'mid' ), $xoopsModule->getVar ( 'dirname' ) );
+					$isStart = (substr ( $_SERVER ['PHP_SELF'], - 9 ) == 'index.php' && $xoopsConfig ['startpage'] == $dirname);
+				} else {
+					list ( $mid, $dirname ) = array (1, 'system' );
+					$isStart = ! @empty ( $GLOBALS ['xoopsOption'] ['show_cblock'] );
+				}
 			}
 		} else {
 			if (@is_object ( $xoopsModule )) {

@@ -238,7 +238,7 @@ function pageform($id=null){
 	$moduleslist = $module_handler->getList($criteria);
 	$module = $module_handler->get(1);
 	$list = array('0'=>'--------------------------',$module->getVar('mid')=>$module->getVar('name'));
-	$moduleslist = array_merge($list,$moduleslist);
+	$moduleslist = $list+$moduleslist;
 	$mid->addOptionArray($moduleslist);
 	$form->addElement($mid,true);
 	
