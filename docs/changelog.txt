@@ -24,6 +24,7 @@ Unreleased : ImpressCMS 1.1 Alpha 2
 - Added: Social bookmark block to be shown as default. (stranger)
 - Added: Search block to be shown as default. (stranger)
 - Added: Themes block to be shown as default. (stranger)
+- Added: 3 new plugins for tinymce. Xoopsimagemanager, XoopsEmotions, XoopsCodeQuote (luciorota/real_therplima)
 
 - Improved : The size of pop-ups for TinyMCE. (sato-san)
 - Improved : Made a suffix for shorten date cases, for servers with O.S windows . (stranger)
