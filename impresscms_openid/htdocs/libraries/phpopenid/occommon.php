@@ -5,8 +5,8 @@
 //  (c) 2008 by Nat Sakimura (=nat), JanRain
 //  License: GPL
 //
-// occommon.php is the file for shared functions. 
-// This file is based on JanRain's Library example. 
+// occommon.php is the file for shared functions.
+// This file is based on JanRain's Library example.
 -------------------------------------------------------- */
 $path_extra = dirname(__FILE__);
 $path_extra2 = ICMS_LIBRARIES_PATH . "/phpopenid/";
@@ -14,7 +14,6 @@ $path = ini_get('include_path');
 $path = $path_extra2 . PATH_SEPARATOR . $path_extra . PATH_SEPARATOR . $path;
 
 ini_set('include_path', $path);
-
 
 function displayError($message) {
     $error = $message;

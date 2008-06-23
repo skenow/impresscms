@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Set this to true to troubleshoot OpenID login
  */
@@ -6,84 +7,84 @@ $openid_debug = false;
 
 define('ICMS_INCLUDE_OPENID', true);
 $xoopsOption['pagetype'] = 'user';
-include_once("mainfile.php");
+include_once ("mainfile.php");
 
 $redirect_url = $_SESSION['frompage'];
-$myts = MyTextSanitizer::getInstance();
+$myts = MyTextSanitizer :: getInstance();
 $member_handler = xoops_gethandler('member');
 
-include_once ICMS_ROOT_PATH.'/class/auth/authfactory.php';
-include_once ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/auth.php';
+include_once ICMS_ROOT_PATH . '/class/auth/authfactory.php';
+include_once ICMS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/auth.php';
 
-$xoopsAuth =& XoopsAuthFactory::getAuthConnection();
+$xoopsAuth = & XoopsAuthFactory :: getAuthConnection();
 $user = $xoopsAuth->authenticate($openid_debug);
 
 if ($xoopsAuth->errorOccured()) {
 	redirect_header($redirect_url, 3, $xoopsAuth->getHtmlErrors());
 }
 
-switch($xoopsAuth->step) {
-	case OPENID_STEP_NO_USER_FOUND:
+switch ($xoopsAuth->step) {
+	case OPENID_STEP_NO_USER_FOUND :
 		$xoopsOption['template_main'] = 'system_openid.html';
-		include_once(ICMS_ROOT_PATH . "/header.php");
-		
-		$sreg=$_SESSION['openid_sreg'];
-		
+		include_once (ICMS_ROOT_PATH . "/header.php");
+
+		$sreg = $_SESSION['openid_sreg'];
+
 		$xoopsTpl->assign('displayId', $xoopsAuth->displayid);
 		$xoopsTpl->assign('cid', $xoopsAuth->openid);
-		$xoopsTpl->assign('uname', isset($sreg['nickname']) ? $sreg['nickname'] : '');
-		$xoopsTpl->assign('email', isset($sreg['email']) ? $sreg['email'] : '');
+		$xoopsTpl->assign('uname', isset ($sreg['nickname']) ? $sreg['nickname'] : '');
+		$xoopsTpl->assign('email', isset ($sreg['email']) ? $sreg['email'] : '');
 
-		include_once ICMS_ROOT_PATH.'/footer.php';
-	break;
-	
-	case OPENID_STEP_REGISTER:
-		
+		include_once ICMS_ROOT_PATH . '/footer.php';
+		break;
+
+	case OPENID_STEP_REGISTER :
+
 		/**
 		 * setting the step to the previous one for if there is an error, user will be redirected
 		 * a step behind
 		 */
 		$_SESSION['openid_step'] = OPENID_STEP_NO_USER_FOUND;
-		
-		$sreg=$_SESSION['openid_sreg'];
-		include_once(ICMS_ROOT_PATH.'/header.php');
-	
+
+		$sreg = $_SESSION['openid_sreg'];
+		include_once (ICMS_ROOT_PATH . '/header.php');
+
 		/**
 		 * @todo this is only temporary and it needs to be included in the template as a javascript check
 		 */
-		if (empty($_POST['email']) || empty($_POST['uname'])) {
+		if (empty ($_POST['email']) || empty ($_POST['uname'])) {
 			redirect_header(ICMS_URL . '/finish_auth.php', 3, 'email and username are mandatory');
 		}
-		
-		$email = addslashes($_POST['email']) ;
-		
-		$uname = addslashes($_POST['uname']) ;
+
+		$email = addslashes($_POST['email']);
+
+		$uname = addslashes($_POST['uname']);
 		/**
 		 * @todo use the related UserConfigOption
 		 */
-		if (strlen($uname)<3 ){ // Username too short.
+		if (strlen($uname) < 3) { // Username too short.
 			redirect_header(ICMS_URL . '/finish_auth.php', 3, _US_OPENID_NEW_USER_UNAME_TOO_SHORT);
 		}
-	
+
 		// checking if this uname is available
-		$criteria = new CriteriaCompo(new Criteria('uname', $uname ));
-		$user_handler =& xoops_gethandler('user');
-		$users =& $user_handler->getObjects($criteria, false);
-		
+		$criteria = new CriteriaCompo(new Criteria('uname', $uname));
+		$user_handler = & xoops_gethandler('user');
+		$users = & $user_handler->getObjects($criteria, false);
+
 		if (is_array($users) && count($users) > 0) {
 			redirect_header(ICMS_URL . '/finish_auth.php', 3, _US_OPENID_NEW_USER_UNAME_EXISTS);
 		}
-	
+
 		$name = addslashes($myts->stripSlashesGPC(utf8_decode($sreg['fullname'])));
 		//$tz = quote_smart($tzoffset[$sreg['timezone']]);
 		$country = addslashes($myts->stripSlashesGPC(utf8_decode($sreg['country'])));
-	
+
 		/**
 		 * @todo use proper core class, manage activation_type and send notifications
 		 */
-		
+
 		/**
-		 
+
 		if ($xoopsConfigUser['activation_type'] == 1) {
 			$newuser->setVar('level', 1, true);
 		}
@@ -101,11 +102,11 @@ switch($xoopsAuth->step) {
 			return false;
 		}
 		$this->setErrors(111, 'We have created an account for you on this site.');
-	
+
 		if ($xoopsConfigUser['activation_type'] == 1) {
-	
+
 			//Sending a confirmation email to the newly registered user
-	
+
 			$myts = & MyTextSanitizer :: getInstance();
 			$xoopsMailer = & getMailer();
 			$xoopsMailer->useMail();
@@ -121,9 +122,9 @@ switch($xoopsAuth->step) {
 			$xoopsMailer->setFromName($xoopsConfig['sitename']);
 			$xoopsMailer->setSubject(sprintf(_US_YOURINSCRIPTION, $myts->oopsStripSlashesGPC($xoopsConfig['sitename'])));
 			$xoopsMailer->send();
-	
+
 			// Sending a notification email to a selected group when a new user registers
-	
+
 						if ($xoopsConfigUser['new_user_notify'] == 1 && !empty ($xoopsConfigUser['new_user_notify_group'])) {
 				$xoopsMailer = & getMailer();
 				$xoopsMailer->useMail();
@@ -221,7 +222,7 @@ switch($xoopsAuth->step) {
 		if (!$member_handler->insertUser($newUser)) {
 			redirect_header(ICMS_URL . '/finish_auth.php', 3, _US_OPENID_NEW_USER_CANNOT_INSERT . ' ' . $newUser->getHtmlErrors());
 		}
-	
+
 		// Now, add the user to the group.
 		$newid = $newUser->getVar('uid');
 		$mship_handler = xoops_getHandler('membership');
@@ -231,80 +232,80 @@ switch($xoopsAuth->step) {
 		if (!$mship_handler->insert($mship)) {
 			redirect_header($redirect_url, 3, _US_OPENID_NEW_USER_CANNOT_INSERT_INGROUP);
 		}
-	
+
 		// Login with this user.
-	
+
 		/**
 		 * @todo use proper login process (include/checklogin.php)
 		 */
 		if ($newUser->getVar('level') == 0) {
 			redirect_header($redirect_url, 3, _US_OPENID_NEW_USER_AUTH_NOT_ACTIVATED);
 		}
-		
+
 		$_SESSION['xoopsUserId'] = $newUser->getVar('uid');
 		$_SESSION['xoopsUserGroups'] = $newUser->getGroups();
 		$user_theme = $newUser->getVar('theme');
-		
+
 		if (in_array($user_theme, $xoopsConfig['theme_set_allowed'])) {
 			$_SESSION['xoopsUserTheme'] = $user_theme;
 		}
-	
-		unset($_SESSION['openid_response']);
-		unset($_SESSION['openid_sreg']);
-		unset($_SESSION['frompage']);
-		
-		redirect_header($redirect_url, 3, sprintf(_US_OPENID_NEW_USER_CREATED, $newUser->getVar('uname')));		
-		
-	break;
-	
-	case OPENID_STEP_USER_FOUND:
-		include_once("include/checklogin.php");
+
+		unset ($_SESSION['openid_response']);
+		unset ($_SESSION['openid_sreg']);
+		unset ($_SESSION['frompage']);
+
+		redirect_header($redirect_url, 3, sprintf(_US_OPENID_NEW_USER_CREATED, $newUser->getVar('uname')));
+
+		break;
+
+	case OPENID_STEP_USER_FOUND :
+		include_once ("include/checklogin.php");
 		exit;
-	break;
-	
-	case OPENID_STEP_LINK:
+		break;
+
+	case OPENID_STEP_LINK :
 		/**
 		 * Linking an existing user with this openid
 		 */
-		include_once(ICMS_ROOT_PATH.'/header.php');
-		
-		$uname4sql = addslashes($myts->stripSlashesGPC($_POST['uname'])) ;
-		$pass4sql = addslashes( $myts->stripSlashesGPC($_POST['pass']) ) ;
-		
+		include_once (ICMS_ROOT_PATH . '/header.php');
+
+		$uname4sql = addslashes($myts->stripSlashesGPC($_POST['uname']));
+		$pass4sql = addslashes($myts->stripSlashesGPC($_POST['pass']));
+
 		$thisUser = $member_handler->loginUser($uname4sql, $pass4sql);
-	
+
 		if (!$thisUser) {
 			redirect_header($redirect_url, 3, _US_OPENID_LINKED_AUTH_FAILED);
 		}
-		
+
 		if ($thisUser->getVar('level') == 0) {
 			redirect_header($redirect_url, 3, _US_OPENID_LINKED_AUTH_NOT_ACTIVATED);
 		}
-		
+
 		// This means the authentication succeeded.
-	    $displayId = $xoopsAuth->response->getDisplayIdentifier();
-	
+		$displayId = $xoopsAuth->response->getDisplayIdentifier();
+
 		$thisUser->setVar('last_login', time());
 		$thisUser->setVar('openid', $xoopsAuth->openid);
-		
+
 		if (!$member_handler->insertUser($thisUser)) {
 			redirect_header($redirect_url, 3, _US_OPENID_LINKED_AUTH_CANNOT_SAVE);
 		}
-		
+
 		$_SESSION['xoopsUserId'] = $thisUser->getVar('uid');
 		$_SESSION['xoopsUserGroups'] = $thisUser->getGroups();
 		$user_theme = $thisUser->getVar('theme');
-		
+
 		if (in_array($user_theme, $xoopsConfig['theme_set_allowed'])) {
 			$_SESSION['xoopsUserTheme'] = $user_theme;
 		}
-	
-		unset($_SESSION['openid_response']);
-		unset($_SESSION['openid_sreg']);
-		unset($_SESSION['frompage']);
-		
-		redirect_header($redirect_url, 3, sprintf(_US_OPENID_LINKED_DONE, $thisUser->getVar('uname')));		
-	break;
-		
+
+		unset ($_SESSION['openid_response']);
+		unset ($_SESSION['openid_sreg']);
+		unset ($_SESSION['frompage']);
+
+		redirect_header($redirect_url, 3, sprintf(_US_OPENID_LINKED_DONE, $thisUser->getVar('uname')));
+		break;
+
 }
 ?>
