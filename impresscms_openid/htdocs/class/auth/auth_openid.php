@@ -33,14 +33,14 @@ class XoopsAuthOpenid extends XoopsAuth {
 	 * @var string $openid openid used for this authentication
 	 */
 	var $openid;
-	
+
 	/**
 	 * OpenID response
 	 *
 	 * @var OpenIDResponse object
 	 */
-	var $response;	
-	
+	var $response;
+
 	/**
 	 * Where are we in the process
 	 * Possible options are
@@ -51,7 +51,7 @@ class XoopsAuthOpenid extends XoopsAuth {
 	 * @var int
 	 */
 	var $step = OPENID_STEP_BACK_FROM_SERVER;
-	
+
 	/**
 	 * Authentication Service constructor
 	 */
@@ -66,14 +66,15 @@ class XoopsAuthOpenid extends XoopsAuth {
      * @return bool successful?
 	 */
 	function authenticate($debug=false) {
-		require_once ICMS_LIBRARIES_PATH . "/phpopenid/occommon.php";
+		//require_once ICMS_LIBRARIES_PATH . "/phpopenid/occommon.php";
 
 		// session_start();
-		
+
 		// check to see if we alredy have an OpenID response in SESSION
 		if (isset($_SESSION['openid_response'])) {
 			if ($debug) icms_debug('we already have an openid_response in SESSION');
-			
+			//icms_debug_vardump($_SESSION['openid_response']);
+
 			$this->response = $_SESSION['openid_response'];
 		} else {
 			if ($debug) icms_debug('fetching the response from the OID server');
@@ -84,15 +85,15 @@ class XoopsAuthOpenid extends XoopsAuth {
 			$this->response = $consumer->complete($return_to);//1123
 			$_SESSION['openid_response']=$this->response;
 		}
-	
+
 		if ($this->response->status == Auth_OpenID_CANCEL) {
 			if ($debug) icms_debug('OOI Server response status is Auth_OpenID_CANCEL');
-			
+
 		    // This means the authentication was cancelled.
 		    $this->setErrors('100', 'Verification cancelled.');
 		} else if ($this->response->status == Auth_OpenID_FAILURE) {
 			if ($debug) icms_debug('OOI Server response status is Auth_OpenID_FAILURE');
-			
+
 		    $this->setErrors('101', "OpenID authentication failed: " . $this->response->message);
 			/**
 			 * This can be uncommented to display the $_REQUEST array. This is usefull for
@@ -100,9 +101,9 @@ class XoopsAuthOpenid extends XoopsAuth {
 			 */
 			 if ($debug) {
 				icms_debug('Outputing the REQUEST');
-				icms_debug_vardump($_REQUEST);	
+				icms_debug_vardump($_REQUEST);
 			 }
-			  
+
 			 //$this->setErrors('102', "REQUEST info: <pre>" . var_export($_REQUEST, true) . "</pre>");
 			 return false;
 		} else if ($this->response->status == Auth_OpenID_SUCCESS) {
@@ -112,14 +113,14 @@ class XoopsAuthOpenid extends XoopsAuth {
 			$sreg_resp = Auth_OpenID_SRegResponse::fromSuccessResponse($this->response);
 			$sreg = $sreg_resp->contents();
 			$_SESSION['openid_sreg']=$sreg;
-			
+
 			if ($debug) {
 				icms_debug('OOI Server response status is Auth_OpenID_SUCCESS');
 				icms_debug('displayid: ' . $this->displayid);
 				icms_debug('openid: ' . $this->openid);
 				icms_debug('dumping sreg info');
 				icms_debug_vardump($sreg);
-			}			
+			}
 
 		    // $openid = $this->response->identity_url;
 		    $esc_identity = htmlspecialchars($this->openid, ENT_QUOTES);
@@ -136,7 +137,7 @@ class XoopsAuthOpenid extends XoopsAuth {
 		    //$this->setErrors('103', $success);
 
 		    /**
-		     * Now, where are we in the process, just back from OpenID server or trying to register or 
+		     * Now, where are we in the process, just back from OpenID server or trying to register or
 		     * trying to link to an existing account
 		     */
 		    if (isset($_POST['openid_register'])) {
@@ -172,7 +173,7 @@ class XoopsAuthOpenid extends XoopsAuth {
 		    }
 		}
 	}
-	
+
 	function errorOccured() {
 		return count($this->_errors) > 0;
 	}
