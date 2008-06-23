@@ -120,7 +120,7 @@ if($op == 'saveuser')
         		}
 			else
 			{
-				$signature = $purifier->icms_html_purifier($_POST['user_sig'],1);
+				$signature = $purifier->icms_html_purifier($_POST['user_sig'], 'system-global');
         			$edituser->setVar('user_sig', xoops_substr($signature, 0, intval($xoopsConfigUser['sig_max_length'])));
         		}
 		}

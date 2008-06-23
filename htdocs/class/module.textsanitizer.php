@@ -49,20 +49,20 @@ class MyTextSanitizer
     	{
 	}
 
-	function html_purifier($text, $config = '1')
+	function html_purifier($text, $config = 'system-global')
 	{
 		include_once ICMS_ROOT_PATH.'/class/icms.htmlpurifier.php';
 		$html_purifier = &icms_HTMLPurifier::getPurifierInstance();
 
-		if($config = '1')
+		if($config = 'system-global')
 		{
 			$text = $html_purifier->icms_html_purifier($text, $config);
 		}
-		elseif($config = '2')
+		elseif($config = 'display')
 		{
 			$text = $html_purifier->displayHTMLarea($text, $config);
 		}
-		elseif($config = '3')
+		elseif($config = 'preview')
 		{
 			$text = $html_purifier->previewHTMLarea($text, $config);
 		}
@@ -351,7 +351,7 @@ class MyTextSanitizer
 		}
 		else
 		{
-			$text = $this->html_purifier($text, $config = '2');
+			$text = $this->html_purifier($text, $config = 'display');
 		}
 
 		$text = $this->codePreConv($text, $xcode); // Ryuji_edit(2003-11-18)
@@ -402,7 +402,7 @@ class MyTextSanitizer
 		}
 		else
 		{
-			$text = $this->html_purifier($text, $config = '3');
+			$text = $this->html_purifier($text, $config = 'preview');
 		}
 
 		$text = $this->codePreConv($text, $xcode); // Ryuji_edit(2003-11-18)

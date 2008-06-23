@@ -21,6 +21,7 @@ class icms_HTMLPurifier
 	function icms_HTMLPurifier()
 	{
 		require ICMS_ROOT_PATH.'/libraries/htmlpurifier/HTMLPurifier.standalone.php';
+		require ICMS_ROOT_PATH.'/libraries/htmlpurifier/HTMLPurifier.autoload.php';
 	}
 
 	/**
@@ -47,7 +48,7 @@ class icms_HTMLPurifier
 	* @param   string  $config configuration to use (must be numeric).
 	* @return  string
 	**/
-	function icms_getPurifierConfig($config = '1')
+	function icms_getPurifierConfig($config = 'system-global')
 	{
 	}
 
@@ -59,23 +60,27 @@ class icms_HTMLPurifier
 	* @param   string  $icms_PurifyConfig instanciate HTMLPurifier Library with default settings
 	* @return  string
 	**/
-	function icms_html_purifier($html, $config = '1')
+	function icms_html_purifier($html, $config = 'system-global')
 	{
 		$host_domain = icms_get_base_domain(ICMS_URL);
 		
 		// sets default config settings for htmpurifier
 		$icms_PurifyConfig = HTMLPurifier_Config::createDefault();
-		
+
+		$icms_PurifyConfig->set('HTML', 'DefinitionID', 'system-global');
+		$icms_PurifyConfig->set('HTML', 'DefinitionRev', 1);
 		// sets the path where HTMLPurifier stores it's serializer cache.
 		if(is_dir(ICMS_PURIFIER_CACHE))
 		{
-			$icms_PurifyConfig->set('Cache', 'SerializerPath', ICMS_PURIFIER_CACHE);
+			$icms_PurifyConfig->set('Core', 'DefinitionCache', true);
+			$icms_PurifyConfig->set('Core', 'SerializerPath', ICMS_PURIFIER_CACHE);
 		}
 		else
 		{
-			$icms_PurifyConfig->set('Cache', 'SerializerPath', ICMS_ROOT_PATH.'/cache');
+			$icms_PurifyConfig->set('Core', 'DefinitionCache', true);
+			$icms_PurifyConfig->set('Core', 'SerializerPath', ICMS_ROOT_PATH.'/cache');
 		}
-		
+
 		// the following config options in future could be defined from admin interface allowing more advanced customised configurations.
 
 		// sets default system config options.
@@ -91,28 +96,29 @@ class icms_HTMLPurifier
 									'news' => true,)); // sets allowed URI schemes to be allowed in Forms.
 		$icms_PurifyConfig->set('URI', 'HostBlacklist', ''); // array of domain names to filter out (blacklist).
 		$icms_PurifyConfig->set('URI', 'DisableExternal', false); // if enabled will disable all links/images from outside your domain (requires Host being set)
-
+//		$icms_PurifyDef = $icms_PurifyConfig->getHTMLDefinition(true);
 
 		// Custom Configuration
 		// these in future could be defined from admin interface allowing more advanced customised configurations.
-		if($config = '1' || $config = '2') // config id level for display HTMLArea
+		if($config = 'system-global' || $config = 'display') // config id level for display HTMLArea
 		{
-			$icms_PurifyConfig->set('HTML', 'DefinitionID', '2');
-			$icms_PurifyDef = $icms_PurifyConfig->getHTMLDefinition();
+			$icms_PurifyConfig->set('HTML', 'DefinitionID', 'display');
+			$icms_PurifyConfig->set('HTML', 'DefinitionRev', 1);
 			// sets purifier to use medium level of filtering for w3c invalid code, cleans malicious code.
 			// allowed options 'none', 'light', 'medium', 'heavy'
-			$icms_PurifyDef->addAttribute('HTML', 'TidyLevel', 'medium');
-			$icms_PurifyDef->addAttribute('Filter', 'YouTube', true); // setting to true will allow Youtube files to be embedded into your site & w3c validated.
-
+			$icms_PurifyConfig->set('HTML', 'TidyLevel', 'medium');
+			$icms_PurifyConfig->set('Filter', 'YouTube', true); // setting to true will allow Youtube files to be embedded into your site & w3c validated.
+			$icms_PurifyDef = $icms_PurifyConfig->getHTMLDefinition(true);
 		}
-		elseif($config = '3') // config id level for preview HTMLArea
+		elseif($config = 'preview') // config id level for preview HTMLArea
 		{
-			$icms_PurifyConfig->set('HTML', 'DefinitionID', '3');
-			$icms_PurifyDef = $icms_PurifyConfig->getHTMLDefinition();
-			// sets purifier to use medium level of filtering for w3c invalid code, cleans malicious code.
+			$icms_PurifyConfig->set('HTML', 'DefinitionID', 'preview');
+			$icms_PurifyConfig->set('HTML', 'DefinitionID', 1);
+			$icms_PurifyConfig->set('HTML', 'TidyLevel', 'light');
+			// sets purifier to use light level of filtering for w3c invalid code, cleans malicious code.
 			// allowed options 'none', 'light', 'medium', 'heavy'
-			$icms_PurifyDef->addAttribute('HTML', 'TidyLevel', 'light');
-			$icms_PurifyDef->addAttribute('Filter', 'YouTube', true); // setting to true will allow Youtube files to be embedded into your site & w3c validated.
+			$icms_PurifyConfig->set('filter', 'YouTube', true); // setting to true will allow Youtube files to be embedded into your site & w3c validated.
+			$icms_PurifyDef = $icms_PurifyConfig->getHTMLDefinition(true);
 		}
 
 		$this->purifier = new HTMLPurifier($icms_PurifyConfig);
@@ -130,7 +136,7 @@ class icms_HTMLPurifier
 	 * @param   string  $config custom filtering config?
 	 * @return  string
 	 **/
-	function &displayHTMLarea($html, $config = '2')
+	function &displayHTMLarea($html, $config = 'display')
 	{
 		// ################# Preload Trigger beforeDisplayTarea ##############
 		global $icmsPreloadHandler;
@@ -151,7 +157,7 @@ class icms_HTMLPurifier
 	 * @param   string  $config custom filtering config?
 	 * @return  string
 	 **/
-	function &previewHTMLarea($html, $config = '3')
+	function &previewHTMLarea($html, $config = 'preview')
 	{
 		// ################# Preload Trigger beforeDisplayTarea ##############
 		global $icmsPreloadHandler;
@@ -173,7 +179,7 @@ class icms_HTMLPurifier
 	 * @param string $config - allows a custom filter set.
 	 * @return string
 	 */
-	function icms_escapeHTMLValue($value, $quotes = true, $config = '1')
+	function icms_escapeHTMLValue($value, $quotes = true, $config = 'system-global')
 	{
 		if (is_string($value))
 		{
