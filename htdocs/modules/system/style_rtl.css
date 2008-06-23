@@ -466,3 +466,6 @@ div.content
 .clear {
 	clear: both;
 }
+div#text_align{
+	text-align: right;
+}

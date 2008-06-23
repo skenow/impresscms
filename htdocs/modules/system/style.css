@@ -437,3 +437,6 @@ div.CPfoot{
 .clear {
 	clear: both;
 }
+div#text_align{
+	text-align: left;
+}
