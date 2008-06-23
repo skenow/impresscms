@@ -20,6 +20,7 @@ class icms_HTMLPurifier
 
 	function icms_HTMLPurifier()
 	{
+		require ICMS_ROOT_PATH.'/libraries/htmlpurifier/HTMLPurifier.standalone.php';
 	}
 
 	/**
@@ -43,10 +44,10 @@ class icms_HTMLPurifier
 	/**
 	* Gets Custom Purifier configurations ** this function is for future development **
 	*
-	* @param   string  $config configuration to use.
+	* @param   string  $config configuration to use (must be numeric).
 	* @return  string
 	**/
-	function icms_getPurifierConfig($config = 'global')
+	function icms_getPurifierConfig($config = '1')
 	{
 	}
 
@@ -58,8 +59,10 @@ class icms_HTMLPurifier
 	* @param   string  $icms_PurifyConfig instanciate HTMLPurifier Library with default settings
 	* @return  string
 	**/
-	function icms_html_purifier($html, $config = 'global')
+	function icms_html_purifier($html, $config = '1')
 	{
+		$host_domain = icms_get_base_domain(ICMS_URL);
+		
 		// sets default config settings for htmpurifier
 		$icms_PurifyConfig = HTMLPurifier_Config::createDefault();
 		
@@ -73,24 +76,45 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('Cache', 'SerializerPath', ICMS_ROOT_PATH.'/cache');
 		}
 		
+		// the following config options in future could be defined from admin interface allowing more advanced customised configurations.
+
 		// sets default system config options.
-		$icms_PurifyConfig->set('Core', 'Encoding', _CHARSET);
-		$icms_PurifyConfig->set('HTML', 'Doctype', 'XHTML 1.0 Transitional');
+		$icms_PurifyConfig->set('Core', 'Encoding', _CHARSET); // sets purifier to use specified encoding. default = UTF-8
+		$icms_PurifyConfig->set('HTML', 'Doctype', 'XHTML 1.0 Transitional'); // sets purifier to use specified Doctype when tidying etc.
+		
+		$icms_PurifyConfig->set('URI', 'Host', $host_domain); // sets host URI for filtering. this should be the base domain name. ie. impresscms.org and not community.impresscms.org.
+		$icms_PurifyConfig->set('URI', 'AllowedSchemes', array(	'http' => true,
+									'https' => true,
+									'mailto' => true,
+									'ftp' => true,
+									'nntp' => true,
+									'news' => true,)); // sets allowed URI schemes to be allowed in Forms.
+		$icms_PurifyConfig->set('URI', 'HostBlacklist', ''); // array of domain names to filter out (blacklist).
+		$icms_PurifyConfig->set('URI', 'DisableExternal', false); // if enabled will disable all links/images from outside your domain (requires Host being set)
+
 
 		// Custom Configuration
 		// these in future could be defined from admin interface allowing more advanced customised configurations.
-		if($config = 'global' || $config = 'global_display')
+		if($config = '1' || $config = '2') // config id level for display HTMLArea
 		{
+			$icms_PurifyConfig->set('HTML', 'DefinitionID', '2');
+			$icms_PurifyDef = $icms_PurifyConfig->getHTMLDefinition();
 			// sets purifier to use medium level of filtering for w3c invalid code, cleans malicious code.
 			// allowed options 'none', 'light', 'medium', 'heavy'
-			$icms_PurifyConfig->set('HTML', 'TidyLevel', 'medium');
+			$icms_PurifyDef->addAttribute('HTML', 'TidyLevel', 'medium');
+			$icms_PurifyDef->addAttribute('Filter', 'YouTube', true); // setting to true will allow Youtube files to be embedded into your site & w3c validated.
+
 		}
-		elseif($config = 'global_preview')
+		elseif($config = '3') // config id level for preview HTMLArea
 		{
+			$icms_PurifyConfig->set('HTML', 'DefinitionID', '3');
+			$icms_PurifyDef = $icms_PurifyConfig->getHTMLDefinition();
 			// sets purifier to use medium level of filtering for w3c invalid code, cleans malicious code.
 			// allowed options 'none', 'light', 'medium', 'heavy'
-			$icms_PurifyConfig->set('HTML', 'TidyLevel', 'light');
+			$icms_PurifyDef->addAttribute('HTML', 'TidyLevel', 'light');
+			$icms_PurifyDef->addAttribute('Filter', 'YouTube', true); // setting to true will allow Youtube files to be embedded into your site & w3c validated.
 		}
+
 		$this->purifier = new HTMLPurifier($icms_PurifyConfig);
 
 		$html = $this->purifier->purify($html);
@@ -106,7 +130,7 @@ class icms_HTMLPurifier
 	 * @param   string  $config custom filtering config?
 	 * @return  string
 	 **/
-	function &displayHTMLarea($html, $config = 'global_display')
+	function &displayHTMLarea($html, $config = '2')
 	{
 		// ################# Preload Trigger beforeDisplayTarea ##############
 		global $icmsPreloadHandler;
@@ -127,7 +151,7 @@ class icms_HTMLPurifier
 	 * @param   string  $config custom filtering config?
 	 * @return  string
 	 **/
-	function &previewHTMLarea($html, $config = 'global_preview')
+	function &previewHTMLarea($html, $config = '3')
 	{
 		// ################# Preload Trigger beforeDisplayTarea ##############
 		global $icmsPreloadHandler;
@@ -149,7 +173,7 @@ class icms_HTMLPurifier
 	 * @param string $config - allows a custom filter set.
 	 * @return string
 	 */
-	function icms_escapeHTMLValue($value, $quotes = true, $config = 'global')
+	function icms_escapeHTMLValue($value, $quotes = true, $config = '1')
 	{
 		if (is_string($value))
 		{

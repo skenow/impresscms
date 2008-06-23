@@ -90,7 +90,7 @@ define( "DB_COLLATION_HELP",  "A collation is a set of rules for comparing chara
 define( "DB_PREFIX_LABEL", "Table prefix" );	// L30
 define( "DB_PREFIX_HELP",  "This prefix will be added to all new tables created to avoid name conflicts in the database. If you are unsure, just keep the default"); // L63
 define( "DB_PCONNECT_LABEL", "Use persistent connection" );	// L54
-define( "DB_PCONNECT_HELP",  "Default is 'NO'. Choose 'NO' if you are unsure"); // L69
+define( "DB_PCONNECT_HELP",  "Persistent connections are useful with slower internet connections. They are not generally required for most installations. Default is 'NO'. Choose 'NO' if you are unsure"); // L69
 
 define( "DB_SALT_LABEL", "Password Salt Key" );	// L98
 define( "DB_SALT_HELP",  "This salt key will be appended to passwords in function icms_encryptPass(), and is used to create a totally unique secure password. Do Not change this key once your site is live, doing so will render ALL passwords invalid. If you are unsure, just keep the default"); // L97
@@ -216,4 +216,5 @@ define("_ADM_USE_RTL","0"); // turn this to 1 if your language is right to left
 define("_DEF_LANG_TAGS",'en,fr'); //Add local translation
 define("_DEF_LANG_NAMES",'english,french'); //Add local translation
 define("_LOCAL_LANG_NAMES",'English,Français'); //Add local translation
+define("_EXT_DATE_FUNC","0"); // change 0 to 1 if this language has an extended date function
 ?>
