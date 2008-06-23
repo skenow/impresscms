@@ -111,7 +111,8 @@ if($op == 'saveuser')
         	$edituser->setVar('user_icq', $_POST['user_icq']);
         	$edituser->setVar('user_from', $_POST['user_from']);
  		if($xoopsConfigUser['allwshow_sig'] == 1)
-		{
+		$edituser->setVar('openid', isset($_POST['openid']) ? trim($_POST['openid']) : '');		
+{
         		if($xoopsConfigUser['allow_htsig'] == 0)
 			{
 				$signature = strip_tags($myts->xoopsCodeDecode($_POST['user_sig'], 1));
@@ -203,6 +204,15 @@ if($op == 'editprofile')
     	$email_cbox->addOption(1, _US_ALLOWVIEWEMAIL);
     	$email_tray->addElement($email_cbox);
     	$form->addElement($email_tray);
+    /*
+     * @todo we need to add this in the preference
+     */
+    $config_to_enable_openid = true;
+	if ($config_to_enable_openid) {
+    	$openid_text = new XoopsFormText(_US_OPENID_FORM_CAPTION, 'openid', 30, 255, $xoopsUser->getVar('openid'));
+    	$openid_text->setDescription(_US_OPENID_FORM_DSC);
+    	$form->addElement($openid_text);
+	}
     	$url_text = new XoopsFormText(_US_WEBSITE, 'url', 30, 100, $xoopsUser->getVar('url', 'E'));
     	$form->addElement($url_text);
 
