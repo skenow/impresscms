@@ -6,6 +6,9 @@ $_SESSION['frompage'] = isset ($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERE
 //SESSION is started automatically by Xoops. -- Natsuhiko
 //session_start();
 
+// since we are trying to authenticate with OpenID, let' get rid of any data in $_SESSION['openid_response']
+unset($_SESSION['openid_response']);
+
 function getOpenIDURL() {
     // Render a default page if we got a submission without an openid
     // value.
