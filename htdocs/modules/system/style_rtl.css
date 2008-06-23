@@ -469,3 +469,9 @@ div.content
 div#text_align{
 	text-align: right;
 }
+div#floats_r{
+	float:left;
+}
+div#floats_l{
+	float:right;
+}

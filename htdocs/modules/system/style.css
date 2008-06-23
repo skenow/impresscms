@@ -440,3 +440,9 @@ div.CPfoot{
 div#text_align{
 	text-align: left;
 }
+div#floats_l{
+	float:left;
+}
+div#floats_r{
+	float:right;
+}
