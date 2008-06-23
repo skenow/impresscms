@@ -72,13 +72,13 @@ class icms_HTMLPurifier
 		// sets the path where HTMLPurifier stores it's serializer cache.
 		if(is_dir(ICMS_PURIFIER_CACHE))
 		{
-			$icms_PurifyConfig->set('Core', 'DefinitionCache', true);
-			$icms_PurifyConfig->set('Core', 'SerializerPath', ICMS_PURIFIER_CACHE);
+			$icms_PurifyConfig->set('Cache', 'DefinitionImpl', 'Serializer');
+			$icms_PurifyConfig->set('Cache', 'SerializerPath', ICMS_PURIFIER_CACHE);
 		}
 		else
 		{
-			$icms_PurifyConfig->set('Core', 'DefinitionCache', true);
-			$icms_PurifyConfig->set('Core', 'SerializerPath', ICMS_ROOT_PATH.'/cache');
+			$icms_PurifyConfig->set('Cache', 'DefinitionImpl', 'Serializer');
+			$icms_PurifyConfig->set('Cache', 'SerializerPath', ICMS_ROOT_PATH.'/cache');
 		}
 
 		// the following config options in future could be defined from admin interface allowing more advanced customised configurations.
