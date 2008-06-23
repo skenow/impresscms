@@ -31,7 +31,7 @@ $purifier =& icms_HTMLPurifier::getPurifierInstance();
 $xoopsTpl->assign('priv_poltype', 'page');
 $priv = str_replace('{X_SITEURL}', XOOPS_URL.'/', $xoopsConfigUser['priv_policy']); 
 $priv = str_replace('{X_SITENAME}', $xoopsConfig['sitename'], $priv);
-$priv = $purifier->displayHTMLarea($priv, 2); 
+$priv = $purifier->displayHTMLarea($priv, 'display'); 
 $xoopsTpl->assign('priv_policy', $priv);
 $xoopsTpl->assign('lang_privacy_policy', _PRV_PRIVACY_POLICY);
 
