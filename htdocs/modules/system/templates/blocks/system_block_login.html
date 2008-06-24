@@ -19,7 +19,7 @@
   <form method="get" action="<{$xoops_url}>/try_auth.php">
     <{$block.lang_youoid}>
     <input type="hidden" name="action" value="verify" />
-    <input type="text" class="openid_url" name="openid_identifier"  value="" />
+    <input type="text" class="openid_url" name="openid_identifier" size="12" value="" />
     <input type="submit" value="<{$block.lang_login}>" />
   </form>
   <div id="text_align"><a href="#" onclick="xoopsGetElementById('xoops_block_login_form').style.display = 'block'; xoopsGetElementById('openid-verify-form2').style.display = 'none'; return false;"><{$block.lang_back2normoid}></a></div>  
