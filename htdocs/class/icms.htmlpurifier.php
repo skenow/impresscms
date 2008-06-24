@@ -63,6 +63,7 @@ class icms_HTMLPurifier
 	function icms_html_purifier($html, $config = 'system-global')
 	{
 		$host_domain = icms_get_base_domain(ICMS_URL);
+		$host_base = icms_get_url_domain(ICMS_URL);
 		
 		// sets default config settings for htmpurifier
 		$icms_PurifyConfig = HTMLPurifier_Config::createDefault();
@@ -87,13 +88,17 @@ class icms_HTMLPurifier
 		$icms_PurifyConfig->set('Core', 'Encoding', _CHARSET); // sets purifier to use specified encoding. default = UTF-8
 		$icms_PurifyConfig->set('HTML', 'Doctype', 'XHTML 1.0 Transitional'); // sets purifier to use specified Doctype when tidying etc.
 		
+		$icms_PurifyConfig->set('URI', 'DefinitionID', 'system-global');
+		$icms_PurifyConfig->set('URI', 'DefinitionRev', 1);
 		$icms_PurifyConfig->set('URI', 'Host', $host_domain); // sets host URI for filtering. this should be the base domain name. ie. impresscms.org and not community.impresscms.org.
+		$icms_PurifyConfig->set('URI', 'Base', $host_base); // sets host URI for filtering. this should be the base domain name. ie. impresscms.org and not community.impresscms.org.
 		$icms_PurifyConfig->set('URI', 'AllowedSchemes', array(	'http' => true,
 									'https' => true,
 									'mailto' => true,
 									'ftp' => true,
 									'nntp' => true,
 									'news' => true,)); // sets allowed URI schemes to be allowed in Forms.
+//		$icms_PurifyConfig->set('HTML', 'Allowed', 'a[href|title],em,p,blockquote,div,b,strong,li,ul');
 		$icms_PurifyConfig->set('URI', 'HostBlacklist', ''); // array of domain names to filter out (blacklist).
 		$icms_PurifyConfig->set('URI', 'DisableExternal', false); // if enabled will disable all links/images from outside your domain (requires Host being set)
 //		$icms_PurifyDef = $icms_PurifyConfig->getHTMLDefinition(true);
@@ -113,11 +118,11 @@ class icms_HTMLPurifier
 		elseif($config = 'preview') // config id level for preview HTMLArea
 		{
 			$icms_PurifyConfig->set('HTML', 'DefinitionID', 'preview');
-			$icms_PurifyConfig->set('HTML', 'DefinitionID', 1);
+			$icms_PurifyConfig->set('HTML', 'DefinitionRev', 1);
 			$icms_PurifyConfig->set('HTML', 'TidyLevel', 'light');
 			// sets purifier to use light level of filtering for w3c invalid code, cleans malicious code.
 			// allowed options 'none', 'light', 'medium', 'heavy'
-			$icms_PurifyConfig->set('filter', 'YouTube', true); // setting to true will allow Youtube files to be embedded into your site & w3c validated.
+			$icms_PurifyConfig->set('Filter', 'YouTube', true); // setting to true will allow Youtube files to be embedded into your site & w3c validated.
 			$icms_PurifyDef = $icms_PurifyConfig->getHTMLDefinition(true);
 		}
 
