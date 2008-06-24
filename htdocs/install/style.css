@@ -304,6 +304,12 @@ SELECT
 	HEIGHT:11em;
 	FONT-SIZE:130%;
 }
+SELECT.db_select
+{
+    WIDTH: 10em;
+	HEIGHT:3em;
+	FONT-SIZE:100%;
+}
 BUTTON
 {
     PADDING-RIGHT: 0.5em;
@@ -324,10 +330,9 @@ BUTTON
 }
 .page#dbsettings SELECT
 {
-	WIDTH: 7em;
-	HEIGHT:3.5em;
+	WIDTH: 20em;
+	HEIGHT: 1.5em;
 	FONT-SIZE:100%;
-	MARGIN-LEFT:40%;
 }
 .error
 {

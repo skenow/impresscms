@@ -1,7 +1,7 @@
 <?php
 // $Id: mailusers.php 2 2005-11-02 18:23:29Z skalpa $
 //%%%%%%	Admin Module Name  MailUsers	%%%%%
-define("_AM_DBUPDATED",_MD_AM_DBUPDATED);
+define("_AM_DBUPDATED","Database Updated Successfully!");
 
 //%%%%%%	mailusers.php 	%%%%%
 define("_AM_SENDTOUSERS","Send message to users whose:");
@@ -35,5 +35,4 @@ define("_AM_SENTNUM", "%s - %s (total: %s users)");
 define("_AM_SENDNEXT", "Next");
 define("_AM_NOUSERMATCH", "No user matched");
 define("_AM_SENDCOMP", "Sending message completed.");
-
 ?>

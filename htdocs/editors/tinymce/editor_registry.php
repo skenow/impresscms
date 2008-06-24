@@ -1,5 +1,5 @@
 <?php
-// $Id: editor_registry.php,v 1.3 2005/08/08 06:29:11 skalpa Exp $
+// $Id: editor_registry.php 1522 2008-04-10 19:54:49Z wtravel $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //

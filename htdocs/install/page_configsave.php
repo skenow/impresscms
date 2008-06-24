@@ -14,7 +14,9 @@
 * @author		Skalpa Keo <skalpa@xoops.org>
 * @version		$Id$
 */
-
+/**
+ *
+ */ 
 require_once 'common.inc.php';
 if ( !defined( 'XOOPS_INSTALL' ) )	exit();
 
@@ -37,7 +39,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 		if ( ! $file = fopen( $vars['TRUST_PATH'] . '/' . $sdata_file_name, "r" ) ) {
 			$error = ERR_READ_SDATA;
         } else {
-        	$content = fread( $file, filesize( $vars['ROOT_PATH'] . '/mainfile.php' ) );
+        	$content = fread( $file, filesize( $vars['TRUST_PATH'] . '/' . $sdata_file_name ) );
         	fclose($file);
 
 			$sdata_rewrite = array();
@@ -45,6 +47,9 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 			$sdata_rewrite['DB_USER'] = $vars['DB_USER'];
 			$sdata_rewrite['DB_PASS'] = $vars['DB_PASS'];
 			$sdata_rewrite['DB_NAME'] = $vars['DB_NAME'];
+			$sdata_rewrite['DB_PREFIX'] = $vars['DB_PREFIX'];
+			$sdata_rewrite['DB_SALT'] = $vars['DB_SALT'];
+
 
 			foreach( $sdata_rewrite as $key => $val ) {
 				if( preg_match( "/(define\()([\"'])(SDATA_$key)\\2,\s*([\"'])(.*?)\\4\s*\)/", $content ) ) {
@@ -73,6 +78,8 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 		$vars['DB_USER'] = 'SDATA_DB_USER';
 		$vars['DB_PASS'] = 'SDATA_DB_PASS';
 		$vars['DB_NAME'] = 'SDATA_DB_NAME';
+		$vars['DB_PREFIX'] = 'SDATA_DB_PREFIX';
+		$vars['DB_SALT'] = 'SDATA_DB_SALT';
 	} else {
 		$dbinfo_in_trust_path = false;
 	}
@@ -127,6 +134,23 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	        }
         }
 	}
+	
+	// creating the required folders in trust_path
+	if (!icms_install_mkdir($vars['TRUST_PATH'] . '/cache/htmlpurifier/configs')) {
+		/**
+		 * @todo trap error
+		 */
+	}
+	if (is_dir($vars['TRUST_PATH'] . '/cache/htmlpurifier/configs'))
+	{
+		if (!icms_install_mkdir($vars['TRUST_PATH'].'/cache/htmlpurifier/configs/HTML') && !icms_install_mkdir($vars['TRUST_PATH'].'/cache/htmlpurifier/configs/CSS') && !icms_install_mkdir($vars['TRUST_PATH'].'/cache/htmlpurifier/configs/URI') && !icms_install_mkdir($vars['TRUST_PATH'].'/cache/htmlpurifier/configs/Test'))
+		{
+			/**
+			 * @todo trap error
+			 */
+		}
+	}
+	
 	if ( empty( $error ) ) {
 		$wizard->redirectToPage( '+1' );
 		exit();

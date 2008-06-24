@@ -24,7 +24,7 @@
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
-// Author: Jochen B��nagel (job@buennagel.com)                               //
+// Author: Jochen Büînagel (job@buennagel.com)                               //
 // URL:  http://www.xoops.org												 //
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
@@ -37,7 +37,7 @@ if (!defined("XOOPS_ROOT_PATH")) {
  * 
  * @filesource 
  *
- * @author		Jochen B��nagel	<jb@buennagel.com>
+ * @author		Jochen Büînagel	<jb@buennagel.com>
  * @copyright	copyright (c) 2000-2003 The XOOPS Project (http://www.xoops.org)
  *
  * @version		$Revision: 1083 $ - $Date: 2007-10-16 12:42:51 -0400 (mar., 16 oct. 2007) $
@@ -119,6 +119,13 @@ class XoopsMultiMailer extends PHPMailer {
 	var $Host		= "";
 
 	/**
+   * Sets connection prefix.
+   * Options are "", "ssl" or "tls"
+   * @var string
+   */
+  var $SMTPSecure = "";
+
+	/**
 	 * Does your SMTP host require SMTPAuth authentication?
 	 * @var 	boolean
 	 * @access	private
@@ -163,15 +170,17 @@ class XoopsMultiMailer extends PHPMailer {
 		$this->Sender = $this->From;
 
 		if ($xoopsMailerConfig["mailmethod"] == "smtpauth") {
-		    $this->Mailer = "smtp";
-			$this->SMTPAuth = TRUE;
+		    	$this->Mailer = "smtp";
+			$this->SMTPAuth = true;
+            		$this->SMTPSecure = "ssl";
 			// TODO: change value type of xoopsConfig "smtphost" from array to text
 			$this->Host = implode(';',$xoopsMailerConfig['smtphost']);
 			$this->Username = $xoopsMailerConfig['smtpuser'];
 			$this->Password = $xoopsMailerConfig['smtppass'];
+			//$this->Port = 465;
 		} else {
 			$this->Mailer = $xoopsMailerConfig['mailmethod'];
-			$this->SMTPAuth = FALSE;
+			$this->SMTPAuth = false;
 			$this->Sendmail = $xoopsMailerConfig['sendmailpath'];
 			$this->Host = implode(';',$xoopsMailerConfig['smtphost']);
 		}

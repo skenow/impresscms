@@ -25,10 +25,12 @@
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
+
 /**
+ * Authentification class for standard LDAP Server V2 or V3
+ *  
  * @package     kernel
  * @subpackage  auth
- * @description	Authentification class for standard LDAP Server V2 or V3
  * @author	    Pierre-Eric MENUET	<pemphp@free.fr>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
@@ -94,22 +96,21 @@ var $cp1252_map = array (
         }	
     }
 
-
 	function cp1252_to_utf8($str) {
 	        return  strtr(utf8_encode($str), $this->cp1252_map);
 	}
 
     /**
-	 *  Authenticate  user again LDAP directory (Bind)
-	 *  2 options : 
-	 * 		Authenticate directly with uname in the DN
-	 * 		Authenticate with manager, search the dn
-	 *
-	 * @param string $uname Username
-	 * @param string $pwd Password
-	 *
-	 * @return bool
-	 */	
+  	 *  Authenticate  user again LDAP directory (Bind)
+  	 *  2 options : 
+  	 * 		Authenticate directly with uname in the DN
+  	 * 		Authenticate with manager, search the dn
+  	 *
+  	 * @param string $uname Username
+  	 * @param string $pwd Password
+  	 *
+  	 * @return bool
+  	 */	
     function authenticate($uname, $pwd = null) {
         $authenticated = false;
         if (!extension_loaded('ldap')) {
@@ -140,14 +141,13 @@ var $cp1252_map = array (
         @ldap_close($this->_ds);
         return $authenticated;
     }
-    
-    
+
     /**
-	 *  Compose the user DN with the configuration.
-	 * 
-	 *
-	 * @return userDN or false
-	 */	    
+  	 *  Compose the user DN with the configuration.
+  	 * 
+  	 *
+  	 * @return userDN or false
+  	 */	    
     function getUserDN($uname) {
     	$userDN = false;
 	    if (!$this->ldap_loginname_asdn) {
@@ -169,37 +169,40 @@ var $cp1252_map = array (
 	    return $userDN;
     }
 
+    /**
+  	 *  Load user from ImpressCMS Database
+  	 * 
+  	 * @return XoopsUser object
+  	 */	        
+    function getFilter($uname) {
+      $filter = '';
+      if ($this->ldap_filter_person != '') {
+        $filter = str_replace('@@loginname@@',$uname, $this->ldap_filter_person);	 			
+      }	
+      else {
+        $filter = $this->ldap_loginldap_attr . "=" . $uname;
+      } 	
+      return $filter;
+    } 
 
     /**
-	 *  Load user from ImpressCMS Database
-	 * 
-	 * @return XoopsUser object
-	 */	        
-	 function getFilter($uname) {
-	 	$filter = '';
-	 	if ($this->ldap_filter_person != '') {
-			$filter = str_replace('@@loginname@@',$uname, $this->ldap_filter_person);	 			
-	 	}	
-	 	else {
-	 		$filter = $this->ldap_loginldap_attr . "=" . $uname;
-	 	} 	
-	 	return $filter;
-	 } 
+     * Loads Xoops user
+     * @param string $userdn
+     * @param string $uname Username
+     * @param string $pwd Password
+     * @return object {@link XoopsUser} 
+     **/
+  	function loadXoopsUser($userdn, $uname, $pwd = null) {
+  		$provisHandler = XoopsAuthProvisionning::getInstance($this);
+          $sr = ldap_read($this->_ds, $userdn, '(objectclass=*)');
+          $entries = ldap_get_entries($this->_ds, $sr);        
+          if ($entries["count"] > 0) {
+          	$xoopsUser = $provisHandler->sync($entries[0], $uname, $pwd);
+          }
+          else $this->setErrors(0, sprintf('loadXoopsUser - ' . _AUTH_LDAP_CANT_READ_ENTRY, $userdn));
+  		return $xoopsUser;
+  	}
 
-	          
-	function loadXoopsUser($userdn, $uname, $pwd = null) {
-		$provisHandler = XoopsAuthProvisionning::getInstance($this);
-        $sr = ldap_read($this->_ds, $userdn, '(objectclass=*)');
-        $entries = ldap_get_entries($this->_ds, $sr);        
-        if ($entries["count"] > 0) {
-        	$xoopsUser = $provisHandler->sync($entries[0], $uname, $pwd);
-        }
-        else $this->setErrors(0, sprintf('loadXoopsUser - ' . _AUTH_LDAP_CANT_READ_ENTRY, $userdn));
-		return $xoopsUser;
-	}
-
-    
 } // end class
-
 
 ?>

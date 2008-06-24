@@ -1,29 +1,19 @@
 <?php
-// $Id: mainfile.dist.php 506 2006-05-26 23:10:37Z skalpa $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
+/**
+* All information in order to connect to database are going through here.
+*
+* Be careful if you are changing data's in this file.
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @package		Installer
+* @since		XOOPS
+* @author		http://www.xoops.org The XOOPS Project
+* @author		modified by stranger <stranger@impresscms.ir>
+* @version		$Id$
+*/
 
 if ( !defined("XOOPS_MAINFILE_INCLUDED") ) {
 	define("XOOPS_MAINFILE_INCLUDED",1);
@@ -70,10 +60,14 @@ if ( !defined("XOOPS_MAINFILE_INCLUDED") ) {
 	// Database
 	// Choose the database to be used
 	define('XOOPS_DB_TYPE', 'mysql');
+ 
+    // Set the database charset if applicable
+    if (defined('XOOPS_DB_CHARSET')) die();
+    define('XOOPS_DB_CHARSET', '');
 
 	// Table Prefix
-	// This prefix will be added to all new tables created to avoid name conflict in the database. If you are unsure, just use the default 'xoops'.
-	define('XOOPS_DB_PREFIX', 'xoops');
+	// This prefix will be added to all new tables created to avoid name conflict in the database. If you are unsure, just use the default 'icms'.
+	define('XOOPS_DB_PREFIX', 'icms');
 
 	// Database Hostname
 	// Hostname of the database server. If you are unsure, 'localhost' works in most cases.
@@ -91,9 +85,18 @@ if ( !defined("XOOPS_MAINFILE_INCLUDED") ) {
 	// The name of database on the host. The installer will attempt to create the database if not exist
 	define('XOOPS_DB_NAME', '');
 
+	// Password Salt Key $mainSalt
+	// This salt will be appended to passwords in the icms_encryptPass() function.
+	// Do NOT change this once your site is Live, doing so will invalidate everyones Password.
+	define('XOOPS_DB_SALT', '');
+	
 	// Use persistent connection? (Yes=1 No=0)
 	// Default is 'Yes'. Choose 'Yes' if you are unsure.
 	define('XOOPS_DB_PCONNECT', 0);
+
+	// (optional) Physical path to script that logs database queries.
+	// Example: define('ICMS_LOGGING_HOOK', XOOPS_ROOT_PATH . '/modules/foobar/logging_hook.php');
+	define('ICMS_LOGGING_HOOK', '');
 
 	define("XOOPS_GROUP_ADMIN", "1");
 	define("XOOPS_GROUP_USERS", "2");

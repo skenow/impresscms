@@ -1,7 +1,7 @@
 <?php
 // $Id: banners.php 2 2005-11-02 18:23:29Z skalpa $
 //%%%%%%        Admin Module Name  Banners         %%%%%
-define("_AM_DBUPDATED",_MD_AM_DBUPDATED);
+define("_AM_DBUPDATED","Database Updated Successfully!");
 
 define("_AM_CURACTBNR","Current Active Banners");
 define("_AM_BANNERID","Banner ID");
@@ -54,5 +54,4 @@ define("_AM_EXTINFO","Extra Info:");
 define("_AM_CHGCLI","Change Client");
 define("_AM_USEHTML","Use Html?");
 define("_AM_CODEHTML","Code Html:");
-
 ?>

@@ -89,14 +89,14 @@ class XoopsLogger {
      * Start a timer
      * @param   string  $name   name of the timer
      */
-    function startTime($name = 'XOOPS') {
+    function startTime($name = 'ICMS') {
         $this->logstart[$name] = $this->microtime();
     }
     /**
      * Stop a timer
      * @param   string  $name   name of the timer
      */
-    function stopTime($name = 'XOOPS') {
+    function stopTime($name = 'ICMS') {
         $this->logend[$name] = $this->microtime();
     }
     /**
@@ -107,6 +107,9 @@ class XoopsLogger {
      */
     function addQuery($sql, $error=null, $errno=null) {
         if ( $this->activated )		$this->queries[] = array('sql' => $sql, 'error' => $error, 'errno' => $errno);
+        if (defined('ICMS_LOGGING_HOOK') and ICMS_LOGGING_HOOK != '') {
+           include ICMS_LOGGING_HOOK;
+        }
     }
     /**
      * Log display of a block
@@ -200,7 +203,7 @@ class XoopsLogger {
 		}
 	}
     /**#@+
-     * @protected
+     * @access protected
      */
 	function dump( $mode = '' ) {
 		include XOOPS_ROOT_PATH . '/class/logger_render.php';
@@ -212,7 +215,7 @@ class XoopsLogger {
      * @param   string  $name   name of the counter
      * @return  float   current execution time of the counter
      */
-    function dumpTime( $name = 'XOOPS' ) {
+    function dumpTime( $name = 'ICMS' ) {
         if ( !isset($this->logstart[$name]) ) {
             return 0;
         }

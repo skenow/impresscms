@@ -31,6 +31,7 @@
 if (!defined('XOOPS_ROOT_PATH')) {
 	die("XOOPS root path not defined");
 }
+
 /**
  * @package     kernel
  * @subpackage  form
@@ -82,7 +83,7 @@ class XoopsFormHidden extends XoopsFormElement {
 	/**
 	 * Sets the "value" attribute
 	 * 
-	 * @patam  $value	string
+	 * @param  $value	string
 	 */
 	function setValue($value) {
 		$this->_value = $value;

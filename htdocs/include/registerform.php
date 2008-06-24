@@ -67,11 +67,19 @@ $email_tray->addElement($email_option);
 //}
 
 $reg_form = new XoopsThemeForm(_US_USERREG, "userinfo", "register.php", "post", true);
-$uname_size = $xoopsConfigUser['maxuname'] < 25 ? $xoopsConfigUser['maxuname'] : 25;
+$uname_size = $xoopsConfigUser['maxuname'] < 75 ? $xoopsConfigUser['maxuname'] : 75;
 $reg_form->addElement(new XoopsFormText(_US_NICKNAME, "uname", $uname_size, $uname_size, $myts->htmlSpecialChars($uname)), true);
 $reg_form->addElement($email_tray);
-$reg_form->addElement(new XoopsFormPassword(_US_PASSWORD, "pass", 10, 32, $myts->htmlSpecialChars($pass)), true);
-$reg_form->addElement(new XoopsFormPassword(_US_VERIFYPASS, "vpass", 10, 32, $myts->htmlSpecialChars($vpass)), true);
+//$reg_form->addElement(new XoopsFormPassword(_US_PASSWORD, "pass", 10, 72, $myts->htmlSpecialChars($pass)), true);
+//$reg_form->addElement(new XoopsFormPassword(_US_VERIFYPASS, "vpass", 10, 72, $myts->htmlSpecialChars($vpass)), true);
+$config_handler =& xoops_gethandler('config');
+$passConfig =& $config_handler->getConfigsByCat(2);
+if ($passConfig['pass_level'] <= 20){
+	$reg_form->addElement(new XoopsFormPassword(_US_PASSWORD, "pass", 10, 72, $myts->htmlSpecialChars($pass)), true);
+}else{
+	include_once XOOPS_ROOT_PATH."/include/passwordquality.php";
+}
+$reg_form->addElement(new XoopsFormPassword(_US_VERIFYPASS, "vpass", 10, 72, $myts->htmlSpecialChars($vpass)), true);
 $reg_form->addElement(new XoopsFormText(_US_WEBSITE, "url", 25, 255, $myts->htmlSpecialChars($url)));
 $tzselected = ($timezone_offset != "") ? $timezone_offset : $xoopsConfig['default_TZ'];
 $reg_form->addElement(new XoopsFormSelectTimezone(_US_TIMEZONE, "timezone_offset", $tzselected));
@@ -79,8 +87,8 @@ $reg_form->addElement(new XoopsFormSelectTimezone(_US_TIMEZONE, "timezone_offset
 $reg_form->addElement(new XoopsFormRadioYN(_US_MAILOK, 'user_mailok', $user_mailok));
 if ($xoopsConfigUser['reg_dispdsclmr'] != 0 && $xoopsConfigUser['reg_disclaimer'] != '') {
 	$disc_tray = new XoopsFormElementTray(_US_DISCLAIMER, '<br />');
-	$disc_text = new XoopsFormTextarea('', 'disclaimer', $xoopsConfigUser['reg_disclaimer'], 8);
-	$disc_text->setExtra('readonly="readonly"');
+	$disclaimer_html = '<div id="disclaimer">'.nl2br($xoopsConfigUser['reg_disclaimer']).'</div>';
+    $disc_text = new XoopsFormLabel('', $disclaimer_html, 'disclaimer');
 	$disc_tray->addElement($disc_text);
 	$agree_chk = new XoopsFormCheckBox('', 'agree_disc', $agree_disc);
 	$agree_chk->addOption(1, _US_IAGREE);
@@ -90,7 +98,13 @@ if ($xoopsConfigUser['reg_dispdsclmr'] != 0 && $xoopsConfigUser['reg_disclaimer'
 	$disc_tray->addElement($agree_chk, true);
 	$reg_form->addElement($disc_tray);
 }
+$reg_form->addElement(new XoopsFormHidden("salt", $myts->htmlSpecialChars($salt)));
 $reg_form->addElement(new XoopsFormHidden("actkey", $myts->htmlSpecialChars($actkey)));
-$reg_form->addElement(new XoopsFormHidden("op", "newuser"));
+	if ($xoopsConfigUser['use_captcha'] == 1) {
+	$reg_form->addElement(new XoopsFormCaptcha(_SECURITYIMAGE_GETCODE, "scode"));
+	$reg_form->addElement(new XoopsFormHidden("op", "finish"));
+} else {
+	$reg_form->addElement(new XoopsFormHidden("op", "newuser"));
+}
 $reg_form->addElement(new XoopsFormButton("", "submit", _US_SUBMIT, "submit"));
 ?>

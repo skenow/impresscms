@@ -92,7 +92,7 @@
 #headlist {
 	width: 100%;
 	margin-top: 3px;
-	font-size: 12px;
+	font-size: 11px;
 }
 
 #info, #title_element, #meta_element, #script_element, #style_element, #base_element, #link_element, #comment_element, #unknown_element {
@@ -170,3 +170,9 @@
 	width: 22px;
 	height: 22px;
 }
+
+textarea {
+	height: 55px;
+}
+
+.panel_wrapper div.current {height:420px;}

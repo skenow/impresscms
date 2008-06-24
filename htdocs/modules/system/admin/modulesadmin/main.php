@@ -34,6 +34,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
 }
 include_once XOOPS_ROOT_PATH.'/class/xoopsblock.php';
 include_once XOOPS_ROOT_PATH."/modules/system/admin/modulesadmin/modulesadmin.php";
+require_once XOOPS_ROOT_PATH."/class/xoopslists.php";
 $op = "list";
 if ( isset($_POST) ) {
     foreach ( $_POST as $k => $v ) {
@@ -53,7 +54,9 @@ if (in_array($op, array('submit', 'install_ok', 'update_ok', 'uninstall_ok'))) {
 }
 
 if ( $op == "list" ) {
-    xoops_module_list();
+	xoops_cp_header();
+    echo xoops_module_list();
+    xoops_cp_footer();
     exit();
 }
 
@@ -176,7 +179,7 @@ if ($op == 'install') {
     if ($mod->getInfo('image') != false && trim($mod->getInfo('image')) != '') {
         $msgs ='<img src="'.XOOPS_URL.'/modules/'.$mod->getVar('dirname').'/'.trim($mod->getInfo('image')).'" alt="" />';
     }
-    $msgs .= '<br /><span style="font-size:smaller;";>'.$mod->getVar('name').'</span><br /><br />'._MD_AM_RUSUREINS;
+    $msgs .= '<br /><span style="font-size:smaller;">'.$mod->getVar('name').'</span><br /><br />'._MD_AM_RUSUREINS;
     xoops_cp_header();
     xoops_confirm(array('module' => $module, 'op' => 'install_ok', 'fct' => 'modulesadmin'), 'admin.php', $msgs, _MD_AM_INSTALL);
     xoops_cp_footer();
@@ -209,7 +212,7 @@ if ($op == 'uninstall') {
     if ($mod->getInfo('image') != false && trim($mod->getInfo('image')) != '') {
         $msgs ='<img src="'.XOOPS_URL.'/modules/'.$mod->getVar('dirname').'/'.trim($mod->getInfo('image')).'" alt="" />';
     }
-    $msgs .= '<br /><span style="font-size:smaller;";>'.$mod->getVar('name').'</span><br /><br />'._MD_AM_RUSUREUNINS;
+    $msgs .= '<br /><span style="font-size:smaller;">'.$mod->getVar('name').'</span><br /><br />'._MD_AM_RUSUREUNINS;
     xoops_cp_header();
     xoops_confirm(array('module' => $module, 'op' => 'uninstall_ok', 'fct' => 'modulesadmin'), 'admin.php', $msgs, _YES);
     xoops_cp_footer();
@@ -242,7 +245,7 @@ if ($op == 'update') {
     if ($mod->getInfo('image') != false && trim($mod->getInfo('image')) != '') {
         $msgs ='<img src="'.XOOPS_URL.'/modules/'.$mod->getVar('dirname').'/'.trim($mod->getInfo('image')).'" alt="" />';
     }
-    $msgs .= '<br /><span style="font-size:smaller;";>'.$mod->getVar('name').'</span><br /><br />'._MD_AM_RUSUREUPD;
+    $msgs .= '<br /><span style="font-size:smaller;">'.$mod->getVar('name').'</span><br /><br />'._MD_AM_RUSUREUPD;
     xoops_cp_header();
     xoops_confirm(array('dirname' => $module, 'op' => 'update_ok', 'fct' => 'modulesadmin'), 'admin.php', $msgs, _MD_AM_UPDATE);
     xoops_cp_footer();
@@ -253,9 +256,9 @@ if ($op == 'update_ok') {
 	$dirname = trim($dirname);
     $module_handler =& xoops_gethandler('module');
     $module =& $module_handler->getByDirname($dirname);
+    
     // Save current version for use in the update function
     $prev_version = $module->getVar('version');
-   // var_dump($module);
     include_once XOOPS_ROOT_PATH.'/class/template.php';
     xoops_template_clear_module_cache($module->getVar('mid'));
     // we dont want to change the module name set by admin
@@ -315,7 +318,7 @@ if ($op == 'update_ok') {
                             if (!xoops_template_touch($newid)) {
                                 $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not recompile template <b>'.$tpl['file'].'</b>.</span>';
                             } else {
-                                $msgs[] = '&nbsp;&nbsp;Template <b>'.$tpl['file'].'</b> recompiled.</span>';
+                                $msgs[] = '&nbsp;&nbsp;<span>Template <b>'.$tpl['file'].'</b> recompiled.</span>';
                             }
                         }
                     }

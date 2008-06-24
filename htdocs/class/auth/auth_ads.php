@@ -25,34 +25,37 @@
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
+
 /**
+ * Authentification class for Active Directory
+ *  
  * @package     kernel
  * @subpackage  auth
- * @description	Authentification class for Active Directory
  * @author	    Pierre-Eric MENUET	<pemphp@free.fr>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
 include_once XOOPS_ROOT_PATH . '/class/auth/auth_ldap.php';
  
 class XoopsAuthAds extends XoopsAuthLdap {
+
    	/**
-	 * Authentication Service constructor
-	 */
+  	 * Authentication Service constructor
+  	 */
     function XoopsAuthAds (&$dao) {
-		parent::XoopsAuthLdap($dao);
+  		parent::XoopsAuthLdap($dao);
     }
 
     /**
-	 *  Authenticate  user again LDAP directory (Bind)
-	 *  2 options : 
-	 * 		Authenticate directly with uname in the DN
-	 * 		Authenticate with manager, search the dn
-	 *
-	 * @param string $uname Username
-	 * @param string $pwd Password
-	 *
-	 * @return bool
-	 */	
+  	 *  Authenticate  user again LDAP directory (Bind)
+  	 *  2 options : 
+  	 * 		Authenticate directly with uname in the DN
+  	 * 		Authenticate with manager, search the dn
+  	 *
+  	 * @param string $uname Username
+  	 * @param string $pwd Password
+  	 *
+  	 * @return bool
+  	 */	
     function authenticate($uname, $pwd = null) {
         $authenticated = false;
         if (!extension_loaded('ldap')) {
@@ -87,16 +90,15 @@ class XoopsAuthAds extends XoopsAuthLdap {
         @ldap_close($this->_ds);
         return $authenticated;
     }
-    
-    
+
     /**
-	 *  Return the UPN = userPrincipalName (Active Directory)
-	 *  userPrincipalName = guyt@CP.com    Often abbreviated to UPN, and 
-	 *  looks like an email address.  Very useful for logging on especially in 
-	 *  a large Forest.   Note UPN must be unique in the forest.
-	 * 
-	 *  @return userDN or false
-	 */	    
+  	 *  Return the UPN = userPrincipalName (Active Directory)
+  	 *  userPrincipalName = guyt@CP.com    Often abbreviated to UPN, and 
+  	 *  looks like an email address.  Very useful for logging on especially in 
+  	 *  a large Forest.   Note UPN must be unique in the forest.
+  	 * 
+  	 *  @return userDN or false
+  	 */	    
     function getUPN($uname) {
     	$userDN = false;
 	    $userDN = $uname."@".$this->ldap_domain_name;
@@ -104,6 +106,5 @@ class XoopsAuthAds extends XoopsAuthLdap {
     }
       
 } // end class
-
 
 ?>

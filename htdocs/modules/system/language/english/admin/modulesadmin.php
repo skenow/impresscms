@@ -57,4 +57,9 @@ define('_MD_AM_RUSUREUNINS', 'Are you sure you would like to uninstall this modu
 define('_MD_AM_LISTUPBLKS', 'The following blocks will be updated.<br />Select the blocks of which contents (template and options) may be overwritten.<br />');
 define('_MD_AM_NEWBLKS', 'New Blocks');
 define('_MD_AM_DEPREBLKS', 'Deprecated Blocks');
+
+define('_MD_AM_MODULESADMIN_SUPPORT', 'Module Support Site');
+define('_MD_AM_MODULESADMIN_STATUS', 'Status');
+define('_MD_AM_MODULESADMIN_MODULENAME', 'Module Name');
+define('_MD_AM_MODULESADMIN_MODULETITLE', 'Module Title');
 ?>

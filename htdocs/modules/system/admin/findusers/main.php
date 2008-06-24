@@ -145,7 +145,6 @@ if ( $op == "form" ) {
     }
     $form->addElement($submit_button);
     echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/findusers/images/findusers_big.png)">'._AM_FINDUS.'</div><br />';
-    //echo "<h4 style='text-align:left;'>"._AM_FINDUS."</h4>";
     echo "(".sprintf(_AM_ACTUS, "<span style='color:#ff0000;'>$acttotal</span>")." ".sprintf(_AM_INACTUS, "<span style='color:#ff0000;'>$inacttotal</span>").")<br /><br />";
     $form->display();
 }
@@ -353,7 +352,6 @@ elseif ($op == "submit" & $GLOBALS['xoopsSecurity']->check()) {
     $member_handler =& xoops_gethandler('member');
     $total = $member_handler->getUserCountByGroupLink($groups, $criteria);
     echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/findusers/images/findusers_big.png)">'._AM_FINDUS.'</div><br />';
-    //echo "<a href='admin.php?fct=findusers&amp;op=form'>". _AM_FINDUS ."</a>&nbsp;<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;". _AM_RESULTS."<br /><br />";
     if ( $total == 0 ) {
         echo "<h4>"._AM_NOFOUND,"</h4>";
     } elseif ( $start < $total ) {
@@ -378,7 +376,7 @@ elseif ($op == "submit" & $GLOBALS['xoopsSecurity']->check()) {
             echo "<tr class='$class'><td align='center'><input type='checkbox' name='memberslist_id[]' id='memberslist_id[]' value='".$foundusers[$j]->getVar("uid")."' /><input type='hidden' name='memberslist_uname[".$foundusers[$j]->getVar("uid")."]' id='memberslist_uname[]' value='".$foundusers[$j]->getVar("uname")."' /></td>";
             echo "<td>$fuser_avatar</td><td><a href='".XOOPS_URL."/userinfo.php?uid=".$foundusers[$j]->getVar("uid")."'>".$foundusers[$j]->getVar("uname")."</a></td><td>".$fuser_name."</td><td align='center'><a href='mailto:".$foundusers[$j]->getVar("email")."'><img src='".XOOPS_URL."/images/icons/email.gif' border='0' alt='";
             printf(_SENDEMAILTO,$foundusers[$j]->getVar("uname", "E"));
-            echo "' /></a></td><td align='center'><a href='javascript:openWithSelfMain(\"".XOOPS_URL."/pmlite.php?send2=1&amp;to_userid=".$foundusers[$j]->getVar("uid")."\",\"pmlite\",450,370);'><img src='".XOOPS_URL."/images/icons/pm.gif' border='0' alt='";
+            echo "' /></a></td><td align='center'><a href='javascript:openWithSelfMain(\"".XOOPS_URL."/pmlite.php?send2=1&amp;to_userid=".$foundusers[$j]->getVar("uid")."\",\"pmlite\",800,680);'><img src='".XOOPS_URL."/images/icons/pm.gif' border='0' alt='";
             printf(_SENDPMTO,$foundusers[$j]->getVar("uname", "E"));
             echo "' /></a></td><td align='center'>";
             if ( $foundusers[$j]->getVar("url","E") != "" ) {

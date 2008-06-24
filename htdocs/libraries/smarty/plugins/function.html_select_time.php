@@ -9,13 +9,13 @@
 /**
  * Smarty {html_select_time} function plugin
  *
- * Type:     function<br>
- * Name:     html_select_time<br>
+ * Type:     function
+ * Name:     html_select_time
  * Purpose:  Prints the dropdowns for time selection
  * @link http://smarty.php.net/manual/en/language.function.html.select.time.php {html_select_time}
  *          (Smarty online manual)
  * @author Roberto Berto <roberto@berto.net>
- * @credits Monte Ohrt <monte AT ohrt DOT com>
+ * @author Monte Ohrt <monte AT ohrt DOT com>
  * @param array
  * @param Smarty
  * @return string

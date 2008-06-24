@@ -22,8 +22,6 @@ define('_US_REMOVEINFO','This will remove all your info from our database.');
 define('_US_BEENDELED','Your account has been deleted.');
 define('_US_REMEMBERME', 'Remember me');
 
-//
-
 //%%%%%%		File Name register.php 		%%%%%
 define('_US_USERREG','User Registration');
 define('_US_NICKNAME','Username');
@@ -47,7 +45,7 @@ define('_US_NOREGISTER','Sorry, we are currently closed for new user registratio
 // %s is username. This is a subject for email
 define('_US_USERKEYFOR','User activation key for %s');
 
-define('_US_YOURREGISTERED','You are now registered. An email containing an user activation key has been sent to the email account you provided. Please follow the instructions in the mail to activate your account. ');
+define('_US_YOURREGISTERED','You are now registered. An email containing a user activation key has been sent to the email account you provided. Please follow the instructions in the mail to activate your account. ');
 define('_US_YOURREGMAILNG','You are now registered. However, we were unable to send the activation mail to your email account due to an internal error that had occurred on our server. We are sorry for the inconvenience, please send the webmaster an email notifying him/her of the situation.');
 define('_US_YOURREGISTERED2','You are now registered.  Please wait for your account to be activated by the adminstrators.  You will receive an email once you are activated.  This could take a while so please be patient.');
 
@@ -144,9 +142,24 @@ define('_US_SELFILE','Select file');
 define('_US_OLDDELETED','Your old avatar will be deleted!');
 define('_US_CHOOSEAVT', 'Choose avatar from the available list');
 define('_US_SELECT_THEME', 'Default Theme');
+define('_US_SELECT_LANG', 'Default Language');
 
 define('_US_PRESSLOGIN', 'Press the button below to login');
 
 define('_US_ADMINNO', 'User in the webmasters group cannot be removed');
 define('_US_GROUPS', 'User\'s Groups');
+
+define('_US_YOURREGISTRATION', 'Your registration at %s');
+define('_US_WELCOMEMSGFAILED', 'Error while sending the welcome email.');
+define('_US_NEWUSERNOTIFYADMINFAIL', 'Notification to admin about new user registration failed.');
+define('_US_REGFORM_NOJAVASCRIPT', 'To log in at the site it\'s necessary that your browser has javascript enabled.');
+define('_US_REGFORM_WARNING', 'To register at the site you need to use a secure password. Try to create your password by using a mixture of letters (upper and lowercase), numbers and symbols. Try to create a password the more complex as possible although you can remember it.');
+define('_US_CHANGE_PASSWORD', 'Change Password?');
+define('_US_POSTSNOTENOUGH','Sorry, at least you need to have <b>%s</b> posts, to be able to upload your avatar.');
+define('_US_UNCHOOSEAVT', 'Until you reach this amount you can choose avatar from the list below.');
+
+/*
+define('_US_AUTORESIZE_ATV', 'Automatic resizing enabled');
+define('_US_AUTORESIZE_ATV_DESC', 'Images larger than %u x %u will be automatically resized, keeping the aspect ratio, so that it is within the maximum pixels set. The function accepts images JPG, PNG and GIF (including animated gif), but yet does not function satisfactorily for animated gifs with transparent background.');
+*/
 ?>
