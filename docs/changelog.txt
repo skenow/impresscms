@@ -79,6 +79,7 @@ Unreleased : ImpressCMS 1.1 Alpha 2
 - Fixed : #1964826 - missing DB_PCONNECT_HELP on install. (stranger)
 - Fixed : #1991855 - The cache-folder of HTMLPurifier after installation. (stranger)
 - Fixed : #1990733 - "Link Manager" saved not the module. (real_therplima)
+- Fixed : When user has logged in can register. (stranger)
 
 =============================================
 2008-05-22 : ImpressCMS 1.1 Alpha 1
