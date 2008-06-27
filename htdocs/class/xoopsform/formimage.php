@@ -100,7 +100,10 @@ class MastopFormSelectImage extends XoopsFormSelect
 						if($storetype == "db"){
 							$ret[$v]["/image.php?id=".$i->getVar('image_id')] = $i->getVar('image_nicename');
 						}else{
-							$ret[$v]["/uploads/".$i->getVar('image_name')] =  $i->getVar('image_nicename');
+							$categ_path = ICMS_IMANAGER_FOLDER_PATH.'/'.$imgcat->getVar('imgcat_foldername');
+							$categ_path = str_replace(ICMS_ROOT_PATH,'',$categ_path);
+							$path = (substr($categ_path,-1) != '/')?$categ_path.'/':$categ_path;
+							$ret[$v][$path.$i->getVar('image_name')] =  $i->getVar('image_nicename');
 						}
 					}
 				}else{
