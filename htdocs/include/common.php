@@ -99,6 +99,10 @@ define("ICMS_CACHE_PATH", ICMS_ROOT_PATH."/cache");
 define("ICMS_IMAGES_URL", ICMS_URL."/images");
 define("ICMS_EDITOR_PATH", ICMS_ROOT_PATH."/editors");
 define("ICMS_EDITOR_URL", ICMS_URL."/editors");
+define('ICMS_IMANAGER_FOLDER_PATH',ICMS_UPLOAD_PATH.'/imagemanager');
+define('ICMS_IMANAGER_FOLDER_URL',ICMS_UPLOAD_URL.'/imagemanager');
+
+
 /**
  * @todo make this $icms_images_setname as an option in preferences...
  */ 

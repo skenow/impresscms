@@ -19,7 +19,8 @@ $categ_url  = $imgcat_handler->getCategFolder($imagecategory,1,'url');
 if ($imagecategory->getVar('imgcat_storetype') == 'db') {
 	$img = wiImage::loadFromString($image[0]->getVar('image_body'));
 }else{
-	$img = wiImage::load($categ_path.'/'.$file);
+	$path = (substr($categ_path,-1) != '/')?$categ_path.'/':$categ_path;
+	$img = wiImage::load($path.$file);
 }
 $width = $img->getWidth();
 $height = $img->getHeight();

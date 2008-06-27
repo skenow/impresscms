@@ -239,7 +239,7 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();
         }
-    		$sql .= ' ORDER BY imgcat_weight, imgcat_id ASC';
+    	$sql .= ' ORDER BY imgcat_weight, imgcat_id ASC';
         $result = $this->db->query($sql, $limit, $start);
         if (!$result) {
             return $ret;

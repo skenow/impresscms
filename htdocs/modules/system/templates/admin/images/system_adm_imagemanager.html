@@ -1,5 +1,6 @@
-<script type="text/javascript" src="http://impresscms.no-ip.info/image_manager/modules/system/admin/images/js/imanager.js"></script>
-<div class="CPbigTitle" style="background-image: url(admin/images/images/images_big.png)"><{$admnav}></div><br />
+<script type="text/javascript" src="<{$xoops_url}>/modules/system/admin/images/js/imanager.js"></script>
+<div class="CPbigTitle" style="background-image: url(<{$xoops_url}>/modules/system/admin/images/images/images_big.png)"><{$lang_imanager_title}></div><br />
+<p style="margin-top:0;"><{$admnav}></p>
 <{if $catcount > 0}>
 <div align="right">
   <input type="button" onclick="showDiv('addcatform'); document.anchors.item('addcatform').scrollIntoView(); return false;" value="<{$lang_imanager_cat_addnewcat}>" />
@@ -67,6 +68,6 @@
 </div>
 <{/if}>
 <div id="addimgform" class="opt_divs" style="display:none; margin:5px; padding:5px;"><{$addimgform}></div>
-<a name="addimgform">
+<a name="addimgform"></a>
 <div id="addcatform" class="opt_divs" style="<{if $catcount > 0}>display:none;<{else}>display:block;<{/if}> margin:5px; padding:5px;"><{$addcatform}></div>
-<a name="addcatform">
+<a name="addcatform"></a>

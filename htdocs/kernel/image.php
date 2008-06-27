@@ -77,8 +77,9 @@ class XoopsImage extends XoopsObject
 	}
 	
 	function getInfo($path,$type='url',$ret=false){
+		$path = (substr($path,-1) != '/')?$path.'/':$path;
         if ($type == 'url'){
-        	$img = $path.'/'.$this->getVar('image_name');
+        	$img = $path.$this->getVar('image_name');
         }else{
         	$img = $path;
         }
