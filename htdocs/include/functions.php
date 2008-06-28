@@ -1694,4 +1694,74 @@ function icms_get_url_domain($url)
 	return $domain;
 }
 
+/**
+ * Function to wordwrap given text.
+ * 
+ * @param string $str 	The text to be wrapped.
+ * @param string $width The column width - text will be wrapped when longer than $width.
+ * @param string $break The line is broken using the optional break parameter.
+ *			can be '/n' or '<br />'
+ * @param string $cut 	If cut is set to TRUE, the string is always wrapped at the specified width.
+ *			So if you have a word that is larger than the given width, it is broken apart..
+ * @return string
+ */
+function icms_wordwrap($str, $width, $break = '/n', $cut = false)
+{
+	if(strtolower(_CHARSET) !== 'utf-8')
+	{
+		$str = wordwrap($str, $width, $break, $cut);
+		return $str;
+	}
+	else
+	{
+		$splitedArray = array();
+        	$lines = explode("\n", $str);
+        	foreach($lines as $line)
+		{
+            		$lineLength = strlen($line);
+            		if($lineLength > $width)
+			{
+                		$words = explode("\040", $line);
+                		$lineByWords = '';
+                		$addNewLine = true;
+                		foreach($words as $word)
+				{
+                    			$lineByWordsLength = strlen($lineByWords);
+                    			$tmpLine = $lineByWords.((strlen($lineByWords) !== 0) ? ' ' : '').$word;
+                    			$tmplineByWordsLength = strlen($tmpLine);
+                    			if($tmplineByWordsLength > $width && $lineByWordsLength <= $width && $lineByWordsLength !== 0)
+					{
+                        			$splitedArray[] = $lineByWords;
+                        			$lineByWords = '';
+                    			}
+
+                    			$newLineByWords = $lineByWords.((strlen($lineByWords) !== 0) ? ' ' : '').$word;
+                    			$newLineByWordsLength    = strlen($newLineByWords);
+                    			if($cut && $newLineByWordsLength > $width)
+					{
+                        			for($i = 0; $i < $newLineByWordsLength; $i = $i + $width)
+						{
+                            				$splitedArray[] = mb_substr($newLineByWords, $i, $width);
+                        			}
+                        			$addNewLine = false;
+                    			}
+					else
+					{
+                        			$lineByWords = $newLineByWords;
+                    			}
+                		}
+                		if($addNewLine)
+				{
+                    			$splitedArray[] = $lineByWords;
+                		}
+            		}
+			else
+			{
+                		$splitedArray[] = $line;
+            		}
+        	}
+        	return implode($break, $splitedArray);
+	}
+}
+
 ?>
