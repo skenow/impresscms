@@ -19,7 +19,7 @@ if(!defined("XOOPS_FOOTER_INCLUDED"))
 
 	// ################# Preload Trigger beforeFooter ##############
 	$icmsPreloadHandler->triggerEvent('beforeFooter');
-	
+
 	$xoopsLogger->stopTime('Module display');
 	if($xoopsOption['theme_use_smarty'] == 0)
 	{
@@ -38,8 +38,12 @@ if(!defined("XOOPS_FOOTER_INCLUDED"))
 	else
 	{
 		// RMV-NOTIFY
+		if (is_object($xoopsModule) && $xoopsModule->getVar('hasnotification') == 1 && is_object($xoopsUser)) {
+			require_once 'include/notification_select.php';
+		}
+
 		include_once ICMS_ROOT_PATH . '/include/notification_select.php';
-		
+
 		if(!headers_sent())
 		{
 			header('Content-Type:text/html; charset='._CHARSET);
