@@ -56,15 +56,15 @@ class MyTextSanitizer
 
 		if($config = 'system-global')
 		{
-			$text = $html_purifier->icms_html_purifier($text, $config);
+			$text = $html_purifier->icms_html_purifier($text, 'system-global');
 		}
 		elseif($config = 'display')
 		{
-			$text = $html_purifier->displayHTMLarea($text, $config);
+			$text = $html_purifier->displayHTMLarea($text, 'display');
 		}
 		elseif($config = 'preview')
 		{
-			$text = $html_purifier->previewHTMLarea($text, $config);
+			$text = $html_purifier->previewHTMLarea($text, 'preview');
 		}
 
 		return $text;
@@ -349,10 +349,10 @@ class MyTextSanitizer
 		{
 			$text = $this->htmlSpecialChars($text);
 		}
-		else
+/*		else // disabled for now as need to rewrite XoopsCodeDecode() functions for htmlpurifier use, so it recognises what to do with em
 		{
 			$text = $this->html_purifier($text, $config = 'display');
-		}
+		} */
 
 		$text = $this->codePreConv($text, $xcode); // Ryuji_edit(2003-11-18)
 		$text = $this->makeClickable($text);
@@ -400,10 +400,10 @@ class MyTextSanitizer
 		{
 			$text = $this->htmlSpecialChars($text);
 		}
-		else
+/*		else // disabled for now as need to rewrite XoopsCodeDecode() functions for htmlpurifier use, so it recognises what to do with em
 		{
 			$text = $this->html_purifier($text, $config = 'preview');
-		}
+		} /* 
 
 		$text = $this->codePreConv($text, $xcode); // Ryuji_edit(2003-11-18)
 		$text = $this->makeClickable($text);
