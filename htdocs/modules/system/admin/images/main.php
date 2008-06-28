@@ -23,10 +23,6 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     $imgcat_id = (isset($_GET['imgcat_id']))?intval($_GET['imgcat_id']):((isset($_POST['imgcat_id']))?intval($_POST['imgcat_id']):null);
     $limit = (isset($_GET['limit']))?intval($_GET['limit']):((isset($_POST['limit']))?intval($_POST['limit']):15);
     $start = (isset($_GET['start']))?intval($_GET['start']):((isset($_POST['start']))?intval($_POST['start']):0);
-    
-	define('_IMANAGER_TPL_PATH',XOOPS_ROOT_PATH.'/modules/system/templates/admin/images');
-	
-	include(XOOPS_ROOT_PATH."/libraries/wideimage/lib/WideImage.inc.php");
 	
     switch ($op){
     	case 'list':
@@ -185,10 +181,10 @@ function imanager_index($imgcat_id=null){
 	$form->addElement(new XoopsFormRadioYN(_MD_IMGCATDISPLAY, 'imgcat_display', 1, _YES, _NO));
 	$storetype = new XoopsFormRadio(_MD_IMGCATSTRTYPE, 'imgcat_storetype', 'file');
 	$storetype->setDescription('<span style="color:#ff0000;">'._MD_STRTYOPENG.'</span>');
-	$storetype->addOptionArray(array('file' => _MD_ASFILE, 'db' => _MD_INDB));
+	$storetype->addOptionArray(array('file' => sprintf(_MD_ASFILE,ICMS_IMANAGER_FOLDER_PATH.'/foldername'), 'db' => _MD_INDB));
 	$storetype->setExtra('onchange="actField(this.value,\'imgcat_foldername\');"');
 	$form->addElement($storetype);
-	$fname = new XoopsFormText(_MD_IMGCATFOLDERNAME, 'imgcat_foldername', 50, 255);
+	$fname = new XoopsFormText(_MD_IMGCATFOLDERNAME, 'imgcat_foldername', 50, 255, '');
 	$fname->setDescription('<span style="color:#ff0000;">'._MD_IMGCATFOLDERNAME_DESC.'<br />'._MD_STRTYOPENG.'</span>');
 	$form->addElement($fname,true);
 	$form->addElement(new XoopsFormHidden('op', 'addcat'));

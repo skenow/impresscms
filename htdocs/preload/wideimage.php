@@ -18,5 +18,9 @@ class IcmsPreloadWideimage extends IcmsPreloadItem
 		// just including the file... more to come
 		include ( ICMS_LIBRARIES_PATH."/wideimage/lib/WideImage.inc.php" );
 	}
+	
+	function eventAdminHeader() {
+		include ( ICMS_LIBRARIES_PATH."/wideimage/lib/WideImage.inc.php" );
+	}
 }
 ?>
