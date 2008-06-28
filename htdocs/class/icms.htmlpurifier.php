@@ -213,12 +213,12 @@ class icms_HTMLPurifier
 	 * @param   string  $config custom filtering config?
 	 * @return  string
 	 **/
-	function &displayHTMLarea($html, $config = 'display')
+	function &displayHTMLarea($html, $config = 'display', $smiley = 1, $xcode = 1, $image = 1, $br = 1)
 	{
 		// ################# Preload Trigger beforeDisplayTarea ##############
 		global $icmsPreloadHandler;
 		$icmsPreloadHandler->triggerEvent('beforedisplayHTMLarea', array(&$html, $config));
-		
+
 		$html = $this->icms_html_purifier($html, $config);
 
 		// ################# Preload Trigger afterDisplayTarea ##############
@@ -234,7 +234,7 @@ class icms_HTMLPurifier
 	 * @param   string  $config custom filtering config?
 	 * @return  string
 	 **/
-	function &previewHTMLarea($html, $config = 'preview')
+	function &previewHTMLarea($html, $config = 'preview', $smiley = 1, $xcode = 1, $image = 1, $br = 1)
 	{
 		// ################# Preload Trigger beforeDisplayTarea ##############
 		global $icmsPreloadHandler;
@@ -260,11 +260,11 @@ class icms_HTMLPurifier
 	{
 		if (is_string($value))
 		{
-			$value = $this->icms_html_purifier($value, $config);
 			if(get_magic_quotes_gpc)
 			{
 				$value = stripslashes($value);
 	        	}
+			$value = $this->icms_html_purifier($value, $config);
 			$value = mysql_real_escape_string($value);
 	    	}
 	    	else if ($value === null)

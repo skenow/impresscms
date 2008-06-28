@@ -349,10 +349,6 @@ class MyTextSanitizer
 		{
 			$text = $this->htmlSpecialChars($text);
 		}
-/*		else // disabled for now as need to rewrite XoopsCodeDecode() functions for htmlpurifier use, so it recognises what to do with em
-		{
-			$text = $this->html_purifier($text, $config = 'display');
-		} */
 
 		$text = $this->codePreConv($text, $xcode); // Ryuji_edit(2003-11-18)
 		$text = $this->makeClickable($text);
@@ -376,6 +372,10 @@ class MyTextSanitizer
 			$text = $this->nl2Br($text);
 		}
 		$text = $this->codeConv($text, $xcode, $image);	// Ryuji_edit(2003-11-18)
+		if($html != 0)
+		{
+			$text = $this->html_purifier($text, $config = 'display');
+		}
 		// ################# Preload Trigger afterDisplayTarea ##############
 		global $icmsPreloadHandler;
 		$icmsPreloadHandler->triggerEvent('afterDisplayTarea', array(&$text, $html, $smiley, $xcode, $image, $br));		
@@ -400,10 +400,6 @@ class MyTextSanitizer
 		{
 			$text = $this->htmlSpecialChars($text);
 		}
-/*		else // disabled for now as need to rewrite XoopsCodeDecode() functions for htmlpurifier use, so it recognises what to do with em
-		{
-			$text = $this->html_purifier($text, $config = 'preview');
-		} */ 
 
 		$text = $this->codePreConv($text, $xcode); // Ryuji_edit(2003-11-18)
 		$text = $this->makeClickable($text);
@@ -427,6 +423,11 @@ class MyTextSanitizer
 			$text = $this->nl2Br($text);
 		}
 		$text = $this->codeConv($text, $xcode, $image);	// Ryuji_edit(2003-11-18)
+		if($html != 0)
+		{
+			$text = $this->html_purifier($text, $config = 'preview');
+		}
+			
 		return $text;
 	}
 
