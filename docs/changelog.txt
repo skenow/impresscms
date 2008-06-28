@@ -34,6 +34,7 @@ Unreleased : ImpressCMS 1.1 Alpha 2
 - Improved : Updated PDF library to the latest version 3.1.000 (stranger)
 - Improved : All 3 theme set to be selectable. (stranger)
 - Improved : In footer.php, we are now including notificaton_select.php only when needed (wizanda/malanciault)
+- Improved : Changing the way we call set_magic_quotes_runtime(0) to add @ before so if the function is not available or turned off in php.ini, we don't try to collect it (wizanda/malanciault)
 
 - Changed : Small change with the term "Personalization" instead of "Personalisation". (malanciault)
 - Changed : Encryption method in preferences to select field type instead of yesno. (vaughan)

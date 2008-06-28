@@ -16,7 +16,7 @@
 */
 defined("XOOPS_MAINFILE_INCLUDED") or die();
 
-set_magic_quotes_runtime(0);
+@set_magic_quotes_runtime(0);
 
 /**
  * Creating ICMS specific constants
