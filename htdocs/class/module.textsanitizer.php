@@ -403,7 +403,7 @@ class MyTextSanitizer
 /*		else // disabled for now as need to rewrite XoopsCodeDecode() functions for htmlpurifier use, so it recognises what to do with em
 		{
 			$text = $this->html_purifier($text, $config = 'preview');
-		} /* 
+		} */ 
 
 		$text = $this->codePreConv($text, $xcode); // Ryuji_edit(2003-11-18)
 		$text = $this->makeClickable($text);
