@@ -41,12 +41,12 @@
   </form>
 </div>
 <{foreach from=$images item=image key=key}>
-  <{include file="$xoops_root_path/modules/system/templates/admin/images/tpl_imanager_img.html" image=$image i=$key}>
+  <{include file="db:admin/images/system_adm_imagemanager_img.html" image=$image i=$key}>
 <{/foreach}>
 <br style="clear:both;" />
 <{foreach from=$images item=image key=key}>
-  <{include file="$xoops_root_path/modules/system/templates/admin/images/tpl_imanager_editimg.html" image=$image i=$key}>
-  <{include file="$xoops_root_path/modules/system/templates/admin/images/tpl_imanager_cloneimg.html" image=$image i=$key}>
+  <{include file="db:admin/images/system_adm_imagemanager_editimg.html" image=$image i=$key}>
+  <{include file="db:admin/images/system_adm_imagemanager_cloneimg.html" image=$image i=$key}>
 <{/foreach}>
 <div id="addimgform" class="opt_divs" style="display:none; padding:5px; margin:5px;"><{$addimgform}></div>
 <a name="addimgform"></a>

@@ -144,6 +144,7 @@ $i++;
 $modversion['templates'][$i]['file'] = 'admin/customtag/system_adm_customtag.html';
 $modversion['templates'][$i]['description'] = 'Template of the Custom Tag admin';
 
+### Image Manager ###
 $i++;
 $modversion['templates'][$i]['file'] = 'admin/images/system_adm_imagemanager.html';
 $modversion['templates'][$i]['description'] = 'Template of the Image Manager admin';
@@ -152,6 +153,18 @@ $i++;
 $modversion['templates'][$i]['file'] = 'admin/images/system_adm_imagemanager_imglist.html';
 $modversion['templates'][$i]['description'] = 'Template of the Image Manager admin';
 
+$i++;
+$modversion['templates'][$i]['file'] = 'admin/images/system_adm_imagemanager_img.html';
+$modversion['templates'][$i]['description'] = 'Template of the Image Manager admin';
+
+$i++;
+$modversion['templates'][$i]['file'] = 'admin/images/system_adm_imagemanager_editimg.html';
+$modversion['templates'][$i]['description'] = 'Template of the Image Manager admin';
+
+$i++;
+$modversion['templates'][$i]['file'] = 'admin/images/system_adm_imagemanager_cloneimg.html';
+$modversion['templates'][$i]['description'] = 'Template of the Image Manager admin';
+###
 
 // Blocks
 $i=0;
