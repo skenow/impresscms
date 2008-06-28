@@ -23,7 +23,7 @@ function actField(value,id){
 	if (value == 'file'){
 		field.disabled = false;
 	}else{
-		field.value = ' ';
+		field.value = '';
 		field.disabled = true;
 	}
 }
