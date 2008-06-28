@@ -413,8 +413,13 @@ if ($op == 'delcat' && $admin) {
 			$imagem_url = XOOPS_URL.'/image.php?id='.$i;
 			$url = '/image.php?id='.$i;
 		} else {
-			$imagem_url = XOOPS_UPLOAD_URL.'/'.$images[$i]->getVar('image_name');
-			$url = '/uploads/'.$images[$i]->getVar('image_name');
+			$categ_path = ICMS_IMANAGER_FOLDER_PATH.'/'.$imagecategory->getVar('imgcat_foldername');
+			$categ_path = str_replace(ICMS_ROOT_PATH,'',$categ_path);
+			$path = (substr($categ_path,-1) != '/')?$categ_path.'/':$categ_path;
+			$categ_url = ICMS_IMANAGER_FOLDER_URL.'/'.$imagecategory->getVar('imgcat_foldername');
+			$url = (substr($categ_url,-1) != '/')?$categ_url.'/':$categ_url;
+			$imagem_url = $url.$images[$i]->getVar('image_name');
+			$url = $path.$images[$i]->getVar('image_name');
 		}
 		echo '<img src="'.$imagem_url.'" alt="" width="50" onmouseover="this.style.border=\'2px solid black\'"  onmouseout="this.style.border=\'2px solid white\'" style="border:2px solid white" onclick="addItem(\''.$url.'\', \''.$images[$i]->getVar('image_nicename').'\', \''.$target.'\', \''.$images[$i]->getVar('imgcat_id').'\')"/>';
 		echo '</td><td style="border: 2px double #F0F0EE; text-align: center">'.$images[$i]->getVar('image_nicename').'</td><td style="border: 2px double #F0F0EE; text-align: center">'.$images[$i]->getVar('image_mimetype').'</td>';
@@ -459,8 +464,14 @@ if ($op == 'addfile') {
 	if (!is_object($imagecategory)) {
 		redirect_header($_SERVER['PHP_SELF'],1);
 	}
+	$categ_path = $imgcat_handler->getCategFolder($imagecategory);
+	if ($imagecategory->getVar('imgcat_storetype') == 'db') {
+		$updir = ICMS_IMANAGER_FOLDER_PATH;
+	}else{
+		$updir = $categ_path;
+	}
 	include_once XOOPS_ROOT_PATH.'/class/uploader.php';
-	$uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png', 'image/bmp'), $imagecategory->getVar('imgcat_maxsize'), $imagecategory->getVar('imgcat_maxwidth'), $imagecategory->getVar('imgcat_maxheight'));
+	$uploader = new XoopsMediaUploader($updir, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png', 'image/bmp'), $imagecategory->getVar('imgcat_maxsize'), $imagecategory->getVar('imgcat_maxwidth'), $imagecategory->getVar('imgcat_maxheight'));
 	$uploader->setPrefix('img');
 	$err = array();
 	$ucount = count($_POST['xoops_upload_file']);
@@ -513,8 +524,13 @@ if ($op == 'addfile') {
 			$imagem_url = XOOPS_URL.'/image.php?id='.$image->getVar('image_id');
 			$url = '/image.php?id='.$image->getVar('image_id');
 		} else {
-			$imagem_url = XOOPS_UPLOAD_URL.'/'.$image->getVar('image_name');
-			$url = '/uploads/'.$image->getVar('image_name');
+			$categ_path = ICMS_IMANAGER_FOLDER_PATH.'/'.$imagecategory->getVar('imgcat_foldername');
+			$categ_path = str_replace(ICMS_ROOT_PATH,'',$categ_path);
+			$path = (substr($categ_path,-1) != '/')?$categ_path.'/':$categ_path;
+			$categ_url = ICMS_IMANAGER_FOLDER_URL.'/'.$imagecategory->getVar('imgcat_foldername');
+			$url = (substr($categ_url,-1) != '/')?$categ_url.'/':$categ_url;
+			$imagem_url = $url.$images[$i]->getVar('image_name');
+			$url = $path.$images[$i]->getVar('image_name');
 		}
 		echo '<img src="'.$imagem_url.'" alt="" width="50" onmouseover="this.style.border=\'2px solid black\'"  onmouseout="this.style.border=\'2px solid white\'" style="border:2px solid white" onclick="addItem(\''.$url.'\', \''.$image->getVar('image_nicename').'\', \''.$target.'\', \''.$image->getVar('imgcat_id').'\')"/>';
 		echo '</td><td style="border: 2px double #F0F0EE; text-align: center">'.$image->getVar('image_nicename').'</td><td style="border: 2px double #F0F0EE; text-align: center">'.$image->getVar('image_mimetype').'</td>';
