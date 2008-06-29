@@ -29,6 +29,7 @@ define('ICMS_PURIFIER_CACHE', ICMS_TRUST_PATH.'/cache/htmlpurifier');
 
 // ################# Creation of the IcmsPreloadHandler ##############
 include_once ICMS_ROOT_PATH . '/kernel/icmspreloadhandler.php';
+
 global $icmsPreloadHandler;
 $icmsPreloadHandler = IcmsPreloadHandler::getInstance();
 

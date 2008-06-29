@@ -661,6 +661,9 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	// ----------
 	$i++;
 	$p++;
+	$dbm->insert('config', " VALUES ($i,0,$c,'auth_openid','_MD_AM_AUTHOPENID','0','_MD_AM_AUTHOPENIDDSC','yesno','int', $p)");
+	$i++;
+	$p++;
 	$dbm->insert('config', " VALUES ($i,0,$c,'ldap_port','_MD_AM_LDAP_PORT','389','_MD_AM_LDAP_PORT','textbox','int', $p)");
 	$i++;
 	$p++;

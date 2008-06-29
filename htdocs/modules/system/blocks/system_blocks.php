@@ -113,6 +113,10 @@ function b_system_login_show()
 			$block['rememberme'] = $xoopsConfigUser['remember_me'];
 		}
 
+		$xoopsAuthConfig =& $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);
+		if ($xoopsAuthConfig['auth_openid']) {
+			$block['auth_openid'] = true;
+		}
         return $block;
     }
     return false;
