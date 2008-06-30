@@ -492,7 +492,7 @@ class XoopsModuleHandler extends XoopsObjectHandler
 	 * @return  bool
 	 **/
 	function delete(&$module) {
-		if(!(class_exists($this->xoopsmodule) && strtolower($module) instanceof $this->xoopsmodule)) {return false;}
+		if(strtolower(get_class($module)) != 'xoopsmodule') {return false;}
 		
 		$sql = sprintf("DELETE FROM %s WHERE mid = '%u'", $this->db->prefix('modules'), intval($module->getVar('mid')));
 		if(!$result = $this->db->query($sql )) {return false;}
