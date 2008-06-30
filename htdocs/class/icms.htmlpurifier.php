@@ -136,8 +136,8 @@ class icms_HTMLPurifier
 		$icms_PurifyConfig->set('HTML', 'DefinitionID', 'system-global');
 		$icms_PurifyConfig->set('HTML', 'DefinitionRev', 1);
 		$icms_PurifyConfig->set('HTML', 'Doctype', 'XHTML 1.0 Transitional'); // sets purifier to use specified Doctype when tidying etc.
-		$icms_PurifyConfig->set('HTML', 'Allowed', 'a[href|title], abbr[title], acronym[title], b, blockquote[cite], br, caption, cite, code, dd, del,
-					dfn, div, dl, dt, em, i, img[src|alt|title|class], ins, kbd, li, ol, p, pre, s, strike, strong, sub, sup, table, tbody,
+		$icms_PurifyConfig->set('HTML', 'Allowed', 'a[href|title|target|rel], abbr[title], acronym[title], b, blockquote[cite], br, caption, cite, code, dd,
+					del, dfn, div, dl, dt, em, i, img[src|alt|title|class], ins, kbd, li, ol, p, pre, s, strike, strong, sub, sup, table, tbody,
 					td, tfoot, th, thead, tr, tt, u, ul, var'); // sets allowed html tags that can be used.
 
 		$icms_PurifyConfig->set('AutoFormat', 'AutoParagraph', true);
@@ -175,6 +175,9 @@ class icms_HTMLPurifier
 		$icms_PurifyConfig->set('URI', 'HostBlacklist', ''); // array of domain names to filter out (blacklist).
 		$icms_PurifyConfig->set('URI', 'DisableExternal', false); // if enabled will disable all links/images from outside your domain (requires Host being set)
 
+		$icms_PurifyConfig->set('Attr', 'AllowedFrameTargets', '_blank, _parent, _self, _top');
+		$icms_PurifyConfig->set('Attr', 'AllowedRel', 'external, nofollow, external nofolow');
+
 		// Custom Configuration
 		// these in future could be defined from admin interface allowing more advanced customised configurations.
 		if($config = 'system-global' || $config = 'display') // config id level for display HTMLArea
@@ -197,6 +200,7 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('Filter', 'YouTube', true); // setting to true will allow Youtube files to be embedded into your site & w3c validated.
 			$icms_PurifyDef = $icms_PurifyConfig->getHTMLDefinition(true);
 		}
+
 
 		$this->purifier = new HTMLPurifier($icms_PurifyConfig);
 
