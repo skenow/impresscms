@@ -165,7 +165,7 @@ class MastopFormSelectImage extends XoopsFormSelect
 		}
 		$browse_url = XOOPS_URL."/class/xoopsform/formimage_browse.php";
 		$ret .= "</select>";
-		$ret .= ($catlist_total > 0) ? " <input type='button' value='"._ADDIMAGE."' onclick=\"window.open('$browse_url?target=".$this->getName()."','formImage','resizable=yes,width=600,height=470,left='+(screen.availWidth/2-200)+',top='+(screen.availHeight/2-200)+'');return false;\">":"" ;
+		$ret .= ($catlist_total > 0) ? " <input type='button' value='"._ADDIMAGE."' onclick=\"window.open('$browse_url?target=".$this->getName()."','formImage','resizable=yes,width=700,height=470,left='+(screen.availWidth/2-200)+',top='+(screen.availHeight/2-200)+'');return false;\">":"" ;
 		$ret .= "<br /><img id='".$this->getName()."_img' src='".((!empty($imagem)) ? XOOPS_URL.$imagem : XOOPS_URL."/images/blank.gif")."'>";
 		return $ret;
 	}

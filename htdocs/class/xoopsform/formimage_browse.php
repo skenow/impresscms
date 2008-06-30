@@ -349,6 +349,8 @@ ul.tabbernav li.tabberactive a:hover
  display:none;
 }
 </style>
+<?$icmsPreloadHandler->triggerEvent ( 'adminHeader' );?>
+<?$icmsPreloadHandler->triggerEvent ( 'adminBeforeFooter' );?>
 </head>
 <body>
 <div class="tabber">
@@ -386,6 +388,7 @@ if ($op == 'delcat' && $admin) {
 	echo '<a href="'.$_SERVER['PHP_SELF'].'?target='.$target.'">'. _MD_IMGMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'.$imagecategory->getVar('imgcat_name').'<br /><br />';
 	$form->display();
 }elseif ($op == 'listimg') {
+	include("../../libraries/wideimage/lib/WideImage.inc.php");
 	$imgcat_id = intval($_GET['imgcat_id']);
 	$imgcat_handler = xoops_gethandler('imagecategory');
 	$imagecategory =& $imgcat_handler->get($imgcat_id);
@@ -400,18 +403,11 @@ if ($op == 'delcat' && $admin) {
 	$criteria->setStart($start);
 	$criteria->setLimit(20);
 	$images =& $image_handler->getObjects($criteria, true, false);
-	echo '<table style="width:100%;"><thead><tr>
-	<td>&nbsp;</td>
-	<td style="border: 1px double black; text-align: center">'._IMAGENAME.'</td>
-	<td style="border: 1px double black; text-align: center">'._IMAGEMIME.'</td>
-	<td style="border: 1px double black; text-align: center">'._OPTIONS.'</td>
-	</tr></thead><tbody>
-	';
 	foreach (array_keys($images) as $i) {
-		echo '<tr><td width="30%" style="text-align: center">';
 		if ($imagecategory->getVar('imgcat_storetype') == 'db') {
 			$imagem_url = XOOPS_URL.'/image.php?id='.$i;
 			$url = '/image.php?id='.$i;
+			$size = icms_convert_size(filesize(ICMS_IMANAGER_FOLDER_PATH.'/'.$images[$i]->getVar('image_name')));
 		} else {
 			$categ_path = ICMS_IMANAGER_FOLDER_PATH.'/'.$imagecategory->getVar('imgcat_foldername');
 			$categ_path = str_replace(ICMS_ROOT_PATH,'',$categ_path);
@@ -420,12 +416,30 @@ if ($op == 'delcat' && $admin) {
 			$url = (substr($categ_url,-1) != '/')?$categ_url.'/':$categ_url;
 			$imagem_url = $url.$images[$i]->getVar('image_name');
 			$url = $path.$images[$i]->getVar('image_name');
+			$size = icms_convert_size(filesize(ICMS_IMANAGER_FOLDER_PATH.'/'.$imagecategory->getVar('imgcat_foldername').'/'.$images[$i]->getVar('image_name')));
+			$img_info = wiImage::load(ICMS_IMANAGER_FOLDER_PATH.'/'.$imagecategory->getVar('imgcat_foldername').'/'.$images[$i]->getVar('image_name'));
+			$width = $img_info->getWidth();
+			$height = $img_info->getHeight();
 		}
-		echo '<img src="'.$imagem_url.'" alt="" width="50" onmouseover="this.style.border=\'2px solid black\'"  onmouseout="this.style.border=\'2px solid white\'" style="border:2px solid white" onclick="addItem(\''.$url.'\', \''.$images[$i]->getVar('image_nicename').'\', \''.$target.'\', \''.$images[$i]->getVar('imgcat_id').'\')"/>';
-		echo '</td><td style="border: 2px double #F0F0EE; text-align: center">'.$images[$i]->getVar('image_nicename').'</td><td style="border: 2px double #F0F0EE; text-align: center">'.$images[$i]->getVar('image_mimetype').'</td>';
-		echo '<td style="border: 2px double #F0F0EE; text-align: center"><a href="javascript:void(0)" onclick="addItem(\''.$url.'\', \''.$images[$i]->getVar('image_nicename').'\', \''.$target.'\', \''.$images[$i]->getVar('imgcat_id').'\')">'._SELECT.'</a></td></tr>';
+		$src_lightbox = XOOPS_URL."/modules/system/admin/images/preview.php?file=".$images[$i]->getVar('image_name');
+		$preview_url = '<a href="'.$src_lightbox.'" rel="lightbox[categ'.$images[$i]->getVar('imgcat_id').']" title="'.$images[$i]->getVar('image_nicename').'"><img src="'.XOOPS_URL.'/modules/system/images/view_big.png" title="'._PREVIEW.'" alt="'._PREVIEW.'" /></a>';
+		
+		echo '<div id="img<{$i}>" class="imanager_image_box">';
+		echo '  <span class="imanager_image_img"><img src="'.$imagem_url.'" title="'.$images[$i]->getVar('image_nicename').'" /></span>';
+		echo '  <span class="imanager_image_label">'.$images[$i]->getVar('image_nicename').'</span>';
+		echo '  <span class="imanager_image_info">';
+		echo '    <b>file:</b> '.$images[$i]->getVar('image_name').'<br />';
+		echo '    <b>size:</b> '.$size.'<br />';
+		echo '    <b>width:</b> '.$width.' px<br />';
+		echo '    <b>height:</b> '.$height.' px';
+		echo '  </span>';
+		echo '  <span class="imanager_image_btns">';
+		echo      $preview_url;
+		echo '    <a href="javascript:void(0)" onclick="addItem(\''.$url.'\', \''.$images[$i]->getVar('image_nicename').'\', \''.$target.'\', \''.$images[$i]->getVar('imgcat_id').'\')"><img src="'.XOOPS_URL.'/modules/system/images/add.png" alt="'._SELECT.'" title="'._SELECT.'" /></a>';
+		echo '  </span>';
+		echo '</div>';
+		
 	}
-	echo "</tbody></table>";
 	if ($imgcount > 0) {
 		if ($imgcount > 20) {
 			include_once XOOPS_ROOT_PATH.'/class/pagenav.php';
@@ -434,18 +448,37 @@ if ($op == 'delcat' && $admin) {
 		}
 	}
 }else{
-	echo '<ul>';
+	echo '<table width="100%" celpadding="0" cellspacing="1" class="outer">';
+    echo '  <tr>';
+    echo '    <th align="left" width="20%">'._MD_IMAGECATNAME.'</th>';
+    echo '    <th align="center" width="10%">'._MD_IMAGECATMSIZE.'</th>';
+    echo '    <th align="center" width="10%">'._MD_IMAGECATMWIDTH.'</th>';
+    echo '    <th align="center" width="10%">'._MD_IMAGECATMHEIGHT.'</th>';
+    echo '    <th align="center" width="5%">'._MD_IMAGECATSUBS.'</th>';
+    echo '    <th align="center" width="10%">'._MD_IMAGECATQTDE.'</th>';
+    echo '    <th align="center" width="10%">'._MD_IMAGECATOPTIONS.'</th>';
+    echo '  </tr>';
 	$catcount = count($imagecategorys);
 	$image_handler =& xoops_gethandler('image');
+	$class= 'even';
 	for ($i = 0; $i < $catcount; $i++) {
-		$count = $image_handler->getCount(new Criteria('imgcat_id', $imagecategorys[$i]->getVar('imgcat_id')));
-		echo '<li>'.$imagecategorys[$i]->getVar('imgcat_name').' ('.sprintf(_NUMIMAGES, '<b>'.$count.'</b>').') [<a href="'.$_SERVER['PHP_SELF'].'?op=listimg&amp;imgcat_id='.$imagecategorys[$i]->getVar('imgcat_id').'&amp;target='.$target.'">'._LIST.'</a>]'.(($admin) ? ' [<a href="'.$_SERVER['PHP_SELF'].'?op=editcat&amp;imgcat_id='.$imagecategorys[$i]->getVar('imgcat_id').'&amp;target='.$target.'">'._EDIT.'</a>]' : '');
+		$class = ($class == 'even')?'odd':'even';
+		echo '<tr class="'.$class.'">';
+		echo '  <td align="left">'.$imagecategorys[$i]->getVar('imgcat_name').'</td>';
+		echo '  <td align="right">'.icms_convert_size($imagecategorys[$i]->getVar('imgcat_maxsize')).'</td>';
+		echo '  <td align="right">'.$imagecategorys[$i]->getVar('imgcat_maxwidth').' px</td>';
+		echo '  <td align="right">'.$imagecategorys[$i]->getVar('imgcat_maxheight').' px</td>';
+		$subs = count($imgcat_handler->getObjects(new CriteriaCompo(new Criteria('imgcat_pid', $imagecategorys[$i]->getVar('imgcat_id')))));
+		echo '  <td align="center">'.$subs.' '.(($subs > 0)?'<a href="'.$_SERVER['PHP_SELF'].'?op=listcat&amp;imgcat_id='.$imagecategorys[$i]->getVar('imgcat_id').'" title="View Sub-categories"><img src="'.XOOPS_URL.'/modules/system/images/viewsubs.gif" align="absmiddle" />':'').'</td>';
+		echo '  <td align="center">'.$image_handler->getCount(new Criteria('imgcat_id', $imagecategorys[$i]->getVar('imgcat_id'))).'</td>';
+		echo '  <td align="center"><a href="'.$_SERVER['PHP_SELF'].'?op=listimg&amp;imgcat_id='.$imagecategorys[$i]->getVar('imgcat_id').'&amp;target='.$target.'"><img src="'.XOOPS_URL.'/modules/system/images/view_big.png" alt="'._LIST.'" title="'._LIST.'" /></a>';
 		if ($imagecategorys[$i]->getVar('imgcat_type') == 'C' && $admin) {
-			echo ' [<a href="'.$_SERVER['PHP_SELF'].'?op=delcat&amp;imgcat_id='.$imagecategorys[$i]->getVar('imgcat_id').'">'._DELETE.'</a>]';
+			echo ' <a href="'.$_SERVER['PHP_SELF'].'?op=delcat&amp;imgcat_id='.$imagecategorys[$i]->getVar('imgcat_id').'"><img src="'.XOOPS_URL.'/modules/system/images/delete_big.png" alt="'._DELETE.'" title="'._DELETE.'" /></a>';
 		}
-		echo '</li>';
+		echo '  </td>';
+		echo '</tr>';
 	}
-	echo '</ul>';
+	echo '</table>';
 }
 ?>
 </div>
