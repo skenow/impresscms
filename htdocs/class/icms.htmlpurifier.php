@@ -176,7 +176,7 @@ class icms_HTMLPurifier
 		$icms_PurifyConfig->set('URI', 'DisableExternal', false); // if enabled will disable all links/images from outside your domain (requires Host being set)
 
 		$icms_PurifyConfig->set('Attr', 'AllowedFrameTargets', '_blank, _parent, _self, _top');
-		$icms_PurifyConfig->set('Attr', 'AllowedRel', 'external, nofollow, external nofolow');
+		$icms_PurifyConfig->set('Attr', 'AllowedRel', 'external, nofollow, external nofollow');
 
 		// Custom Configuration
 		// these in future could be defined from admin interface allowing more advanced customised configurations.
