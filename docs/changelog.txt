@@ -27,6 +27,7 @@ ImpressCMS ChangeLog
 - Added : 3 new plugins for tinymce. Xoopsimagemanager, XoopsEmotions, XoopsCodeQuote (luciorota/real_therplima)
 - Added : OpenID relying party now integrated in the core (malanciault)
 - Added : Implementation of the IcmsPersistableRegistry allowing caching when fetching IcmsPersistableObjects from the database (malanciault)
+- Added : new theme "iTheme" is now included (MrTheme)
 
 - Improved : The size of pop-ups for TinyMCE. (sato-san)
 - Improved : Made a suffix for shorten date cases, for servers with O.S windows . (stranger)
