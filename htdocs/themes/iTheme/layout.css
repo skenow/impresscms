@@ -53,7 +53,7 @@ head~body #xo-canvas-rightcolumn {
 
 #xo-page {
 	float:			left;
-	width:			100%;
+	width:			96%;
 }
 
 /* ------- Top and bottom zones (2 columns) ------- */
@@ -97,7 +97,7 @@ head~body #xo-canvas-rightcolumn {
 
 #xo-page-topblocks.xo-lcrpageblocks #xo-page-topleftblocks {}
 
-#xo-content {	
+#xo-content {
 	position:		relative;
 	clear: both;
 }
