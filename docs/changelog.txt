@@ -1,7 +1,7 @@
 ImpressCMS ChangeLog
 
 =============================================
-2008-07-02 : ImpressCMS 1.1 Alpha 2
+Unreleased : ImpressCMS 1.1 Alpha 2
 =============================================
 
 - Added: new icms.htmlpurifier.php class file, can now be called anytime in the same way as module.textsanitizer.php. (vaughan)
@@ -26,7 +26,6 @@ ImpressCMS ChangeLog
 - Added: Themes block to be shown as default. (stranger)
 - Added: 3 new plugins for tinymce. Xoopsimagemanager, XoopsEmotions, XoopsCodeQuote (luciorota/real_therplima)
 - Added: OpenID relying party now integrated in the core (malanciault)
-- Added: IcmsPersistableRegistry allowing caching when fetching IcmsPersistableObjects from the database (malanciault)
 
 - Improved : The size of pop-ups for TinyMCE. (sato-san)
 - Improved : Made a suffix for shorten date cases, for servers with O.S windows . (stranger)
@@ -36,6 +35,9 @@ ImpressCMS ChangeLog
 - Improved : All 3 theme set to be selectable. (stranger)
 - Improved : In footer.php, we are now including notificaton_select.php only when needed (wizanda/malanciault)
 - Improved : Changing the way we call set_magic_quotes_runtime(0) to add @ before so if the function is not available or turned off in php.ini, we don't try to collect it (wizanda/malanciault)
+- Improved : External links were not working externally. (vaughan)
+- Improved : Modules unable to uninstall. (vaughan)
+- Improved : Pictures for the Image-Manager (sato-san)
 
 - Changed : Small change with the term "Personalization" instead of "Personalisation". (malanciault)
 - Changed : Encryption method in preferences to select field type instead of yesno. (vaughan)
@@ -84,6 +86,8 @@ ImpressCMS ChangeLog
 - Fixed : #1990733 - "Link Manager" saved not the module. (real_therplima)
 - Fixed : When user has logged in can register. (stranger)
 - Fixed : #1970777 - Smilie bug with dhtml-editor. (real_therplima)
+- Fixed : Fix a bug that not allow change the avatar. (real_therplima)
+- Fixed : #1978931 - Re-committed fix for bug (icetomyst)
 
 =============================================
 2008-05-22 : ImpressCMS 1.1 Alpha 1
