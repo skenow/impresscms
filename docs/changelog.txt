@@ -1,7 +1,7 @@
 ImpressCMS ChangeLog
 
 =============================================
-Unreleased : ImpressCMS 1.1 Alpha 2
+2008-07-02 : ImpressCMS 1.1 Alpha 2
 =============================================
 
 - Added: new icms.htmlpurifier.php class file, can now be called anytime in the same way as module.textsanitizer.php. (vaughan)
@@ -26,6 +26,7 @@ Unreleased : ImpressCMS 1.1 Alpha 2
 - Added: Themes block to be shown as default. (stranger)
 - Added: 3 new plugins for tinymce. Xoopsimagemanager, XoopsEmotions, XoopsCodeQuote (luciorota/real_therplima)
 - Added: OpenID relying party now integrated in the core (malanciault)
+- Added: IcmsPersistableRegistry allowing caching when fetching IcmsPersistableObjects from the database (malanciault)
 
 - Improved : The size of pop-ups for TinyMCE. (sato-san)
 - Improved : Made a suffix for shorten date cases, for servers with O.S windows . (stranger)
