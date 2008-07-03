@@ -456,6 +456,7 @@ if($op == 'avatarchoose')
 	{
         	redirect_header('index.php',3,_US_NOEDITRIGHT."<br />".implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
     	}
+    	$myts =& MyTextSanitizer::getInstance();
     	$uid = 0;
     	if(!empty($_POST['uid']))
 	{
