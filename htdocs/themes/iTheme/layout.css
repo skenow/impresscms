@@ -87,7 +87,7 @@ head~body #xo-canvas-rightcolumn {
 #xo-page-topblocks.xo-lcrpageblocks .xo-blockszone, #xo-page-bottomblocks.xo-lcrpageblocks .xo-blockszone {
 	float:			left;
 	clear:			none;
-	width:			31.2%;
+	width:			48%;
 }
 
 * html #xo-page-topblocks.xo-lcrpageblocks .xo-blockszone,
@@ -97,7 +97,7 @@ head~body #xo-canvas-rightcolumn {
 
 #xo-page-topblocks.xo-lcrpageblocks #xo-page-topleftblocks {}
 
-#xo-content {
+#xo-content {	
 	position:		relative;
 	clear: both;
 }

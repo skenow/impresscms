@@ -12,12 +12,12 @@ html, body {
 	padding: 0;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 10pt;
-	background: url(img/body_bg.jpg) no-repeat;
+	background: url(../img/body_bg.jpg) no-repeat;
 }
 
 #xo-canvas {
 	background: inherit;
-	background: url(img/right_bg.jpg);
+	background: url(../img/right_bg.jpg);
 	background-repeat: no-repeat;
 	background-position: top right;
 	float: right;
@@ -60,20 +60,20 @@ h6 {font-size: .8em;}
 	clear: both;
 	height: 78px;
 	position: relative;
-	background: url(img/header_bg.jpg) repeat-x;
+	background: url(../img/header_bg.jpg) repeat-x;
 	margin-left: 35px;
 	margin-right: 35px;
 }
 
 #xo-headerlogo {
-	float: left;
+	float: right;
 }
 
 #xo-headerbanner {
 	position:relative;
 	top:10px;
-	right:20px;
-	float: right;
+	left:120px;
+	float: left;
 }
 
 /* ------ Header top menu navigation rules ------ */
@@ -202,7 +202,7 @@ h6 {font-size: .8em;}
 	font-size: 70%;
 	color: #666;
 	margin-top: 5px;
-	background: url(img/foot_bg.jpg) repeat-x;
+	background: url(../img/foot_bg.jpg) repeat-x;
 	background-color: #59b9e4;
 	width: 100%;
 }
