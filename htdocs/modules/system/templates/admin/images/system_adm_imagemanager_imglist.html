@@ -25,7 +25,7 @@
       <{$cat_subs}>
     <{/if}>
     </td>
-    <td align="center"><{$imgcount}></td>
+    <td align="center"><{$imgcount}><{if $simgcount > 0}> (+<{$simgcount}>)<{/if}></td>
     <td align="center">
       <a href="#" onclick="showDiv('addimgform',''); document.anchors.item('addimgform').scrollIntoView(); return false;" title="<{$lang_imanager_cat_addimg}>"><img src="images/add.png" /></a>
       <a href="admin.php?fct=images&amp;op=editcat&amp;imgcat_id=<{$cat_id}>" title="<{$lang_imanager_cat_edit}>"><img src="images/edit_big.png" /></a>

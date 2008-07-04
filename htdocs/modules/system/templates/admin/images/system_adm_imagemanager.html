@@ -42,7 +42,7 @@
             <{$subs[i]}>
           <{/if}>
         </td>
-        <td><{$count[i]}></td>
+        <td><{$count[i]}><{if $scount[i] > 0}> (+<{$scount[i]}>)<{/if}></td>
         <td>
           <{if $count[i] > 0}>
             <a href="admin.php?fct=images&amp;op=listimg&amp;imgcat_id=<{$imagecategorys[i]->getVar('imgcat_id')}>" title="<{$lang_imanager_cat_listimg}>"><img src="images/view_big.png" /></a>

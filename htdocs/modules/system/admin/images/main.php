@@ -174,9 +174,31 @@ function imanager_index($imgcat_id=null){
 		$criteriaRead->add(new Criteria('imgcat_pid', $imagecategorys[$i]->getVar('imgcat_id')));
 		$subs[$i]  = count($imgcat_handler->getObjects($criteriaRead));
 	}
+	$scount = array();
+	foreach ($subs as $k=>$v){
+		$criteriaRead = new CriteriaCompo();
+		if (is_array($groups) && !empty($groups)) {
+			$criteriaTray = new CriteriaCompo();
+			foreach ($groups as $gid) {
+				$criteriaTray->add(new Criteria('gperm_groupid', $gid), 'OR');
+			}
+			$criteriaRead->add($criteriaTray);
+			$criteriaRead->add(new Criteria('gperm_name', 'imgcat_read'));
+			$criteriaRead->add(new Criteria('gperm_modid', 1));
+		}
+		$id = (!is_null($imgcat_id)?$imgcat_id:0);
+		$criteriaRead->add(new Criteria('imgcat_pid', $imagecategorys[$k]->getVar('imgcat_id')));
+		$ssubs = $imgcat_handler->getObjects($criteriaRead);
+		$sc = 0;
+		foreach ($ssubs as $id=>$va){
+			$sc += $image_handler->getCount(new Criteria('imgcat_id', $va->getVar('imgcat_id')));
+		}
+		$scount[$k] = $sc;
+	}
 	$icmsAdminTpl->assign('msize',$msize);
 	$icmsAdminTpl->assign('count',$count);
 	$icmsAdminTpl->assign('subs',$subs);
+	$icmsAdminTpl->assign('scount',$scount);
 
 	include_once XOOPS_ROOT_PATH.'/class/xoopsformloader.php';
 	if (!empty($catcount)) {
@@ -236,8 +258,16 @@ function imanager_index($imgcat_id=null){
 }
 
 function imanager_listimg($imgcat_id,$start=0) {
-	global $icmsAdminTpl;
+	global $icmsAdminTpl,$xoopsUser;
 
+	if (!is_object($xoopsUser)) {
+		$groups = array(XOOPS_GROUP_ANONYMOUS);
+		$admin = false;
+	} else {
+		$groups =& $xoopsUser->getGroups();
+		$admin = (!$xoopsUser->isAdmin(1)) ? false : true;
+	}
+	
 	$query = isset($_POST['query']) ? $_POST['query'] : null;
 
 	if ($imgcat_id <= 0) {
@@ -280,9 +310,43 @@ function imanager_listimg($imgcat_id,$start=0) {
 	$icmsAdminTpl->assign('cat_display',$imagecategory->getVar('imgcat_display'));
 	$icmsAdminTpl->assign('cat_id',$imagecategory->getVar('imgcat_id'));
 
-	$subs  = count($imgcat_handler->getObjects(new CriteriaCompo(new Criteria('imgcat_pid', $imgcat_id))));
+	$criteriaRead = new CriteriaCompo();
+	if (is_array($groups) && !empty($groups)) {
+		$criteriaTray = new CriteriaCompo();
+		foreach ($groups as $gid) {
+			$criteriaTray->add(new Criteria('gperm_groupid', $gid), 'OR');
+		}
+		$criteriaRead->add($criteriaTray);
+		$criteriaRead->add(new Criteria('gperm_name', 'imgcat_read'));
+		$criteriaRead->add(new Criteria('gperm_modid', 1));
+	}
+	$criteriaRead->add(new Criteria('imgcat_pid', $imagecategory->getVar('imgcat_id')));
+	$subcats = $imgcat_handler->getObjects($criteriaRead);
+	$subs  = count($subcats);
 	$icmsAdminTpl->assign('cat_subs',$subs);
 
+	$image_handler = xoops_gethandler('image');
+	
+	$criteriaRead = new CriteriaCompo();
+	if (is_array($groups) && !empty($groups)) {
+		$criteriaTray = new CriteriaCompo();
+		foreach ($groups as $gid) {
+			$criteriaTray->add(new Criteria('gperm_groupid', $gid), 'OR');
+		}
+		$criteriaRead->add($criteriaTray);
+		$criteriaRead->add(new Criteria('gperm_name', 'imgcat_read'));
+		$criteriaRead->add(new Criteria('gperm_modid', 1));
+	}
+	$id = (!is_null($imgcat_id)?$imgcat_id:0);
+	$criteriaRead->add(new Criteria('imgcat_pid', $imagecategory->getVar('imgcat_id')));
+	$ssubs = $imgcat_handler->getObjects($criteriaRead);
+	$sc = 0;
+	foreach ($ssubs as $id=>$va){
+		$sc += $image_handler->getCount(new Criteria('imgcat_id', $va->getVar('imgcat_id')));
+	}
+	$scount = $sc;
+	$icmsAdminTpl->assign('simgcount',$scount);
+	
 	$icmsAdminTpl->assign('lang_imanager_img_preview',_PREVIEW);
 	
 	$icmsAdminTpl->assign('lang_image_name',_IMAGENAME);
@@ -299,7 +363,6 @@ function imanager_listimg($imgcat_id,$start=0) {
 	$icmsAdminTpl->assign('xoops_root_path',XOOPS_ROOT_PATH);
 	$icmsAdminTpl->assign('query',$query);
 	
-	$image_handler = xoops_gethandler('image');
 	$criteria = new CriteriaCompo(new Criteria('imgcat_id', $imgcat_id));
 	if (!is_null($query)){
 		$criteria->add(new Criteria('image_nicename', $query.'%','LIKE'));

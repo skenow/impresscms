@@ -21,7 +21,7 @@
       <{$cat_subs}>
     <{/if}>
     </td>
-    <td align="center"><{$imgcount}></td>
+    <td align="center"><{$imgcount}><{if $simgcount > 0}> (+<{$simgcount}>)<{/if}></td>
     <td align="center">
       <a href="#" onclick="showDiv('addimgform',''); document.anchors.item('addimgform').scrollIntoView(); return false;" title="<{$lang_imanager_cat_addimg}>"><img src="<{$xoops_url}>/modules/system/images/add.png" /></a>
     </td>
