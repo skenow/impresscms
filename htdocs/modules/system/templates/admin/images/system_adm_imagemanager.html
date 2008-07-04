@@ -40,7 +40,11 @@
         </td>
         <td><{$count[i]}></td>
         <td>
-          <a href="admin.php?fct=images&amp;op=listimg&amp;imgcat_id=<{$imagecategorys[i]->getVar('imgcat_id')}>" title="<{$lang_imanager_cat_listimg}>"><img src="images/view_big.png" /></a>
+          <{if $count[i] > 0}>
+            <a href="admin.php?fct=images&amp;op=listimg&amp;imgcat_id=<{$imagecategorys[i]->getVar('imgcat_id')}>" title="<{$lang_imanager_cat_listimg}>"><img src="images/view_big.png" /></a>
+          <{else}>
+            <img src="images/view_big_off.png" />
+          <{/if}>
           <a href="admin.php?fct=images&amp;op=editcat&amp;imgcat_id=<{$imagecategorys[i]->getVar('imgcat_id')}>" title="<{$lang_imanager_cat_edit}>"><img src="images/edit_big.png" /></a>
           <{if ($imagecategorys[i]->getVar('imgcat_type') == 'C')}>
             <a href="admin.php?fct=images&amp;op=delcat&amp;imgcat_id=<{$imagecategorys[i]->getVar('imgcat_id')}>" title="<{$lang_imanager_cat_del}>"><img src="images/delete_big.png" /></a>

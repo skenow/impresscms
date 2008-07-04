@@ -32,7 +32,11 @@
         </td>
         <td><{$count[i]}></td>
         <td>
-          <a href="?op=listimg&amp;imgcat_id=<{$imagecategorys[i]->getVar('imgcat_id')}>&target=<{$target}>" title="<{$lang_imanager_cat_listimg}>"><img src="<{$xoops_url}>/modules/system/images/view_big.png" /></a>
+          <{if $count[i] > 0}>
+            <a href="?op=listimg&amp;imgcat_id=<{$imagecategorys[i]->getVar('imgcat_id')}>&target=<{$target}>" title="<{$lang_imanager_cat_listimg}>"><img src="<{$xoops_url}>/modules/system/images/view_big.png" /></a>
+          <{else}>
+            <img src="<{$xoops_url}>/modules/system/images/view_big_off.png" />
+          <{/if}>
         </td>
       </tr>
       <tr id="line<{$imagecategorys[i]->getVar('imgcat_id')}>" style="display:none;">
