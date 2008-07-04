@@ -100,10 +100,10 @@ class MastopFormSelectImage extends XoopsFormSelect
 						if($storetype == "db"){
 							$ret[$v]["/image.php?id=".$i->getVar('image_id')] = $i->getVar('image_nicename');
 						}else{
-							$categ_path = ICMS_IMANAGER_FOLDER_PATH.'/'.$imgcat->getVar('imgcat_foldername');
+							$categ_path = $imgcat_handler->getCategFolder($imgcat);
 							$categ_path = str_replace(ICMS_ROOT_PATH,'',$categ_path);
 							$path = (substr($categ_path,-1) != '/')?$categ_path.'/':$categ_path;
-							$ret[$v][$path.$i->getVar('image_name')] =  $i->getVar('image_nicename');
+							$ret[$v][$path.$i->getVar('image_name')] = $i->getVar('image_nicename');
 						}
 					}
 				}else{
@@ -165,7 +165,7 @@ class MastopFormSelectImage extends XoopsFormSelect
 		}
 		$browse_url = XOOPS_URL."/class/xoopsform/formimage_browse.php";
 		$ret .= "</select>";
-		$ret .= ($catlist_total > 0) ? " <input type='button' value='"._ADDIMAGE."' onclick=\"window.open('$browse_url?target=".$this->getName()."','formImage','resizable=yes,width=700,height=470,left='+(screen.availWidth/2-200)+',top='+(screen.availHeight/2-200)+'');return false;\">":"" ;
+		$ret .= ($catlist_total > 0) ? " <input type='button' value='"._ADDIMAGE."' onclick=\"window.open('$browse_url?target=".$this->getName()."','formImage','resizable=yes,scrollbars=yes,width=985,height=470,left='+(screen.availWidth/2-492)+',top='+(screen.availHeight/2-235)+'');return false;\">":"" ;
 		$ret .= "<br /><img id='".$this->getName()."_img' src='".((!empty($imagem)) ? XOOPS_URL.$imagem : XOOPS_URL."/images/blank.gif")."'>";
 		return $ret;
 	}

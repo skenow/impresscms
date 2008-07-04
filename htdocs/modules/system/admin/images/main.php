@@ -76,12 +76,6 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     	case 'delfileok':
     		imanager_delfileok($image_id,$imgcat_id);
     		break;
-    	case 'cropimg':
-    		imanager_cropimg();
-    		break;
-    	case 'filter':
-    		imanager_filter();
-    		break;
     	case 'cloneimg':
     		imanager_clone();
     		break;

@@ -27,3 +27,29 @@ function actField(value,id){
 		field.disabled = true;
 	}
 }
+
+function addItem(itemurl, name, target, cat, url) {
+	var win = opener;
+	var campo = win.document.getElementById(target);
+	var opcoes = win.document.getElementById('img_cat_'+cat);
+	var imagem = win.document.getElementById(target+'_img');
+	if(opcoes){
+		for(x=0; x<campo.options.length; x++){
+			if(campo.options[x].value == itemurl){
+				campo.options[x].selected = true;
+				imagem.src = url+itemurl;
+				var found = true;
+			}
+		}
+		if(!found){
+			var newOption = win.document.createElement("option");
+			opcoes.appendChild(newOption);
+			newOption.text = name;
+			newOption.value = itemurl;
+			newOption.selected = true;
+			imagem.src = url+itemurl;
+		}
+	}
+	window.close();
+	return;
+}
