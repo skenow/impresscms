@@ -3,8 +3,12 @@
 <p style="margin-top:0;"><{$admnav}></p>
 <{if $catcount > 0}>
 <div align="right">
-  <input type="button" onclick="showDiv('addcatform'); document.anchors.item('addcatform').scrollIntoView(); return false;" value="<{$lang_imanager_cat_addnewcat}>" />
-  <input type="button" onclick="showDiv('addimgform'); document.anchors.item('addimgform').scrollIntoView(); return false;" value="<{$lang_imanager_cat_addnewimg}>" />
+  <{if $isAdmin}>
+    <input type="button" onclick="showDiv('addcatform'); document.anchors.item('addcatform').scrollIntoView(); return false;" value="<{$lang_imanager_cat_addnewcat}>" />
+  <{/if}>
+  <{if $writecatcount > 0}>
+    <input type="button" onclick="showDiv('addimgform'); document.anchors.item('addimgform').scrollIntoView(); return false;" value="<{$lang_imanager_cat_addnewimg}>" />
+  <{/if}>
 </div>
 <form action="admin.php" method="post">
   <table width="100%" celpadding="0" cellspacing="1" class="outer">
@@ -67,8 +71,12 @@
   <{$token}>
 </form>
 <div align="right">
-  <input type="button" onclick="showDiv('addcatform'); document.anchors.item('addcatform').scrollIntoView(); return false;" value="<{$lang_imanager_cat_addnewcat}>" />
-  <input type="button" onclick="showDiv('addimgform'); document.anchors.item('addimgform').scrollIntoView(); return false;" value="<{$lang_imanager_cat_addnewimg}>" />
+  <{if $isAdmin}>
+    <input type="button" onclick="showDiv('addcatform'); document.anchors.item('addcatform').scrollIntoView(); return false;" value="<{$lang_imanager_cat_addnewcat}>" />
+  <{/if}>
+  <{if $writecatcount > 0}>
+    <input type="button" onclick="showDiv('addimgform'); document.anchors.item('addimgform').scrollIntoView(); return false;" value="<{$lang_imanager_cat_addnewimg}>" />
+  <{/if}>
 </div>
 <{/if}>
 <div id="addimgform" class="opt_divs" style="display:none; margin:5px; padding:5px;"><{$addimgform}></div>

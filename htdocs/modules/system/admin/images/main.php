@@ -92,10 +92,37 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
 function imanager_index($imgcat_id=null){
 	global $icmsAdminTpl,$xoopsUser,$xoopsConfig,$limit;
 
+	if (!is_object($xoopsUser)) {
+		$groups = array(XOOPS_GROUP_ANONYMOUS);
+		$admin = false;
+	} else {
+		$groups =& $xoopsUser->getGroups();
+		$admin = (!$xoopsUser->isAdmin(1)) ? false : true;
+	}
+
 	$imgcat_handler = xoops_gethandler('imagecategory');
+	
+	$criteriaRead = new CriteriaCompo();
+	if (is_array($groups) && !empty($groups)) {
+		$criteriaTray = new CriteriaCompo();
+		foreach ($groups as $gid) {
+			$criteriaTray->add(new Criteria('gperm_groupid', $gid), 'OR');
+		}
+		$criteriaRead->add($criteriaTray);
+		$criteriaRead->add(new Criteria('gperm_name', 'imgcat_read'));
+		$criteriaRead->add(new Criteria('gperm_modid', 1));
+	}
 	$id = (!is_null($imgcat_id)?$imgcat_id:0);
-	$criteria = new CriteriaCompo(new Criteria('imgcat_pid', $id));
-	$imagecategorys =& $imgcat_handler->getObjects($criteria);
+	$criteriaRead->add(new Criteria('imgcat_pid', $id));
+	$imagecategorys =& $imgcat_handler->getObjects($criteriaRead);
+	$criteriaWrite = new CriteriaCompo();
+	if (is_array($groups) && !empty($groups)) {
+		$criteriaWrite->add($criteriaTray);
+		$criteriaWrite->add(new Criteria('gperm_name', 'imgcat_write'));
+		$criteriaWrite->add(new Criteria('gperm_modid', 1));
+	}
+	$criteriaWrite->add(new Criteria('imgcat_pid', $id));
+	$imagecategorysWrite =& $imgcat_handler->getObjects($criteriaWrite);
 
 	$icmsAdminTpl->assign('lang_imanager_title',_IMGMANAGER);
 	$icmsAdminTpl->assign('lang_imanager_catid',_MD_IMAGECATID);
@@ -121,6 +148,8 @@ function imanager_index($imgcat_id=null){
 
 	$icmsAdminTpl->assign('token',$GLOBALS['xoopsSecurity']->getTokenHTML());
 	$icmsAdminTpl->assign('catcount',count($imagecategorys));
+	$icmsAdminTpl->assign('writecatcount',count($imagecategorysWrite));
+	$icmsAdminTpl->assign('isAdmin',$admin);
 
 	$icmsAdminTpl->assign('imagecategorys',$imagecategorys);
 	$icmsAdminTpl->assign('admnav',adminNav($imgcat_id));
@@ -131,7 +160,19 @@ function imanager_index($imgcat_id=null){
 	for ($i = 0; $i < $catcount; $i++) {
 		$msize[$i] = icms_convert_size($imagecategorys[$i]->getVar('imgcat_maxsize'));
 		$count[$i] = $image_handler->getCount(new Criteria('imgcat_id', $imagecategorys[$i]->getVar('imgcat_id')));
-		$subs[$i]  = count($imgcat_handler->getObjects(new CriteriaCompo(new Criteria('imgcat_pid', $imagecategorys[$i]->getVar('imgcat_id')))));
+		$criteriaRead = new CriteriaCompo();
+		if (is_array($groups) && !empty($groups)) {
+			$criteriaTray = new CriteriaCompo();
+			foreach ($groups as $gid) {
+				$criteriaTray->add(new Criteria('gperm_groupid', $gid), 'OR');
+			}
+			$criteriaRead->add($criteriaTray);
+			$criteriaRead->add(new Criteria('gperm_name', 'imgcat_read'));
+			$criteriaRead->add(new Criteria('gperm_modid', 1));
+		}
+		$id = (!is_null($imgcat_id)?$imgcat_id:0);
+		$criteriaRead->add(new Criteria('imgcat_pid', $imagecategorys[$i]->getVar('imgcat_id')));
+		$subs[$i]  = count($imgcat_handler->getObjects($criteriaRead));
 	}
 	$icmsAdminTpl->assign('msize',$msize);
 	$icmsAdminTpl->assign('count',$count);
@@ -143,7 +184,7 @@ function imanager_index($imgcat_id=null){
 		$form->setExtra('enctype="multipart/form-data"');
 		$form->addElement(new XoopsFormText(_IMAGENAME, 'image_nicename', 50, 255), true);
 		$select = new XoopsFormSelect(_IMAGECAT, 'imgcat_id');
-		$select->addOptionArray($imgcat_handler->getCategList());
+		$select->addOptionArray($imgcat_handler->getCategList($groups,'imgcat_write'));
 		$form->addElement($select, true);
 		$form->addElement(new XoopsFormFile(_IMAGEFILE, 'image_file', 5000000));
 		$form->addElement(new XoopsFormText(_IMGWEIGHT, 'image_weight', 3, 4, 0));
@@ -159,7 +200,7 @@ function imanager_index($imgcat_id=null){
 		$icmsAdminTpl->assign('addimgform',$form->render());
 	}
 	$form = new XoopsThemeForm(_MD_ADDIMGCAT, 'imagecat_form', 'admin.php', 'post', true);
-	$list =& $imgcat_handler->getCategList();
+	$list =& $imgcat_handler->getCategList($groups,'imgcat_write');
 	$sup = new XoopsFormSelect(_MD_IMGCATPARENT, 'imgcat_pid', $id);
 	$list[0] = '--------------------';
 	ksort($list);
