@@ -37,14 +37,6 @@ $modversion['onUpdate'] = "include/update.php";
 $i=0;
 
 $i++;
-$modversion['templates'][$i]['file'] = 'system_imagemanager.html';
-$modversion['templates'][$i]['description'] = '';
-
-$i++;
-$modversion['templates'][$i]['file'] = 'system_imagemanager2.html';
-$modversion['templates'][$i]['description'] = '';
-
-$i++;
 $modversion['templates'][$i]['file'] = 'system_userinfo.html';
 $modversion['templates'][$i]['description'] = '';
 

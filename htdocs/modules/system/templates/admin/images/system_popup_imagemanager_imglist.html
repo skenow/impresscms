@@ -16,7 +16,7 @@
     <td align="center"><{$cat_maxheight}>px</td>
     <td align="center">
     <{if $cat_subs > 0}>
-      <{$cat_subs}> <a href="?op=list&imgcat_id=<{$cat_id}>&target=<{$target}>" title="View Sub-categories"><img src="<{$xoops_url}>/modules/system/images/viewsubs.gif" align="absmiddle" /></a>
+      <{$cat_subs}> <a href="?op=list&imgcat_id=<{$cat_id}>&target=<{$target}>&type=<{$type}>" title="View Sub-categories"><img src="<{$xoops_url}>/modules/system/images/viewsubs.gif" align="absmiddle" /></a>
     <{else}>
       <{$cat_subs}>
     <{/if}>
@@ -28,7 +28,7 @@
   </tr>
 </table>
 <div style="padding:5px;" align="right">
-  <form action="formimage_browse.php?op=listimg&imgcat_id=<{$cat_id}>&target=<{$target}>" method="POST">
+  <form action="formimage_browse.php?op=listimg&imgcat_id=<{$cat_id}>&target=<{$target}>&type=<{$type}>" method="POST">
     <input type="text" name="query" id="query" size="20" value="<{$query}>" />
     <input type="submit" name="btn" value="<{$lang_search}>" />
     <input type="submit" name="btn1" value="<{$lang_cancel}>" onclick="document.getElementById('query').value='';" />

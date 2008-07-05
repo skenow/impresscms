@@ -1,3 +1,5 @@
+window.moveTo(screen.availWidth/2-492,screen.availHeight/2-235);
+
 function showDiv(type,id){
 	divs = document.getElementsByTagName('div');
 	for (i=0; i<divs.length;i++){
@@ -50,6 +52,23 @@ function addItem(itemurl, name, target, cat, url) {
 			imagem.src = url+itemurl;
 		}
 	}
+	window.close();
+	return;
+}
+
+function appendCode(addCode,target) {
+	var targetDom = window.opener.xoopsGetElementById(target);
+	if (targetDom.createTextRange && targetDom.caretPos){
+  		var caretPos = targetDom.caretPos;
+		caretPos.text = caretPos.text.charAt(caretPos.text.length - 1) 
+== ' ' ? addCode + ' ' : addCode;  
+	} else if (targetDom.getSelection && targetDom.caretPos){
+		var caretPos = targetDom.caretPos;
+		caretPos.text = caretPos.text.charat(caretPos.text.length - 1)  
+== ' ' ? addCode + ' ' : addCode;
+	} else {
+		targetDom.value = targetDom.value + addCode;
+  	}
 	window.close();
 	return;
 }
