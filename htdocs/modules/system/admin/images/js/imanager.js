@@ -1,5 +1,3 @@
-window.moveTo(screen.availWidth/2-492,screen.availHeight/2-235);
-
 function showDiv(type,id){
 	divs = document.getElementsByTagName('div');
 	for (i=0; i<divs.length;i++){
