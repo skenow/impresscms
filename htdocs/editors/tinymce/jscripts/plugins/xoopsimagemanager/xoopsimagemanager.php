@@ -60,7 +60,7 @@ $html = "<img
 	alt=\"image\"
 	src=\"".XOOPS_URL."/images/imgsrc.gif\"
 
-	onclick=\"javascript:xoopspopup=openWithSelfMain('xoopsimagebrowser.php?target=src','imgmanager',800,430,1);\"
+	onclick=\"javascript:xoopspopup=openWithSelfMain('xoopsimagebrowser.php?target=src&type=tiny','imgmanager',985,570,1);\"
 	onmouseover=\"style.cursor='hand'\"
 	style=\"\" />\n";
 //	onclick='javascript:openWithSelfMain(\"".XOOPS_URL."/imagemanager.php?target=".$this->getName()."\",\"imgmanager\",400,430);'

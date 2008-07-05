@@ -14,7 +14,7 @@
     <a href="?op=delfile&amp;image_id=<{$i}>&imgcat_id=<{$image.categ_id}>&target=<{$target}>&type=<{$type}>" title="<{$lang_imanager_cat_delete}>"><img src="<{$xoops_url}>/modules/system/images/delete.png" /></a>
     <{if $type == "ibrow"}>
       <a href="javascript:void(0)" onclick="addItem('<{$image.url_src}>', '<{$image.nicename}>', '<{$target}>', '<{$image.categ_id}>', '<{$xoops_url}>')" title="<{$lang_select}>"><img src="<{$xoops_url}>/modules/system/images/select.png" /></a>
-    <{else}>
+    <{elseif $type == "iman"}>
       <a href="javascript:void(0)" onclick="changeDisplay('selimage_<{$i}>'); return false;" title="<{$lang_select}>">
         <img src="<{$xoops_url}>/modules/system/images/select.png" />
         <div id="selimage_<{$i}>" class="ed_block_box" align="center" style="width:72px;">
@@ -23,6 +23,8 @@
           <a href="#" onclick="javascript:appendCode('<{$image.rcode}>','<{$target}>');"><img src="<{$xoops_url}>/images/alignright.gif" alt="Right" /></a>
         </div>
       </a>
+    <{elseif $type == "tiny"}>
+      <a href="javascript:void(0)" onclick="addItem('<{$image.src}>', '<{$image.nicename}>', '<{$target}>', '<{$image.categ_id}>', '<{$xoops_url}>', 'tiny')" title="<{$lang_select}>"><img src="<{$xoops_url}>/modules/system/images/select.png" /></a>
     <{/if}>
   </span>
 </div>
