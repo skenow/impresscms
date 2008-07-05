@@ -58,6 +58,8 @@ if ($xoopsConfig['theme_set'] != 'default' && file_exists(ICMS_THEME_PATH.'/'.$x
 	$xoTheme->addScript( '/include/xoops.js', array( 'type' => 'text/javascript' ) );
 	$xoTheme->addScript( '/include/linkexternal.js', array( 'type' => 'text/javascript' ) );
 
+	$icmsPreloadHandler->triggerEvent('finishOutputInit');
+	
     // Weird, but need extra <script> tags for 2.0.x themes
     //$xoopsTpl->assign('xoops_js', '//--></script><script type="text/javascript" src="'.ICMS_URL.'/include/xoops.js"></script><script type="text/javascript"><!--');
 	//$xoopsTpl->assign('linkexternal_js', '//--></script><script type="text/javascript" src="'.ICMS_URL.'/include/linkexternal.js"></script><script type="text/javascript"><!--');

@@ -14,7 +14,7 @@
 
 class IcmsPreloadLightbox extends IcmsPreloadItem
 {
-	function eventStartOutputInit() {
+	function finishOutputInit() {
 		global $xoTheme;
 
 		$xoTheme->addScript(ICMS_LIBRARIES_URL . '/lightbox/js/lightbox.js');
