@@ -94,12 +94,25 @@ var pass_level = "60";
 	<label for="adminpass"><?php echo ADMIN_PASS_LABEL; ?></label>
 	<input type="password" name="adminpass" id="adminpass" maxlength="255" value="" />
 	<script language="javascript">
-	  document.getElementById('adminpass').style.minWidth = '30%';
-	  document.getElementById('adminpass').style.cssFloat = 'left';
-	  document.getElementById('adminpass').style.styleFloat = 'left';
+<?php if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
+echo 'document.getElementById("adminpass").style.minWidth = "60%";
+	  document.getElementById("adminpass").style.cssFloat = "right";
+	  document.getElementById("adminpass").style.styleFloat = "right";';
+	   } else {
+echo 'document.getElementById("adminpass").style.minWidth = "60%";
+	  document.getElementById("adminpass").style.cssFloat = "left";
+	  document.getElementById("adminpass").style.styleFloat = "left";';
+           }
+?>
 	</script>
 	 <script language="javascript" src="<?php echo XOOPS_URL;?>/install/include/percent_bar.js"></script>
-	<br style="clear:left;" /><label for="adminpass2"><?php echo ADMIN_CONFIRMPASS_LABEL; ?></label>
+	<?php if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
+echo '<br style="clear:right;" />';
+	   } else {
+echo '<br style="clear:left;" />';
+           }
+?>
+<label for="adminpass2"><?php echo ADMIN_CONFIRMPASS_LABEL; ?></label>
 	<input type="password" name="adminpass2" id="adminpass2" maxlength="255" value="" />
 	<input type="hidden" name="adminsalt" id="adminsalt" maxlength="255" value="<?php echo $adminsalt; ?>" />
 </fieldset>
