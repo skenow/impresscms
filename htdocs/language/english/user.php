@@ -10,6 +10,8 @@ define('_US_LOGGEDOUT','You are now logged out');
 define('_US_THANKYOUFORVISIT','Thank you for your visit to our site!');
 define('_US_INCORRECTLOGIN','Incorrect Login!');
 define('_US_LOGGINGU','Thank you for logging in, %s.');
+define('_US_RESETPASSWORD','Reset your Password?');
+define('_US_SUBRESETPASSWORD','Reset Password');
 
 // 2001-11-17 ADD
 define('_US_NOACTTPADM','The selected user has been deactivated or has not been activated yet.<br />Please contact the administrator for details.');
@@ -85,6 +87,13 @@ define('_US_NEWPWDREQ','New Password Request at %s');
 define('_US_YOURACCOUNT', 'Your account at %s');
 
 define('_US_MAILPWDNG','mail_password: could not update user entry. Contact the Administrator');
+
+define('_US_RESETPWDREQ','Reset Password Request at %s');
+define('_US_MAILRESETPWDNG','reset_password: could not update user entry. Contact the Administrator');
+define('_US_NEWPASSWORD','New Password');
+define('_US_YOURUSERNAME','Your Username');
+define('_US_CURRENTPASS','Your Current Password');
+define('_US_BADPWD','Bad Password, Password can not contain username.');
 
 // %s is a username
 define('_US_PWDMAILED','Password for %s mailed.');

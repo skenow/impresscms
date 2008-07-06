@@ -36,4 +36,23 @@
 			</form>
 		</fieldset>
 	</div>
+
+	<div style="float: left; width: 80% ">
+		<fieldset style="padding: 10px;">
+			<legend style="font-weight: bold;"><{$lang_resetpassword}></legend>
+			<div>
+				<br /><{$lang_noproblem}>
+			</div>
+			<form action="resetpass.php" method="post">
+				<{$lang_youremail}> <input type="text" name="email" size="26" maxlength="100" />
+				<{$lang_yourusername}> <input type="username" name="username" size="26" maxlength="60" />
+				<{$lang_currentpass}> <input type="c_password" name="c_password" size="26" maxlength="255" />
+				<{$lang_newpass}> <input type="password" name="password" size="26" maxlength="255" />
+				<{$lang_newpass2}> <input type="password2" name="password2" size="26" maxlength="255" />&nbsp;&nbsp;<input type="hidden" name="op" value="resetpasswd" /><input type="hidden" name="t" value="<{$resetpasswd_token}>" />
+		    	<br />
+		    	<br />
+		     	<input type="submit" value="<{$lang_resetpassword}>" />
+			</form>
+		</fieldset>
+	</div>
 </div>
