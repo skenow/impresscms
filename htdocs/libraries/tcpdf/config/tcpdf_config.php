@@ -29,10 +29,8 @@
  * @since 2004-10-27
  */
 
-// First we need to include the mainfile.
-include_once '../../../mainfile.php';
-$myts =& MyTextSanitizer::getInstance();
 // If you define the constant K_TCPDF_EXTERNAL_CONFIG, the following settings will be ignored.
+
 if (!defined("K_TCPDF_EXTERNAL_CONFIG")) {
 	
 	// DOCUMENT_ROOT fix for IIS Webserver
@@ -78,19 +76,18 @@ if (!defined("K_TCPDF_EXTERNAL_CONFIG")) {
 	
 	/**
 	 * cache directory for temporary files (full path)
-	 * This path has been changed to the cache folder in ICMS
 	 */
-	define ("K_PATH_CACHE", ICMS_ROOT_PATH."/cache/");
+	define ("K_PATH_CACHE", K_PATH_MAIN."cache/");
 	
 	/**
 	 * cache directory for temporary files (url path)
 	 */
-	define ("K_PATH_URL_CACHE", ICMS_URL."/cache/");
+	define ("K_PATH_URL_CACHE", K_PATH_URL."cache/");
 	
 	/**
 	 *images directory
 	 */
-	define ("K_PATH_IMAGES", ICMS_ROOT_PATH."/images/");
+	define ("K_PATH_IMAGES", K_PATH_MAIN."images/");
 	
 	/**
 	 * blank image
@@ -119,24 +116,18 @@ if (!defined("K_TCPDF_EXTERNAL_CONFIG")) {
 	
 	/**
 	 * header title
-	 * Now if anybody include the default header, the site title and slogan will load.
 	 */
-	$sitename = $xoopsConfig['sitename'];
-	$siteslogan = $xoopsConfig['slogan'];
-	$pdfheader = ''.$sitename.' - '.$siteslogan.'';
-	$firstLine = $myts->undoHtmlSpecialChars($pdfheader);
-	define ("PDF_HEADER_TITLE", $firstLine);
+	define ("PDF_HEADER_TITLE", "TCPDF Example");
 	
 	/**
 	 * header description string
-	 * The description contains the site url
 	 */
-	define ("PDF_HEADER_STRING", ICMS_URL);
+	define ("PDF_HEADER_STRING", "by Nicola Asuni - Tecnick.com\nwww.tcpdf.org");
 	
 	/**
 	 * image logo
 	 */
-	define ("PDF_HEADER_LOGO", "logo.gif");
+	define ("PDF_HEADER_LOGO", "tcpdf_logo.jpg");
 	
 	/**
 	 * header logo image width [mm]
