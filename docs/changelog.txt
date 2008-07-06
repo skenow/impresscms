@@ -2,6 +2,19 @@ ImpressCMS ChangeLog
 
 == Impresscms 1.1==
 
+===2008-07-02 : 1.1 Beta 1===
+
+'''Added'''
+* new plugin for tinymce. hiddencontent (luciorota/real_therplima/stranger)
+
+'''Improved'''
+* Updated TCPDF to version 4.0.001. (stranger)
+
+'''Changed'''
+
+'''Fixed'''
+* Culd not upload avatar. (real_therplima/stranger)
+
 ===2008-07-02 : 1.1 Alpha 2===
 
 '''Added'''
