@@ -110,8 +110,8 @@ if($op == 'saveuser')
         	$edituser->setVar('url', formatURL($_POST['url']));
         	$edituser->setVar('user_icq', $_POST['user_icq']);
         	$edituser->setVar('user_from', $_POST['user_from']);
- 		if($xoopsConfigUser['allwshow_sig'] == 1)
 		$edituser->setVar('openid', isset($_POST['openid']) ? trim($_POST['openid']) : '');		
+ 		if($xoopsConfigUser['allwshow_sig'] == 1)
 {
         		if($xoopsConfigUser['allow_htsig'] == 0)
 			{
@@ -373,7 +373,9 @@ if($op == 'avatarform')
     		$avatar_tray = new XoopsFormElementTray(_US_AVATAR, '&nbsp;');
     		$avatar_tray->addElement($avatar_select);
     		$avatar_tray->addElement(new XoopsFormLabel('', "<img src='".ICMS_UPLOAD_URL."/".$xoopsUser->getVar("user_avatar", "E")."' name='avatar' id='avatar' alt='' /> <a href=\"javascript:openWithSelfMain('".ICMS_URL."/misc.php?action=showpopups&amp;type=avatars','avatars',600,400);\">"._LIST."</a>"));
-    		$form2->addElement($avatar_tray);
+    		if($xoopsConfigUser['avatar_allow_upload'] == 1 && $xoopsUser->getVar('posts') < $xoopsConfigUser['avatar_minposts']){
+			$form2->addElement(new XoopsFormLabel(sprintf(_US_POSTSNOTENOUGH,$xoopsConfigUser['avatar_minposts']),_US_UNCHOOSEAVT));}
+			$form2->addElement($avatar_tray);
     		$form2->addElement(new XoopsFormHidden('uid', intval($xoopsUser->getVar('uid'))));
     		$form2->addElement(new XoopsFormHidden('op', 'avatarchoose'));
     		$form2->addElement(new XoopsFormButton('', 'submit2', _SUBMIT, 'submit'));
