@@ -16,6 +16,8 @@ ImpressCMS ChangeLog
 '''Fixed'''
 * Culd not upload avatar. (real_therplima/stranger)
 * Fixed the isssue of password meter for RTL languages. (stranger)
+* Fixed the isssues of installation for RTL languages. (stranger)
+
 ===2008-07-02 : 1.1 Alpha 2===
 
 '''Added'''
