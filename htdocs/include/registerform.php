@@ -75,11 +75,11 @@ $reg_form->addElement($email_tray);
 $config_handler =& xoops_gethandler('config');
 $passConfig =& $config_handler->getConfigsByCat(2);
 if ($passConfig['pass_level'] <= 20){
-	$reg_form->addElement(new XoopsFormPassword(_US_PASSWORD, "pass", 10, 255, $myts->htmlSpecialChars($pass)), true);
+	$reg_form->addElement(new XoopsFormPassword(_US_PASSWORD, "pass", 10, 72, $myts->htmlSpecialChars($pass)), true);
 }else{
 	include_once XOOPS_ROOT_PATH."/include/passwordquality.php";
 }
-$reg_form->addElement(new XoopsFormPassword(_US_VERIFYPASS, "vpass", 10, 255, $myts->htmlSpecialChars($vpass)), true);
+$reg_form->addElement(new XoopsFormPassword(_US_VERIFYPASS, "vpass", 10, 72, $myts->htmlSpecialChars($vpass)), true);
 $reg_form->addElement(new XoopsFormText(_US_WEBSITE, "url", 25, 255, $myts->htmlSpecialChars($url)));
 $tzselected = ($timezone_offset != "") ? $timezone_offset : $xoopsConfig['default_TZ'];
 $reg_form->addElement(new XoopsFormSelectTimezone(_US_TIMEZONE, "timezone_offset", $tzselected));

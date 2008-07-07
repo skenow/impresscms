@@ -477,7 +477,7 @@ class MyTextSanitizer
 		{
 			$patterns = "/\[code](.*)\[\/code\]/esU";
 			$replacements = "'[code]'.base64_encode('$1').'[/code]'";
-			$text = preg_replace($patterns, $replacements, $text);
+			$text =  preg_replace($patterns, $replacements, $text);
 		}
 		return $text;
 	}
