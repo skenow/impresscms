@@ -6,6 +6,7 @@ ImpressCMS ChangeLog
 
 '''Added'''
 * new plugin for tinymce. hiddencontent (luciorota/real_therplima/stranger)
+* Password meter op on installation. (stranger/real_therplima)
 
 '''Improved'''
 * Updated TCPDF to version 4.0.001. (stranger)
@@ -14,7 +15,7 @@ ImpressCMS ChangeLog
 
 '''Fixed'''
 * Culd not upload avatar. (real_therplima/stranger)
-
+* Fixed the isssue of password meter for RTL languages. (stranger)
 ===2008-07-02 : 1.1 Alpha 2===
 
 '''Added'''
@@ -153,7 +154,7 @@ ImpressCMS ChangeLog
 * RSS URL for admin, with this option, you can define a local site on the list of . (stranger)
 * CAPTCHA (task #145604). (stranger)
 * using CAPTCHA on register/comment forms for guests/anonymous. (stranger)
-* Password meter op on edit user and register form. (stranger/real_therplima/vaughan?)
+* Password meter op on edit user and register form. (stranger/real_therplima)
 * Addition for allowing webmaster to disable/enable signature of users on a site. (stranger)
 * Addition for allowing webmaster to disable/enable of using html and external images on signatures of users of a site. (stranger/Hervet)
 * Using GRAVATAR in Impresscms. (real_therplima)
