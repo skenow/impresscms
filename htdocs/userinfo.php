@@ -103,7 +103,14 @@ if ( $thisUser->getVar('url', 'E') == '') {
 	$xoopsTpl->assign('user_websiteurl', '<a href="'.$thisUser->getVar('url', 'E').'" rel="external">'.$thisUser->getVar('url').'</a>');
 }
 $xoopsTpl->assign('lang_email', _US_EMAIL);
-$xoopsTpl->assign('lang_openid', _US_OPENID_FORM_CAPTION);
+	$config_handler =& xoops_gethandler('config');
+    $icmsauthConfig =& $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);
+    if ($icmsauthConfig['auth_openid'] == 1) {
+            $xoopsTpl->assign('user_alwopenid', true);
+            $xoopsTpl->assign('lang_openid', _US_OPENID_FORM_CAPTION);
+        } else {
+            $xoopsTpl->assign('user_alwopenid', false);
+        }
 $xoopsTpl->assign('lang_privmsg', _US_PM);
 $xoopsTpl->assign('lang_icq', _US_ICQ);
 $xoopsTpl->assign('user_icq', $thisUser->getVar('user_icq'));
@@ -153,8 +160,6 @@ if ($thisUser->getVar('user_viewemail') == 1) {
         }
     }
 }
-	$config_handler =& xoops_gethandler('config');
-    $icmsauthConfig =& $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);
     if ($icmsauthConfig['auth_openid'] == 1) {
 if ($thisUser->getVar('user_viewemail') == 1) {
     $xoopsTpl->assign('user_openid', $thisUser->getVar('openid', 'E'));
@@ -168,10 +173,6 @@ if ($xoopsUserIsAdmin || ($xoopsUser->getVar("uid") == $thisUser->getVar("uid"))
         }
     }
 }
-	}else{
-        // All admins will be allowed to see openids, even those that are not allowed to edit users or if openid has turned off (I think it's ok like this)
-if ($xoopsUserIsAdmin || ($xoopsUser->getVar("uid") == $thisUser->getVar("uid"))) {
-            $xoopsTpl->assign('user_openid', $thisUser->getVar('openid', 'E'));}
     }
 if (is_object($xoopsUser)) {
     $xoopsTpl->assign('user_pmlink', "<a href=\"javascript:openWithSelfMain('".ICMS_URL."/pmlite.php?send2=1&amp;to_userid=".intval($thisUser->getVar('uid'))."', 'pmlite', 800,680);\"><img src=\"".ICMS_URL."/images/icons/pm.gif\" alt=\"".sprintf(_SENDPMTO,$thisUser->getVar('uname'))."\" /></a>");
