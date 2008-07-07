@@ -105,7 +105,8 @@ echo 'document.getElementById("adminpass").style.minWidth = "60%";
            }
 ?>
 	</script>
-	 <script language="javascript" src="<?php echo XOOPS_URL;?>/install/include/percent_bar.js"></script>
+	 <script language="javascript" src="<?php echo XOOPS_URL;?>/install/include/<?php if(defined('_ADM_USE_RTL') && _ADM_USE_RTL){echo 'percent_bar_rtl.js';}else{echo 'percent_bar.js';}?>
+"></script>
 	<?php if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
 echo '<br style="clear:right;" />';
 	   } else {
