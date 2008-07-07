@@ -201,18 +201,23 @@ if($op == 'editprofile')
     	$email_tray->addElement($email_text);
     	$email_cbox_value = $xoopsUser->user_viewemail() ? 1 : 0;
     	$email_cbox = new XoopsFormCheckBox('', 'user_viewemail', $email_cbox_value);
+		$config_handler =& xoops_gethandler('config');
+   		$icmsauthConfig =& $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);
+    	if ($icmsauthConfig['auth_openid'] == 1) {
+    	$email_cbox->addOption(1, _US_ALLOWVIEWEMAILOPENID);
+    	}else{
     	$email_cbox->addOption(1, _US_ALLOWVIEWEMAIL);
+    	}
     	$email_tray->addElement($email_cbox);
     	$form->addElement($email_tray);
     /*
      * @todo we need to add this in the preference
      */
-    $config_to_enable_openid = true;
-	if ($config_to_enable_openid) {
+    if ($icmsauthConfig['auth_openid'] == 1) {
     	$openid_text = new XoopsFormText(_US_OPENID_FORM_CAPTION, 'openid', 30, 255, $xoopsUser->getVar('openid'));
     	$openid_text->setDescription(_US_OPENID_FORM_DSC);
     	$form->addElement($openid_text);
-	}
+}
     	$url_text = new XoopsFormText(_US_WEBSITE, 'url', 30, 100, $xoopsUser->getVar('url', 'E'));
     	$form->addElement($url_text);
 
