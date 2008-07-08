@@ -10,6 +10,7 @@ ImpressCMS ChangeLog
 
 '''Improved'''
 * Updated TCPDF to version 4.0.001. (stranger)
+* Formfield for OpenID, if OID is inactive users won't see it's fields. (stranger)
 
 '''Changed'''
 
@@ -17,6 +18,7 @@ ImpressCMS ChangeLog
 * Culd not upload avatar. (real_therplima/stranger)
 * Fixed the isssue of password meter for RTL languages. (stranger)
 * Fixed the isssues of installation for RTL languages. (stranger)
+* Issue with PDF generator. (stranger)
 
 ===2008-07-02 : 1.1 Alpha 2===
 
@@ -32,7 +34,7 @@ ImpressCMS ChangeLog
 * New field type in installation proccess. (stranger)
 * New function to improve converting to utf-8 (upgarde proccess). (stranger)
 * New library for PDF. (stranger)
-* New definitions to easier include the PDF library. (stranger)
+* New path definitions to easier include the PDF library. (stranger)
 * Task # 1914769 Including PHP class for generating PDF documents, in the core. (stranger)
 * New Language constants for the logger. (stranger)
 * New page to introduce ImpressCMS after a clean installation. (stranger)
