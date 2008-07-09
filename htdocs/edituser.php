@@ -71,7 +71,7 @@ if($op == 'saveuser')
 	{
         	$password = $myts->stripSlashesGPC(trim($_POST['password']));
     	}
-    	if($password != '')
+    	if($password !== '' && $_POST['change_pass'] == 1)
 	{
         	if(strlen($password) < $xoopsConfigUser['minpass'])
 		{
