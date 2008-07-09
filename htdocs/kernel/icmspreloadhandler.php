@@ -37,8 +37,11 @@ class IcmsPreloadHandler {
 	function IcmsPreloadHandler() {
 		$preloadFilesArray = XoopsLists::getFileListAsArray(ICMS_PRELOAD_PATH);
 		foreach ($preloadFilesArray as $filename) {
-			$this->_preloadFilesArray[] = $filename;
-			$this->addPreloadEvents($filename);
+			// exclude index.html
+			if ($filename != 'index.html') {
+				$this->_preloadFilesArray[] = $filename;
+				$this->addPreloadEvents($filename);
+			}
 		}
 	}
 	
@@ -126,7 +129,7 @@ class IcmsPreloadHandler {
      *
      */
 	function getClassName($filename) {
-		return 'IcmsPreload' . ucfirst(str_replace('.php', '', $filename)); 
+		return 'IcmsPreload' . ucfirst(str_replace('.php', '', $filename));
 	}
 
 }
