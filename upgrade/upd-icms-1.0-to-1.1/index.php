@@ -295,7 +295,30 @@ class upgrade_impcms06 {
 			}
 
 			$sql = "ALTER TABLE " . $GLOBALS['xoopsDB']->prefix('users') . " ADD 'salt' VARCHAR(255)";
+			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
+				return false;
+			}
+
 			$sql = "ALTER TABLE " . $GLOBALS['xoopsDB']->prefix('users') . " CHANGE pass pass VARCHAR(255)";
+			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
+				return false;
+			}
+
+			$sql = "ALTER TABLE " . $GLOBALS['xoopsDB']->prefix('users') . " CHANGE uname varchar(255) NOT NULL default ''";
+			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
+				return false;
+			}
+
+			$sql = "ALTER TABLE " . $GLOBALS['xoopsDB']->prefix('users') . " CHANGE email varchar(255) NOT NULL default ''";
+			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
+				return false;
+			}
+
+			$sql = "ALTER TABLE " . $GLOBALS['xoopsDB']->prefix('users') . " CHANGE url varchar(255) NOT NULL default ''";
 			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
 				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
 				return false;
@@ -477,11 +500,55 @@ class upgrade_impcms06 {
 					  page_url varchar(255) NOT NULL default '',
 					  page_status tinyint(1) unsigned NOT NULL default '1',
 					  PRIMARY KEY  (page_id)");
+			$this->updater->updateTable($table);
+		}
+		unset ($table);
+
+		// Create table icmscontent
+		$table = new IcmsDatabasetable('icmscontent');
+		if (!$table->exists()) {
+			$table->setStructure("`content_id` mediumint(8) unsigned NOT NULL auto_increment,
+  				`content_catid` mediumint(8) unsigned NOT NULL default '1',
+				  `content_supid` mediumint(8) unsigned NOT NULL default '0',
+				  `content_uid` mediumint(5) NOT NULL default '1',
+				  `content_title` varchar(255) NOT NULL default '',
+				  `content_menu` varchar(100) default NULL,
+				  `content_body` text,
+				  `content_css` text,
+				  `content_visibility` int(10) NOT NULL default '3',
+				  `content_created` int(10) NOT NULL default '0',
+				  `content_updated` int(10) NOT NULL default '0',
+				  `content_weight` smallint(5) unsigned NOT NULL default '0',
+				  `content_reads` int(11) NOT NULL default '0',
+				  `content_status` tinyint(1) unsigned NOT NULL default '0',
+				  PRIMARY KEY  (`content_id`)
+				");
+			$this->updater->updateTable($table);
+		}
+		unset ($table);
+
+		// Create table invites
+		$table = new IcmsDatabasetable('invites');
+		if (!$table->exists()) {
+			$table->setStructure("`invite_id` mediumint(8) unsigned NOT NULL auto_increment,
+						  `from_id` mediumint(8) unsigned NOT NULL default '0',
+						  `invite_to` varchar(255) NOT NULL default '',
+						  `invite_code` varchar(8) NOT NULL default '',
+						  `invite_date` int(10) unsigned NOT NULL default '0',
+						  `view_date` int(10) unsigned NOT NULL default '0',
+						  `register_id` mediumint(8) unsigned NOT NULL default '0',
+						  `extra_info` text NOT NULL,
+						  PRIMARY KEY  (`invite_id`),
+						  KEY `invite_code` (`invite_code`),
+						  KEY `register_id` (`register_id`)
+				");
+			$this->updater->updateTable($table);
 		}
 		unset ($table);
 
 		$table = new IcmsDatabasetable('block_module_link');
 		$table->addNewField('page_id', "smallint(5) NOT NULL default '0'");
+		$this->updater->updateTable($table);
 		unset ($table);
 
 		// Block Visibility
@@ -497,14 +564,34 @@ class upgrade_impcms06 {
 					  language varchar(100) NOT NULL default '',
 					  customtag_type tinyint(1) NOT NULL default 0,
 					  PRIMARY KEY (customtagid)");
+			$this->updater->updateTable($table);
 		}
 		unset ($table);
+
+		// adding the into configoption table
+		$table = new IcmsDatabasetable('configoption');
+		$table->setData("18, '_MD_AM_REGINVITE', '3', 49");
+		$this->updater->updateTable($table);
+		unset ($table);
+
+
+		// new fields in users table
+		$table = new IcmsDatabasetable('users');
+		$table->addNewField('language', "varchar(100) NOT NULL default ''");
+		$table->addNewField('openid', "varchar(255) NOT NULL default ''");
+		$this->updater->updateTable($table);
+		unset ($table);
+
+
+
+
+
 		$table = new IcmsDatabasetable('modules');
 		$table->addNewField('dbversion', 'INT(11) DEFAULT 0');
-		$icmsDatabaseUpdater->updateTable($table);
+		$this->updater->updateTable($table);
 
 		// Updating the system module dbversion field. This needs to be at the very end of the upgrade script
-		$icmsDatabaseUpdater->updateModuleDBVersion(1, 'system');
+		$this->updater->updateModuleDBVersion(1, 'system');
 
 	}
 
