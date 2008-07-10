@@ -793,6 +793,8 @@ ul#primary-nav li.over { background-color: <{$block.selcolor}>; }\n
 		$this->updater->insertConfig(XOOPS_CONF_PERSONA, 'last_chars_left', '_MD_AM_LASTCHARS', '10', '_MD_AM_LASTCHARS_DESC', 'textbox', 'int', 21);
 		$this->updater->insertConfig(XOOPS_CONF_PERSONA, 'show_impresscms_menu', '_MD_AM_SHOW_ICMSMENU', '1', '_MD_AM_SHOW_ICMSMENU_DESC', 'yesno', 'int', 22);
 		$this->updater->insertConfig(XOOPS_CONF_PERSONA, 'use_hidden', '_MD_AM_HIDDENCONTENT', '0', '_MD_AM_HIDDENCONTENTDSC', 'yesno', 'int', 23);
+		// Adding new function of authentication
+		$this->updater->insertConfig(XOOPS_CONF_AUTH, 'auth_openid', '_MD_AM_AUTHOPENID', '0', '_MD_AM_AUTHOPENIDDSC', 'yesno', 'int', 1);
 
 		$table = new IcmsDatabasetable('imagecategory');
 		$this->updater->runQuery('INSERT INTO ' . $table->name() . ' (imgcat_id, imgcat_name, imgcat_maxsize, imgcat_maxwidth, imgcat_maxheight, imgcat_display, imgcat_weight, imgcat_type, imgcat_storetype) VALUES (NULL, "Logos", 350000, 350, 80, 1, 0, "C", "file")', 'Successfully created Logos imagecategory', 'Problems when try to create Logos imagecategory');
