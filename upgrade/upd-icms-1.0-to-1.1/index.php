@@ -642,7 +642,7 @@ ul#primary-nav li.over { background-color: <{$block.selcolor}>; }\n
 				return false;
 			}
 
-s		}
+		}
 
 		return $result;
 
