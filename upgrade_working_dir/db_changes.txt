@@ -34,7 +34,7 @@ New preferences
 [added] INSERT INTO `config` VALUES (138, 0, 10, 'email_font', '_MD_AM_EMAILTTF', 'arial.ttf', '_MD_AM_EMAILTTF_DESC', 'select_font', 'text', 11);
 [added] INSERT INTO `config` VALUES (139, 0, 10, 'email_font_len', '_MD_AM_EMAILLEN', '12', '_MD_AM_EMAILLEN_DESC', 'textbox', 'int', 12);
 [added] INSERT INTO `config` VALUES (137, 0, 10, 'email_protect', '_MD_AM_EMAILPROTECT', '0', '_MD_AM_EMAILPROTECTDSC', 'yesno', 'int', 10);
-[added] INSERT INTO `config` VALUES (141, 0, 10, 'email_sombra', '_MD_AM_EMAILSOMBRA', '#cccccc', '_MD_AM_EMAILSOMBRA_DESC', 'color', 'text', 14);
+[added] INSERT INTO `config` VALUES (141, 0, 10, 'email_shadow', '_MD_AM_EMAILSHADOW', '#cccccc', '_MD_AM_EMAILSHADOW_DESC', 'color', 'text', 14);
 [added] INSERT INTO `config` VALUES (70, 0, 2, 'enc_type', '_MD_AM_ENC_TYPE', '1', '_MD_AM_ENC_TYPEDSC', 'select', 'int', 34);
 [added] INSERT INTO `config` VALUES (80, 0, 3, 'footadm', '_MD_AM_FOOTADM', 'Powered by ImpressCMS &copy; 2007-2008 <a href="http://www.impresscms.org/" rel="external">The ImpressCMS Project</a>', '_MD_AM_FOOTADM_DESC', 'textarea', 'text', 9);
 [added] INSERT INTO `config` VALUES (79, 0, 3, 'google_analytics', '_MD_AM_GOOGLE_ANA', '', '_MD_AM_GOOGLE_ANA_DESC', 'textarea', 'text', 8);
@@ -55,8 +55,8 @@ New preferences
 [added] INSERT INTO `config` VALUES (124, 0, 9, 'show_nav', '_MD_AM_CONT_SHOWNAV', '1', '_MD_AM_CONT_SHOWNAVDSC', 'yesno', 'int', 1);
 [added] INSERT INTO `config` VALUES (126, 0, 9, 'show_pinfo', '_MD_AM_CONT_SHOWPINFO', '1', '_MD_AM_CONT_SHOWPINFODSC', 'yesno', 'int', 3);
 [added] INSERT INTO `config` VALUES (125, 0, 9, 'show_subs', '_MD_AM_CONT_SHOWSUBS', '1', '_MD_AM_CONT_SHOWSUBSDSC', 'yesno', 'int', 2);
-[added] INSERT INTO `config` VALUES (142, 0, 10, 'sombra_x', '_MD_AM_SOMBRAX', '2', '_MD_AM_SOMBRAX_DESC', 'textbox', 'int', 15);
-[added] INSERT INTO `config` VALUES (143, 0, 10, 'sombra_y', '_MD_AM_SOMBRAY', '2', '_MD_AM_SOMBRAY_DESC', 'textbox', 'int', 16);
+[added] INSERT INTO `config` VALUES (142, 0, 10, 'shadow_x', '_MD_AM_SOMBRAX', '2', '_MD_AM_SOMBRAX_DESC', 'textbox', 'int', 15);
+[added] INSERT INTO `config` VALUES (143, 0, 10, 'shadow_y', '_MD_AM_SOMBRAY', '2', '_MD_AM_SOMBRAY_DESC', 'textbox', 'int', 16);
 [added] INSERT INTO `config` VALUES (41, 0, 2, 'use_captcha', '_MD_AM_USECAPTCHA', '1', '_MD_AM_USECAPTCHADSC', 'yesno', 'int', 5);
 [added] INSERT INTO `config` VALUES (32, 0, 1, 'use_captchaf', '_MD_AM_USECAPTCHAFORM', '1', '_MD_AM_USECAPTCHAFORMDSC', 'yesno', 'int', 31);
 [added] INSERT INTO `config` VALUES (8, 0, 1, 'use_ext_date', '_MD_AM_EXT_DATE', '0', '_MD_AM_EXT_DATEDSC', 'yesno', 'int', 7);
@@ -208,7 +208,7 @@ INSERT INTO `newblocks` VALUES (16, 1, 16, 'content_weight|ASC|1', 'Related Cont
 New table system_customtag
 Table to store custom tags information
 
-CREATE TABLE `i83106030_system_customtag` (
+[added] CREATE TABLE `i83106030_system_customtag` (
   `customtagid` int(11) unsigned NOT NULL auto_increment,
   `name` varchar(255) NOT NULL default '',
   `description` text NOT NULL,
@@ -217,7 +217,7 @@ CREATE TABLE `i83106030_system_customtag` (
   `customtag_type` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`customtagid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-------<
+------
 
 New records in tplfile table
 New templates added
@@ -267,10 +267,10 @@ We also need to change the charset of the database to be UTF-8
 
 New config : Signature max length
 
-INSERT INTO `i83106030_config` VALUES(47, 0, 2, 'sig_max_length', '_MD_AM_SIGMAXLENGTH', '255', '_MD_AM_SIGMAXLENGTHDSC', 'textbox', 'int', 11);
+[added] INSERT INTO `i83106030_config` VALUES(47, 0, 2, 'sig_max_length', '_MD_AM_SIGMAXLENGTH', '255', '_MD_AM_SIGMAXLENGTHDSC', 'textbox', 'int', 11);
 ------
 
 New config : Use hidden text
 
-INSERT INTO `i83106030_config` VALUES(151, 0, 10, 'use_hidden', '_MD_AM_HIDDENCONTENT', '0', '_MD_AM_HIDDENCONTENTDSC', 'yesno', 'int', 22);
+[added] INSERT INTO `i83106030_config` VALUES(151, 0, 10, 'use_hidden', '_MD_AM_HIDDENCONTENT', '0', '_MD_AM_HIDDENCONTENTDSC', 'yesno', 'int', 22);
 ------
