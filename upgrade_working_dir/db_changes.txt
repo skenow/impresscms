@@ -5,11 +5,12 @@ Addition of a page_id field in block_module_link to configure on which page each
 ------
 
 New records in block_module_link
-Linking 3 new blocks to the System Module
+Linking 4 new blocks to the System Module
 
 INSERT INTO `block_module_link` VALUES (16, 0, 0);
 INSERT INTO `block_module_link` VALUES (17, 0, 1);
 INSERT INTO `block_module_link` VALUES (18, 0, 1);
+INSERT INTO `block_module_link` VALUES (19, 0, 1);
 ------
 
 New records in config table
@@ -169,7 +170,7 @@ Logos category in image manager
 
 [added] INSERT INTO `i83106030_imagecategory` VALUES (1, 'Logos', 350000, 350, 80, 1, 0, 'C', 'file');
 ------
- 
+
 New table invite
 Table to manage invites from the registration by invitation feature
 
@@ -252,6 +253,7 @@ Fields type changes in users table
 New field in users table
 
 `language` varchar(100) NOT NULL default '',
+`openid` varchar(255) NOT NULL default '',
 [added] `salt` varchar(255) NOT NULL default '',
 ------
 
@@ -261,4 +263,14 @@ KEY `unamepass` (`uname`(10),`pass`(10))
 ------
 
 We also need to change the charset of the database to be UTF-8
+------
+
+New config : Signature max length
+
+INSERT INTO `i83106030_config` VALUES(47, 0, 2, 'sig_max_length', '_MD_AM_SIGMAXLENGTH', '255', '_MD_AM_SIGMAXLENGTHDSC', 'textbox', 'int', 11);
+------
+
+New config : Use hidden text
+
+INSERT INTO `i83106030_config` VALUES(151, 0, 10, 'use_hidden', '_MD_AM_HIDDENCONTENT', '0', '_MD_AM_HIDDENCONTENTDSC', 'yesno', 'int', 22);
 ------
