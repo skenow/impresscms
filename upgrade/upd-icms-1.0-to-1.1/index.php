@@ -900,6 +900,8 @@ ul#primary-nav li.over { background-color: <{$block.selcolor}>; }\n
 		$table = new IcmsDatabasetable('users');
 		$table->addNewField('language', "varchar(100) NOT NULL default ''");
 		$table->addNewField('openid', "varchar(255) NOT NULL default ''");
+		$table->addNewField('pass_expired', "tinyint(1) NOT NULL default ''");
+		$table->addNewField('enc_type', "tinyint(2) NOT NULL default ''");
 		$this->updater->updateTable($table);
 		unset ($table);
 
