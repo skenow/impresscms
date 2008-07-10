@@ -15,10 +15,12 @@ ImpressCMS ChangeLog
 '''Changed'''
 
 '''Fixed'''
-* Culd not upload avatar. (real_therplima/stranger)
+* Could not upload avatar. (real_therplima/stranger)
 * Fixed the isssue of password meter for RTL languages. (stranger)
 * Fixed the isssues of installation for RTL languages. (stranger)
 * Issue with PDF generator. (stranger)
+* HTML Purifier is now properly using the trust path to create its cache data (Vaughan/malanciault)
+* The installer was not properly creating the password hash of the administrator (Vaughan/real_therplima/malanciault)
 
 ===2008-07-02 : 1.1 Alpha 2===
 
