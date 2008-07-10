@@ -39,7 +39,7 @@ class upgrade_impcms06 {
 				return false;
 			array_shift($_SESSION[__CLASS__]);
 		}
-		return ($this->cleaning_write_folders());
+		return true;
 	}
 	function cleaning_write_folders() {
 		$dir = array ();
@@ -97,7 +97,7 @@ class upgrade_impcms06 {
 		$this->query(" UPDATE " . $db->prefix("newblocks") . " SET func_num = " . $new_block_id . " WHERE bid=" . $new_block_id);
 		$this->query(" INSERT INTO " . $db->prefix("tplfile") . " VALUES ('', " . $new_block_id . ", 'system', 'default', 'system_block_contentmenu.html', 'Menu of content pages and categories', " . time() . ", " . time() . ", 'block');");
 		$new_tplfile_id = $db->getInsertId();
-		$new_tpl_source = '<script type="text/javascript">\r\nfunction IEHoverPseudo() {\r\n\r\n	var navItems = document.getElementById("primary-nav").getElementsByTagName("li");\r\n\r\n	for (var i=0; i<navItems.length; i++) {\r\n		if(navItems[i].className == "menuparent") {\r\n			navItems[i].onmouseover=function() { this.className += " over";}\r\n			navItems[i].onmouseout=function() { this.className = "menuparent"; }\r\n		}\r\n	}\r\n\r\n}\r\nif (window.onload){\r\n  var oldonload = window.onload;\r\n  window.onload=function(){\r\n    oldonload;\r\n    IEHoverPseudo();\r\n  }\r\n}else{\r\n  window.onload=function(){\r\n    IEHoverPseudo();\r\n  }\r\n}\r\n</script>\r\n<style type="text/css">\r\nul#primary-nav,\r\nul#primary-nav ul {\r\n	margin: 0;\r\n	padding: 0;\r\n	width: 100%; /* Width of Menu Items */\r\n	background: #fff; /* IE6 Bug */\r\n}\r\n\r\nul#primary-nav li {\r\n	position: relative;\r\n	list-style: none;\r\n	margin: 0;\r\n	padding: 0;\r\n}\r\n\r\nul#primary-nav li a {\r\n	display: block;\r\n	text-decoration: none;\r\n	padding: 3px;\r\n	width:auto;\r\n}\r\n\r\n/* Fix IE. Hide from IE Mac \\*/\r\n* html ul#primary-nav li { float: left; height: 1%; }\r\n* html ul#primary-nav li a { height: 1%; }\r\n/* End */\r\n\r\nul#primary-nav ul {\r\n	position: absolute;\r\n	display: none;\r\n	left: 99%;\r\n	top: 0;\r\n	z-index: 1;\r\n}\r\n\r\nul#primary-nav li:hover ul ul,\r\nul#primary-nav li:hover ul ul ul,\r\nul#primary-nav li:hover ul ul ul ul,\r\nul#primary-nav li:hover ul ul ul ul ul,\r\nul#primary-nav li:hover ul ul ul ul ul ul,\r\nul#primary-nav li:hover ul ul ul ul ul ul ul,\r\nul#primary-nav li:hover ul ul ul ul ul ul ul ul,\r\nul#primary-nav li:hover ul ul ul ul ul ul ul ul ul,\r\nul#primary-nav li:hover ul ul ul ul ul ul ul ul ul ul,\r\nul#primary-nav li:hover ul ul ul ul ul ul ul ul ul ul ul,\r\nul#primary-nav li.over ul ul,\r\nul#primary-nav li.over ul ul ul,\r\nul#primary-nav li.over ul ul ul ul,\r\nul#primary-nav li.over ul ul ul ul ul,\r\nul#primary-nav li.over ul ul ul ul ul ul,\r\nul#primary-nav li.over ul ul ul ul ul ul ul,\r\nul#primary-nav li.over ul ul ul ul ul ul ul ul,\r\nul#primary-nav li.over ul ul ul ul ul ul ul ul ul,\r\nul#primary-nav li.over ul ul ul ul ul ul ul ul ul ul,\r\nul#primary-nav li.over ul ul ul ul ul ul ul ul ul ul ul { display: none; }\r\n\r\nul#primary-nav li:hover ul,\r\nul#primary-nav li li:hover ul,\r\nul#primary-nav li li li:hover ul,\r\nul#primary-nav li li li li:hover ul,\r\nul#primary-nav li li li li li:hover ul,\r\nul#primary-nav li li li li li li:hover ul,\r\nul#primary-nav li li li li li li li:hover ul,\r\nul#primary-nav li li li li li li li li:hover ul,\r\nul#primary-nav li li li li li li li li li:hover ul,\r\nul#primary-nav li li li li li li li li li li:hover ul,\r\nul#primary-nav li li li li li li li li li li li:hover ul,\r\nul#primary-nav li.over ul,\r\nul#primary-nav li li.over ul,\r\nul#primary-nav li li li.over ul,\r\nul#primary-nav li li li li.over ul,\r\nul#primary-nav li li li li li.over ul,\r\nul#primary-nav li li li li li li.over ul,\r\nul#primary-nav li li li li li li li.over ul,\r\nul#primary-nav li li li li li li li li.over ul,\r\nul#primary-nav li li li li li li li li li.over ul,\r\nul#primary-nav li li li li li li li li li li.over ul,\r\nul#primary-nav li li li li li li li li li li li.over ul { display: block; } /* The magic */\r\n\r\nul#primary-nav li.menuparent { background: transparent url(<{$xoops_url}>/images/arrow.gif) right center no-repeat; }\r\n\r\nul#primary-nav li.menuparent:hover,\r\nul#primary-nav li.over { background-color: <{$block.selcolor}>; }\r\n\r\n</style>\r\n<div id="mainmenu">\r\n  <ul id="primary-nav">\r\n    <{foreach from=$block.menu key=key item=menu}> \r\n      <li<{if $block.showsubs && $menu.hassubs}> class="menuparent"<{/if}>>\r\n        <a class="menuMain" href="<{$xoops_url}>/content.php?page=<{$menu.menu}>"><{$menu.title}></a>\r\n        <{if $block.showsubs && $menu.hassubs}><{includeq file=''db:blocks/system_block_contentmenu_structure.html'' menus=$menu.subs}><{/if}> \r\n      </li> \r\n    <{/foreach}>\r\n  </ul>\r\n</div>';
+		$new_tpl_source = '<script src="<{$xoops_url}>/modules/system/admin/content/menu.js" type="text/javascript"></script>\r\n<link rel="stylesheet" type="text/css" media="all" title="Style sheet" href="<{$xoops_url}>/modules/system/admin/content/menu.css" />\r\n<div id="mainmenu">\r\n  <ul id="primary-nav">\r\n    <{foreach from=$block.menu key=key item=menu}> \r\n      <li<{if $block.showsubs && $menu.hassubs}> class="menuparent"<{/if}>>\r\n        <a class="menuMain" href="<{$xoops_url}>/content.php?page=<{$menu.menu}>"><{$menu.title}></a>\r\n        <{if $block.showsubs && $menu.hassubs}><{includeq file="db:blocks/system_block_contentmenu_structure.html" menus=$menu.subs}><{/if}> \r\n      </li> \r\n    <{/foreach}>\r\n  </ul>\r\n</div>';
 		$this->query(" INSERT INTO " . $db->prefix("tplsource") . " VALUES (" . $new_tplfile_id . ", '" . $new_tpl_source . "');");
 		$this->query(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0);");
 		$this->query(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, " . $new_block_id . ", 1, 'block_read');");
@@ -110,7 +110,7 @@ class upgrade_impcms06 {
 		$this->query(" UPDATE " . $db->prefix("newblocks") . " SET func_num = " . $new_block_id . " WHERE bid=" . $new_block_id);
 		$this->query(" INSERT INTO " . $db->prefix("tplfile") . " VALUES ('', " . $new_block_id . ", 'system', 'default', 'system_block_contentmenu.html', 'Menu of content pages and categories', " . time() . ", " . time() . ", 'block');");
 		$new_tplfile_id = $db->getInsertId();
-		$new_tpl_source = '<script type="text/javascript">\r\nfunction IEHoverPseudo() {\r\n\r\n	var navItems = document.getElementById("primary-nav").getElementsByTagName("li");\r\n\r\n	for (var i=0; i<navItems.length; i++) {\r\n		if(navItems[i].className == "menuparent") {\r\n			navItems[i].onmouseover=function() { this.className += " over";}\r\n			navItems[i].onmouseout=function() { this.className = "menuparent"; }\r\n		}\r\n	}\r\n\r\n}\r\nif (window.onload){\r\n  var oldonload = window.onload;\r\n  window.onload=function(){\r\n    oldonload;\r\n    IEHoverPseudo();\r\n  }\r\n}else{\r\n  window.onload=function(){\r\n    IEHoverPseudo();\r\n  }\r\n}\r\n</script>\r\n<style type="text/css">\r\nul#primary-nav,\r\nul#primary-nav ul {\r\n	margin: 0;\r\n	padding: 0;\r\n	width: 100%; /* Width of Menu Items */\r\n	background: #fff; /* IE6 Bug */\r\n}\r\n\r\nul#primary-nav li {\r\n	position: relative;\r\n	list-style: none;\r\n	margin: 0;\r\n	padding: 0;\r\n}\r\n\r\nul#primary-nav li a {\r\n	display: block;\r\n	text-decoration: none;\r\n	padding: 3px;\r\n	width:auto;\r\n}\r\n\r\n/* Fix IE. Hide from IE Mac \\*/\r\n* html ul#primary-nav li { float: left; height: 1%; }\r\n* html ul#primary-nav li a { height: 1%; }\r\n/* End */\r\n\r\nul#primary-nav ul {\r\n	position: absolute;\r\n	display: none;\r\n	left: 99%;\r\n	top: 0;\r\n	z-index: 1;\r\n}\r\n\r\nul#primary-nav li:hover ul ul,\r\nul#primary-nav li:hover ul ul ul,\r\nul#primary-nav li:hover ul ul ul ul,\r\nul#primary-nav li:hover ul ul ul ul ul,\r\nul#primary-nav li:hover ul ul ul ul ul ul,\r\nul#primary-nav li:hover ul ul ul ul ul ul ul,\r\nul#primary-nav li:hover ul ul ul ul ul ul ul ul,\r\nul#primary-nav li:hover ul ul ul ul ul ul ul ul ul,\r\nul#primary-nav li:hover ul ul ul ul ul ul ul ul ul ul,\r\nul#primary-nav li:hover ul ul ul ul ul ul ul ul ul ul ul,\r\nul#primary-nav li.over ul ul,\r\nul#primary-nav li.over ul ul ul,\r\nul#primary-nav li.over ul ul ul ul,\r\nul#primary-nav li.over ul ul ul ul ul,\r\nul#primary-nav li.over ul ul ul ul ul ul,\r\nul#primary-nav li.over ul ul ul ul ul ul ul,\r\nul#primary-nav li.over ul ul ul ul ul ul ul ul,\r\nul#primary-nav li.over ul ul ul ul ul ul ul ul ul,\r\nul#primary-nav li.over ul ul ul ul ul ul ul ul ul ul,\r\nul#primary-nav li.over ul ul ul ul ul ul ul ul ul ul ul { display: none; }\r\n\r\nul#primary-nav li:hover ul,\r\nul#primary-nav li li:hover ul,\r\nul#primary-nav li li li:hover ul,\r\nul#primary-nav li li li li:hover ul,\r\nul#primary-nav li li li li li:hover ul,\r\nul#primary-nav li li li li li li:hover ul,\r\nul#primary-nav li li li li li li li:hover ul,\r\nul#primary-nav li li li li li li li li:hover ul,\r\nul#primary-nav li li li li li li li li li:hover ul,\r\nul#primary-nav li li li li li li li li li li:hover ul,\r\nul#primary-nav li li li li li li li li li li li:hover ul,\r\nul#primary-nav li.over ul,\r\nul#primary-nav li li.over ul,\r\nul#primary-nav li li li.over ul,\r\nul#primary-nav li li li li.over ul,\r\nul#primary-nav li li li li li.over ul,\r\nul#primary-nav li li li li li li.over ul,\r\nul#primary-nav li li li li li li li.over ul,\r\nul#primary-nav li li li li li li li li.over ul,\r\nul#primary-nav li li li li li li li li li.over ul,\r\nul#primary-nav li li li li li li li li li li.over ul,\r\nul#primary-nav li li li li li li li li li li li.over ul { display: block; } /* The magic */\r\n\r\nul#primary-nav li.menuparent { background: transparent url(<{$xoops_url}>/images/arrow.gif) right center no-repeat; }\r\n\r\nul#primary-nav li.menuparent:hover,\r\nul#primary-nav li.over { background-color: <{$block.selcolor}>; }\r\n\r\n</style>\r\n<div id="mainmenu">\r\n  <ul id="primary-nav">\r\n    <{foreach from=$block.menu key=key item=menu}> \r\n      <li<{if $block.showsubs && $menu.hassubs}> class="menuparent"<{/if}>>\r\n        <a class="menuMain" href="<{$xoops_url}>/content.php?page=<{$menu.menu}>"><{$menu.title}></a>\r\n        <{if $block.showsubs && $menu.hassubs}><{includeq file=''db:blocks/system_block_contentmenu_structure.html'' menus=$menu.subs}><{/if}> \r\n      </li> \r\n    <{/foreach}>\r\n  </ul>\r\n</div>';
+		$new_tpl_source = '<script src="<{$xoops_url}>/modules/system/admin/content/menu.js" type="text/javascript"></script>\r\n<link rel="stylesheet" type="text/css" media="all" title="Style sheet" href="<{$xoops_url}>/modules/system/admin/content/menu.css" />\r\n<div id="mainmenu">\r\n  <ul id="primary-nav">\r\n    <{foreach from=$block.menu key=key item=menu}> \r\n      <li<{if $block.showsubs && $menu.hassubs}> class="menuparent"<{/if}>>\r\n        <a class="menuMain" href="<{$xoops_url}>/content.php?page=<{$menu.menu}>"><{$menu.title}></a>\r\n        <{if $block.showsubs && $menu.hassubs}><{includeq file="db:blocks/system_block_contentmenu_structure.html" menus=$menu.subs}><{/if}> \r\n      </li> \r\n    <{/foreach}>\r\n  </ul>\r\n</div>';
 		$this->query(" INSERT INTO " . $db->prefix("tplsource") . " VALUES (" . $new_tplfile_id . ", '" . $new_tpl_source . "');");
 		$this->query(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0);");
 		$this->query(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, " . $new_block_id . ", 1, 'block_read');");
@@ -277,7 +277,7 @@ class upgrade_impcms06 {
 			" (NULL, '_MD_AM_PASSLEVEL1', '20', {$config_id})," .
 			" (NULL, '_MD_AM_PASSLEVEL2', '40', {$config_id})," .
 			" (NULL, '_MD_AM_PASSLEVEL3', '60', {$config_id})," .
-			" (NULL, '_MD_AM_PASSLEVEL4', '80', {$config_id})";
+			" (NULL, '_MD_AM_PASSLEVEL4', '80', {$config_id})," .
 			" (NULL, '_MD_AM_PASSLEVEL5', '95', {$config_id})";
 			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
 				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
@@ -326,41 +326,6 @@ class upgrade_impcms06 {
 			" (NULL, '_MD_AM_ENC_HAVAL1925', '14', {$config_id})," .
 			" (NULL, '_MD_AM_ENC_HAVAL2245', '15', {$config_id})," .
 			" (NULL, '_MD_AM_ENC_HAVAL2565', '16', {$config_id})";
-			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
-				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
-				return false;
-			}
-
-			$sql = "ALTER TABLE " . $GLOBALS['xoopsDB']->prefix('users') . " ADD 'salt' VARCHAR(255)";
-			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
-				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
-				return false;
-			}
-
-			$sql = "ALTER TABLE " . $GLOBALS['xoopsDB']->prefix('users') . " CHANGE pass VARCHAR(255)";
-			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
-				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
-				return false;
-			}
-
-			$sql = "ALTER TABLE " . $GLOBALS['xoopsDB']->prefix('users') . " CHANGE uname varchar(255) NOT NULL default ''";
-			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
-				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
-				return false;
-			}
-
-			$sql = "ALTER TABLE " . $GLOBALS['xoopsDB']->prefix('users') . " CHANGE email varchar(255) NOT NULL default ''";
-			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
-				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
-				return false;
-			}
-
-			$sql = "ALTER TABLE " . $GLOBALS['xoopsDB']->prefix('users') . " CHANGE url varchar(255) NOT NULL default ''";
-			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
-				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
-				return false;
-			}
-			$sql = "ALTER TABLE " . $GLOBALS['xoopsDB']->prefix('users') . " CHANGE user_sig text NOT NULL";
 			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
 				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
 				return false;
@@ -591,55 +556,85 @@ class upgrade_impcms06 {
 		}
 		unset ($table);
 
-		$table = new IcmsDatabasetable('block_module_link');
-		$table->addNewField('page_id', "smallint(5) NOT NULL default '0'");
-		$this->updater->updateTable($table);
-		unset ($table);
-
-		// Block Visibility
-		$this->updater->runQuery('UPDATE ' . $table->name() . ' SET module_id=0, page_id=1 WHERE module_id=-1', 'Block Visibility Restructured Successfully', 'Failed in Restructure the Block Visibility');
-
 		// Create table system_customtag
 		$table = new IcmsDatabasetable('system_customtag');
 		if (!$table->exists()) {
-			$table->setStructure("customtagid int(11) unsigned NOT NULL auto_increment,
-					  name varchar(255) NOT NULL default '',
-					  description text NOT NULL default '',
-					  content text NOT NULL default '',
-					  language varchar(100) NOT NULL default '',
-					  customtag_type tinyint(1) NOT NULL default 0,
-					  PRIMARY KEY (customtagid)");
+			$table->setStructure("`customtagid` int(11) unsigned NOT NULL auto_increment,
+					  `name` varchar(255) NOT NULL default '',
+					  `description` text NOT NULL default '',
+					  `content` text NOT NULL default '',
+					  `language` varchar(100) NOT NULL default '',
+					  `customtag_type` tinyint(1) NOT NULL default 0,
+					  PRIMARY KEY (`customtagid`)");
 			$this->updater->updateTable($table);
 		}
 		unset ($table);
 
-		// adding the into configoption table
-		$table = new IcmsDatabasetable('configoption');
-		$table->setData("18, '_MD_AM_REGINVITE', '3', 49");
-		$this->updater->updateTable($table);
-		unset ($table);
 
+        	$sql = "INSERT INTO `" . $GLOBALS['xoopsDB']->prefix("configoption") . "` (confop_id, confop_name, confop_value, conf_id) VALUES (NULL, '_MD_AM_REGINVITE', '3', 21)";
+			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
+				return false;
+			}
 
-		// new fields in users table
-		$table = new IcmsDatabasetable('users');
-		$table->addNewField('language', "varchar(100) NOT NULL default ''");
-		$table->addNewField('openid', "varchar(255) NOT NULL default ''");
-		$table->addNewField('pass_expired', "tinyint(1) NOT NULL default ''");
-		$table->addNewField('enc_type', "tinyint(2) NOT NULL default ''");
-		$this->updater->updateTable($table);
-		unset ($table);
+			$sql = "ALTER TABLE " . $GLOBALS['xoopsDB']->prefix('users') . " MODIFY pass VARCHAR(255)";
+			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
+				return false;
+			}
 
+			$sql = "ALTER TABLE " . $GLOBALS['xoopsDB']->prefix('users') . " MODIFY user_sig text NOT NULL";
+			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
+				return false;
+			}
+			$sql = "ALTER TABLE `" . $GLOBALS['xoopsDB']->prefix('users') . "` ADD salt varchar(255) NOT NULL default ''";
+			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
+				return false;
+			}
 
+			$sql = "ALTER TABLE `" . $GLOBALS['xoopsDB']->prefix('users') . "` ADD language varchar(100) NOT NULL default ''";
+			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
+				return false;
+			}
 
+			$sql = "ALTER TABLE `" . $GLOBALS['xoopsDB']->prefix('users') . "` ADD openid varchar(255) NOT NULL default ''";
+			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
+				return false;
+			}
 
+			$sql = "ALTER TABLE `" . $GLOBALS['xoopsDB']->prefix('users') . "` ADD pass_expired tinyint(1) NOT NULL default '1'";
+			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
+				return false;
+			}
 
-		$table = new IcmsDatabasetable('modules');
-		$table->addNewField('dbversion', 'INT(11) DEFAULT 0');
-		$this->updater->updateTable($table);
+			$sql = "ALTER TABLE `" . $GLOBALS['xoopsDB']->prefix('users') . "` ADD enc_type tinyint(2) NOT NULL default '1'";
+			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
+				return false;
+			}
 
+			$sql = "ALTER TABLE `" . $GLOBALS['xoopsDB']->prefix('modules') . "` ADD dbversion INT(11) DEFAULT 0";
+			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
+				return false;
+			}
+
+			$sql = "ALTER TABLE `" . $GLOBALS['xoopsDB']->prefix('block_module_link') . "` ADD page_id smallint(5) NOT NULL default '0'";
+			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
+				return false;
+			}
+
+/*		// Block Visibility
+		$this->updater->runQuery('UPDATE ' . $table->name() . ' SET module_id=0, page_id=1 WHERE module_id=-1', 'Block Visibility Restructured Successfully', 'Failed in Restructure the Block Visibility');
 		// Updating the system module dbversion field. This needs to be at the very end of the upgrade script
 		$this->updater->updateModuleDBVersion(1, 'system');
-
+*/
 	}
 
 }
