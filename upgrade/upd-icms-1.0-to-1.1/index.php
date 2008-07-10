@@ -65,9 +65,7 @@ class upgrade_impcms06 {
 
 	function apply_new_blocks() {
 		$db = $GLOBALS['xoopsDB'];
-		if (getDbValue($db, 'newblocks', 'bid', ' show_func="b_social_bookmarks"') != 0) {
-			return true;
-		}
+		if (!getDbValue($db, 'newblocks', 'bid', ' show_func="b_social_bookmarks"')) {
 		$this->query(" INSERT INTO " . $db->prefix("newblocks") . " VALUES ('', 1, 0, '', 'Share this page!', 'Share this page!', '', 1, 0, 0, 'S', 'H', 1, 'system', 'social_bookmarks.php', 'b_social_bookmarks', '', 'system_block_socialbookmark.html', 0, " . time() . ")");
 		$new_block_id = $db->getInsertId();
 		$this->query(" UPDATE " . $db->prefix("newblocks") . " SET func_num = " . $new_block_id . " WHERE bid=" . $new_block_id);
@@ -79,10 +77,8 @@ class upgrade_impcms06 {
 		$this->query(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, " . $new_block_id . ", 1, 'block_read');");
 		$this->query(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 2, " . $new_block_id . ", 1, 'block_read');");
 		$this->query(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
-		return true;
-		if (getDbValue($db, 'newblocks', 'bid', ' show_func="b_content_show"') != 0) {
-			return true;
 		}
+		if (!getDbValue($db, 'newblocks', 'bid', ' show_func="b_content_show"')) {
 		$this->query(" INSERT INTO " . $db->prefix("newblocks") . " VALUES ('', 1, 0, '1|1|1|1', 'Content', 'Content', '', 1, 0, 0, 'S', 'H', 1, 'system', 'content_blocks.php', 'b_content_show', 'b_content_edits', 'system_block_content.html', 0, " . time() . ")");
 		$new_block_id = $db->getInsertId();
 		$this->query(" UPDATE " . $db->prefix("newblocks") . " SET func_num = " . $new_block_id . " WHERE bid=" . $new_block_id);
@@ -94,10 +90,8 @@ class upgrade_impcms06 {
 		$this->query(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, " . $new_block_id . ", 1, 'block_read');");
 		$this->query(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 2, " . $new_block_id . ", 1, 'block_read');");
 		$this->query(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
-		return true;
-		if (getDbValue($db, 'newblocks', 'bid', ' show_func="b_content_menu_show"') != 0) {
-			return true;
 		}
+		if (!getDbValue($db, 'newblocks', 'bid', ' show_func="b_content_menu_show"')) {
 		$this->query(" INSERT INTO " . $db->prefix("newblocks") . " VALUES ('', 1, 0, 'content_weight|ASC|1|#F2E2A0', 'Content Menu', 'Content Menu', '', 1, 0, 0, 'S', 'H', 1, 'system', 'content_blocks.php', 'b_content_menu_show', 'b_content_menu_edit', 'system_block_contentmenu.html', 0, " . time() . ")");
 		$new_block_id = $db->getInsertId();
 		$this->query(" UPDATE " . $db->prefix("newblocks") . " SET func_num = " . $new_block_id . " WHERE bid=" . $new_block_id);
@@ -109,10 +103,8 @@ class upgrade_impcms06 {
 		$this->query(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, " . $new_block_id . ", 1, 'block_read');");
 		$this->query(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 2, " . $new_block_id . ", 1, 'block_read');");
 		$this->query(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
-		return true;
-		if (getDbValue($db, 'newblocks', 'bid', ' show_func="b_content_relmenu_show"') != 0) {
-			return true;
 		}
+		if (!getDbValue($db, 'newblocks', 'bid', ' show_func="b_content_relmenu_show"')) {
 		$this->query(" INSERT INTO " . $db->prefix("newblocks") . " VALUES ('', 1, 0, 'content_weight|ASC|1', 'Related Content', 'Related Content', '', 1, 0, 0, 'S', 'H', 1, 'system', 'content_blocks.php', 'b_content_relmenu_show', 'b_content_relmenu_edit', 'system_block_contentmenu.html', 0, " . time() . ")");
 		$new_block_id = $db->getInsertId();
 		$this->query(" UPDATE " . $db->prefix("newblocks") . " SET func_num = " . $new_block_id . " WHERE bid=" . $new_block_id);
@@ -124,7 +116,7 @@ class upgrade_impcms06 {
 		$this->query(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, " . $new_block_id . ", 1, 'block_read');");
 		$this->query(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 2, " . $new_block_id . ", 1, 'block_read');");
 		$this->query(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
-		return true;
+		}
 	}
 
 	function check_db() {
