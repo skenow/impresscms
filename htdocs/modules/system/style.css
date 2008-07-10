@@ -497,3 +497,8 @@ div#floats_r{
     padding: 5px;
     margin:5px;
 }
+
+tr.blocked td {background-color: #FF0000;}
+
+.imgcat_notwrite {background-color: #FF0000; width:20px; height: 17px; padding-top: 3px; overflow: visible; margin-bottom: 2px;}
+.imgcat_notwrite span{margin-left: 25px; display: block; width: 400px;}

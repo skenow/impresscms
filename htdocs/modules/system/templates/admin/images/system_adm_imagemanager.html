@@ -26,7 +26,7 @@
       <th align="center" width="10%"><{$lang_imanager_catoptions}></th>
     </tr>
     <{section name=i loop=$imagecategorys}>
-      <tr class="<{cycle values="odd,even"}>" align="center">
+      <tr class="<{cycle values="odd,even"}><{if !$nwrite[i]}> blocked<{/if}>" align="center">
         <td><{$imagecategorys[i]->getVar('imgcat_id')}></td>
         <td align="left"><{$imagecategorys[i]->getVar('imgcat_name')}></td>
         <td><{$msize[i]}></td>
@@ -77,6 +77,11 @@
   <{if $writecatcount > 0}>
     <input type="button" onclick="showDiv('addimgform'); document.anchors.item('addimgform').scrollIntoView(); return false;" value="<{$lang_imanager_cat_addnewimg}>" />
   <{/if}>
+</div>
+<{/if}>
+<{if $hasnwrite}>
+<div id="legend">
+  <div class="imgcat_notwrite"><span>Folder is not writeable by the server.</span></div>
 </div>
 <{/if}>
 <div id="addimgform" class="opt_divs" style="display:none; margin:5px; padding:5px;"><{$addimgform}></div>

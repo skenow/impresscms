@@ -100,6 +100,12 @@ function imanager_index($imgcat_id=null){
 		$admin = (!$xoopsUser->isAdmin(1)) ? false : true;
 	}
 
+	if(!is_writable(ICMS_IMANAGER_FOLDER_PATH))
+	{
+		xoops_warning(sprintf(_WARNINNOTWRITEABLE,ICMS_IMANAGER_FOLDER_PATH));
+		echo '<br />';
+	}
+	
 	$imgcat_handler = xoops_gethandler('imagecategory');
 	
 	$criteriaRead = new CriteriaCompo();
@@ -155,9 +161,14 @@ function imanager_index($imgcat_id=null){
 	$icmsAdminTpl->assign('admnav',adminNav($imgcat_id));
 
 	$image_handler =& xoops_gethandler('image');
-	$count = $msize = $subs = array();
+	$count = $msize = $subs = $nwrite = array();
+	$hasnwrite = 0;
 	$icmsAdminTpl->assign('catcount',$catcount = count($imagecategorys));
 	for ($i = 0; $i < $catcount; $i++) {
+		$nwrite[$i] = is_writable($imgcat_handler->getCategFolder($imagecategorys[$i]));
+		if (!$nwrite[$i]){
+			$hasnwrite = 1;
+		}
 		$msize[$i] = icms_convert_size($imagecategorys[$i]->getVar('imgcat_maxsize'));
 		$count[$i] = $image_handler->getCount(new Criteria('imgcat_id', $imagecategorys[$i]->getVar('imgcat_id')));
 		$criteriaRead = new CriteriaCompo();
@@ -195,6 +206,8 @@ function imanager_index($imgcat_id=null){
 		}
 		$scount[$k] = $sc;
 	}
+	$icmsAdminTpl->assign('nwrite',$nwrite);
+	$icmsAdminTpl->assign('hasnwrite',$hasnwrite);
 	$icmsAdminTpl->assign('msize',$msize);
 	$icmsAdminTpl->assign('count',$count);
 	$icmsAdminTpl->assign('subs',$subs);
