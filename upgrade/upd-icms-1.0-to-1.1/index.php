@@ -80,6 +80,319 @@ class upgrade_impcms06 {
 		$this->query(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 2, " . $new_block_id . ", 1, 'block_read');");
 		$this->query(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
 		return true;
+		if (getDbValue($db, 'newblocks', 'bid', ' show_func="b_content_show"') != 0) {
+			return true;
+		}
+		$this->query(" INSERT INTO " . $db->prefix("newblocks") . " VALUES ('', 1, 0, '1|1|1|1', 'Content', 'Content', '', 1, 0, 0, 'S', 'H', 1, 'system', 'content_blocks.php', 'b_content_show', 'b_content_edits', 'system_block_content.html', 0, " . time() . ")");
+		$new_block_id = $db->getInsertId();
+		$this->query(" UPDATE " . $db->prefix("newblocks") . " SET func_num = " . $new_block_id . " WHERE bid=" . $new_block_id);
+		$this->query(" INSERT INTO " . $db->prefix("tplfile") . " VALUES ('', " . $new_block_id . ", 'system', 'default', 'system_block_content.html', 'Show content page', " . time() . ", " . time() . ", 'block');");
+		$new_tplfile_id = $db->getInsertId();
+		$new_tpl_source = '<link rel="stylesheet" type="text/css" media="all" title="Style sheet" href="<{$xoops_url}>/modules/system/admin/content/style.css" />\n
+<style type="text/css">\n
+  <{$content_css}>\n
+</style>\n
+<div id="impress_content">\n
+  <{if $block.showNav}>\n
+    <div id="nav"><{$block.nav}></div>\n
+  <{/if}>  \n
+  <div id="title">\n
+    <{if $block.isAdmin}><div class="title_admlinks"><{$block.content_admlinks}></div><{/if}>\n
+    <h1 class="title_body"><{$block.content_title}></h1>\n
+    <{if $block.show_pinfo}><h2 class="title_info"><{$block.content_tinfo}></h2><{/if}>\n
+  </div>\n
+  <div class="content">\n
+    <div class="content_body"><{$block.content_body}></div>\n
+  </div>\n
+  <{if $block.showSubs}>\n
+    <hr style="margin:20px;" />\n
+    <div id="subs">\n
+      <div class="title_subs"><{$block.subs_label}></div>\n
+      <{foreach item=sub from=$block.content_subs}>\n
+        <div style="margin:5px;" class="<{cycle values="even,odd"}>">\n
+          <h3 style="margin:0;"><a href="<{$sub.link}>"><{$sub.titulo}></a></h3>\n
+          <em><{$sub.teaser}></em>\n
+        </div>\n
+      <{/foreach}>\n
+    </div>\n
+  <{/if}>  \n
+</div>';
+		$this->query(" INSERT INTO " . $db->prefix("tplsource") . " VALUES (" . $new_tplfile_id . ", '" . $new_tpl_source . "');");
+		$this->query(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0);");
+		$this->query(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, " . $new_block_id . ", 1, 'block_read');");
+		$this->query(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 2, " . $new_block_id . ", 1, 'block_read');");
+		$this->query(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
+		return true;
+		if (getDbValue($db, 'newblocks', 'bid', ' show_func="b_content_menu_show"') != 0) {
+			return true;
+		}
+		$this->query(" INSERT INTO " . $db->prefix("newblocks") . " VALUES ('', 1, 0, 'content_weight|ASC|1|#F2E2A0', 'Content Menu', 'Content Menu', '', 1, 0, 0, 'S', 'H', 1, 'system', 'content_blocks.php', 'b_content_menu_show', 'b_content_menu_edit', 'system_block_contentmenu.html', 0, " . time() . ")");
+		$new_block_id = $db->getInsertId();
+		$this->query(" UPDATE " . $db->prefix("newblocks") . " SET func_num = " . $new_block_id . " WHERE bid=" . $new_block_id);
+		$this->query(" INSERT INTO " . $db->prefix("tplfile") . " VALUES ('', " . $new_block_id . ", 'system', 'default', 'system_block_contentmenu.html', 'Menu of content pages and categories', " . time() . ", " . time() . ", 'block');");
+		$new_tplfile_id = $db->getInsertId();
+		$new_tpl_source = '<script type="text/javascript">\n
+function IEHoverPseudo() {\n
+\n
+	var navItems = document.getElementById("primary-nav").getElementsByTagName("li");\n
+\n
+	for (var i=0; i<navItems.length; i++) {\n
+		if(navItems[i].className == "menuparent") {\n
+			navItems[i].onmouseover=function() { this.className += " over";}\n
+			navItems[i].onmouseout=function() { this.className = "menuparent"; }\n
+		}\n
+	}\n
+\n
+}\n
+if (window.onload){\n
+  var oldonload = window.onload;\n
+  window.onload=function(){\n
+    oldonload;\n
+    IEHoverPseudo();\n
+  }\n
+}else{\n
+  window.onload=function(){\n
+    IEHoverPseudo();\n
+  }\n
+}\n
+</script>\n
+<style type="text/css">\n
+ul#primary-nav,\n
+ul#primary-nav ul {\n
+	margin: 0;\n
+	padding: 0;\n
+	width: 100%; /* Width of Menu Items */\n
+	background: #fff; /* IE6 Bug */\n
+}\n
+\n
+ul#primary-nav li {\n
+	position: relative;\n
+	list-style: none;\n
+	margin: 0;\n
+	padding: 0;\n
+}\n
+\n
+ul#primary-nav li a {\n
+	display: block;\n
+	text-decoration: none;\n
+	padding: 3px;\n
+	width:auto;\n
+}\n
+\n
+/* Fix IE. Hide from IE Mac \*/\n
+* html ul#primary-nav li { float: left; height: 1%; }\n
+* html ul#primary-nav li a { height: 1%; }\n
+/* End */\n
+\n
+ul#primary-nav ul {\n
+	position: absolute;\n
+	display: none;\n
+	left: 99%;\n
+	top: 0;\n
+	z-index: 1;\n
+}\n
+\n
+ul#primary-nav li:hover ul ul,\n
+ul#primary-nav li:hover ul ul ul,\n
+ul#primary-nav li:hover ul ul ul ul,\n
+ul#primary-nav li:hover ul ul ul ul ul,\n
+ul#primary-nav li:hover ul ul ul ul ul ul,\n
+ul#primary-nav li:hover ul ul ul ul ul ul ul,\n
+ul#primary-nav li:hover ul ul ul ul ul ul ul ul,\n
+ul#primary-nav li:hover ul ul ul ul ul ul ul ul ul,\n
+ul#primary-nav li:hover ul ul ul ul ul ul ul ul ul ul,\n
+ul#primary-nav li:hover ul ul ul ul ul ul ul ul ul ul ul,\n
+ul#primary-nav li.over ul ul,\n
+ul#primary-nav li.over ul ul ul,\n
+ul#primary-nav li.over ul ul ul ul,\n
+ul#primary-nav li.over ul ul ul ul ul,\n
+ul#primary-nav li.over ul ul ul ul ul ul,\n
+ul#primary-nav li.over ul ul ul ul ul ul ul,\n
+ul#primary-nav li.over ul ul ul ul ul ul ul ul,\n
+ul#primary-nav li.over ul ul ul ul ul ul ul ul ul,\n
+ul#primary-nav li.over ul ul ul ul ul ul ul ul ul ul,\n
+ul#primary-nav li.over ul ul ul ul ul ul ul ul ul ul ul { display: none; }\n
+\n
+ul#primary-nav li:hover ul,\n
+ul#primary-nav li li:hover ul,\n
+ul#primary-nav li li li:hover ul,\n
+ul#primary-nav li li li li:hover ul,\n
+ul#primary-nav li li li li li:hover ul,\n
+ul#primary-nav li li li li li li:hover ul,\n
+ul#primary-nav li li li li li li li:hover ul,\n
+ul#primary-nav li li li li li li li li:hover ul,\n
+ul#primary-nav li li li li li li li li li:hover ul,\n
+ul#primary-nav li li li li li li li li li li:hover ul,\n
+ul#primary-nav li li li li li li li li li li li:hover ul,\n
+ul#primary-nav li.over ul,\n
+ul#primary-nav li li.over ul,\n
+ul#primary-nav li li li.over ul,\n
+ul#primary-nav li li li li.over ul,\n
+ul#primary-nav li li li li li.over ul,\n
+ul#primary-nav li li li li li li.over ul,\n
+ul#primary-nav li li li li li li li.over ul,\n
+ul#primary-nav li li li li li li li li.over ul,\n
+ul#primary-nav li li li li li li li li li.over ul,\n
+ul#primary-nav li li li li li li li li li li.over ul,\n
+ul#primary-nav li li li li li li li li li li li.over ul { display: block; } /* The magic */\n
+\n
+ul#primary-nav li.menuparent { background: transparent url(<{$xoops_url}>/images/arrow.gif) right center no-repeat; }\n
+\n
+ul#primary-nav li.menuparent:hover,\n
+ul#primary-nav li.over { background-color: <{$block.selcolor}>; }\n
+\n
+</style>\n
+<div id="mainmenu">\n
+  <ul id="primary-nav">\n
+    <{foreach from=$block.menu key=key item=menu}> \n
+      <li<{if $block.showsubs && $menu.hassubs}> class="menuparent"<{/if}>>\n
+        <a class="menuMain" href="<{$xoops_url}>/content.php?page=<{$menu.menu}>"><{$menu.title}></a>\n
+        <{if $block.showsubs && $menu.hassubs}><{includeq file='db:blocks/system_block_contentmenu_structure.html' menus=$menu.subs}><{/if}> \n
+      </li> \n
+    <{/foreach}>\n
+  </ul>\n
+</div>';
+		$this->query(" INSERT INTO " . $db->prefix("tplsource") . " VALUES (" . $new_tplfile_id . ", '" . $new_tpl_source . "');");
+		$this->query(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0);");
+		$this->query(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, " . $new_block_id . ", 1, 'block_read');");
+		$this->query(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 2, " . $new_block_id . ", 1, 'block_read');");
+		$this->query(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
+		return true;
+		if (getDbValue($db, 'newblocks', 'bid', ' show_func="b_content_relmenu_show"') != 0) {
+			return true;
+		}
+		$this->query(" INSERT INTO " . $db->prefix("newblocks") . " VALUES ('', 1, 0, 'content_weight|ASC|1', 'Related Content', 'Related Content', '', 1, 0, 0, 'S', 'H', 1, 'system', 'content_blocks.php', 'b_content_relmenu_show', 'b_content_relmenu_edit', 'system_block_contentmenu.html', 0, " . time() . ")");
+		$new_block_id = $db->getInsertId();
+		$this->query(" UPDATE " . $db->prefix("newblocks") . " SET func_num = " . $new_block_id . " WHERE bid=" . $new_block_id);
+		$this->query(" INSERT INTO " . $db->prefix("tplfile") . " VALUES ('', " . $new_block_id . ", 'system', 'default', 'system_block_contentmenu.html', 'Menu of content pages and categories', " . time() . ", " . time() . ", 'block');");
+		$new_tplfile_id = $db->getInsertId();
+		$new_tpl_source = '<script type="text/javascript">\n
+function IEHoverPseudo() {\n
+\n
+	var navItems = document.getElementById("primary-nav").getElementsByTagName("li");\n
+\n
+	for (var i=0; i<navItems.length; i++) {\n
+		if(navItems[i].className == "menuparent") {\n
+			navItems[i].onmouseover=function() { this.className += " over";}\n
+			navItems[i].onmouseout=function() { this.className = "menuparent"; }\n
+		}\n
+	}\n
+\n
+}\n
+if (window.onload){\n
+  var oldonload = window.onload;\n
+  window.onload=function(){\n
+    oldonload;\n
+    IEHoverPseudo();\n
+  }\n
+}else{\n
+  window.onload=function(){\n
+    IEHoverPseudo();\n
+  }\n
+}\n
+</script>\n
+<style type="text/css">\n
+ul#primary-nav,\n
+ul#primary-nav ul {\n
+	margin: 0;\n
+	padding: 0;\n
+	width: 100%; /* Width of Menu Items */\n
+	background: #fff; /* IE6 Bug */\n
+}\n
+\n
+ul#primary-nav li {\n
+	position: relative;\n
+	list-style: none;\n
+	margin: 0;\n
+	padding: 0;\n
+}\n
+\n
+ul#primary-nav li a {\n
+	display: block;\n
+	text-decoration: none;\n
+	padding: 3px;\n
+	width:auto;\n
+}\n
+\n
+/* Fix IE. Hide from IE Mac \*/\n
+* html ul#primary-nav li { float: left; height: 1%; }\n
+* html ul#primary-nav li a { height: 1%; }\n
+/* End */\n
+\n
+ul#primary-nav ul {\n
+	position: absolute;\n
+	display: none;\n
+	left: 99%;\n
+	top: 0;\n
+	z-index: 1;\n
+}\n
+\n
+ul#primary-nav li:hover ul ul,\n
+ul#primary-nav li:hover ul ul ul,\n
+ul#primary-nav li:hover ul ul ul ul,\n
+ul#primary-nav li:hover ul ul ul ul ul,\n
+ul#primary-nav li:hover ul ul ul ul ul ul,\n
+ul#primary-nav li:hover ul ul ul ul ul ul ul,\n
+ul#primary-nav li:hover ul ul ul ul ul ul ul ul,\n
+ul#primary-nav li:hover ul ul ul ul ul ul ul ul ul,\n
+ul#primary-nav li:hover ul ul ul ul ul ul ul ul ul ul,\n
+ul#primary-nav li:hover ul ul ul ul ul ul ul ul ul ul ul,\n
+ul#primary-nav li.over ul ul,\n
+ul#primary-nav li.over ul ul ul,\n
+ul#primary-nav li.over ul ul ul ul,\n
+ul#primary-nav li.over ul ul ul ul ul,\n
+ul#primary-nav li.over ul ul ul ul ul ul,\n
+ul#primary-nav li.over ul ul ul ul ul ul ul,\n
+ul#primary-nav li.over ul ul ul ul ul ul ul ul,\n
+ul#primary-nav li.over ul ul ul ul ul ul ul ul ul,\n
+ul#primary-nav li.over ul ul ul ul ul ul ul ul ul ul,\n
+ul#primary-nav li.over ul ul ul ul ul ul ul ul ul ul ul { display: none; }\n
+\n
+ul#primary-nav li:hover ul,\n
+ul#primary-nav li li:hover ul,\n
+ul#primary-nav li li li:hover ul,\n
+ul#primary-nav li li li li:hover ul,\n
+ul#primary-nav li li li li li:hover ul,\n
+ul#primary-nav li li li li li li:hover ul,\n
+ul#primary-nav li li li li li li li:hover ul,\n
+ul#primary-nav li li li li li li li li:hover ul,\n
+ul#primary-nav li li li li li li li li li:hover ul,\n
+ul#primary-nav li li li li li li li li li li:hover ul,\n
+ul#primary-nav li li li li li li li li li li li:hover ul,\n
+ul#primary-nav li.over ul,\n
+ul#primary-nav li li.over ul,\n
+ul#primary-nav li li li.over ul,\n
+ul#primary-nav li li li li.over ul,\n
+ul#primary-nav li li li li li.over ul,\n
+ul#primary-nav li li li li li li.over ul,\n
+ul#primary-nav li li li li li li li.over ul,\n
+ul#primary-nav li li li li li li li li.over ul,\n
+ul#primary-nav li li li li li li li li li.over ul,\n
+ul#primary-nav li li li li li li li li li li.over ul,\n
+ul#primary-nav li li li li li li li li li li li.over ul { display: block; } /* The magic */\n
+\n
+ul#primary-nav li.menuparent { background: transparent url(<{$xoops_url}>/images/arrow.gif) right center no-repeat; }\n
+\n
+ul#primary-nav li.menuparent:hover,\n
+ul#primary-nav li.over { background-color: <{$block.selcolor}>; }\n
+\n
+</style>\n
+<div id="mainmenu">\n
+  <ul id="primary-nav">\n
+    <{foreach from=$block.menu key=key item=menu}> \n
+      <li<{if $block.showsubs && $menu.hassubs}> class="menuparent"<{/if}>>\n
+        <a class="menuMain" href="<{$xoops_url}>/content.php?page=<{$menu.menu}>"><{$menu.title}></a>\n
+        <{if $block.showsubs && $menu.hassubs}><{includeq file='db:blocks/system_block_contentmenu_structure.html' menus=$menu.subs}><{/if}> \n
+      </li> \n
+    <{/foreach}>\n
+  </ul>\n
+</div>';
+		$this->query(" INSERT INTO " . $db->prefix("tplsource") . " VALUES (" . $new_tplfile_id . ", '" . $new_tpl_source . "');");
+		$this->query(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0);");
+		$this->query(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, " . $new_block_id . ", 1, 'block_read');");
+		$this->query(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 2, " . $new_block_id . ", 1, 'block_read');");
+		$this->query(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
+		return true;
 	}
 
 	function check_db() {
@@ -300,7 +613,7 @@ class upgrade_impcms06 {
 				return false;
 			}
 
-			$sql = "ALTER TABLE " . $GLOBALS['xoopsDB']->prefix('users') . " CHANGE pass pass VARCHAR(255)";
+			$sql = "ALTER TABLE " . $GLOBALS['xoopsDB']->prefix('users') . " CHANGE pass VARCHAR(255)";
 			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
 				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
 				return false;
@@ -323,7 +636,13 @@ class upgrade_impcms06 {
 				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
 				return false;
 			}
-		}
+			$sql = "ALTER TABLE " . $GLOBALS['xoopsDB']->prefix('users') . " CHANGE user_sig text NOT NULL";
+			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
+				return false;
+			}
+
+s		}
 
 		return $result;
 
