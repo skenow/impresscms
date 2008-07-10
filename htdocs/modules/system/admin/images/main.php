@@ -218,8 +218,11 @@ function imanager_index($imgcat_id=null){
 		$form = new XoopsThemeForm(_ADDIMAGE, 'image_form', 'admin.php', 'post', true);
 		$form->setExtra('enctype="multipart/form-data"');
 		$form->addElement(new XoopsFormText(_IMAGENAME, 'image_nicename', 50, 255), true);
-		$select = new XoopsFormSelect(_IMAGECAT, 'imgcat_id');
-		$select->addOptionArray($imgcat_handler->getCategList($groups,'imgcat_write'));
+		$list =& $imgcat_handler->getCategList($groups,'imgcat_write');
+		$select = new XoopsFormSelect(_IMAGECAT, 'imgcat_id', $imgcat_id);
+		$list[0] = '--------------------';
+		ksort($list);
+		$select->addOptionArray($list);
 		$form->addElement($select, true);
 		$form->addElement(new XoopsFormFile(_IMAGEFILE, 'image_file', 5000000));
 		$form->addElement(new XoopsFormText(_IMGWEIGHT, 'image_weight', 3, 4, 0));
@@ -236,7 +239,7 @@ function imanager_index($imgcat_id=null){
 	}
 	$form = new XoopsThemeForm(_MD_ADDIMGCAT, 'imagecat_form', 'admin.php', 'post', true);
 	$list =& $imgcat_handler->getCategList($groups,'imgcat_write');
-	$sup = new XoopsFormSelect(_MD_IMGCATPARENT, 'imgcat_pid', $id);
+	$sup = new XoopsFormSelect(_MD_IMGCATPARENT, 'imgcat_pid', $imgcat_id);
 	$list[0] = '--------------------';
 	ksort($list);
 	$sup->addOptionArray($list);
