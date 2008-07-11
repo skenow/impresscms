@@ -2,14 +2,6 @@
 <div class="CPbigTitle" style="background-image: url(<{$xoops_url}>/modules/system/admin/images/images/images_big.png)"><{$lang_imanager_title}></div><br />
 <p style="margin-top:0;"><{$admnav}></p>
 <{if $catcount > 0}>
-<div align="right">
-  <{if $isAdmin}>
-    <input type="button" onclick="showDiv('addcatform'); document.anchors.item('addcatform').scrollIntoView(); return false;" value="<{$lang_imanager_cat_addnewcat}>" />
-  <{/if}>
-  <{if $writecatcount > 0}>
-    <input type="button" onclick="showDiv('addimgform'); document.anchors.item('addimgform').scrollIntoView(); return false;" value="<{$lang_imanager_cat_addnewimg}>" />
-  <{/if}>
-</div>
 <form action="admin.php" method="post">
   <table width="100%" celpadding="0" cellspacing="1" class="outer">
     <tr>
@@ -64,20 +56,22 @@
         </td>  
       </tr>
     <{/section}>
-    <tr><td class="head" colspan="12" align="center"><input type="submit" name="submit" value="<{$lang_imanager_cat_submit}>" /></td></tr>
+    <tr>
+      <td class="head" colspan="12" align="right">
+        <input type="submit" name="submit" value="<{$lang_imanager_cat_submit}>" />
+        <{if $isAdmin}>
+          <input type="button" onclick="showDiv('addcatform'); document.anchors.item('addcatform').scrollIntoView(); return false;" value="<{$lang_imanager_cat_addnewcat}>" />
+        <{/if}>
+        <{if $writecatcount > 0}>
+          <input type="button" onclick="showDiv('addimgform'); document.anchors.item('addimgform').scrollIntoView(); return false;" value="<{$lang_imanager_cat_addnewimg}>" />
+        <{/if}>
+      </td>
+    </tr>
   </table>
   <input type="hidden" name="op" value="reordercateg" />
   <input type="hidden" name="fct" value="images" />
   <{$token}>
 </form>
-<div align="right">
-  <{if $isAdmin}>
-    <input type="button" onclick="showDiv('addcatform'); document.anchors.item('addcatform').scrollIntoView(); return false;" value="<{$lang_imanager_cat_addnewcat}>" />
-  <{/if}>
-  <{if $writecatcount > 0}>
-    <input type="button" onclick="showDiv('addimgform'); document.anchors.item('addimgform').scrollIntoView(); return false;" value="<{$lang_imanager_cat_addnewimg}>" />
-  <{/if}>
-</div>
 <{/if}>
 <{if $hasnwrite}>
 <div id="legend">
