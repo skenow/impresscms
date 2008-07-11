@@ -12,9 +12,10 @@ function showDiv(type,id){
 }
 </script>
 <div class="CPbigTitle" style="background-image: url(<{$xoops_url}>/modules/system/admin/content/images/content_big.png)"><{$lang_cont_manager}></div><br />
-<div style="margin-top:0; float: right; width:350px;" align="right">
+<div style="border: 2px solid #C2CDD6; padding: 5px; vertical-align: middle; background-color: #E6E6E6; width:45%; float:right; margin-bottom:5px;" align="right">
   <form action="admin.php?fct=content&op=list&content_supid=<{$content_supid}>" method="POST">
-    <input type="text" name="query" id="query" size="30" value="<{$query}>" />
+    <b><{$lang_search_title}>:</b> 
+    <input type="text" name="query" id="query" size="20" value="<{$query}>" style="min-width:300px;" />
     <input type="submit" name="btn" value="<{$lang_search}>" />
     <input type="submit" name="btn1" value="<{$lang_cancel}>" onclick="document.getElementById('query').value='';" />
   </form>

@@ -86,6 +86,7 @@ define('_ON','on');
 define('_READS','reads');
 define('_WELCOMETO','Welcome to %s');
 define('_SEARCH','Search');
+define('_QSEARCH','Quick Search');
 define('_ALL', 'All');
 define('_TITLE', 'Title');
 define('_OPTIONS', 'Options');

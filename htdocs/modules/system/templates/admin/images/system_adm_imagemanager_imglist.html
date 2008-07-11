@@ -33,13 +33,15 @@
     </td>
   </tr>
 </table>
-<div style="padding:5px;" align="right">
+<div style="border: 2px solid #C2CDD6; padding: 5px; vertical-align: middle; background-color: #E6E6E6; width:45%; float:right; margin-top:5px;" align="right">
   <form action="admin.php?fct=images&op=listimg&imgcat_id=<{$cat_id}>" method="POST">
-    <input type="text" name="query" id="query" size="20" value="<{$query}>" />
+    <b><{$lang_search_title}>:</b> 
+    <input type="text" name="query" id="query" size="20" value="<{$query}>" style="min-width:300px;" />
     <input type="submit" name="btn" value="<{$lang_search}>" />
     <input type="submit" name="btn1" value="<{$lang_cancel}>" onclick="document.getElementById('query').value='';" />
   </form>
 </div>
+<br style="clear:right;" />
 <{foreach from=$images item=image key=key}>
   <{include file="db:admin/images/system_adm_imagemanager_img.html" image=$image i=$key}>
 <{/foreach}>

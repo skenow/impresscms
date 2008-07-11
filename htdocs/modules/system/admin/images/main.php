@@ -375,6 +375,7 @@ function imanager_listimg($imgcat_id,$start=0) {
 	$icmsAdminTpl->assign('lang_yes',_YES);
 	$icmsAdminTpl->assign('lang_no',_NO);
 	$icmsAdminTpl->assign('lang_search',_SEARCH);
+	$icmsAdminTpl->assign('lang_search_title',_QSEARCH);
 	
 	$icmsAdminTpl->assign('xoops_root_path',XOOPS_ROOT_PATH);
 	$icmsAdminTpl->assign('query',$query);
