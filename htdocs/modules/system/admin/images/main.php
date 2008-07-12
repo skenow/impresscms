@@ -84,6 +84,9 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     		echo getSubs($imgcat_id);
     		xoops_cp_footer();
     		break;
+    	case 'filter':
+    		imanager_filter();
+    		break;
     }
 }
 
@@ -364,6 +367,7 @@ function imanager_listimg($imgcat_id,$start=0) {
 	$icmsAdminTpl->assign('simgcount',$scount);
 	
 	$icmsAdminTpl->assign('lang_imanager_img_preview',_PREVIEW);
+	$icmsAdminTpl->assign('lang_imanager_img_filter',_IMGFILTER);
 	
 	$icmsAdminTpl->assign('lang_image_name',_IMAGENAME);
 	$icmsAdminTpl->assign('lang_image_mimetype',_IMAGEMIME);
@@ -376,6 +380,11 @@ function imanager_listimg($imgcat_id,$start=0) {
 	$icmsAdminTpl->assign('lang_no',_NO);
 	$icmsAdminTpl->assign('lang_search',_SEARCH);
 	$icmsAdminTpl->assign('lang_search_title',_QSEARCH);
+	
+	$icmsAdminTpl->assign('lang_image_applyfilters',_IMAGEAPPLYFILTERS);
+	$icmsAdminTpl->assign('lang_image_filterssave',_IMAGEFILTERS);
+	$icmsAdminTpl->assign('lang_image_filtersoverw',_IMAGEFILTERSSAVE);
+	$icmsAdminTpl->assign('lang_image_filterpreview',_PREVIEW);
 	
 	$icmsAdminTpl->assign('xoops_root_path',XOOPS_ROOT_PATH);
 	$icmsAdminTpl->assign('query',$query);
@@ -393,6 +402,88 @@ function imanager_listimg($imgcat_id,$start=0) {
 
 	$icmsAdminTpl->assign('imgcount',$imgcount);
 
+	$filters = array();
+	$i = 0;
+	$filters[$i]['title'] = 'Negative';
+	$filters[$i]['value'] = 'IMG_FILTER_NEGATE';
+	$filters[$i]['descr'] = 'Reverses all colors of the image.';
+	
+	$i++;
+	$filters[$i]['title'] = 'Grayscale';
+	$filters[$i]['value'] = 'IMG_FILTER_GRAYSCALE';
+	$filters[$i]['descr'] = 'Converts the image into grayscale.';
+	
+	$i++; $j = 0;
+	$filters[$i]['title'] = 'Brightness';
+	$filters[$i]['value'] = 'IMG_FILTER_BRIGHTNESS';
+	$filters[$i]['descr'] = 'Changes the brightness of the image.';
+	$filters[$i]['args'][$j]['title'] = 'Level';
+	$filters[$i]['args'][$j]['value'] = '0';
+	$filters[$i]['args'][$j]['descr'] = '-255 = min brightness, 0 = no change, +255 = max brightness';
+	
+	$i++; $j = 0;
+	$filters[$i]['title'] = 'Contrast';
+	$filters[$i]['value'] = 'IMG_FILTER_CONTRAST';
+	$filters[$i]['descr'] = 'Changes the contrast of the image.';
+	$filters[$i]['args'][$j]['title'] = 'Level';
+	$filters[$i]['args'][$j]['value'] = '0';
+	$filters[$i]['args'][$j]['descr'] = '-100 = max contrast, 0 = no change, +100 = min contrast';
+	
+	$i++; $j = 0;
+	$filters[$i]['title'] = 'Colorize';
+	$filters[$i]['value'] = 'IMG_FILTER_COLORIZE';
+	$filters[$i]['descr'] = 'Adds (subtracts) specified RGB values to each pixel.';
+	$filters[$i]['args'][$j]['title'] = 'Red';
+	$filters[$i]['args'][$j]['value'] = '0';
+	$filters[$i]['args'][$j]['descr'] = '-255 = min, 0 = no change, +255 = max';
+	$j++;
+	$filters[$i]['args'][$j]['title'] = 'Green';
+	$filters[$i]['args'][$j]['value'] = '0';
+	$filters[$i]['args'][$j]['descr'] = '-255 = min, 0 = no change, +255 = max';
+	$j++;
+	$filters[$i]['args'][$j]['title'] = 'Blue';
+	$filters[$i]['args'][$j]['value'] = '0';
+	$filters[$i]['args'][$j]['descr'] = '-255 = min, 0 = no change, +255 = max';
+	
+	$i++;
+	$filters[$i]['title'] = 'Highlight Edges';
+	$filters[$i]['value'] = 'IMG_FILTER_EDGEDETECT';
+	$filters[$i]['descr'] = 'Uses edge detection to highlight the edges in the image.';
+	
+	$i++;
+	$filters[$i]['title'] = 'Emboss';
+	$filters[$i]['value'] = 'IMG_FILTER_EMBOSS';
+	$filters[$i]['descr'] = 'Embosses the image.';
+	
+	$i++;
+	$filters[$i]['title'] = 'Gaussian Blur';
+	$filters[$i]['value'] = 'IMG_FILTER_GAUSSIAN_BLUR';
+	$filters[$i]['descr'] = 'Blurs the image using the Gaussian method.';
+	
+	$i++;
+	$filters[$i]['title'] = 'Selective Blur';
+	$filters[$i]['value'] = 'IMG_FILTER_SELECTIVE_BLUR';
+	$filters[$i]['descr'] = 'Blurs the image.';
+	
+	$i++;
+	$filters[$i]['title'] = 'Sketchy';
+	$filters[$i]['value'] = 'IMG_FILTER_MEAN_REMOVAL';
+	$filters[$i]['descr'] = 'Uses mean removal to achieve a "sketchy" effect.';
+	
+	$i++; $j = 0;
+	$filters[$i]['title'] = 'Smooth';
+	$filters[$i]['value'] = 'IMG_FILTER_SMOOTH';
+	$filters[$i]['descr'] = 'Makes the image smoother. Applies a 9-cell convolution matrix where center pixel has the weight arg1 and others weight of 1.0. The result is normalized by dividing the sum with arg1 + 8.0 (sum of the matrix).';
+	$filters[$i]['args'][$j]['title'] = 'Level';
+	$filters[$i]['args'][$j]['value'] = '2048';
+	$filters[$i]['args'][$j]['descr'] = 'any float is accepted, large value (in practice: 2048 or more) = no change';
+	
+	$i++;
+	$filters[$i]['title'] = 'Sepia';
+	$filters[$i]['value'] = 'IMG_FILTER_SEPIA';
+	$filters[$i]['descr'] = 'Apply sepia effects in the image';
+    $icmsAdminTpl->assign('filters',$filters);
+    
 	$arrimg = array();
     foreach (array_keys($images) as $i) {
 		$arrimg[$i]['id'] = $images[$i]->getVar('image_id');
@@ -439,6 +530,13 @@ function imanager_listimg($imgcat_id,$start=0) {
 		
 		$arrimg[$i]['ed_token'] = $GLOBALS['xoopsSecurity']->getTokenHTML();
 		$arrimg[$i]['clone_token'] = $GLOBALS['xoopsSecurity']->getTokenHTML();
+		$arrimg[$i]['filter_token'] = $GLOBALS['xoopsSecurity']->getTokenHTML();
+		$select  = '<select name="filter'.$i.'" id="filter'.$i.'" style="width:250px;" onchange="selFilter('.$i.',this.value);">';
+		$select .= '<option value="">Select a filter</option>';
+		foreach ($filters as $k=>$v){
+			$select .= '<option value="'.$v['value'].'">'.$v['title'].'</option>';
+		}
+		$arrimg[$i]['filter_select'] = $select.'</select>';
     }
     
 	$icmsAdminTpl->assign('images',$arrimg);
@@ -935,6 +1033,122 @@ function imanager_clone() {
 		$msg = sprintf(_FAILSAVEIMG, $newimg->getVar('image_nicename'));
 	}else{
 		$msg = _MD_AM_DBUPDATED;
+	}
+
+	if (isset($imgcat_id)){
+		$redir = '&op=listimg&imgcat_id='.$imgcat_id;
+	}else{
+		$redir = '';
+	}
+	redirect_header('admin.php?fct=images'.$redir,2,$msg);
+}
+
+function imanager_filter() {
+	if (!$GLOBALS['xoopsSecurity']->check()) {
+		redirect_header('admin.php?fct=images', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+	}
+
+	$imgcat_id = intval($_POST['imgcat_id']);
+	$image_id = intval($_POST['image_id']);
+	$i = intval($_POST['i']);
+	if ($_POST['filter'.$i] != 'IMG_FILTER_SEPIA'){
+		$filter = constant($_POST['filter'.$i]);
+	}else{
+	    $filter = $_POST['filter'.$i];
+	}
+	$args = array();
+	if (isset($_POST[$image_id.'arg1'])){
+		$args[] = $_POST[$image_id.'arg1'];
+	}
+	if (isset($_POST[$image_id.'arg2'])){
+		$args[] = $_POST[$image_id.'arg2'];
+	}
+	if (isset($_POST[$image_id.'arg3'])){
+		$args[] = $_POST[$image_id.'arg3'];
+	}
+
+	$imgcat_handler =& xoops_gethandler('imagecategory');
+	$imagecategory =& $imgcat_handler->get(intval($imgcat_id));
+	if (!is_object($imagecategory)) {
+		redirect_header('admin.php?fct=images',1);
+	}
+
+	$categ_path = $imgcat_handler->getCategFolder($imagecategory);
+	$categ_url  = $imgcat_handler->getCategFolder($imagecategory,1,'url');
+	
+	$image_handler =& xoops_gethandler('image');
+	$image =& $image_handler->get($image_id);
+	if ( ($ext = strrpos( $image->getVar('image_name'), '.' )) !== false ) {
+		$ext = strtolower(substr( $image->getVar('image_name'), $ext + 1 ));
+	}
+	include(ICMS_LIBRARIES_PATH."/wideimage/lib/WideImage.inc.php");
+	if ($_POST['overwrite']){
+		if ($imagecategory->getVar('imgcat_storetype') == 'db') {
+			$img = wiImage::loadFromString($image->getVar('image_body'));
+			if ($filter == 'IMG_FILTER_SEPIA'){
+				$img->applyFilter(IMG_FILTER_GRAYSCALE)->applyFilter(IMG_FILTER_COLORIZE, 100, 70, 50)->saveToFile(XOOPS_UPLOAD_PATH.'/'.$image->getVar('image_name'));
+			}else{
+				$img->applyFilter($filter,implode(',',$args))->saveToFile(XOOPS_UPLOAD_PATH.'/'.$image->getVar('image_name'));
+			}
+			$fp = @fopen(XOOPS_UPLOAD_PATH.'/'.$image->getVar('image_name'), 'rb');
+			$fbinary = @fread($fp, filesize(XOOPS_UPLOAD_PATH.'/'.$image->getVar('image_name')));
+			@fclose($fp);
+			$image->setVar('image_body', $fbinary, true);
+			@unlink(XOOPS_UPLOAD_PATH.'/'.$image->getVar('image_name'));
+			if (!$image_handler->insert($image)) {
+				$msg = sprintf(_FAILSAVEIMG, $image->getVar('image_nicename'));
+			}else{
+				$msg = _MD_AM_DBUPDATED;
+			}
+		}else{
+			$path = (substr($categ_path,-1) != '/')?$categ_path.'/':$categ_path;
+			$img = wiImage::load($path.$image->getVar('image_name'));
+			if ($filter == 'IMG_FILTER_SEPIA'){
+				$img->applyFilter(IMG_FILTER_GRAYSCALE)->applyFilter(IMG_FILTER_COLORIZE, 100, 70, 50)->saveToFile($path.$image->getVar('image_name'));
+			}else{
+				$img->applyFilter($filter,implode(',',$args))->saveToFile($path.$image->getVar('image_name'));
+			}
+			$msg = _MD_AM_DBUPDATED;
+		}
+	}else{
+		$imgname = 'img'.icms_random_str(12).'.'.$ext;
+		$newimg =& $image_handler->create();
+		$newimg->setVar('image_name', $imgname);
+		$newimg->setVar('image_nicename', $_POST['image_nicename']);
+		$newimg->setVar('image_mimetype', $image->getVar('image_mimetype'));
+		$newimg->setVar('image_created', time());
+		$newimg->setVar('image_display', $_POST['image_display']);
+		$newimg->setVar('image_weight', $_POST['image_weight']);
+		$newimg->setVar('imgcat_id', $imgcat_id);
+		if ($imagecategory->getVar('imgcat_storetype') == 'db') {
+			$img = wiImage::loadFromString($image->getVar('image_body'));
+			if ($filter == 'IMG_FILTER_SEPIA'){
+				$img->applyFilter(IMG_FILTER_GRAYSCALE)->applyFilter(IMG_FILTER_COLORIZE, 100, 70, 50)->saveToFile(XOOPS_UPLOAD_PATH.'/'.$image->getVar('image_name'));
+			}else{
+				$img->applyFilter($filter,implode(',',$args))->saveToFile(XOOPS_UPLOAD_PATH.'/'.$image->getVar('image_name'));
+			}
+			$fp = @fopen(XOOPS_UPLOAD_PATH.'/'.$image->getVar('image_name'), 'rb');
+			$fbinary = @fread($fp, filesize(XOOPS_UPLOAD_PATH.'/'.$image->getVar('image_name')));
+			@fclose($fp);
+			$newimg->setVar('image_body', $fbinary, true);
+			@unlink(XOOPS_UPLOAD_PATH.'/'.$image->getVar('image_name'));
+		}else{
+			$path = (substr($categ_path,-1) != '/')?$categ_path.'/':$categ_path;
+			if (!@copy($path.$image->getVar('image_name'),$path.$imgname)){
+				$msg = sprintf(_FAILSAVEIMG, $image->getVar('image_nicename'));
+			}
+			$img = wiImage::load($path.$imgname);
+			if ($filter == 'IMG_FILTER_SEPIA'){
+				$img->applyFilter(IMG_FILTER_GRAYSCALE)->applyFilter(IMG_FILTER_COLORIZE, 100, 70, 50)->saveToFile($path.$imgname);
+			}else{
+				$img->applyFilter($filter,implode(',',$args))->saveToFile($path.$imgname);
+			}
+		}
+		if (!$image_handler->insert($newimg)) {
+			$msg = sprintf(_FAILSAVEIMG, $newimg->getVar('image_nicename'));
+		}else{
+			$msg = _MD_AM_DBUPDATED;
+		}
 	}
 
 	if (isset($imgcat_id)){

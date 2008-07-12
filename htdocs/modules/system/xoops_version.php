@@ -160,6 +160,10 @@ $modversion['templates'][$i]['description'] = 'Template of the Image Manager adm
 $i++;
 $modversion['templates'][$i]['file'] = 'admin/images/system_adm_imagemanager_cloneimg.html';
 $modversion['templates'][$i]['description'] = 'Template of the Image Manager admin';
+
+$i++;
+$modversion['templates'][$i]['file'] = 'admin/images/system_adm_imagemanager_filterimg.html';
+$modversion['templates'][$i]['description'] = 'Template of the Image Manager admin';
 ###
 
 // Blocks

@@ -6,6 +6,17 @@ include(ICMS_ROOT_PATH."/kernel/imagecategory.php");
 
 $file = $_GET['file'];
 $resize = isset($_GET['resize'])?$_GET['resize']:1;
+$filter = isset($_GET['filter'])?$_GET['filter']:null;
+$args = array();
+if (isset($_GET['arg1'])){
+	$args[] = $_GET['arg1'];
+}
+if (isset($_GET['arg2'])){
+	$args[] = $_GET['arg2'];
+}
+if (isset($_GET['arg3'])){
+	$args[] = $_GET['arg3'];
+}
 
 $image_handler = xoops_gethandler('image');
 $imgcat_handler = xoops_gethandler('imagecategory');
@@ -26,10 +37,25 @@ $width = $img->getWidth();
 $height = $img->getHeight();
 
 header('Content-type: image/png');
-if ($resize && ($width > 400 || $height > 300)){
-    echo $img->resize(400, 300)->asString('png');	
+if (!is_null($filter)){
+	if ($filter == 'IMG_FILTER_SEPIA'){
+		if ($resize && ($width > 400 || $height > 300)){
+			echo $img->resize(400, 300)->applyFilter(IMG_FILTER_GRAYSCALE)->applyFilter(IMG_FILTER_COLORIZE, 90, 60, 30)->asString('png');
+		}else{
+			echo $img->applyFilter(IMG_FILTER_GRAYSCALE)->applyFilter(IMG_FILTER_COLORIZE, 90, 60, 30)->asString('png');
+		}
+	}else{
+		if ($resize && ($width > 400 || $height > 300)){
+			echo $img->resize(400, 300)->applyFilter(constant($filter),implode(',',$args))->asString('png');
+		}else{
+			echo $img->applyFilter(constant($filter),implode(',',$args))->asString('png');
+		}
+	}
 }else{
-	echo $img->asString('png');
+	if ($resize && ($width > 400 || $height > 300)){
+		echo $img->resize(400, 300)->asString('png');
+	}else{
+		echo $img->asString('png');
+	}
 }
-
 ?>

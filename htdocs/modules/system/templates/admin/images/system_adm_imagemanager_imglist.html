@@ -1,4 +1,23 @@
 <script type="text/javascript" src="<{$xoops_url}>/modules/system/admin/images/js/imanager.js"></script>
+<script type="text/javascript">
+  var Filters=new Array();
+  <{foreach from=$filters item=filter key=key}>
+    var filter = new Array();
+    filter['title'] = '<{$filter.title}>';
+    filter['value'] = '<{$filter.value}>';
+    filter['descr'] = '<{$filter.descr}>';
+    var args = new Array();
+    <{foreach from=$filter.args item=arg key=key1}>
+      var arg = new Array();
+      arg['title'] = '<{$arg.title}>';
+      arg['value'] = '<{$arg.value}>';
+      arg['descr'] = '<{$arg.descr}>';
+      args[<{$key1}>] = arg;
+    <{/foreach}>
+    filter['args'] = args;
+    Filters[<{$key}>] = filter;
+  <{/foreach}>
+</script>
 <div class="CPbigTitle" style="background-image: url(<{$xoops_url}>/modules/system/admin/images/images/images_big.png)"><{$lang_imanager_title}></div><br />
 <p style="margin-top:0;"><{$admnav}></p>
 <table width="100%" celpadding="0" cellspacing="1" class="outer">
@@ -49,6 +68,7 @@
 <{foreach from=$images item=image key=key}>
   <{include file="db:admin/images/system_adm_imagemanager_editimg.html" image=$image i=$key}>
   <{include file="db:admin/images/system_adm_imagemanager_cloneimg.html" image=$image i=$key}>
+  <{include file="db:admin/images/system_adm_imagemanager_filterimg.html" image=$image i=$key}>
 <{/foreach}>
 <div id="addimgform" class="opt_divs" style="display:none; padding:5px; margin:5px;"><{$addimgform}></div>
 <a name="addimgform"></a>

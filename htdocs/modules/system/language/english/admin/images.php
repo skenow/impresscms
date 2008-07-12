@@ -50,6 +50,7 @@ define('_IMAGEFILTERS', 'Select a filter:');
 define('_IMAGEAPPLYFILTERS', 'Apply filters in image');
 define('_IMAGEFILTERSSAVE', 'Overwrite image with filter?');
 define('_IMGCROP', 'Crop Tool');
+define('_IMGFILTER', 'Filter Tool');
 
 define('_MD_IMAGECATSUBS', 'Subcategories');
 ?>
