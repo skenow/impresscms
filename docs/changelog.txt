@@ -7,6 +7,7 @@ ImpressCMS ChangeLog
 '''Added'''
 * new plugin for tinymce. hiddencontent (luciorota/real_therplima/stranger)
 * Password meter op on installation. (stranger/real_therplima)
+* Upgrade script. (stranger)
 
 '''Improved'''
 * Updated TCPDF to version 4.0.001. (stranger)
@@ -21,6 +22,7 @@ ImpressCMS ChangeLog
 * Issue with PDF generator. (stranger)
 * HTML Purifier is now properly using the trust path to create its cache data (Vaughan/malanciault)
 * The installer was not properly creating the password hash of the administrator (Vaughan/real_therplima/malanciault)
+* #1871202 (was not completely fixed) - Avatar and Karma (Fixed). (stranger)
 
 ===2008-07-02 : 1.1 Alpha 2===
 
