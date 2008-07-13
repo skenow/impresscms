@@ -1051,11 +1051,8 @@ function imanager_filter() {
 	$imgcat_id = intval($_POST['imgcat_id']);
 	$image_id = intval($_POST['image_id']);
 	$i = intval($_POST['i']);
-	if ($_POST['filter'.$i] != 'IMG_FILTER_SEPIA'){
-		$filter = constant($_POST['filter'.$i]);
-	}else{
-	    $filter = $_POST['filter'.$i];
-	}
+	$filter = isset($_POST['filter'.$i])?$_POST['filter'.$i]:null;
+	
 	$args = array();
 	if (isset($_POST[$image_id.'arg1'])){
 		$args[] = $_POST[$image_id.'arg1'];
@@ -1088,7 +1085,7 @@ function imanager_filter() {
 			if ($filter == 'IMG_FILTER_SEPIA'){
 				$img->applyFilter(IMG_FILTER_GRAYSCALE)->applyFilter(IMG_FILTER_COLORIZE, 100, 70, 50)->saveToFile(XOOPS_UPLOAD_PATH.'/'.$image->getVar('image_name'));
 			}else{
-				$img->applyFilter($filter,implode(',',$args))->saveToFile(XOOPS_UPLOAD_PATH.'/'.$image->getVar('image_name'));
+				$img->applyFilter(constant($filter),implode(',',$args))->saveToFile(XOOPS_UPLOAD_PATH.'/'.$image->getVar('image_name'));
 			}
 			$fp = @fopen(XOOPS_UPLOAD_PATH.'/'.$image->getVar('image_name'), 'rb');
 			$fbinary = @fread($fp, filesize(XOOPS_UPLOAD_PATH.'/'.$image->getVar('image_name')));
@@ -1106,7 +1103,7 @@ function imanager_filter() {
 			if ($filter == 'IMG_FILTER_SEPIA'){
 				$img->applyFilter(IMG_FILTER_GRAYSCALE)->applyFilter(IMG_FILTER_COLORIZE, 100, 70, 50)->saveToFile($path.$image->getVar('image_name'));
 			}else{
-				$img->applyFilter($filter,implode(',',$args))->saveToFile($path.$image->getVar('image_name'));
+				$img->applyFilter(constant($filter),implode(',',$args))->saveToFile($path.$image->getVar('image_name'));
 			}
 			$msg = _MD_AM_DBUPDATED;
 		}
@@ -1125,7 +1122,7 @@ function imanager_filter() {
 			if ($filter == 'IMG_FILTER_SEPIA'){
 				$img->applyFilter(IMG_FILTER_GRAYSCALE)->applyFilter(IMG_FILTER_COLORIZE, 100, 70, 50)->saveToFile(XOOPS_UPLOAD_PATH.'/'.$image->getVar('image_name'));
 			}else{
-				$img->applyFilter($filter,implode(',',$args))->saveToFile(XOOPS_UPLOAD_PATH.'/'.$image->getVar('image_name'));
+				$img->applyFilter(constant($filter),implode(',',$args))->saveToFile(XOOPS_UPLOAD_PATH.'/'.$image->getVar('image_name'));
 			}
 			$fp = @fopen(XOOPS_UPLOAD_PATH.'/'.$image->getVar('image_name'), 'rb');
 			$fbinary = @fread($fp, filesize(XOOPS_UPLOAD_PATH.'/'.$image->getVar('image_name')));
@@ -1141,7 +1138,7 @@ function imanager_filter() {
 			if ($filter == 'IMG_FILTER_SEPIA'){
 				$img->applyFilter(IMG_FILTER_GRAYSCALE)->applyFilter(IMG_FILTER_COLORIZE, 100, 70, 50)->saveToFile($path.$imgname);
 			}else{
-				$img->applyFilter($filter,implode(',',$args))->saveToFile($path.$imgname);
+				$img->applyFilter(constant($filter),implode(',',$args))->saveToFile($path.$imgname);
 			}
 		}
 		if (!$image_handler->insert($newimg)) {
