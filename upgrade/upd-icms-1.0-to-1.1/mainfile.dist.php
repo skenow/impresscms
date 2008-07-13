@@ -11,7 +11,7 @@
 * @package		Installer
 * @since		XOOPS
 * @author		http://www.xoops.org The XOOPS Project
-* @author		modified by stranger <stranger@impresscms.ir>
+* @author		modified by stranger <pesian_stranger@users.sourceforge.net>
 * @version		$Id$
 */
 

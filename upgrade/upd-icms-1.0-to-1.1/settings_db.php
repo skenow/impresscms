@@ -22,8 +22,6 @@ if ( !defined( 'XOOPS_ROOT_PATH' ) ) {
 
 $vars =& $_SESSION['settings'];
 
-$link = $GLOBALS["xoopsDB"]->conn;
-
 function getDbCharsets()
 {
     $charsets = array();
@@ -97,17 +95,15 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' && @$_POST['task'] == 'db' ) {
 	return $vars;
 }
 
-if ( !isset( $vars['DB_CHARSET'] ) ) {
-	$vars = array_merge( $vars, array(
-		'DB_CHARSET'	=> 'utf8',
-	) );
+if ( !isset( $vars['DB_COLLATION'] ) ) {
+    $vars['DB_COLLATION'] = '';
 }
 
 
 ?>
 <?php if ( !empty( $error ) ) echo '<div class="x2-note error">' . $error . "</div>\n"; ?>
 
-<form action='<?php echo $_SERVER['PHP_SELF']; ?>' method='post'>
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method='post'>
 <fieldset>
 	<legend><?php echo LEGEND_DATABASE; ?></legend>
 	<?php echo xoFormFieldCollation( 'DB_COLLATION',	$vars['DB_COLLATION'],	DB_COLLATION_LABEL, DB_COLLATION_HELP ); ?>
