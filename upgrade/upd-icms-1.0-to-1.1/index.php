@@ -1,6 +1,6 @@
 <?php
 
-class upgrade_impcms16 {
+class upgrade_impcms06 {
 	
 	var $usedFiles = array ();
     var $tasks = array('table1', 'table2', 'table3', 'table4', 'conf', 'block1', 'block2', 'block3', 'block4', 'dbversion', 'db');
@@ -265,7 +265,7 @@ class upgrade_impcms16 {
                     " (NULL, '_MD_AM_PASSLEVEL1', '20', {$config_id})," .
                     " (NULL, '_MD_AM_PASSLEVEL2', '40', {$config_id})," .
                     " (NULL, '_MD_AM_PASSLEVEL3', '60', {$config_id})," .
-                    " (NULL, '_MD_AM_PASSLEVEL4', '80', {$config_id})";
+                    " (NULL, '_MD_AM_PASSLEVEL4', '80', {$config_id})," .
                     " (NULL, '_MD_AM_PASSLEVEL5', '95', {$config_id})";
             if ( !$result = $GLOBALS['xoopsDB']->queryF( $sql ) ) {
                 return false;
@@ -753,6 +753,6 @@ class upgrade_impcms16 {
     }
 }
 
-$upg = new upgrade_impcms16();
+$upg = new upgrade_impcms06();
 return $upg;
 ?>
