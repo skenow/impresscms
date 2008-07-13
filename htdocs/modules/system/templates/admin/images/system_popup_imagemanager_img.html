@@ -12,6 +12,7 @@
     <a href="#" onclick="showDiv('edit_image',<{$i}>); document.anchors.item('edit_image<{$i}>').scrollIntoView(); return false;" title="<{$lang_imanager_cat_edit}>"><img src="<{$xoops_url}>/modules/system/images/edit.png" /></a>
     <a href="#" onclick="showDiv('clone_image',<{$i}>); document.anchors.item('clone_image<{$i}>').scrollIntoView(); return false;" title="<{$lang_imanager_cat_clone}>"><img src="<{$xoops_url}>/modules/system/images/clone.png" /></a>
     <a href="?op=delfile&amp;image_id=<{$i}>&imgcat_id=<{$image.categ_id}>&target=<{$target}>&type=<{$type}>" title="<{$lang_imanager_cat_delete}>"><img src="<{$xoops_url}>/modules/system/images/delete.png" /></a>
+    <a href="#" onclick="showDiv('filter_image',<{$i}>); document.anchors.item('filter_image<{$i}>').scrollIntoView(); return false;" title="<{$lang_imanager_img_filter}>"><img src="<{$xoops_url}>/modules/system/images/filter.png" /></a>
     <{if $type == "ibrow"}>
       <a href="javascript:void(0)" onclick="addItem('<{$image.url_src}>', '<{$image.nicename}>', '<{$target}>', '<{$image.categ_id}>', '<{$xoops_url}>')" title="<{$lang_select}>"><img src="<{$xoops_url}>/modules/system/images/select.png" /></a>
     <{elseif $type == "iman"}>
