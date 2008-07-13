@@ -46,13 +46,15 @@
     </td>
   </tr>
 </table>
-<div style="padding:5px;" align="right">
+<div style="border: 2px solid #C2CDD6; padding: 5px; vertical-align: middle; background-color: #E6E6E6; width:55%; float:right; margin-top:5px;" align="right">
   <form action="<{if $type == "tiny"}>xoopsimagebrowser.php<{else}>formimage_browse.php<{/if}>?op=listimg&imgcat_id=<{$cat_id}>&target=<{$target}>&type=<{$type}>" method="POST">
-    <input type="text" name="query" id="query" size="20" value="<{$query}>" />
+    <b><{$lang_search_title}>:</b>
+    <input type="text" name="query" id="query" size="20" value="<{$query}>" style="min-width:280px;" />
     <input type="submit" name="btn" value="<{$lang_search}>" />
     <input type="submit" name="btn1" value="<{$lang_cancel}>" onclick="document.getElementById('query').value='';" />
   </form>
 </div>
+<br style="clear:right;" />
 <{foreach from=$images item=image key=key}>
   <{include file="$icms_root_path/modules/system/templates/admin/images/system_popup_imagemanager_img.html" image=$image i=$key}>
 <{/foreach}>
