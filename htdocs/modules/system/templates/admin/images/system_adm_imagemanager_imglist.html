@@ -68,7 +68,7 @@
 <{foreach from=$images item=image key=key}>
   <{include file="db:admin/images/system_adm_imagemanager_editimg.html" image=$image i=$key}>
   <{include file="db:admin/images/system_adm_imagemanager_cloneimg.html" image=$image i=$key}>
-  <{include file="db:admin/images/system_adm_imagemanager_filterimg.html" image=$image i=$key}>
+  <{include file="db:admin/images/system_adm_imagemanager_filteimg.html" image=$image i=$key}>
 <{/foreach}>
 <div id="addimgform" class="opt_divs" style="display:none; padding:5px; margin:5px;"><{$addimgform}></div>
 <a name="addimgform"></a>

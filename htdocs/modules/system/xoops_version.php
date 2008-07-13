@@ -162,7 +162,7 @@ $modversion['templates'][$i]['file'] = 'admin/images/system_adm_imagemanager_clo
 $modversion['templates'][$i]['description'] = 'Template of the Image Manager admin';
 
 $i++;
-$modversion['templates'][$i]['file'] = 'admin/images/system_adm_imagemanager_filterimg.html';
+$modversion['templates'][$i]['file'] = 'admin/images/system_adm_imagemanager_filteimg.html';
 $modversion['templates'][$i]['description'] = 'Template of the Image Manager admin';
 ###
 
