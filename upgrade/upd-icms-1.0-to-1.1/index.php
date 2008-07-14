@@ -35,6 +35,26 @@ class upgrade_impcms06 {
         return true;
     }
 
+	function cleaning_write_folders() {
+		$dir = array();
+		$dir['templates_c'] = XOOPS_ROOT_PATH."/templates_c/";
+		$dir['cache'] = XOOPS_ROOT_PATH."/cache/";
+
+		foreach ($dir as $d)
+		{
+			$dd = opendir($d);
+			while($file = readdir($dd))
+			{
+		 		if(is_file($d.$file) && ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess'))
+				{
+		  			unlink($d.$file);
+				}
+			}
+			closedir($dd);
+		}
+			return true;
+	}
+
     function check_table1()
     {
 		$table = new IcmsDatabasetable('modules');
@@ -225,7 +245,7 @@ class upgrade_impcms06 {
 		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, " . $new_block_id . ", 1, 'block_read');");
 		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 2, " . $new_block_id . ", 1, 'block_read');");
 		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
-		return true;
+		return ($this->cleaning_write_folders());
 	}
     function check_conf()
     {
