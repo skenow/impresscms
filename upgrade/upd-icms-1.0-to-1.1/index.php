@@ -290,11 +290,6 @@ class upgrade_impcms06 {
 				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
 				return false;
 			}
-			$sql = "ALTER TABLE `" . $GLOBALS['xoopsDB']->prefix('users') . "` ADD salt varchar(255) NOT NULL default ''";
-			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
-				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
-				return false;
-			}
 
 			$sql = "ALTER TABLE `" . $GLOBALS['xoopsDB']->prefix('users') . "` ADD language varchar(100) NOT NULL default ''";
 			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
@@ -303,6 +298,18 @@ class upgrade_impcms06 {
 			}
 
 			$sql = "ALTER TABLE `" . $GLOBALS['xoopsDB']->prefix('users') . "` ADD openid varchar(255) NOT NULL default ''";
+			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
+				return false;
+			}
+
+			$sql = "ALTER TABLE `" . $GLOBALS['xoopsDB']->prefix('users') . "` ADD salt varchar(255) NOT NULL default ''";
+			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
+				return false;
+			}
+
+			$sql = "ALTER TABLE `" . $GLOBALS['xoopsDB']->prefix('users') . "` ADD user_viewoid tinyint(1) unsigned NOT NULL default '0'";
 			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
 				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
 				return false;
