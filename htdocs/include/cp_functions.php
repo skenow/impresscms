@@ -535,4 +535,19 @@ function xoops_write_index_file($path = '') {
 	fclose ( $file );
 	return true;
 }
+function getDbValue( &$db, $table, $field, $condition = '' ) {
+	$table = $db->prefix( $table );
+	$sql = "SELECT `$field` FROM `$table`";
+	if ( $condition ) {
+		$sql .= " WHERE $condition";
+	}
+	$result = $db->query($sql);
+	if ( $result ) {
+		$row = $db->fetchRow($result);
+		if ( $row ) {
+			return $row[0];
+		}
+	}
+	return false;
+}
 ?>

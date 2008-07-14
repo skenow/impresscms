@@ -121,10 +121,31 @@ switch($op)
 	default:
 		$mods = xoops_cp_header(1);
 
+function getDbValue( &$db, $table, $field, $condition = '' ) {
+	$table = $db->prefix( $table );
+	$sql = "SELECT `$field` FROM `$table`";
+	if ( $condition ) {
+		$sql .= " WHERE $condition";
+	}
+	$result = $db->query($sql);
+	if ( $result ) {
+		$row = $db->fetchRow($result);
+		if ( $row ) {
+			return $row[0];
+		}
+	}
+	return false;
+}
+
 		// ###### Output warn messages for security  ######
 		if(is_dir(ICMS_ROOT_PATH."/install/"))
 		{
 			xoops_error(sprintf(_WARNINSTALL2,ICMS_ROOT_PATH.'/install/'));
+			echo '<br />';
+		}
+		$db = $GLOBALS['xoopsDB'];
+		if (getDbValue($db, 'modules', 'mid', 'version="103"') != 1 AND getDbValue($db, 'modules', 'mid', 'mid="1"') == 1) {
+			xoops_error ('<a href="'. ICMS_URL .'/modules/system/admin.php?fct=modulesadmin&op=update&module=system">'._WARNINGUPDATESYSTEM.'</a>');
 			echo '<br />';
 		}
 		if(is_writable(ICMS_ROOT_PATH."/mainfile.php"))
