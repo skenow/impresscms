@@ -11,7 +11,7 @@ ImpressCMS ChangeLog
 * new field to let user select if they want to sho their openid (stranger)
 
 '''Improved'''
-* Updated TCPDF to version 4.0.001. (stranger)
+* Updated TCPDF to version 4.0.005. (stranger)
 * Formfield for OpenID, if OID is inactive users won't see it's fields. (stranger)
 
 '''Changed'''
