@@ -58,7 +58,7 @@ switch($op)
 		break;
 	case 2:
 		xoops_module_write_admin_menu(impresscms_get_adminmenu());
-		redirect_header('admin.php', 1, _AD_LOGINADMIN);
+		redirect_header('javascript:history.go(-1)', 1, _AD_LOGINADMIN);
 		exit();
 		break;
 	case 10:
@@ -120,22 +120,6 @@ switch($op)
 	
 	default:
 		$mods = xoops_cp_header(1);
-
-function getDbValue( &$db, $table, $field, $condition = '' ) {
-	$table = $db->prefix( $table );
-	$sql = "SELECT `$field` FROM `$table`";
-	if ( $condition ) {
-		$sql .= " WHERE $condition";
-	}
-	$result = $db->query($sql);
-	if ( $result ) {
-		$row = $db->fetchRow($result);
-		if ( $row ) {
-			return $row[0];
-		}
-	}
-	return false;
-}
 
 		// ###### Output warn messages for security  ######
 		if(is_dir(ICMS_ROOT_PATH."/install/"))
