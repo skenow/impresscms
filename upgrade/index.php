@@ -100,7 +100,7 @@ if ( !$xoopsUser || !$xoopsUser->isAdmin() ) {
 			array_unshift( $_SESSION['xoops_upgrade'], $next );
 			echo '<a id="link-next" href="index.php?action=next">' . _RELOAD . '</a>';
 		} else {
-			$text = empty( $_SESSION['xoops_upgrade'] ) ? '<a id="link-next" href="'. XOOPS_URL .'/modules/system/admin.php?fct=modulesadmin&op=update&module=system">' . _FINISH . '</a>' : sprintf('<a id="link-next" href="index.php?action=next">' . _APPLY_NEXT . '</a>', $_SESSION['xoops_upgrade'][0] );
+			$text = empty( $_SESSION['xoops_upgrade'] ) ? '<a id="link-next" href="ref="index.php">' . _FINISH . '</a>' : sprintf('<a id="link-next" href="index.php?action=next">' . _APPLY_NEXT . '</a>', $_SESSION['xoops_upgrade'][0] );
 			echo $text ;
 		}
 	}
