@@ -116,7 +116,7 @@ define('_IMGMAXWIDTH','Max width allowed (pixels):');
 define('_IMGMAXHEIGHT','Max height allowed (pixels):');
 define('_IMAGECAT','Category:');
 define('_IMAGEFILE','Image file:');
-define('_IMGWEIGHT','Display order in image manager:');
+define('_IMGWEIGHT','Order:');
 define('_IMGDISPLAY','Display this image?');
 define('_IMAGEMIME','MIME type:');
 define('_FAILFETCHIMG', 'Could not get uploaded file %s');

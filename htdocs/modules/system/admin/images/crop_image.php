@@ -16,6 +16,9 @@ if(isset($_GET['image_ref']) && isset($_GET['x']) && isset($_GET['y']) && isset(
 	$save = $_GET['save'];
 	$cancel = $_GET['cancel'];
 	$overwrite = $_GET['overwrite'];
+	$image_nicename = $_GET['image_nicename'];
+	$image_weight = $_GET['image_weight'];
+	$image_display = $_GET['image_display'];
 	
 	$x = preg_replace("/[^0-9]/si","",$x);
 	$y = preg_replace("/[^0-9]/si","",$y);
@@ -73,6 +76,9 @@ if(isset($_GET['image_ref']) && isset($_GET['x']) && isset($_GET['y']) && isset(
 			$params  = '&oldimg='.$image_name;
 			$params .= '&newimg='.$imgname.'.'.$convertTo;
 			$params .= '&overwrite='.$overwrite;
+			$params .= '&image_nicename='.$image_nicename;
+			$params .= '&image_weight='.$image_weight;
+			$params .= '&image_display='.$image_display;
 			$params .= '&uniq='.$uniq;
 			echo 'window.opener.location.href="../../modules/system/admin.php?fct=images&op=cropimg'.$params.'";';
 			echo 'window.close();';
@@ -83,6 +89,4 @@ if(isset($_GET['image_ref']) && isset($_GET['x']) && isset($_GET['y']) && isset(
 		echo "alert('"._ERROR."');";
 	}	
 }
-
-
 ?>

@@ -179,7 +179,7 @@ class XoopsImageHandler extends XoopsObjectHandler
         if ($image->isNew()) {
             $image_id = $this->db->genId('image_image_id_seq');
             $sql = sprintf("INSERT INTO %s (image_id, image_name, image_nicename, image_mimetype, image_created, image_display, image_weight, imgcat_id) VALUES ('%u', %s, %s, %s, '%u', '%u', '%u', '%u')", $this->db->prefix('image'), intval($image_id), $this->db->quoteString($image_name), $this->db->quoteString($image_nicename), $this->db->quoteString($image_mimetype), time(), intval($image_display), intval($image_weight), intval($imgcat_id));
-            if (!$result = $this->db->query($sql)) {
+            if (!$result = $this->db->queryF($sql)) {
                 return false;
             }
             if (empty($image_id)) {
@@ -187,7 +187,7 @@ class XoopsImageHandler extends XoopsObjectHandler
             }
             if (isset($image_body) && $image_body != '') {
                 $sql = sprintf("INSERT INTO %s (image_id, image_body) VALUES ('%u', %s)", $this->db->prefix('imagebody'), intval($image_id), $this->db->quoteString($image_body));
-                if (!$result = $this->db->query($sql)) {
+                if (!$result = $this->db->queryF($sql)) {
                     $sql = sprintf("DELETE FROM %s WHERE image_id = '%u'", $this->db->prefix('image'), intval($image_id));
                     $this->db->query($sql);
                     return false;

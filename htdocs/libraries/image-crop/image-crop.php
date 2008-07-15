@@ -1,3 +1,12 @@
+<?php
+include '../../mainfile.php';
+global $xoopsConfig;
+if ( file_exists(XOOPS_ROOT_PATH."/modules/system/language/".$xoopsConfig['language']."/admin/images.php") ) {
+	include_once XOOPS_ROOT_PATH."/modules/system/language/".$xoopsConfig['language']."/admin/images.php";
+} else {
+	include_once XOOPS_ROOT_PATH."/modules/system/language/english/admin/images.php";
+}
+?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
@@ -58,7 +67,7 @@
 	<div class="dhtmlgoodies_panel">
 		<div>
 			<!-- Start content of pane -->
-			<form>
+			<form id="cropimgform" name="cropimgform">
 			<input type="hidden" id="input_image_ref" value="<?=$_GET['image'];?>">
 			<input type="hidden" id="image_id" value="<?=$_GET['image_id'];?>">
 			<input type="hidden" id="uniq" value="<?=$_GET['uniq'];?>">
@@ -71,25 +80,26 @@
 					<td align="right">Y:</td><td><input type="text" class="textInput" name="crop_y" id="input_crop_y"></td>
 				</tr>
 				<tr>
-					<td align="right">Width:</td><td><input type="text" class="textInput" name="crop_width" id="input_crop_width"></td>
+					<td align="right"><?=_WIDTH;?>:</td><td><input type="text" class="textInput" name="crop_width" id="input_crop_width"></td>
 				</tr>
 				<tr>
-					<td align="right">Height:</td><td><input type="text" class="textInput" name="crop_height" id="input_crop_height"></td>
+					<td align="right"><?=_HEIGHT;?>:</td><td><input type="text" class="textInput" name="crop_height" id="input_crop_height"></td>
 				</tr>
 				<tr>
 					<td id="cropButtonCell" colspan="2" align="center">
-					<input type="button" onclick="cropScript_executeCrop(this)" value="Preview">
-					<input type="button" onclick="cropScript_saveCrop(this)" value="Save" />
-					<input type="button" onclick="cropScript_cancelCrop(this)" value="Cancel" />
+					<input type="button" onclick="cropScript_executeCrop(this)" value="<?=_PREVIEW;?>">
+					<input type="button" onclick="cropScript_saveCrop(this)" value="<?=_SUBMIT;?>" />
+					<input type="button" onclick="cropScript_cancelCrop(this)" value="<?=_CANCEL;?>" />
 					</td>
 				</tr>
 			</table>
 			<input type="hidden" id="input_convert_to" value="<?=substr($_GET['image_name'],strlen($_GET['image_name'])-3,3);?>">
 			<input type="hidden" class="textInput" name="crop_percent_size" id="crop_percent_size" value="100">
+			<input type="hidden" class="textInput" name="overwrite" id="overwrite" value="">
 			<div id="crop_progressBar">
 			
 			</div>		
-			</form>
+			
 			<!-- End content -->
 		</div>	
 	</div>
@@ -101,7 +111,31 @@
 					<td><b><?=$_GET['image_title'];?></b></td>
 				</tr>
 				<tr>
-					<td>Dimension: <span id="label_dimension"></span></td>
+					<td><?=_DIMENSION;?>: <span id="label_dimension"></span></td>
+				</tr>
+				<tr>
+					<td>
+  <b><?=_IMAGEFILTERSSAVE;?></b><br />
+  <label><input type="radio" name="img_overwrite" id="img_overwrite" value="1" onclick="overpanel(this.value);" checked><?=_YES;?></label>
+  <label><input type="radio" name="img_overwrite" id="img_overwrite" value="0" onclick="overpanel(this.value);"><?=_NO;?></label>
+		  <div id="overpanel" style="display:none; line-height:20px;">
+		    <table width="100%" cellspacing="1" class="outer">
+		      <tr>
+		        <td><b><?=_IMAGENAME;?></b> <input type="text" name="image_nicename" id="image_nicename" size=20 value="Copy of <?=$_GET['image_title'];?>"></td>
+		      </tr>
+		      <tr>
+		        <td><b><?=_IMGWEIGHT;?></b> <input type="text" name="image_weight" id="image_weight" size="5" value="0"></td>
+		      </tr>
+		      <tr>
+		        <td>
+		          <b><?=_IMGDISPLAY;?></b><br />
+                  <label><input type="radio" name="image_display" id="image_display" value="1" checked><?=_YES;?></label>
+                  <label><input type="radio" name="image_display" id="image_display" value="0"><?=_NO;?></label>		        
+		        </td>
+		      </tr> 
+		    </table>
+		  </div>
+					</td>
 				</tr>
 			</table>
 			<!-- End content -->
@@ -111,13 +145,13 @@
 		<div>
 			<!-- Start content of pane -->
 			
-			To select crop area, drag and move the dotted rectangle or type in values directly into the form.
+			<?=_INSTRUCTIONS_DSC;?>
 			
 			<!-- End of content -->
 		</div>		
 	</div>
 </div>
-
+</form>
 <div class="crop_content">
 <div id="imageContainer">
 <img src="<?=$_GET['image'];?>">
@@ -126,7 +160,7 @@
 </div>
 
 <script type="text/javascript">
-initDhtmlgoodies_xpPane(Array('Crop inspector','Image details','Instructions'),Array(true,true,true),Array('pane1','pane2','pane3'));
+initDhtmlgoodies_xpPane(Array('<?=_CROPTOOL;?>','<?=_IMGDETAILS;?>','<?=_INSTRUCTIONS;?>'),Array(true,true,false),Array('pane1','pane2','pane3'));
 init_imageCrop();
 </script>
  

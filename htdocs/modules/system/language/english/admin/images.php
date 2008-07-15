@@ -48,9 +48,17 @@ define('_MD_IMAGECATOPTIONS', 'Options');
 define('_MD_IMAGECATQTDE', '# Images');
 define('_IMAGEFILTERS', 'Select a filter:');
 define('_IMAGEAPPLYFILTERS', 'Apply filters in image');
-define('_IMAGEFILTERSSAVE', 'Overwrite image with filter?');
+define('_IMAGEFILTERSSAVE', 'Overwrite image?');
 define('_IMGCROP', 'Crop Tool');
 define('_IMGFILTER', 'Filter Tool');
 
 define('_MD_IMAGECATSUBS', 'Subcategories');
+
+define('_WIDTH', 'Width');
+define('_HEIGHT', 'Height');
+define('_DIMENSION', 'Dimension');
+define('_CROPTOOL', 'Crop inspector');
+define('_IMGDETAILS', 'Image details');
+define('_INSTRUCTIONS', 'Instructions');
+define('_INSTRUCTIONS_DSC', 'To select crop area, drag and move the dotted rectangle or type in values directly into the form.');
 ?>
