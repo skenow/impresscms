@@ -12,6 +12,9 @@
     <a href="#" onclick="showDiv('edit_image',<{$i}>); document.anchors.item('edit_image<{$i}>').scrollIntoView(); return false;" title="<{$lang_imanager_cat_edit}>"><img src="images/edit.png" /></a>
     <a href="#" onclick="showDiv('clone_image',<{$i}>); document.anchors.item('clone_image<{$i}>').scrollIntoView(); return false;" title="<{$lang_imanager_cat_clone}>"><img src="images/clone.png" /></a>
     <a href="admin.php?fct=images&amp;op=delfile&amp;image_id=<{$i}>&imgcat_id=<{$image.categ_id}>" title="<{$lang_imanager_cat_del}>"><img src="images/delete.png" /></a>
-    <a href="#" onclick="showDiv('filter_image',<{$i}>); document.anchors.item('filter_image<{$i}>').scrollIntoView(); return false;" title="<{$lang_imanager_img_filter}>"><img src="images/filter.png" /></a>
+    <{if $image.hasextra_link}>
+      <a href="#" onclick="<{$image.crop_link}>" title="<{$lang_imanager_img_crop}>"><img src="images/crop.png" /></a>
+      <a href="#" onclick="showDiv('filter_image',<{$i}>); document.anchors.item('filter_image<{$i}>').scrollIntoView(); return false;" title="<{$lang_imanager_img_filter}>"><img src="images/filter.png" /></a>
+    <{/if}>
   </span>
 </div>

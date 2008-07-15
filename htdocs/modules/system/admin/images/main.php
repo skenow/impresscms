@@ -87,6 +87,9 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     	case 'filter':
     		imanager_filter();
     		break;
+    	case 'cropimg':
+    		imanager_cropimg();
+    		break;
     }
 }
 
@@ -262,6 +265,9 @@ function imanager_index($imgcat_id=null){
 	$form->addElement($storetype);
 	$fname = new XoopsFormText(_MD_IMGCATFOLDERNAME, 'imgcat_foldername', 50, 255, '');
 	$fname->setDescription('<span style="color:#ff0000;">'._MD_IMGCATFOLDERNAME_DESC.'<br />'._MD_STRTYOPENG.'</span>');
+	$js = 'var fname = document.getElementById("imgcat_foldername");';
+	$js .= 'if (fname.disabled == false && fname.value == ""){alert("'.sprintf( _FORM_ENTER, _MD_IMGCATFOLDERNAME ).'"); return false;}';
+	$fname->customValidationCode[] = $js;
 	$form->addElement($fname,true);
 	$form->addElement(new XoopsFormHidden('op', 'addcat'));
 	$form->addElement(new XoopsFormHidden('fct', 'images'));
@@ -368,6 +374,7 @@ function imanager_listimg($imgcat_id,$start=0) {
 	
 	$icmsAdminTpl->assign('lang_imanager_img_preview',_PREVIEW);
 	$icmsAdminTpl->assign('lang_imanager_img_filter',_IMGFILTER);
+	$icmsAdminTpl->assign('lang_imanager_img_crop',_IMGCROP);
 	
 	$icmsAdminTpl->assign('lang_image_name',_IMAGENAME);
 	$icmsAdminTpl->assign('lang_image_mimetype',_IMAGEMIME);
@@ -386,7 +393,7 @@ function imanager_listimg($imgcat_id,$start=0) {
 	$icmsAdminTpl->assign('lang_image_filtersoverw',_IMAGEFILTERSSAVE);
 	$icmsAdminTpl->assign('lang_image_filterpreview',_PREVIEW);
 	
-	$icmsAdminTpl->assign('xoops_root_path',XOOPS_ROOT_PATH);
+	$icmsAdminTpl->assign('xoops_root_path',ICMS_ROOT_PATH);
 	$icmsAdminTpl->assign('query',$query);
 	
 	$criteria = new CriteriaCompo(new Criteria('imgcat_id', $imgcat_id));
@@ -495,6 +502,8 @@ function imanager_listimg($imgcat_id,$start=0) {
 		$arrimg[$i]['categ_id'] = $images[$i]->getVar('imgcat_id');
 		$arrimg[$i]['display_nicename'] = xoops_substr($images[$i]->getVar('image_nicename'),0,20);
 
+		$uniq = icms_random_str(5);
+		
 		if ($imagecategory->getVar('imgcat_storetype') == 'db') {
 			$src = XOOPS_URL."/modules/system/admin/images/preview.php?file=".$images[$i]->getVar('image_name').'&resize=0';
 			$img = wiImage::load($images[$i]->getVar('image_body'))->saveToFile(ICMS_IMANAGER_FOLDER_PATH.'/'.$images[$i]->getVar('image_name'));
@@ -503,6 +512,7 @@ function imanager_listimg($imgcat_id,$start=0) {
 			$arrimg[$i]['width'] = $img_info->getWidth();
 			$arrimg[$i]['height'] = $img_info->getHeight();
 			@unlink(ICMS_IMANAGER_FOLDER_PATH.'/'.$images[$i]->getVar('image_name'));
+			$path = ICMS_IMANAGER_FOLDER_PATH.'/';
 		} else {
 			$url = (substr($categ_url,-1) != '/')?$categ_url.'/':$categ_url;
 			$path = (substr($categ_path,-1) != '/')?$categ_path.'/':$categ_path;
@@ -517,6 +527,22 @@ function imanager_listimg($imgcat_id,$start=0) {
 		$preview_url = '<a href="'.$src_lightbox.'" rel="lightbox[categ'.$images[$i]->getVar('imgcat_id').']" title="'.$images[$i]->getVar('image_nicename').'"><img src="images/view.png" title="'._PREVIEW.'" alt="'._PREVIEW.'" /></a>';
 		$arrimg[$i]['preview_link'] = $preview_url;
 
+		$extra_perm = array("image/jpeg","image/jpeg","image/png","image/gif");
+		if (in_array($images[$i]->getVar('image_mimetype'),$extra_perm)){
+			$arrimg[$i]['hasextra_link'] = 1;
+			$params  = '?imageWidth='.$arrimg[$i]['width'];
+			$params .= '&imageHeight='.$arrimg[$i]['height'];
+			$params .= '&image='.$src;
+			$params .= '&image_title='.$images[$i]->getVar('image_nicename');
+			$params .= '&image_name='.$images[$i]->getVar('image_name');
+			$params .= '&image_id='.$images[$i]->getVar('image_id');
+			$params .= '&uniq='.$uniq;
+			$params .= '&crop_script='.ICMS_URL.'/modules/system/admin/images/crop_image.php';
+			$arrimg[$i]['crop_link'] = 'window.open(\''.ICMS_LIBRARIES_URL.'/image-crop/image-crop.php'.$params.'\',\'imageWin\',\'width='.($arrimg[$i]['width']+227).',height='.(($arrimg[$i]['height']<=400)?400:$arrimg[$i]['height']+30).',resizable=yes\'); return false;';
+		}else{
+			$arrimg[$i]['hasextra_link'] = 0;
+		}
+		
 		$list =& $imgcat_handler->getList(array(), null, null, $imagecategory->getVar('imgcat_storetype'));
 		$div = '';
 		foreach ($list as $value => $name) {
@@ -582,9 +608,11 @@ function imanager_addcat() {
 	}
 	$imagecategory->setVar('imgcat_type', 'C');
 	
-	if (!file_exists($categ_path)){
-		if (!mkdir($categ_path)){
-			redirect_header('admin.php?fct=images',1,_MD_FAILADDCAT);
+	if ($imgcat_storetype == 'file'){
+		if (!file_exists($categ_path)){
+			if (!mkdir($categ_path)){
+				redirect_header('admin.php?fct=images',1,_MD_FAILADDCAT);
+			}
 		}
 	}
 	
@@ -1154,6 +1182,61 @@ function imanager_filter() {
 		$redir = '';
 	}
 	redirect_header('admin.php?fct=images'.$redir,2,$msg);
+}
+
+function imanager_cropimg() {
+	$oldimg = $_GET['oldimg'];
+	$newimg = $_GET['newimg'];
+	$overwrite = $_GET['overwrite'];
+	$uniq = $_GET['uniq'];
+
+	$image_handler =& xoops_gethandler('image');
+	$images =& $image_handler->getObjects(new Criteria('image_name', $oldimg));
+	if (count($images) <= 0){
+		redirect_header('admin.php?fct=images',1);
+	}
+	$image = $images[0];
+	
+	$imgcat_handler =& xoops_gethandler('imagecategory');
+	$imagecategory =& $imgcat_handler->get($image->getVar('imgcat_id'));
+	if (!is_object($imagecategory)) {
+		redirect_header('admin.php?fct=images',1);
+	}
+
+	$categ_path = $imgcat_handler->getCategFolder($imagecategory);
+	$categ_url  = $imgcat_handler->getCategFolder($imagecategory,1,'url');
+	$url = (substr($categ_url,-1) != '/')?$categ_url.'/':$categ_url;
+	$path = (substr($categ_path,-1) != '/')?$categ_path.'/':$categ_path;
+	
+	if ($imagecategory->getVar('imgcat_storetype') == 'db') {
+		$fp = @fopen($path.'crop_'.$uniq.'_'.$newimg, 'rb');
+		$fbinary = @fread($fp, filesize($path.'crop_'.$uniq.'_'.$newimg));
+		@fclose($fp);
+		$image->setVar('image_body', $fbinary, true);
+		if (!$image_handler->insert($image)) { //Falha ao salvar db, apagar imagem crop
+			$msg = _MD_FAILEDIT;
+			@unlink($path.'crop_'.$uniq.'_'.$newimg);
+		}else{ //Db salvo, apagar img original, copiar imagem crop para imagem nova, apagar imagem crop
+			@unlink($path.'crop_'.$uniq.'_'.$newimg);
+			$msg = _MD_AM_DBUPDATED;
+		}
+	}else{
+		if (unlink($path.$oldimg)){
+			if (copy($path.'crop_'.$uniq.'_'.$newimg,$path.$newimg)){
+				if (unlink($path.'crop_'.$uniq.'_'.$newimg)){
+					$msg = _MD_AM_DBUPDATED;
+				}else{
+					$msg = sprintf(_MD_FAILUNLINK,$path.'crop_'.$uniq.'_'.$newimg);
+				}
+			}else{
+				$msg = _MD_FAILEDIT;
+			}
+		}else{
+			$msg = _MD_FAILEDIT;
+		}
+	}
+
+	redirect_header('admin.php?fct=images&op=listimg&imgcat_id='.$image->getVar('imgcat_id'),3,$msg);
 }
 
 /**
