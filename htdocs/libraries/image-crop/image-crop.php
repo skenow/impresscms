@@ -72,6 +72,8 @@ if ( file_exists(XOOPS_ROOT_PATH."/modules/system/language/".$xoopsConfig['langu
 			<input type="hidden" id="image_id" value="<?=$_GET['image_id'];?>">
 			<input type="hidden" id="uniq" value="<?=$_GET['uniq'];?>">
 			<input type="hidden" id="image_name" value="<?=$_GET['image_name'];?>">
+			<input type="hidden" id="type" value="<?=$_GET['type'];?>">
+			<input type="hidden" id="target" value="<?=$_GET['target'];?>">
 			<table width="100%">
 				<tr>
 					<td align="right">X:</td><td><input type="text" class="textInput" name="crop_x" id="input_crop_x"></td>
@@ -95,7 +97,7 @@ if ( file_exists(XOOPS_ROOT_PATH."/modules/system/language/".$xoopsConfig['langu
 			</table>
 			<input type="hidden" id="input_convert_to" value="<?=substr($_GET['image_name'],strlen($_GET['image_name'])-3,3);?>">
 			<input type="hidden" class="textInput" name="crop_percent_size" id="crop_percent_size" value="100">
-			<input type="hidden" class="textInput" name="overwrite" id="overwrite" value="">
+			<input type="hidden" class="textInput" name="overwrite" id="overwrite" value="1">
 			<div id="crop_progressBar">
 			
 			</div>		

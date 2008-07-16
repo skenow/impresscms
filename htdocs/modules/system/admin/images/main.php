@@ -537,7 +537,7 @@ function imanager_listimg($imgcat_id,$start=0) {
 			$params .= '&image_name='.$images[$i]->getVar('image_name');
 			$params .= '&image_id='.$images[$i]->getVar('image_id');
 			$params .= '&uniq='.$uniq;
-			$params .= '&crop_script='.ICMS_URL.'/modules/system/admin/images/crop_image.php';
+			$params .= '&crop_script='.ICMS_LIBRARIES_URL.'/image-crop/crop_image.php';
 			$arrimg[$i]['crop_link'] = 'window.open(\''.ICMS_LIBRARIES_URL.'/image-crop/image-crop.php'.$params.'\',\'imageWin\',\'width='.($arrimg[$i]['width']+227).',height='.(($arrimg[$i]['height']<=500)?500:$arrimg[$i]['height']+30).',resizable=yes\'); return false;';
 		}else{
 			$arrimg[$i]['hasextra_link'] = 0;

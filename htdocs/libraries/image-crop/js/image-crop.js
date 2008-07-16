@@ -301,7 +301,9 @@ function cropScript_executeCrop(buttonObj)
 	+ '&width=' + document.getElementById('input_crop_width').value
 	+ '&height=' + document.getElementById('input_crop_height').value
 	+ '&percentSize=' + document.getElementById('crop_percent_size').value
-	+ '&convertTo=' + document.getElementById('input_convert_to').value;
+	+ '&convertTo=' + document.getElementById('input_convert_to').value
+	+ '&target=' + document.getElementById('target').value
+	+ '&type=' + document.getElementById('type').value;
 
 
 	cropScriptAjaxObjects[ajaxIndex].requestFile = url;	// Specifying which file to get
@@ -350,8 +352,9 @@ function cropScript_saveCrop(buttonObj)
 	+ '&image_nicename=' + document.getElementById('image_nicename').value
 	+ '&image_weight=' + document.getElementById('image_weight').value
 	+ '&image_display=' + document.getElementById('image_display').value
-	+ '&convertTo=' + document.getElementById('input_convert_to').value;
-
+	+ '&convertTo=' + document.getElementById('input_convert_to').value
+	+ '&target=' + document.getElementById('target').value
+	+ '&type=' + document.getElementById('type').value;
 
 	cropScriptAjaxObjects[ajaxIndex].requestFile = url;	// Specifying which file to get
 	cropScriptAjaxObjects[ajaxIndex].onCompletion = function(){ cropScript_cropCompleted(ajaxIndex,buttonObj); };	// Specify function that will be executed after file has been found
@@ -374,8 +377,10 @@ function cropScript_cancelCrop(buttonObj)
 	+ '&height=' + document.getElementById('input_crop_height').value
 	+ '&percentSize=' + document.getElementById('crop_percent_size').value
 	+ '&cancel=1'
-	+ '&convertTo=' + document.getElementById('input_convert_to').value;
-
+	+ '&convertTo=' + document.getElementById('input_convert_to').value
+	+ '&target=' + document.getElementById('target').value
+	+ '&type=' + document.getElementById('type').value;
+    
 	cropScriptAjaxObjects[ajaxIndex].requestFile = url;	// Specifying which file to get
 	cropScriptAjaxObjects[ajaxIndex].onCompletion = function(){ cropScript_cropCompleted(ajaxIndex,buttonObj); };	// Specify function that will be executed after file has been found
 	cropScriptAjaxObjects[ajaxIndex].runAJAX();		// Execute AJAX function
