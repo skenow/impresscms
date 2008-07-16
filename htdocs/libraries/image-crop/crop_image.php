@@ -1,5 +1,5 @@
 <?
-include '../../../../mainfile.php';
+include '../../mainfile.php';
 include_once ICMS_LIBRARIES_PATH.'/wideimage/lib/WideImage.inc.php';
 
 if(isset($_GET['image_ref']) && isset($_GET['x']) && isset($_GET['y']) && isset($_GET['x']) && isset($_GET['width']) && isset($_GET['convertTo'])){
@@ -80,7 +80,7 @@ if(isset($_GET['image_ref']) && isset($_GET['x']) && isset($_GET['y']) && isset(
 			$params .= '&image_weight='.$image_weight;
 			$params .= '&image_display='.$image_display;
 			$params .= '&uniq='.$uniq;
-			echo 'window.opener.location.href="../../modules/system/admin.php?fct=images&op=cropimg'.$params.'";';
+			echo 'window.opener.location.href="'.ICMS_URL.'/modules/system/admin.php?fct=images&op=cropimg'.$params.'";';
 			echo 'window.close();';
 		}else{
 		    echo "var w = window.open('".$curl.$destinationFile."','imageWin1','width=".($width+5).",height=".($height+5).",resizable=yes');";
