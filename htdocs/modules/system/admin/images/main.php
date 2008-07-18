@@ -661,28 +661,43 @@ function imanager_delcatok($imgcat_id) {
 		redirect_header('admin.php?fct=images',1,'2');
 	}
 	$categ_path = $imgcat_handler->getCategFolder($imagecategory);
+	$categ_path = (substr($categ_path,-1) != '/')?$categ_path.'/':$categ_path;
 	if ($imagecategory->getVar('imgcat_type') != 'C') {
 		redirect_header('admin.php?fct=images',1,_MD_SCATDELNG);
 	}
+	
 	$image_handler =& xoops_gethandler('image');
 	$images =& $image_handler->getObjects(new Criteria('imgcat_id', $imgcat_id), true, false);
+	
 	$errors = array();
-	foreach (array_keys($images) as $i) {
-		if (!$image_handler->delete($images[$i])) {
-			$errors[] = sprintf(_MD_FAILDEL, $i);
-		} else {
-			if (file_exists($categ_path.'/'.$images[$i]->getVar('image_name'))){
-				if (!@unlink($categ_path.'/'.$images[$i]->getVar('image_name'))) {
-					$errors[] = sprintf(_MD_FAILUNLINK, $i);
+	
+	if ($imagecategory->getVar('imgcat_storetype') == 'db') {
+		foreach (array_keys($images) as $i) {
+			if (!$image_handler->delete($images[$i])) {
+				$errors[] = sprintf(_MD_FAILDEL, $i);
+			}
+		}
+	}else{
+		foreach (array_keys($images) as $i) {
+			if (!$image_handler->delete($images[$i])) {
+				$errors[] = sprintf(_MD_FAILDEL, $i);
+			} else {
+				if (file_exists($categ_path.$images[$i]->getVar('image_name'))){
+					if (!@unlink($categ_path.$images[$i]->getVar('image_name'))) {
+						$errors[] = sprintf(_MD_FAILUNLINK, $i);
+					}
 				}
 			}
 		}
-	}
+	}	
+
 	if (!$imgcat_handler->delete($imagecategory)) {
 		$errors[] = sprintf(_MD_FAILDELCAT, $imagecategory->getVar('imgcat_name'));
 	}else{
-		if (!@rmdir($categ_path)) {
-			$errors[] = sprintf(_MD_FAILDELCAT, $i);
+		if ($imagecategory->getVar('imgcat_storetype') != 'db') {
+			if (!@rmdir($categ_path)) {
+				$errors[] = sprintf(_MD_FAILDELCAT, $i);
+			}
 		}
 	}
 	if (count($errors) > 0) {
@@ -834,6 +849,9 @@ function imanager_updateimage() {
 					if (!copy($src,$dest)){
 						$error[] = sprintf(_FAILSAVEIMG, $image_id[$i]);
 					}
+					if (!@unlink($src)) {
+						$error[] = sprintf(_MD_FAILUNLINK, $i);
+					}					
 				}
 			}
 		}
