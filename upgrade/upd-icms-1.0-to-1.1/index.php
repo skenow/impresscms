@@ -1,4 +1,16 @@
 <?php
+/**
+* Upgrade script of ImpressCMS 1.0 to 1.0
+*
+* @copyright   The XOOPS project http://www.xoops.org/
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @package		upgrader
+* @since		1.1
+* @author	   Sina Asghari <pesian_stranger@users.sourceforge.net>
+* @author      Taiwen Jiang <phppp@users.sourceforge.net>
+* @version		$Id$
+*/
 
 class upgrade_impcms06 {
 	
