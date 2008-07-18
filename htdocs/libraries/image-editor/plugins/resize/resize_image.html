@@ -1,0 +1,24 @@
+<script type="text/javascript">
+  var resize_script_server_file = '<{$icms_lib_url}>/image-editor/plugins/resize/resize_image.php';
+</script>
+<script type="text/javascript" src="<{$icms_lib_url}>/image-editor/plugins/resize/resize_image.js"></script>
+<form id="resize_form" name="resize_form">
+  <table width="100%">
+    <tr>
+      <td width="20%"><b><{$lang_width}>:</b></td>
+      <td><input type="text" name="resize_width" id="resize_width" style="width:80px;" value="<{$image.width}>"></td>
+    </tr>
+    <tr>
+      <td><b><{$lang_height}>:</b></td>
+      <td><input type="text" name="resize_height" id="resize_height" style="width:80px;" value="<{$image.height}>"></td>
+    </tr>
+    <tr>
+      <td colspan="2" align="center" id="cropButtonCell">
+        <input type="button" onclick="resize_preview(this);" value="<{$lang_preview}>" /> 
+        <input type="button" onclick="resize_save(this);" value="<{$lang_resize}>" />
+        <input type="hidden" id="fimage_path" value="<{$image.path}>">
+        <input type="hidden" id="fimage_url" value="<{$image.url}>">
+      </td>
+    </tr>
+  </table>
+</form>
