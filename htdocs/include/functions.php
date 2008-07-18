@@ -1301,7 +1301,11 @@ function icms_encryptPass($pass, $salt)
 
 	if(function_exists('hash'))
 	{
-		if($xoopsConfigUser['enc_type'] == 0)
+		$db = $GLOBALS['xoopsDB'];
+		if (getDbValue($db, 'config', 'conf_id', 'conf_name="enc_type"') == 0) {
+			$pass = md5($pass); // no salt used to let users using versions < icms 1.1 be able to login in the site.
+		}
+		elseif($xoopsConfigUser['enc_type'] == 0)
 		{
 			$pass = hash('md5', md5($pass)); // no salt used for compatibility with external scripts such as ipb/phpbb etc.
 		}
@@ -1803,5 +1807,24 @@ function icms_utf8_strrev($str, $reverse = false)
 		}
 		return implode('', $temp);
 	}
+}
+
+/**
+* Function to get a query from DB
+*/
+function getDbValue( &$db, $table, $field, $condition = '' ) {
+	$table = $db->prefix( $table );
+	$sql = "SELECT `$field` FROM `$table`";
+	if ( $condition ) {
+		$sql .= " WHERE $condition";
+	}
+	$result = $db->query($sql);
+	if ( $result ) {
+		$row = $db->fetchRow($result);
+		if ( $row ) {
+			return $row[0];
+		}
+	}
+	return false;
 }
 ?>
