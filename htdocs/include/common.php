@@ -175,13 +175,15 @@ if ( $xoopsConfig['gzip_compression'] == 1 && extension_loaded( 'zlib' ) && !ini
 }
 
 // #################### Error reporting settings ##################
-if ( $xoopsConfig['debug_mode'] == 1 || $xoopsConfig['debug_mode'] == 2 ) {
-	error_reporting(E_ALL);
-    $xoopsLogger->enableRendering();
-    $xoopsLogger->usePopup = ( $xoopsConfig['debug_mode'] == 2 );
-} else {
-	error_reporting(0);
-    $xoopsLogger->activated = false;
+if (!isset($xoopsOption['nodebug']) || !$xoopsOption['nodebug']){
+	if ( $xoopsConfig['debug_mode'] == 1 || $xoopsConfig['debug_mode'] == 2 ) {
+		error_reporting(E_ALL);
+		$xoopsLogger->enableRendering();
+		$xoopsLogger->usePopup = ( $xoopsConfig['debug_mode'] == 2 );
+	} else {
+		error_reporting(0);
+		$xoopsLogger->activated = false;
+	}
 }
 $xoopsSecurity->checkBadips();
 

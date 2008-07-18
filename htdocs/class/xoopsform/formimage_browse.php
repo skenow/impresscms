@@ -73,11 +73,9 @@ switch ($op){
 	case 'cloneimg':
 		imanager_clone();
 		break;
-	case 'filter':
-		imanager_filter();
-		break;
-	case 'cropimg':
-		imanager_cropimg();
+	case 'save_edit_ok':
+		$msg = isset($_GET['msg'])?urldecode($_GET['msg']):null;
+		redir($imgcat_id,$msg);
 		break;
 }
 
@@ -345,8 +343,6 @@ function imanager_listimg($imgcat_id,$start=0) {
 	$icmsTpl->assign('simgcount',$scount);
 	
 	$icmsTpl->assign('lang_imanager_img_preview',_PREVIEW);
-	$icmsTpl->assign('lang_imanager_img_filter',_IMGFILTER);
-	$icmsTpl->assign('lang_imanager_img_crop',_IMGCROP);
 	
 	$icmsTpl->assign('lang_image_name',_IMAGENAME);
 	$icmsTpl->assign('lang_image_mimetype',_IMAGEMIME);
@@ -361,10 +357,7 @@ function imanager_listimg($imgcat_id,$start=0) {
 	$icmsTpl->assign('lang_select',_SELECT);
 	$icmsTpl->assign('lang_search_title',_QSEARCH);
 	
-	$icmsTpl->assign('lang_image_applyfilters',_IMAGEAPPLYFILTERS);
-	$icmsTpl->assign('lang_image_filterssave',_IMAGEFILTERS);
-	$icmsTpl->assign('lang_image_filtersoverw',_IMAGEFILTERSSAVE);
-	$icmsTpl->assign('lang_image_filterpreview',_PREVIEW);
+	$icmsTpl->assign('lang_imanager_img_editor','DHTML Image Editor');
 	
 	$icmsTpl->assign('icms_root_path',ICMS_ROOT_PATH);
 	$icmsTpl->assign('query',$query);
@@ -385,88 +378,6 @@ function imanager_listimg($imgcat_id,$start=0) {
 
 	$icmsTpl->assign('imgcount',$imgcount);
 
-	$filters = array();
-	$i = 0;
-	$filters[$i]['title'] = 'Negative';
-	$filters[$i]['value'] = 'IMG_FILTER_NEGATE';
-	$filters[$i]['descr'] = 'Reverses all colors of the image.';
-	
-	$i++;
-	$filters[$i]['title'] = 'Grayscale';
-	$filters[$i]['value'] = 'IMG_FILTER_GRAYSCALE';
-	$filters[$i]['descr'] = 'Converts the image into grayscale.';
-	
-	$i++; $j = 0;
-	$filters[$i]['title'] = 'Brightness';
-	$filters[$i]['value'] = 'IMG_FILTER_BRIGHTNESS';
-	$filters[$i]['descr'] = 'Changes the brightness of the image.';
-	$filters[$i]['args'][$j]['title'] = 'Level';
-	$filters[$i]['args'][$j]['value'] = '0';
-	$filters[$i]['args'][$j]['descr'] = '-255 = min brightness, 0 = no change, +255 = max brightness';
-	
-	$i++; $j = 0;
-	$filters[$i]['title'] = 'Contrast';
-	$filters[$i]['value'] = 'IMG_FILTER_CONTRAST';
-	$filters[$i]['descr'] = 'Changes the contrast of the image.';
-	$filters[$i]['args'][$j]['title'] = 'Level';
-	$filters[$i]['args'][$j]['value'] = '0';
-	$filters[$i]['args'][$j]['descr'] = '-100 = max contrast, 0 = no change, +100 = min contrast';
-	
-	$i++; $j = 0;
-	$filters[$i]['title'] = 'Colorize';
-	$filters[$i]['value'] = 'IMG_FILTER_COLORIZE';
-	$filters[$i]['descr'] = 'Adds (subtracts) specified RGB values to each pixel.';
-	$filters[$i]['args'][$j]['title'] = 'Red';
-	$filters[$i]['args'][$j]['value'] = '0';
-	$filters[$i]['args'][$j]['descr'] = '-255 = min, 0 = no change, +255 = max';
-	$j++;
-	$filters[$i]['args'][$j]['title'] = 'Green';
-	$filters[$i]['args'][$j]['value'] = '0';
-	$filters[$i]['args'][$j]['descr'] = '-255 = min, 0 = no change, +255 = max';
-	$j++;
-	$filters[$i]['args'][$j]['title'] = 'Blue';
-	$filters[$i]['args'][$j]['value'] = '0';
-	$filters[$i]['args'][$j]['descr'] = '-255 = min, 0 = no change, +255 = max';
-	
-	$i++;
-	$filters[$i]['title'] = 'Highlight Edges';
-	$filters[$i]['value'] = 'IMG_FILTER_EDGEDETECT';
-	$filters[$i]['descr'] = 'Uses edge detection to highlight the edges in the image.';
-	
-	$i++;
-	$filters[$i]['title'] = 'Emboss';
-	$filters[$i]['value'] = 'IMG_FILTER_EMBOSS';
-	$filters[$i]['descr'] = 'Embosses the image.';
-	
-	$i++;
-	$filters[$i]['title'] = 'Gaussian Blur';
-	$filters[$i]['value'] = 'IMG_FILTER_GAUSSIAN_BLUR';
-	$filters[$i]['descr'] = 'Blurs the image using the Gaussian method.';
-	
-	$i++;
-	$filters[$i]['title'] = 'Selective Blur';
-	$filters[$i]['value'] = 'IMG_FILTER_SELECTIVE_BLUR';
-	$filters[$i]['descr'] = 'Blurs the image.';
-	
-	$i++;
-	$filters[$i]['title'] = 'Sketchy';
-	$filters[$i]['value'] = 'IMG_FILTER_MEAN_REMOVAL';
-	$filters[$i]['descr'] = 'Uses mean removal to achieve a "sketchy" effect.';
-	
-	$i++; $j = 0;
-	$filters[$i]['title'] = 'Smooth';
-	$filters[$i]['value'] = 'IMG_FILTER_SMOOTH';
-	$filters[$i]['descr'] = 'Makes the image smoother. Applies a 9-cell convolution matrix where center pixel has the weight arg1 and others weight of 1.0. The result is normalized by dividing the sum with arg1 + 8.0 (sum of the matrix).';
-	$filters[$i]['args'][$j]['title'] = 'Level';
-	$filters[$i]['args'][$j]['value'] = '2048';
-	$filters[$i]['args'][$j]['descr'] = 'any float is accepted, large value (in practice: 2048 or more) = no change';
-	
-	$i++;
-	$filters[$i]['title'] = 'Sepia';
-	$filters[$i]['value'] = 'IMG_FILTER_SEPIA';
-	$filters[$i]['descr'] = 'Apply sepia effects in the image';
-    $icmsTpl->assign('filters',$filters);
-	
 	$arrimg = array();
     foreach (array_keys($images) as $i) {
 		$arrimg[$i]['id'] = $images[$i]->getVar('image_id');
@@ -488,6 +399,7 @@ function imanager_listimg($imgcat_id,$start=0) {
 			$arrimg[$i]['width'] = $img_info->getWidth();
 			$arrimg[$i]['height'] = $img_info->getHeight();
 			@unlink(ICMS_IMANAGER_FOLDER_PATH.'/'.$images[$i]->getVar('image_name'));
+			$path = ICMS_IMANAGER_FOLDER_PATH.'/';
 			$arrimg[$i]['lcode'] = '[img align=left id='.$images[$i]->getVar('image_id').']'.$images[$i]->getVar('image_nicename').'[/img]';
 			$arrimg[$i]['code'] = '[img id='.$images[$i]->getVar('image_id').']'.$images[$i]->getVar('image_nicename').'[/img]';
 			$arrimg[$i]['rcode'] = '[img align=right id='.$images[$i]->getVar('image_id').']'.$images[$i]->getVar('image_nicename').'[/img]';
@@ -512,17 +424,11 @@ function imanager_listimg($imgcat_id,$start=0) {
 		$extra_perm = array("image/jpeg","image/jpeg","image/png","image/gif");
 		if (in_array($images[$i]->getVar('image_mimetype'),$extra_perm)){
 			$arrimg[$i]['hasextra_link'] = 1;
-			$params  = '?imageWidth='.$arrimg[$i]['width'];
-			$params .= '&imageHeight='.$arrimg[$i]['height'];
-			$params .= '&image='.$src;
-			$params .= '&image_title='.$images[$i]->getVar('image_nicename');
-			$params .= '&image_name='.$images[$i]->getVar('image_name');
-			$params .= '&image_id='.$images[$i]->getVar('image_id');
-			$params .= '&uniq='.$uniq;
-			$params .= '&target='.$target;
-			$params .= '&type='.$type;
-			$params .= '&crop_script='.ICMS_LIBRARIES_URL.'/image-crop/crop_image_popup.php';
-			$arrimg[$i]['crop_link'] = 'window.open(\''.ICMS_LIBRARIES_URL.'/image-crop/image-crop.php'.$params.'\',\'imageWin\',\'width='.($arrimg[$i]['width']+227).',height='.(($arrimg[$i]['height']<=500)?500:$arrimg[$i]['height']+30).',resizable=yes\'); return false;';
+			if (file_exists(ICMS_LIBRARIES_PATH.'/image-editor/image-edit.php')){
+				$arrimg[$i]['editor_link'] = 'window.open(\''.ICMS_LIBRARIES_URL.'/image-editor/image-edit.php?image_id='.$images[$i]->getVar('image_id').'&uniq='.$uniq.'&target='.$target.'&type='.$type.'\',\'icmsDHTMLImageEditor\',\'width=800,height=600,left=\'+parseInt(screen.availWidth/2-400)+\',top=\'+parseInt(screen.availHeight/2-350)+\',resizable=no,location=no,menubar=no,status=no,titlebar=no,scrollbars=no\'); return false;';
+			}else{
+				$arrimg[$i]['editor_link'] = '';
+			}
 		}else{
 			$arrimg[$i]['hasextra_link'] = 0;
 		}
@@ -540,20 +446,13 @@ function imanager_listimg($imgcat_id,$start=0) {
 		
 		$arrimg[$i]['ed_token'] = $GLOBALS['xoopsSecurity']->getTokenHTML();
 		$arrimg[$i]['clone_token'] = $GLOBALS['xoopsSecurity']->getTokenHTML();
-		$arrimg[$i]['filter_token'] = $GLOBALS['xoopsSecurity']->getTokenHTML();
-		$select  = '<select name="filter'.$i.'" id="filter'.$i.'" style="width:250px;" onchange="selFilter('.$i.',this.value);">';
-		$select .= '<option value="">Select a filter</option>';
-		foreach ($filters as $k=>$v){
-			$select .= '<option value="'.$v['value'].'">'.$v['title'].'</option>';
-		}
-		$arrimg[$i]['filter_select'] = $select.'</select>';
     }
     
 	$icmsTpl->assign('images',$arrimg);
 	if ($imgcount > 0) {
 		if ($imgcount > 15) {
 			include_once XOOPS_ROOT_PATH.'/class/pagenav.php';
-			$nav = new XoopsPageNav($imgcount, 15, $start, 'start', 'fct=images&amp;op=listimg&amp;imgcat_id='.$imgcat_id.'&type='.$type.'&target='.$target);
+			$nav = new XoopsPageNav($imgcount, 15, $start, 'start', 'op=listimg&amp;imgcat_id='.$imgcat_id.'&type='.$type.'&target='.$target);
 			$icmsTpl->assign('pag','<div class="img_list_info_panel" align="center">'.$nav->renderNav().'</div>');
 		}else{
 		    $icmsTpl->assign('pag','');
@@ -852,207 +751,6 @@ function imanager_clone() {
 	redirect_header($_SERVER['PHP_SELF'].$redir,2,$msg);
 }
 
-function imanager_filter() {
-	global $target,$type;
-	
-	if (!$GLOBALS['xoopsSecurity']->check()) {
-		redirect_header($_SERVER['PHP_SELF'].'?op=list&target='.$target.'&type='.$type, 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-	}
-
-	$imgcat_id = intval($_POST['imgcat_id']);
-	$image_id = intval($_POST['image_id']);
-	$i = intval($_POST['i']);
-	$filter = isset($_POST['filter'.$i])?$_POST['filter'.$i]:null;
-	
-	$args = array();
-	if (isset($_POST[$image_id.'arg1'])){
-		$args[] = $_POST[$image_id.'arg1'];
-	}
-	if (isset($_POST[$image_id.'arg2'])){
-		$args[] = $_POST[$image_id.'arg2'];
-	}
-	if (isset($_POST[$image_id.'arg3'])){
-		$args[] = $_POST[$image_id.'arg3'];
-	}
-
-	$imgcat_handler =& xoops_gethandler('imagecategory');
-	$imagecategory =& $imgcat_handler->get(intval($imgcat_id));
-	if (!is_object($imagecategory)) {
-		redirect_header($_SERVER['PHP_SELF'].'?op=list&target='.$target.'&type='.$type,1);
-	}
-
-	$categ_path = $imgcat_handler->getCategFolder($imagecategory);
-	$categ_url  = $imgcat_handler->getCategFolder($imagecategory,1,'url');
-	
-	$image_handler =& xoops_gethandler('image');
-	$image =& $image_handler->get($image_id);
-	if ( ($ext = strrpos( $image->getVar('image_name'), '.' )) !== false ) {
-		$ext = strtolower(substr( $image->getVar('image_name'), $ext + 1 ));
-	}
-	include(ICMS_LIBRARIES_PATH."/wideimage/lib/WideImage.inc.php");
-	if ($_POST['overwrite']){
-		if ($imagecategory->getVar('imgcat_storetype') == 'db') {
-			$img = wiImage::loadFromString($image->getVar('image_body'));
-			if ($filter == 'IMG_FILTER_SEPIA'){
-				$img->applyFilter(IMG_FILTER_GRAYSCALE)->applyFilter(IMG_FILTER_COLORIZE, 100, 70, 50)->saveToFile(XOOPS_UPLOAD_PATH.'/'.$image->getVar('image_name'));
-			}else{
-				$img->applyFilter(constant($filter),implode(',',$args))->saveToFile(XOOPS_UPLOAD_PATH.'/'.$image->getVar('image_name'));
-			}
-			$fp = @fopen(XOOPS_UPLOAD_PATH.'/'.$image->getVar('image_name'), 'rb');
-			$fbinary = @fread($fp, filesize(XOOPS_UPLOAD_PATH.'/'.$image->getVar('image_name')));
-			@fclose($fp);
-			$image->setVar('image_body', $fbinary, true);
-			@unlink(XOOPS_UPLOAD_PATH.'/'.$image->getVar('image_name'));
-			if (!$image_handler->insert($image)) {
-				$msg = sprintf(_FAILSAVEIMG, $image->getVar('image_nicename'));
-			}else{
-				$msg = _MD_AM_DBUPDATED;
-			}
-		}else{
-			$path = (substr($categ_path,-1) != '/')?$categ_path.'/':$categ_path;
-			$img = wiImage::load($path.$image->getVar('image_name'));
-			if ($filter == 'IMG_FILTER_SEPIA'){
-				$img->applyFilter(IMG_FILTER_GRAYSCALE)->applyFilter(IMG_FILTER_COLORIZE, 100, 70, 50)->saveToFile($path.$image->getVar('image_name'));
-			}else{
-				$img->applyFilter(constant($filter),implode(',',$args))->saveToFile($path.$image->getVar('image_name'));
-			}
-			$msg = _MD_AM_DBUPDATED;
-		}
-	}else{
-		$imgname = 'img'.icms_random_str(12).'.'.$ext;
-		$newimg =& $image_handler->create();
-		$newimg->setVar('image_name', $imgname);
-		$newimg->setVar('image_nicename', $_POST['image_nicename']);
-		$newimg->setVar('image_mimetype', $image->getVar('image_mimetype'));
-		$newimg->setVar('image_created', time());
-		$newimg->setVar('image_display', $_POST['image_display']);
-		$newimg->setVar('image_weight', $_POST['image_weight']);
-		$newimg->setVar('imgcat_id', $imgcat_id);
-		if ($imagecategory->getVar('imgcat_storetype') == 'db') {
-			$img = wiImage::loadFromString($image->getVar('image_body'));
-			if ($filter == 'IMG_FILTER_SEPIA'){
-				$img->applyFilter(IMG_FILTER_GRAYSCALE)->applyFilter(IMG_FILTER_COLORIZE, 100, 70, 50)->saveToFile(XOOPS_UPLOAD_PATH.'/'.$image->getVar('image_name'));
-			}else{
-				$img->applyFilter(constant($filter),implode(',',$args))->saveToFile(XOOPS_UPLOAD_PATH.'/'.$image->getVar('image_name'));
-			}
-			$fp = @fopen(XOOPS_UPLOAD_PATH.'/'.$image->getVar('image_name'), 'rb');
-			$fbinary = @fread($fp, filesize(XOOPS_UPLOAD_PATH.'/'.$image->getVar('image_name')));
-			@fclose($fp);
-			$newimg->setVar('image_body', $fbinary, true);
-			@unlink(XOOPS_UPLOAD_PATH.'/'.$image->getVar('image_name'));
-		}else{
-			$path = (substr($categ_path,-1) != '/')?$categ_path.'/':$categ_path;
-			if (!@copy($path.$image->getVar('image_name'),$path.$imgname)){
-				$msg = sprintf(_FAILSAVEIMG, $image->getVar('image_nicename'));
-			}
-			$img = wiImage::load($path.$imgname);
-			if ($filter == 'IMG_FILTER_SEPIA'){
-				$img->applyFilter(IMG_FILTER_GRAYSCALE)->applyFilter(IMG_FILTER_COLORIZE, 100, 70, 50)->saveToFile($path.$imgname);
-			}else{
-				$img->applyFilter(constant($filter),implode(',',$args))->saveToFile($path.$imgname);
-			}
-		}
-		if (!$image_handler->insert($newimg)) {
-			$msg = sprintf(_FAILSAVEIMG, $newimg->getVar('image_nicename'));
-		}else{
-			$msg = _MD_AM_DBUPDATED;
-		}
-	}
-
-	if (isset($imgcat_id)){
-		$redir = '?op=listimg&imgcat_id='.$imgcat_id.'&target='.$target.'&type='.$type;
-	}else{
-		$redir = '?op=list&target='.$target.'&type='.$type;
-	}
-	redirect_header($_SERVER['PHP_SELF'].$redir,2,$msg);
-}
-
-function imanager_cropimg() {
-	global $target,$type;
-	
-	$oldimg = $_GET['oldimg'];
-	$newimg = $_GET['newimg'];
-	$overwrite = $_GET['overwrite'];
-	$uniq = $_GET['uniq'];
-
-	$image_handler =& xoops_gethandler('image');
-	$images =& $image_handler->getObjects(new Criteria('image_name', $oldimg));
-	if (count($images) <= 0){
-		redirect_header($_SERVER['PHP_SELF'].'?op=list&target='.$target.'&type='.$type,1);
-	}
-	$image = $images[0];
-	
-	$imgcat_handler =& xoops_gethandler('imagecategory');
-	$imagecategory =& $imgcat_handler->get($image->getVar('imgcat_id'));
-	if (!is_object($imagecategory)) {
-		redirect_header($_SERVER['PHP_SELF'].'?op=list&target='.$target.'&type='.$type,1);
-	}
-
-	$categ_path = $imgcat_handler->getCategFolder($imagecategory);
-	$categ_url  = $imgcat_handler->getCategFolder($imagecategory,1,'url');
-	$url = (substr($categ_url,-1) != '/')?$categ_url.'/':$categ_url;
-	$path = (substr($categ_path,-1) != '/')?$categ_path.'/':$categ_path;
-	
-	if ($overwrite){
-		if ($imagecategory->getVar('imgcat_storetype') == 'db') {
-			$fp = @fopen($path.'crop_'.$uniq.'_'.$newimg, 'rb');
-			$fbinary = @fread($fp, filesize($path.'crop_'.$uniq.'_'.$newimg));
-			@fclose($fp);
-			$image->setVar('image_body', $fbinary, true);
-			if (!$image_handler->insert($image)) { //Falha ao salvar db, apagar imagem crop
-				$msg = _MD_FAILEDIT;
-				@unlink($path.'crop_'.$uniq.'_'.$newimg);
-			}else{ //Db salvo, apagar img original, copiar imagem crop para imagem nova, apagar imagem crop
-				@unlink($path.'crop_'.$uniq.'_'.$newimg);
-				$msg = _MD_AM_DBUPDATED;
-			}
-		}else{
-			if (unlink($path.$oldimg)){
-				if (copy($path.'crop_'.$uniq.'_'.$newimg,$path.$newimg)){
-					if (unlink($path.'crop_'.$uniq.'_'.$newimg)){
-						$msg = _MD_AM_DBUPDATED;
-					}else{
-						$msg = sprintf(_MD_FAILUNLINK,$path.'crop_'.$uniq.'_'.$newimg);
-					}
-				}else{
-					$msg = _MD_FAILEDIT;
-				}
-			}else{
-				$msg = _MD_FAILEDIT;
-			}
-		}
-	}else{
-		$ext = substr($image->getVar('image_name'),strlen($image->getVar('image_name'))-3,3);
-		$imgname = 'img'.icms_random_str(12).'.'.$ext;
-		$newimg =& $image_handler->create();
-		$newimg->setVar('image_name', $imgname);
-		$newimg->setVar('image_nicename', $_GET['image_nicename']);
-		$newimg->setVar('image_mimetype', $image->getVar('image_mimetype'));
-		$newimg->setVar('image_created', time());
-		$newimg->setVar('image_display', $_GET['image_display']);
-		$newimg->setVar('image_weight', $_GET['image_weight']);
-		$newimg->setVar('imgcat_id', $image->getVar('imgcat_id'));
-		if ($imagecategory->getVar('imgcat_storetype') == 'db') {
-			$fp = @fopen($path.'crop_'.$uniq.'_'.$oldimg, 'rb');
-			$fbinary = @fread($fp, filesize($path.'crop_'.$uniq.'_'.$oldimg));
-			@fclose($fp);
-			$newimg->setVar('image_body', $fbinary, true);
-			@unlink($path.'crop_'.$uniq.'_'.$oldimg);
-		}else{
-			if (copy($path.'crop_'.$uniq.'_'.$oldimg,$path.$imgname)){
-				@unlink($path.'crop_'.$uniq.'_'.$oldimg);
-			}
-		}
-		if (!$image_handler->insert($newimg)) {
-			$msg = sprintf(_FAILSAVEIMG, $newimg->getVar('image_nicename'));
-		}else{
-			$msg = _MD_AM_DBUPDATED;
-		}
-	}
-
-	redirect_header($_SERVER['PHP_SELF'].'?op=listimg&target='.$target.'&type='.$type.'&imgcat_id='.$image->getVar('imgcat_id'),3,$msg);
-}
-
 function icmsPopupHeader(){
 	global $xoopsConfig,$icmsPreloadHandler;
 	if (! headers_sent ()) {
@@ -1147,5 +845,11 @@ function adminNav($id = null, $separador = "/", $list = false, $style="style='fo
 		}
 	}
 	return $ret;
+}
+
+function redir($imgcat_id,$msg=null){
+	global $target,$type;
+	
+	redirect_header($_SERVER['PHP_SELF'].'?op=listimg&imgcat_id='.$imgcat_id.'&target='.$target.'&type='.$type,2,$msg);
 }
 ?>

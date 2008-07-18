@@ -48,7 +48,7 @@ define('_MD_IMAGECATOPTIONS', 'Options');
 define('_MD_IMAGECATQTDE', '# Images');
 define('_IMAGEFILTERS', 'Select a filter:');
 define('_IMAGEAPPLYFILTERS', 'Apply filters in image');
-define('_IMAGEFILTERSSAVE', 'Overwrite image?');
+define('_IMAGEFILTERSSAVE', 'Overwrite original image?');
 define('_IMGCROP', 'Crop Tool');
 define('_IMGFILTER', 'Filter Tool');
 

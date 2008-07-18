@@ -77,6 +77,7 @@ function crop_createDivElements()
 	cropDiv_left.style.height = crop_imageHeight + 'px';
 	cropDiv_left.style.width = '0px';
 	cropDiv_left.innerHTML = '<span></span>';
+	cropDiv_left.id = 'cropDiv_left';
 	crop_imageDiv.appendChild(cropDiv_left);
 
 	cropDiv_top = document.createElement('DIV');
@@ -87,6 +88,7 @@ function crop_createDivElements()
 	cropDiv_top.style.height = '0px';
 	cropDiv_top.style.width = crop_imageWidth + 'px';
 	cropDiv_top.innerHTML = '<span></span>';
+	cropDiv_top.id = 'cropDiv_top';
 	crop_imageDiv.appendChild(cropDiv_top);
 
 	cropDiv_right = document.createElement('DIV');
@@ -97,6 +99,7 @@ function crop_createDivElements()
 	cropDiv_right.style.height = crop_imageHeight + 'px';
 	cropDiv_right.style.width = '0px';
 	cropDiv_right.innerHTML = '<span></span>';
+	cropDiv_right.id = 'cropDiv_right';
 	crop_imageDiv.appendChild(cropDiv_right);
 
 	cropDiv_bottom = document.createElement('DIV');
@@ -107,6 +110,7 @@ function crop_createDivElements()
 	cropDiv_bottom.style.height = '0px';
 	cropDiv_bottom.style.width = crop_imageWidth + 'px';
 	cropDiv_bottom.innerHTML = '<span></span>';
+	cropDiv_bottom.id = 'cropDiv_bottom';
 	crop_imageDiv.appendChild(cropDiv_bottom);
 
 	cropDiv_dotted = document.createElement('DIV');
@@ -117,6 +121,7 @@ function crop_createDivElements()
 	cropDiv_dotted.style.height = (crop_imageHeight-(cropToolBorderWidth*2)) + 'px';
 	cropDiv_dotted.innerHTML = '<div></div>';
 	cropDiv_dotted.style.cursor = 'move';
+	cropDiv_dotted.id = 'cropDiv_dotted';
 
 	if(crop_script_browserIsOpera){
 		var div = cropDiv_dotted.getElementsByTagName('DIV')[0];
@@ -292,18 +297,13 @@ function cropScript_executeCrop(buttonObj)
 	buttonObj.style.visibility='hidden';
 	var ajaxIndex = cropScriptAjaxObjects.length;
 	cropScriptAjaxObjects[ajaxIndex] = new sack();
-	var url = crop_script_server_file + '?image_ref=' + document.getElementById('input_image_ref').value
-	+ '&uniq=' + document.getElementById('uniq').value
-	+ '&image_name=' + document.getElementById('image_name').value
-	+ '&image_id=' + document.getElementById('image_id').value
+	var url = crop_script_server_file + '?image_path=' + document.getElementById('image_path').value
+	+ '&image_url=' + document.getElementById('image_url').value
 	+ '&x=' + document.getElementById('input_crop_x').value
 	+ '&y=' + document.getElementById('input_crop_y').value
 	+ '&width=' + document.getElementById('input_crop_width').value
 	+ '&height=' + document.getElementById('input_crop_height').value
-	+ '&percentSize=' + document.getElementById('crop_percent_size').value
-	+ '&convertTo=' + document.getElementById('input_convert_to').value
-	+ '&target=' + document.getElementById('target').value
-	+ '&type=' + document.getElementById('type').value;
+	+ '&percentSize=' + document.getElementById('crop_percent_size').value;
 
 
 	cropScriptAjaxObjects[ajaxIndex].requestFile = url;	// Specifying which file to get
@@ -338,23 +338,14 @@ function cropScript_saveCrop(buttonObj)
 	buttonObj.style.visibility='hidden';
 	var ajaxIndex = cropScriptAjaxObjects.length;
 	cropScriptAjaxObjects[ajaxIndex] = new sack();
-	var url = crop_script_server_file + '?image_ref=' + document.getElementById('input_image_ref').value
-	+ '&uniq=' + document.getElementById('uniq').value
-	+ '&image_name=' + document.getElementById('image_name').value
-	+ '&image_id=' + document.getElementById('image_id').value
+	var url = crop_script_server_file + '?image_path=' + document.getElementById('image_path').value
+	+ '&image_url=' + document.getElementById('image_url').value
 	+ '&x=' + document.getElementById('input_crop_x').value
 	+ '&y=' + document.getElementById('input_crop_y').value
 	+ '&width=' + document.getElementById('input_crop_width').value
 	+ '&height=' + document.getElementById('input_crop_height').value
 	+ '&percentSize=' + document.getElementById('crop_percent_size').value
-	+ '&save=1'
-	+ '&overwrite=' + document.getElementById('overwrite').value
-	+ '&image_nicename=' + document.getElementById('image_nicename').value
-	+ '&image_weight=' + document.getElementById('image_weight').value
-	+ '&image_display=' + document.getElementById('image_display').value
-	+ '&convertTo=' + document.getElementById('input_convert_to').value
-	+ '&target=' + document.getElementById('target').value
-	+ '&type=' + document.getElementById('type').value;
+	+ '&save=1';
 
 	cropScriptAjaxObjects[ajaxIndex].requestFile = url;	// Specifying which file to get
 	cropScriptAjaxObjects[ajaxIndex].onCompletion = function(){ cropScript_cropCompleted(ajaxIndex,buttonObj); };	// Specify function that will be executed after file has been found
@@ -367,22 +358,33 @@ function cropScript_cancelCrop(buttonObj)
 	buttonObj.style.visibility='hidden';
 	var ajaxIndex = cropScriptAjaxObjects.length;
 	cropScriptAjaxObjects[ajaxIndex] = new sack();
-	var url = crop_script_server_file + '?image_ref=' + document.getElementById('input_image_ref').value
-	+ '&uniq=' + document.getElementById('uniq').value
-	+ '&image_name=' + document.getElementById('image_name').value
-	+ '&image_id=' + document.getElementById('image_id').value
+	var url = crop_script_server_file + '?image_path=' + document.getElementById('image_path').value
+	+ '&image_url=' + document.getElementById('image_url').value
 	+ '&x=' + document.getElementById('input_crop_x').value
 	+ '&y=' + document.getElementById('input_crop_y').value
 	+ '&width=' + document.getElementById('input_crop_width').value
 	+ '&height=' + document.getElementById('input_crop_height').value
 	+ '&percentSize=' + document.getElementById('crop_percent_size').value
-	+ '&cancel=1'
-	+ '&convertTo=' + document.getElementById('input_convert_to').value
-	+ '&target=' + document.getElementById('target').value
-	+ '&type=' + document.getElementById('type').value;
+	+ '&cancel=1';
     
 	cropScriptAjaxObjects[ajaxIndex].requestFile = url;	// Specifying which file to get
 	cropScriptAjaxObjects[ajaxIndex].onCompletion = function(){ cropScript_cropCompleted(ajaxIndex,buttonObj); };	// Specify function that will be executed after file has been found
+	cropScriptAjaxObjects[ajaxIndex].runAJAX();		// Execute AJAX function
+}
+
+function crop_delpreview(){
+	var ajaxIndex = cropScriptAjaxObjects.length;
+	cropScriptAjaxObjects[ajaxIndex] = new sack();
+	var url = crop_script_server_file + '?image_path=' + document.getElementById('fimage_path').value
+	+ '&image_url=' + document.getElementById('fimage_url').value
+	+ '&delprev=1';
+
+	cropScriptAjaxObjects[ajaxIndex].requestFile = url;	// Specifying which file to get
+	cropScriptAjaxObjects[ajaxIndex].onCompletion = function(){ 	
+		eval(cropScriptAjaxObjects[ajaxIndex].response)
+		cropScriptAjaxObjects[ajaxIndex] = false;
+		crop_hideProgressBar();
+	};	// Specify function that will be executed after file has been found
 	cropScriptAjaxObjects[ajaxIndex].runAJAX();		// Execute AJAX function
 }
 
@@ -624,12 +626,12 @@ function cropScript_validatePercent()
 
 function crop_progressBar()
 {
-	var div = document.getElementById('crop_progressBar');
+	var div = document.getElementById('progressBar');
 
 	var subDiv = document.createElement('DIV');
 	div.appendChild(subDiv);
 	subDiv.style.position = 'absolute';
-	subDiv.className='crop_progressBar_parentBox';
+	subDiv.className='progressBar_parentBox';
 	subDiv.style.left = '0px';
 	var progressBarSquare = document.createElement('DIV');
 	progressBarSquare.className='progressBar_square';
@@ -647,20 +649,20 @@ function crop_progressBar()
 
 function crop_hideProgressBar()
 {
-	document.getElementById('crop_progressBar').style.visibility = 'hidden';
+	document.getElementById('progressBar').style.visibility = 'hidden';
 
 }
 
 function crop_startProgressBar()
 {
-	var div = document.getElementById('crop_progressBar').getElementsByTagName('DIV')[0];
+	var div = document.getElementById('progressBar').getElementsByTagName('DIV')[0];
 	div.style.left = '0px';
-	document.getElementById('crop_progressBar').style.visibility = 'visible';
+	document.getElementById('progressBar').style.visibility = 'visible';
 }
 
 function crop_progressBarMove()
 {
-	var div = document.getElementById('crop_progressBar').getElementsByTagName('DIV')[0];
+	var div = document.getElementById('progressBar').getElementsByTagName('DIV')[0];
 	var left = div.style.left.replace('px','')/1;
 	left = left + 1;
 	if(left > div.parentNode.clientWidth)left = 0 - div.clientWidth;
@@ -684,7 +686,7 @@ function crop_initFixedRatio()
 
 function init_imageCrop()
 {
-	document.getElementById('label_dimension').innerHTML = crop_originalImageWidth + 'x' + crop_originalImageHeight;
+	//document.getElementById('label_dimension').innerHTML = crop_originalImageWidth + 'x' + crop_originalImageHeight;
 	cropScript_setBasicEvents();
 	crop_createDivElements();
 	crop_progressBar();
@@ -692,16 +694,21 @@ function init_imageCrop()
 	if(crop_script_fixedRatio && crop_script_alwaysPreserveAspectRatio){
 		crop_initFixedRatio();
 	}
-
 }
 
-function overpanel(value){
-	panel = document.getElementById('overpanel');
-	input = document.getElementById('overwrite');
-	if (value == 1){
-		panel.style.display = 'none';
-	}else{
-		panel.style.display = 'block';
-	}
-	input.value = value;
+function crop_removeDivElements(){
+	crop_imageDiv = document.getElementById('imageContainer');
+
+	var removeNode = document.getElementById('cropDiv_left');
+	if (removeNode)crop_imageDiv.removeChild(removeNode);
+	var removeNode = document.getElementById('cropDiv_top');
+	if (removeNode)crop_imageDiv.removeChild(removeNode);
+	var removeNode = document.getElementById('cropDiv_right');
+	if (removeNode)crop_imageDiv.removeChild(removeNode);
+	var removeNode = document.getElementById('cropDiv_bottom');
+	if (removeNode)crop_imageDiv.removeChild(removeNode);
+	var removeNode = document.getElementById('cropDiv_dotted');
+	if (removeNode)crop_imageDiv.removeChild(removeNode);
+	
+	crop_delpreview();
 }
