@@ -50,24 +50,6 @@ function getDirList($dirname) {
     }
     return $dirlist;
 }
-function getDbValue( &$db, $table, $field, $condition = '' ) {
-	$table = $db->prefix( $table );
-	$sql = "SELECT `$field` FROM `$table`";
-	if ( $condition ) {
-		$sql .= " WHERE $condition";
-	}
-	$result = $db->query($sql);
-	if ( $result ) {
-		$row = $db->fetchRow($result);
-		if ( $row ) {
-			return $row[0];
-		}
-	}
-	return false;
-}
-
-
-
 if ( file_exists("./language/".$xoopsConfig['language']."/upgrade.php") ) {
     include_once "./language/".$xoopsConfig['language']."/upgrade.php";
     $language = $xoopsConfig['language'];
@@ -100,7 +82,7 @@ if ( !$xoopsUser || !$xoopsUser->isAdmin() ) {
 			array_unshift( $_SESSION['xoops_upgrade'], $next );
 			echo '<a id="link-next" href="index.php?action=next">' . _RELOAD . '</a>';
 		} else {
-			$text = empty( $_SESSION['xoops_upgrade'] ) ? '<a id="link-next" href="ref="index.php">' . _FINISH . '</a>' : sprintf('<a id="link-next" href="index.php?action=next">' . _APPLY_NEXT . '</a>', $_SESSION['xoops_upgrade'][0] );
+			$text = empty( $_SESSION['xoops_upgrade'] ) ? '<a id="link-next" href="index.php">' . _FINISH . '</a>' : sprintf('<a id="link-next" href="index.php?action=next">' . _APPLY_NEXT . '</a>', $_SESSION['xoops_upgrade'][0] );
 			echo $text ;
 		}
 	}
