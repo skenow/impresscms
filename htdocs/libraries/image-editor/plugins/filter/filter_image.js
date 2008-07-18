@@ -45,15 +45,14 @@ function selFilter(value,panelId,e){
 				eval('arg'+x).value = filter['args'][i]['value'];
 			}
 		}
-		var div = xoopsGetElementById('xpPaneTopBar'+panelId);
-		updatePaneHeight(e,div);
 	}
+	var div = xoopsGetElementById('xpPaneTopBar'+panelId);
+	updatePaneHeight(e,div);
 }
 
 var filterScriptAjaxObjects = new Array();
 
 function filter_preview(buttonObj){
-	filter_progressBar();
 	filter_startProgressBar();
 	buttonObj.style.visibility='hidden';
 	var ajaxIndex = filterScriptAjaxObjects.length;
@@ -72,8 +71,7 @@ function filter_preview(buttonObj){
 
 function filter_save(buttonObj)
 {
-	filter_progressBar();
-	filter_startProgressBar();
+    filter_startProgressBar();
 	buttonObj.style.visibility='hidden';
 	var ajaxIndex = filterScriptAjaxObjects.length;
 	filterScriptAjaxObjects[ajaxIndex] = new sack();
@@ -134,7 +132,13 @@ function filter_progressBar()
 	subDiv.appendChild(progressBarSquare);
 	filter_progressBarMove();
 	filter_hideProgressBar();
-
+	
+	var menu = xoopsGetElementById('dhtmlgoodies_xpPane');
+	top = (window.innerHeight/2)-(div.clientHeight/2);
+	left = ((window.innerWidth/2)+(menu.clientWidth)/2)-(div.clientWidth/2);
+	
+	div.style.top = top+'px';
+	div.style.left = left+'px';
 }
 
 function filter_hideProgressBar()

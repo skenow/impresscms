@@ -229,6 +229,7 @@ $img['originalname']  = $original_image->getVar('image_name');
 $img['id'] = $original_image->getVar('image_id');
 $img['title'] = $original_image->getVar('image_nicename');
 $img['url']   = ICMS_IMANAGER_FOLDER_URL.'/temp/'.$temp_img_name;
+$img['previewurl'] = ICMS_IMANAGER_FOLDER_URL.'/temp/'.$temp_img_name.'?'.time();
 $img['originalurl'] = ICMS_IMANAGER_FOLDER_URL.'/temp/'.$orig_img_name;
 $img['path']   = ICMS_IMANAGER_FOLDER_PATH.'/temp/'.$temp_img_name;
 $img['width'] = $temp_img->getWidth();
@@ -287,12 +288,12 @@ $icmsTpl->assign('lang_imgdetails',_IMGDETAILS);
 $icmsTpl->assign('lang_image_applyfilters',_IMAGEAPPLYFILTERS);
 $icmsTpl->assign('lang_image_filterssave',_IMAGEFILTERS);
 $icmsTpl->assign('lang_image_filtersoverw',_IMAGEFILTERSSAVE);
-$icmsTpl->assign('lang_image_filterpreview',_PREVIEW);
 $icmsTpl->assign('lang_title','Title');
 $icmsTpl->assign('lang_file','File');
 $icmsTpl->assign('lang_size','Size');
 $icmsTpl->assign('lang_crop','Crop');
 $icmsTpl->assign('lang_filter','Filter');
+$icmsTpl->assign('lang_resize','Resize');
 
 echo $icmsTpl->fetch(ICMS_LIBRARIES_PATH.'/image-editor/templates/image-editor.html');
 ?>

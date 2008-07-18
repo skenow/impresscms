@@ -288,6 +288,7 @@
    
    function cancel_edit(){
    	var ajaxIndex = cropScriptAjaxObjects.length;
+   	startProgressBar();
    	cropScriptAjaxObjects[ajaxIndex] = new sack();
    	var url = script_server_file + '?op=cancel&image_path=' + document.getElementById('save_img_path').value;
 
@@ -295,12 +296,14 @@
    	cropScriptAjaxObjects[ajaxIndex].onCompletion = function(){
    		eval(cropScriptAjaxObjects[ajaxIndex].response)
    		cropScriptAjaxObjects[ajaxIndex] = false;
+   		hideProgressBar();
    	};	// Specify function that will be executed after file has been found
    	cropScriptAjaxObjects[ajaxIndex].runAJAX();		// Execute AJAX function
    }
    
    function save_edit(){
    	var ajaxIndex = cropScriptAjaxObjects.length;
+   	startProgressBar();
    	cropScriptAjaxObjects[ajaxIndex] = new sack();
    	var url = script_server_file + '?op=save&image_id=' + document.getElementById('save_img_id').value
    	+'&image_temp=' + document.getElementById('save_img_tempname').value
@@ -313,6 +316,7 @@
    	cropScriptAjaxObjects[ajaxIndex].onCompletion = function(){
    		eval(cropScriptAjaxObjects[ajaxIndex].response)
    		cropScriptAjaxObjects[ajaxIndex] = false;
+   		hideProgressBar();
    	};	// Specify function that will be executed after file has been found
    	cropScriptAjaxObjects[ajaxIndex].runAJAX();		// Execute AJAX function
    }
@@ -342,4 +346,71 @@ function getOpenerUrl(){
 	url += '/'+endurl.split("?")[0];
 	
 	return url;
+}
+
+function progressBar()
+{
+	var div = document.getElementById('progressBar');
+
+	var subDiv = document.createElement('DIV');
+	div.appendChild(subDiv);
+	subDiv.style.position = 'absolute';
+	subDiv.className='progressBar_parentBox';
+	subDiv.style.left = '0px';
+	var progressBarSquare = document.createElement('DIV');
+	progressBarSquare.className='progressBar_square';
+	subDiv.appendChild(progressBarSquare);
+	var progressBarSquare = document.createElement('DIV');
+	progressBarSquare.className='progressBar_square';
+	subDiv.appendChild(progressBarSquare);
+	var progressBarSquare = document.createElement('DIV');
+	progressBarSquare.className='progressBar_square';
+	subDiv.appendChild(progressBarSquare);
+	progressBarMove();
+	hideProgressBar();
+	
+	var menu = xoopsGetElementById('dhtmlgoodies_xpPane');
+	top = (window.innerHeight/2)-(div.clientHeight/2);
+	left = ((window.innerWidth/2)+(menu.clientWidth)/2)-(div.clientWidth/2);
+	
+	div.style.top = top+'px';
+	div.style.left = left+'px';
+}
+
+function hideProgressBar()
+{
+	document.getElementById('progressBar').style.visibility = 'hidden';
+
+}
+
+function startProgressBar()
+{
+	var div = document.getElementById('progressBar').getElementsByTagName('DIV')[0];
+	if (!div){
+		progressBar();
+		var div = document.getElementById('progressBar').getElementsByTagName('DIV')[0];
+	}
+	div.style.left = '0px';
+	document.getElementById('progressBar').style.visibility = 'visible';
+}
+
+function progressBarMove()
+{
+	var div = document.getElementById('progressBar').getElementsByTagName('DIV')[0];
+	var left = div.style.left.replace('px','')/1;
+	left = left + 1;
+	if(left > div.parentNode.clientWidth)left = 0 - div.clientWidth;
+	div.style.left = left + 'px';
+
+	setTimeout('progressBarMove()',20);
+
+}
+
+function resizePanels(){
+	var menu = xoopsGetElementById('dhtmlgoodies_xpPane');
+	var content = xoopsGetElementById('contentarea');
+	
+	menu.style.height = window.innerHeight+'px';
+	content.style.height = window.innerHeight+'px';
+	content.style.width = window.innerWidth-menu.clientWidth-1+'px';
 }

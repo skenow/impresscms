@@ -14,6 +14,7 @@ if(isset($_GET['image_path']) && isset($_GET['image_url'])){
 	$image_path = isset($_GET['image_path'])?$_GET['image_path']:null;
 	$image_url = isset($_GET['image_url'])?$_GET['image_url']:null;
 	$filter = isset($_GET['filter'])?$_GET['filter']:null;
+	
 	$args = array();
 	if (isset($_GET['arg1'])){
 		$args[] = $_GET['arg1'];
@@ -26,6 +27,10 @@ if(isset($_GET['image_path']) && isset($_GET['image_url'])){
 	}
 	$save = isset($_GET['save'])?$_GET['save']:0;
 	$del  = isset($_GET['delprev'])?$_GET['delprev']:0;
+	
+	if (is_null($filter) || $filter == ''){
+		exit;
+	}
 	
 	$img = wiImage::load($image_path);
 	$arr = explode('/',$image_path);
@@ -42,9 +47,9 @@ if(isset($_GET['image_path']) && isset($_GET['image_url'])){
 	
 	if (!is_null($filter)){
 		if ($filter == 'IMG_FILTER_SEPIA'){
-			echo $img->applyFilter(IMG_FILTER_GRAYSCALE)->applyFilter(IMG_FILTER_COLORIZE, 90, 60, 30)->saveToFile($temp_img_path);
+			$img->applyFilter(IMG_FILTER_GRAYSCALE)->applyFilter(IMG_FILTER_COLORIZE, 90, 60, 30)->saveToFile($temp_img_path);
 		}else{
-			echo $img->applyFilter(constant($filter),implode(',',$args))->saveToFile($temp_img_path);
+			$img->applyFilter(constant($filter),implode(',',$args))->saveToFile($temp_img_path);
 		}
 	}
 		

@@ -30,6 +30,8 @@
 	}
 	#dhtmlgoodies_xpPane .panelContent div{
 		position:relative;
+		padding:0;
+		margin:0;
 	}
 	#dhtmlgoodies_xpPane .dhtmlgoodies_panel .topBar{
 		background-image:url('../images/bg_panel_top_right.gif');
@@ -94,8 +96,8 @@ input:hover { border: #000 1px solid;}
 		overflow:hidden;
 		position: absolute;
 		z-index:10000;
-		top: 280px;
-		left: 380px;
+		top: 0;
+		right: 0px;
 		margin: 20px;
 		width: 175px;
 		visibility: hidden;
@@ -115,10 +117,13 @@ input:hover { border: #000 1px solid;}
 	
 .imanager_image_img {
     display:block;
-    height:160px;
     overflow:hidden;
+    width: 100%;
+    padding:0;
+    margin:0;
 }
 
 .imanager_image_img img{
-    max-width:180px;
+    max-width: 160px;
+    max-height: 160px;
 }

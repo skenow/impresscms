@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title><{$lang_ie_title}></title>
+	<link rel="stylesheet" href="<{$icms_url}>/xoops.css">
 	<link rel="stylesheet" href="<{$icms_lib_url}>/image-editor/css/xp-info-pane.css">
 	<script type="text/javascript" src="<{$icms_lib_url}>/image-editor/js/xp-info-pane.js"></script>
 	<script type="text/javascript" src="<{$icms_lib_url}>/image-editor/js/ajax.js"></script>
@@ -10,14 +11,14 @@
       var script_server_file = '<{$icms_lib_url}>/image-editor/image-edit.php';
     </script>
 </head>
-<body>
+<body onresize="resizePanels();" onload="resizePanels();">
   <div id="pageContent">
     <div id="dhtmlgoodies_xpPane">
 	  <div class="dhtmlgoodies_panel">
 	    <div>
           <!-- Start content of pane -->
-		  <table>
-		    <tr><td align="center" class="imanager_image_img"><img src="<{$image.originalurl}>" /></td></tr>
+		  <table width="100%">
+		    <tr><td align="center" valign="middle"><div class="imanager_image_img"><img src="<{$image.originalurl}>" /></div></td></tr>
 		    <tr><td style="overflow: hidden;"><b><{$lang_title}></b>: <{$image.title}></td></tr>
 		    <tr><td style="overflow: hidden;"><b><{$lang_file}></b>: <{$image.originalname}></td></tr>
 		    <tr><td align="center"><b>Original Image</b></td></tr>
@@ -53,7 +54,7 @@
 	      <input type="radio" name="overwrite" value="1" onclick="overpanel(this.value);" checked /><{$lang_yes}>
 	      <input type="radio" name="overwrite" value="0" onclick="overpanel(this.value);" /><{$lang_no}>
 		  <div id="overpanel" style="display:none; line-height:20px;">
-		    <table width="100%" cellspacing="1" class="outer">
+		    <table width="100%">
 		      <tr>
 		        <td class="head"><b><{$lang_imagename}></b></td>
 		        <td class="odd"><input type="text" name="save_img_name" id="save_img_name" size=20 value="Copy of <{$image.title}>"></td>
@@ -85,9 +86,9 @@
         </div>		
       </div>
     </div>
-    <div class="imageContent">
+    <div class="imageContent" id="contentarea">
       <div><div id="progressBar"></div></div>
-      <div id="imageContainer"><img src="<{$image.url}>"></div>
+      <div id="imageContainer"><img src="<{$image.previewurl}>"></div>
     </div>
   </div>
 

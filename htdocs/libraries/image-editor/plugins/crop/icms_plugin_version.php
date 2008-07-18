@@ -14,7 +14,7 @@
 
 $plugversion['name'] = 'Crop Tool';
 $plugversion['version'] = 1.00;
-$plugversion['description'] = 'Plugin to allow the DHTML Image Editor Tool crop images';
+$plugversion['description'] = 'Plugin to allow the DHTML Image Editor crop images. Change the values in the form or drag the squares in the image to define the crop area and press the button to preview or crop the image.';
 $plugversion['author'] = "Rodrigo Pereira Lima (AKA TheRplima) <therplima@impresscms.org>";
 $plugversion['credits'] = "The ImpressCMS Project";
 $plugversion['license'] = "GPL see LICENSE";

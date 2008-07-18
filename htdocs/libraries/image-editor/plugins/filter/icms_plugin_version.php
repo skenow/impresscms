@@ -14,7 +14,7 @@
 
 $plugversion['name'] = 'Filter Tool';
 $plugversion['version'] = 1.00;
-$plugversion['description'] = 'Plugin to allow the DHTML Image Editor Tool apply filters images';
+$plugversion['description'] = 'Plugin to allow the DHTML Image Editor apply filters in the images. Select the desired filter, set the parameters (if have) and click on the button to apply or preview the filter.';
 $plugversion['author'] = "Rodrigo Pereira Lima (AKA TheRplima) <therplima@impresscms.org>";
 $plugversion['credits'] = "The ImpressCMS Project";
 $plugversion['license'] = "GPL see LICENSE";
@@ -23,6 +23,6 @@ $plugversion['icon'] = 'filter.png';
 $plugversion['folder'] = 'filter';
 $plugversion['file'] = 'filter_image.php';
 $plugversion['block_template'] = 'filter_image.html';
-$plugversion['init_js_function'] = '';
+$plugversion['init_js_function'] = 'filter_progressBar();';
 $plugversion['stop_js_function'] = 'filter_delpreview()';
 ?>

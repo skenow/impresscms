@@ -644,7 +644,13 @@ function crop_progressBar()
 	subDiv.appendChild(progressBarSquare);
 	crop_progressBarMove();
 	crop_hideProgressBar();
-
+	
+	var menu = xoopsGetElementById('dhtmlgoodies_xpPane');
+	top = (window.innerHeight/2)-(div.clientHeight/2);
+	left = ((window.innerWidth-menu.clientWidth)/2)-(div.clientWidth/2);
+	
+	div.style.top = top+'px';
+	div.style.left = left+'px';
 }
 
 function crop_hideProgressBar()
