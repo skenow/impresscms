@@ -1,3 +1,13 @@
+4.0.007 (2008-07-18)
+	- str_split was replaced by preg_split for compatibility with PHP4 version.
+	- Clipping mode was added to all graphic functions by using parameter $style = "CNZ" or "CEO" (see example_034.php).
+
+4.0.006 (2008-07-16)
+	- HTML rowspan bug was fixed.
+	- Line style for MultiCell() was fixed.
+	- WriteHTML(9 function was improved.
+	- CODE128C barcode was fixed (barcodes.php).
+
 4.0.005 (2008-07-11)
 	- Bug [2015715] "PHP Error/Warning" was fixed.
 

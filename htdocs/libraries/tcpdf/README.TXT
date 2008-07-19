@@ -11,10 +11,10 @@ Name:
 	TCPDF
 
 Version:
-	4.0.005
+	4.0.007
 	
 Release date:
-	2008-07-11
+	2008-07-18
 
 Author:
 	Nicola Asuni 
@@ -53,6 +53,7 @@ Main Features:
 	* supports automatic line break and text justification;
 	* supports JPEG and PNG images whitout GD library and all images supported by GD: GD, GD2, GD2PART, GIF, JPEG, PNG, BMP, XBM, XPM;
 	* supports stroke and clipping mode for text;
+	* supports clipping masks;
 	* supports Grayscale, RGB and CMYK colors and transparency;
 	* supports links;
 	* supports page compression (requires zlib extension);
