@@ -1307,7 +1307,7 @@ function icms_encryptPass($pass, $salt)
 		}
 		elseif($xoopsConfigUser['enc_type'] == 0)
 		{
-			$pass = hash('md5', md5($pass)); // no salt used for compatibility with external scripts such as ipb/phpbb etc.
+			$pass = md5($pass); // no salt used for compatibility with external scripts such as ipb/phpbb etc.
 		}
 		elseif($xoopsConfigUser['enc_type'] == 1)
 		{
