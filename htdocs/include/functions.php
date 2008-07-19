@@ -1301,11 +1301,7 @@ function icms_encryptPass($pass, $salt)
 
 	if(function_exists('hash'))
 	{
-		$db = $GLOBALS['xoopsDB'];
-		if (getDbValue($db, 'config', 'conf_id', 'conf_name="enc_type"') == 0) {
-			$pass = md5($pass); // no salt used to let users using versions < icms 1.1 be able to login in the site.
-		}
-		elseif($xoopsConfigUser['enc_type'] == 0)
+		if($xoopsConfigUser['enc_type'] == 0)
 		{
 			$pass = md5($pass); // no salt used for compatibility with external scripts such as ipb/phpbb etc.
 		}
