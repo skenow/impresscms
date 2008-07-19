@@ -13,11 +13,12 @@ ImpressCMS ChangeLog
 * Upgrade script XOOPS2.2.x --> ImpressCMS. (stranger/phppp)
 
 '''Improved'''
-* Updated TCPDF to version 4.0.005. (stranger)
+* Updated TCPDF to version 4.0.007. (stranger)
 * Formfield for OpenID, if OID is inactive users won't see it's fields. (stranger)
 
 '''Changed'''
 * after upgrade is done you'll get back to index to see if upgrade was successful. (stranger)
+* moved protector.php to extras. (stranger)
 
 '''Fixed'''
 * Could not upload avatar. (real_therplima/stranger)
