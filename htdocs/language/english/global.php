@@ -255,4 +255,8 @@ define("_ERROR", "Error");
 define("_TOOKXLONG", " took %s seconds to load.");
 define("_BLOCK", "Block(s)");
 define("_WARNINGUPDATESYSTEM","Congratulations, you have just successfully upgraded your site to the latest version of ImpressCMS!<br />Therefor to finish the upgrade process you'll need to click here and update your system module.<br />Click here to process the upgrade.");
+
+// This shows local support site in ImpressCMS menu, (if selected language is not English)
+define('_IMPRESSCMS_LOCAL_SUPPORT','http://www.impresscms.org'); //add the local support site's URL
+define('_IMPRESSCMS_LOCAL_SUPPORT_TITLE','Local support site');
 ?>

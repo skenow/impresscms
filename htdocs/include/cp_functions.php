@@ -421,6 +421,14 @@ function impresscms_get_adminmenu() {
 	//$menu[$i]['small'] = XOOPS_URL.'/images/impresscms.png';
 	$i ++;
 	
+	if ( _LANGCODE != 'en' ){
+	$menu [$i] ['link'] = _IMPRESSCMS_LOCAL_SUPPORT;
+	$menu [$i] ['title'] = _IMPRESSCMS_LOCAL_SUPPORT_TITLE;
+	$menu [$i] ['absolute'] = 1;
+	//$menu[$i]['small'] = XOOPS_URL.'/images/impresscms.png';
+	$i ++;
+    }
+
 	$menu [$i] ['link'] = 'http://community.impresscms.org';
 	$menu [$i] ['title'] = _IMPRESSCMS_COMMUNITY;
 	$menu [$i] ['absolute'] = 1;
