@@ -9,7 +9,7 @@
 * @package		libraries
 * @since		1.1
 * @author		marcan <marcan@impresscms.org>
-* @version		$Id: protector.php 2385 2008-05-24 13:15:00Z malanciault $
+* @version		$Id: protector.php 1742 2008-04-20 14:46:20Z malanciault $
 */
 
 /**
@@ -21,22 +21,16 @@ define(ICMSPRELOADPROTECTOR_FINISHCOREBOOT, 10);
 class IcmsPreloadProtector extends IcmsPreloadItem
 {
 	function eventStartCoreBoot() {
-//		$protector_module = icms_getModuleInfo('protector');
-//		if ($protector_module) {
-			$filename = ICMS_TRUST_PATH.'/modules/protector/include/precheck.inc.php';
-			if (file_exists($filename)) {
-				include $filename;
-			}
-	//	}
+		$filename = ICMS_TRUST_PATH.'/modules/protector/include/precheck.inc.php';
+		if (file_exists($filename)) {
+			include $filename;
+		}
 	}
 	
 	function eventFinishCoreBoot() {
-		$protector_module = icms_getModuleInfo('protector');
-		if ($protector_module) {
-			$filename = ICMS_TRUST_PATH.'/modules/protector/include/postcheck.inc.php';
-			if (file_exists($filename)) { 
-				include $filename;
-			}
+		$filename = ICMS_TRUST_PATH.'/modules/protector/include/postcheck.inc.php';
+		if (file_exists($filename)) { 
+			include $filename;
 		}
 	}
 }
