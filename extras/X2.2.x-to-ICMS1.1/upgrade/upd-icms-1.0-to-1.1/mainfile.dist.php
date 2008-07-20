@@ -8,7 +8,7 @@
 * @copyright	XOOPS_copyrights.txt
 * @copyright	http://www.impresscms.org/ The ImpressCMS Project
 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		upgrader
+* @package		Installer
 * @since		XOOPS
 * @author		http://www.xoops.org The XOOPS Project
 * @author		modified by stranger <pesian_stranger@users.sourceforge.net>
@@ -29,7 +29,6 @@ if ( !defined("XOOPS_MAINFILE_INCLUDED") ) {
 	// Example: define('XOOPS_TRUST_PATH', '/path/to/trust/directory');
 	define('XOOPS_TRUST_PATH', '');
 
-	// sdata#--#
 
 	// XOOPS Virtual Path (URL)
 	// Virtual path to your main XOOPS directory WITHOUT trailing slash

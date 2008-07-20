@@ -9,15 +9,18 @@
 * @since		1.1
 * @author	   Sina Asghari <pesian_stranger@users.sourceforge.net>
 * @author      Taiwen Jiang <phppp@users.sourceforge.net>
-* @version		$Id: index.php 3706 2008-07-18 23:30:02Z pesian_stranger $
+* @version		$Id: index.php 3740 2008-07-20 15:48:52Z pesian_stranger $
 */
 
 class upgrade_impcms06 {
 	
 	var $usedFiles = array ();
-    var $tasks = array('table1', 'table2', 'table3', 'table4', 'conf', 
+    var $tasks = array(
+    'table1', 'table2', 'table3', 'table4', 'conf', 
     //'block1', 'block2', 'block3', 'block4', 
-    'dbversion', 'db');
+    'dbversion', 'db'
+    , 'salt'
+    );
 	var $updater;
 	
 	function __construct() {
@@ -471,6 +474,21 @@ class upgrade_impcms06 {
         }
         return false;
             }
+		function check_salt()
+    {
+        $lines = file( XOOPS_ROOT_PATH . '/mainfile.php' );
+        foreach ( $lines as $line ) {
+            if( preg_match( "/(define\(\s*)([\"'])(XOOPS_DB_SALT)\\2,\s*([\"'])([^\"']*?)\\4\s*\);/", $line ) ) {
+                return true;
+            }
+        }
+        return false;
+            }
+
+    function apply_salt()
+    {
+        return $this->update_configs('salt');
+    }
 
     function apply_db()
     {
