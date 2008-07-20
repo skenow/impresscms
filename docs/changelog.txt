@@ -11,13 +11,14 @@ ImpressCMS ChangeLog
 * new field to let user select if they want to sho their openid. (stranger)
 * new warning to let users know about upgrading system module. (stranger)
 * Upgrade script XOOPS2.2.x --> ImpressCMS. (stranger/phppp)
+* function "_filterImgUrl" to module.sanitizer, to keep compatibility with D3 modules.. (stranger/)
 
 '''Improved'''
 * Updated TCPDF to version 4.0.007. (stranger)
 * Formfield for OpenID, if OID is inactive users won't see it's fields. (stranger)
 
 '''Changed'''
-* after upgrade is done you'll get back to index to see if upgrade was successful. (stranger)
+* after upgrade is done you'll get back to index to see if upgrade was successful. (stranger/minahito/hodaka)
 * moved protector.php to extras. (stranger)
 
 '''Fixed'''
