@@ -259,4 +259,7 @@ define("_WARNINGUPDATESYSTEM","Congratulations, you have just successfully upgra
 // This shows local support site in ImpressCMS menu, (if selected language is not English)
 define('_IMPRESSCMS_LOCAL_SUPPORT','http://www.impresscms.org'); //add the local support site's URL
 define('_IMPRESSCMS_LOCAL_SUPPORT_TITLE','Local support site');
+define("_ALLEFTCON","Enter the text to be aligned on the Left side.");
+define("_ALCENTERCON","Enter the text to be aligned on the Center side.");
+define("_ALRIGHTCON","Enter the text to be aligned on the Right side.");
 ?>

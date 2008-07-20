@@ -229,6 +229,12 @@ class MyTextSanitizer
 		$replacements[] = '<u>\\1</u>';
 		$patterns[] = "/\[d](.*)\[\/d\]/sU";
 		$replacements[] = '<del>\\1</del>';
+    	$patterns[] = "/\[center](.*)\[\/center\]/sU";
+		$replacements[] = '<div align=center>\\1</div>';
+    	$patterns[] = "/\[left](.*)\[\/left\]/sU";
+		$replacements[] = '<div align=left>\\1</div>';
+    	$patterns[] = "/\[right](.*)\[\/right\]/sU";
+		$replacements[] = '<div align=right>\\1</div>';
 		$patterns[] = "/\[img align=(['\"]?)(left|center|right)\\1]([^\"\(\)\?\&'<>]*)\[\/img\]/sU";
 		$patterns[] = "/\[img]([^\"\(\)\?\&'<>]*)\[\/img\]/sU";
 		$patterns[] = "/\[img align=(['\"]?)(left|center|right)\\1 id=(['\"]?)([0-9]*)\\3]([^\"\(\)\?\&'<>]*)\[\/img\]/sU";
