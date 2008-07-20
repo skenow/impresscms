@@ -261,6 +261,37 @@ class MyTextSanitizer
 		return $text;
 	}
 
+/**
+     * Filters out invalid strings included in URL, if any
+     *
+     * @param   array  $matches
+     * @return  string
+     */
+    function _filterImgUrl($matches)
+    {
+        if ($this->checkUrlString($matches[2])) {
+            return $matches[0];
+        } else {
+            return "";
+        }
+    }
+
+    /**
+     * Checks if invalid strings are included in URL
+     *
+     * @param   string  $text
+     * @return  bool
+     */
+    function checkUrlString($text)
+    {
+        // Check control code
+        if (preg_match("/[\0-\31]/", $text)) {
+            return false;
+        }
+        // check black pattern(deprecated)
+        return !preg_match("/^(javascript|vbscript|about):/i", $text);
+    }
+
 	/**
 	* Convert linebreaks to <br /> tags
      	*
