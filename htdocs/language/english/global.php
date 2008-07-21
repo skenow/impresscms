@@ -262,4 +262,6 @@ define('_IMPRESSCMS_LOCAL_SUPPORT_TITLE','Local support site');
 define("_ALLEFTCON","Enter the text to be aligned on the Left side.");
 define("_ALCENTERCON","Enter the text to be aligned on the Center side.");
 define("_ALRIGHTCON","Enter the text to be aligned on the Right side.");
+define( "_TRUST_PATH_HELP", "Warning: System failed in reaching Trust path.<br />The trust path is a folder where ImpressCMS and its modules will store some sensible code and information for more security.<br />It is recommended that this folder be outside of the web root, making it not accessible by a browser.<br /><a target='_blank' href='http://wiki.impresscms.org/index.php?title=Trust_Path'>Click here to learn more about the Trust path and how to Create it.</a>" );
+define( "_PROTECTOR_NOT_FOUND", "Warning: System is unable not find protector module in your site.<br />We highly recommend you to install protector to improve your site's security.<br />We also have to thank GIJOE for this very good module.<br /><a target='_blank' href='http://wiki.impresscms.org/index.php?title=Protector'>Click here to learn more about Protector.</a><br /><a target='_blank' href='http://xoops.peak.ne.jp/modules/mydownloads/singlefile.php?lid=105&cid=1'>Click here to download the latest version of protector.</a>" );
 ?>

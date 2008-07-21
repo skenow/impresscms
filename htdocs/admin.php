@@ -142,6 +142,16 @@ switch($op)
 			xoops_error(sprintf(_WARNINSTALL2,ICMS_ROOT_PATH.'/upgrade/'));
 			echo '<br />';
 		}
+		if(!is_dir(XOOPS_TRUST_PATH))
+		{
+			xoops_error (_TRUST_PATH_HELP);
+			echo '<br />';
+		}
+		if(is_dir(XOOPS_TRUST_PATH) AND !is_dir(XOOPS_TRUST_PATH.'/modules/protector/'))
+		{
+			xoops_error (_PROTECTOR_NOT_FOUND);
+			echo '<br />';
+		}
 		// ###### Output warn messages for correct functionality  ######
 		if(!is_writable(ICMS_CACHE_PATH))
 		{
