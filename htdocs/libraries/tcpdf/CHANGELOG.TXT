@@ -1,3 +1,11 @@
+4.0.009 (2008-07-21)
+	- UTF8StringToArray() function was fixed for non-unicode mode.
+
+4.0.008 (2008-07-21)
+	- Barcodes alignment was fixed (see example_027.php).
+	- unicode_data.php was updated.
+	- Arabic shaping for "Zero-Width Non-Joiner" character (U+200C) was fixed.
+
 4.0.007 (2008-07-18)
 	- str_split was replaced by preg_split for compatibility with PHP4 version.
 	- Clipping mode was added to all graphic functions by using parameter $style = "CNZ" or "CEO" (see example_034.php).
@@ -5,7 +13,7 @@
 4.0.006 (2008-07-16)
 	- HTML rowspan bug was fixed.
 	- Line style for MultiCell() was fixed.
-	- WriteHTML(9 function was improved.
+	- WriteHTML() function was improved.
 	- CODE128C barcode was fixed (barcodes.php).
 
 4.0.005 (2008-07-11)

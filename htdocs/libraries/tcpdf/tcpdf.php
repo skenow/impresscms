@@ -2,9 +2,9 @@
 //============================================================+
 // File name   : tcpdf.php
 // Begin       : 2002-08-03
-// Last Update : 2008-07-18
+// Last Update : 2008-07-21
 // Author      : Nicola Asuni - info@tecnick.com - http://www.tcpdf.org
-// Version     : 4.0.007
+// Version     : 4.0.009
 // License     : GNU LGPL (http://www.gnu.org/copyleft/lesser.html)
 // 	----------------------------------------------------------------------------
 //  Copyright (C) 2002-2008  Nicola Asuni - Tecnick.com S.r.l.
@@ -116,7 +116,7 @@
  * @copyright 2004-2008 Nicola Asuni - Tecnick.com S.r.l (www.tecnick.com) Via Della Pace, 11 - 09044 - Quartucciu (CA) - ITALY - www.tecnick.com - info@tecnick.com
  * @link http://www.tcpdf.org
  * @license http://www.gnu.org/copyleft/lesser.html LGPL
- * @version 4.0.007
+ * @version 4.0.009
  */
 
 /**
@@ -146,14 +146,14 @@ if (!class_exists('TCPDF')) {
 	/**
 	 * define default PDF document producer
 	 */ 
-	define('PDF_PRODUCER','TCPDF 4.0.007 (http://www.tcpdf.org)');
+	define('PDF_PRODUCER','TCPDF 4.0.009 (http://www.tcpdf.org)');
 	
 	/**
 	* This is a PHP class for generating PDF documents without requiring external extensions.<br>
 	* TCPDF project (http://www.tcpdf.org) has been originally derived in 2002 from the Public Domain FPDF class by Olivier Plathey (http://www.fpdf.org), but now is almost entirely rewritten.<br>
 	* @name TCPDF
 	* @package com.tecnick.tcpdf
-	* @version 4.0.007
+	* @version 4.0.009
 	* @author Nicola Asuni - info@tecnick.com
 	* @link http://www.tcpdf.org
 	* @license http://www.gnu.org/copyleft/lesser.html LGPL
@@ -3359,7 +3359,7 @@ if (!class_exists('TCPDF')) {
 					$type = "jpeg";
 				}
 				$mqr = get_magic_quotes_runtime();
-				@set_magic_quotes_runtime(0);
+				set_magic_quotes_runtime(0);
 				// Specific image handlers
 				$mtd = '_parse'.$type;
 				// GD image handler function
@@ -3946,7 +3946,7 @@ if (!class_exists('TCPDF')) {
 				$this->_out('endobj');
 			}
 			$mqr = get_magic_quotes_runtime();
-			@set_magic_quotes_runtime(0);
+			set_magic_quotes_runtime(0);
 			foreach($this->FontFiles as $file => $info) {
 				//Font file embedding
 				$this->_newobj();
@@ -4784,11 +4784,11 @@ if (!class_exists('TCPDF')) {
 		 */
 		protected function UTF8StringToArray($str) {
 			if (!$this->isunicode) {
-				// split string into array of chars
-				$strarr = preg_split('//', $str);
-				// convert chars to equivalent code
-				while (list($pos, $char) = each($strarr)) {
-					$strarr[$pos] = ord($char);
+				// split string into array of equivalent codes
+				$strarr = array();
+				$strlen = strlen($str);
+				for($i=0; $i < $strlen; $i++) {
+					$strarr[] = ord($str{$i});
 				}
 				return $strarr;
 			}
@@ -6776,7 +6776,7 @@ if (!class_exists('TCPDF')) {
 				$charAL = array();
 				$x = 0;
 				for ($i=0; $i < $numchars; $i++) {
-					if (($unicode[$chardata[$i]['char']] == 'AL') OR ($chardata[$i]['char'] == 32)) {
+					if (($unicode[$chardata[$i]['char']] == 'AL') OR ($chardata[$i]['char'] == 32) OR ($chardata[$i]['char'] == 8204)) {
 						$charAL[$x] = $chardata[$i];
 						$charAL[$x]['i'] = $i;
 						$chardata[$i]['x'] = $x;
@@ -8122,12 +8122,26 @@ if (!class_exists('TCPDF')) {
 			$prevTextColor = $this->TextColor;
 			$this->SetDrawColorArray($style["fgcolor"]);
 			$this->SetTextColorArray($style["fgcolor"]);
+			if (empty($w) OR ($w <= 0)) {
+				if ($this->rtl) {
+					$w = $this->x - $this->lMargin;
+				} else {
+					$w = $this->w - $this->rMargin - $this->x;
+				}
+			}
 			if (empty($x)) {
 				$x = $this->GetX();
+			}
+			if ($this->rtl) {
+				$x = $this->w - $x;
 			}
 			if (empty($y)) {
 				$y = $this->GetY();
 			}
+			if (empty($xres)) {
+				$xres = 0.4;
+			}
+			$fbw = ($arrcode["maxw"] * $xres) + (2 * $style["padding"]);
 			$extraspace = ($this->cell_height_ratio * $fontsize / $this->k) + (2 * $style["padding"]);
 			if (empty($h)) {
 				$h = 10 + $extraspace;
@@ -8150,42 +8164,54 @@ if (!class_exists('TCPDF')) {
 			}
 			// maximum bar heigth
 			$barh = $h - $extraspace;
-			if (empty($w) OR ($w <= 0)) {
-				if ($this->rtl) {
-					$w = $this->x - $this->lMargin;
-				} else {
-					$w = $this->w - $this->rMargin - $this->x;
-				}
-			}
-			if (empty($xres)) {
-				$xres = 0.4;
-			}
-			$fbw = ($arrcode["maxw"] * $xres) + (2 * $style["padding"]);
 			switch ($style["position"]) {
-				case "L": {
-					$xpos = $x + $style["padding"];
+				case "L": { // left
+					if ($this->rtl) {
+						$xpos = $x - $w;
+					} else {
+						$xpos = $x;
+					}
 					break;
 				}
-				case "C": {
-					$xpos = ($w - ($x + $style["padding"])) / 2;
+				case "C": { // center
+					$xdiff = (($w - $fbw) / 2);
+					if ($this->rtl) {
+						$xpos = $x - $w + $xdiff;
+					} else {
+						$xpos = $x + $xdiff;
+					}
 					break;
 				}
-				case "R": {
-					$xpos = $x + $style["padding"];
+				case "R": { // right
+					if ($this->rtl) {
+						$xpos = $x - $fbw;
+					} else {
+						$xpos = $x + $w - $fbw;
+					}
 					break;
 				}
-				case "S": {
-					$xpos = $x + $style["padding"];
-					$xres = ($w - (2 * $style["padding"])) / $arrcode["maxw"];
+				case "S": { // stretch
 					$fbw = $w;
+					$xres = ($w - (2 * $style["padding"])) / $arrcode["maxw"];
+					if ($this->rtl) {
+						$xpos = $x - $w;
+					} else {
+						$xpos = $x;
+					}
 					break;
 				}
 			}
+			$xpos_rect = $xpos;
+			$xpos = $xpos_rect + $style["padding"];
+			$xpos_text = $xpos;
+			// barcode is always printed in LTR direction
+			$tempRTL = $this->rtl;
+			$this->rtl = false;
 			// print background color
 			if ($style["bgcolor"]) {
-				$this->Rect($x, $y, $fbw, $h, 'DF', '', $style["bgcolor"]);
+				$this->Rect($xpos_rect, $y, $fbw, $h, 'DF', '', $style["bgcolor"]);
 			} elseif ($style["border"]) {
-				$this->Rect($x, $y, $fbw, $h, 'D');
+				$this->Rect($xpos_rect, $y, $fbw, $h, 'D');
 			}
 			// print bars
 			if ($arrcode !== false) {
@@ -8202,10 +8228,12 @@ if (!class_exists('TCPDF')) {
 			// print text
 			if ($style["text"]) {
 				// print text
-				$this->x = $x + $style["padding"];
+				$this->x = $xpos_text;
 				$this->y = $y + $style["padding"] + $barh; 
 				$this->Cell(($arrcode["maxw"] * $xres), ($this->cell_height_ratio * $fontsize / $this->k), $code, 0, 0, 'C', 0, '', $style["stretchtext"]);
 			}
+			// restore original direction
+			$this->rtl = $tempRTL;
 			// restore previous font
 			if ($style["text"] AND isset($style["font"])) {
 				$this->SetFont($prevFontFamily, $prevFontStyle, $prevFontSizePt);
