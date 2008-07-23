@@ -147,8 +147,14 @@ switch($op)
 			xoops_error (_TRUST_PATH_HELP);
 			echo '<br />';
 		}
-		if(is_dir(XOOPS_TRUST_PATH) AND !is_dir(XOOPS_TRUST_PATH.'/modules/protector/'))
-		{
+$sql1 = "SELECT conf_modid FROM `" . $xoopsDB->prefix("config") . "` WHERE conf_name = 'dos_skipmodules'";
+if($result1 = $xoopsDB->query($sql1)) {
+list($modid) = $xoopsDB->FetchRow($result1);
+$sql2 = "SELECT isactive FROM `" . $xoopsDB->prefix("modules") . "` WHERE mid =".$modid;
+$result2 = $xoopsDB->query($sql2);
+list($protector_is_active) = $xoopsDB->FetchRow($result2);
+}
+	if( $protector_is_active == 0 ) {
 			xoops_error (_PROTECTOR_NOT_FOUND);
 			echo '<br />';
 		}
