@@ -15,6 +15,7 @@ ImpressCMS ChangeLog
 * Upgrade script XOOPS2.2.x --> ImpressCMS. (stranger/phppp)
 * function "_filterImgUrl" to module.sanitizer, to keep compatibility with D3 modules.. (stranger/minahito/hodaka)
 * added 3 content alignments for dhtml text editor. (stranger)
+* Upgrade script XOOPS2.3 --> ImpressCMS. (stranger)
 
 '''Improved'''
 * Updated TCPDF to version 4.0.009. (stranger)
