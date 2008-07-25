@@ -16,6 +16,8 @@ ImpressCMS ChangeLog
 * function "_filterImgUrl" to module.sanitizer, to keep compatibility with D3 modules.. (stranger/minahito/hodaka)
 * added 3 content alignments for dhtml text editor. (stranger)
 * Upgrade script XOOPS2.3 --> ImpressCMS. (stranger)
+* icms.css loads from the header. (stranger)
+* pdf.php in language files. (stranger)
 
 '''Improved'''
 * Updated TCPDF to version 4.0.009. (stranger)
@@ -24,6 +26,9 @@ ImpressCMS ChangeLog
 '''Changed'''
 * after upgrade is done you'll get back to index to see if upgrade was successful. (stranger)
 * moved protector.php to extras. (stranger)
+* xoops.css to icms.css. (stranger)
+* xoops_rtl.css to icms_rtl.css. (stranger)
+* xoops_rtl.js to icms_rtl.js. (stranger)
 
 '''Fixed'''
 * Could not upload avatar. (real_therplima/stranger)
