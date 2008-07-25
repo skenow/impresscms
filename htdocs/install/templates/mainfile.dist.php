@@ -11,30 +11,33 @@
 * @package		Installer
 * @since		XOOPS
 * @author		http://www.xoops.org The XOOPS Project
-* @author		modified by stranger <stranger@impresscms.ir>
+* @author		modified by stranger <pesian_stranger@users.sourceforge.net>
 * @version		$Id$
 */
 
-if ( !defined("XOOPS_MAINFILE_INCLUDED") ) {
-	define("XOOPS_MAINFILE_INCLUDED",1);
+if ( !defined('XOOPS_MAINFILE_INCLUDED') ) {
+	define('XOOPS_MAINFILE_INCLUDED',1);
 
-	// XOOPS Physical Path
-	// Physical path to your main XOOPS directory WITHOUT trailing slash
-	// Example: define('XOOPS_ROOT_PATH', '/path/to/xoops/directory');
-	define('XOOPS_ROOT_PATH', '');
+	// IMPRESSCMS Physical Path
+	// Physical path to your main IMPRESSCMS directory WITHOUT trailing slash
+	// Example: define('XOOPS_ROOT_PATH', '/path/to/impresscms/directory');
+	define( 'XOOPS_ROOT_PATH', '' );
+	define( 'ICMS_ROOT_PATH', XOOPS_ROOT_PATH );
 
-	// XOOPS Security Physical Path
-	// Physical path to your security XOOPS directory WITHOUT trailing slash.
+	// IMPRESSCMS Security Physical Path
+	// Physical path to your security IMPRESSCMS directory WITHOUT trailing slash.
 	// Ideally off your server WEB folder
 	// Example: define('XOOPS_TRUST_PATH', '/path/to/trust/directory');
-	define('XOOPS_TRUST_PATH', '');
+	define( 'XOOPS_TRUST_PATH', '' );
+	define( 'ICMS_TRUST_PATH', XOOPS_TRUST_PATH );
 
 	// sdata#--#
 
-	// XOOPS Virtual Path (URL)
+	// IMPRESSCMS Virtual Path (URL)
 	// Virtual path to your main XOOPS directory WITHOUT trailing slash
-	// Example: define('XOOPS_URL', 'http://url_to_xoops_directory');
-	define('XOOPS_URL', 'http://');
+	// Example: define('XOOPS_URL', 'http://url_to_impresscms_directory');
+	define( 'XOOPS_URL', 'http://' );
+	define( 'ICMS_URL', XOOPS_URL );
 
 	define('XOOPS_CHECK_PATH', 0);
 	// Protect against external scripts execution if safe mode is not enabled
@@ -42,7 +45,7 @@ if ( !defined("XOOPS_MAINFILE_INCLUDED") ) {
 		if ( function_exists('debug_backtrace') ) {
 			$xoopsScriptPath = debug_backtrace();
 			if ( !count($xoopsScriptPath) ) {
-			 	die("ImpressCMS path check: this file cannot be requested directly");
+			 	die('ImpressCMS path check: this file cannot be requested directly');
 			}
 			$xoopsScriptPath = $xoopsScriptPath[0]['file'];
 		} else {
@@ -52,8 +55,8 @@ if ( !defined("XOOPS_MAINFILE_INCLUDED") ) {
 			// IIS6 may double the \ chars
 			$xoopsScriptPath = str_replace( strpos( $xoopsScriptPath, '\\\\', 2 ) ? '\\\\' : DIRECTORY_SEPARATOR, '/', $xoopsScriptPath);
 		}
-		if ( strcasecmp( substr($xoopsScriptPath, 0, strlen(XOOPS_ROOT_PATH)), str_replace( DIRECTORY_SEPARATOR, '/', XOOPS_ROOT_PATH)) ) {
-		 	exit("ImpressCMS path check: Script is not inside XOOPS_ROOT_PATH and cannot run.");
+		if ( strcasecmp( substr($xoopsScriptPath, 0, strlen(ICMS_ROOT_PATH)), str_replace( DIRECTORY_SEPARATOR, '/', ICMS_ROOT_PATH)) ) {
+		 	exit('ImpressCMS path check: Script is not inside ICMS_ROOT_PATH and cannot run.');
 		}
 	}
 
@@ -95,22 +98,25 @@ if ( !defined("XOOPS_MAINFILE_INCLUDED") ) {
 	define('XOOPS_DB_PCONNECT', 0);
 
 	// (optional) Physical path to script that logs database queries.
-	// Example: define('ICMS_LOGGING_HOOK', XOOPS_ROOT_PATH . '/modules/foobar/logging_hook.php');
+	// Example: define('ICMS_LOGGING_HOOK', ICMS_ROOT_PATH . '/modules/foobar/logging_hook.php');
 	define('ICMS_LOGGING_HOOK', '');
 
-	define("XOOPS_GROUP_ADMIN", "1");
-	define("XOOPS_GROUP_USERS", "2");
-	define("XOOPS_GROUP_ANONYMOUS", "3");
+	define('XOOPS_GROUP_ADMIN', '1');
+	define('XOOPS_GROUP_USERS', '2');
+	define('XOOPS_GROUP_ANONYMOUS', '3');
+	define('ICMS_GROUP_ADMIN', XOOPS_GROUP_ADMIN);
+	define('ICMS_GROUP_USERS', XOOPS_GROUP_USERS);
+	define('ICMS_GROUP_ANONYMOUS', XOOPS_GROUP_ANONYMOUS);
 
     foreach ( array('GLOBALS', '_SESSION', 'HTTP_SESSION_VARS', '_GET', 'HTTP_GET_VARS', '_POST', 'HTTP_POST_VARS', '_COOKIE', 'HTTP_COOKIE_VARS', '_REQUEST', '_SERVER', 'HTTP_SERVER_VARS', '_ENV', 'HTTP_ENV_VARS', '_FILES', 'HTTP_POST_FILES', 'xoopsDB', 'xoopsUser', 'xoopsUserId', 'xoopsUserGroups', 'xoopsUserIsAdmin', 'xoopsConfig', 'xoopsOption', 'xoopsModule', 'xoopsModuleConfig', 'xoopsRequestUri') as $bad_global ) {
         if ( isset( $_REQUEST[$bad_global] ) ) {
-            header( 'Location: '.XOOPS_URL.'/' );
+            header( 'Location: '.ICMS_URL.'/' );
             exit();
         }
     }
 
-	if (!isset($xoopsOption['nocommon']) && XOOPS_ROOT_PATH != '') {
-		include XOOPS_ROOT_PATH."/include/common.php";
+	if (!isset($xoopsOption['nocommon']) && ICMS_ROOT_PATH != '') {
+		include ICMS_ROOT_PATH.'/include/common.php';
 	}
 }
 ?>
