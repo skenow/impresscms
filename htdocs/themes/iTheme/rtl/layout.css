@@ -101,3 +101,4 @@ head~body #xo-canvas-rightcolumn {
 	position:		relative;
 	clear: both;
 }
+.outer { direction : rtl;}
