@@ -21,9 +21,6 @@ defined("XOOPS_MAINFILE_INCLUDED") or die();
 /**
  * Creating ICMS specific constants
  */
-define('ICMS_ROOT_PATH', XOOPS_ROOT_PATH);
-define('ICMS_URL', XOOPS_URL);
-define('ICMS_TRUST_PATH', XOOPS_TRUST_PATH);
 define('ICMS_PRELOAD_PATH', XOOPS_ROOT_PATH . '/preload');
 define('ICMS_PURIFIER_CACHE', ICMS_TRUST_PATH.'/cache/htmlpurifier');
 

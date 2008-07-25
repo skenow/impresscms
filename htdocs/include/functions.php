@@ -44,7 +44,7 @@ function xoops_header($closehead=true)
     <script type="text/javascript" src="'.ICMS_URL.'/include/xoops.js"></script>
     ';
     $themecss = getcss($xoopsConfig['theme_set']);
-    echo '<link rel="stylesheet" type="text/css" media="all" href="'.ICMS_URL.'/xoops.css" />';
+    echo '<link rel="stylesheet" type="text/css" media="all" href="'.ICMS_URL.'/icms.css" />';
     if ($themecss) {
         echo '<link rel="stylesheet" type="text/css" media="all" href="'.$themecss.'" />';
         //echo '<style type="text/css" media="all"><!-- @import url('.$themecss.'); --></style>';
