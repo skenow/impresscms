@@ -40,6 +40,8 @@ ImpressCMS ChangeLog
 * #1871202 (was not completely fixed) - Avatar and Karma (Fixed). (stranger)
 * Issue with new hash generator, when replacing new core files. (stranger)
 * Security Vulnerabilty (http://www.securityfocus.com/bid/30330) in modules/system/admin.php (Vaughan)
+* typo in htaccess.txt for error documents in error 500.. errpr.php should be error.php (Wizanda)
+
 
 ===2008-07-02 : 1.1 Alpha 2===
 
