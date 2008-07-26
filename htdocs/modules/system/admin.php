@@ -36,14 +36,17 @@
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */ 
 if (isset($_POST['fct'])) {
-	$fct = trim($_POST['fct']);
+	$fct = preg_replace('/(;|\||`|>|<|&|^|"|'."\n|\r|'".'|{|}|[|]|\)|\()/i', '', trim($_POST['fct']));
+	$fct = '"'.preg_replace('/\$/', '\\\$', $fct).'"';
 }
 if (isset($_GET['fct'])) {
-	$fct = trim($_GET['fct']);
+	$fct = preg_replace('/(;|\||`|>|<|&|^|"|'."\n|\r|'".'|{|}|[|]|\)|\()/i', '', trim($_GET['fct']));
+	$fct = '"'.preg_replace('/\$/', '\\\$', $fct).'"';
 }
 if (isset($fct) && $fct == 'users') {
 	$xoopsOption['pagetype'] = 'user';
 }
+
 include '../../mainfile.php';
 include XOOPS_ROOT_PATH.'/include/cp_functions.php';
 if ( file_exists(XOOPS_ROOT_PATH.'/modules/system/language/'.$xoopsConfig['language'].'/admin.php') ) {
