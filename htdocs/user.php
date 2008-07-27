@@ -21,15 +21,11 @@ include 'mainfile.php';
 
 $op = 'main';
 
-if(isset($_POST['op']))
-{
-    $op = preg_replace('/(;|||`|>|<|&|^|"|'."n|r|'".'|{|}|[|]|)|()/i', '', trim($_POST['op']));
-    $op = '"'.preg_replace('/$/', '\$', $op).'"';
+if (isset($_POST['op'])) {
+	$op = StopXSS($_POST['op']);
 }
-elseif(isset($_GET['op']))
-{
-    $op = preg_replace('/(;|||`|>|<|&|^|"|'."n|r|'".'|{|}|[|]|)|()/i', '', trim($_GET['op']));
-    $op = '"'.preg_replace('/$/', '\$', $op).'"';
+elseif (isset($_GET['op'])) {
+	$op = StopXSS($_GET['op']);
 }
 
 if($op == 'main')
