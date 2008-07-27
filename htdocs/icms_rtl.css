@@ -62,7 +62,7 @@ div#disclaimer{
 	font-family: tahoma,verdana,arial, helvetica, sans-serif;
 }
 .openid_url {
-	background-image: url(./images/openid-inputicon.gif);
+	background-image: url(images/openid-inputicon.gif);
 	background-repeat: no-repeat;
 	background-attachment: scroll;
 	background-color: #ffffff;
