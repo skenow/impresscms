@@ -307,5 +307,4 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
         displayGroups();
         break;
     }
-}
 ?>
