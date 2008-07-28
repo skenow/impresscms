@@ -311,6 +311,13 @@ modules/system/language/english/modinfo.php
 + modules/system/language/english/admin/social_bookmarks_links.php
 ---------------------------------------------------------
 
+modules/system/language/english/admin/users.php
+---------------------------------------------------------
+
++  define("_AM_OPENID","OpenID");
++  define("_AM_AOUTVTOIAD","Allow other users to view this OpenID address");
+
+
 modules/system/language/english/admin/modulesadmin.php
 ---------------------------------------------------------
 

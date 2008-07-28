@@ -39,7 +39,7 @@ ImpressCMS ChangeLog
 * The installer was not properly creating the password hash of the administrator (Vaughan/real_therplima/malanciault)
 * #1871202 (was not completely fixed) - Avatar and Karma (Fixed). (stranger)
 * Issue with new hash generator, when replacing new core files. (stranger)
-* Security Vulnerabilty (http://www.securityfocus.com/bid/30330) in modules/system/admin.php (Vaughan)
+* Security Vulnerabilty (http://www.securityfocus.com/bid/30330) in modules/system/admin.php (Vaughan/Rodrigo/Wtravel)
 * typo in htaccess.txt for error documents in error 500.. errpr.php should be error.php (Wizanda)
 
 
