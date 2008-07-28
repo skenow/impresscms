@@ -24,32 +24,14 @@ if($xoopsConfigSearch['enable_search'] != 1)
 	exit();
 }
 $action = 'search';
-if(!empty($_GET['action']))
-{
-    $action = preg_replace('/(;|||`|>|<|&|^|"|'."n|r|'".'|{|}|[|]|)|()/i', '', trim($_GET['action']));
-    $action = '"'.preg_replace('/$/', '\$', $action).'"';
-} elseif (!empty($_POST['action'])) {
-    $action = preg_replace('/(;|||`|>|<|&|^|"|'."n|r|'".'|{|}|[|]|)|()/i', '', trim($_POST['action']));
-    $action = '"'.preg_replace('/$/', '\$', $action).'"';
-}
+if(!empty($_GET['action'])) {$action = trim(StopXSS($_GET['action']));}
+elseif(!empty($_POST['action'])) {$action = trim(StopXSS($_POST['action']));}
 $query = '';
-if(!empty($_GET['query']))
-{
-	$query = $_GET['query'];
-}
-elseif(!empty($_POST['query']))
-{
-	$query = $_POST['query'];
-}
+if(!empty($_GET['query'])) {$query = StopXSS($_GET['query']);}
+elseif(!empty($_POST['query'])) {$query = StopXSS($_POST['query']);}
 $andor = 'AND';
-if(!empty($_GET['andor']))
-{
-	$andor = $_GET['andor'];
-}
-elseif(!empty($_POST['andor']))
-{
-	$andor = $_POST['andor'];
-}
+if(!empty($_GET['andor'])) {$andor = StopXSS($_GET['andor']);}
+elseif(!empty($_POST['andor'])) {$andor = StopXSS($_POST['andor']);}
 $mid = $uid = $start = 0;
 if(!empty($_GET['mid'])) {$mid = intval($_GET['mid']);}
 elseif(!empty($_POST['mid'])) {$mid = intval($_POST['mid']);}
