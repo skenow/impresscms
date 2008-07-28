@@ -37,13 +37,11 @@
  */ 
 if(isset($_POST['fct']))
 {
-	$fct = preg_replace('/(;|\||`|>|<|&|^|"|'."\n|\r|'".'|{|}|[|]|\)|\()/i', '', trim($_POST['fct']));
-	$fct = '"'.preg_replace('/\$/', '\\\$', $fct).'"';
+	$fct = trim(StopXSS($_POST['fct']));
 }
 if(isset($_GET['fct']))
 {
-	$fct = preg_replace('/(;|\||`|>|<|&|^|"|'."\n|\r|'".'|{|}|[|]|\)|\()/i', '', trim($_GET['fct']));
-	$fct = '"'.preg_replace('/\$/', '\\\$', $fct).'"';
+	$fct = trim(StopXSS($_GET['fct']));
 }
 if(isset($fct) && $fct == 'users') {$xoopsOption['pagetype'] = 'user';}
 
