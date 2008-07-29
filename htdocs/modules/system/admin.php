@@ -35,12 +35,13 @@
  * @author Kazumi Ono (AKA onokazu)
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */ 
-include '../../mainfile.php';
+include '../../include/functions.php';
 if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
 if(!empty($_GET)) foreach($_GET as $k => $v) ${$k} = StopXSS($v);
 $fct = (isset($_GET['fct']))?trim(StopXSS($_GET['fct'])):((isset($_POST['fct']))?trim(StopXSS($_POST['fct'])):'');
 
 if(isset($fct) && $fct == 'users') {$xoopsOption['pagetype'] = 'user';}
+include '../../mainfile.php';
 
 include ICMS_ROOT_PATH.'/include/cp_functions.php';
 if(file_exists(ICMS_ROOT_PATH.'/modules/system/language/'.$xoopsConfig['language'].'/admin.php'))
