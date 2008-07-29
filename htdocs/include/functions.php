@@ -1288,7 +1288,7 @@ function icms_getUserSaltFromUname($uname = '')
 	}
 	else
 	{
-		trigger_error('ERROR: No User Selected', E_USER_ERROR);
+		redirect_header('user.php',2,_US_SORRYNOTFOUND);
 	}
 	return $salt;
 }
