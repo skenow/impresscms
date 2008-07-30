@@ -215,6 +215,8 @@ function pages_confirmdelpage($page_id,$redir=null){
 }
 
 function pages_changestatus($page_id) {
+	global $xoopsConfig;
+	
 	$page_handler = xoops_gethandler('page');
 	$page = $page_handler->get($page_id);
 	$page->setVar('page_status',!$page->getVar('page_status'));
@@ -224,6 +226,10 @@ function pages_changestatus($page_id) {
 	
 	if (!$mod->getVar('isactive')){
 		redirect_header('admin.php?fct=pages&op=list',3,_MD_MODDEACTIVE);
+	}
+	
+	if ($xoopsConfig['startpage'] == $page->getVar('page_moduleid').'-'.$page->getVar('page_id')){ //Selected page is the start page of the site
+		redirect_header('admin.php?fct=pages&op=list',5,_MD_DELSTARTPAGE);
 	}
 	
 	if (!$page_handler->insert($page)){
