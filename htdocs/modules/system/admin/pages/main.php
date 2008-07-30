@@ -47,7 +47,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     		pages_delpage($page_id,$redir);
     		break;
     	case 'changestatus':
-    		pages_changestatus($page_id);
+    		pages_changestatus($page_id,$redir);
     		break;
     }
 }
@@ -214,22 +214,27 @@ function pages_confirmdelpage($page_id,$redir=null){
 	}
 }
 
-function pages_changestatus($page_id) {
+function pages_changestatus($page_id,$redir=null) {
 	global $xoopsConfig;
 	
 	$page_handler = xoops_gethandler('page');
 	$page = $page_handler->get($page_id);
-	$page->setVar('page_status',!$page->getVar('page_status'));
+	if (empty($redir)){
+		$sts = !$page->getVar('page_status');
+	}else{
+		$sts = 0;
+	}
+	$page->setVar('page_status',$sts);
 
 	$module_handler = xoops_gethandler('module');
 	$mod = $module_handler->get($page->getVar('page_moduleid'));
 	
 	if (!$mod->getVar('isactive')){
-		redirect_header('admin.php?fct=pages&op=list',3,_MD_MODDEACTIVE);
+		redirect_header((!is_null($redir))?base64_decode($redir).'&canceled=1':'admin.php?fct=pages&op=list',3,_MD_MODDEACTIVE);
 	}
 	
 	if ($xoopsConfig['startpage'] == $page->getVar('page_moduleid').'-'.$page->getVar('page_id')){ //Selected page is the start page of the site
-		redirect_header('admin.php?fct=pages&op=list',5,_MD_DELSTARTPAGE);
+		redirect_header((!is_null($redir))?base64_decode($redir).'&canceled=1':'admin.php?fct=pages&op=list',5,_MD_DELSTARTPAGE);
 	}
 	
 	if (!$page_handler->insert($page)){
@@ -238,7 +243,7 @@ function pages_changestatus($page_id) {
 		$msg = _MD_AM_DBUPDATED;
 	}
 
-	redirect_header('admin.php?fct=pages&op=list',2,$msg);
+	redirect_header((!is_null($redir))?base64_decode($redir):'admin.php?fct=pages&op=list',2,$msg);
 }
 
 function pageform($id=null){
