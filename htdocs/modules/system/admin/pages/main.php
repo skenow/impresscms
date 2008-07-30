@@ -219,6 +219,13 @@ function pages_changestatus($page_id) {
 	$page = $page_handler->get($page_id);
 	$page->setVar('page_status',!$page->getVar('page_status'));
 
+	$module_handler = xoops_gethandler('module');
+	$mod = $module_handler->get($page->getVar('page_moduleid'));
+	
+	if (!$mod->getVar('isactive')){
+		redirect_header('admin.php?fct=pages&op=list',3,_MD_MODDEACTIVE);
+	}
+	
 	if (!$page_handler->insert($page)){
 		$msg = _MD_FAILEDIT;
 	}else{

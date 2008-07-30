@@ -26,4 +26,6 @@ define('_MD_PAGECHANGESTS','Change the status of this link');
 define('_MD_NOTFOUND','No record found');
 
 define('_MD_DELSTARTPAGE','This page is used as Start Page of the site.<br />Change the Start Page first <font color="red">(in Preferences >> General Settings)</font> and try again.');
+
+define('_MD_MODDEACTIVE','You can not change the status for this link because the module that it point is deactivated.');
 ?>
