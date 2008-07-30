@@ -185,6 +185,22 @@ class icms_HTMLPurifier
 
 			$icms_PurifyConfig->set('Filter', 'YouTube', true); // setting to true will allow Youtube files to be embedded into your site & w3c validated.
 		}
+		elseif($config = 'protector')
+		{
+			$icms_PurifyConfig->set('HTML', 'DefinitionID', 'protector');
+			$icms_PurifyConfig->set('HTML', 'DefinitionRev', 1);
+			$icms_PurifyConfig->set('Core', 'Encoding', _CHARSET); // sets purifier to use specified encoding. default = UTF-8
+			if(is_dir(ICMS_PURIFIER_CACHE))
+			{
+				$icms_PurifyConfig->set('Cache', 'DefinitionImpl', 'Serializer');
+				$icms_PurifyConfig->set('Cache', 'SerializerPath', ICMS_PURIFIER_CACHE);
+			}
+			else
+			{
+				$icms_PurifyConfig->set('Cache', 'DefinitionImpl', 'Serializer');
+				$icms_PurifyConfig->set('Cache', 'SerializerPath', ICMS_ROOT_PATH.'/cache');
+			}
+		}
 		elseif($config = 'display') // config id level for display HTMLArea
 		{
 			$icms_PurifyConfig->set('HTML', 'DefinitionID', 'display');
@@ -290,6 +306,8 @@ class icms_HTMLPurifier
 		$this->purifier = new HTMLPurifier($icms_PurifyConfig);
 
 		$html = $this->purifier->purify($html);
+
+		if($config = 'protector') {$html = $this->purify_recursive($html);}
 
 		return $html;
 	
