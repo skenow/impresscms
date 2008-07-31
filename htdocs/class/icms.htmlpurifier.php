@@ -305,12 +305,17 @@ class icms_HTMLPurifier
 
 		$this->purifier = new HTMLPurifier($icms_PurifyConfig);
 
-		$html = $this->purifier->purify($html);
-
-		if($config = 'protector') {$html = $this->purify_recursive($html);}
+		if($config = 'protector') {$html = $this->icms_purify_recursive($html);}
+		else {$html = $this->purifier->purify($html);}
 
 		return $html;
 	
+	}
+
+	function icms_purify_recursive($data)
+	{
+		if(is_array($data)) {return array_map(array($this, 'icms_purify_recursive'), $data);}
+		else {return strlen($data) > 32 ? $this->purifier->purify($data) : $data;}
 	}
 
 	/**
