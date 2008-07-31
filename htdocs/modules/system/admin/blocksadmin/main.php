@@ -33,13 +33,16 @@ if(!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($x
 include_once ICMS_ROOT_PATH.'/class/xoopsblock.php';
 include ICMS_ROOT_PATH.'/modules/system/admin/blocksadmin/blocksadmin.php';
 
-if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
-if(!empty($_GET)) foreach($_GET as $k => $v) ${$k} = StopXSS($v);
+$allowedHTML = array('bcontent');
+
+if(!empty($_POST)){ foreach($_POST as $k => $v){ if (!in_array($k,$allowedHTML)){${$k} = StopXSS($v);}else{${$k} = $v;}}}
+if(!empty($_GET)){ foreach($_GET as $k => $v){ if (!in_array($k,$allowedHTML)){${$k} = StopXSS($v);}else{${$k} = $v;}}}
+
 $op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'list');
 if($op == 'edit' || $op == 'delete' || $op == 'delete_ok' || $op == 'clone' || $op == 'changestatus')
 {
-	$bid = isset($_GET['bid']) ? intval($_GET['bid']) : 0;
-	$sts = isset($_GET['sts']) ? intval($_GET['sts']) : 0;
+  $bid = (isset($_GET['bid']))?intval($_GET['bid']):((isset($_POST['bid']))?intval($_POST['bid']):0);
+  $sts = (isset($_GET['sts']))?intval($_GET['sts']):((isset($_POST['sts']))?intval($_POST['sts']):0);
 }
 
 if(isset($previewblock))
