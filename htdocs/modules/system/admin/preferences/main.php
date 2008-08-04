@@ -33,16 +33,9 @@
 if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->isAdmin ( $xoopsModule->mid () )) {
 	exit ( "Access Denied" );
 } else {
-	$op = 'list';
-	if (isset ( $_POST )) {
-		foreach ( $_POST as $k => $v ) {
-			${$k} = $v;
-		}
-	}
-	if (isset ( $_GET ['op'] )) {
-		$op = trim ( $_GET ['op'] );
-	}
-	
+	if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
+	if(!empty($_GET)) foreach($_GET as $k => $v) ${$k} = StopXSS($v);
+	$op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'list');
 	if (isset ( $_GET ['confcat_id'] )) {
 		$confcat_id = intval ( $_GET ['confcat_id'] );
 	}
@@ -281,6 +274,18 @@ if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->
 					include_once XOOPS_ROOT_PATH . "/class/xoopsform/formimage.php";
 					$myts = & MyTextSanitizer::getInstance ();
 					$ele = new MastopFormSelectImage ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
+				break;
+				case 'select_paginati' :
+					if (file_exists(ICMS_LIBRARIES_PATH . '/paginationstyles/paginationstyles.php')){
+						include ICMS_LIBRARIES_PATH . '/paginationstyles/paginationstyles.php';
+						$st =& $styles;
+						$arr = array();
+						foreach ($st as $style){
+							$arr[$style['fcss']] = $style['name'];
+						}
+						$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
+						$ele->addOptionArray ( $arr );
+					}
 				break;
 				case 'textbox' :
 				default :

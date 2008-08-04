@@ -7,7 +7,7 @@
 * @package		core
 * @since		1.1
 * @author		marcan <marcan@impresscms.org>
-* @version		$Id: main.php 2005 2008-05-03 17:49:17Z malanciault $
+* @version		$Id$
 */
 if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid()) ) {
     exit("Access Denied");
@@ -43,10 +43,9 @@ icms_loadLanguageFile('system', 'common');
 
 $icms_customtag_handler = xoops_getmodulehandler('customtag');
 
-$op = '';
-
-if (isset($_GET['op'])) $op = $_GET['op'];
-if (isset($_POST['op'])) $op = $_POST['op'];
+if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
+if(!empty($_GET)) foreach($_GET as $k => $v) ${$k} = StopXSS($v);
+$op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'');
 
 switch ($op) {
 	case "mod":

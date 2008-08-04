@@ -24,6 +24,8 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     $limit = (isset($_GET['limit']))?intval($_GET['limit']):((isset($_POST['limit']))?intval($_POST['limit']):15);
     $start = (isset($_GET['start']))?intval($_GET['start']):((isset($_POST['start']))?intval($_POST['start']):0);
     $editor = (isset($_GET['editor']))?$_GET['editor']:null;
+    $canceled = (isset($_GET['canceled']))?intval($_GET['canceled']):((isset($_POST['canceled']))?intval($_POST['canceled']):0);
+    
     switch ($op){
     	case 'list':
     		xoops_cp_header();
@@ -53,9 +55,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     		contmanager_clonecontent($content_id);
     		break;
     	case 'delcontent':
-    		xoops_cp_header();
-    		xoops_confirm(array('op' => 'delcontentok', 'content_id' => $content_id, 'fct' => 'content'), 'admin.php', _MD_RUDELCONTENT);
-    		xoops_cp_footer();
+    		contmanager_confirmdelcontent($content_id);
     		break;
     	case 'delcontentok':
     		contmanager_delcontent($content_id);
@@ -342,24 +342,90 @@ function contmanager_delcontent($content_id) {
 	redirect_header('admin.php?fct=content',2,_MD_AM_DBUPDATED);
 }
 
+function contmanager_confirmdelcontent($content_id){
+	global $canceled;
+	
+	if ($canceled){
+		header('Location: '.ICMS_URL.'/modules/system/admin.php?fct=content');
+	}
+	
+	$content_handler =& xoops_gethandler('content');
+	$content = $content_handler->get($content_id);
+	
+	$content_url = 'content.php?page='.$content_handler->makeLink($content);
+
+	$page_handler = xoops_gethandler('page');
+	$criteria = new CriteriaCompo(new Criteria('page_url', $content_url));
+	$criteria->add(new Criteria('page_url', ICMS_URL.'/'.$content_url),'OR');
+	$pages = $page_handler->getObjects($criteria);
+
+	if (count($pages) > 0){
+		$page = $pages[0];
+	}else{
+		$page = false;
+	}
+
+	$redir = base64_encode('admin.php?fct=content&op=delcontent&content_id='.$content_id);
+	
+	if (!$page || !is_object($page)){
+		xoops_cp_header();
+		xoops_confirm(array('op' => 'delcontentok', 'content_id' => $content_id, 'fct' => 'content'), 'admin.php', _MD_RUDELCONTENT);
+		xoops_cp_footer();
+	}else{
+		redirect_header('admin.php?fct=pages&op=delpage&page_id='.$page->getVar('page_id').'&redir='.$redir,5,_MD_DELLINKFIRST);
+	}
+}
+
 function contmanager_changestatus($content_id) {
+	global $canceled;
+	
+	if ($canceled){
+		header('Location: '.ICMS_URL.'/modules/system/admin.php?fct=content');
+	}
+	
 	$content_handler =& xoops_gethandler('content');
 	$content = $content_handler->get($content_id);
 	$content->setVar('content_status',!$content->getVar('content_status'));
 
-	if (!$content_handler->insert($content)){
-		$msg = _MD_FAILEDIT;
-	}else{
-		$msg = _MD_AM_DBUPDATED;
-	}
+	$content_url = 'content.php?page='.$content_handler->makeLink($content);
 
+	$page_handler = xoops_gethandler('page');
+	$criteria = new CriteriaCompo(new Criteria('page_url', $content_url));
+	$criteria->add(new Criteria('page_url', ICMS_URL.'/'.$content_url),'OR');
+	$pages = $page_handler->getObjects($criteria);
+
+	if (count($pages) > 0){
+		$page = $pages[0];
+	}else{
+		$page = false;
+	}
+	
 	$contentid_or_supid = 'content_id';
 	$contentid_or_supid_value = $content->getVar('content_id');
 	if ($content->getVar('content_supid') != 0) {
 		$contentid_or_supid = 'content_supid';
 		$contentid_or_supid_value = $content->getVar('content_supid');
 	}
-	redirect_header('admin.php?fct=content&op=list&'.$contentid_or_supid.'='.$contentid_or_supid_value,2,$msg);
+	
+	$redir = base64_encode('admin.php?fct=content&op=changestatus&content_id='.$content_id);
+
+	if ($page && is_object($page) && $page->getVar('page_status') == 1){
+		redirect_header('admin.php?fct=pages&op=changestatus&page_id='.$page->getVar('page_id').'&redir='.$redir,5,_MD_STSLINKFIRST);
+	}else{
+		if (!$content_handler->insert($content)){
+			$msg = _MD_FAILEDIT;
+		}else{
+			$msg = _MD_AM_DBUPDATED;
+		}
+
+		$contentid_or_supid = 'content_id';
+		$contentid_or_supid_value = $content->getVar('content_id');
+		if ($content->getVar('content_supid') != 0) {
+			$contentid_or_supid = 'content_supid';
+			$contentid_or_supid_value = $content->getVar('content_supid');
+		}
+		redirect_header('admin.php?fct=content&op=list&'.$contentid_or_supid.'='.$contentid_or_supid_value,2,$msg);
+	}
 }
 
 function contentform($id=null,$clone=false){
@@ -380,6 +446,7 @@ function contentform($id=null,$clone=false){
         $menu = $content->getVar('content_menu');
 		$body = $content->getVar('content_body','E');
 		$css = $content->getVar('content_css','E');
+		$tags = $content->getVar('content_tags','E');
 		$weight = $content->getVar('content_weight');
 		$status = $content->getVar('content_status');
 		$visibility = $content->getVar('content_visibility');
@@ -387,12 +454,12 @@ function contentform($id=null,$clone=false){
 		$content_uid = $content->getVar('content_uid');
 		$grupos_ids = $gperm_handler->getGroupIds('content_read', $id);
 	}else{
-		if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
 		$ftitle = _MD_ADDCONTENT;
 		$title = '';
 		$menu = '';
 		$body = '';
-		$css = file_get_contents(XOOPS_ROOT_PATH.'/modules/system/admin/content/style_rtl.css');
+		$css = file_get_contents(XOOPS_ROOT_PATH.'/modules/system/admin/content/style'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl.':'').'.css');
+		$tags = '';
 		$weight = 0;
 		$status = 1;
 		$visibility = 3;
@@ -401,23 +468,7 @@ function contentform($id=null,$clone=false){
 		$grupos_ids = $xoopsUser->getGroups();
 		if (!in_array(XOOPS_GROUP_ANONYMOUS, $grupos_ids)) {
 			array_push($grupos_ids, XOOPS_GROUP_ANONYMOUS);
-		}
-	   } else {
-		$ftitle = _MD_ADDCONTENT;
-		$title = '';
-		$menu = '';
-		$body = '';
-		$css = file_get_contents(XOOPS_ROOT_PATH.'/modules/system/admin/content/style.css');
-		$weight = 0;
-		$status = 1;
-		$visibility = 3;
-		global $content_supid;
-		$content_uid = $xoopsUser->getVar('uid');
-		$grupos_ids = $xoopsUser->getGroups();
-		if (!in_array(XOOPS_GROUP_ANONYMOUS, $grupos_ids)) {
-			array_push($grupos_ids, XOOPS_GROUP_ANONYMOUS);
-		}
-           }
+		}		
 	}
 
 	$form = new XoopsThemeForm($ftitle, 'content_form', 'admin.php', "post", true);
@@ -444,6 +495,9 @@ function contentform($id=null,$clone=false){
 	$fcss = new XoopsFormTextArea(_MD_CONTENT_CSS, 'content_css',$css,10);
 	$fcss->setDescription(sprintf(_MD_CONTENT_CSS_DESC,XOOPS_URL.'/modules/system/language/'.$xoopsConfig['language'].'/admin/content_css_doc.html'));
 	$form->addElement($fcss);
+	$ftags = new XoopsFormTextArea(_MD_CONTENT_TAGS, 'content_tags',$tags,2);
+	$ftags->setDescription(_MD_CONTENT_TAGS_DESC);
+	$form->addElement($ftags);
 	$form->addElement(new XoopsFormText(_MD_CONTENT_WEIGHT, 'content_weight', 3, 4, $weight));
 	$form->addElement(new XoopsFormRadioYN(_MD_CONTENT_DISPLAY, 'content_status', intval($status), _YES, _NO));
 

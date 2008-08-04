@@ -371,7 +371,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'minuname', '_MD_AM_MINUNAME', '3', '_MD_AM_MINUNAMEDSC', 'textbox', 'int', $p)");
 	$i++;
 	$p++;
-    	$dbm->insert('config', " VALUES ($i, 0, $c, 'maxuname', '_MD_AM_MAXUNAME', '10', '_MD_AM_MAXUNAMEDSC', 'textbox', 'int', $p)");
+    	$dbm->insert('config', " VALUES ($i, 0, $c, 'maxuname', '_MD_AM_MAXUNAME', '20', '_MD_AM_MAXUNAMEDSC', 'textbox', 'int', $p)");
 	$i++;
 	$p++;
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'use_captcha', '_MD_AM_USECAPTCHA', 1, '_MD_AM_USECAPTCHADSC', 'yesno', 'int', $p)");
@@ -755,6 +755,12 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'show_pinfo', '_MD_AM_CONT_SHOWPINFO', '1', '_MD_AM_CONT_SHOWPINFODSC', 'yesno', 'int', $p)");
+	$i++;
+	$p++;
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'num_pages', '_MD_AM_CONT_NUMPAGES', '10', '_MD_AM_CONT_NUMPAGESDSC', 'textbox', 'int', $p)");
+	$i++;
+	$p++;
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'teaser_length', '_MD_AM_CONT_TEASERLENGTH', '500', '_MD_AM_CONT_TEASERLENGTHDSC', 'textbox', 'int', $p)");
 
 
 	// Data for Config Category 10 (Personalization Settings)
@@ -828,6 +834,9 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'use_hidden', '_MD_AM_HIDDENCONTENT', '0', '_MD_AM_HIDDENCONTENTDSC', 'yesno', 'int', $p)");
+	$i++;
+	$p++;
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'pagstyle', '_MD_AM_PAGISTYLE', 'default', '_MD_AM_PAGISTYLE_DESC', 'select_paginati', 'text', $p)");
 
     return $gruops;
 }
