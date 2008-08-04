@@ -42,6 +42,8 @@ ImpressCMS ChangeLog
 * Issue with new hash generator, when replacing new core files. (stranger)
 * Security Vulnerabilty (http://www.securityfocus.com/bid/30330) in modules/system/admin.php (Vaughan/Rodrigo/Wtravel)
 * typo in htaccess.txt for error documents in error 500.. errpr.php should be error.php (Wizanda)
+* #2037875 - theme block did not display theme names
+* #2037881 - SQL error when checking for protector module installation in Control Panel home
 
 
 ===2008-07-02 : 1.1 Alpha 2===

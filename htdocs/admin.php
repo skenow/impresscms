@@ -142,9 +142,11 @@ switch($op)
 		if($result1 = $xoopsDB->query($sql1))
 		{
 			list($modid) = $xoopsDB->FetchRow($result1);
+			if (!is_null($modid)){
 			$sql2 = "SELECT isactive FROM `".$xoopsDB->prefix('modules')."` WHERE mid =".$modid;
 			$result2 = $xoopsDB->query($sql2);
 			list($protector_is_active) = $xoopsDB->FetchRow($result2);
+			}
 		}
 		if($protector_is_active == 0)
 		{
