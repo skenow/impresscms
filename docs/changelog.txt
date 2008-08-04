@@ -3,6 +3,11 @@ ImpressCMS ChangeLog
 == Impresscms 1.2==
 '''Added'''
 * Smarty xoPageNav function (Skalpa)
+* calendar block (Stranger)
+* simplepie library (marcan)
+
+'''Improved'''
+* Updated jscalendar to 1.15. (stranger)
 
 == Impresscms 1.1==
 
@@ -22,6 +27,7 @@ ImpressCMS ChangeLog
 * Upgrade script XOOPS2.3 --> ImpressCMS. (stranger)
 * icms.css loads from the header. (stranger)
 * pdf.php in language files. (stranger)
+* system skips all folders with no theme.html. (nekro/stranger)
 
 '''Improved'''
 * Updated TCPDF to version 4.0.009. (stranger)
