@@ -147,7 +147,7 @@ CREATE TABLE `i83106030_icmscontent` (
 ------
 
 New table icmspage
-Table to store the definition of pages in the Links Manager
+Table to store the definition of pages in the Symlink Manager
 
 [added] CREATE TABLE `i83106030_icmspage` (
   `page_id` mediumint(8) unsigned NOT NULL auto_increment,
