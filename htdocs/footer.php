@@ -25,7 +25,7 @@ if(!defined("XOOPS_FOOTER_INCLUDED"))
 	{
 		// the old way
 		$footer = htmlspecialchars($xoopsConfigMetaFooter['footer']).'<br /><div style="text-align:center">Powered by ImpressCMS &copy; 2007-'.date('Y').' <a href="http://www.impresscms.org/" rel="external">ImpressCMS</a></div>';
-		$google_analytics = htmlspecialchars($xoopsConfigMetaFooter['google_analytics']);
+		$google_analytics = $xoopsConfigMetaFooter['google_analytics'];
 
 		if(isset($xoopsOption['template_main']))
 		{
@@ -74,6 +74,14 @@ if(!defined("XOOPS_FOOTER_INCLUDED"))
 				$xoTheme->contentTemplate = $xoopsOption['template_main'];
 			}
 		}
+	if ($xoopsConfigMetaFooter['use_google_analytics'] == 1){
+		$xoTheme->addScript('<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+			</script>
+	<script type="text/javascript">
+_uacct = "UA-'.$xoopsConfigMetaFooter['google_analytics'].'";
+urchinTracker();
+</script>');
+	}
 		$xoTheme->render();
 	}
 	$xoopsLogger->stopTime();
