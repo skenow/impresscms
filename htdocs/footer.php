@@ -74,6 +74,8 @@ if(!defined("XOOPS_FOOTER_INCLUDED"))
 				$xoTheme->contentTemplate = $xoopsOption['template_main'];
 			}
 		}
+	$config_handler = & xoops_gethandler ( 'config' );
+	$xoopsConfigMetaFooter = & $config_handler->getConfigsByCat ( XOOPS_CONF_METAFOOTER );
 	if ($xoopsConfigMetaFooter['use_google_analytics'] == 1){
 		$xoTheme->addScript('<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
 			</script>

@@ -235,18 +235,11 @@ window.onload=startList;
 
 function xoops_cp_footer() {
 	global $xoopsConfig, $xoopsLogger;
+
 	echo "</div><br /></div>";
 	$config_handler = & xoops_gethandler ( 'config' );
 	$xoopsConfiMetaFooter = & $config_handler->getConfigsByCat ( XOOPS_CONF_METAFOOTER );
-	echo "<div class='CPfoot'>" . $xoopsConfiMetaFooter ['footadm'] . "</small></div>" .	if ($xoopsConfigMetaFooter['use_google_analytics'] == 1){
-		"<script src='http://www.google-analytics.com/urchin.js' type='text/javascript'>
-			</script>
-	<script type='text/javascript'>
-_uacct = 'UA-".$xoopsConfigMetaFooter['google_analytics']."';
-urchinTracker();
-</script>"
-	}
-. "
+	echo "<div class='CPfoot'>" . $xoopsConfiMetaFooter ['footadm'] . "</small></div>
         </body>
       </html>
     ";
