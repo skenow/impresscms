@@ -146,7 +146,7 @@ switch($op)
 			$sql2 = "SELECT isactive FROM `".$xoopsDB->prefix('modules')."` WHERE mid =".$modid;
 			$result2 = $xoopsDB->query($sql2);
 			list($protector_is_active) = $xoopsDB->FetchRow($result2);
-			}
+			}elseif (is_null($modid)){$protector_is_active = '0';}
 		}
 		if($protector_is_active == 0)
 		{
