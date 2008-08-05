@@ -349,7 +349,7 @@ define('_MD_AM_ALLWSHOWSIGDSC', 'By enabling this option, users will be able to 
 // < personalizações > fabio - Sat Apr 28 11:55:00 BRT 2007 11:55:00
 define("_MD_AM_PERSON","Personalization");
 define("_MD_AM_GOOGLE_ANA","Google Analytics");
-define("_MD_AM_GOOGLE_ANA_DESC","Write down the Google Analytics id-code, like: <small>_uacct = \"<font color=#FF0000><b>UA-xxxxxx-x</b></font>\"</small><br />OR<small><br />var pageTracker = _gat._getTracker( \"<font color=#FF0000><b>UA-xxxxxx-x</b></font>\");</small> (you need to write the red bold id-code)
+define("_MD_AM_GOOGLE_ANA_DESC","Write down the Google Analytics id-code, like: <small>_uacct = \"UA-<font color=#FF0000><b>xxxxxx-x</b></font>\"</small><br />OR<small><br />var pageTracker = _gat._getTracker( UA-\"<font color=#FF0000><b>xxxxxx-x</b></font>\");</small> (you need to write the red bold id-code)
 .");
 define("_MD_AM_LLOGOADM","Admin left logo");
 define("_MD_AM_LLOGOADM_DESC"," Select an image to use in the top left corner of the admin panel. <br /><i>To select or send an image, at least one image category must be present in system > images</i> ");
