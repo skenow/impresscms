@@ -51,21 +51,17 @@ else
 	// ################# Preload Trigger startOutputInit ##############
 	$icmsPreloadHandler->triggerEvent('startOutputInit');
 	
-	$xoTheme->addScript('/include/xoops.js', array('type' => 'text/javascript'));
-	$xoTheme->addScript('/include/linkexternal.js', array('type' => 'text/javascript'));
-
-        	if(file_exists(ICMS_ROOT_PATH."/icms.css"))
-		{
-            		$xoTheme->addStylesheet("/icms.css", array("media" => "screen"));
-        	}
-        	if(defined('_ADM_USE_RTL') && _ADM_USE_RTL && file_exists(ICMS_ROOT_PATH."/icms_rtl.css"))
-		{
-            		$xoTheme->addStylesheet("/icms_rtl.css", array("media" => "screen"));
-        	}
-        	if(defined('_ADM_USE_RTL') && _ADM_USE_RTL && file_exists(ICMS_ROOT_PATH."/include/icms_rtl.js"))
-		{
-            		$xoTheme->addScript("/include/icms_rtl.js", array("type" => "text/javascript"));
-        	}
+	$xoTheme->addScript(ICMS_URL.'/include/xoops.js', array('type' => 'text/javascript'));
+	$xoTheme->addScript(ICMS_URL.'/include/linkexternal.js', array('type' => 'text/javascript'));
+	/** 
+	 * Now system first checks for RTL, if it is enabled it'll just load it, otherwise it will load the normal (LTR) styles
+	*/
+ 		if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
+            		$xoTheme->addStylesheet(ICMS_URL."/icms_rtl.css", array("media" => "screen"));
+            		$xoTheme->addScript(ICMS_URL."/include/icms_rtl.js", array("type" => "text/javascript"));
+	   } else {
+            		$xoTheme->addStylesheet(ICMS_URL."/icms.css", array("media" => "screen"));
+           }
     // Weird, but need extra <script> tags for 2.0.x themes
     //$xoopsTpl->assign('xoops_js', '//--></script><script type="text/javascript" src="'.ICMS_URL.'/include/xoops.js"></script><script type="text/javascript"><!--');
 	//$xoopsTpl->assign('linkexternal_js', '//--></script><script type="text/javascript" src="'.ICMS_URL.'/include/linkexternal.js"></script><script type="text/javascript"><!--');
