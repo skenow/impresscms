@@ -35,6 +35,9 @@ if(empty($getuser))
 }
 else
 {
+	$config_handler =& xoops_gethandler('config');
+	$xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
+
 	$code = isset($_GET['code']) ? trim($_GET['code']) : '';
 	$areyou = substr($getuser[0]->getVar('pass'), 0, 5);
 	$enc_type = intval($xoopsConfigUser['enc_type']);
