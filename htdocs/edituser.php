@@ -8,7 +8,7 @@
 * @package		core
 * @since		XOOPS
 * @author		http://www.xoops.org The XOOPS Project
-* @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+* @author		modified by stranger <stranger@impresscms.ir>
 * @version		$Id$
 */
 /**
@@ -52,7 +52,7 @@ if($op == 'saveuser')
     	
 	$errors = array();
     	$myts =& MyTextSanitizer::getInstance();
-	$purifier =& icms_HTMLPurifier::getPurifierInstance();
+
 
 	if($xoopsConfigUser['allow_chgmail'] == 1)
 	{
@@ -66,6 +66,7 @@ if($op == 'saveuser')
             		$errors[] = _US_INVALIDMAIL;
         	}
     	}
+	$username = xoops_getLinkedUnameFromId($uid);
     	$password = '';
     	if(!empty($_POST['password']))
 	{
@@ -86,6 +87,10 @@ if($op == 'saveuser')
 		{
             		$errors[] = _US_PASSNOTSAME;
         	}
+		if($password == $username || $password == icms_utf8_strrev($username, true) || strripos($password, $username) === true)
+		{
+            		$errors[] = _US_BADPWD;
+		}
     	}
     	if(count($errors) > 0)
 	{
@@ -135,6 +140,7 @@ if($op == 'saveuser')
 		{
         		$salt = icms_createSalt();
         		$edituser->setVar('salt', $salt, true);
+			$edituser->setVar('enc_type', $xoopsConfigUser['enc_type'], true);
         		$pass = icms_encryptPass($password, $salt);
             		$edituser->setVar('pass', $pass, true);
         	}
@@ -290,13 +296,13 @@ if($op == 'editprofile')
 	$passConfig =& $config_handler->getConfigsByCat(2);
 	if($passConfig['pass_level'] <= 20)
 	{
-		$pwd_text = new XoopsFormPassword('', 'password', 10, 72);
+		$pwd_text = new XoopsFormPassword('', 'password', 10, 255);
 	}
 	else
 	{
 		include_once ICMS_ROOT_PATH."/include/passwordquality.php";
 	}
-    	$pwd_text2 = new XoopsFormPassword('', 'vpass', 10, 72);
+    	$pwd_text2 = new XoopsFormPassword('', 'vpass', 10, 255);
     	$pwd_tray = new XoopsFormElementTray(_US_PASSWORD.'<br />'._US_TYPEPASSTWICE);
     	$pwd_tray->addElement($pwd_text);
     	$pwd_tray->addElement($pwd_text2);

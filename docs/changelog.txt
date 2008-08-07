@@ -19,11 +19,17 @@ ImpressCMS ChangeLog
 * icms.css loads from the header. (stranger)
 * pdf.php in language files. (stranger)
 * system skips all folders with no theme.html. (nekro/stranger)
+* new function: icms_utf8_strrev() - Allows reversing of strings for utf8 character sets. (vaughan)
+* reset/expired password system - when encryption changed, pass is expired, you need to then reset your password before logging in. (vaughan)
+* reset password page. user must enter registered email, username, current password & then enter new password in order to reset pass. (vaughan)
+* improved language and template of the password rest feature (malanicault)
+* addition of the pre-populated uname in the password reset form (malanciault)
 
 '''Improved'''
 * Updated TCPDF to version 4.0.009. (stranger)
 * Formfield for OpenID, if OID is inactive users won't see it's fields. (stranger)
 * Google Analytics is now being handled directly (without smartys). (stranger)
+* some enhancements to password secureness. pass can not equal username, or uname in reverse or even contain username. (vaughan)
 
 '''Changed'''
 * after upgrade is done you'll get back to index to see if upgrade was successful. (stranger)

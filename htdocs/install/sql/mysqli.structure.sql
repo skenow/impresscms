@@ -616,6 +616,8 @@ CREATE TABLE users (
   openid varchar(255) NOT NULL default '',
   salt varchar(255) NOT NULL default '',
   user_viewoid tinyint(1) unsigned NOT NULL default '0',
+  pass_expired tinyint(1) unsigned NOT NULL default '0',
+  enc_type tinyint(2) unsigned NOT NULL default '1',
   PRIMARY KEY  (uid),
   KEY uname (uname),
   KEY email (email),
