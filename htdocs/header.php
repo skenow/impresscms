@@ -58,7 +58,7 @@ else
 	*/
  		if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
             		$xoTheme->addStylesheet(ICMS_URL."/icms_rtl.css", array("media" => "screen"));
-            		$xoTheme->addScript(ICMS_URL."/include/icms_rtl.js", array("type" => "text/javascript"));
+            		//$xoTheme->addScript(ICMS_URL."/include/icms_rtl.js", array("type" => "text/javascript"));
 	   } else {
             		$xoTheme->addStylesheet(ICMS_URL."/icms.css", array("media" => "screen"));
            }
