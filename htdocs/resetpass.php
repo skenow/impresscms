@@ -28,22 +28,10 @@ $password2 = (isset($_GET['password2']))?trim(StopXSS($_GET['password2'])):((iss
 
 global $xoopsConfigUser;
 
-if($email == '' || $username == '')
-{
-	redirect_header('user.php',2,_US_SORRYNOTFOUND);
-}
-elseif($password == '' || $password2 == '')
-{
-	redirect_header('user.php',2,_US_SORRYMUSTENTERPASS);
-}
-if((isset($password)) && ($password !== $password2))
-{
-	redirect_header('user.php',2,_US_PASSNOTSAME);
-}
-elseif(($password !== '') && (strlen($password) < $xoopsConfigUser['minpass']))
-{
-	redirect_header('user.php',2,sprintf(_US_PWDTOOSHORT,$xoopsConfigUser['minpass']));
-}
+if($email == '' || $username == '') {redirect_header('user.php',2,_US_SORRYNOTFOUND);}
+elseif($password == '' || $password2 == '') {redirect_header('user.php',2,_US_SORRYMUSTENTERPASS);}
+if((isset($password)) && ($password !== $password2)) {redirect_header('user.php',2,_US_PASSNOTSAME);}
+elseif(($password !== '') && (strlen($password) < $xoopsConfigUser['minpass'])) {redirect_header('user.php',2,sprintf(_US_PWDTOOSHORT,$xoopsConfigUser['minpass']));}
 
 $myts =& MyTextSanitizer::getInstance();
 $member_handler =& xoops_gethandler('member');
@@ -52,10 +40,7 @@ $getuser =& $member_handler->getUsers(new Criteria('email', $myts->addSlashes($e
 if(empty($getuser)) {redirect_header('user.php',2,_US_SORRYNOTFOUND);}
 else
 {
-	if($getuser[0]->getVar('uname') !== $username)
-	{
-    		redirect_header('user.php',2,_US_SORRYUNAMENOTMATCHEMAIL);
-	}
+	if($getuser[0]->getVar('uname') !== $username) {redirect_header('user.php',2,_US_SORRYUNAMENOTMATCHEMAIL);}
 	else
 	{
 		$current_pass = $getuser[0]->getVar('pass');
