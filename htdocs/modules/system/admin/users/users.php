@@ -38,6 +38,9 @@ function displayUsers()
 {
 	global $xoopsDB, $xoopsConfig, $xoopsModule;
 	$userstart = isset($_GET['userstart']) ? intval($_GET['userstart']) : 0;
+	$config_handler =& xoops_gethandler('config');
+	$xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
+
 	xoops_cp_header();
 	echo '<div class="CPbigTitle" style="background-image: url('.ICMS_URL.'/modules/system/admin/users/images/users_big.png)">'._MD_AM_USER.'</div><br />';
 	$member_handler =& xoops_gethandler('member');
