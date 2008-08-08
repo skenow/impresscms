@@ -196,8 +196,6 @@ define('_US_OPENID_LINKED_DONE', 'Your OpenID has been linked with the user %S. 
 define('_US_ALREADY_LOGED_IN', 'You already are logged in, we are sorry but, you can\'t register while you\'re logged in the site');
 define('_US_ALLOWVIEWEMAILOPENID','Allow other users to view my OpenID');
 
-/*
-define('_US_AUTORESIZE_ATV', 'Automatic resizing enabled');
-define('_US_AUTORESIZE_ATV_DESC', 'Images larger than %u x %u will be automatically resized, keeping the aspect ratio, so that it is within the maximum pixels set. The function accepts images JPG, PNG and GIF (including animated gif), but yet does not function satisfactorily for animated gifs with transparent background.');
-*/
+/* define('_US_AUTORESIZE_ATV', 'Automatic resizing enabled'); */
+/* define('_US_AUTORESIZE_ATV_DESC', 'Images larger than %u x %u will be automatically resized, keeping the aspect ratio, so that it is within the maximum pixels set. The function accepts images JPG, PNG and GIF (including animated gif), but yet does not function satisfactorily for animated gifs with transparent background.'); */
 ?>
