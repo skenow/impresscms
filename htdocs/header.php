@@ -48,6 +48,10 @@ else
 	*/
     	$xoTheme =& $xoopsThemeFactory->createInstance(array('contentTemplate' => @$xoopsOption['template_main'],));
     	$xoopsTpl =& $xoTheme->template;
+	$config_handler =& xoops_gethandler('config');
+	$xoopsConfigMetaFooter =& $config_handler->getConfigsByCat(XOOPS_CONF_METAFOOTER);
+		$arr_google_meta=explode('"',$xoopsConfigMetaFooter['google_meta']);
+		$xoTheme->addMeta('meta',$arr_google_meta[1],$arr_google_meta[3]);
 	// ################# Preload Trigger startOutputInit ##############
 	$icmsPreloadHandler->triggerEvent('startOutputInit');
 	
