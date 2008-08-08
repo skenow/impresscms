@@ -57,6 +57,7 @@ ImpressCMS ChangeLog
 * #2038160 - custom tag admin functions now work properly.
 * #2038233 - removed OpenID requirement when adding or editing users in admin area.
 * #2043607 - fatal error when includes/functions.php was included again 
+* #2043612 - filtering of span tags from the rendering of the html
 
 ===2008-07-02 : 1.1 Alpha 2===
 

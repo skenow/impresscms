@@ -142,7 +142,7 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('HTML', 'Doctype', 'XHTML 1.0 Transitional'); // sets purifier to use specified Doctype when tidying etc.
 			$icms_PurifyConfig->set('HTML', 'Allowed', 'a[href|title|target|rel], abbr[title], acronym[title], b, blockquote[cite], br, caption, cite, code, dd,
 					del, dfn, div[align|style], dl, dt, em, i, img[src|alt|title|class|align|style], ins, kbd, li, ol, p, pre, s, strike, strong, sub, sup, table, tbody,
-					td, tfoot, th, thead, tr, tt, u, ul, var, font'); // sets allowed html tags that can be used.
+					td, tfoot, th, thead, tr, tt, u, ul, var, font, span'); // sets allowed html tags that can be used.
 			$icms_PurifyConfig->set('HTML', 'TidyLevel', 'medium');
 
 			$icms_PurifyConfig->set('AutoFormat', 'AutoParagraph', true);
@@ -208,7 +208,7 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('HTML', 'Doctype', 'XHTML 1.0 Transitional'); // sets purifier to use specified Doctype when tidying etc.
 			$icms_PurifyConfig->set('HTML', 'Allowed', 'a[href|title|target|rel], abbr[title], acronym[title], b, blockquote[cite], br, caption, cite, code, dd,
 					del, dfn, div[align|style], dl, dt, em, i, img[src|alt|title|class|align|style], ins, kbd, li, ol, p, pre, s, strike, strong, sub, sup, table, tbody,
-					td, tfoot, th, thead, tr, tt, u, ul, var, font'); // sets allowed html tags that can be used.
+					td, tfoot, th, thead, tr, tt, u, ul, var, font, span'); // sets allowed html tags that can be used.
 			$icms_PurifyConfig->set('HTML', 'TidyLevel', 'medium');
 
 			$icms_PurifyConfig->set('AutoFormat', 'AutoParagraph', true);
@@ -258,7 +258,7 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('HTML', 'Doctype', 'XHTML 1.0 Transitional'); // sets purifier to use specified Doctype when tidying etc.
 			$icms_PurifyConfig->set('HTML', 'Allowed', 'a[href|title|target|rel], abbr[title], acronym[title], b, blockquote[cite], br, caption, cite, code, dd,
 					del, dfn, div[align|style], dl, dt, em, i, img[src|alt|title|class|align|style], ins, kbd, li, ol, p, pre, s, strike, strong, sub, sup, table, tbody,
-					td, tfoot, th, thead, tr, tt, u, ul, var, font'); // sets allowed html tags that can be used.
+					td, tfoot, th, thead, tr, tt, u, ul, var, font, span'); // sets allowed html tags that can be used.
 			$icms_PurifyConfig->set('HTML', 'TidyLevel', 'none');
 
 			$icms_PurifyConfig->set('AutoFormat', 'AutoParagraph', true);
