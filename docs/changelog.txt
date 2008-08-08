@@ -30,6 +30,7 @@ ImpressCMS ChangeLog
 * Formfield for OpenID, if OID is inactive users won't see it's fields. (stranger)
 * Google Analytics is now being handled directly (without smartys). (stranger)
 * some enhancements to password secureness. pass can not equal username, or uname in reverse or even contain username. (vaughan)
+* finishing the implementation of xoops_footer in the footer of the site - adding it in redirect and site close template of the impresstheme (malanciault)
 
 '''Changed'''
 * after upgrade is done you'll get back to index to see if upgrade was successful. (stranger)
