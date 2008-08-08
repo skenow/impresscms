@@ -26,10 +26,7 @@ if(!is_object($xoopsUser))
 	redirect_header('index.php',3,_US_NOEDITRIGHT);
 }
 
-// initialize $op variable
-$op = 'editprofile';
-if(!empty($_POST['op'])){$op = StopXSS($_POST['op']);}
-if(!empty($_GET['op'])){$op = StopXSS($_GET['op']);}
+$op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'editprofile');
 
 $config_handler =& xoops_gethandler('config');
 $xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
