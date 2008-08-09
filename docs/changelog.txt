@@ -2,7 +2,7 @@ ImpressCMS ChangeLog
 
 == Impresscms 1.1==
 
-===2008-07-02 : 1.1 Beta 1===
+===2008-07-08 : 1.1 Beta 1===
 
 '''Added'''
 * new plugin for tinymce. hiddencontent (luciorota/real_therplima/stranger)
@@ -56,7 +56,7 @@ ImpressCMS ChangeLog
 * #1990271 - database charset can be set to ucs2 without generating any errors.
 * #2038160 - custom tag admin functions now work properly.
 * #2038233 - removed OpenID requirement when adding or editing users in admin area.
-* #2043607 - fatal error when includes/functions.php was included again 
+* #2043607 - fatal error when includes/functions.php was included again
 * #2043612 - filtering of span tags from the rendering of the html
 
 ===2008-07-02 : 1.1 Alpha 2===
