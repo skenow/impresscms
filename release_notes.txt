@@ -48,6 +48,7 @@ https://impresscms.svn.sourceforge.net/svnroot/impresscms/core/trunk/
 
 The ImpressCMS trunk is always the latest as-stable-as-possible development code. It is, of course, not to be used on production sites.
 
+
 Installing ImpressCMS
 ==================================
 
@@ -57,10 +58,21 @@ Installing ImpressCMS
 
 For a complete installation documentation, please refer to /docs/install.html in the ImpressCMS package.
 
-Upgrading from a previous version of ImpressCMS
+
+Upgrading from a previous version of ImpressCMS or from XOOPS 2.0.18.1 or earlier
 ==================================
 
-Please note that this alpha release do not yet have an upgrade script from ImpressCMS 1.0. ImpressCMS 1.1 Beta 1 will surely include the upgrade package, so don't worry !
+If you are upgrading from a previous version of ImpressCMS, please follow these instructions:
+
+1. Get the xoops-or-impresscms_1.0-to-impresscms-1.1 package from the sourceforge file repository.
+2. Copy the content of htdocs/ over your existing files.
+3. On your server, delete the file cache/adminmenu.php
+4. Access <your.site.url>/upgrade/ with a browser.
+5. Follow the instructions to update your database.
+6. You will then be asked to enter the admin area will see a message saying you are entering the admin area for the first time, click on the Submit button.
+7. You will then be asked to Update the System module. Follow the instructions.
+8. Flush your browsers cache (on windows IE & Firefox you can do this by pressing CTRL+F5. MAC & Safari users can press CTRL+R, Linux Users can also press CTRL+R or CTRL+F5 when using Firefox).
+9. Enjoy !
 
 Revealing the blank page backtrace log
 ==================================
