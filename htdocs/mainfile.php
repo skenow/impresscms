@@ -13,7 +13,8 @@
 * @author		http://www.xoops.org The XOOPS Project
 * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
 * @version		$Id$
-*//**
+*/
+/**
  * Xoops is not installed, redirect to the installer
  **/
 
