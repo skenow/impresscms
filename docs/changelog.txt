@@ -58,6 +58,7 @@ ImpressCMS ChangeLog
 * #2038233 - removed OpenID requirement when adding or editing users in admin area.
 * #2043607 - fatal error when includes/functions.php was included again
 * #2043612 - filtering of span tags from the rendering of the html
+* #2043716 - content pages not displaying when using SEO feature 
 
 ===2008-07-02 : 1.1 Alpha 2===
 

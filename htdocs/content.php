@@ -19,7 +19,7 @@ include_once ICMS_ROOT_PATH.'/class/module.textsanitizer.php';
 include_once ICMS_ROOT_PATH.'/modules/system/constants.php';
 
 $im_contentConfig =& $config_handler->getConfigsByCat(IM_CONF_CONTENT);
-$page = (isset($_GET['page']))?intval($_GET['page']):((isset($_POST['page']))?intval($_POST['page']):0);
+$page = (isset($_GET['page']))?trim(StopXSS($_GET['page'])):((isset($_POST['page']))?trim(StopXSS($_POST['page'])):0);
 
 $gperm_handler = & xoops_gethandler('groupperm');
 $groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
