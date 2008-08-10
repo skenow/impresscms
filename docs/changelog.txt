@@ -5,7 +5,8 @@ ImpressCMS ChangeLog
 ===2008-08-08 : 1.1 RC 1===
 
 '''Fixed'''
-2 errors with google meta tag and google analytics. (stranger)
+* 2 errors with google meta tag and google analytics. (stranger)
+* possible issue in modulesadmin/main.php (real_therplima/trabis)
 
 ===2008-08-08 : 1.1 Beta 1===
 

@@ -15,10 +15,10 @@
 * @version		$Id$
 */
 /**
- * Xoops is not installed, redirect to the installer
+ * ImpressCMS is not installed, redirect to the installer
  **/
 
-// XOOPS is not installed yet.
+// ImpressCMS is not installed yet.
 if(! defined('XOOPS_INSTALL')){
     header('Location: install/index.php');
 	exit();
