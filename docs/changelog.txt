@@ -2,7 +2,12 @@ ImpressCMS ChangeLog
 
 == Impresscms 1.1==
 
-===2008-07-08 : 1.1 Beta 1===
+===2008-08-08 : 1.1 RC 1===
+
+'''Fixed'''
+2 errors with google meta tag and google analytics. (stranger)
+
+===2008-08-08 : 1.1 Beta 1===
 
 '''Added'''
 * new plugin for tinymce. hiddencontent (luciorota/real_therplima/stranger)
