@@ -38,7 +38,7 @@ if(!$page)
 		$criteria->setOrder('DESC');
 	}
 	$impress_content = $content_handler->getObjects($criteria);
-	$impress_content = $impress_content[0];
+	$impress_content = (isset($impress_content[0]))?$impress_content[0]:null;
 }
 else
 {
@@ -47,7 +47,7 @@ else
 	$criteria->add(new Criteria('content_menu', $page,'LIKE'));
 	$criteria->add(new Criteria('content_id', $page),'OR');
 	$impress_content = $content_handler->getObjects($criteria);
-	$impress_content = $impress_content[0];
+	$impress_content = (isset($impress_content[0]))?$impress_content[0]:null;
 }
 if(!is_object($impress_content)) {redirect_header('index.php', 2, _CT_SELECTNG);}
 $content_id = $impress_content->getVar('content_id');
