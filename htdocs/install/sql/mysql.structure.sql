@@ -637,7 +637,7 @@ CREATE TABLE invites (
   invite_date int(10) unsigned NOT NULL default '0',
   view_date int(10) unsigned NOT NULL default '0',
   register_id mediumint(8) unsigned NOT NULL DEFAULT 0,
-  extra_info text NOT NULL DEFAULT '',
+  extra_info text NOT NULL,
   PRIMARY KEY (invite_id),
   KEY invite_code (invite_code),
   KEY register_id (register_id)
@@ -650,8 +650,8 @@ CREATE TABLE invites (
 CREATE TABLE system_customtag (
   customtagid int(11) unsigned NOT NULL auto_increment,
   name varchar(255) NOT NULL default '',
-  description text NOT NULL default '',
-  content text NOT NULL default '',
+  description text NOT NULL,
+  content text NOT NULL,
   language varchar(100) NOT NULL default '',
   customtag_type tinyint(1) NOT NULL default 0,
   PRIMARY KEY (customtagid)
