@@ -3,6 +3,8 @@ ImpressCMS ChangeLog
 == Impresscms 1.1==
 
 ===2008-08-08 : 1.1 RC 1===
+'''Added'''
+* agree box before upgrading to make sure of a backup. (stranger)
 
 '''Fixed'''
 * 2 errors with google meta tag and google analytics. (stranger)
