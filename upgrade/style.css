@@ -97,7 +97,7 @@ li {
 }
 #help_button
 {
-    FLOAT: right;
+    FLOAT: left;
     CURSOR: pointer;
 }
 .xoform-help
