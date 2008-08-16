@@ -1605,4 +1605,31 @@ function getDbValue(&$db, $table, $field, $condition = '')
 	}
 	return false;
 }
+
+/**
+* Function to escape $value makes safe for DB Queries.
+* 
+* @param string $quotes - true/false - determines whether to add quotes to the value or not.
+* @param string $value - $variable that is being escaped for query.
+* @return string
+*/
+function icms_escapeValue($value, $quotes = true)
+{
+	if(is_string($value))
+	{
+		if(get_magic_quotes_gpc) {$value = stripslashes($value);}
+		$value = mysql_real_escape_string($value);
+		if($quotes) {$value = '"'.$value.'"';}
+	}
+	elseif($value === null) {$value = 'NULL';}
+	elseif(is_bool($value)) {$value = $value ? 1 : 0;}
+	elseif(is_numeric($value)) {$value = intval($value);}
+	elseif(is_int($value)) {$value = intval($value);}
+	elseif(!is_numeric($value))
+	{
+		$value = mysql_real_escape_string($value);
+		if($quotes) {$value = '"'.$value.'"';}
+	}
+	return $value;
+}
 ?>
