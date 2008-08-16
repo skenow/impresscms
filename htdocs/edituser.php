@@ -122,7 +122,7 @@ if($op == 'saveuser')
         		}
 			else
 			{
-				$signature = $myts->displayTarea($_POST['user_sig'], 1);
+				$signature = $myts->previewTarea($_POST['user_sig'], 1, 1, 1, 1, 1);
         			$edituser->setVar('user_sig', xoops_substr($signature, 0, intval($xoopsConfigUser['sig_max_length'])));
         		}
 		}
