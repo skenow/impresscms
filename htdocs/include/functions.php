@@ -42,13 +42,8 @@ function xoops_header($closehead=true)
 	<title>'.htmlspecialchars($xoopsConfig['sitename']).'</title>
 	<script type="text/javascript" src="'.ICMS_URL.'/include/xoops.js"></script>
 	<script type="text/javascript" src="'.ICMS_URL.'/include/linkexternal.js"></script>
-	';
+	<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/icms'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css" />';
 	$themecss = getcss($xoopsConfig['theme_set']);
-		if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
-	echo '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/icms_rtl.css" />';
-	   } else {
-	echo '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/icms.css" />';
-           }
 	if ($themecss) {
 		echo '<link rel="stylesheet" type="text/css" media="all" href="'.$themecss.'" />';
 		//echo '<style type="text/css" media="all"><!-- @import url('.$themecss.'); --></style>';
