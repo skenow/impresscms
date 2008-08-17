@@ -316,6 +316,7 @@ modules/system/language/english/admin/users.php
 
 +  define("_AM_OPENID","OpenID");
 +  define("_AM_AOUTVTOIAD","Allow other users to view this OpenID address");
++  define('_AM_BADPWD','Bad Password, Password can not contain username.');
 
 
 modules/system/language/english/admin/modulesadmin.php

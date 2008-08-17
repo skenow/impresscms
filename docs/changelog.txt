@@ -12,6 +12,7 @@ ImpressCMS ChangeLog
 * #2048746: SQL error when creating invites and system_customtags tables (Commerce)
 * bug with modules when calling editors. (stranger)
 * #2037989 - Registration notification sent twice (real_therplima)
+* added password can't contain username to pass check in admin edit user form. (vaughan)
 
 ===2008-08-08 : 1.1 Beta 1===
 
