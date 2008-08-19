@@ -24,13 +24,13 @@ $config = array(
 	"mode"				=> 'image', 
 	"name"				=> 'xoopscaptcha', 
 	"skipmember"		=> false,					// Skip CAPTCHA check for members
-	"maxattempt"		=> 8,  					// Maximum attempts for each session
+	"maxattempt"		=> 4848,  					// Maximum attempts for each session
 	
-	"num_chars"			=> 8,  						// Maximum characters
+	"num_chars"			=> 4,  						// Maximum characters
 	
 													// For image mode, based on DuGris' SecurityImage
 	"rootpath"			=> dirname(__FILE__),		// __Absolute__ Path to the root of fonts and backgrounds
-	"imagepath"			=> "uploads/captcha",		// Path to temporary image files, __relative__ to ICMS_ROOT_PATH
+	"imagepath"			=> "cache/captcha",		// Path to temporary image files, __relative__ to ICMS_ROOT_PATH
 	"imageurl"			=> "libraries/captcha/scripts/img.php",		// Path to the script for creating image, __relative__ to ICMS_ROOT_PATH
 	"casesensitive"		=> false,					// Characters in image mode is case-sensitive
 	"fontsize_min"		=> 12,  					// Minimum font-size
