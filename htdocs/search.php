@@ -188,7 +188,7 @@ switch($action)
 							echo !empty($results[$i]['time']) ? " (". formatTimestamp(intval($results[$i]['time'])).")" : "";
 							echo '</small>';
 						}
-						echo '<br />\n';
+						echo "<br />\n";
 					}
 					if($count >= intval($xoopsConfigSearch['search_per_page']))
 					{

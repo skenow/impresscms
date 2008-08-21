@@ -1,16 +1,14 @@
 <?php
-### =============================================================
-### Mastop InfoDigital - Paixão por Internet
-### =============================================================
-### Função de Busca no Módulo
-### =============================================================
-### Developer: Fernando Santos (topet05), fernando@mastop.com.br
-### Copyright: Mastop InfoDigital © 2003-2007
-### -------------------------------------------------------------
-### www.mastop.com.br
-### =============================================================
-### $Id: busca.inc.php,v 1.1.1.1 2007/01/31 19:30:00 topet05 Exp $
-### =============================================================
+/**
+* Function to allow search on content pages of the content manager and in Links on Symlinks Mnager
+*
+* @copyright	The ImpressCMS Project http://www.impresscms.org/
+* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @package		core
+* @since		1.1
+* @author		real_therplima <therplima@impresscms.org)
+* @version		$Id: search.inc.php 429 2008-003-25 22:21:41Z real_therplima $
+*/
 
 function search_content($queryarray, $andor, $limit, $offset, $userid){
 	global $xoopsDB, $xoopsConfig, $xoopsUser;
@@ -58,6 +56,38 @@ function search_content($queryarray, $andor, $limit, $offset, $userid){
 			}
 		}
 	}
+	
+	
+	$symlinks_handler =& xoops_gethandler('page');
+
+	$criteria = new CriteriaCompo(new Criteria('page_status', 1));
+	if ( is_array($queryarray) && $count = count($queryarray) ) {
+		$crit = new CriteriaCompo(new Criteria('page_title', '%'.$queryarray[0].'%','LIKE'));
+		$criteria->add($crit);
+		unset($queryarray[0]);
+		foreach ($queryarray as $query){
+			$crit = new CriteriaCompo(new Criteria('page_title', '%'.$queryarray[0].'%','LIKE'));
+			$criteria->add($crit,$andor);
+		}
+	}
+	$criteria->add(new Criteria('page_url', '%*', 'NOT LIKE'));
+	
+	$symlinks = $symlinks_handler->getObjects($criteria);
+	
+	if (is_array($symlinks) && count($symlinks) > 0) {
+		$i = 0;
+		asort($symlinks);
+		foreach ($symlinks as $symlink) {
+			$ret[$i]['image'] = "images/icon_small.png";
+			$ret[$i]['link'] = $symlink->getVar('page_url');
+			$ret[$i]['title'] = $symlink->getVar('page_title');
+			if ($i == ($limit-1)) {
+				return $ret;
+			}
+			$i++;
+		}
+	}
+	
 	return $ret;
 }
 ?>
