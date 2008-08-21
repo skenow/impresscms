@@ -21,19 +21,24 @@ function search_content($queryarray, $andor, $limit, $offset, $userid){
 	if ( $userid != 0 ) {
 		$criteria->add(new Criteria('content_uid', $userid));
 	}
+
+	$qarray_bkp = $queryarray;
 	if ( is_array($queryarray) && $count = count($queryarray) ) {
 		$crit = new CriteriaCompo(new Criteria('content_title', '%'.$queryarray[0].'%','LIKE'));
 		$crit->add(new Criteria('content_menu', '%'.$queryarray[0].'%','LIKE'),'OR');
 		$crit->add(new Criteria('content_body', '%'.$queryarray[0].'%','LIKE'),'OR');
 		$criteria->add($crit);
 		unset($queryarray[0]);
+		unset($crit);
 		foreach ($queryarray as $query){
-			$crit = new CriteriaCompo(new Criteria('content_title', '%'.$queryarray[0].'%','LIKE'));
-			$crit->add(new Criteria('content_menu', '%'.$queryarray[0].'%','LIKE'),'OR');
-			$crit->add(new Criteria('content_body', '%'.$queryarray[0].'%','LIKE'),'OR');
+			$crit = new CriteriaCompo(new Criteria('content_title', '%'.$query.'%','LIKE'));
+			$crit->add(new Criteria('content_menu', '%'.$query.'%','LIKE'),'OR');
+			$crit->add(new Criteria('content_body', '%'.$query.'%','LIKE'),'OR');
 			$criteria->add($crit,$andor);
+			unset($crit);
 		}
 	}
+	$queryarray = $qarray_bkp;
 	
 	$contents = $content_handler->getObjects($criteria);
 	
@@ -57,7 +62,6 @@ function search_content($queryarray, $andor, $limit, $offset, $userid){
 		}
 	}
 	
-	
 	$symlinks_handler =& xoops_gethandler('page');
 
 	$criteria = new CriteriaCompo(new Criteria('page_status', 1));
@@ -65,9 +69,11 @@ function search_content($queryarray, $andor, $limit, $offset, $userid){
 		$crit = new CriteriaCompo(new Criteria('page_title', '%'.$queryarray[0].'%','LIKE'));
 		$criteria->add($crit);
 		unset($queryarray[0]);
+		unset($crit);
 		foreach ($queryarray as $query){
-			$crit = new CriteriaCompo(new Criteria('page_title', '%'.$queryarray[0].'%','LIKE'));
+			$crit = new CriteriaCompo(new Criteria('page_title', '%'.$query.'%','LIKE'));
 			$criteria->add($crit,$andor);
+			unset($crit);
 		}
 	}
 	$criteria->add(new Criteria('page_url', '%*', 'NOT LIKE'));
@@ -86,8 +92,8 @@ function search_content($queryarray, $andor, $limit, $offset, $userid){
 			}
 			$i++;
 		}
-	}
-	
+	} 
+
 	return $ret;
 }
 ?>
