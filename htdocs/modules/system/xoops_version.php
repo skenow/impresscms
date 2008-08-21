@@ -148,6 +148,9 @@ $i++;
 $modversion['templates'][$i]['file'] = 'admin/customtag/system_adm_customtag.html';
 $modversion['templates'][$i]['description'] = 'Template of the Custom Tag admin';
 
+$i++;
+$modversion['templates'][$i]['file'] = 'system_default_form.html';
+$modversion['templates'][$i]['description'] = 'Default form template';
 
 // Blocks
 $i=0;
