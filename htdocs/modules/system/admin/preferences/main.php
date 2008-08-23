@@ -33,10 +33,10 @@
 if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->isAdmin ( $xoopsModule->mid () )) {
 	exit ( "Access Denied" );
 } else {
-	$allowedHTML = array('conf_value');
-
-	if(!empty($_POST)){ foreach($_POST as $k => $v){ if (!in_array($k,$allowedHTML)){${$k} = StopXSS($v);}else{${$k} = $v;}}}
-	if(!empty($_GET)){ foreach($_GET as $k => $v){ if (!in_array($k,$allowedHTML)){${$k} = StopXSS($v);}else{${$k} = $v;}}}
+	if(isset($_POST))
+	{
+		foreach($_POST as $k => $v) {${$k} = $v;}
+	}
 	$op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'list');
 
 	if (isset ( $_GET ['confcat_id'] )) {
