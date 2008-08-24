@@ -132,8 +132,14 @@ class icms_HTMLPurifier
 
 		// HTML_Allowed: allowed tags for html content. format: element, element[attribute] - seperate attributes using pipe '|'
 		$HTML_Allowed = 'a[href|title|target|rel], abbr[title], acronym[title], b, blockquote[cite], br, caption, cite, code, dd,
-					del, dfn, div[align|style|class], dl, dt, em, font[size|color], h1, h2, h3, h4, h5, h6, i, img[src|alt|title|class|align|style], ins, kbd, li, ol, p[style], pre, s, span[style], strike, strong, sub, sup, table[align|bgcolor|border|cellpadding|cellspacing|class|id|style|summary|width], tbody, td, tfoot, th, thead, tr, tt, u, ul, var';
+					del, dfn, div[align|style], dl, dt, em, font[size|color], h1, h2, h3, h4, h5, h6, i, img[src|alt|title|class|align|style], ins, kbd, li, ol, p[style], pre, s, span[style], strike, strong, sub, sup, table, tbody, td, tfoot, th, thead, tr, tt, u, ul, var';
 		
+		$HTML_Allowed_Elms = 'a, abbr, acronym, b, blockquote, br, caption, cite, code, dd, del, dfn, div, dl, dt, em, font, h1, h2, h3, h4, h5, h6, i, img, ins,
+		kbd, li, ol, p, pre, s, span, strike, strong, sub, sup, table, tbody, td, tfoot, th, thead, tr, tt, u, ul, var';
+
+		$HTML_Allowed_Attr = 'a.href, a.title, a.target, a.rel, abbr.title, acronym.title, blockquote.cite, div.align, div.style, div.class, font.size, font.color,
+		img.src, img.alt, img.title, img.class, img.align, img.style, p.style, span.style, span.class, table.class, table.border, table.bordercolor, table.bordercolorlight, table.bordercolordark, table.cellpadding, table.cellspacing, table.cols, table.colspan, table.rowspan, table.style, table.width, td.abbr, td.align, td.axis, td.class, td.colspan, td.rowspan, td.style, td.valign, tr.align, tr.class, tr.style, tr.valign, th.abbr, th.align, th.axis, th.class, th.colspan, th.rowspan, th.style, th.valign';
+
 		// sets default config settings for htmpurifier
 		$icms_PurifyConfig = HTMLPurifier_Config::createDefault();
 
@@ -144,7 +150,9 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('HTML', 'DefinitionID', 'system-global');
 			$icms_PurifyConfig->set('HTML', 'DefinitionRev', 1);
 			$icms_PurifyConfig->set('HTML', 'Doctype', 'XHTML 1.0 Transitional'); // sets purifier to use specified Doctype when tidying etc.
-			$icms_PurifyConfig->set('HTML', 'Allowed', $HTML_Allowed); // sets allowed html tags that can be used.
+//			$icms_PurifyConfig->set('HTML', 'Allowed', $HTML_Allowed); // sets allowed html tags that can be used.
+			$icms_PurifyConfig->set('HTML', 'AllowedElements', $HTML_Allowed_Elms); // sets allowed html elements that can be used.
+			$icms_PurifyConfig->set('HTML', 'AllowedAttributes', $HTML_Allowed_Attr); // sets allowed html attributes that can be used.
 			$icms_PurifyConfig->set('HTML', 'TidyLevel', 'medium');
 
 			$icms_PurifyConfig->set('AutoFormat', 'AutoParagraph', true);
@@ -208,7 +216,9 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('HTML', 'DefinitionID', 'display');
 			$icms_PurifyConfig->set('HTML', 'DefinitionRev', 1);
 			$icms_PurifyConfig->set('HTML', 'Doctype', 'XHTML 1.0 Transitional'); // sets purifier to use specified Doctype when tidying etc.
-			$icms_PurifyConfig->set('HTML', 'Allowed', $HTML_Allowed); // sets allowed html tags that can be used.
+//			$icms_PurifyConfig->set('HTML', 'Allowed', $HTML_Allowed); // sets allowed html tags that can be used.
+			$icms_PurifyConfig->set('HTML', 'AllowedElements', $HTML_Allowed_Elms); // sets allowed html elements that can be used.
+			$icms_PurifyConfig->set('HTML', 'AllowedAttributes', $HTML_Allowed_Attr); // sets allowed html attributes that can be used.
 			$icms_PurifyConfig->set('HTML', 'TidyLevel', 'medium');
 
 			$icms_PurifyConfig->set('AutoFormat', 'AutoParagraph', true);
@@ -256,7 +266,9 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('HTML', 'DefinitionID', 'preview');
 			$icms_PurifyConfig->set('HTML', 'DefinitionRev', 1);
 			$icms_PurifyConfig->set('HTML', 'Doctype', 'XHTML 1.0 Transitional'); // sets purifier to use specified Doctype when tidying etc.
-			$icms_PurifyConfig->set('HTML', 'Allowed', $HTML_Allowed); // sets allowed html tags that can be used.
+//			$icms_PurifyConfig->set('HTML', 'Allowed', $HTML_Allowed); // sets allowed html tags that can be used.
+			$icms_PurifyConfig->set('HTML', 'AllowedElements', $HTML_Allowed_Elms); // sets allowed html elements that can be used.
+			$icms_PurifyConfig->set('HTML', 'AllowedAttributes', $HTML_Allowed_Attr); // sets allowed html attributes that can be used.
 			$icms_PurifyConfig->set('HTML', 'TidyLevel', 'none');
 
 			$icms_PurifyConfig->set('AutoFormat', 'AutoParagraph', true);
