@@ -17,7 +17,7 @@
 if (!defined("CAPTCHA_FUNCTIONS_INI")):
 define("CAPTCHA_FUNCTIONS_INI", true);
 
-define("CAPTCHA_ROOT_PATH", ICMS_ROOT_PATH."/libraries/captcha");
+define("CAPTCHA_ROOT_PATH", ICMS_ROOT_PATH."/class/captcha");
 
 global $xoops;
 /**

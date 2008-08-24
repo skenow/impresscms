@@ -12,7 +12,7 @@
  * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		libraries
+ * @package		class
  * @since		XOOPS
  * @author		http://www.xoops.org/ The XOOPS Project
  * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
@@ -31,7 +31,7 @@ $config = array(
 													// For image mode, based on DuGris' SecurityImage
 	"rootpath"			=> dirname(__FILE__),		// __Absolute__ Path to the root of fonts and backgrounds
 	"imagepath"			=> "cache/captcha",		// Path to temporary image files, __relative__ to ICMS_ROOT_PATH
-	"imageurl"			=> "libraries/captcha/scripts/img.php",		// Path to the script for creating image, __relative__ to ICMS_ROOT_PATH
+	"imageurl"			=> "class/captcha/scripts/img.php",		// Path to the script for creating image, __relative__ to ICMS_ROOT_PATH
 	"casesensitive"		=> false,					// Characters in image mode is case-sensitive
 	"fontsize_min"		=> 9,  					// Minimum font-size
 	"fontsize_max"		=> 10,  					// Maximum font-size 
