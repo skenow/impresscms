@@ -188,7 +188,7 @@ if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->
 				case 'select_font' :
 					$ele = new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
 					require_once ICMS_ROOT_PATH.'/class/xoopslists.php';
-					$dirlist = XoopsLists::getFileListAsArray(ICMS_ROOT_PATH.'/libraries/captcha/fonts/');
+					$dirlist = XoopsLists::getFontListAsArray(ICMS_ROOT_PATH.'/class/captcha/fonts/');
 					if(!empty($dirlist))
 					{
 						asort($dirlist);
