@@ -207,9 +207,9 @@ class TinyMCE
         foreach($this->setting as $key => $val) {
             $ret .= $key . ' : ';
             if($val === true || $val === false) {
-                $ret .= $val.','."rn";
+                $ret .= $val.','."\r\n";
             }else{
-                $ret .= '"'. $val . '",'."rn";
+                $ret .= '"'. $val . '",'."\r\n";
             }
         }
         $ret .= '   
