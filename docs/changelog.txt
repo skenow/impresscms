@@ -13,6 +13,7 @@ ImpressCMS ChangeLog
 * Improved how we use rtl in system. (stranger/real_therplima)
 * Moved captcha to classes + some configurations were updated. (stranger)
 * Updated TCPDF to version 4.0.020. (stranger)
+* Removed warnings for unhandled global attribut in icms.htmlpurifier.php
 
 '''Fixed'''
 * 2 errors with google meta tag and google analytics. (stranger)
