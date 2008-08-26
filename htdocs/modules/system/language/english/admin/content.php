@@ -21,7 +21,7 @@ define('_MD_CONTENT_VISIBILITY_2','Only in Related Pages');
 define('_MD_CONTENT_VISIBILITY_3','Menu and Related Pages');
 define('_MD_CONTENT_VISIBILITY_4','Don\'t show link');
 define('_MD_CONTENT_PARENT','Parent Page');
-define('_MD_CONTENT_AUTOR','Autor');
+define('_MD_CONTENT_AUTOR','Author');
 define('_MD_CONTENT_CSS','Custom CSS');
 define('_MD_CONTENT_CSS_DESC','Recommended only for advanced users.<br />Click <a href="javascript:openWithSelfMain(\'%s\', \'content_help\', 1000, 600);">here</a> to see the documentation.');
 define('_MD_CONTENT_TAGS','Tags');
@@ -40,6 +40,9 @@ define('_MD_CONTENT_NAVADM','Main');
 define('_MD_CONTENTCHANGESTS','Change the status of this page');
 
 define('_MD_NOTFOUND','No record found');
-define('_MD_DELLINKFIRST','This page is in use by the Links Manager.<br />You will be redirect to Links Manager to delete this link first and after you will be redirect back to delete this page.');
-define('_MD_STSLINKFIRST','This page is in use by the Links Manager.<br />You will be redirect to Links Manager to change the status of this link first and after you will be redirect back to change the status of this page.');
+define('_MD_DELLINKFIRST','This page is in use by the Symlink Manager.<br />You will be redirect to Symlink Manager to delete this link first and after you will be redirect back to delete this page.');
+define('_MD_STSLINKFIRST','This page is in use by the Symlink Manager.<br />You will be redirect to Symlink Manager to change the status of this link first and after you will be redirect back to change the status of this page.');
+
+######################## Added in 1.2 ###################################
+define('_MD_FILTERBYTAGS','Filter by Tag');
 ?>

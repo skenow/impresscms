@@ -8,14 +8,15 @@
 * @package		core
 * @since		XOOPS
 * @author		http://www.xoops.org The XOOPS Project
-* @author		modified by stranger <stranger@impresscms.ir>
+* @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
 * @version		$Id$
 */
 
 if(!defined('ICMS_ROOT_PATH')) {die('ICMS root path not defined');}
 if(!defined("XOOPS_FOOTER_INCLUDED"))
 {
-	define("XOOPS_FOOTER_INCLUDED",1);
+	/** Set the constant XOOPS_FOOTER_INCLUDED to 1 - this file has been included */
+  define("XOOPS_FOOTER_INCLUDED",1);
 
 	// ################# Preload Trigger beforeFooter ##############
 	$icmsPreloadHandler->triggerEvent('beforeFooter');
@@ -25,7 +26,7 @@ if(!defined("XOOPS_FOOTER_INCLUDED"))
 	{
 		// the old way
 		$footer = htmlspecialchars($xoopsConfigMetaFooter['footer']).'<br /><div style="text-align:center">Powered by ImpressCMS &copy; 2007-'.date('Y').' <a href="http://www.impresscms.org/" rel="external">ImpressCMS</a></div>';
-		$google_analytics = htmlspecialchars($xoopsConfigMetaFooter['google_analytics']);
+		$google_analytics = $xoopsConfigMetaFooter['google_analytics'];
 
 		if(isset($xoopsOption['template_main']))
 		{
@@ -40,9 +41,11 @@ if(!defined("XOOPS_FOOTER_INCLUDED"))
 	{
 		// RMV-NOTIFY
 		if (is_object($xoopsModule) && $xoopsModule->getVar('hasnotification') == 1 && is_object($xoopsUser)) {
-			require_once 'include/notification_select.php';
+			/** Require the notifications area */
+      require_once 'include/notification_select.php';
 		}
-
+    /** @todo Notifications include/require clarification in footer.php - if this is included here, why does it need to be required above? */
+    /** Include the notifications area */
 		include_once ICMS_ROOT_PATH . '/include/notification_select.php';
 
 		if(!headers_sent())
@@ -74,6 +77,16 @@ if(!defined("XOOPS_FOOTER_INCLUDED"))
 				$xoTheme->contentTemplate = $xoopsOption['template_main'];
 			}
 		}
+	$config_handler = & xoops_gethandler ( 'config' );
+	$xoopsConfigMetaFooter = & $config_handler->getConfigsByCat ( XOOPS_CONF_METAFOOTER );
+	if ($xoopsConfigMetaFooter['use_google_analytics'] == 1 && isset($xoopsConfigMetaFooter['google_analytics']) && $xoopsConfigMetaFooter['google_analytics'] != ''){
+		$xoTheme->addScript('<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+			</script>
+	<script type="text/javascript">
+_uacct = "UA-'.$xoopsConfigMetaFooter['google_analytics'].'";
+urchinTracker();
+</script>');
+	}
 		$xoTheme->render();
 	}
 	$xoopsLogger->stopTime();

@@ -27,6 +27,15 @@ if (!defined('ICMS_TRUST_PATH')) {
 if (!defined('ICMS_URL')) {
 	define( 'ICMS_URL', XOOPS_URL );
 }
+if (!defined('ICMS_GROUP_ADMIN')) {
+	define('ICMS_GROUP_ADMIN', XOOPS_GROUP_ADMIN);
+}
+if (!defined('ICMS_GROUP_USERS')) {
+	define('ICMS_GROUP_USERS', XOOPS_GROUP_USERS);
+}
+if (!defined('ICMS_GROUP_ANONYMOUS')) {
+	define('ICMS_GROUP_ANONYMOUS', XOOPS_GROUP_ANONYMOUS);
+}
 
 /**
  * Creating ICMS specific constants
@@ -414,9 +423,9 @@ if ( !defined("XOOPS_USE_MULTIBYTES") ) {
 	define("XOOPS_USE_MULTIBYTES",0);
 }
 
-if (!empty($_POST['xoops_theme_select']) && in_array($_POST['xoops_theme_select'], $xoopsConfig['theme_set_allowed'])) {
-	$xoopsConfig['theme_set'] = $_POST['xoops_theme_select'];
-    $_SESSION['xoopsUserTheme'] = $_POST['xoops_theme_select'];
+if (!empty($_POST['theme_select']) && in_array($_POST['theme_select'], $xoopsConfig['theme_set_allowed'])) {
+	$xoopsConfig['theme_set'] = $_POST['theme_select'];
+    $_SESSION['xoopsUserTheme'] = $_POST['theme_select'];
 } elseif (!empty($_SESSION['xoopsUserTheme']) && in_array($_SESSION['xoopsUserTheme'], $xoopsConfig['theme_set_allowed'])) {
 	$xoopsConfig['theme_set'] = $_SESSION['xoopsUserTheme'];
 }

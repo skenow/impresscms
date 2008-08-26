@@ -8,7 +8,7 @@
 * @package		core
 * @since		XOOPS
 * @author		http://www.xoops.org The XOOPS Project
-* @author		modified by stranger <stranger@impresscms.ir>
+* @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
 * @version		$Id$
 */
 /** Displays user profile
@@ -145,7 +145,7 @@ $xoopsTpl->assign('lang_notregistered', _US_NOTREGISTERED);
             $xoopsTpl->assign('user_showsignature', true);
 $xoopsTpl->assign('lang_signature', _US_SIGNATURE);
 $var = $thisUser->getVar('user_sig', 'N');
-$xoopsTpl->assign('user_signature', $myts->displayTarea( $var, 1, 1, 1 ) );
+$xoopsTpl->assign('user_signature', $myts->displayTarea($var, 1, 1));
         }
 
 if ($thisUser->getVar('user_viewemail') == 1) {

@@ -14,22 +14,44 @@
 */
 
 $xoopsOption['pagetype'] = 'content';
+/** Including mainfile.php is required */
 include 'mainfile.php';
+/** Include the textsanitizer class*/
 include_once ICMS_ROOT_PATH.'/class/module.textsanitizer.php';
+/** Include the system constants definitions */
 include_once ICMS_ROOT_PATH.'/modules/system/constants.php';
 
 $im_contentConfig =& $config_handler->getConfigsByCat(IM_CONF_CONTENT);
-$page = (isset($_GET['page']))?$_GET['page']:((isset($_POST['page']))?$_POST['page']:0);
+$page = (isset($_GET['page']))?trim(StopXSS($_GET['page'])):((isset($_POST['page']))?trim(StopXSS($_POST['page'])):0);
+
 $gperm_handler = & xoops_gethandler('groupperm');
 $groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
-$uid = is_object($xoopsUser) ? $xoopsUser->getVar('uid') : 0;
+$uid = is_object($xoopsUser) ? intval($xoopsUser->getVar('uid')) : 0;
 $content_handler =& xoops_gethandler('content');
 
 $tag = (isset($_GET['tag']))?trim(StopXSS($_GET['tag'])):((isset($_POST['tag']))?trim(StopXSS($_POST['tag'])):null);
-$start = (isset($_GET['start']))?intval($_GET['start']):((isset($_POST['start']))?intval($_POST['tag']):0);
+$start = (isset($_GET['start']))?intval($_GET['start']):((isset($_POST['start']))?intval($_POST['start']):0);
+if (!$page){
+	$path = (isset($_SERVER['PATH_INFO']) && substr($_SERVER['PATH_INFO'],0,1) == '/')?substr($_SERVER['PATH_INFO'],1,strlen($_SERVER['PATH_INFO'])):((isset($_SERVER['PATH_INFO']))?$_SERVER['PATH_INFO']:'');
+	$path = trim(StopXSS($path));
+	$params = explode('/',$path);
+	if (count($params) > 0){
+		if ($params[0] == 'page'){
+			$page = (isset($params[1]))?$params[1]:0;
+		}elseif ($params[0] == 'tag'){
+			$tag = (isset($params[1]))?$params[1]:null;
+			$start = (isset($params[2]))?$params[2]:0;
+		}else{
+			$page = $params[0];
+		}
+	}
+}
+
 if (!is_null($tag)){
+  /** Include the header that starts page rendering */
 	include ICMS_ROOT_PATH.'/header.php';
 	echo list_by_tag($tag,$start);
+	/** Include the footer that completes page rendering */
 	include ICMS_ROOT_PATH.'/footer.php';
 	exit;
 }
@@ -47,7 +69,7 @@ if(!$page)
 		$criteria->setOrder('DESC');
 	}
 	$impress_content = $content_handler->getObjects($criteria);
-	$impress_content = $impress_content[0];
+	$impress_content = (isset($impress_content[0]))?$impress_content[0]:null;
 }
 else
 {
@@ -56,7 +78,7 @@ else
 	$criteria->add(new Criteria('content_menu', $page,'LIKE'));
 	$criteria->add(new Criteria('content_id', $page),'OR');
 	$impress_content = $content_handler->getObjects($criteria);
-	$impress_content = $impress_content[0];
+	$impress_content = (isset($impress_content[0]))?$impress_content[0]:null;
 }
 if(!is_object($impress_content)) {redirect_header('index.php', 2, _CT_SELECTNG);}
 $content_id = $impress_content->getVar('content_id');
@@ -66,12 +88,12 @@ $adminperm = $gperm_handler->checkRight('content_admin', $content_id, $uid);	// 
 if(!$viewperm) {redirect_header('index.php', 2, _NOPERM);}
 $myts =& MyTextSanitizer::getInstance();
 $xoopsOption['template_main'] = 'system_content.html';
-
+/** Include the header file to start page rendering */
 include ICMS_ROOT_PATH.'/header.php';
 $xoopsTpl->assign("content_title", $impress_content->getVar('content_title'));
 $xoopsTpl->assign("isAdmin", $adminperm);
-$options = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=content&op=editcontent&content_id='.$impress_content->getVar('content_id').'"><img src="'.ICMS_URL.'/modules/system/images/edit_big.png" title="'._CT_EDIT_CONTENT.'" alt="'._CT_EDIT_CONTENT.'" /></a>';
-$options .= '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=content&op=delcontent&content_id='.$impress_content->getVar('content_id').'"><img src="'.ICMS_URL.'/modules/system/images/delete_big.png" title="'._CT_DELETE_CONTENT.'" alt="'._CT_DELETE_CONTENT.'" /></a>';
+$options = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=content&amp;op=editcontent&amp;content_id='.$impress_content->getVar('content_id').'"><img src="'.ICMS_URL.'/modules/system/images/edit_big.png" title="'._CT_EDIT_CONTENT.'" alt="'._CT_EDIT_CONTENT.'" /></a>';
+$options .= '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=content&amp;op=delcontent&amp;content_id='.$impress_content->getVar('content_id').'"><img src="'.ICMS_URL.'/modules/system/images/delete_big.png" title="'._CT_DELETE_CONTENT.'" alt="'._CT_DELETE_CONTENT.'" /></a>';
 $xoopsTpl->assign("content_admlinks", $options);
 $member_handler =& xoops_gethandler('member');
 $autor =& $member_handler->getUser($impress_content->getVar('content_uid')); 
@@ -126,6 +148,7 @@ else
 	if($xoopsUser->getVar('uid') != $autor->getVar('uid')) {$impress_content->setReads();}
 }
 $content_handler->insert($impress_content);
+/** Include the footer file to complete page rendering */
 include ICMS_ROOT_PATH.'/footer.php';
 
 function list_by_tag($tag,$start=0){
@@ -150,8 +173,8 @@ function list_by_tag($tag,$start=0){
 			$cont['title'] = $page->getVar('content_title');
 			$cont['url'] = ICMS_URL.'/content.php?page='.$content_handler->makeLink($page);
 			$cont['isAdmin'] = $adminperm;
-			$options = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=content&op=editcontent&content_id='.$page->getVar('content_id').'"><img src="'.ICMS_URL.'/modules/system/images/edit_big.png" title="'._CT_EDIT_CONTENT.'" alt="'._CT_EDIT_CONTENT.'" /></a>';
-			$options .= '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=content&op=delcontent&content_id='.$page->getVar('content_id').'"><img src="'.ICMS_URL.'/modules/system/images/delete_big.png" title="'._CT_DELETE_CONTENT.'" alt="'._CT_DELETE_CONTENT.'" /></a>';
+			$options = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=content&amp;op=editcontent&amp;content_id='.$page->getVar('content_id').'"><img src="'.ICMS_URL.'/modules/system/images/edit_big.png" title="'._CT_EDIT_CONTENT.'" alt="'._CT_EDIT_CONTENT.'" /></a>';
+			$options .= '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=content&amp;op=delcontent&amp;content_id='.$page->getVar('content_id').'"><img src="'.ICMS_URL.'/modules/system/images/delete_big.png" title="'._CT_DELETE_CONTENT.'" alt="'._CT_DELETE_CONTENT.'" /></a>';
 			$cont['admlinks'] = $options;
 			$member_handler =& xoops_gethandler('member');
 			$autor =& $member_handler->getUser($page->getVar('content_uid'));
@@ -168,7 +191,8 @@ function list_by_tag($tag,$start=0){
 	
 	if ($pagecount > 0){
 		if ($pagecount > $im_contentConfig['num_pages']) {
-			include_once XOOPS_ROOT_PATH.'/class/pagenav.php';
+			/** Include the page navigation class for rendering */
+      include_once XOOPS_ROOT_PATH.'/class/pagenav.php';
 			$nav = new XoopsPageNav($pagecount, $im_contentConfig['num_pages'], $start, 'start','tag='.$tag);
 			$xoopsTpl->assign('pag',$nav->renderNav());
 		}else{

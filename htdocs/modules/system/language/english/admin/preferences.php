@@ -355,7 +355,8 @@ define('_MD_AM_ALLWSHOWSIGDSC', 'By enabling this option, users will be able to 
 // < personalizações > fabio - Sat Apr 28 11:55:00 BRT 2007 11:55:00
 define("_MD_AM_PERSON","Personalization");
 define("_MD_AM_GOOGLE_ANA","Google Analytics");
-define("_MD_AM_GOOGLE_ANA_DESC","Insert the script informed by Google Analytics for your site. If you don't use it, leave it blank.");
+define("_MD_AM_GOOGLE_ANA_DESC","Write down the Google Analytics id-code, like: <small>_uacct = \"UA-<font color=#FF0000><b>xxxxxx-x</b></font>\"</small><br />OR<small><br />var pageTracker = _gat._getTracker( UA-\"<font color=#FF0000><b>xxxxxx-x</b></font>\");</small> (you need to write the red bold id-code)
+.");
 define("_MD_AM_LLOGOADM","Admin left logo");
 define("_MD_AM_LLOGOADM_DESC"," Select an image to use in the top left corner of the admin panel. <br /><i>To select or send an image, at least one image category must be present in system > images</i> ");
 define("_MD_AM_LLOGOADM_URL","Admin left logo link URL");
@@ -392,7 +393,7 @@ define("_MD_AM_MULTLOGINPREVENTDSC","With this option enabled, if a user is alre
 define("_MD_AM_MULTLOGINMSG","Multilogin redirection message:");
 define("_MD_AM_MULTLOGINMSG_DESC","Message that will be displayed to a user who tries to login with a username already loged in on the site. <br><i>This option only applies if 'Prevent multiple login from same user?' is set to Yes.</i>");
 define("_MD_AM_GRAVATARALLOW","Allow using GRAVATAR?");
-define("_MD_AM_GRAVATARALWDSC","By allowing this, user will be able to use their local avatar/gravatar linked to their email address.");
+define("_MD_AM_GRAVATARALWDSC","Show account images from members are hosted by <a href='http://www.gravatar.com/' target='_blank'>Gravatar</a>, a free avatar service. ImpressCMS will automatically display any Gravatar-hosted image linked to the email address from the members.");
 
 define("_MD_AM_SHOW_ICMSMENU","Show ImpressCMS Project drop down menu?");
 define("_MD_AM_SHOW_ICMSMENU_DESC","Select NO to not show the drop down menu and YES to show it.");
@@ -415,6 +416,8 @@ define("_MD_AM_AUTORESIZE_DESC","If YES, if the avatar sent have the width or he
 */
 define("_MD_AM_AUTHOPENID","Enable OpenID authentication");
 define("_MD_AM_AUTHOPENIDDSC","Select Yes to enable OpenID authentication. This will allow users to login on the site using their OpenID account. For complete information about the OpenID Integration in ImpressCMS, please visit <a href='http://wiki.impresscms.org/index.php?title=ImpressCMS_OpenID'>our wiki</a>.");
+define("_MD_AM_USE_GOOGLE_ANA"," Enable Google Analytics?");
+define("_MD_AM_USE_GOOGLE_ANA_DESC","");
 
 define('_MD_AM_PAGISTYLE','Paginations Style');
 define('_MD_AM_PAGISTYLE_DESC','Select the style of the paginations links.');

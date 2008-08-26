@@ -1,5 +1,17 @@
-/*Made some necessary changes for RTL languages by stranger @ www.impresscms.ir */
-/* IMPORTANT, PLEASE RESPECT THIS SEMANTIC ORDER !!! :
+/**
+* ImpressCMS styles for RTL languages
+*
+* Main system style sheet information for control panel are rendered from here.
+* System tool to make ImpressCMS work under RTL (Right To Left).
+*
+* @copyright	The ImpressCMS Project http://www.impresscms.org/
+* @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @package	core
+* @since	1.1
+* @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+* @version	$Id$
+*
+* IMPORTANT, PLEASE RESPECT THIS SEMANTIC ORDER !!! :
 	- position box,
 	- width,
 	- heigth,
@@ -9,7 +21,8 @@
 	- padding,
 	- content (color, style font, ...),
 	- border,
-	 ... */
+	 ... 
+*/
 
 /* General definitions */
 html, body {background-color : #FFF; font-size: 12px; font-family: Tahoma; margin: 0px; padding: 0px;
@@ -136,7 +149,7 @@ a.fontSmall { background-color: transparent; color: #006699;font-family: Tahoma;
 a.fontSmall:hover { background-color: transparent; color: #C23030; text-decoration: underline;font-family: Tahoma; direction: rtl;}
 
 /* ===== forms elements ===== */
-input { background-color: #fff; color:inherit; border: #CCC 1px solid; font-size: .8em; font-family: Tahoma; font-family: Tahoma; direction: rtl;}
+input { background-color: #fff; border: #CCC 1px solid; font-size: .8em; font-family: Tahoma; font-family: Tahoma; direction: rtl;}
 input:focus { background-color: #FFFFBB; border: #000 1px solid;font-family: Tahoma; direction: rtl;}
 input:hover { border: #000 1px solid;font-family: Tahoma; direction: rtl;}
 

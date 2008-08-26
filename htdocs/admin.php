@@ -19,7 +19,9 @@
 */
 
 $xoopsOption['pagetype'] = 'admin';
+/** Including mainfile.php is required */
 include 'mainfile.php';
+/** Include the control panel functions */
 include ICMS_ROOT_PATH.'/include/cp_functions.php';
 
 // Admin Authentication
@@ -120,7 +122,7 @@ switch($op)
 		$db = $GLOBALS['xoopsDB'];
 		if(getDbValue($db, 'modules', 'version', 'version="120"') == 0 AND getDbValue($db, 'modules', 'mid', 'mid="1"') == 1)
 		{
-			xoops_error('<a href="'.ICMS_URL.'/modules/system/admin.php?fct=modulesadmin&op=update&module=system">'._WARNINGUPDATESYSTEM.'</a>');
+			xoops_error('<a href="'.ICMS_URL.'/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=system">'._WARNINGUPDATESYSTEM.'</a>');
 			echo '<br />';
 		}
 		if(is_writable(ICMS_ROOT_PATH.'/mainfile.php'))
@@ -142,9 +144,12 @@ switch($op)
 		if($result1 = $xoopsDB->query($sql1))
 		{
 			list($modid) = $xoopsDB->FetchRow($result1);
+			$protector_is_active = '0';
+			if (!is_null($modid)){
 			$sql2 = "SELECT isactive FROM `".$xoopsDB->prefix('modules')."` WHERE mid =".$modid;
 			$result2 = $xoopsDB->query($sql2);
 			list($protector_is_active) = $xoopsDB->FetchRow($result2);
+			}
 		}
 		if($protector_is_active == 0)
 		{

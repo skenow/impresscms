@@ -28,6 +28,7 @@
 // URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
+global $xoopsConfigUser;
 
 $uid_label = new XoopsFormLabel(_AM_USERID, $uid_value);
 $uname_text = new XoopsFormText(_AM_NICKNAME, "username", 25, 25, $uname_value);
@@ -38,12 +39,16 @@ $email_tray->addElement($email_text, true);
 $email_cbox = new XoopsFormCheckBox("", "user_viewemail", $email_cbox_value);
 $email_cbox->addOption(1, _AM_AOUTVTEAD);
 $email_tray->addElement($email_cbox);
+$config_handler =& xoops_gethandler('config');
+$icmsauthConfig =& $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);
+if ($icmsauthConfig['auth_openid'] == 1) {
 $openid_tray = new XoopsFormElementTray(_AM_OPENID, "<br />");
-$openid_text = new XoopsFormText("", "openid", 30, 60, $openid_value);
-$openid_tray->addElement($openid_text, true);
+  $openid_text = new XoopsFormText("", "openid", 30, 255, $openid_value);
+  $openid_tray->addElement($openid_text);
 $openid_cbox = new XoopsFormCheckBox("", "user_viewoid", $openid_cbox_value);
 $openid_cbox->addOption(1, _AM_AOUTVTOIAD);
 $openid_tray->addElement($openid_cbox);
+}
 $url_text = new XoopsFormText(_AM_URL, "url", 30, 100, $url_value);
 //  $avatar_select = new XoopsFormSelect("", "user_avatar", $avatar_value);
 //  $avatar_array = XoopsLists::getImgListAsArray(XOOPS_ROOT_PATH."/images/avatar/");
@@ -134,6 +139,9 @@ else {
     }
 }
 $salt_hidden = new XoopsFormHidden('salt', icms_createSalt());
+
+$enc_type_hidden = new XoopsFormHidden('enc_type', $xoopsConfigUser['enc_type']);
+$pass_expired_hidden = new XoopsFormHidden('pass_expired', 0);
 $fct_hidden = new XoopsFormHidden("fct", "users");
 $op_hidden = new XoopsFormHidden("op", $op_value);
 $submit_button = new XoopsFormButton("", "submit", _SUBMIT, "submit");
@@ -164,13 +172,17 @@ $form->addElement($bio_tarea);
 $form->addElement($rank_select);
 // adding a new user requires password fields
 if (!$form_isedit) {
-    $form->addElement($pwd_text, true);
-    $form->addElement($pwd_text2, true);
-    $form->addElement($salt_hidden, true);
+	$form->addElement($pwd_text, true);
+	$form->addElement($pwd_text2, true);
+	$form->addElement($salt_hidden, true);
+	$form->addElement($enc_type_hidden, true);
+	$form->addElement($pass_expired_hidden, true);
 } else {
     $form->addElement($pwd_text);
     $form->addElement($pwd_text2);
     $form->addElement($salt_hidden);
+    $form->addElement($enc_type_hidden);
+    $form->addElement($pass_expired_hidden);
 }
 $form->addElement($mailok_radio);
 $form->addElement($language);

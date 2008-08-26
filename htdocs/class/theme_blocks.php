@@ -59,12 +59,14 @@ class xos_logos_PageBuilder {
 		$startMod = ($xoopsConfig ['startpage'] == '--') ? 'system' : $xoopsConfig ['startpage']; //Getting the top page
 
 		//Setting the full and relative url of the actual page
-		$fullurl = "http://" . $_SERVER ["SERVER_NAME"] . $_SERVER ["REQUEST_URI"];
-		$url = substr ( str_replace ( XOOPS_URL, '', $fullurl ), 1 );
+		$fullurl = urldecode("http://".$_SERVER ["SERVER_NAME"].$_SERVER ["REQUEST_URI"]);
+		$url = urldecode(substr(str_replace(XOOPS_URL,'',$fullurl),1));
 		
 		$page_handler = & xoops_gethandler ( 'page' );
 		$criteria = new CriteriaCompo ( new Criteria ( 'page_url', $fullurl ) );
-		$criteria->add(new Criteria ( 'page_url', $url ),'OR');
+		if (!empty($url)){
+			$criteria->add(new Criteria ( 'page_url', $url ),'OR');
+		}
 		$pages = $page_handler->getCount ( $criteria );
 		
 		if ($pages > 0){ //We have a sym-link defined for this page
