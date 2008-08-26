@@ -2,12 +2,13 @@ ImpressCMS ChangeLog
 
 == Impresscms 1.1==
 
-===2008-08-?? : 1.1 RC 1===
+===2008-09-?? : 1.1 RC 1===
 '''Added'''
 * agree box before upgrading to make sure of a backup. (stranger)
 * added password can't contain username to pass check in admin edit user form. (vaughan)
 * default template form usable by core feature or any modules - system_default_form.html (malanciault)
 * new function to list all fonts. (stranger)
+* new function to generate pdfs. (stranger)
 
 '''Improved'''
 * Improved how we use rtl in system. (stranger/real_therplima)
@@ -23,6 +24,7 @@ ImpressCMS ChangeLog
 * bug with modules when calling editors. (stranger)
 * bug "Cannot redeclare class XoopsFormCaptcha". (stranger)
 * Language constants in IcmsModuleAbout feature (malanciault)
+* bug with pdf generator. (stranger)
 
 ===2008-08-08 : 1.1 Beta 1===
 
