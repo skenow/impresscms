@@ -266,4 +266,6 @@ define( "_TRUST_PATH_HELP", "Warning: System failed in reaching Trust path.<br /
 define( "_PROTECTOR_NOT_FOUND", "Warning: System is unable to find if Protector is installed or active in your site.<br />We highly recommend you to install or activate Protector to improve your site's security.<br />We also have to thank GIJOE for this very good module.<br /><a target='_blank' href='http://wiki.impresscms.org/index.php?title=Protector'>Click here to learn more about Protector.</a><br /><a target='_blank' href='http://xoops.peak.ne.jp/modules/mydownloads/singlefile.php?lid=105&cid=1'>Click here to download the latest version of Protector.</a>" );
 
 define('_MODABOUT_ABOUT', 'About');
+// if you have troubles with this font on your language or it is not working, download tcpdf from: http://www.tecnick.com/public/code/cp_dpage.php?aiocp_dp=tcpdf and add the required font in libraries/tcpdf/fonts then write down the font name here. system will then load this font for your language.
+define('_PDF_LOCAL_FONT', '');
 ?>
