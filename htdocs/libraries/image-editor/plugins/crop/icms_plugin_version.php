@@ -12,14 +12,14 @@
 * @version		$Id: icms_plugin_version.php 1244 2008-03-18 17:09:11Z real_therplima $
 */
 
-$plugversion['name'] = 'Crop Tool';
+$plugversion['name'] = _CROP_PLUGNAME;
 $plugversion['version'] = 1.00;
-$plugversion['description'] = 'Plugin to allow the DHTML Image Editor crop images. Change the values in the form or drag the squares in the image to define the crop area and press the button to preview or crop the image.';
+$plugversion['description'] = _CROP_PLUGDESC;
 $plugversion['author'] = "Rodrigo Pereira Lima (AKA TheRplima) <therplima@impresscms.org>";
 $plugversion['credits'] = "The ImpressCMS Project";
 $plugversion['license'] = "GPL see LICENSE";
 $plugversion['official'] = 1;
-$plugversion['icon'] = 'crop.png';
+$plugversion['icon'] = 'images/crop.png';
 $plugversion['folder'] = 'crop';
 $plugversion['file'] = 'crop_image.php';
 $plugversion['block_template'] = 'crop_image.html';

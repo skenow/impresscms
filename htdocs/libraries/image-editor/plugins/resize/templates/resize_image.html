@@ -5,17 +5,17 @@
 <form id="resize_form" name="resize_form">
   <table width="100%">
     <tr>
-      <td width="20%"><b><{$lang_width}>:</b></td>
-      <td><input type="text" name="resize_width" id="resize_width" style="width:80px;" value="<{$image.width}>"></td>
+      <td width="20%"><b><{$smarty.const._WIDTH}>:</b></td>
+      <td><input type="text" name="resize_width" id="resize_width" size="10" value="<{$image.width}>"></td>
     </tr>
     <tr>
-      <td><b><{$lang_height}>:</b></td>
-      <td><input type="text" name="resize_height" id="resize_height" style="width:80px;" value="<{$image.height}>"></td>
+      <td><b><{$smarty.const._HEIGHT}>:</b></td>
+      <td><input type="text" name="resize_height" id="resize_height" size="10" value="<{$image.height}>"></td>
     </tr>
     <tr>
       <td colspan="2" align="center" id="cropButtonCell">
-        <input type="button" onclick="resize_preview(this);" value="<{$lang_preview}>" /> 
-        <input type="button" onclick="resize_save(this);" value="<{$lang_resize}>" />
+        <input type="button" onclick="resize_preview(this);" value="<{$smarty.const._RESIZE_PREVIEW}>" /> 
+        <input type="button" onclick="resize_save(this);" value="<{$smarty.const._RESIZE_EXECUTE}>" />
         <input type="hidden" id="fimage_path" value="<{$image.path}>">
         <input type="hidden" id="fimage_url" value="<{$image.url}>">
       </td>

@@ -65,4 +65,12 @@ define('_INSTRUCTIONS_DSC', 'To select crop area, drag and move the dotted recta
 define('_MD_IMAGE_EDITORTITLE', 'DHTML Image Editor');
 define('_MD_IMAGE_VIEWSUBS', 'View Sub-categories');
 define('_MD_IMAGE_COPYOF', 'Copy of ');
+
+define('IMANAGER_FILE', 'File');
+define('IMANAGER_WIDTH', 'Width');
+define('IMANAGER_HEIGHT', 'Height');
+define('IMANAGER_SIZE', 'Size');
+define('IMANAGER_ORIGINAL', 'Original Image');
+define('IMANAGER_EDITED', 'Edited Image');
+
 ?>

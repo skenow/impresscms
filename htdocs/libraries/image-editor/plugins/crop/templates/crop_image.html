@@ -46,21 +46,21 @@
 <form id="cropimgform" name="cropimgform">
   <table width="100%">
     <tr>
-      <td align="right">X:</td><td><input type="text" name="crop_x" id="input_crop_x"></td>
+      <td align="right">X:</td><td><input type="text" name="crop_x" id="input_crop_x" size="10"></td>
     </tr>
     <tr>
-      <td align="right">Y:</td><td><input type="text" name="crop_y" id="input_crop_y"></td>
+      <td align="right">Y:</td><td><input type="text" name="crop_y" id="input_crop_y" size="10"></td>
     </tr>
     <tr>
-      <td align="right"><{$lang_width}>:</td><td><input type="text" name="crop_width" id="input_crop_width"></td>
+      <td align="right"><{$smarty.const._WIDTH}>:</td><td><input type="text" name="crop_width" id="input_crop_width" size="10"></td>
     </tr>
     <tr>
-      <td align="right"><{$lang_height}>:</td><td><input type="text" name="crop_height" id="input_crop_height"></td>
+      <td align="right"><{$smarty.const._HEIGHT}>:</td><td><input type="text" name="crop_height" id="input_crop_height" size="10"></td>
     </tr>
     <tr>
       <td id="cropButtonCell" colspan="2" align="center">
-        <input type="button" onclick="cropScript_executeCrop(this)" value="<{$lang_preview}>">
-        <input type="button" onclick="cropScript_saveCrop(this)" value="<{$lang_crop}>" />
+        <input type="button" onclick="cropScript_executeCrop(this)" value="<{$smarty.const._CROP_PREVIEW}>">
+        <input type="button" onclick="cropScript_saveCrop(this)" value="<{$smarty.const._CROP_EXECUTE}>" />
       </td>
     </tr>
   </table>
