@@ -150,7 +150,8 @@ function imanager_index($imgcat_id=null){
 	
 	$icmsAdminTpl->assign('lang_imanager_cat_addnewcat',_MD_ADDIMGCATBTN);
 	$icmsAdminTpl->assign('lang_imanager_cat_addnewimg',_MD_ADDIMGBTN);
-
+	$icmsAdminTpl->assign('lang_imanager_viewsubs',_MD_IMAGE_VIEWSUBS);
+	
 	$icmsAdminTpl->assign('token',$GLOBALS['xoopsSecurity']->getTokenHTML());
 	$icmsAdminTpl->assign('catcount',count($imagecategorys));
 	$icmsAdminTpl->assign('writecatcount',count($imagecategorysWrite));
@@ -379,7 +380,9 @@ function imanager_listimg($imgcat_id,$start=0) {
 	$icmsAdminTpl->assign('lang_search',_SEARCH);
 	$icmsAdminTpl->assign('lang_search_title',_QSEARCH);
 	
-	$icmsAdminTpl->assign('lang_imanager_img_editor','DHTML Image Editor');
+	$icmsAdminTpl->assign('lang_imanager_img_editor',_MD_IMAGE_EDITORTITLE);
+	
+	$icmsAdminTpl->assign('lang_imanager_copyof',_MD_IMAGE_COPYOF);
 	
 	$icmsAdminTpl->assign('xoops_root_path',ICMS_ROOT_PATH);
 	$icmsAdminTpl->assign('query',$query);

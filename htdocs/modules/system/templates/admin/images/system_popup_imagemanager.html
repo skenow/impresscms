@@ -30,7 +30,7 @@
         <td><{$imagecategorys[i]->getVar('imgcat_maxheight')}>px</td>
         <td>
           <{if $subs[i] > 0}>
-            <{$subs[i]}> <a href="?op=list&imgcat_id=<{$imagecategorys[i]->getVar('imgcat_id')}>&target=<{$target}>&type=<{$type}>" title="View Sub-categories"><img src="<{$xoops_url}>/modules/system/images/viewsubs.gif" align="absmiddle" /></a>
+            <{$subs[i]}> <a href="?op=list&imgcat_id=<{$imagecategorys[i]->getVar('imgcat_id')}>&target=<{$target}>&type=<{$type}>" title="<{$smarty.const._MD_IMAGE_VIEWSUBS}>"><img src="<{$xoops_url}>/modules/system/images/viewsubs.gif" align="absmiddle" /></a>
           <{else}>
             <{$subs[i]}>
           <{/if}>

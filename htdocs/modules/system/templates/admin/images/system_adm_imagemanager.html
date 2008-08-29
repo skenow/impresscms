@@ -29,7 +29,7 @@
         <td><input style="text-align:center;" type="text" name="imgcat_weight[<{$imagecategorys[i]->getVar('imgcat_id')}>]" value="<{$imagecategorys[i]->getVar('imgcat_weight')}>" size="3" maxlength="4" /></td>
         <td>
           <{if $subs[i] > 0}>
-            <{$subs[i]}> <a href="admin.php?fct=images&imgcat_id=<{$imagecategorys[i]->getVar('imgcat_id')}>" title="View Sub-categories"><img src="images/viewsubs.gif" align="absmiddle" /></a>
+            <{$subs[i]}> <a href="admin.php?fct=images&imgcat_id=<{$imagecategorys[i]->getVar('imgcat_id')}>" title="<{$lang_imanager_viewsubs}>"><img src="images/viewsubs.gif" align="absmiddle" /></a>
           <{else}>
             <{$subs[i]}>
           <{/if}>
