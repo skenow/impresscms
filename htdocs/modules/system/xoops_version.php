@@ -37,14 +37,6 @@ $modversion['onUpdate'] = "include/update.php";
 $i=0;
 
 $i++;
-$modversion['templates'][$i]['file'] = 'system_imagemanager.html';
-$modversion['templates'][$i]['description'] = '';
-
-$i++;
-$modversion['templates'][$i]['file'] = 'system_imagemanager2.html';
-$modversion['templates'][$i]['description'] = '';
-
-$i++;
 $modversion['templates'][$i]['file'] = 'system_userinfo.html';
 $modversion['templates'][$i]['description'] = '';
 
@@ -109,6 +101,10 @@ $modversion['templates'][$i]['file'] = 'system_content.html';
 $modversion['templates'][$i]['description'] = 'Template of content pages';
 
 $i++;
+$modversion['templates'][$i]['file'] = 'system_content_list.html';
+$modversion['templates'][$i]['description'] = 'Template of content pages';
+
+$i++;
 $modversion['templates'][$i]['file'] = 'system_openid.html';
 $modversion['templates'][$i]['description'] = '';
 
@@ -155,6 +151,27 @@ $i++;
 $modversion['templates'][$i]['file'] = 'system_content_list.html';
 $modversion['templates'][$i]['description'] = 'Template of content pages';
 
+### Image Manager ###
+$i++;
+$modversion['templates'][$i]['file'] = 'admin/images/system_adm_imagemanager.html';
+$modversion['templates'][$i]['description'] = 'Template of the Image Manager admin';
+
+$i++;
+$modversion['templates'][$i]['file'] = 'admin/images/system_adm_imagemanager_imglist.html';
+$modversion['templates'][$i]['description'] = 'Template of the Image Manager admin';
+
+$i++;
+$modversion['templates'][$i]['file'] = 'admin/images/system_adm_imagemanager_img.html';
+$modversion['templates'][$i]['description'] = 'Template of the Image Manager admin';
+
+$i++;
+$modversion['templates'][$i]['file'] = 'admin/images/system_adm_imagemanager_editimg.html';
+$modversion['templates'][$i]['description'] = 'Template of the Image Manager admin';
+
+$i++;
+$modversion['templates'][$i]['file'] = 'admin/images/system_adm_imagemanager_cloneimg.html';
+$modversion['templates'][$i]['description'] = 'Template of the Image Manager admin';
+###
 
 // Blocks
 $i=0;
