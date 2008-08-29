@@ -2,10 +2,10 @@
   <span class="imanager_image_img"><img src="<{$image.src}>" title="<{$image.nicename}>" /></span>
   <span class="imanager_image_label"><{$image.display_nicename}></span>
   <span class="imanager_image_info">
-    <b>file:</b> <{$image.name}><br />
-    <b>size:</b> <{$image.size}><br />
-    <b>width:</b> <{$image.width}>px<br />
-    <b>height:</b> <{$image.height}>px
+    <b><{$smarty.const.IMANAGER_FILE}>:</b> <{$image.name}><br />
+    <b><{$smarty.const.IMANAGER_SIZE}>:</b> <{$image.size}><br />
+    <b><{$smarty.const.IMANAGER_WIDTH}>:</b> <{$image.width}>px<br />
+    <b><{$smarty.const.IMANAGER_HEIGHT}>:</b> <{$image.height}>px
   </span>
   <span class="imanager_image_btns">
     <{$image.preview_link}>
