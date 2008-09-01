@@ -105,7 +105,7 @@ function xoops_module_install($dirname) {
     global $xoopsUser, $xoopsConfig;
     $dirname = trim($dirname);
     $db =& Database::getInstance();
-    $reservedTables = array('avatar', 'avatar_users_link', 'block_module_link', 'xoopscomments', 'config', 'configcategory', 'configoption', 'image', 'imagebody', 'imagecategory', 'imgset', 'imgset_tplset_link', 'imgsetimg', 'groups','groups_users_link','group_permission', 'online', 'bannerclient', 'banner', 'bannerfinish', 'priv_msgs', 'ranks', 'session', 'smiles', 'users', 'newblocks', 'modules', 'tplfile', 'tplset', 'tplsource', 'xoopsnotifications', 'banner', 'bannerclient', 'bannerfinish', 'configsec', 'configsec_category', 'configsec_option');
+    $reservedTables = array('avatar', 'avatar_users_link', 'block_module_link', 'xoopscomments', 'config', 'configcategory', 'configoption', 'image', 'imagebody', 'imagecategory', 'imgset', 'imgset_tplset_link', 'imgsetimg', 'groups','groups_users_link','group_permission', 'online', 'bannerclient', 'banner', 'bannerfinish', 'priv_msgs', 'ranks', 'session', 'smiles', 'users', 'newblocks', 'modules', 'tplfile', 'tplset', 'tplsource', 'xoopsnotifications', 'banner', 'bannerclient', 'bannerfinish');
     $module_handler =& xoops_gethandler('module');
     if ($module_handler->getCount(new Criteria('dirname', $dirname)) == 0) {
         $module =& $module_handler->create();
@@ -300,7 +300,6 @@ function xoops_module_install($dirname) {
                     unset($blocks);
                 }
                 $configs = $module->getInfo('config');
-			$configsecs = $module->getInfo('configsec');
                 if ($configs != false) {
                     if ($module->getVar('hascomments') != 0) {
                         include_once(XOOPS_ROOT_PATH.'/include/comment_constants.php');
@@ -386,46 +385,6 @@ function xoops_module_install($dirname) {
                     }
                     unset($configs);
                 }
-
-                if ($configsecs != false) {
-                    $msgs[] = 'Adding module security config data...';
-                    $configsec_handler =& xoops_gethandler('configsec');
-                    $order = 0;
-                    foreach ($configsecs as $configsec) {
-                        $confsecobj =& $configsec_handler->createConfigSec();
-                        $confsecobj->setVar('confsec_modid', $newmid);
-                        $confsecobj->setVar('confsec_catid', 0);
-                        $confsecobj->setVar('confsec_name', $configsec['name']);
-                        $confsecobj->setVar('confsec_title', $configsec['title'], true);
-                        $confsecobj->setVar('confsec_desc', $configsec['description'], true);
-                        $confsecobj->setVar('confsec_formtype', $configsec['formtype']);
-                        $confsecobj->setVar('confsec_valuetype', $configsec['valuetype']);
-                        $confsecobj->setConfSecValueForInput($configsec['default'], true);
-                        //$confobj->setVar('conf_value', $config['default'], true);
-                        $confsecobj->setVar('confsec_order', $order);
-                        $confsecop_msgs = '';
-                        if (isset($configsec['options']) && is_array($configsec['options'])) {
-                            foreach ($configsec['options'] as $key => $value) {
-                                $confsecop =& $configsec_handler->createConfigSecOption();
-                                $confsecop->setVar('confsecop_name', $key, true);
-                                $confsecop->setVar('confsecop_value', $value, true);
-                                $confsecobj->setConfSecOptions($confsecop);
-                                $confsecop_msgs .= '<br />&nbsp;&nbsp;&nbsp;&nbsp;Security Config option added. Name: <b>'.$key.'</b> Value: <b>'.$value.'</b>';
-                                unset($confsecop);
-                            }
-                        }
-                        $order++;
-                        if ($configsec_handler->insertConfigSec($confsecobj) != false) {
-                            $msgs[] = '&nbsp;&nbsp;Security Config <b>'.$configsec['name'].'</b> added to the database.'.$confsecop_msgs;
-                        } else {
-                            $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not insert security config <b>'.$configsec['name'].'</b> to the database.</span>';
-                        }
-                        unset($confsecobj);
-                    }
-                    unset($configsecs);
-                }
-
-
             }
 				if ($module->getInfo('hasMain')) {
 					$groups = array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS);
@@ -545,7 +504,7 @@ function &xoops_module_gettemplate($dirname, $template, $block=false) {
 
 function xoops_module_uninstall($dirname) {
     global $xoopsConfig;
-    $reservedTables = array('avatar', 'avatar_users_link', 'block_module_link', 'xoopscomments', 'config', 'configcategory', 'configoption', 'image', 'imagebody', 'imagecategory', 'imgset', 'imgset_tplset_link', 'imgsetimg', 'groups','groups_users_link','group_permission', 'online', 'bannerclient', 'banner', 'bannerfinish', 'priv_msgs', 'ranks', 'session', 'smiles', 'users', 'newblocks', 'modules', 'tplfile', 'tplset', 'tplsource', 'xoopsnotifications', 'banner', 'bannerclient', 'bannerfinish', 'configsec', 'configsec_category', 'configsec_option');
+    $reservedTables = array('avatar', 'avatar_users_link', 'block_module_link', 'xoopscomments', 'config', 'configcategory', 'configoption', 'image', 'imagebody', 'imagecategory', 'imgset', 'imgset_tplset_link', 'imgsetimg', 'groups','groups_users_link','group_permission', 'online', 'bannerclient', 'banner', 'bannerfinish', 'priv_msgs', 'ranks', 'session', 'smiles', 'users', 'newblocks', 'modules', 'tplfile', 'tplset', 'tplsource', 'xoopsnotifications', 'banner', 'bannerclient', 'bannerfinish');
     $db =& Database::getInstance();
     $module_handler =& xoops_gethandler('module');
     $module =& $module_handler->getByDirname($dirname);
@@ -694,28 +653,6 @@ function xoops_module_uninstall($dirname) {
                     }
                 }
             }
-			// delete module security config options if any
-			if($module->getVar('hasconfigsec') != 0)
-			{
-				$configsec_handler =& xoops_gethandler('configsec');
-				$configsecs =& $configsec_handler->getConfigSecs(new Criteria('confsec_modid', $module->getVar('mid')));
-				$confseccount = count($configsecs);
-				if($confcount > 0)
-				{
-					$msgs[] = 'Deleting module security config options...';
-					for($i = 0; $i < $confseccount; $i++)
-					{
-						if(!$configsec_handler->deleteConfigSec($configsecs[$i]))
-						{
-							$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete security config data from the database. Security Config ID: <b>'.$configsecs[$i]->getvar('confsec_id').'</b></span>';
-						}
-						else
-						{
-							$msgs[] = '&nbsp;&nbsp;Security Config data deleted from the database. Security Config ID: <b>'.$configsecs[$i]->getVar('confsec_id').'</b>';
-						}
-					}
-				}
-			}
 
             // execute module specific install script if any
             $uninstall_script = $module->getInfo('onUninstall');
