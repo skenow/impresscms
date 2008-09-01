@@ -580,6 +580,86 @@ if ($op == 'update_ok') {
             unset($configs);
         }
 
+		// first delete all security config entries
+		$configsec_handler =& xoops_gethandler('configsec');
+		$configsecs =& $configsec_handler->getConfigSecs(new Criteria('confsec_modid', $module->getVar('mid')));
+		$confseccount = count($configsecs);
+		$configsec_delng = array();
+		if($confseccount > 0)
+		{
+			$msgs[] = 'Deleting module security config options...';
+			for($i = 0; $i < $confseccount; $i++)
+			{
+				if(!$configsec_handler->deleteConfigSec($configsecs[$i])) {
+					$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete security config data from the database. Security Config ID: <b>'.$configsecs[$i]->getvar('confsec_id').'</b></span>';
+					// save the name of securityconfig failed to delete for later use
+					$configsec_delng[] = $configsecs[$i]->getvar('confsec_name');
+				}
+				else
+				{
+					$configsec_old[$configsecs[$i]->getvar('confsec_name')]['value'] = $configsecs[$i]->getvar('confsec_value', 'N');
+					$configsec_old[$configsecs[$i]->getvar('confsec_name')]['formtype'] = $configsecs[$i]->getvar('confsec_formtype');
+					$configsec_old[$configsecs[$i]->getvar('confsec_name')]['valuetype'] = $configsecs[$i]->getvar('confsec_valuetype');
+					$msgs[] = '&nbsp;&nbsp;Security Config data deleted from the database. Security Config ID: <b>'.$configsecs[$i]->getVar('confsec_id').'</b>';
+				}
+			}
+		}
+
+		if($configsecs != false)
+		{
+			$msgs[] = 'Adding module security config data...';
+			$configsec_handler =& xoops_gethandler('configsec');
+			$order = 0;
+			foreach($configsecs as $configsec)
+			{
+				// only insert ones that have been deleted previously with success
+				if(!in_array($configsec['name'], $configsec_delng))
+				{
+					$confsecobj =& $configsec_handler->createConfigSec();
+					$confsecobj->setVar('confsec_modid', intval($newmid));
+					$confsecobj->setVar('confsec_catid', 0);
+					$confsecobj->setVar('confsec_name', $configsec['name']);
+					$confsecobj->setVar('confsec_title', $configsec['title'], true);
+					$confsecobj->setVar('confsec_desc', $configsec['description'], true);
+					$confsecobj->setVar('confsec_formtype', $configsec['formtype']);
+					$confsecobj->setVar('confsec_valuetype', $configsec['valuetype']);
+					if(isset($configsec_old[$configsec['name']]['value']) && $configsec_old[$configsec['name']]['formtype'] == $configsec['formtype'] && $configsec_old[$configsec['name']]['valuetype'] == $configsec['valuetype'])
+					{
+						// preserve the old value if any
+						// form type and value type must be the same
+						$confsecobj->setVar('confsec_value', $configsec_old[$configsec['name']]['value'], true);
+					}
+					else {$confsecobj->setConfSecValueForInput($configsec['default'], true);}
+
+					$confsecobj->setVar('confsec_order', $order);
+					$confsecop_msgs = '';
+					if(isset($configsec['options']) && is_array($configsec['options']))
+					{
+						foreach($configsec['options'] as $key => $value)
+						{
+							$confsecop =& $configsec_handler->createConfigSecOption();
+							$confsecop->setVar('confsecop_name', $key, true);
+							$confsecop->setVar('confsecop_value', $value, true);
+							$confsecobj->setConfSecOptions($confsecop);
+							$confsecop_msgs .= '<br />&nbsp;&nbsp;&nbsp;&nbsp;Security Config option added. Name: <b>'.$key.'</b> Value: <b>'.$value.'</b>';
+							unset($confsecop);
+						}
+					}
+					$order++;
+					if(false != $configsec_handler->insertConfigSec($confsecobj))
+					{
+						$msgs[] = '&nbsp;&nbsp;Security Config <b>'.$configsec['name'].'</b> added to the database.'.$confsecop_msgs;
+					}
+					else
+					{
+						$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not insert security config <b>'.$configsec['name'].'</b> to the database.</span>';
+					}
+					unset($confsecobj);
+				}
+			}
+			unset($configsecs);
+		}
+
         // execute module specific update script if any
         $update_script = $module->getInfo('onUpdate');
         if (false != $update_script && trim($update_script) != '') {
