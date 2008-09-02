@@ -63,6 +63,12 @@ function search_content($queryarray, $andor, $limit, $offset, $userid){
 		}
 	}
 	
+	/**
+     * Removing this part of the code because we need to improve the permission system of the symlinks before.
+     * Without this permissions all users can see all links and this can cause problems.
+     * This code was causing problems on the user profile too, because the symlink dont have an user that created 
+     * it and this cause the symlink be shwon in the profile of all users. 
+     * 
 	$symlinks_handler =& xoops_gethandler('page');
 
 	$criteria = new CriteriaCompo(new Criteria('page_status', 1));
@@ -102,7 +108,7 @@ function search_content($queryarray, $andor, $limit, $offset, $userid){
 			$i++;
 		}
 	} 
-
+*/
 	return $ret;
 }
 ?>
