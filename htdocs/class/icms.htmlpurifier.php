@@ -153,10 +153,10 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('HTML', 'AllowedAttributes', $HTML_Allowed_Attr); // sets allowed html attributes that can be used.
 			$icms_PurifyConfig->set('HTML', 'TidyLevel', 'medium');
 
-			$icms_PurifyConfig->set('AutoFormat', 'AutoParagraph', true);
+			$icms_PurifyConfig->set('AutoFormat', 'AutoParagraph', false);
 			$icms_PurifyConfig->set('AutoFormat', 'Linkify', true);
 		
-			$icms_PurifyConfig->set('Core', 'AggressivelyFixLt', true);
+//			$icms_PurifyConfig->set('Core', 'AggressivelyFixLt', true);
 			$icms_PurifyConfig->set('Core', 'Encoding', _CHARSET); // sets purifier to use specified encoding. default = UTF-8
 			if(strtolower(_CHARSET) !== 'utf-8')
 			{
@@ -193,7 +193,7 @@ class icms_HTMLPurifier
 
 			$icms_PurifyConfig->set('Filter', 'YouTube', true); // setting to true will allow Youtube files to be embedded into your site & w3c validated.
 		}
-		if($config = 'system-basic')
+		elseif($config = 'system-basic')
 		{
 			$icms_PurifyConfig->set('HTML', 'DefinitionID', 'system-basic');
 			$icms_PurifyConfig->set('HTML', 'DefinitionRev', 1);
@@ -268,10 +268,10 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('HTML', 'AllowedAttributes', $HTML_Allowed_Attr); // sets allowed html attributes that can be used.
 			$icms_PurifyConfig->set('HTML', 'TidyLevel', 'medium');
 
-			$icms_PurifyConfig->set('AutoFormat', 'AutoParagraph', true);
+			$icms_PurifyConfig->set('AutoFormat', 'AutoParagraph', false);
 			$icms_PurifyConfig->set('AutoFormat', 'Linkify', true);
 		
-			$icms_PurifyConfig->set('Core', 'AggressivelyFixLt', true);
+//			$icms_PurifyConfig->set('Core', 'AggressivelyFixLt', true);
 			$icms_PurifyConfig->set('Core', 'Encoding', _CHARSET); // sets purifier to use specified encoding. default = UTF-8
 			if(strtolower(_CHARSET) !== 'utf-8')
 			{
@@ -316,12 +316,12 @@ class icms_HTMLPurifier
 //			$icms_PurifyConfig->set('HTML', 'Allowed', $HTML_Allowed); // sets allowed html tags that can be used.
 			$icms_PurifyConfig->set('HTML', 'AllowedElements', $HTML_Allowed_Elms); // sets allowed html elements that can be used.
 			$icms_PurifyConfig->set('HTML', 'AllowedAttributes', $HTML_Allowed_Attr); // sets allowed html attributes that can be used.
-			$icms_PurifyConfig->set('HTML', 'TidyLevel', 'none');
+			$icms_PurifyConfig->set('HTML', 'TidyLevel', 'light');
 
-			$icms_PurifyConfig->set('AutoFormat', 'AutoParagraph', true);
+			$icms_PurifyConfig->set('AutoFormat', 'AutoParagraph', false);
 			$icms_PurifyConfig->set('AutoFormat', 'Linkify', true);
 		
-			$icms_PurifyConfig->set('Core', 'AggressivelyFixLt', true);
+//			$icms_PurifyConfig->set('Core', 'AggressivelyFixLt', true);
 			$icms_PurifyConfig->set('Core', 'Encoding', _CHARSET); // sets purifier to use specified encoding. default = UTF-8
 			if(strtolower(_CHARSET) !== 'utf-8')
 			{
