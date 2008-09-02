@@ -42,7 +42,7 @@ function search_content($queryarray, $andor, $limit, $offset, $userid){
 	
 	$contents = $content_handler->getObjects($criteria);
 	
-	$ret = array();
+	$ret = $bak = array();
 	
 	if (is_array($contents) && count($contents) > 0) {
 		$i = 0;
@@ -51,6 +51,7 @@ function search_content($queryarray, $andor, $limit, $offset, $userid){
 			if ($gperm_handler->checkRight('content_read', $content->getVar('content_id'), $groups)){
 				$ret[$i]['image'] = "images/icon_small.png";
 				$ret[$i]['link'] = XOOPS_URL.'/content.php?page='.$content_handler->makeLink($content);
+				$bak[] = $ret[$i]['link'];
 				$ret[$i]['title'] = $content->getVar('content_title');
 				$ret[$i]['uid'] = $content->getVar('content_uid');
 				$ret[$i]['time'] = $content->getVar('content_created');
@@ -81,12 +82,20 @@ function search_content($queryarray, $andor, $limit, $offset, $userid){
 	$symlinks = $symlinks_handler->getObjects($criteria);
 	
 	if (is_array($symlinks) && count($symlinks) > 0) {
-		$i = 0;
 		asort($symlinks);
 		foreach ($symlinks as $symlink) {
-			$ret[$i]['image'] = "images/icon_small.png";
-			$ret[$i]['link'] = $symlink->getVar('page_url');
+			if(!preg_match('/^http[s]*:\/\//i', $symlink->getVar('page_url'))){
+			    $url = XOOPS_URL.'/'.$symlink->getVar('page_url');
+			}else{
+			    $url = $symlink->getVar('page_url');
+			}
+			if (in_array($url,$bak)){
+			    continue;
+			}
+			$ret[$i]['image'] = "admin/pages/images/pages_small.png";
+			$ret[$i]['link'] = $url;
 			$ret[$i]['title'] = $symlink->getVar('page_title');
+			$ret[$i]['time'] = 0;
 			if ($i == ($limit-1)) {
 				return $ret;
 			}
