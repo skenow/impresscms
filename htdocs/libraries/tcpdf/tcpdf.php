@@ -3477,7 +3477,7 @@ if (!class_exists('TCPDF')) {
 					$type = "jpeg";
 				}
 				$mqr = get_magic_quotes_runtime();
-				set_magic_quotes_runtime(0);
+				@set_magic_quotes_runtime(0);
 				// Specific image handlers
 				$mtd = '_parse'.$type;
 				// GD image handler function
@@ -4385,7 +4385,7 @@ if (!class_exists('TCPDF')) {
 				$this->_out('endobj');
 			}
 			$mqr = get_magic_quotes_runtime();
-			set_magic_quotes_runtime(0);
+			@set_magic_quotes_runtime(0);
 			foreach($this->FontFiles as $file => $info) {
 				//Font file embedding
 				$this->_newobj();
