@@ -30,7 +30,7 @@ ImpressCMS ChangeLog
 * bug Hidencontent doesn`t work with TinyMCE. (stranger)
 * # 2090834: Customtag works not with TinyMCE (malanciault)
 * # 2046097: RSS admin news no longer works  (malanciault)
-* # 2046097: Updating rss_local config with correct info (if value was not previously changed by user) (malanciault)
+* # 2046097: Upgrade script modified to update rss_local config with correct info (if value was not previously changed by user) (malanciault)
 
 ===2008-08-08 : 1.1 Beta 1===
 
