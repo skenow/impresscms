@@ -34,6 +34,7 @@ ImpressCMS ChangeLog
 * #1969061: _AUTH_MSG_AUTH_METHOD = xoops. This message was not saying much to users so the word 'xoops' was changed to 'standard' login (malanciault)
 * #1984939: Creating a new CustomTag: Undefined offset: 0 in file /kernel/icmspersistableobjecthandler.php line 262 (malanciault)
 * #1984939: Creating a new CustomTag: Undefined variable: groups_value in file /class/icmsform/icmsform.php line 270 (malanciault)
+* #2096670: Changed field types for meta_description and meta_keywords to only allow plain text
 
 ===2008-08-08 : 1.1 Beta 1===
 
