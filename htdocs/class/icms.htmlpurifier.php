@@ -127,6 +127,9 @@ class icms_HTMLPurifier
 	**/
 	function icms_html_purifier($html, $config = 'system-global')
 	{
+		
+		if(get_magic_quotes_gpc()) {$html = stripslashes($html);}
+
 		$host_domain = icms_get_base_domain(ICMS_URL);
 		$host_base = icms_get_url_domain(ICMS_URL);
 
@@ -152,6 +155,8 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('HTML', 'AllowedElements', $HTML_Allowed_Elms); // sets allowed html elements that can be used.
 			$icms_PurifyConfig->set('HTML', 'AllowedAttributes', $HTML_Allowed_Attr); // sets allowed html attributes that can be used.
 			$icms_PurifyConfig->set('HTML', 'TidyLevel', 'medium');
+			$icms_PurifyConfig->set('HTML', 'SafeEmbed', true);
+			$icms_PurifyConfig->set('HTML', 'SafeObject', true);
 
 			$icms_PurifyConfig->set('AutoFormat', 'AutoParagraph', false);
 			$icms_PurifyConfig->set('AutoFormat', 'Linkify', true);
@@ -202,6 +207,8 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('HTML', 'AllowedElements', $HTML_Allowed_Elms); // sets allowed html elements that can be used.
 			$icms_PurifyConfig->set('HTML', 'AllowedAttributes', $HTML_Allowed_Attr); // sets allowed html attributes that can be used.
 			$icms_PurifyConfig->set('HTML', 'TidyLevel', 'none');
+			$icms_PurifyConfig->set('HTML', 'SafeEmbed', true);
+			$icms_PurifyConfig->set('HTML', 'SafeObject', true);
 
 			$icms_PurifyConfig->set('AutoFormat', 'AutoParagraph', false);
 			$icms_PurifyConfig->set('AutoFormat', 'Linkify', true);
@@ -267,6 +274,8 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('HTML', 'AllowedElements', $HTML_Allowed_Elms); // sets allowed html elements that can be used.
 			$icms_PurifyConfig->set('HTML', 'AllowedAttributes', $HTML_Allowed_Attr); // sets allowed html attributes that can be used.
 			$icms_PurifyConfig->set('HTML', 'TidyLevel', 'medium');
+			$icms_PurifyConfig->set('HTML', 'SafeEmbed', true);
+			$icms_PurifyConfig->set('HTML', 'SafeObject', true);
 
 			$icms_PurifyConfig->set('AutoFormat', 'AutoParagraph', false);
 			$icms_PurifyConfig->set('AutoFormat', 'Linkify', true);
@@ -317,6 +326,8 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('HTML', 'AllowedElements', $HTML_Allowed_Elms); // sets allowed html elements that can be used.
 			$icms_PurifyConfig->set('HTML', 'AllowedAttributes', $HTML_Allowed_Attr); // sets allowed html attributes that can be used.
 			$icms_PurifyConfig->set('HTML', 'TidyLevel', 'light');
+			$icms_PurifyConfig->set('HTML', 'SafeEmbed', true);
+			$icms_PurifyConfig->set('HTML', 'SafeObject', true);
 
 			$icms_PurifyConfig->set('AutoFormat', 'AutoParagraph', false);
 			$icms_PurifyConfig->set('AutoFormat', 'Linkify', true);
