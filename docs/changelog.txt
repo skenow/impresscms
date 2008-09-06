@@ -26,6 +26,7 @@ ImpressCMS ChangeLog
 * Language constants in IcmsModuleAbout feature (malanciault)
 * bug with pdf generator. (stranger)
 * # 2090834: Customtag works not with TinyMCE (malanciault)
+* # 2046097: rss admin news no longer works  (malanciault)
 
 ===2008-08-08 : 1.1 Beta 1===
 
