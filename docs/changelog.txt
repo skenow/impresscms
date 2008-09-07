@@ -17,7 +17,8 @@ ImpressCMS ChangeLog
 * Updated TCPDF to version 4.0.023. (stranger)
 * Removed warnings for unhandled global attribut in icms.htmlpurifier.php
 * Updated jscalendar to 1.15. (stranger)
-* Time picker now works correctly with jalali. (stranger)
+* Time picker now works correctly with jalali (stranger)
+* Improving content manager page display to use displayTarea instead of previewTarea (malanciault)
 
 '''Fixed'''
 * 2 errors with google meta tag and google analytics. (stranger)

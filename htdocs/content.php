@@ -25,6 +25,7 @@ $gperm_handler = & xoops_gethandler('groupperm');
 $groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
 $uid = is_object($xoopsUser) ? intval($xoopsUser->getVar('uid')) : 0;
 $content_handler =& xoops_gethandler('content');
+
 if(!$page)
 {
 	if($im_contentConfig['default_page'] != 0)
@@ -65,10 +66,10 @@ $options = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=content&op=editco
 $options .= '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=content&op=delcontent&content_id='.$impress_content->getVar('content_id').'"><img src="'.ICMS_URL.'/modules/system/images/delete_big.png" title="'._CT_DELETE_CONTENT.'" alt="'._CT_DELETE_CONTENT.'" /></a>';
 $xoopsTpl->assign("content_admlinks", $options);
 $member_handler =& xoops_gethandler('member');
-$autor =& $member_handler->getUser($impress_content->getVar('content_uid')); 
+$autor =& $member_handler->getUser($impress_content->getVar('content_uid'));
 $xoopsTpl->assign("show_pinfo",$im_contentConfig['show_pinfo']);
 $xoopsTpl->assign("content_tinfo", sprintf(_CT_PUBLISHEDBY.' <a href="'.ICMS_URL.'/userinfo.php?uid=%u">%s</a> '._CT_ON.' %s (%u '._CT_READS.')',$autor->getVar('uid'),$autor->getVar('uname'),formatTimestamp($impress_content->getVar('content_created'),"s"),$impress_content->getReads()));
-$xoopsTpl->assign("content_body", $myts->previewTarea($impress_content->getVar('content_body', "n"),1,1,1,1,0));
+$xoopsTpl->assign("content_body", $myts->displayTarea($impress_content->getVar('content_body', "n"),1,1,1,1,0));
 $xoopsTpl->assign("content_css", sanitizeContentCss($impress_content->getVar('content_css')));
 
 if($im_contentConfig['show_subs'])
