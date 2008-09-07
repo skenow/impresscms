@@ -208,7 +208,11 @@ switch ($op)
 				$newuser->setVar('user_intrest', $user_intrest);
 				$newuser->setVar('user_mailok', $user_mailok);
 				$newuser->setVar('language', $language);
-				$newuser->setVar('openid', $openid);
+				$newuser->setVar('language', $language);
+				$config_handler =& xoops_gethandler('config');
+				$icmsauthConfig =& $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);
+				if ($icmsauthConfig['auth_openid'] == 1) {
+				$newuser->setVar('openid', $openid);}
 				if(!$member_handler->insertUser($newuser))
 				{
 					$adduser_errormsg = _AM_CNRNU;
