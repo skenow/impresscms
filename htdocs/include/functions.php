@@ -1161,6 +1161,17 @@ function icms_getUserSaltFromUname($uname = '')
 	else	{redirect_header('user.php',2,_US_SORRYNOTFOUND);}
 	return $salt;
 }
+function icms_getUnameFromUserEmail($email = '')
+{
+	$db =& Database::getInstance();
+	if($email !== '')
+	{
+	    	$sql = $db->query("SELECT uname, email FROM ".$db->prefix('users')." WHERE email = '".@htmlspecialchars($email, ENT_QUOTES, _CHARSET)."'");
+		list($uname, $email) = $db->fetchRow($sql);
+	}
+	else	{redirect_header('user.php',2,_US_SORRYNOTFOUND);}
+	return $uname;
+}
 
 function icms_encryptPass($pass, $salt, $enc_type = 0, $reset = 0)
 {
