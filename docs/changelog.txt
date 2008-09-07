@@ -22,6 +22,7 @@ ImpressCMS ChangeLog
 * Changing sanitizeContentCss() to icms_sanitizeContentCss() (malanciault)
 
 '''Fixed'''
+* it was not possible to login using email address like v1.0 (vaughan)
 * 2 errors with google meta tag and google analytics. (stranger)
 * possible issue in modulesadmin/main.php (real_therplima/trabis)
 * #2048746: SQL error when creating invites and system_customtags tables (Commerce)
