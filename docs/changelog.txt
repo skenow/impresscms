@@ -19,6 +19,7 @@ ImpressCMS ChangeLog
 * Updated jscalendar to 1.15. (stranger)
 * Time picker now works correctly with jalali (stranger)
 * Improving content manager page display to use displayTarea instead of previewTarea (malanciault)
+* Changing sanitizeContentCss() to icms_sanitizeContentCss() (malanciault)
 
 '''Fixed'''
 * 2 errors with google meta tag and google analytics. (stranger)
