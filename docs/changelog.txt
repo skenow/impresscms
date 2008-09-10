@@ -193,7 +193,7 @@ ImpressCMS ChangeLog
 * #1970777 - Smilie bug with dhtml-editor. (real_therplima)
 * Fix a bug that not allow change the avatar. (real_therplima)
 * #1978931 - Re-committed fix for bug (icetomyst)
-
+* #2098379 a few fields were missing in users table on certain specific uprade path (malanciault)
 ===2008-05-22 : 1.1 Apha 1 ===
 
 '''Added'''
