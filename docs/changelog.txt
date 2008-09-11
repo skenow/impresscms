@@ -2,7 +2,8 @@ ImpressCMS ChangeLog
 
 == Impresscms 1.1==
 
-===2008-09-?? : 1.1 RC 1===
+===2008-09-14 : 1.1 RC 1===
+
 '''Added'''
 * agree box before upgrading to make sure of a backup. (stranger)
 * added password can't contain username to pass check in admin edit user form. (vaughan)
