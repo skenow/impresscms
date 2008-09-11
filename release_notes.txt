@@ -1,7 +1,7 @@
 ImpressCMS 1.1 RC 1 release notes
 ==================================
 
-The ImpressCMS Project is very proud to announce the 1.1 Release Candidate version of its Community Management System! This is the first Beta of the 1.1 series.
+The ImpressCMS Project is very proud to announce the 1.1 Release Candidate version of its Community Management System!
 
 Please note that this package is not to be installed on production site. Altough we are very near a final release, we recommend our users to wait just a little bit ! If no bugs are found in this release, the highly expected ImpressCMS 1.1 Final release will be made shortly.
 
