@@ -45,6 +45,7 @@ ImpressCMS ChangeLog
 * #1984939: Creating a new CustomTag: Undefined variable: groups_value in file /class/icmsform/icmsform.php line 270 (malanciault)
 * #2096670: Changed field types for meta_description and meta_keywords to only allow plain text
 * Notice: Undefined variable: openid in file /modules/system/admin/users/main.php line 61. (stranger/malanciault)
+* Fixed issues with inserting google meta tag. (stranger)
 
 ===2008-08-08 : 1.1 Beta 1===
 
