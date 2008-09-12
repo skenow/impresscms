@@ -40,7 +40,7 @@ class XoopsInstallWizard {
 	var $secondlastpage;
 	var $language = 'english';
 	var $no_php5 = false;
-	var $dafe_mode = false;
+	var $safe_mode = false;
 
 	function xoInit() {
 		if ( !$this->checkAccess() ) {
@@ -50,8 +50,11 @@ class XoopsInstallWizard {
 			$_SERVER['REQUEST_URI'] = $_SERVER['PHP_SELF'];
 		}
 
-		$this->no_php5 = version_compare( phpversion(), '5', '<');
-		$this->safe_mode = ini_get('safe_mode');
+		if (version_compare( phpversion(), '5', '<')) {
+			$this->no_php5 = true;
+		} elseif(ini_get('safe_mode')) {
+			$this->safe_mode = true;
+		}
 
 		// Load the main language file
 		$this->initLanguage( !@empty( $_COOKIE['xo_install_lang'] ) ? $_COOKIE['xo_install_lang'] : 'english' );
