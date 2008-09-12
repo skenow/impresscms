@@ -40,6 +40,7 @@ class XoopsInstallWizard {
 	var $secondlastpage;
 	var $language = 'english';
 	var $no_php5 = false;
+	var $dafe_mode = false;
 
 	function xoInit() {
 		if ( !$this->checkAccess() ) {
@@ -50,6 +51,7 @@ class XoopsInstallWizard {
 		}
 
 		$this->no_php5 = version_compare( phpversion(), '5', '<');
+		$this->safe_mode = ini_get('safe_mode');
 
 		// Load the main language file
 		$this->initLanguage( !@empty( $_COOKIE['xo_install_lang'] ) ? $_COOKIE['xo_install_lang'] : 'english' );
@@ -84,7 +86,9 @@ class XoopsInstallWizard {
 		// Setup pages
 		if ($this->no_php5) {
 			$this->pages[]= 'no_php5';
-		} else {
+		}elseif ($this->safe_mode) {
+			$this->pages[]= 'safe_mode';
+		}else {
 			$this->pages[]= 'langselect';
 			$this->pages[]= 'start';
 			$this->pages[]= 'modcheck';
@@ -102,6 +106,8 @@ class XoopsInstallWizard {
 
 		if ($this->no_php5) {
 			$this->pagesNames[] = NO_PHP5;
+		}elseif ($this->safe_mode) {
+			$this->pagesNames[]= SAFE_MODE;
 		} else {
 			$this->pagesNames[] = LANGUAGE_SELECTION;
 			$this->pagesNames[] = INTRODUCTION;
@@ -118,6 +124,8 @@ class XoopsInstallWizard {
 
 		if ($this->no_php5) {
 			$this->pagesTitles[] = NO_PHP5_TITLE;
+		}elseif ($this->safe_mode) {
+			$this->pagesTitles[]= SAFE_MODE_TITLE;
 		} else {
 			$this->pagesTitles[] = LANGUAGE_SELECTION_TITLE;
 			$this->pagesTitles[] = INTRODUCTION_TITLE;
@@ -185,6 +193,13 @@ class XoopsInstallWizard {
 		 */
 		if ($this->no_php5 && $page != 'no_php5') {
 			header('location:page_no_php5.php');
+			exit;
+		}
+		/**
+		 * If server is in Safe Mode, display the safe_mode page and stop the install
+		 */
+		if ($this->safe_mode && $page != 'safe_mode') {
+			header('location:page_safe_mode.php');
 			exit;
 		}
 

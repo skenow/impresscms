@@ -23,6 +23,7 @@ ImpressCMS ChangeLog
 * Changing sanitizeContentCss() to icms_sanitizeContentCss() (malanciault)
 * #2011730: Installer: Check for phpOpenID requirements on install (malanciault/skenow)
 * #2014053: Installer: Check for php5 on install (malanciault/skenow)
+* #2091448: Installer: installation with safemode=on is not possible (malanciault/skenow)
 
 '''Fixed'''
 * it was not possible to login using email address like v1.0 (vaughan)

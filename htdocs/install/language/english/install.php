@@ -67,6 +67,9 @@ define( "MODULES_INSTALL", "Install modules" );
 define( "MODULES_INSTALL_TITLE", "Installation of modules " );
 define( "NO_PHP5_TITLE", "No PHP 5" );
 define( "NO_PHP5_CONTENT", "This is where the information about NO PHP 5 needs to be disclosed" );
+define( "SAFE_MODE", "Safe Mode On" );
+define( "SAFE_MODE_TITLE", "Safe Mode On" );
+define( "SAFE_MODE_CONTENT", "This is where the information about Safe Mode will be disclosed" );
 
 // Settings (labels and help text)
 define( "XOOPS_ROOT_PATH_LABEL", "ImpressCMS documents root physical path" ); // L55
