@@ -39,6 +39,7 @@ class XoopsInstallWizard {
 	var $lastpage;
 	var $secondlastpage;
 	var $language = 'english';
+	var $no_php5 = false;
 
 	function xoInit() {
 		if ( !$this->checkAccess() ) {
@@ -47,6 +48,9 @@ class XoopsInstallWizard {
 		if ( @empty( $_SERVER['REQUEST_URI'] ) ) {
 			$_SERVER['REQUEST_URI'] = $_SERVER['PHP_SELF'];
 		}
+
+		$this->no_php5 = version_compare( phpversion(), '5', '<');
+
 		// Load the main language file
 		$this->initLanguage( !@empty( $_COOKIE['xo_install_lang'] ) ? $_COOKIE['xo_install_lang'] : 'english' );
 		// Setup pages
@@ -78,35 +82,56 @@ class XoopsInstallWizard {
 		);
 		*/
 		// Setup pages
-		$this->pages		= array(
-			'langselect', 'start', 'modcheck',
-			'pathsettings',
-			'dbconnection', 
-			'dbsettings', 
-			'configsave',
-			'tablescreate', 'siteinit',
-			'tablesfill', 'end',
-		);
+		if ($this->no_php5) {
+			$this->pages[]= 'no_php5';
+		} else {
+			$this->pages[]= 'langselect';
+			$this->pages[]= 'start';
+			$this->pages[]= 'modcheck';
+			$this->pages[]= 'pathsettings';
+			$this->pages[]= 'dbconnection';
+			$this->pages[]= 'dbsettings';
+			$this->pages[]= 'configsave';
+			$this->pages[]= 'tablescreate';
+			$this->pages[]= 'siteinit';
+			$this->pages[]= 'tablesfill';
+			$this->pages[]= 'end';
+		}
+
 		$this->lastpage = end($this->pages);
-		$this->pagesNames	= array(
-			LANGUAGE_SELECTION, INTRODUCTION, CONFIGURATION_CHECK,
-			PATHS_SETTINGS,
-			DATABASE_CONNECTION, 
-			DATABASE_CONFIG, 
-			CONFIG_SAVE,
-			TABLES_CREATION, INITIAL_SETTINGS, 
-			DATA_INSERTION, WELCOME,
-		);
-		$this->pagesTitles	= array(
-			LANGUAGE_SELECTION_TITLE, INTRODUCTION_TITLE, CONFIGURATION_CHECK_TITLE,
-			PATHS_SETTINGS_TITLE,
-			DATABASE_CONNECTION_TITLE, 
-			DATABASE_CONFIG_TITLE, 
-			CONFIG_SAVE_TITLE,
-			TABLES_CREATION_TITLE, INITIAL_SETTINGS_TITLE,
-			DATA_INSERTION_TITLE, WELCOME_TITLE,
-		);
-		
+
+		if ($this->no_php5) {
+			$this->pagesNames[] = NO_PHP5;
+		} else {
+			$this->pagesNames[] = LANGUAGE_SELECTION;
+			$this->pagesNames[] = INTRODUCTION;
+			$this->pagesNames[] = CONFIGURATION_CHECK;
+			$this->pagesNames[] = PATHS_SETTINGS;
+			$this->pagesNames[] = DATABASE_CONNECTION;
+			$this->pagesNames[] = DATABASE_CONFIG;
+			$this->pagesNames[] = CONFIG_SAVE;
+			$this->pagesNames[] = TABLES_CREATION;
+			$this->pagesNames[] = INITIAL_SETTINGS;
+			$this->pagesNames[] = DATA_INSERTION;
+			$this->pagesNames[] = WELCOME;
+		}
+
+		if ($this->no_php5) {
+			$this->pagesTitles[] = NO_PHP5_TITLE;
+		} else {
+			$this->pagesTitles[] = LANGUAGE_SELECTION_TITLE;
+			$this->pagesTitles[] = INTRODUCTION_TITLE;
+			$this->pagesTitles[] = CONFIGURATION_CHECK_TITLE;
+			$this->pagesTitles[] = PATHS_SETTINGS_TITLE;
+			$this->pagesTitles[] = DATABASE_CONNECTION_TITLE;
+			$this->pagesTitles[] = DATABASE_CONFIG_TITLE;
+			$this->pagesTitles[] = CONFIG_SAVE_TITLE;
+			$this->pagesTitles[] = TABLES_CREATION_TITLE;
+			$this->pagesTitles[] = INITIAL_SETTINGS_TITLE;
+			$this->pagesTitles[] = DATA_INSERTION_TITLE;
+			$this->pagesTitles[] = WELCOME_TITLE;
+		}
+
 		$this->setPage(0);
 		// Prevent client caching
 		header( "Cache-Control: no-store, no-cache, must-revalidate", false );
@@ -155,6 +180,14 @@ class XoopsInstallWizard {
 	}
 
 	function setPage( $page ) {
+		/**
+		 * If server is PHP 4, display the php4 page and stop the install
+		 */
+		if ($this->no_php5 && $page != 'no_php5') {
+			header('location:page_no_php5.php');
+			exit;
+		}
+
 		if ( (int)$page && $page >= 0 && $page < count($this->pages) ) {
 			$this->currentPageName = $this->pages[ $page ];
 			$this->currentPage = $page;

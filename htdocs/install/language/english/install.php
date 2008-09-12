@@ -61,9 +61,12 @@ define( "INITIAL_SETTINGS_TITLE", "Please enter your initial settings" );
 define( "DATA_INSERTION", "Data insertion" );
 define( "DATA_INSERTION_TITLE", "Saving your settings to the database" );
 define( "WELCOME", "Welcome" );
+define( "NO_PHP5", "No PHP 5" );
 define( "WELCOME_TITLE", "Installation of ImpressCMS completed" );		// L0
 define( "MODULES_INSTALL", "Install modules" );
 define( "MODULES_INSTALL_TITLE", "Installation of modules " );
+define( "NO_PHP5_TITLE", "No PHP 5" );
+define( "NO_PHP5_CONTENT", "This is where the information about NO PHP 5 needs to be disclosed" );
 
 // Settings (labels and help text)
 define( "XOOPS_ROOT_PATH_LABEL", "ImpressCMS documents root physical path" ); // L55
