@@ -153,19 +153,19 @@ class XoopsInstallWizard {
 	function checkAccess() {
 		if ( INSTALL_USER != '' && INSTALL_PASSWORD != '' ) {
 		    if (!isset($_SERVER['PHP_AUTH_USER']) ) {
-		        header('WWW-Authenticate: Basic realm="XOOPS Installer"');
+		        header('WWW-Authenticate: Basic realm="ImpressCMS Installer"');
 		        header('HTTP/1.0 401 Unauthorized');
-		        echo 'You can not access this XOOPS installer.';
+		        echo 'You can not access this ImpressCMS installer.';
 		        return false;
 		    }
 	        if( INSTALL_USER != '' && $_SERVER['PHP_AUTH_USER'] != INSTALL_USER) {
 	            header('HTTP/1.0 401 Unauthorized');
-	            echo 'You can not access this XOOPS installer.';
+	            echo 'You can not access this ImpressCMS installer.';
 	            return false;
 	        }
 	        if( INSTALL_PASSWD != $_SERVER['PHP_AUTH_PW'] ){
 	            header('HTTP/1.0 401 Unauthorized');
-	            echo 'You can not access this XOOPS installer.';
+	            echo 'You can not access this ImpressCMS installer.';
 	            return false;
 		    }
 		}
