@@ -21,6 +21,7 @@ ImpressCMS ChangeLog
 * Time picker now works correctly with jalali (stranger)
 * Improving content manager page display to use displayTarea instead of previewTarea (malanciault)
 * Changing sanitizeContentCss() to icms_sanitizeContentCss() (malanciault)
+* #2011730: Installer: Check for phpOpenID requirements on install (malanciault/skenow)
 
 '''Fixed'''
 * it was not possible to login using email address like v1.0 (vaughan)
