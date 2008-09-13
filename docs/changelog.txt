@@ -46,6 +46,7 @@ ImpressCMS ChangeLog
 * #2096670: Changed field types for meta_description and meta_keywords to only allow plain text
 * Notice: Undefined variable: openid in file /modules/system/admin/users/main.php line 61. (stranger/malanciault)
 * Fixed issues with inserting google meta tag. (stranger)
+* Bug fixed in IcmsForm::render(): the id of the row was the same as the control. Now, the id of the row is <keyname>_row (malanciault)
 
 ===2008-08-08 : 1.1 Beta 1===
 

@@ -656,7 +656,7 @@ class IcmsForm extends XoopsThemeForm {
 				$ret .= $ele;
 			} elseif ( !$ele->isHidden() ) {
 				//$class = ( $class == 'even' ) ? 'odd' : 'even';
-				$ret .= "<tr id='" . $ele->getName() . "' valign='top' align='left'><td class='head'>".$ele->getCaption();
+				$ret .= "<tr id='" . $ele->getName() . "_row' valign='top' align='left'><td class='head'>".$ele->getCaption();
 				if ($ele->getDescription() != '') {
 					$ret .= '<br /><br /><span style="font-weight: normal;">'.$ele->getDescription().'</span>';
 				}
