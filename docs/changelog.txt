@@ -17,8 +17,8 @@ ImpressCMS ChangeLog
 * Moved captcha to classes + some configurations were updated. (stranger)
 * Updated TCPDF to version 4.0.023. (stranger)
 * Removed warnings for unhandled global attribut in icms.htmlpurifier.php
-* Updated jscalendar to 1.15. (stranger)
-* Time picker now works correctly with jalali (stranger)
+* Updated jscalendar to 1.2 . (stranger)
+* Time picker now works correctly with jalali (stranger/Ali Farhadi)
 * Improving content manager page display to use displayTarea instead of previewTarea (malanciault)
 * Changing sanitizeContentCss() to icms_sanitizeContentCss() (malanciault)
 * #2011730: Installer: Check for phpOpenID requirements on install (malanciault/skenow)
