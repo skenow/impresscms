@@ -229,6 +229,12 @@ function xoops_module_update_system(&$module) {
 		    $icmsDatabaseUpdater->updateTable($table);
 	    }
 		unset($table);
+	}
+
+    $newDbVersion = 4;
+
+    if($dbVersion < $newDbVersion) {
+    	echo "Database migrate to version " . $newDbVersion . "<br />";
 
    		$table = new IcmsDatabasetable('users');
 	    if ($table->fieldExists('pass')) {
