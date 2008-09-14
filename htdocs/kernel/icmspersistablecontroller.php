@@ -11,7 +11,7 @@
 * @author		marcan <marcan@impresscms.org>
 * @version		$Id$
 */
- 
+
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
 include_once ICMS_ROOT_PATH."/kernel/icmspersistableobject.php";
@@ -82,8 +82,8 @@ class IcmsPersistableController {
 	    				$value = strtotime($_POST[$key]['date']) + $_POST[$key]['time'];
 	    			}else {
 	    				$value = intval($_POST[$key]);
-	    				$icmsObj->setVar($key, $value);
 	     			}
+	    			$icmsObj->setVar($key, $value);
     			break;
 
     			default:
@@ -249,7 +249,7 @@ class IcmsPersistableController {
     function handleObjectDeletion($confirm_msg = false, $op='del', $userSide=false)
     {
 		global $impresscms;
-		
+
     	$objectid = (isset($_REQUEST[$this->handler->keyName])) ? intval($_REQUEST[$this->handler->keyName]) : 0;
     	$icmsObj = $this->handler->get($objectid);
 
@@ -275,15 +275,15 @@ class IcmsPersistableController {
 			if (!$confirm_msg) {
 				$confirm_msg = _CO_ICMS_DELETE_CONFIRM;
 			}
-			
+
 			$hiddens = array(
-						'op' => $op, 
-						$this->handler->keyName => $icmsObj->getVar($this->handler->keyName), 
-						'confirm' => 1, 
+						'op' => $op,
+						$this->handler->keyName => $icmsObj->getVar($this->handler->keyName),
+						'confirm' => 1,
 						'redirect_page' => $impresscms->urls['previouspage']
 					);
 			if ($this->handler->_moduleName == 'system') {
-				$hiddens['fct'] = isset($_GET['fct']) ? $_GET['fct'] : false; 
+				$hiddens['fct'] = isset($_GET['fct']) ? $_GET['fct'] : false;
 			}
 			xoops_confirm($hiddens, xoops_getenv('PHP_SELF'), sprintf($confirm_msg , $icmsObj->getVar($this->handler->identifierName)), _CO_ICMS_DELETE);
 
@@ -430,7 +430,7 @@ class IcmsPersistableController {
 			 */
 			//$admin_side = $userSide ? '' : 'admin/';
 			$admin_side = '';
-			$ret = $this->handler->_moduleUrl . $admin_side . 'admin.php?fct=' . $this->handler->_itemname . "&op=del&" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);	    	
+			$ret = $this->handler->_moduleUrl . $admin_side . 'admin.php?fct=' . $this->handler->_itemname . "&op=del&" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
 		}
 		if ($onlyUrl) {
 			return $ret;
