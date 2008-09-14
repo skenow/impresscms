@@ -28,6 +28,7 @@ ImpressCMS ChangeLog
 * Correct implementation of TextEditor within IcmsForm, we are now using normal dhtmltarea as ImpressCMS will handle what editor needs to be displayed (malanciault)
 
 '''Fixed'''
+* Error: Expected ';' when viewing social_bookmars_links.php block in IE7. (mcdonald)
 * pass_expired was not set to 0 after lost password request. (only happens if user uses lost password instead of reset password after encryption type is used). (vaughan)
 * unable to login when using sha512 or whirlpool encryption.  hash produces 128 chars and db field is set to varchar(100). (vaughan)
 * it was not possible to login using email address like v1.0 (vaughan)
