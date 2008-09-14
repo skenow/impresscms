@@ -229,6 +229,13 @@ function xoops_module_update_system(&$module) {
 		    $icmsDatabaseUpdater->updateTable($table);
 	    }
 		unset($table);
+
+   		$table = new IcmsDatabasetable('users');
+	    if ($table->fieldExists('pass')) {
+	    	$table->alterTable('pass', 'pass', "varchar(255) UNSIGNED NOT NULL default ''");
+		    $icmsDatabaseUpdater->updateTable($table);
+	    }
+		unset($table);
 	}
 
 	echo "</code>";
