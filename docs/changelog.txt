@@ -24,6 +24,7 @@ ImpressCMS ChangeLog
 * #2011730: Installer: Check for phpOpenID requirements on install (malanciault/skenow)
 * #2014053: Installer: Check for php5 on install (malanciault/skenow)
 * #2091448: Installer: installation with safemode=on is not possible (malanciault/skenow)
+* Correct implementation of TextEditor within IcmsForm, we are now using normal dhtmltarea as ImpressCMS will handle what editor needs to be displayed (malanciault)
 
 '''Fixed'''
 * pass_expired was not set to 0 after lost password request. (only happens if user uses lost password instead of reset password after encryption type is used). (vaughan)
