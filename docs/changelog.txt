@@ -26,6 +26,8 @@ ImpressCMS ChangeLog
 * #2091448: Installer: installation with safemode=on is not possible (malanciault/skenow)
 
 '''Fixed'''
+* pass_expired was not set to 0 after lost password request. (only happens if user uses lost password instead of reset password after encryption type is used). (vaughan)
+* unable to login when using sha512 or whirlpool encryption.  hash produces 128 chars and db field is set to varchar(100). (vaughan)
 * it was not possible to login using email address like v1.0 (vaughan)
 * 2 errors with google meta tag and google analytics. (stranger)
 * possible issue in modulesadmin/main.php (real_therplima/trabis)
