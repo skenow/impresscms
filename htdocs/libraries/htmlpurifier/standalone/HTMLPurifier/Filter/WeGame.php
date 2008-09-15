@@ -6,10 +6,9 @@ class HTMLPurifier_Filter_WeGame extends HTMLPurifier_Filter
     public $name = 'WeGame';
     
     public function preFilter($html, $config, $context) {
-        $pre_regex = '#<object[^>]+>.+?'.
-            'http://www.wegame.com/static/flash/player2.swf?tag=([A-Za-z0-9\-_]+).+?</object>#s';
-        $pre_replace = '<span class="wegame-embed">\1</span>';
-        return preg_replace($pre_regex, $pre_replace, $html);
+		$pre_regex = '#<object[^>]+>.+?'.'http://www.wegame.com/static/flash/player2.swf\?tag=([A-Za-z0-9\-_]+).+?</object>#s';
+		$pre_replace = '<span class="wegame-embed">\1</span>';
+		return preg_replace($pre_regex, $pre_replace, $html);
     }
     
     public function postFilter($html, $config, $context) {
