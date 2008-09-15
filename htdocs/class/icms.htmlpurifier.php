@@ -206,7 +206,7 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('Attr', 'AllowedRel', 'external, nofollow, external nofollow, lightbox');
 
 			$icms_PurifyConfig->set('Filter', 'YouTube', true); // setting to true will allow Youtube files to be embedded into your site & w3c validated.
-			$icms_PurifyConfig->set('Filter', 'Custom', array(new HTMLPurifier_Filter_WeGame()));
+			$icms_PurifyConfig->set('Filter', 'Custom', array(new HTMLPurifier_Filter_WeGame(), new HTMLPurifier_Filter_LiveLeak()));
 		}
 		elseif($config = 'system-basic')
 		{
@@ -259,7 +259,7 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('Attr', 'AllowedRel', 'external, nofollow, external nofollow, lightbox');
 
 			$icms_PurifyConfig->set('Filter', 'YouTube', true); // setting to true will allow Youtube files to be embedded into your site & w3c validated.
-			$icms_PurifyConfig->set('Filter', 'Custom', array(new HTMLPurifier_Filter_WeGame()));
+			$icms_PurifyConfig->set('Filter', 'Custom', array(new HTMLPurifier_Filter_WeGame(), new HTMLPurifier_Filter_LiveLeak()));
 		}
 		elseif($config = 'protector')
 		{
@@ -329,7 +329,7 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('Attr', 'AllowedRel', 'external, nofollow, external nofollow, lightbox');
 
 			$icms_PurifyConfig->set('Filter', 'YouTube', true); // setting to true will allow Youtube files to be embedded into your site & w3c validated.
-			$icms_PurifyConfig->set('Filter', 'Custom', array(new HTMLPurifier_Filter_WeGame()));
+			$icms_PurifyConfig->set('Filter', 'Custom', array(new HTMLPurifier_Filter_WeGame(), new HTMLPurifier_Filter_LiveLeak()));
 		}
 		elseif($config = 'preview') // config id level for preview HTMLArea
 		{
@@ -383,7 +383,7 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('Attr', 'AllowedRel', 'external, nofollow, external nofollow, lightbox');
 
 			$icms_PurifyConfig->set('Filter', 'YouTube', true); // setting to true will allow Youtube files to be embedded into your site & w3c validated.
-			$icms_PurifyConfig->set('Filter', 'Custom', array(new HTMLPurifier_Filter_WeGame()));
+			$icms_PurifyConfig->set('Filter', 'Custom', array(new HTMLPurifier_Filter_WeGame(), new HTMLPurifier_Filter_LiveLeak()));
 		}
 		$icms_PurifyDef = $icms_PurifyConfig->getHTMLDefinition(true);
 
