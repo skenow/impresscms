@@ -133,6 +133,7 @@ class icms_HTMLPurifier
 			if(!$xoopsUser->isAdmin($xoopsModule->mid())) {$is_admin = false;}
 			else {$is_admin = true;}
 		}
+		else {$is_admin = false;}
 		
 		if(get_magic_quotes_gpc()) {$html = stripslashes($html);}
 
