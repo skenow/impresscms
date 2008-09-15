@@ -127,6 +127,7 @@ class icms_HTMLPurifier
 	**/
 	function icms_html_purifier($html, $config = 'system-global')
 	{
+		global $xoopsUser;
 		if(is_object($xoopsUser))
 		{
 			$xoopsModule =& XoopsModule::getByDirname('system');
