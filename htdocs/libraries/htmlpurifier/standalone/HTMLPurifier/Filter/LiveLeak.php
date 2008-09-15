@@ -18,7 +18,7 @@ class HTMLPurifier_Filter_LiveLeak extends HTMLPurifier_Filter
             '<param name="movie" value="http://www.liveleak.com/e/\1"></param>'.
             '<param name="wmode" value="transparent"></param>'.
             '<!--[if IE]>'.
-            '<embed src="hhttp://www.liveleak.com/e/\1"'.
+            '<embed src="http://www.liveleak.com/e/\1"'.
             'type="application/x-shockwave-flash"'.
             'wmode="transparent" width="450" height="370" />'.
             '<![endif]-->'.
