@@ -14,6 +14,7 @@ ImpressCMS ChangeLog
 '''Added'''
 * Adding movie filter in HTMLPurifier for Liveleak movies (vaughan)
 * Adding movie filter in HTMLPurifier for vimeo movies (vaughan)
+* Adding IcmsSecureForm to create IcmsPersistable object form with a seucirty token. We will recommend to always use this within the IcmsPersistable Framework when not on the admin side (malanciault)
 
 ===2008-09-14 : 1.1 RC 1===
 
