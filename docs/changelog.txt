@@ -9,6 +9,7 @@ ImpressCMS ChangeLog
 * In HTMLPurifier $is_admin wasn't defined if $xoopsUser wasn't an existing object.(vaughan)
 * In HTMPPurifier $xoopsUser undefined variable on line 130 (vaughan)
 * Wrong smarty variable name in IcmsPersistableController::handleObjectDeletionFromUserSide() (malanciault)
+* In IcmsDatabaseUpdater::upgradeObjectItem() when a TEXT field was created, a default value was set which is wrong. TEXT field can't have default value (malanciault)
 
 '''Added'''
 * Adding movie filter in HTMLPurifier for Liveleak movies (vaughan)

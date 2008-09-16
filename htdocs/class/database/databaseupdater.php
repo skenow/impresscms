@@ -771,11 +771,21 @@ class IcmsDatabaseupdater {
 						$extra = "auto_increment";
 					} else {
 						$default =  $this->getFieldDefaultFromVar($var);
-						$extra = "default '$default'
+						if ($default != 'nodefault') {
+							$extra = "default '$default'
+";
+						} else {
+							$extra = false;
+						}
+					}
+					if ($extra) {
+						$structure .= "`$key` $type not null $extra,
+";
+					} else {
+						$structure .= "`$key` $type not null,
 ";
 					}
-					$structure .= "`$key` $type not null $extra,
-";
+
 				}
 			}
 			$structure .= "PRIMARY KEY  (`" . $module_handler->keyName . "`)
