@@ -8,6 +8,7 @@ ImpressCMS ChangeLog
 * Warning: Value for HTML. Trusted is of invalid type, should be bool in file /libraries/htmlpurifier/HTMLPurifier.standalone.php line 1447 (vaughan)
 * In HTMLPurifier $is_admin wasn't defined if $xoopsUser wasn't an existing object.(vaughan)
 * In HTMPPurifier $xoopsUser undefined variable on line 130 (vaughan)
+* Wrong smarty variable name in IcmsPersistableController::handleObjectDeletionFromUserSide() (malanciault)
 
 '''Added'''
 * Adding movie filter in HTMLPurifier for Liveleak movies (vaughan)

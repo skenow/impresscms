@@ -321,7 +321,7 @@ class IcmsPersistableController {
 
 			ob_start();
 			xoops_confirm(array('op' => $op, $this->handler->keyName => $icmsObj->getVar($this->handler->keyName), 'confirm' => 1, 'redirect_page' => $impresscms->urls['previouspage']), xoops_getenv('PHP_SELF'), sprintf($confirm_msg , $icmsObj->getVar($this->handler->identifierName)), _CO_ICMS_DELETE);
-			$icms_delete_confirm = ob_get_clean();
+			$icmspersistable_delete_confirm = ob_get_clean();
 			$xoopsTpl->assign('icmspersistable_delete_confirm', $icmspersistable_delete_confirm);
 		}
     }
