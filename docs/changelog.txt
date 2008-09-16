@@ -2,6 +2,17 @@ ImpressCMS ChangeLog
 
 == Impresscms 1.1==
 
+===2008-09-21 : 1.1 RC 2===
+
+'''Fixed'''
+* Warning: Value for HTML. Trusted is of invalid type, should be bool in file /libraries/htmlpurifier/HTMLPurifier.standalone.php line 1447 (vaughan)
+* In HTMLPurifier $is_admin wasn't defined if $xoopsUser wasn't an existing object.(vaughan)
+* In HTMPPurifier $xoopsUser undefined variable on line 130 (vaughan)
+
+'''Added'''
+* Adding movie filter in HTMLPurifier for Liveleak movies (vaughan)
+* Adding movie filter in HTMLPurifier for vimeo movies (vaughan)
+
 ===2008-09-14 : 1.1 RC 1===
 
 '''Added'''
