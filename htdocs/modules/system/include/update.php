@@ -203,7 +203,7 @@ function xoops_module_update_system(&$module) {
     if ($dbVersion < $newDbVersion) {
     	echo "Database migrate to version " . $newDbVersion . "<br />";
    		$table = new IcmsDatabasetable('users');
-	    if (!$table->fieldExists('opendid')) {
+	    if (!$table->fieldExists('openid')) {
 	    	$table->addNewField('openid', "varchar(255) NOT NULL default ''");
 		    $icmsDatabaseUpdater->updateTable($table);
 	    }

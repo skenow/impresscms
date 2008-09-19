@@ -12,6 +12,7 @@ ImpressCMS ChangeLog
 * In IcmsDatabaseUpdater::upgradeObjectItem() when a TEXT field was created, a default value was set which is wrong. TEXT field can't have default value (malanciault)
 * Closed comment tag in include/calendarjs.php that created a problem with IE (skenow)
 * Undefined variable: ret in file /kernel/icmspersistablecontroller.php line 462 (malanciault)
+* #2115835: Typo when checking if openid field existed in database update version 3 (malanciault)
 
 '''Added'''
 * Adding movie filter in HTMLPurifier for Liveleak movies (vaughan)
