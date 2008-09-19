@@ -448,6 +448,7 @@ class IcmsPersistableController {
 		/**
 		 * @todo to be completed...
 		 */
+		$ret = '';
 /*    	$printlink = $this->handler->_moduleUrl . "print.php?" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
 		$js = "javascript:openWithSelfMain('" . $printlink . "', 'smartpopup', 700, 519);";
 		$printlink = '<a href="' . $js . '"><img  src="' . ICMS_IMAGES_SET_URL . '/actions/fileprint.png" alt="" style="vertical-align: middle;"/></a>';
