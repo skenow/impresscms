@@ -71,6 +71,7 @@ ImpressCMS ChangeLog
 * Fixed issues with inserting google meta tag. (stranger)
 * Bug fixed in IcmsForm::render(): the id of the row was the same as the control. Now, the id of the row is <keyname>_row (malanciault)
 * Bug fixed in IcmsPersistableController::postDataToObject where date was not saved properly (malanciault)
+* #2118948: Email Protection does not work (real_therplima)
 
 ===2008-08-08 : 1.1 Beta 1===
 
