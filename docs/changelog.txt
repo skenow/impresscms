@@ -10,6 +10,7 @@ ImpressCMS ChangeLog
 * In HTMPPurifier $xoopsUser undefined variable on line 130 (vaughan)
 * Wrong smarty variable name in IcmsPersistableController::handleObjectDeletionFromUserSide() (malanciault)
 * In IcmsDatabaseUpdater::upgradeObjectItem() when a TEXT field was created, a default value was set which is wrong. TEXT field can't have default value (malanciault)
+* Closed comment tag in include/calendarjs.php that created a problem with IE (skenow)
 
 '''Added'''
 * Adding movie filter in HTMLPurifier for Liveleak movies (vaughan)

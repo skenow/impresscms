@@ -151,5 +151,5 @@ Calendar._TT["PM"] = "<?php echo _CAL_PM_CAPS;?>";
 Calendar._NUMBERS = [<?php echo _CAL_NUMS_ARRAY;?>];
 
 Calendar._DIR = '<?php echo _CAL_DIRECTION;?>';
-
+-->
 </script>
