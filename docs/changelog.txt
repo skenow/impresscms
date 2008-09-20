@@ -4,6 +4,14 @@ ImpressCMS ChangeLog
 
 ===2008-09-21 : 1.1 RC 2===
 
+'''Added'''
+* Adding movie filter in HTMLPurifier for Liveleak movies (vaughan)
+* Adding movie filter in HTMLPurifier for vimeo movies (vaughan)
+* Adding IcmsSecureForm to create IcmsPersistable object form with a seucirty token. We will recommend to always use this within the IcmsPersistable Framework when not on the admin side (malanciault)
+
+'''Improved'''
+* Rendering of Google Analytics script and new script source from Google (skenow)
+
 '''Fixed'''
 * Warning: Value for HTML. Trusted is of invalid type, should be bool in file /libraries/htmlpurifier/HTMLPurifier.standalone.php line 1447 (vaughan)
 * In HTMLPurifier $is_admin wasn't defined if $xoopsUser wasn't an existing object.(vaughan)
@@ -13,14 +21,8 @@ ImpressCMS ChangeLog
 * Closed comment tag in include/calendarjs.php that created a problem with IE (skenow)
 * Undefined variable: ret in file /kernel/icmspersistablecontroller.php line 462 (malanciault)
 * #2115835: Typo when checking if openid field existed in database update version 3 (malanciault)
-
-'''Added'''
-* Adding movie filter in HTMLPurifier for Liveleak movies (vaughan)
-* Adding movie filter in HTMLPurifier for vimeo movies (vaughan)
-* Adding IcmsSecureForm to create IcmsPersistable object form with a seucirty token. We will recommend to always use this within the IcmsPersistable Framework when not on the admin side (malanciault)
-
-'''Improved'''
-* Rendering of Google Analytics script and new script source from Google (skenow)
+* When the deafault selected theme was suddenly removed, blank page appeared. (stranger)
+* Using impresstheme instead of default. (stranger)
 
 ===2008-09-14 : 1.1 RC 1===
 
