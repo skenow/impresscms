@@ -9,6 +9,7 @@ ImpressCMS ChangeLog
 * Adding movie filter in HTMLPurifier for vimeo movies (vaughan)
 * Adding IcmsSecureForm to create IcmsPersistable object form with a seucirty token. We will recommend to always use this within the IcmsPersistable Framework when not on the admin side (malanciault)
 * Added option to select calendar type for forms. (stranger)
+* Updated system to version 1.05. (stranger)
 
 '''Improved'''
 * Rendering of Google Analytics script and new script source from Google (skenow)
