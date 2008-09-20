@@ -231,7 +231,7 @@ function xoops_module_update_system(&$module) {
 		unset($table);
 	}
 
-    $newDbVersion = 4;
+    $newDbVersion = 111;
 
     if($dbVersion < $newDbVersion) {
     	echo "Database migrate to version " . $newDbVersion . "<br />";
@@ -243,6 +243,22 @@ function xoops_module_update_system(&$module) {
 	    }
 		unset($table);
 	}
+
+    $newDbVersion = 115;
+
+    if($dbVersion < $newDbVersion) {
+    	echo "Database migrate to version " . $newDbVersion . "<br />";
+		// Now, first, let's increment the conf_order of user option starting at new_user_notify
+		$table = new IcmsDatabasetable('config');
+		$criteria = new CriteriaCompo();
+		$criteria->add(new Criteria('conf_order', 3, '>'));
+    	$table->addUpdateAll('conf_order', 'conf_order + 2', $criteria, true);
+	    $icmsDatabaseUpdater->updateTable($table);
+	    unset($table);
+
+		$icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'use_jsjalali', '_MD_AM_JALALICAL', '0', '_MD_AM_JALALICALDSC', 'yesno', 'int', 23);
+			unset($table);
+}
 
 	echo "</code>";
 

@@ -412,4 +412,6 @@ define("_MD_AM_AUTHOPENID","Enable OpenID authentication");
 define("_MD_AM_AUTHOPENIDDSC","Select Yes to enable OpenID authentication. This will allow users to login on the site using their OpenID account. For complete information about the OpenID Integration in ImpressCMS, please visit <a href='http://wiki.impresscms.org/index.php?title=ImpressCMS_OpenID'>our wiki</a>.");
 define("_MD_AM_USE_GOOGLE_ANA"," Enable Google Analytics?");
 define("_MD_AM_USE_GOOGLE_ANA_DESC","");
+define("_MD_AM_JALALICAL","Use Extended Calendar with Jalali?");
+define("_MD_AM_JALALICALDSC","By selecting this, you`ll have an extended calendar on forms.<br />Please be aware, this calendar may not work in some Browsers.");
 ?>
