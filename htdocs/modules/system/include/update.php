@@ -231,7 +231,7 @@ function xoops_module_update_system(&$module) {
 		unset($table);
 	}
 
-    $newDbVersion = 111;
+    $newDbVersion = 4;
 
     if($dbVersion < $newDbVersion) {
     	echo "Database migrate to version " . $newDbVersion . "<br />";
@@ -244,7 +244,7 @@ function xoops_module_update_system(&$module) {
 		unset($table);
 	}
 
-    $newDbVersion = 115;
+    $newDbVersion = 5;
 
     if($dbVersion < $newDbVersion) {
     	echo "Database migrate to version " . $newDbVersion . "<br />";
