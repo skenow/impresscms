@@ -23,6 +23,7 @@ ImpressCMS ChangeLog
 * #2115835: Typo when checking if openid field existed in database update version 3 (malanciault)
 * When the deafault selected theme was suddenly removed, blank page appeared. (stranger)
 * Using impresstheme instead of default. (stranger)
+* #2120445: Module block not showing when created on module update (real_therplima)
 
 ===2008-09-14 : 1.1 RC 1===
 
