@@ -52,7 +52,7 @@ class XoopsInstallWizard {
 
 		if (version_compare( phpversion(), '5', '<')) {
 			$this->no_php5 = true;
-		} elseif(ini_get('safe_mode')) {
+		} elseif(ini_get('safe_mode') !== 0) {
 			$this->safe_mode = true;
 		}
 
