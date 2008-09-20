@@ -8,6 +8,7 @@ ImpressCMS ChangeLog
 * Adding movie filter in HTMLPurifier for Liveleak movies (vaughan)
 * Adding movie filter in HTMLPurifier for vimeo movies (vaughan)
 * Adding IcmsSecureForm to create IcmsPersistable object form with a seucirty token. We will recommend to always use this within the IcmsPersistable Framework when not on the admin side (malanciault)
+* Added option to select calendar type for forms. (stranger)
 
 '''Improved'''
 * Rendering of Google Analytics script and new script source from Google (skenow)
@@ -24,10 +25,12 @@ ImpressCMS ChangeLog
 * When the deafault selected theme was suddenly removed, blank page appeared. (stranger)
 * Using impresstheme instead of default. (stranger)
 * #2120445: Module block not showing when created on module update (real_therplima)
+* Issues with dateform. (stranger)
 
 ===2008-09-14 : 1.1 RC 1===
 
 '''Added'''
+* Added jalalijscalendar 1.2 . (stranger)
 * agree box before upgrading to make sure of a backup. (stranger)
 * added password can't contain username to pass check in admin edit user form. (vaughan)
 * default template form usable by core feature or any modules - system_default_form.html (malanciault)
@@ -41,7 +44,6 @@ ImpressCMS ChangeLog
 * Moved captcha to classes + some configurations were updated. (stranger)
 * Updated TCPDF to version 4.0.023. (stranger)
 * Removed warnings for unhandled global attribut in icms.htmlpurifier.php
-* Updated jscalendar to 1.2 . (stranger)
 * Time picker now works correctly with jalali (stranger/Ali Farhadi)
 * Improving content manager page display to use displayTarea instead of previewTarea (malanciault)
 * Changing sanitizeContentCss() to icms_sanitizeContentCss() (malanciault)
