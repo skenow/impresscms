@@ -53,7 +53,6 @@ class XoopsFormTextDateSelect extends XoopsFormText
 	 */
 	function render()
 	{
-	global $xoopsConfig;
 	   	$ele_name = $this->getName();
 		$ele_value = $this->getValue(false);
 		$jstime = formatTimestamp( $ele_value, 'Y-m-d' );
