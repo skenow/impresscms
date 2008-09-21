@@ -27,6 +27,7 @@ ImpressCMS ChangeLog
 * Using impresstheme instead of default. (stranger)
 * #2120445: Module block not showing when created on module update (real_therplima)
 * Issues with dateform. (stranger)
+* Issues with dateform in IE. (stranger/Ali Farhadi)
 
 ===2008-09-14 : 1.1 RC 1===
 
