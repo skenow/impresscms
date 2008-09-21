@@ -1,4 +1,17 @@
 <?php 
+/**
+* Function to use timepicker
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @package	core
+* @since	XOOPS
+* @author	http://www.xoops.org The XOOPS Project
+* @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+* @version	$Id$
+**/
 if (!defined('XOOPS_ROOT_PATH')) {
 	exit();
 }
@@ -14,7 +27,8 @@ if (!defined('XOOPS_ROOT_PATH')) {
 }
 ?>
 <script type="text/javascript">
-<!--
+
+
 Calendar._DN = new Array
 ("<?php echo _CAL_SUNDAY;?>",
  "<?php echo _CAL_MONDAY;?>",
@@ -102,10 +116,11 @@ Calendar._TT = {};
 Calendar._TT["INFO"] = "About the calendar";
 
 Calendar._TT["ABOUT"] =
-"DHTML Date/Time Selector\n"
-/*"(c) dynarch.com 2002-2005 / Author: Mihai Bazon\n" + // don't translate this this ;-)
-"For latest version visit: http://www.dynarch.com/projects/calendar/\n" +
-"Distributed under GNU LGPL.  See http://gnu.org/licenses/lgpl.html for details." +
+"JalaliJSCalendar\n" +
+"Copyright (c) 2008 Ali Farhadi (http://farhadi.ir/)\n" + // don't translate this this ;-)
+"Distributed under GNU GPL. See http://gnu.org/licenses/gpl.html for details.\n\n" +
+"Based on The DHTML Calendar developed by Dynarch.com.\n" +
+"(c) dynarch.com 2002-2005 / Author: Mihai Bazon\n" + // don't translate this this ;-)
 "\n\n" +
 "Date selection:\n" +
 "- Use the \xab, \xbb buttons to select year\n" +
@@ -114,7 +129,7 @@ Calendar._TT["ABOUT"] =
 Calendar._TT["ABOUT_TIME"] = "\n\n" +
 "Time selection:\n" +
 "- Click on any of the time parts to increase it\n" +
-"- or Shift-click to decrease it\n" +*/
+"- or Shift-click to decrease it\n" +
 "- or click and drag for faster selection.";
 
 Calendar._TT["PREV_YEAR"] = "<?php echo _CAL_PREVYR;?>";
@@ -138,7 +153,7 @@ Calendar._TT["TIME_PART"] = "(Shift-)Click or drag to change value";
 
 // date formats
 Calendar._TT["DEF_DATE_FORMAT"] = "%Y-%m-%d";
-Calendar._TT["TT_DATE_FORMAT"] = "%a, %b %e";
+Calendar._TT["TT_DATE_FORMAT"] = "<?php echo _CAL_TT_DATE_FORMAT;?>";
 
 Calendar._TT["WK"] = "<?php echo _CAL_WK;?>";
 Calendar._TT["TIME"] = "<?php echo _CAL_TIME;?> : ";
