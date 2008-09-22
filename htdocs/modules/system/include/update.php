@@ -15,7 +15,7 @@ function xoops_module_update_system(&$module) {
      * For compatibility upgrade...
      */
      $moduleVersion  = $module->getVar('version');
-	if ($moduleVersion < 103) {
+	if ($moduleVersion < 105) {
         $result = $xoopsDB->query("SELECT t1.tpl_id FROM ".$xoopsDB->prefix('tplfile')." t1, ".$xoopsDB->prefix('tplfile')." t2 WHERE t1.tpl_module = t2.tpl_module AND t1.tpl_tplset=t2.tpl_tplset AND t1.tpl_file = t2.tpl_file AND t1.tpl_id > t2.tpl_id");
 
         $tplids = array();
@@ -251,6 +251,7 @@ function xoops_module_update_system(&$module) {
 		$icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'use_jsjalali', '_MD_AM_JALALICAL', '0', '_MD_AM_JALALICALDSC', 'yesno', 'int', 23);
 			unset($table);
 }
+	//Some users had used a copy of working branch and they got multiple option, this is to remove all those re-created options and make a single option
     $newDbVersion = 6;
 
     if($dbVersion < $newDbVersion) {
@@ -270,7 +271,28 @@ function xoops_module_update_system(&$module) {
         echo $feedback;
     }
     $icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
-    return true;
-}
+		return icms_cleaning_write_folders();
+	}
+
+	function icms_cleaning_write_folders() {
+	    global $xoopsConfig;
+		$dir = array();
+		$dir['templates_c'] = ICMS_ROOT_PATH."/templates_c/";
+		$dir['cache'] = ICMS_ROOT_PATH."/cache/";
+
+		foreach ($dir as $d)
+		{
+			$dd = opendir($d);
+			while($file = readdir($dd))
+			{
+		 		if(is_file($d.$file) && ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess' && $file != 'adminmenu_' . $xoopsConfig['language'] . '.php'))
+				{
+		  			unlink($d.$file);
+				}
+			}
+			closedir($dd);
+		}
+			return true;
+	}
 
 ?>
