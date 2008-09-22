@@ -275,7 +275,7 @@ function xoops_module_update_system(&$module) {
 		if (isset($configitemsObj[0]) && $configitemsObj[0]->getVar('conf_formtype', 'n') == 'textarea') {
 			$configitemsObj[0]->setVar('conf_formtype', 'textbox');
 			$configitem_handler->insert($configitemsObj[0]);
-			echo "&nbsp;&nbsp;Updating google_analytics field tpe<br />";
+			echo "&nbsp;&nbsp;Updating google_analytics field type<br />";
 		}
 
 	}
