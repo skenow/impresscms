@@ -10,6 +10,11 @@ ImpressCMS ChangeLog
 * Updated TinyMCE to version 3.2.0.1 (stranger)
 * Updated TCPDF to version 4.0.027. (stranger)
 
+'''Changed'''
+* moved preload file "scriptaculous.php" to extras. (stranger)
+* moved preload file "prototype.php" to extras. (stranger)
+* moved preload file "projax.php" to extras. (stranger)
+
 '''Fixed'''
 * Issues with google analytic textform in admin menu (stranger)
 * Issues with Jalalijscalendar option in admin menu (stranger)
@@ -127,7 +132,7 @@ ImpressCMS ChangeLog
 
 '''Changed'''
 * after upgrade is done you'll get back to index to see if upgrade was successful. (stranger)
-* moved protector.php to extras. (stranger)
+* moved preload file "protector.php" to extras. (stranger)
 * xoops.css to icms.css. (stranger)
 * xoops_rtl.css to icms_rtl.css. (stranger)
 * xoops_rtl.js to icms_rtl.js. (stranger)
