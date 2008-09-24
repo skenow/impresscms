@@ -2,6 +2,19 @@ ImpressCMS ChangeLog
 
 == Impresscms 1.1==
 
+===2008-09-28 : 1.1 RC 3===
+
+'''Added'''
+
+'''Improved'''
+* Updated TinyMCE to version 3.2.0.1 (stranger)
+* Updated TCPDF to version 4.0.027. (stranger)
+
+'''Fixed'''
+* Issues with google analytic textform in admin menu (stranger)
+* Issues with Jalalijscalendar option in admin menu (stranger)
+* Issues with new templates not being inserted in system module (stranger)
+
 ===2008-09-21 : 1.1 RC 2===
 
 '''Added'''
