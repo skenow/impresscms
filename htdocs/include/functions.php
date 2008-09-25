@@ -1683,4 +1683,26 @@ $pdf->writeHTML($content, true, 0);
 $Generate = $pdf->Output();
 return $Generate;
 }
+
+	function icms_cleaning_write_folders() {
+	    global $xoopsConfig;
+		$dir = array();
+		$dir['templates_c'] = ICMS_ROOT_PATH."/templates_c/";
+		$dir['cache'] = ICMS_ROOT_PATH."/cache/";
+
+		foreach ($dir as $d)
+		{
+			$dd = opendir($d);
+			while($file = readdir($dd))
+			{
+		 		if(is_file($d.$file) && ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess' && $file != 'adminmenu_' . $xoopsConfig['language'] . '.php'))
+				{
+		  			unlink($d.$file);
+				}
+			}
+			closedir($dd);
+		}
+			return true;
+	}
+
 ?>

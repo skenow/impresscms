@@ -15,7 +15,7 @@ function xoops_module_update_system(&$module) {
      * For compatibility upgrade...
      */
      $moduleVersion  = $module->getVar('version');
-	if ($moduleVersion < 105) {
+	if ($moduleVersion < 110) {
         $result = $xoopsDB->query("SELECT t1.tpl_id FROM ".$xoopsDB->prefix('tplfile')." t1, ".$xoopsDB->prefix('tplfile')." t2 WHERE t1.tpl_module = t2.tpl_module AND t1.tpl_tplset=t2.tpl_tplset AND t1.tpl_file = t2.tpl_file AND t1.tpl_id > t2.tpl_id");
 
         $tplids = array();
@@ -290,26 +290,4 @@ function xoops_module_update_system(&$module) {
     $icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
 		return icms_cleaning_write_folders();
 	}
-
-	function icms_cleaning_write_folders() {
-	    global $xoopsConfig;
-		$dir = array();
-		$dir['templates_c'] = ICMS_ROOT_PATH."/templates_c/";
-		$dir['cache'] = ICMS_ROOT_PATH."/cache/";
-
-		foreach ($dir as $d)
-		{
-			$dd = opendir($d);
-			while($file = readdir($dd))
-			{
-		 		if(is_file($d.$file) && ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess' && $file != 'adminmenu_' . $xoopsConfig['language'] . '.php'))
-				{
-		  			unlink($d.$file);
-				}
-			}
-			closedir($dd);
-		}
-			return true;
-	}
-
 ?>
