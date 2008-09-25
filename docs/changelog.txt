@@ -13,6 +13,7 @@ ImpressCMS ChangeLog
 * Issues with Jalalijscalendar option in admin menu. (stranger)
 * Issues with new templates not being inserted in system module. (stranger)
 * Issues with Jalalijscalendar option in Persian language. (stranger)
+* Issues with reset buttons. (mcdonald3072)
 
 ===2008-09-21 : 1.1 RC 2===
 
