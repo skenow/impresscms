@@ -2,23 +2,17 @@ ImpressCMS ChangeLog
 
 == Impresscms 1.1==
 
-===2008-09-28 : 1.1 RC 3===
-
-'''Added'''
+===2008-09-28 : 1.1 FINAL===
 
 '''Improved'''
-* Updated TinyMCE to version 3.2.0.1 (stranger)
-* Updated TCPDF to version 4.0.027. (stranger)
-
-'''Changed'''
-* moved preload file "scriptaculous.php" to extras. (stranger)
-* moved preload file "prototype.php" to extras. (stranger)
-* moved preload file "projax.php" to extras. (stranger)
+* Updated system to version 1.10. (stranger)
+* Function icms_cleaning_write_folders. (stranger)
 
 '''Fixed'''
-* Issues with google analytic textform in admin menu (stranger)
-* Issues with Jalalijscalendar option in admin menu (stranger)
-* Issues with new templates not being inserted in system module (stranger)
+* Issues with google analytic textform in admin menu. (stranger)
+* Issues with Jalalijscalendar option in admin menu. (stranger)
+* Issues with new templates not being inserted in system module. (stranger)
+* Issues with Jalalijscalendar option in Persian language. (stranger)
 
 ===2008-09-21 : 1.1 RC 2===
 
