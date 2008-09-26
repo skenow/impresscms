@@ -730,7 +730,9 @@ class IcmsDatabaseupdater {
 	 * @return string default value
 	 */
 	function getFieldDefaultFromVar($var, $key = false) {
-		if ($var['value']) {
+		if ($var['data_type'] == XOBJ_DTYPE_TXTAREA) {
+			return 'nodefault';
+		} elseif ($var['value']) {
 			return $var['value'];
 		} else {
 			if (in_array($var['data_type'], array(
@@ -743,8 +745,6 @@ class IcmsDatabaseupdater {
 							XOBJ_DTYPE_FILE
 						))) {
 				return '0';
-			} elseif($var['data_type'] == XOBJ_DTYPE_TXTAREA) {
-				return 'nodefault';
 			} else {
 				return '';
 			}
