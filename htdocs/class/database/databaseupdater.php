@@ -804,7 +804,12 @@ class IcmsDatabaseupdater {
 						// the fiels does not exist, let's create it
 						$type = $this->getFieldTypeFromVar($var);
 						$default =  $this->getFieldDefaultFromVar($var);
-						$table->addNewField($key, "$type not null default '$default'");
+						if ($default != 'nodefault') {
+							$extra = "default '$default'";
+						} else {
+							$extra = false;
+						}
+						$table->addNewField($key, "$type not null " . $extra);
 					} else {
 						// if field already exists, let's check if the definition is correct
 						$definition =  strtolower($existingFieldsArray[$key]);
