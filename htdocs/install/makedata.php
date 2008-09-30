@@ -36,7 +36,7 @@ function make_groups(&$dbm){
     return $gruops;
 }
 
-function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $adminsalt, $gruops){
+function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $adminmail, $language, $adminsalt, $gruops){
 
     //$xoopsDB =& Database::getInstance();
     //$dbm = new db_manager;
@@ -189,7 +189,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
     $regdate = time();
     //$dbadminname= addslashes($adminname);
 	// RMV-NOTIFY (updated for extra columns in user table)
-    $dbm->insert('users', " VALUES (1,'','".addslashes($adminname)."','".addslashes($adminmail)."','".XOOPS_URL."/','blank.gif','".$regdate."','','','',0,'','','','','".$temp."',0,0,7,5,'impresstheme','0.0',".time().",'thread',0,1,0,'','','','0','".addslashes($language)."', '', '".addslashes($adminsalt)."', 0, 0, 1, '".addslashes($adminname)."')");
+    $dbm->insert('users', " VALUES (1,'','".addslashes($adminname)."','".addslashes($adminmail)."','".XOOPS_URL."/','blank.gif','".$regdate."','','','',0,'','','','','".$temp."',0,0,7,5,'impresstheme','0.0',".time().",'thread',0,1,0,'','','','0','".addslashes($language)."', '', '".addslashes($adminsalt)."', 0, 0, 1, '".addslashes($adminlogin_name)."')");
 
 
     // data for table 'block_module_link'
@@ -386,6 +386,9 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'allow_chgmail', '_MD_AM_ALLWCHGMAIL', '0', '_MD_AM_ALLWCHGMAILDSC', 'yesno', 'int', $p)");
 	$i++;
 	$p++;
+    	$dbm->insert('config', " VALUES ($i, 0, $c, 'allow_chguname', '_MD_AM_ALLWCHGUNAME', '0', '_MD_AM_ALLWCHGUNAMEDSC', 'yesno', 'int', $p)");
+	$i++;
+	$p++;
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'allwshow_sig', '_MD_AM_ALLWSHOWSIG', '1', '_MD_AM_ALLWSHOWSIGDSC', 'yesno', 'int', $p)");
 	$i++;
 	$p++;
@@ -529,10 +532,10 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	$c=3; // sets config category id
 	$i++;
 	$p=0; // reset position increment to 0 for new category id
-    	$dbm->insert('config', " VALUES ($i, 0, $c, 'meta_keywords', '_MD_AM_METAKEY', 'community management system, CMS, content management, social networking, community, blog, support, modules, add-ons, themes', '_MD_AM_METAKEYDSC', 'textarea', 'text', $p)");
+    	$dbm->insert('config', " VALUES ($i, 0, $c, 'meta_keywords', '_MD_AM_METAKEY', 'community management system, CMS, content management, social networking, community, blog, support, modules, add-ons, themes', '_MD_AM_METAKEYDSC', 'textsarea', 'text', $p)");
 	$i++;
 	$p++;
-    	$dbm->insert('config', " VALUES ($i, 0, $c, 'meta_description', '_MD_AM_METADESC', 'ImpressCMS is a dynamic Object Oriented based open source portal script written in PHP.', '_MD_AM_METADESCDSC', 'textarea', 'text', $p)");
+    	$dbm->insert('config', " VALUES ($i, 0, $c, 'meta_description', '_MD_AM_METADESC', 'ImpressCMS is a dynamic Object Oriented based open source portal script written in PHP.', '_MD_AM_METADESCDSC', 'textsarea', 'text', $p)");
 	$i++;
 	$p++;
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'meta_robots', '_MD_AM_METAROBOTS', 'index,follow', '_MD_AM_METAROBOTSDSC', 'select', 'text', $p)");

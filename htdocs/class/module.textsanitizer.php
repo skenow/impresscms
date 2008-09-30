@@ -66,6 +66,10 @@ class MyTextSanitizer
 		{
 			$text = $html_purifier->previewHTMLarea($text, 'preview');
 		}
+		elseif($config = 'system-basic')
+		{
+			$text = $html_purifier->icms_html_purifier($text, 'system-basic');
+		}
 
 		return $text;
 	}
@@ -157,7 +161,7 @@ class MyTextSanitizer
 				$endlength = -intval($xoopsConfigPersona['last_chars_left']);
 				$middleurl = " ... ";
 				$chunked = (strlen($urlname) > $maxlength && preg_match('#^(https://|http://|ftp://|www\.)#is', $urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $urlname;
-				$text = str_replace('>'.$urlname.'<', '>'.$chunked.'<', $text); 
+				$text = str_replace('>'.$urlname.'<', '>'.$chunked.'<', $text);
    			}
 			$text = substr($text, 1);
 			return($text);
@@ -376,12 +380,12 @@ class MyTextSanitizer
 	* @param   bool    $br     convert linebreaks?
 	* @return  string
 	**/
-	function &displayTarea($text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1)
+	function &displayTarea($text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1, $config = 'display')
 	{
 		// ################# Preload Trigger beforeDisplayTarea ##############
 		global $icmsPreloadHandler;
 		$icmsPreloadHandler->triggerEvent('beforeDisplayTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
-		
+
 		if($html != 1)
 		{
 			$text = $this->htmlSpecialChars($text);
@@ -411,11 +415,11 @@ class MyTextSanitizer
 		$text = $this->codeConv($text, $xcode, $image);	// Ryuji_edit(2003-11-18)
 		if($html != 0)
 		{
-			$text = $this->html_purifier($text, $config = 'display');
+			$text = $this->html_purifier($text, $config);
 		}
 		// ################# Preload Trigger afterDisplayTarea ##############
 		global $icmsPreloadHandler;
-		$icmsPreloadHandler->triggerEvent('afterDisplayTarea', array(&$text, $html, $smiley, $xcode, $image, $br));		
+		$icmsPreloadHandler->triggerEvent('afterDisplayTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
 		return $text;
 	}
 
@@ -430,8 +434,12 @@ class MyTextSanitizer
 	* @param   bool    $br     convert linebreaks?
 	* @return  string
 	**/
-	function &previewTarea($text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1)
+	function &previewTarea($text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1, $config = 'preview')
 	{
+		// ################# Preload Trigger beforePreviewTarea ##############
+		global $icmsPreloadHandler;
+		$icmsPreloadHandler->triggerEvent('beforePreviewTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
+
 		$text = $this->stripSlashesGPC($text);
 		if($html != 1)
 		{
@@ -462,9 +470,13 @@ class MyTextSanitizer
 		$text = $this->codeConv($text, $xcode, $image);	// Ryuji_edit(2003-11-18)
 		if($html != 0)
 		{
-			$text = $this->html_purifier($text, $config = 'preview');
+			$text = $this->html_purifier($text, $config);
 		}
-			
+
+		// ################# Preload Trigger afterPreviewTarea ##############
+		global $icmsPreloadHandler;
+		$icmsPreloadHandler->triggerEvent('afterPreviewTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
+
 		return $text;
 	}
 

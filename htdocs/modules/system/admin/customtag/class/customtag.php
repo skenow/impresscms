@@ -7,7 +7,7 @@
  * @package		core
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id: customtag.php 2385 2008-05-24 13:15:00Z malanciault $
+ * @version		$Id$
  */
 if (! defined ( "ICMS_ROOT_PATH" ))
 	die ( "ImpressCMS root path not defined" );
@@ -55,11 +55,11 @@ class SystemCustomtag extends IcmsPersistableObject {
 			switch ( $this->getVar ( 'customtag_type' )) {
 				case ICMS_CUSTOMTAG_TYPE_XCODES :
 					$ret = $this->getVar ( 'content', 'N' );
-					$ret = $myts->displayTarea ( $ret, 1, 1, 1, 1, 1 );
+					$ret = $myts->displayTarea ( $ret, 1, 1, 1, 1, 1, 'system-basic' );
 				break;
 				case ICMS_CUSTOMTAG_TYPE_HTML :
 					$ret = $this->getVar ( 'content', 'N' );
-					$ret = $myts->displayTarea ( $ret, 1, 1, 1, 1, 0 );
+					$ret = $myts->displayTarea ( $ret, 1, 1, 1, 1, 0, 'system-basic' );
 				break;
 				
 				case ICMS_CUSTOMTAG_TYPE_PHP :

@@ -153,7 +153,7 @@ if($op == 'saveuser')
         		}
 			else
 			{
-				$signature = $myts->previewTarea($_POST['user_sig'], 1, 1, 1, 1, 1);
+				$signature = $myts->displayTarea($_POST['user_sig'], 1, 1, 1, 1, 1, 'display');
         			$edituser->setVar('user_sig', xoops_substr($signature, 0, intval($xoopsConfigUser['sig_max_length'])));
         		}
 		}
@@ -256,8 +256,15 @@ if($op == 'editprofile')
     	$openid_cbox->addOption(1, _US_ALLOWVIEWEMAILOPENID);
     	$openid_tray->addElement($openid_cbox);
     	$form->addElement($openid_tray);
-}
+		}
+    	if($xoopsConfigUser['allow_chguname'] == 1)
+	{
     	$uname_label = new XoopsFormText(_US_NICKNAME, 'uname', 30, 60, $xoopsUser->getVar('uname', 'E'));
+    	}
+	else
+	{
+     	$uname_label = new XoopsFormLabel(_US_NICKNAME, $xoopsUser->getVar('uname'));
+    	}
     	$form->addElement($uname_label);
     	$name_text = new XoopsFormText(_US_REALNAME, 'name', 30, 60, $xoopsUser->getVar('name', 'E'));
     	$form->addElement($name_text);

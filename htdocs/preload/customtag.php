@@ -7,7 +7,7 @@
 * @package		libraries
 * @since		1.1
 * @author		marcan <marcan@impresscms.org>
-* @version		$Id: customtag.php 2034 2008-05-06 16:30:14Z skenow $
+* @version		$Id$
 */
 
 class IcmsPreloadCustomtag extends IcmsPreloadItem
@@ -35,10 +35,30 @@ class IcmsPreloadCustomtag extends IcmsPreloadItem
 	 * @param array array containing parameters passed by MyTextSanitizer::displayTarea()
 	 *
 	 * @return	void
-	 */	
+	 */
+	function eventBeforePreviewTarea($array) {
+		$array[0] = icms_sanitizeCustomtags($array[0]);
+	}
+
+	/**
+	 * Function to be triggered when entering in MyTextSanitizer::displayTarea() function
+	 *
+	 * The $array var is structured like this:
+	 * $array[0] = $text
+	 * $array[1] = $html
+	 * $array[2] = $smiley
+	 * $array[3] = $xcode
+	 * $array[4] = $image
+	 * $array[5] = $br
+	 *
+	 * @param array array containing parameters passed by MyTextSanitizer::displayTarea()
+	 *
+	 * @return	void
+	 */
 	function eventBeforeDisplayTarea($array) {
 		$array[0] = icms_sanitizeCustomtags($array[0]);
 	}
+
 
 	/**
 	 * Function to be triggered at the end of the output init process
@@ -54,6 +74,6 @@ class IcmsPreloadCustomtag extends IcmsPreloadItem
 			}
 			$xoopsTpl->assign('icmsCustomtags', $customtags_array);
 		}
-	}	
+	}
 }
 ?>
