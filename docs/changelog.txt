@@ -14,6 +14,7 @@ ImpressCMS ChangeLog
 * Issues with new templates not being inserted in system module. (stranger)
 * Issues with Jalalijscalendar option in Persian language. (stranger)
 * Issues with reset buttons. (mcdonald3072)
+* When converting the db to another character set during an upgrade, the default values were being dropped if they were empty strings (skenow)
 
 ===2008-09-21 : 1.1 RC 2===
 

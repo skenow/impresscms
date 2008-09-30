@@ -550,7 +550,7 @@ class upgrade_impcms06 {
     			while ( $result = $GLOBALS["xoopsDB"]->fetchArray($resource) ) {
     				if ( preg_match('/(char)|(text)|(enum)|(set)/', $result['Type']) ) {
     					// String Type SQL Sentence.
-    					$string_querys[] = "ALTER TABLE `$table` MODIFY `" . $result['Field'] . '` ' . $result['Type'] . " CHARACTER SET $charset COLLATE $collation " . ( ( (!empty($result['Default'])) || ($result['Default'] === '0') || ($result['Default'] === 0) ) ? "DEFAULT '". $result['Default'] ."' " : '' ) . ( 'YES' == $result['Null'] ? '' : 'NOT ' ) . 'NULL';
+    					$string_querys[] = "ALTER TABLE `$table` MODIFY `" . $result['Field'] . '` ' . $result['Type'] . " CHARACTER SET $charset COLLATE $collation " . ( ( (!empty($result['Default'])) || ($result['Default'] === '0') || ($result['Default'] === 0) || ($result['Default'] ==='') ) ? "DEFAULT '". $result['Default'] ."' " : '' ) . ( 'YES' == $result['Null'] ? '' : 'NOT ' ) . 'NULL';
     
     					// Binary String Type SQL Sentence.
     					if ( preg_match('/(enum)|(set)/', $result['Type']) ) {
