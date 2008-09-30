@@ -189,7 +189,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
     $regdate = time();
     //$dbadminname= addslashes($adminname);
 	// RMV-NOTIFY (updated for extra columns in user table)
-    $dbm->insert('users', " VALUES (1,'','".addslashes($adminname)."','".addslashes($adminmail)."','".XOOPS_URL."/','blank.gif','".$regdate."','','','',0,'','','','','".$temp."',0,0,7,5,'impresstheme','0.0',".time().",'thread',0,1,0,'','','','0','".addslashes($language)."', '', '".addslashes($adminsalt)."', 0, 0, 1)");
+    $dbm->insert('users', " VALUES (1,'','".addslashes($adminname)."','".addslashes($adminmail)."','".XOOPS_URL."/','blank.gif','".$regdate."','','','',0,'','','','','".$temp."',0,0,7,5,'impresstheme','0.0',".time().",'thread',0,1,0,'','','','0','".addslashes($language)."', '', '".addslashes($adminsalt)."', 0, 0, 1, '".addslashes($adminname)."')");
 
 
     // data for table 'block_module_link'
@@ -228,7 +228,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'language', '_MD_AM_LANGUAGE', '".addslashes($language)."', '_MD_AM_LANGUAGEDSC', 'language', 'other', $p)");
 	$i++;
 	$p++;
-    	$dbm->insert('config', " VALUES ($i, 0, $c, 'startpage', '_MD_AM_STARTPAGE', '1-1', '_MD_AM_STARTPAGEDSC', 'startpage', 'other', $p)");
+    	$dbm->insert('config', " VALUES ($i, 0, $c, 'startpage', '_MD_AM_STARTPAGE', 'a:3:{i:1;s:3:\"1-1\";i:2;s:3:\"1-1\";i:3;s:3:\"1-1\";}', '_MD_AM_STARTPAGEDSC', 'startpage', 'array', $p)");
 	$i++;
 	$p++;
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'server_TZ', '_MD_AM_SERVERTZ', '0', '_MD_AM_SERVERTZDSC', 'timezone', 'float', $p)");
