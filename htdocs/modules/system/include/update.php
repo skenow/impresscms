@@ -287,9 +287,17 @@ function xoops_module_update_system(&$module) {
 
    		$table = new IcmsDatabasetable('modules');
 	    if ($table->fieldExists('dbversion')) {
-	    	$table->alterTable('dbversion', 'dbversion', "INT(11) unsigned DEFAULT 1");
-		    $icmsDatabaseUpdater->updateTable($table);
-	    }
+       $icmsDatabaseUpdater->runQuery("ALTER TABLE `" .$table->name()."` MODIFY dbversion INT(11) unsigned DEFAULT 1",'','');
+ 	    }
+		unset($table);
+	}
+
+  $newDbVersion = 9;
+
+  if($dbVersion < $newDbVersion) {
+    	echo "Database migrate to version " . $newDbVersion . "<br />";
+   		$table = new IcmsDatabasetable('users');
+      $icmsDatabaseUpdater->runQuery("ALTER TABLE `" .$table->name()."` DROP INDEX unamepass, ADD INDEX unamepass (uname (10), pass (10))",'','');      
 		unset($table);
 	}
 

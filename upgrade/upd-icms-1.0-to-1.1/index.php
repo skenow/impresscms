@@ -395,6 +395,12 @@ class upgrade_impcms06 {
 				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
 				return false;
 			}
+
+			$sql = "ALTER TABLE `" . $GLOBALS['xoopsDB']->prefix('users') . "` DROP INDEX unamepass, ADD INDEX unamepass (uname (10), pass (10))";
+			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
+				return false;
+			}
 			
 		$pw_salt_installed = false;
 		$sql = "SELECT COUNT(*) FROM `" . $GLOBALS ['xoopsDB']->prefix ( 'config' ) . "` WHERE `conf_name` = 'enc_type'";
