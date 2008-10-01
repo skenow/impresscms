@@ -50,7 +50,7 @@ function xoops_module_update_system(&$module) {
 	 */
     $newDbVersion = 1;
 
-    if ($dbVersion < $newDbVersion) {
+    if ($dbVersion <= $newDbVersion) {
     	echo "Database migrate to version " . $newDbVersion . "<br />";
 
 		// Now, first, let's increment the conf_order of user option starting at new_user_notify
