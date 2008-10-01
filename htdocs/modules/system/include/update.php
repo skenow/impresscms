@@ -279,6 +279,20 @@ function xoops_module_update_system(&$module) {
 		}
 
 	}
+	
+  $newDbVersion = 8;
+
+  if($dbVersion < $newDbVersion) {
+    	echo "Database migrate to version " . $newDbVersion . "<br />";
+
+   		$table = new IcmsDatabasetable('modules');
+	    if ($table->fieldExists('dbversion')) {
+	    	$table->alterTable('dbversion', 'dbversion', "INT(11) unsigned DEFAULT 1");
+		    $icmsDatabaseUpdater->updateTable($table);
+	    }
+		unset($table);
+	}
+
 	echo "</code>";
 
    $feedback = ob_get_clean();
