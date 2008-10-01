@@ -287,7 +287,7 @@ function xoops_module_update_system(&$module) {
 
    		$table = new IcmsDatabasetable('modules');
 	    if ($table->fieldExists('dbversion')) {
-       $icmsDatabaseUpdater->runQuery("ALTER TABLE `" .$table->name()."` MODIFY dbversion INT(11) unsigned DEFAULT 1",'','');
+       $icmsDatabaseUpdater->runQuery("ALTER TABLE `" .$table->name()."` MODIFY dbversion INT(11) NOT NULL unsigned DEFAULT 1",'','');
  	    }
 		unset($table);
 	}
