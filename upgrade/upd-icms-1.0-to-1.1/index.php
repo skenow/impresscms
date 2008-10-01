@@ -1,6 +1,6 @@
 <?php
 /**
-* Upgrade script of ImpressCMS 1.0 to 1.0
+* Upgrade script of ImpressCMS 1.0 to 1.1
 *
 * @copyright   The XOOPS project http://www.xoops.org/
 * @copyright	http://www.impresscms.org/ The ImpressCMS Project
