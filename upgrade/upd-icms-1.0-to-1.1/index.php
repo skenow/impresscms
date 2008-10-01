@@ -444,10 +444,6 @@ class upgrade_impcms06 {
 			{
                 		return false;
             		}
-            		if (!$result = $GLOBALS['xoopsDB']->queryF($sql))
-			{
-                		return false;
-            		}
         	}
         
         return $result;
@@ -463,7 +459,7 @@ class upgrade_impcms06 {
     	function apply_dbversion() {
     	// First let's create the dbversion field in the modules table
     	$table = new IcmsDatabasetable('modules');
-    	$table->addNewField('dbversion', 'INT(11) DEFAULT 0');
+    	$table->addNewField('dbversion', 'INT(11) unsigned DEFAULT 1');
     	return $this->updater->updateTable($table, true);
 	}
 		function check_db()
