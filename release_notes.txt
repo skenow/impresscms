@@ -1,7 +1,7 @@
-ImpressCMS 1.1 Final release notes
+ImpressCMS 1.1 RC 3 release notes
 ==================================
 
-The ImpressCMS Project is very proud to announce the final version of its highly expected 1.1 version Community Management System! This is a stable release, ready for production sites !
+The ImpressCMS Project is very proud to announce the RC 3 release of its highly expected 1.1 version Community Management System! This is not yet ready for production sites but should be the last release before hitting 1.1 Final !
 
 Please see the full changelog for details in docs/changelog.txt.
 
