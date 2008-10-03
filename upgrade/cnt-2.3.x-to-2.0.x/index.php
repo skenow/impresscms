@@ -10,7 +10,7 @@
  * @version     $Id$
  */
 
-class upgrade_240
+class upgrade_230
 {
 	var $usedFiles = array ();
     var $tasks = array('config');
@@ -86,7 +86,7 @@ class upgrade_240
    }
 }
 
-$upg = new upgrade_240();
+$upg = new upgrade_230();
 return $upg;
 
 ?>
