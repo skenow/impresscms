@@ -10,16 +10,40 @@
  * @version     $Id$
  */
 
-class upgrade_230
+class upgrade_240
 {
 	var $usedFiles = array ();
-	function isApplied() {
-		return ($this->check_config());
+    var $tasks = array('config');
+	var $updater;
+	
+	function __construct() {
+		$this->updater = XoopsDatabaseFactory::getDatabaseUpdater();
 	}
 
-	function apply() {
-		$this->apply_config();
-	}
+    function isApplied()
+    {
+        if (!isset($_SESSION[__CLASS__]) || !is_array($_SESSION[__CLASS__])) {
+            $_SESSION[__CLASS__] = array();
+        }
+        foreach ($this->tasks as $task) {
+            if (!in_array($task, $_SESSION[__CLASS__])) {
+                if (!$res = $this->{"check_{$task}"}()) {
+                    $_SESSION[__CLASS__][] = $task;
+                }
+            }
+        }
+        return empty($_SESSION[__CLASS__]) ? true : false;
+    }
+    function apply()
+    {
+        $tasks = $_SESSION[__CLASS__];
+        foreach ($tasks as $task) {
+            $res = $this->{"apply_{$task}"}();
+            if (!$res) return false;
+            array_shift($_SESSION[__CLASS__]);
+        }
+        return true;
+    }
     
     
     /**
@@ -28,12 +52,11 @@ class upgrade_230
      */
     function check_config()
     {
-        $sql = "SELECT COUNT(*) FROM `" . $GLOBALS['xoopsDB']->prefix('config') . "` WHERE `conf_name` IN ('welcome_type', 'cpanel')";
-        if ( !$result = $GLOBALS['xoopsDB']->queryF( $sql ) ) {
-            return false;
-        }
-        list($count) = $GLOBALS['xoopsDB']->fetchRow($result);
-        return ($count == 2) ? false : true;
+        $sql = "SHOW TABLES LIKE '" . $GLOBALS['xoopsDB']->prefix("cache_model") . "'";
+        $result = $GLOBALS['xoopsDB']->queryF($sql);
+        if (!$result) return true;
+        if ($GLOBALS['xoopsDB']->getRowsNum($result) > 0) return false;
+        return true;
     }
 /*    function check_config()
     {
@@ -63,7 +86,7 @@ class upgrade_230
    }
 }
 
-$upg = new upgrade_230();
+$upg = new upgrade_240();
 return $upg;
 
 ?>
