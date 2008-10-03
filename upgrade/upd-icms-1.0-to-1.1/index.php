@@ -17,7 +17,7 @@ class upgrade_impcms06 {
 	var $usedFiles = array ();
     var $tasks = array(
     'table1', 'table2', 'table3', 'table4', 'conf', 
-    'block1', 'block2', 'block3', 'block4', 
+    //'block1', 'block2', 'block3', 'block4', 
     'dbversion', 'db'
     , 'salt'
     );
