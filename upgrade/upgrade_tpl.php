@@ -13,7 +13,7 @@
 		document.body.className = ( butt.className == 'on' ) ? 'show-help': '';
 	}
 	</script>
-	<link rel="stylesheet" type="text/css" media="all" href="style.css" />
+	<link rel="stylesheet" type="text/css" media="all" href="<?php echo 'style'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css' ?>" />
 </head>
 <body>
 <div id="xo-banner">
