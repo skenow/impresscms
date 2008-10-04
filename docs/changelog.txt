@@ -4,6 +4,10 @@ ImpressCMS ChangeLog
 
 ===2008-10-5 : 1.1 RC 3===
 
+'''Added'''
+* Converter of 2.2.X to icms 1.0 then 1.1 (stranger/phppp)
+* Converter of 2.3.X to icms 1.0 then 1.1 (stranger)
+
 '''Improved'''
 * Updated system to version 1.10. (stranger)
 * Function icms_cleaning_write_folders. (stranger)
@@ -15,6 +19,8 @@ ImpressCMS ChangeLog
 * Issues with Jalalijscalendar option in Persian language. (stranger)
 * Issues with reset buttons. (mcdonald3072)
 * When converting the db to another character set during an upgrade, the default values were being dropped if they were empty strings (skenow)
+* Issues with Jalalijscalendar button in forms. (stranger)
+* Issue with upgrader, blocks got twice inserted. (stranger)
 
 ===2008-09-21 : 1.1 RC 2===
 
