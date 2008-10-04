@@ -18,8 +18,7 @@ class upgrade_impcms06 {
     var $tasks = array(
     'table1', 'table2', 'table3', 'table4', 'conf', 
     //'block1', 'block2', 'block3', 'block4', 
-    'dbversion', 'db'
-    , 'salt'
+    'customblocks', 'dbversion', 'db', 'salt'
     );
 	var $updater;
 	
@@ -264,6 +263,19 @@ class upgrade_impcms06 {
 		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
 		return ($this->cleaning_write_folders());
 	}
+     function check_customblocks()
+     {
+		$table = new IcmsDatabasetable('modules');
+	    return $table->fieldExists('dbversion');
+     }
+	
+     function apply_customblocks()
+     {
+          $db = $GLOBALS['xoopsDB'];
+          $result = $db->queryF("UPDATE ". $db->prefix('newblocks') . " SET mid=0 WHERE mid=1 AND func_num=0");
+          return $result;
+     }
+
     function check_conf()
     {
 		$table = new IcmsDatabasetable('modules');
