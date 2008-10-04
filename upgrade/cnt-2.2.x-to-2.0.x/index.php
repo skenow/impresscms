@@ -204,7 +204,7 @@ class upgrade_220
               ADD user_regdate int(10) unsigned NOT NULL default '0',
               ADD user_icq varchar(15) NOT NULL default '',
               ADD user_from varchar(100) NOT NULL default '',
-              ADD user_sig tinytext NOT NULL,
+              ADD user_sig tinytext,
               ADD user_viewemail tinyint(1) unsigned NOT NULL default '0',
               ADD actkey varchar(8) NOT NULL default '',
               ADD user_aim varchar(18) NOT NULL default '',
@@ -220,7 +220,7 @@ class upgrade_220
               ADD notify_method tinyint(1) NOT NULL default '1',
               ADD notify_mode tinyint(1) NOT NULL default '0',
               ADD user_occ varchar(100) NOT NULL default '',
-              ADD bio tinytext NOT NULL,
+              ADD bio tinytext,
               ADD user_intrest varchar(150) NOT NULL default '',
               ADD user_mailok tinyint(1) unsigned NOT NULL default '1'
               "
@@ -284,10 +284,11 @@ class upgrade_220
         //Remove page links for module subpages
         $xoopsDB->queryF("DELETE FROM " . $xoopsDB->prefix("block_module_link") . " WHERE pageid > 0");
         
-        $sql =  "   ALTER TABLE `" . $xoopsDB->prefix("block_module_link") . "` " .
-                "   DROP PRIMARY KEY, " .
-                "   DROP pageid, " .
-                "   ADD PRIMARY KEY (`block_id` , `module_id`)";
+        $sql = "ALTER TABLE `" . $xoopsDB->prefix("block_module_link") . "` DROP PRIMARY KEY";
+        $xoopsDB->queryF($sql);
+        $sql = "ALTER TABLE `" . $xoopsDB->prefix("block_module_link") . "` DROP pageid";
+        $xoopsDB->queryF($sql);
+        $sql = "ALTER IGNORE TABLE `" . $xoopsDB->prefix("block_module_link") . "` ADD PRIMARY KEY (`block_id` , `module_id`)";
         $xoopsDB->queryF($sql);
 
         $xoopsDB->queryF("RENAME TABLE `" . $xoopsDB->prefix("newblocks") . "` TO `" . $xoopsDB->prefix("newblocks_bak") . "`");
@@ -300,7 +301,7 @@ class upgrade_220
               options varchar(255) NOT NULL default '',
               name varchar(150) NOT NULL default '',
               title varchar(255) NOT NULL default '',
-              content text NOT NULL,
+              content text,
               side tinyint(1) unsigned NOT NULL default '0',
               weight smallint(5) unsigned NOT NULL default '0',
               visible tinyint(1) unsigned NOT NULL default '0',
