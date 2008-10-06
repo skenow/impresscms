@@ -59,5 +59,4 @@ define('_MD_LASTIMP', 'Last Imported');
 define('_MD_FILENEWER', 'A newer file that has not been imported yet exists under the <b>templates</b> directory.');
 define('_MD_FILEIMPORT', 'An older file that has not been imported yet exists under the <b>templates</b> directory.');
 define('_MD_FILEGENER', 'Template file does not eixst. It can be generated (copied from the <b>default</b> template), uploaded, or imported from the <b>templates</b> directory.');
-define('_MD_VIEWTEMPLATE', 'View Template');
 ?>
