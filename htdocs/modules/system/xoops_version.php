@@ -301,7 +301,7 @@ $modversion['blocks'][$i]['file'] = "content_blocks.php";
 $modversion['blocks'][$i]['name'] = _MI_SYSTEM_BNAME16;
 $modversion['blocks'][$i]['description'] = "Menu of content pages and categories";
 $modversion['blocks'][$i]['show_func'] = "b_content_menu_show";
-$modversion['blocks'][$i]['options'] = "content_weight|ASC|1|#F2E2A0";
+$modversion['blocks'][$i]['options'] = "content_weight|ASC|1|#F2E2A0|0";
 $modversion['blocks'][$i]['edit_func'] = "b_content_menu_edit";
 $modversion['blocks'][$i]['template'] = 'system_block_contentmenu.html';
 
@@ -315,15 +315,8 @@ $modversion['blocks'][$i]['edit_func'] = "b_content_relmenu_edit";
 $modversion['blocks'][$i]['template'] = 'system_block_contentmenu.html';
 
 $i++;
-$modversion['blocks'][$i]['file'] = "calendar.php";
-$modversion['blocks'][$i]['name'] = _MI_SYSTEM_BNAME19;
-$modversion['blocks'][$i]['description'] = "Menu of sit calendar";
-$modversion['blocks'][$i]['show_func'] = "b_icms_calendar";
-$modversion['blocks'][$i]['template'] = 'system_block_icms_calendar.html';
-
-$i++;
 $modversion['blocks'][$i]['file'] = "content_blocks.php";
-$modversion['blocks'][$i]['name'] = _MI_SYSTEM_BNAME20;
+$modversion['blocks'][$i]['name'] = _MI_SYSTEM_BNAME19;
 $modversion['blocks'][$i]['description'] = "Block that show tagswith links to see the list of pages that use the tag.";
 $modversion['blocks'][$i]['show_func'] = "b_content_tagmenu_show";
 $modversion['blocks'][$i]['template'] = 'system_block_contenttags.html';

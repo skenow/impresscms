@@ -127,16 +127,11 @@ class icms_HTMLPurifier
 	**/
 	function icms_html_purifier($html, $config = 'system-global')
 	{
-		
 		if(get_magic_quotes_gpc()) {$html = stripslashes($html);}
 
 		$host_domain = icms_get_base_domain(ICMS_URL);
 		$host_base = icms_get_url_domain(ICMS_URL);
 
-		// HTML_Allowed: allowed tags for html content. format: element, element[attribute] - seperate attributes using pipe '|'
-		$HTML_Allowed = 'a[href|title|target|rel], abbr[title], acronym[title], b, blockquote[cite], br, caption, cite, code, dd,
-					del, dfn, div[align|style], dl, dt, em, font[size|color], h1, h2, h3, h4, h5, h6, i, img[src|alt|title|class|align|style], ins, kbd, li, ol, p[style], pre, s, span[style], strike, strong, sub, sup, table, tbody, td, tfoot, th, thead, tr, tt, u, ul, var';
-		
 		$HTML_Allowed_Elms = 'a, abbr, acronym, b, blockquote, br, caption, cite, code, dd, del, dfn, div, dl, dt, em, font, h1, h2, h3, h4, h5, h6, i, img, ins, kbd, li, ol, p, pre, s, span, strike, strong, sub, sup, table, tbody, td, tfoot, th, thead, tr, tt, u, ul, var';
 
 		$HTML_Allowed_Attr = 'a.href, a.rev, a.title, a.target, a.rel, abbr.title, acronym.title, blockquote.cite, div.align, div.style, div.class, div.id, font.size, font.color,	h1.style, h2.style, h3.style, h4.style, h5.style, h6.style, img.src, img.alt, img.title, img.class, img.align, img.style, p.style, span.style, span.class, span.id, table.class, table.id, table.border, table.cellpadding, table.cellspacing, table.style, table.width, td.abbr, td.align, td.class, td.id, td.colspan, td.rowspan, td.style, td.valign, tr.align, tr.class, tr.id, tr.style, tr.valign, th.abbr, th.align, th.class, th.id, th.colspan, th.rowspan, th.style, th.valign';
@@ -151,7 +146,6 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('HTML', 'DefinitionID', 'system-global');
 			$icms_PurifyConfig->set('HTML', 'DefinitionRev', 1);
 			$icms_PurifyConfig->set('HTML', 'Doctype', 'XHTML 1.0 Transitional'); // sets purifier to use specified Doctype when tidying etc.
-//			$icms_PurifyConfig->set('HTML', 'Allowed', $HTML_Allowed); // sets allowed html tags that can be used.
 			$icms_PurifyConfig->set('HTML', 'AllowedElements', $HTML_Allowed_Elms); // sets allowed html elements that can be used.
 			$icms_PurifyConfig->set('HTML', 'AllowedAttributes', $HTML_Allowed_Attr); // sets allowed html attributes that can be used.
 			$icms_PurifyConfig->set('HTML', 'TidyLevel', 'medium');
@@ -161,7 +155,6 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('AutoFormat', 'AutoParagraph', false);
 			$icms_PurifyConfig->set('AutoFormat', 'Linkify', true);
 		
-//			$icms_PurifyConfig->set('Core', 'AggressivelyFixLt', true);
 			$icms_PurifyConfig->set('Core', 'Encoding', _CHARSET); // sets purifier to use specified encoding. default = UTF-8
 			if(strtolower(_CHARSET) !== 'utf-8')
 			{
@@ -197,13 +190,13 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('Attr', 'AllowedRel', 'external, nofollow, external nofollow, lightbox');
 
 			$icms_PurifyConfig->set('Filter', 'YouTube', true); // setting to true will allow Youtube files to be embedded into your site & w3c validated.
+			$icms_PurifyConfig->set('Filter', 'Custom', array(new HTMLPurifier_Filter_WeGame(), new HTMLPurifier_Filter_LiveLeak(), new HTMLPurifier_Filter_Vimeo()));
 		}
 		elseif($config = 'system-basic')
 		{
 			$icms_PurifyConfig->set('HTML', 'DefinitionID', 'system-basic');
 			$icms_PurifyConfig->set('HTML', 'DefinitionRev', 1);
 			$icms_PurifyConfig->set('HTML', 'Doctype', 'XHTML 1.0 Transitional'); // sets purifier to use specified Doctype when tidying etc.
-//			$icms_PurifyConfig->set('HTML', 'Allowed', $HTML_Allowed); // sets allowed html tags that can be used.
 			$icms_PurifyConfig->set('HTML', 'AllowedElements', $HTML_Allowed_Elms); // sets allowed html elements that can be used.
 			$icms_PurifyConfig->set('HTML', 'AllowedAttributes', $HTML_Allowed_Attr); // sets allowed html attributes that can be used.
 			$icms_PurifyConfig->set('HTML', 'TidyLevel', 'none');
@@ -248,6 +241,7 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('Attr', 'AllowedRel', 'external, nofollow, external nofollow, lightbox');
 
 			$icms_PurifyConfig->set('Filter', 'YouTube', true); // setting to true will allow Youtube files to be embedded into your site & w3c validated.
+			$icms_PurifyConfig->set('Filter', 'Custom', array(new HTMLPurifier_Filter_WeGame(), new HTMLPurifier_Filter_LiveLeak(), new HTMLPurifier_Filter_Vimeo()));
 		}
 		elseif($config = 'protector')
 		{
@@ -270,7 +264,6 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('HTML', 'DefinitionID', 'display');
 			$icms_PurifyConfig->set('HTML', 'DefinitionRev', 1);
 			$icms_PurifyConfig->set('HTML', 'Doctype', 'XHTML 1.0 Transitional'); // sets purifier to use specified Doctype when tidying etc.
-//			$icms_PurifyConfig->set('HTML', 'Allowed', $HTML_Allowed); // sets allowed html tags that can be used.
 			$icms_PurifyConfig->set('HTML', 'AllowedElements', $HTML_Allowed_Elms); // sets allowed html elements that can be used.
 			$icms_PurifyConfig->set('HTML', 'AllowedAttributes', $HTML_Allowed_Attr); // sets allowed html attributes that can be used.
 			$icms_PurifyConfig->set('HTML', 'TidyLevel', 'medium');
@@ -280,7 +273,6 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('AutoFormat', 'AutoParagraph', false);
 			$icms_PurifyConfig->set('AutoFormat', 'Linkify', true);
 		
-//			$icms_PurifyConfig->set('Core', 'AggressivelyFixLt', true);
 			$icms_PurifyConfig->set('Core', 'Encoding', _CHARSET); // sets purifier to use specified encoding. default = UTF-8
 			if(strtolower(_CHARSET) !== 'utf-8')
 			{
@@ -316,13 +308,13 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('Attr', 'AllowedRel', 'external, nofollow, external nofollow, lightbox');
 
 			$icms_PurifyConfig->set('Filter', 'YouTube', true); // setting to true will allow Youtube files to be embedded into your site & w3c validated.
+			$icms_PurifyConfig->set('Filter', 'Custom', array(new HTMLPurifier_Filter_WeGame(), new HTMLPurifier_Filter_LiveLeak(), new HTMLPurifier_Filter_Vimeo()));
 		}
 		elseif($config = 'preview') // config id level for preview HTMLArea
 		{
 			$icms_PurifyConfig->set('HTML', 'DefinitionID', 'preview');
 			$icms_PurifyConfig->set('HTML', 'DefinitionRev', 1);
 			$icms_PurifyConfig->set('HTML', 'Doctype', 'XHTML 1.0 Transitional'); // sets purifier to use specified Doctype when tidying etc.
-//			$icms_PurifyConfig->set('HTML', 'Allowed', $HTML_Allowed); // sets allowed html tags that can be used.
 			$icms_PurifyConfig->set('HTML', 'AllowedElements', $HTML_Allowed_Elms); // sets allowed html elements that can be used.
 			$icms_PurifyConfig->set('HTML', 'AllowedAttributes', $HTML_Allowed_Attr); // sets allowed html attributes that can be used.
 			$icms_PurifyConfig->set('HTML', 'TidyLevel', 'light');
@@ -332,7 +324,6 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('AutoFormat', 'AutoParagraph', false);
 			$icms_PurifyConfig->set('AutoFormat', 'Linkify', true);
 		
-//			$icms_PurifyConfig->set('Core', 'AggressivelyFixLt', true);
 			$icms_PurifyConfig->set('Core', 'Encoding', _CHARSET); // sets purifier to use specified encoding. default = UTF-8
 			if(strtolower(_CHARSET) !== 'utf-8')
 			{
@@ -368,6 +359,7 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('Attr', 'AllowedRel', 'external, nofollow, external nofollow, lightbox');
 
 			$icms_PurifyConfig->set('Filter', 'YouTube', true); // setting to true will allow Youtube files to be embedded into your site & w3c validated.
+			$icms_PurifyConfig->set('Filter', 'Custom', array(new HTMLPurifier_Filter_WeGame(), new HTMLPurifier_Filter_LiveLeak(), new HTMLPurifier_Filter_Vimeo()));
 		}
 		$icms_PurifyDef = $icms_PurifyConfig->getHTMLDefinition(true);
 

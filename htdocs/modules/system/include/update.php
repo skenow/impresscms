@@ -15,7 +15,7 @@ function xoops_module_update_system(&$module) {
      * For compatibility upgrade...
      */
      $moduleVersion  = $module->getVar('version');
-	if ($moduleVersion < 103) {
+	if ($moduleVersion < 120) {
         $result = $xoopsDB->query("SELECT t1.tpl_id FROM ".$xoopsDB->prefix('tplfile')." t1, ".$xoopsDB->prefix('tplfile')." t2 WHERE t1.tpl_module = t2.tpl_module AND t1.tpl_tplset=t2.tpl_tplset AND t1.tpl_file = t2.tpl_file AND t1.tpl_id > t2.tpl_id");
 
         $tplids = array();
@@ -92,7 +92,7 @@ function xoops_module_update_system(&$module) {
 	    // Adding configurations of meta tag&footer
 	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_METAFOOTER, 'google_meta', '_MD_AM_METAGOOGLE', '', '_MD_AM_METAGOOGLE_DESC', 'textbox', 'text', 9);
 	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_METAFOOTER, 'use_google_analytics', '_MD_AM_USE_GOOGLE_ANA', 0, '_MD_AM_USE_GOOGLE_ANA_DESC', 'yesno', 'int', 21);
-	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_METAFOOTER, 'google_analytics', '_MD_AM_GOOGLE_ANA', '', '_MD_AM_GOOGLE_ANA_DESC', 'textarea', 'text', 21);
+	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_METAFOOTER, 'google_analytics', '_MD_AM_GOOGLE_ANA', '', '_MD_AM_GOOGLE_ANA_DESC', 'textbox', 'text', 21);
 	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_METAFOOTER, 'footadm', '_MD_AM_FOOTADM', 'Powered by ImpressCMS &copy; 2007-' . date("Y", time()) . ' <a href=\"http://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a>', '_MD_AM_FOOTADM_DESC', 'textarea', 'text', 22);
 
 	    // Adding configurations of search preferences
@@ -193,6 +193,107 @@ function xoops_module_update_system(&$module) {
 
 	}
 
+    /**
+     * A few fields were added in the DB after 1.1 Beta 1. Those fields were added to the upgrade script from 1.0 to 1.1,
+     * but it may be a problem for people following each of our release
+     * Bug item #2098379 is about this
+     */
+    $newDbVersion = 3;
+
+    if ($dbVersion < $newDbVersion) {
+    	echo "Database migrate to version " . $newDbVersion . "<br />";
+   		$table = new IcmsDatabasetable('users');
+	    if (!$table->fieldExists('openid')) {
+	    	$table->addNewField('openid', "varchar(255) NOT NULL default ''");
+		    $icmsDatabaseUpdater->updateTable($table);
+	    }
+		unset($table);
+
+   		$table = new IcmsDatabasetable('users');
+	    if (!$table->fieldExists('user_viewoid')) {
+	    	$table->addNewField('user_viewoid', "tinyint(1) UNSIGNED NOT NULL default 0");
+		    $icmsDatabaseUpdater->updateTable($table);
+	    }
+		unset($table);
+
+   		$table = new IcmsDatabasetable('users');
+	    if (!$table->fieldExists('pass_expired')) {
+	    	$table->addNewField('pass_expired', "tinyint(1) UNSIGNED NOT NULL default 0");
+		    $icmsDatabaseUpdater->updateTable($table);
+	    }
+		unset($table);
+
+   		$table = new IcmsDatabasetable('users');
+	    if (!$table->fieldExists('enc_type')) {
+	    	$table->addNewField('enc_type', "tinyint(2) UNSIGNED NOT NULL default 0");
+		    $icmsDatabaseUpdater->updateTable($table);
+	    }
+		unset($table);
+	}
+
+    $newDbVersion = 4;
+
+    if($dbVersion < $newDbVersion) {
+    	echo "Database migrate to version " . $newDbVersion . "<br />";
+
+   		$table = new IcmsDatabasetable('users');
+	    if ($table->fieldExists('pass')) {
+	    	$table->alterTable('pass', 'pass', "varchar(255) UNSIGNED NOT NULL default ''");
+		    $icmsDatabaseUpdater->updateTable($table);
+	    }
+		unset($table);
+	}
+
+    $newDbVersion = 5;
+
+    if($dbVersion < $newDbVersion) {
+    	echo "Database migrate to version " . $newDbVersion . "<br />";
+		$icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'use_jsjalali', '_MD_AM_JALALICAL', '0', '_MD_AM_JALALICALDSC', 'yesno', 'int', 23);
+			unset($table);
+}
+	//Some users had used a copy of working branch and they got multiple option, this is to remove all those re-created options and make a single option
+    $newDbVersion = 6;
+
+    if($dbVersion < $newDbVersion) {
+    	echo "Database migrate to version " . $newDbVersion . "<br />";
+	    global $xoopsDB;
+        $xoopsDB->queryF("DELETE FROM `" . $xoopsDB->prefix('config') . "` WHERE conf_name='use_jsjalali'");
+		$icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'use_jsjalali', '_MD_AM_JALALICAL', '0', '_MD_AM_JALALICALDSC', 'yesno', 'int', 23);
+			unset($table);
+}
+    $newDbVersion = 7;
+    if($dbVersion < $newDbVersion) {
+    	echo "Database migrate to version " . $newDbVersion . "<br />";
+		$configitem_handler = xoops_getHandler('configitem');
+		// fetch the rss_local configitem
+		$criteria = new CriteriaCompo();
+		$criteria->add(new Criteria('conf_name', 'google_analytics'));
+		$criteria->add(new Criteria('conf_catid', XOOPS_CONF_METAFOOTER));
+		$configitemsObj = $configitem_handler->getObjects($criteria);
+		if (isset($configitemsObj[0]) && $configitemsObj[0]->getVar('conf_formtype', 'n') == 'textarea') {
+			$configitemsObj[0]->setVar('conf_formtype', 'textbox');
+			$configitem_handler->insert($configitemsObj[0]);
+			echo "&nbsp;&nbsp;Updating google_analytics field type<br />";
+		}
+
+	}
+ 
+    $newDbVersion = 8;
+
+    if ($dbVersion < $newDbVersion) {
+    	echo "Database migrate to version " . $newDbVersion . "<br />";
+  		$table = new IcmsDatabasetable('users');
+	    if (!$table->fieldExists('login_name')) {
+	    	$table->addNewField('login_name', "varchar(255) NOT NULL default ''");
+		    $icmsDatabaseUpdater->updateTable($table);
+	    }
+		unset($table);
+	    global $xoopsDB;
+        $xoopsDB->queryF("UPDATE `" . $xoopsDB->prefix("users") . "` SET login_name=uname");
+	    unset($table);
+
+	}
+
 	echo "</code>";
 
    $feedback = ob_get_clean();
@@ -202,7 +303,6 @@ function xoops_module_update_system(&$module) {
         echo $feedback;
     }
     $icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
-    return true;
-}
-
+		return icms_cleaning_write_folders();
+	}
 ?>

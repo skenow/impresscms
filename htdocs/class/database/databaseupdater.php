@@ -730,7 +730,9 @@ class IcmsDatabaseupdater {
 	 * @return string default value
 	 */
 	function getFieldDefaultFromVar($var, $key = false) {
-		if ($var['value']) {
+		if ($var['data_type'] == XOBJ_DTYPE_TXTAREA) {
+			return 'nodefault';
+		} elseif ($var['value']) {
 			return $var['value'];
 		} else {
 			if (in_array($var['data_type'], array(
@@ -769,11 +771,21 @@ class IcmsDatabaseupdater {
 						$extra = "auto_increment";
 					} else {
 						$default =  $this->getFieldDefaultFromVar($var);
-						$extra = "default '$default'
+						if ($default != 'nodefault') {
+							$extra = "default '$default'
+";
+						} else {
+							$extra = false;
+						}
+					}
+					if ($extra) {
+						$structure .= "`$key` $type not null $extra,
+";
+					} else {
+						$structure .= "`$key` $type not null,
 ";
 					}
-					$structure .= "`$key` $type not null $extra,
-";
+
 				}
 			}
 			$structure .= "PRIMARY KEY  (`" . $module_handler->keyName . "`)
@@ -792,7 +804,12 @@ class IcmsDatabaseupdater {
 						// the fiels does not exist, let's create it
 						$type = $this->getFieldTypeFromVar($var);
 						$default =  $this->getFieldDefaultFromVar($var);
-						$table->addNewField($key, "$type not null default '$default'");
+						if ($default != 'nodefault') {
+							$extra = "default '$default'";
+						} else {
+							$extra = false;
+						}
+						$table->addNewField($key, "$type not null " . $extra);
 					} else {
 						// if field already exists, let's check if the definition is correct
 						$definition =  strtolower($existingFieldsArray[$key]);
@@ -801,9 +818,16 @@ class IcmsDatabaseupdater {
 							$extra = "auto_increment";
 						} else {
 							$default =  $this->getFieldDefaultFromVar($var, $key);
-							$extra = "default '$default'";
+							if ($default != 'nodefault') {
+								$extra = "default '$default'";
+							} else {
+								$extra = false;
+							}
 						}
-						$actual_definition = "$type not null $extra";
+						$actual_definition = "$type not null";
+						if ($extra) {
+							$actual_definition .= " $extra";
+						}
 						if ($definition != $actual_definition) {
 							$table->addAlteredField($key, $actual_definition);
 						}
@@ -863,8 +887,8 @@ class IcmsDatabaseupdater {
 	    $dbVersion  = $module->getDbversion();
 
 	    $newDbVersion = constant(strtoupper($dirname . '_db_version')) ? constant(strtoupper($dirname . '_db_version')) : 0;
-		echo '&nbsp;&nbsp;Database version : ' . $dbVersion . '<br />';
-		echo '&nbsp;&nbsp;New database version : ' . $newDbVersion . '<br />';
+		echo 'Current database version : ' . $dbVersion . '<br />';
+		echo '&nbsp;&nbsp;Latest database version : ' . $newDbVersion . '<br />';
 
 	    if ($newDbVersion > $dbVersion) {
 	    	for($i=$dbVersion+1;$i<=$newDbVersion; $i++) {

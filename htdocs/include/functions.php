@@ -217,12 +217,7 @@ function formatTimestamp($time, $format='l', $timeoffset='')
 		break;
 	}
 	//Start addition including extended date function
-	if(defined('_EXT_DATE_FUNC') && $xoopsConfig['use_ext_date'] == 1 && _EXT_DATE_FUNC && $format != 'mysql' && file_exists(ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/ext/ext_date_function.php'))
-	{
-		include_once ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/ext/ext_date_function.php';
-		return ucfirst(ext_date($datestring,$usertimestamp));
-	}
-	else {return ucfirst(date($datestring,$usertimestamp));}
+return ucfirst(icmsdate($datestring,$usertimestamp));
 }
 
 /*
@@ -364,8 +359,8 @@ function xoops_getbanner()
 			{
 				$bannerobject = $bannerobject
 					.'<object type="application/x-shockwave-flash" data="'.$imageurl.'" width="468" height="60">'
-					.'<param name="movie" value="'.$imageurl.'" />'
-					.'<param name="quality" value="high" />'
+					.'<param name="movie" value="'.$imageurl.'"></param>'
+					.'<param name="quality" value="high"></param>'
 					.'</object>';
 			}
 			else {$bannerobject = $bannerobject.'<img src="'.$imageurl.'" alt="" />';}
@@ -1051,7 +1046,7 @@ function icms_float($var) {return icms_currency($var);}
 
 function icms_purifyText($text, $keyword = false)
 {
-	global $myts;
+	$myts = MyTextsanitizer::getInstance();
 	$text = str_replace('&nbsp;', ' ', $text);
 	$text = str_replace('<br />', ' ', $text);
 	$text = str_replace('<br/>', ' ', $text);
