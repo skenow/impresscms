@@ -21,6 +21,7 @@ ImpressCMS ChangeLog
 * When converting the db to another character set during an upgrade, the default values were being dropped if they were empty strings (skenow)
 * Issues with Jalalijscalendar button in forms. (stranger)
 * Issue with upgrader, blocks got twice inserted. (stranger)
+* Issue with upgrader, blocks permissions was not inserted. (skenow/stranger)
 
 ===2008-09-21 : 1.1 RC 2===
 
