@@ -16,7 +16,7 @@
 */
 
 if (!defined("ICMS_ROOT_PATH")) {
-	die("XOOPS root path not defined");
+	die("ImpressCMS root path not defined");
 }
 
 class IcmsPersistableObjectHandler extends XoopsObjectHandler {
