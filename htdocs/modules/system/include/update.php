@@ -307,30 +307,46 @@ function xoops_module_update_system(&$module) {
  
         $db = $GLOBALS['xoopsDB'];
  
-        if (getDbValue($db, 'newblocks', 'bid', 'show_func="b_social_bookmarks"') = 0) {
-    	$new_block_id = getDbValue($db, 'newblocks', 'bid', 'show_func="b_social_bookmarks"');
-        $db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . "VALUES (" . $new_block_id . ", 0, 1);");
-        $db->queryF(" INSERT INTO " . $db->prefix("group_permission") . "VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
+        if (getDbValue($db, 'newblocks', 'show_func', 'show_func="b_social_bookmarks"') == 0) {
+		$sql = "SELECT bid FROM `".$db->prefix('newblocks')."` WHERE show_func='b_social_bookmarks'";
+		$result = $db->query($sql);
+		list($new_block_id) = $db->FetchRow($result);
+		$db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0);");
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, " . $new_block_id . ", 1, 'block_read');");
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 2, " . $new_block_id . ", 1, 'block_read');");
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
         }
  
-        if (getDbValue($db, 'newblocks', 'bid', 'show_func="b_content_show"') = 0) {
-    	$new_block_id = getDbValue($db, 'newblocks', 'bid', 'show_func="b_content_show"');
-        $db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . "VALUES (" . $new_block_id . ", 0, 0);");
-        $db->queryF(" INSERT INTO " . $db->prefix("group_permission") . "VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
+        if (getDbValue($db, 'newblocks', 'show_func', 'show_func="b_content_show"') == 0) {
+		$sql = "SELECT bid FROM `".$db->prefix('newblocks')."` WHERE show_func='b_content_show'";
+		$result = $db->query($sql);
+		list($new_block_id) = $db->FetchRow($result);
+		$db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0);");
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, " . $new_block_id . ", 1, 'block_read');");
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 2, " . $new_block_id . ", 1, 'block_read');");
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
         }
  
-        if (getDbValue($db, 'newblocks', 'bid', 'show_func="b_content_menu_show"') = 0) {
-        $new_block_id = getDbValue($db, 'newblocks', 'bid', 'show_func="b_content_menu_show"');
-        $db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . "VALUES (" . $new_block_id . ", 0, 0);");
-        $db->queryF(" INSERT INTO " . $db->prefix("group_permission") . "VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
+        if (getDbValue($db, 'newblocks', 'show_func', 'show_func="b_content_menu_show"') == 0) {
+		$sql = "SELECT bid FROM `".$db->prefix('newblocks')."` WHERE show_func='b_content_menu_show'";
+		$result = $db->query($sql);
+		list($new_block_id) = $db->FetchRow($result);
+		$db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0);");
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, " . $new_block_id . ", 1, 'block_read');");
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 2, " . $new_block_id . ", 1, 'block_read');");
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
         }
  
-        if (getDbValue($db, 'newblocks', 'bid', 'show_func="b_content_relmenu_show"') = 0) {
-        $new_block_id = getDbValue($db, 'newblocks', 'bid', 'show_func="b_content_relmenu_show"');
-        $db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . "VALUES (" . $new_block_id . ", 0, 0);");
-        $db->queryF(" INSERT INTO " . $db->prefix("group_permission") . "VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
+        if (getDbValue($db, 'newblocks', 'show_func', 'show_func="b_content_relmenu_show"') == 0) {
+		$sql = "SELECT bid FROM `".$db->prefix('newblocks')."` WHERE show_func='b_content_relmenu_show'";
+		$result = $db->query($sql);
+		list($new_block_id) = $db->FetchRow($result);
+		$db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0);");
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, " . $new_block_id . ", 1, 'block_read');");
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 2, " . $new_block_id . ", 1, 'block_read');");
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
         }
- 
+		unset($table);
   }
   
 	echo "</code>";
