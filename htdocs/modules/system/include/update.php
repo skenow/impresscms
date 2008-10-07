@@ -338,8 +338,11 @@ function xoops_module_update_system(&$module) {
 		$db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0, 0);");
 		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
         }
-     /* Need to add admin permissions for block positions, content manager, custom tag, symlink manager and version checker */
-     
+		//$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, 16, 1, 'system_admin');");
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, 17, 1, 'system_admin');");
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, 18, 1, 'system_admin');");
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, 19, 1, 'system_admin');");
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, 20, 1, 'system_admin');");
   }
   
 	echo "</code>";
