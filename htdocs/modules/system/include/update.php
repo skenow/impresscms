@@ -311,9 +311,7 @@ function xoops_module_update_system(&$module) {
 		$sql = "SELECT bid FROM `".$db->prefix('newblocks')."` WHERE show_func='b_social_bookmarks'";
 		$result = $db->query($sql);
 		list($new_block_id) = $db->FetchRow($result);
-		$db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0);");
-		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, " . $new_block_id . ", 1, 'block_read');");
-		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 2, " . $new_block_id . ", 1, 'block_read');");
+		$db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0, 1);");
 		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
         }
  
@@ -321,9 +319,7 @@ function xoops_module_update_system(&$module) {
 		$sql = "SELECT bid FROM `".$db->prefix('newblocks')."` WHERE show_func='b_content_show'";
 		$result = $db->query($sql);
 		list($new_block_id) = $db->FetchRow($result);
-		$db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0);");
-		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, " . $new_block_id . ", 1, 'block_read');");
-		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 2, " . $new_block_id . ", 1, 'block_read');");
+		$db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0, 0);");
 		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
         }
  
@@ -331,9 +327,7 @@ function xoops_module_update_system(&$module) {
 		$sql = "SELECT bid FROM `".$db->prefix('newblocks')."` WHERE show_func='b_content_menu_show'";
 		$result = $db->query($sql);
 		list($new_block_id) = $db->FetchRow($result);
-		$db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0);");
-		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, " . $new_block_id . ", 1, 'block_read');");
-		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 2, " . $new_block_id . ", 1, 'block_read');");
+		$db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0, 0);");
 		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
         }
  
@@ -341,12 +335,11 @@ function xoops_module_update_system(&$module) {
 		$sql = "SELECT bid FROM `".$db->prefix('newblocks')."` WHERE show_func='b_content_relmenu_show'";
 		$result = $db->query($sql);
 		list($new_block_id) = $db->FetchRow($result);
-		$db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0);");
-		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, " . $new_block_id . ", 1, 'block_read');");
-		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 2, " . $new_block_id . ", 1, 'block_read');");
+		$db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0, 0);");
 		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
         }
-		unset($table);
+     /* Need to add admin permissions for block positions, content manager, custom tag, symlink manager and version checker */
+     
   }
   
 	echo "</code>";
