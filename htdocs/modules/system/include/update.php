@@ -301,6 +301,38 @@ function xoops_module_update_system(&$module) {
 		unset($table);
 	}
 
+    $newDbVersion = 10;
+  if($dbVersion < $newDbVersion) {
+    echo "Database migrate to version " . $newDbVersion . "<br />";
+ 
+        $db = $GLOBALS['xoopsDB'];
+ 
+        if (getDbValue($db, 'newblocks', 'bid', 'show_func="b_social_bookmarks"') = 0) {
+    	$new_block_id = getDbValue($db, 'newblocks', 'bid', 'show_func="b_social_bookmarks"');
+        $db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . "VALUES (" . $new_block_id . ", 0, 1);");
+        $db->queryF(" INSERT INTO " . $db->prefix("group_permission") . "VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
+        }
+ 
+        if (getDbValue($db, 'newblocks', 'bid', 'show_func="b_content_show"') = 0) {
+    	$new_block_id = getDbValue($db, 'newblocks', 'bid', 'show_func="b_content_show"');
+        $db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . "VALUES (" . $new_block_id . ", 0, 0);");
+        $db->queryF(" INSERT INTO " . $db->prefix("group_permission") . "VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
+        }
+ 
+        if (getDbValue($db, 'newblocks', 'bid', 'show_func="b_content_menu_show"') = 0) {
+        $new_block_id = getDbValue($db, 'newblocks', 'bid', 'show_func="b_content_menu_show"');
+        $db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . "VALUES (" . $new_block_id . ", 0, 0);");
+        $db->queryF(" INSERT INTO " . $db->prefix("group_permission") . "VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
+        }
+ 
+        if (getDbValue($db, 'newblocks', 'bid', 'show_func="b_content_relmenu_show"') = 0) {
+        $new_block_id = getDbValue($db, 'newblocks', 'bid', 'show_func="b_content_relmenu_show"');
+        $db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . "VALUES (" . $new_block_id . ", 0, 0);");
+        $db->queryF(" INSERT INTO " . $db->prefix("group_permission") . "VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
+        }
+ 
+  }
+  
 	echo "</code>";
 
    $feedback = ob_get_clean();
