@@ -9,7 +9,7 @@
 * @since		1.1
 * @author	   Sina Asghari <pesian_stranger@users.sourceforge.net>
 * @author      Taiwen Jiang <phppp@users.sourceforge.net>
-* @version		$Id$
+* @version		$Id: index.php 4731 2008-09-07 11:22:08Z pesian_stranger $
 */
 
 class upgrade_impcms06 {

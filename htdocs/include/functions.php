@@ -1679,6 +1679,62 @@ $Generate = $pdf->Output();
 return $Generate;
 }
 
+	function icms_cleaning_write_folders() {
+	    global $xoopsConfig;
+		$dir = array();
+		$dir['templates_c'] = ICMS_ROOT_PATH."/templates_c/";
+		$dir['cache'] = ICMS_ROOT_PATH."/cache/";
+
+		foreach ($dir as $d)
+		{
+			$dd = opendir($d);
+			while($file = readdir($dd))
+			{
+		 		if(is_file($d.$file) && ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess' && $file != 'adminmenu_' . $xoopsConfig['language'] . '.php'))
+				{
+		  			unlink($d.$file);
+				}
+			}
+			closedir($dd);
+		}
+			return true;
+	}
+
+
+function icmsdate($datestring,$usertimestamp)
+{
+	global $xoopsConfig;
+	$basecheck = defined('_EXT_DATE_FUNC') && $xoopsConfig['use_ext_date'] == 1 && _EXT_DATE_FUNC;
+	if ($basecheck && $xoopsConfig['language'] == 'persian' && $datestring != 'mysql'){
+		include_once ICMS_ROOT_PATH.'/include/jalali.php';
+		return ucfirst(icms_conv_nr2local(jdate($datestring,$usertimestamp)));
+	}else{
+	return ucfirst(date($datestring,$usertimestamp));}
+}
+function icms_conv_nr2local($string)
+{
+	$basecheck = defined('_USE_LOCAL_NUM') && _USE_LOCAL_NUM;
+	if ( $basecheck ){
+	return str_replace(
+		array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'),
+		array(_LCL_NUM0, _LCL_NUM1, _LCL_NUM2, _LCL_NUM3, _LCL_NUM4, _LCL_NUM5, _LCL_NUM6, _LCL_NUM7, _LCL_NUM8, _LCL_NUM9), $string);
+	}else{
+		return $string;
+	}
+}
+function icms_conv_local2nr($string)
+{
+	$basecheck = defined('_USE_LOCAL_NUM') && _USE_LOCAL_NUM;
+	if ( $basecheck ){
+	return str_replace(
+		array(_LCL_NUM0, _LCL_NUM1, _LCL_NUM2, _LCL_NUM3, _LCL_NUM4, _LCL_NUM5, _LCL_NUM6, _LCL_NUM7, _LCL_NUM8, _LCL_NUM9), 
+		array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'), 
+		$string);
+	}else{
+		return $string;
+	}
+}
+
 function icms_convert_size($size){ 	 
     if ($size >= 1073741824){ 	 
         $ret = round((($size/1024)/1024)/1024,1).' Gb'; 	 
