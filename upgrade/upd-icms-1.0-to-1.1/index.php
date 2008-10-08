@@ -16,8 +16,7 @@ class upgrade_impcms06 {
 	
 	var $usedFiles = array ();
     var $tasks = array(
-    'table1', 'table2', 'table3', 'table4', 'conf', 
-    //'block1', 'block2', 'block3', 'block4', 
+    'table1', 'table2', 'table3', 'table4', 'conf',  
     'customblocks', 'dbversion', 'db', 'salt'
     );
 	var $updater;
@@ -171,98 +170,6 @@ class upgrade_impcms06 {
 		unset ($table);
 	}
 
-    function check_block1()
-    {
-		$db = $GLOBALS['xoopsDB'];
-		if (getDbValue($db, 'newblocks', 'bid', ' show_func="b_social_bookmarks"') != 0) {
-			return true;
-		}
-            }
-
- 	function apply_block1() {
-		$db = $GLOBALS['xoopsDB'];
-		$db->queryF(" INSERT INTO " . $db->prefix("newblocks") . " VALUES ('', 1, 0, '', 'Share this page!', 'Share this page!', '', 1, 0, 0, 'S', 'H', 1, 'system', 'social_bookmarks.php', 'b_social_bookmarks', '', 'system_block_socialbookmark.html', 0, " . time() . ")");
-		$new_block_id = $db->getInsertId();
-		$db->queryF(" UPDATE " . $db->prefix("newblocks") . " SET func_num = " . $new_block_id . " WHERE bid=" . $new_block_id);
-		$db->queryF(" INSERT INTO " . $db->prefix("tplfile") . " VALUES ('', " . $new_block_id . ", 'system', 'default', 'system_block_socialbookmark.html', 'Displays image links to bookmark pages in sharing websites', " . time() . ", " . time() . ", 'block');");
-		$new_tplfile_id = $db->getInsertId();
-		$new_tpl_source = '<table cellspacing="0" class="outer">\n  <tr>\n    <td class="odd">\n		<{$block.bookmark}>\n	</td>\n  </tr>\n</table>';
-		$db->queryF(" INSERT INTO " . $db->prefix("tplsource") . " VALUES (" . $new_tplfile_id . ", '" . $new_tpl_source . "');");
-		$db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0);");
-		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, " . $new_block_id . ", 1, 'block_read');");
-		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 2, " . $new_block_id . ", 1, 'block_read');");
-		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
-		return true;
-	}
-    function check_block2()
-    {
-		$db = $GLOBALS['xoopsDB'];
-		if (getDbValue($db, 'newblocks', 'bid', ' show_func="b_content_show"') != 0) {
-			return true;
-		}
-            }
-
- 	function apply_block2() {
-		$db = $GLOBALS['xoopsDB'];
-		$db->queryF(" INSERT INTO " . $db->prefix("newblocks") . " VALUES ('', 1, 0, '1|1|1|1', 'Content', 'Content', '', 1, 0, 0, 'S', 'H', 1, 'system', 'content_blocks.php', 'b_content_show', 'b_content_edits', 'system_block_content.html', 0, " . time() . ")");
-		$new_block_id = $db->getInsertId();
-		$db->queryF(" UPDATE " . $db->prefix("newblocks") . " SET func_num = " . $new_block_id . " WHERE bid=" . $new_block_id);
-		$db->queryF(" INSERT INTO " . $db->prefix("tplfile") . " VALUES ('', " . $new_block_id . ", 'system', 'default', 'system_block_content.html', 'Show content page', " . time() . ", " . time() . ", 'block');");
-		$new_tplfile_id = $db->getInsertId();
-		$new_tpl_source = '<link rel="stylesheet" type="text/css" media="all" title="Style sheet" href="<{$xoops_url}>/modules/system/admin/content/style.css" />\r\n<style type="text/css">\r\n  <{$content_css}>\r\n</style>\r\n<div id="impress_content">\r\n  <{if $block.showNav}>\r\n    <div id="nav"><{$block.nav}></div>\r\n  <{/if}>  \r\n  <div id="title">\r\n    <{if $block.isAdmin}><div class="title_admlinks"><{$block.content_admlinks}></div><{/if}>\r\n    <h1 class="title_body"><{$block.content_title}></h1>\r\n    <{if $block.show_pinfo}><h2 class="title_info"><{$block.content_tinfo}></h2><{/if}>\r\n  </div>\r\n  <div class="content">\r\n    <div class="content_body"><{$block.content_body}></div>\r\n  </div>\r\n  <{if $block.showSubs}>\r\n    <hr style="margin:20px;" />\r\n    <div id="subs">\r\n      <div class="title_subs"><{$block.subs_label}></div>\r\n      <{foreach item=sub from=$block.content_subs}>\r\n        <div style="margin:5px;" class="<{cycle values="even,odd"}>">\r\n          <h3 style="margin:0;"><a href="<{$sub.link}>"><{$sub.titulo}></a></h3>\r\n          <em><{$sub.teaser}></em>\r\n        </div>\r\n      <{/foreach}>\r\n    </div>\r\n  <{/if}>  \r\n</div>';
-		$db->queryF(" INSERT INTO " . $db->prefix("tplsource") . " VALUES (" . $new_tplfile_id . ", '" . $new_tpl_source . "');");
-		$db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0);");
-		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, " . $new_block_id . ", 1, 'block_read');");
-		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 2, " . $new_block_id . ", 1, 'block_read');");
-		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
-		return true;
-	}
-    function check_block3()
-    {
-		$db = $GLOBALS['xoopsDB'];
-		if (getDbValue($db, 'newblocks', 'bid', ' show_func="b_content_menu_show"') != 0) {
-			return true;
-		}
-            }
-
- 	function apply_block3() {
-		$db = $GLOBALS['xoopsDB'];
-		$db->queryF(" INSERT INTO " . $db->prefix("newblocks") . " VALUES ('', 1, 0, 'content_weight|ASC|1|#F2E2A0', 'Content Menu', 'Content Menu', '', 1, 0, 0, 'S', 'H', 1, 'system', 'content_blocks.php', 'b_content_menu_show', 'b_content_menu_edit', 'system_block_contentmenu.html', 0, " . time() . ")");
-		$new_block_id = $db->getInsertId();
-		$db->queryF(" UPDATE " . $db->prefix("newblocks") . " SET func_num = " . $new_block_id . " WHERE bid=" . $new_block_id);
-		$db->queryF(" INSERT INTO " . $db->prefix("tplfile") . " VALUES ('', " . $new_block_id . ", 'system', 'default', 'system_block_contentmenu.html', 'Menu of content pages and categories', " . time() . ", " . time() . ", 'block');");
-		$new_tplfile_id = $db->getInsertId();
-		$new_tpl_source = '<script src="<{$xoops_url}>/modules/system/admin/content/menu.js" type="text/javascript"></script>\r\n<link rel="stylesheet" type="text/css" media="all" title="Style sheet" href="<{$xoops_url}>/modules/system/admin/content/menu.css" />\r\n<div id="mainmenu">\r\n  <ul id="primary-nav">\r\n    <{foreach from=$block.menu key=key item=menu}> \r\n      <li<{if $block.showsubs && $menu.hassubs}> class="menuparent"<{/if}>>\r\n        <a class="menuMain" href="<{$xoops_url}>/content.php?page=<{$menu.menu}>"><{$menu.title}></a>\r\n        <{if $block.showsubs && $menu.hassubs}><{includeq file="db:blocks/system_block_contentmenu_structure.html" menus=$menu.subs}><{/if}> \r\n      </li> \r\n    <{/foreach}>\r\n  </ul>\r\n</div>';
-		$db->queryF(" INSERT INTO " . $db->prefix("tplsource") . " VALUES (" . $new_tplfile_id . ", '" . $new_tpl_source . "');");
-		$db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0);");
-		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, " . $new_block_id . ", 1, 'block_read');");
-		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 2, " . $new_block_id . ", 1, 'block_read');");
-		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
-		return true;
-	}
-    function check_block4()
-    {
-		$db = $GLOBALS['xoopsDB'];
-		if (getDbValue($db, 'newblocks', 'bid', ' show_func="b_content_relmenu_show"') != 0) {
-			return true;
-		}
-            }
-
- 	function apply_block4() {
-		$db = $GLOBALS['xoopsDB'];
-		$db->queryF(" INSERT INTO " . $db->prefix("newblocks") . " VALUES ('', 1, 0, 'content_weight|ASC|1', 'Related Content', 'Related Content', '', 1, 0, 0, 'S', 'H', 1, 'system', 'content_blocks.php', 'b_content_relmenu_show', 'b_content_relmenu_edit', 'system_block_contentmenu.html', 0, " . time() . ")");
-		$new_block_id = $db->getInsertId();
-		$db->queryF(" UPDATE " . $db->prefix("newblocks") . " SET func_num = " . $new_block_id . " WHERE bid=" . $new_block_id);
-		$db->queryF(" INSERT INTO " . $db->prefix("tplfile") . " VALUES ('', " . $new_block_id . ", 'system', 'default', 'system_block_contentmenu.html', 'Menu of content pages and categories', " . time() . ", " . time() . ", 'block');");
-		$new_tplfile_id = $db->getInsertId();
-		$new_tpl_source = '<script src="<{$xoops_url}>/modules/system/admin/content/menu.js" type="text/javascript"></script>\r\n<link rel="stylesheet" type="text/css" media="all" title="Style sheet" href="<{$xoops_url}>/modules/system/admin/content/menu.css" />\r\n<div id="mainmenu">\r\n  <ul id="primary-nav">\r\n    <{foreach from=$block.menu key=key item=menu}> \r\n      <li<{if $block.showsubs && $menu.hassubs}> class="menuparent"<{/if}>>\r\n        <a class="menuMain" href="<{$xoops_url}>/content.php?page=<{$menu.menu}>"><{$menu.title}></a>\r\n        <{if $block.showsubs && $menu.hassubs}><{includeq file="db:blocks/system_block_contentmenu_structure.html" menus=$menu.subs}><{/if}> \r\n      </li> \r\n    <{/foreach}>\r\n  </ul>\r\n</div>';
-		$db->queryF(" INSERT INTO " . $db->prefix("tplsource") . " VALUES (" . $new_tplfile_id . ", '" . $new_tpl_source . "');");
-		$db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0);");
-		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, " . $new_block_id . ", 1, 'block_read');");
-		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 2, " . $new_block_id . ", 1, 'block_read');");
-		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
-		return ($this->cleaning_write_folders());
-	}
      function check_customblocks()
      {
 		$table = new IcmsDatabasetable('modules');
@@ -360,7 +267,7 @@ class upgrade_impcms06 {
             }
         }
 
-			$sql = "ALTER TABLE " . $GLOBALS['xoopsDB']->prefix('users') . " MODIFY pass VARCHAR(255)";
+			$sql = "ALTER TABLE " . $GLOBALS['xoopsDB']->prefix('users') . " MODIFY pass VARCHAR(255) NOT NULL";
 			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
 				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
 				return false;
@@ -402,7 +309,7 @@ class upgrade_impcms06 {
 				return false;
 			}
 
-			$sql = "ALTER TABLE `" . $GLOBALS['xoopsDB']->prefix('users') . "` ADD enc_type tinyint(2) NOT NULL default '0'";
+			$sql = "ALTER TABLE `" . $GLOBALS['xoopsDB']->prefix('users') . "` ADD enc_type tinyint(2) unsigned NOT NULL default '1'";
 			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
 				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
 				return false;

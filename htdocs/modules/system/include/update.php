@@ -287,8 +287,9 @@ function xoops_module_update_system(&$module) {
 
    		$table = new IcmsDatabasetable('modules');
 	    if ($table->fieldExists('dbversion')) {
-       $icmsDatabaseUpdater->runQuery("ALTER TABLE `" .$table->name()."` MODIFY dbversion INT(11) unsigned NOT NULL DEFAULT 1",'','');
+       $icmsDatabaseUpdater->runQuery("ALTER TABLE `" .$table->name()."` MODIFY dbversion INT(11) unsigned NOT NULL DEFAULT 1",'Successfully modified field dbversion in table modules','');
  	    }
+      $icmsDatabaseUpdater->runQuery("ALTER TABLE `" .$table->name()."` MODIFY version smallint(5) unsigned NOT NULL default '102'",'Successfully modified field version in table modules','');
 		unset($table);
 	}
 
@@ -296,9 +297,11 @@ function xoops_module_update_system(&$module) {
 
   if($dbVersion < $newDbVersion) {
     	echo "Database migrate to version " . $newDbVersion . "<br />";
-   		$table = new IcmsDatabasetable('users');
-      $icmsDatabaseUpdater->runQuery("ALTER TABLE `" .$table->name()."` DROP INDEX unamepass, ADD INDEX unamepass (uname (10), pass (10))",'','');      
-		unset($table);
+     $table = new IcmsDatabasetable('users');
+      $icmsDatabaseUpdater->runQuery("ALTER TABLE `" .$table->name()."` DROP INDEX unamepass, ADD INDEX unamepass (uname (10), pass (10))",'Successfully altered the index unamepass on table users','');      
+      $icmsDatabaseUpdater->runQuery("ALTER TABLE `" .$table->name()."` MODIFY enc_type tinyint(2) unsigned NOT NULL default 1",'Successfully altered field enc_type in table users','');
+      $icmsDatabaseUpdater->runQuery("ALTER TABLE `" .$table->name()."` MODIFY pass_expired tinyint(1) unsigned NOT NULL default 0",'Successfully altered field pass_expired in table users','');
+	unset($table);
 	}
 
     $newDbVersion = 10;
@@ -338,12 +341,16 @@ function xoops_module_update_system(&$module) {
 		$db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0, 0);");
 		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
         }
-		//$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, 16, 1, 'system_admin');");
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, 16, 1, 'system_admin');");
 		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, 17, 1, 'system_admin');");
 		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, 18, 1, 'system_admin');");
 		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, 19, 1, 'system_admin');");
 		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, 20, 1, 'system_admin');");
-  }
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, 1, 1, 'content_admin');");
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, 2, 1, 'group_manager');");
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, 3, 1, 'group_manager');");
+
+        }
   
 	echo "</code>";
 
