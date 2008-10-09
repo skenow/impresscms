@@ -7,7 +7,7 @@
  * @package		upgrader
  * @since		1.1
  * @author	   Sina Asghari <pesian_stranger@users.sourceforge.net>
- * @version		$Id: setting_trust_path.php 1747 2008-04-20 19:42:15Z pesian_stranger $
+ * @version		$Id: setting_trust_path.php 5547 2008-10-09 19:42:15Z pesian_stranger $
  */
 
 if ( !defined( 'XOOPS_ROOT_PATH' ) ) {
@@ -41,17 +41,18 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' && @$_POST['task'] == 'trust_path' ) {
     	$error = ERR_NO_TRUST_PATH;
 	} elseif ( $vars['TRUST_PATH'] == XOOPS_ROOT_PATH ) {
     	$error = ERR_INVALID_TRUST_PATH;
-	}/* elseif ( !is_dir( $vars['TRUST_PATH'] ) ) {
+	} elseif ( !is_dir( $vars['TRUST_PATH'] ) ) {
     	$error = ERR_WRONG_TRUST_PATH;
-	}*/
+	}
 	if ( $error ) {
-		echo $error;
+		echo '<div class="x2-note error">' . $error . "</div>\n";
     	return false;
-	} else {
-	return $vars;
+	} elseif ( substr( $vars, -1 ) == '/' OR substr( $vars, -1 ) == '\'' ) {
+					return str_replace( "//", "/", str_replace( "\\", "/", substr( $vars, 0, -1 ) ) );
+	}else{
+					return str_replace( "//", "/", str_replace( "\\", "/", $vars ) );
 	}
 }
-
 if ( !isset( $vars['TRUST_PATH'] ) ) {
     $vars['TRUST_PATH'] = '';
 }
