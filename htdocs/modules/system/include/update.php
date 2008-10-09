@@ -299,7 +299,6 @@ function xoops_module_update_system(&$module) {
     	echo "Database migrate to version " . $newDbVersion . "<br />";
      $table = new IcmsDatabasetable('users');
       $icmsDatabaseUpdater->runQuery("ALTER TABLE `" .$table->name()."` DROP INDEX unamepass, ADD INDEX unamepass (uname (10), pass (10))",'Successfully altered the index unamepass on table users','');      
-      $icmsDatabaseUpdater->runQuery("ALTER TABLE `" .$table->name()."` MODIFY enc_type tinyint(2) unsigned NOT NULL default 1",'Successfully altered field enc_type in table users','');
       $icmsDatabaseUpdater->runQuery("ALTER TABLE `" .$table->name()."` MODIFY pass_expired tinyint(1) unsigned NOT NULL default 0",'Successfully altered field pass_expired in table users','');
 	unset($table);
 	}
