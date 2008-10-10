@@ -25,6 +25,8 @@ ImpressCMS ChangeLog
 * Issue with upgrader, blocks got twice inserted. (stranger)
 * Issue with upgrader, blocks permissions were not inserted. (skenow/stranger)
 * Issue with upgrader, system sub-module permissions were not inserted. (stranger)
+* Issue with theme_rtl. (stranger)
+* Issue with <{if $xoops_contents}>. (stranger)
 
 ===2008-09-21 : 1.1 RC 2===
 
