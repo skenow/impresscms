@@ -2,11 +2,13 @@ ImpressCMS ChangeLog
 
 == Impresscms 1.1==
 
-===2008-10-5 : 1.1 RC 3===
+===2008-10-12 : 1.1 RC 3===
 
 '''Added'''
 * Converter of 2.2.X to icms 1.0 then 1.1 (stranger/phppp)
 * Converter of 2.3.X to icms 1.0 then 1.1 (stranger)
+* TRUST_PATH to upgarder. (stranger)
+* a checker to see if TRUST_PATH exists in adminmenu, if it doesn't it will prompt admins from accessing admin menu. (stranger)
 
 '''Improved'''
 * Updated system to version 1.10. (stranger)
