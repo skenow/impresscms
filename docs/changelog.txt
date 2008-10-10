@@ -13,6 +13,7 @@ ImpressCMS ChangeLog
 '''Improved'''
 * Updated system to version 1.10. (stranger)
 * Function icms_cleaning_write_folders. (stranger)
+* renamed preload to peloads. (stranger)
 
 '''Fixed'''
 * Issues with google analytic textform in admin menu. (stranger)
@@ -27,6 +28,7 @@ ImpressCMS ChangeLog
 * Issue with upgrader, system sub-module permissions were not inserted. (stranger)
 * Issue with theme_rtl. (stranger)
 * Issue with <{if $xoops_contents}>. (stranger)
+* Issue with preload of xoopscube modules. (stranger)
 
 ===2008-09-21 : 1.1 RC 2===
 
