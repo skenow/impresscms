@@ -96,7 +96,7 @@ class xos_opal_Theme {
 	* Canvas-level template to use
 	* @var string
 	*/
-	var $canvasTemplate = 'theme.html';
+	var $canvasTemplate = 'theme_rtl.html';
 	/**
 	* Content-level template to use
 	* @var string
