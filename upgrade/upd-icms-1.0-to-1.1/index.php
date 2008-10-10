@@ -17,7 +17,7 @@ class upgrade_impcms06 {
 	var $usedFiles = array ();
     var $tasks = array(
     'table1', 'table2', 'table3', 'table4', 'conf',  
-    'customblocks', 'dbversion', 'trust_path', 'db', 'salt'
+    'customblocks', 'dbversion', 'db', 'salt', 'trust_path'
     );
 	var $updater;
 	
@@ -391,7 +391,8 @@ class upgrade_impcms06 {
     {
         $lines = file( XOOPS_ROOT_PATH . '/mainfile.php' );
         foreach ( $lines as $line ) {
-            if( preg_match( "/(define\(\s*)([\"'])(XOOPS_TRUST_PATH)\\2,\s*([\"'])([^\"']*?)\\4\s*\);/", $line ) ) {
+		$trustcheck = defined("XOOPS_TRUST_PATH") && XOOPS_TRUST_PATH != '';
+            if( preg_match( "/(define\(\s*)([\"'])(XOOPS_TRUST_PATH)\\2,\s*([\"'])([^\"']*?)\\4\s*\);/", $line ) && $trustcheck ) {
                 return true;
             }
         }
