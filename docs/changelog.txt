@@ -9,6 +9,7 @@ ImpressCMS ChangeLog
 * Converter of 2.3.X to icms 1.0 then 1.1 (stranger)
 * TRUST_PATH to upgarder. (stranger)
 * a checker to see if TRUST_PATH exists in adminmenu, if it doesn't it will prompt admins from accessing admin menu. (stranger)
+* a checker to see if email address already exists in adminmenu. (stranger)
 
 '''Improved'''
 * Updated system to version 1.10. (stranger)
