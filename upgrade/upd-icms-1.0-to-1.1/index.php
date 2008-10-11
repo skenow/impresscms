@@ -196,7 +196,7 @@ class upgrade_impcms06 {
 		if (getDbValue($db,'configcategory','confcat_id',' confcat_name="_MD_AM_PERSON"') != 0){return true;}
 		$db->queryF(" INSERT INTO " . $db->prefix("configcategory") . " (confcat_id,confcat_name) VALUES ('10','_MD_AM_PERSON')");
     
-    $db->queryF("UPDATE ". $db->prefix('config') . "SET conf_formtype = 'textsarea' WHERE conf_name IN ('meta_keywords', 'meta_description')" );
+    $db->queryF("UPDATE ". $db->prefix('config') . " SET conf_formtype = 'textsarea' WHERE conf_name IN ('meta_keywords', 'meta_description')" );
       
         $passwordmeter_installed = false;
         $sql = "SELECT COUNT(*) FROM `" . $GLOBALS['xoopsDB']->prefix('config') . "` WHERE `conf_name` = 'pass_level'";
@@ -404,7 +404,7 @@ class upgrade_impcms06 {
         return $this->update_configs('trust_path');
     }
 		function check_db()
-    {
+    { return false;
         $lines = file( XOOPS_ROOT_PATH . '/mainfile.php' );
         foreach ( $lines as $line ) {
             if( preg_match( "/(define\(\s*)([\"'])(XOOPS_DB_CHARSET)\\2,\s*([\"'])([^\"']*?)\\4\s*\);/", $line ) ) {
@@ -484,10 +484,11 @@ class upgrade_impcms06 {
     		foreach ( (array) $tables as $table ) {
     			// Analyze tables for string types columns and generate his binary and string correctness sql sentences.
     			$resource = $GLOBALS["xoopsDB"]->queryF("DESCRIBE $table");
+    			$col_query = array();
     			while ( $result = $GLOBALS["xoopsDB"]->fetchArray($resource) ) {
     				if ( preg_match('/(char)|(text)|(enum)|(set)/', $result['Type']) ) {
     					// String Type SQL Sentence.
-    					$string_querys[] = "ALTER TABLE `$table` MODIFY `" . $result['Field'] . '` ' . $result['Type'] . " CHARACTER SET $charset COLLATE $collation " . ( ( (!empty($result['Default'])) || ($result['Default'] === '0') || ($result['Default'] === 0) || ($result['Default'] ==='') ) ? "DEFAULT '". $result['Default'] ."' " : '' ) . ( 'YES' == $result['Null'] ? '' : 'NOT ' ) . 'NULL';
+    					$col_query[] .= ' MODIFY `' . $result['Field'] . '` ' . $result['Type'] . " CHARACTER SET $charset COLLATE $collation " . ( ( (!empty($result['Default'])) || ($result['Default'] === '0') || ($result['Default'] === 0) || ($result['Default'] ==='') ) ? "DEFAULT '". $result['Default'] ."' " : '' ) . ( 'YES' == $result['Null'] ? '' : 'NOT ' ) . 'NULL';
     
     					/* This has been removed because of conversion problems encountered with data in other languages
                          // Binary String Type SQL Sentence.
@@ -500,6 +501,7 @@ class upgrade_impcms06 {
     					}*/
     				}
     			}
+    			$string_querys[] = "ALTER TABLE `$table`" . implode(',', $col_query);
     
     			// Analyze table indexs for any FULLTEXT-Type of index in the table.
     			$fulltext_indexes = array();

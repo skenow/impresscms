@@ -14,6 +14,7 @@ ImpressCMS ChangeLog
 '''Improved'''
 * Updated system to version 1.10. (stranger)
 * Function icms_cleaning_write_folders. (stranger)
+* Query execution during character set conversion
 
 '''Fixed'''
 * Issues with google analytic textform in admin menu. (stranger)
