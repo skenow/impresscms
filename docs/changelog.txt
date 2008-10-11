@@ -28,6 +28,7 @@ ImpressCMS ChangeLog
 * Issue with upgrader, system sub-module permissions were not inserted. (stranger)
 * Issue with theme_rtl. (stranger)
 * Issue with <{if $xoops_contents}>. (stranger)
+* Removed intermediate conversion of data to binary during db character set conversion, now the data integrity is improved
 
 ===2008-09-21 : 1.1 RC 2===
 

@@ -489,14 +489,15 @@ class upgrade_impcms06 {
     					// String Type SQL Sentence.
     					$string_querys[] = "ALTER TABLE `$table` MODIFY `" . $result['Field'] . '` ' . $result['Type'] . " CHARACTER SET $charset COLLATE $collation " . ( ( (!empty($result['Default'])) || ($result['Default'] === '0') || ($result['Default'] === 0) || ($result['Default'] ==='') ) ? "DEFAULT '". $result['Default'] ."' " : '' ) . ( 'YES' == $result['Null'] ? '' : 'NOT ' ) . 'NULL';
     
-    					// Binary String Type SQL Sentence.
+    					/* This has been removed because of conversion problems encountered with data in other languages
+                         // Binary String Type SQL Sentence.
     					if ( preg_match('/(enum)|(set)/', $result['Type']) ) {
     						$binary_querys[] = "ALTER TABLE `$table` MODIFY `" . $result['Field'] . '` ' . $result['Type'] . ' CHARACTER SET binary ' . ( ( (!empty($result['Default'])) || ($result['Default'] === '0') || ($result['Default'] === 0) ) ? "DEFAULT '". $result['Default'] ."' " : '' ) . ( 'YES' == $result['Null'] ? '' : 'NOT ' ) . 'NULL';
     					} else {
     						$result['Type'] = preg_replace('/char/', 'binary', $result['Type']);
     						$result['Type'] = preg_replace('/text/', 'blob', $result['Type']);
     						$binary_querys[] = "ALTER TABLE `$table` MODIFY `" . $result['Field'] . '` ' . $result['Type'] . ' ' . ( ( (!empty($result['Default'])) || ($result['Default'] === '0') || ($result['Default'] === 0) ) ? "DEFAULT '". $result['Default'] ."' " : '' ) . ( 'YES' == $result['Null'] ? '' : 'NOT ' ) . 'NULL';
-    					}
+    					}*/
     				}
     			}
     
