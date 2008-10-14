@@ -2,7 +2,7 @@ ImpressCMS ChangeLog
 
 == Impresscms 1.1==
 
-===2008-10-12 : 1.1 RC 3===
+===2008-10-17 : 1.1 RC 3===
 
 '''Added'''
 * Converter of 2.2.X to icms 1.0 then 1.1 (stranger/phppp)
