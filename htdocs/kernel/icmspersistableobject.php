@@ -1079,12 +1079,13 @@ class IcmsPersistableObject extends XoopsObject {
 	/**
 	 * Display an automatic SingleView of the object, based on the displayOnSingleView param of each vars
 	 *
+	 * @todo this method will not work until ImpressCMS 1.2 so please don't use it unless your module includes IcmsPersistableSingelView (see imTagging)
 	 * @param bool $fetchOnly if set to TRUE, then the content will be return, if set to FALSE, the content will be outputed
 	 * @param bool $userSide for futur use, to do something different on the user side
 	 * @return content of the template if $fetchOnly or nothing if !$fetchOnly
 	 */
     function displaySingleObject($fetchOnly=false, $userSide=false, $actions=array(), $headerAsRow=true) {
-		include_once SMARTOBJECT_ROOT_PATH."class/smartobjectsingleview.php";
+		include_once ICMS_ROOT_PATH."kernel/icmspersistableobjectsingleview.php";
 		$singleview = new IcmsPersistableObjectSingleView($this, $userSide, $actions, $headerAsRow);
 		// add all fields mark as displayOnSingleView except the keyid
 		foreach($this->vars as $key=>$var) {
