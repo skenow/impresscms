@@ -2,6 +2,13 @@ ImpressCMS ChangeLog
 
 == Impresscms 1.1==
 
+===2008-10-?? : 1.1 Final===
+
+'''Fixed'''
+* Issues with content menu in RTL. (stranger)
+* Issues with registration not completed with passwordmeter. (stranger)
+* Issues with too easy captcha configs. (stranger)
+
 ===2008-10-17 : 1.1 RC 3===
 
 '''Added'''
