@@ -7,7 +7,8 @@ define("THEME_LICENSE",					"See Creative Commons Licence");
 define("THEME_W3C",						"Valid W3C - XHTML 1.01 and CSS 1/2/3");
 
 // userbar.html
-define("THEME_REGISTER",				"User Registration");
+define("THEME_REGISTER",				"Register");
+define("THEME_REGISTERATION",				"User Registration");
 define("THEME_REMEMBER",				" Remember me ?");
 define("THEME_PSEUDO",					" Login");
 define("THEME_DESC_PSEUDO",				" Write your login");
@@ -16,13 +17,15 @@ define("THEME_DESC_PASSWORD",			" Write your password");
 
 define("THEME_WELLCOME",				"Welcome");
 define("THEME_PROFILE",					"Your profile");
-define("THEME_NOTIFICATION",			"View bookmarks");
+define("THEME_NOTIFICATION",			"Bookmarks");
 define("THEME_MESSAGE",					"Show your inbox content");
+define("THEME_INBOX",					"Inbox");
 define("THEME_YOUHAVE",					"You have ");
 define("THEME_NOTREAD",					"unread message(s)");
 define("THEME_MYACCOUNT",				"My profile");
-define("THEME_LOGOUT",				"Click to logout");
-define("THEME_ADMIN",				"Display site administration");
+define("THEME_LOGOUT",				"Logout");
+define("THEME_ADMIN",				"Admin");
+define("THEME_OR",				"or");
 
 // searchbar.html
 define("THEME_SEARCH",					"Search");
@@ -33,7 +36,7 @@ define("THEME_KEYWORDS",				"Put the keywords");
 define("THEME_CONTACT",					"Contact");
 define("THEME_CONTACT_DESC",			"Contact us ?");
 define("THEME_SITEMAP",					"Sitemap");
-define("THEME_RSS",						"RSS Feeds");
+define("THEME_RSS",						"RSS");
 
 define("THEME_NAVTITLE",				"Navigation");
 define("THEME_HOME",					"Home");
@@ -93,4 +96,6 @@ define("THEME_Wiki_DESC","Learn more in the community-driven wiki for ImpressCMS
 define("THEME_Addons_DESC","Download modules, themes and more documentation");
 define("THEME_Community_DESC","Join the ImpressCMS Community");
 define("THEME_ImpressCMS_DESC","Visit the ImpressCMS main site");
+define("THEME_FEEDS",					"Feeds");
+define("THEME_PARTNERS",					"Partners");
 ?>
