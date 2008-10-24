@@ -2,12 +2,13 @@ ImpressCMS ChangeLog
 
 == Impresscms 1.1==
 
-===2008-10-?? : 1.1 Final===
+===2008-10-31 : 1.1 Final===
 
 '''Fixed'''
 * Issues with content menu in RTL. (stranger)
 * Issues with registration not completed with passwordmeter. (stranger)
 * Issues with too easy captcha configs. (stranger)
+* #2190687: When saving a block, if $options was a multi-levels array, StopXSS was failing to save array. StopXSS is now recursive and will all levels of $text parameter if it's an array (malanciault)
 
 ===2008-10-17 : 1.1 RC 3===
 

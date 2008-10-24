@@ -1391,10 +1391,14 @@ function StopXSS($text)
 	{
 		foreach($text as $k=>$t)
 		{
-			$t = preg_replace("/\(\)/si", "", $t);
-			$t = strip_tags($t);
-			$t = str_replace(array("'","\"",">","<","\\"), "", $t);
-			$text[$k] = $t;
+			if (is_array($t)) {
+				StopXSS($t);
+			} else {
+				$t = preg_replace("/\(\)/si", "", $t);
+				$t = strip_tags($t);
+				$t = str_replace(array("'","\"",">","<","\\"), "", $t);
+				$text[$k] = $t;
+			}
 		}
 	}
 	return $text;
