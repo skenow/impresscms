@@ -6,7 +6,7 @@
 * @package		core
 * @since		1.0
 * @author		http://www.impresscms.org The ImpressCMS Project
-* @version		$Id: error.php 429 2008-01-02 22:21:41Z malanciault $
+* @version		$Id: readme.php 429 2008-01-02 22:21:41Z malanciault $
 */
 
 What is this ?
@@ -19,7 +19,7 @@ You should use this script only when your server supports SSL.
 Installation
 ==================================
 
-Place login.php file under your SSL directory.
+Copy the file extra/ssl/login.php un the root of your site.
 
 ==================================
 The ImpressCMS Project
