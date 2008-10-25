@@ -1,7 +1,7 @@
 /**
 * SSL Login
 *
-* @copyright	http://www.impresscms.org/ The XOOPS Project
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
 * @package		core
 * @since		1.0
