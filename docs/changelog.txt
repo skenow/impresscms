@@ -10,6 +10,7 @@ ImpressCMS ChangeLog
 * Issues with too easy captcha configs. (stranger)
 * #2190687: When saving a block, if $options was a multi-levels array, StopXSS was failing to save array. StopXSS is now recursive and will all levels of $text parameter if it's an array (malanciault)
 * #2192679: Leading space in cache/index.html (dave_l)
+* Fixed issues with spambots. (Frederick/stranger)
 
 ===2008-10-17 : 1.1 RC 3===
 

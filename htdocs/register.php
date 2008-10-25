@@ -78,6 +78,26 @@ function userCheck($uname, $email, $pass, $vpass)
 		$restriction = '/[\000-\040]/';
 		break;
 	}
+$base_url = "http://www.stopforumspam.com/";
+$api_url = "api?username=";
+$url = $base_url . $api_url . $uname;
+$file = @fopen($url, "r");
+if (!$file) {
+  echo "<script> alert('" . _US_SERVER_PROBLEM_OCCURRED . "'); window.history.go(-1); </script>\n";
+ }
+while (!feof($file)) {
+  $line = fgets($file, 1024);
+  if (eregi("<appears>(.*)</appears>", $line, $out)) {
+   $spam = $out[1];
+   break;
+  }
+ }
+
+fclose($file);
+
+if ($spam == 'yes') {
+			$stop .= _US_INVALIDNICKNAME."<br />";
+ }
 	if (empty($uname) || preg_match($restriction, $uname)) {
 		$stop .= _US_INVALIDNICKNAME."<br />";
 	}
@@ -111,6 +131,26 @@ function userCheck($uname, $email, $pass, $vpass)
 			$stop .= _US_EMAILTAKEN."<br />";
 		}
 	}
+$base_url = "http://www.stopforumspam.com/";
+$api_url = "api?email=";
+$url = $base_url . $api_url . $email;
+$file = @fopen($url, "r");
+if (!$file) {
+  echo "<script> alert('" . _US_SERVER_PROBLEM_OCCURRED . "'); window.history.go(-1); </script>\n";
+   }
+while (!feof($file)) {
+  $line = fgets($file, 1024);
+  if (eregi("<appears>(.*)</appears>", $line, $out)) {
+   $spam = $out[1];
+   break;
+  }
+ }
+
+fclose($file);
+
+if ($spam == 'yes') {
+			$stop .= _US_INVALIDMAIL."<br />";
+ }
 	if ( !isset($pass) || $pass == '' || !isset($vpass) || $vpass == '' ) {
 		$stop .= _US_ENTERPWD.'<br />';
 	}
