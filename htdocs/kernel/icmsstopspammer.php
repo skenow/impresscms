@@ -7,8 +7,6 @@
 * @copyright	The ImpressCMS Project http://www.impresscms.org/
 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
 * @package		IcmsPersistableObject
-* @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @author		marcan <marcan@impresscms.org>
 * @since		1.2
 * @version		$Id
 */
@@ -32,18 +30,35 @@ class IcmsStopSpammer {
 	 */
 	function checkForField($field, $value) {
 		$spam = false;
-		$file = @fopen($this->api_url . $field . '=' . $value, "r");
-		if (!$file) {
-			echo "<script> alert('" . _US_SERVER_PROBLEM_OCCURRED . "'); window.history.go(-1); </script>\n";
-		}
-		while (!feof($file)) {
-			$line = fgets($file, 1024);
-			if (eregi("<appears>(.*)</appears>", $line, $out)) {
+
+		$url = $this->api_url . $field . '=' . $value;
+		if (!ini_get('allow_url_fopen')) {
+			$output = '';
+			$ch=curl_init();
+			curl_setopt($ch, CURLOPT_URL, "$url");
+			curl_setopt($ch, CURLOPT_HEADER,0);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			$output .=curl_exec($ch);
+			curl_close($ch);
+			if (eregi("<appears>(.*)</appears>", $output, $out)) {
 				$spam = $out[1];
-				break;
 			}
+		} else {
+			$file = fopen($url, "r");
+			if (!$file) {
+			icms_debug(1111);
+			icms_debug($this->api_url . $field . '=' . $value); exit;
+				echo "<script> alert('" . _US_SERVER_PROBLEM_OCCURRED . "'); window.history.go(-1); </script>\n";
+			}
+			while (!feof($file)) {
+				$line = fgets($file, 1024);
+				if (eregi("<appears>(.*)</appears>", $line, $out)) {
+					$spam = $out[1];
+					break;
+				}
+			}
+			fclose($file);
 		}
-		fclose($file);
 		return $spam == 'yes';
 	}
 
