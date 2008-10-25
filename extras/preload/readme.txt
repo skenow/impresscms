@@ -6,7 +6,7 @@
 * @package		core
 * @since		1.0
 * @author		http://www.impresscms.org The ImpressCMS Project
-* @version		$Id: error.php 429 2008-01-02 22:21:41Z malanciault $
+* @version		$Id: readme.txt 429 2008-01-02 22:21:41Z malanciault $
 */
 
 Protetor.php
