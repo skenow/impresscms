@@ -142,7 +142,7 @@ function formatTimestamp($time, $format='l', $timeoffset='')
 	$usertimestamp = xoops_getUserTimestamp($time, $timeoffset);
 	switch(strtolower($format))
 	{
-		case 'ds':
+		case 'daynumber':
 			$datestring = 'd';
 		break;
 		case 'D':
@@ -157,7 +157,7 @@ function formatTimestamp($time, $format='l', $timeoffset='')
 		case 'H':
 			$datestring = 'H';
 		break;
-		case 'gs':
+		case 'gg':
 			$datestring = 'g';
 		break;
 		case 'G':
@@ -175,13 +175,13 @@ function formatTimestamp($time, $format='l', $timeoffset='')
 		case 'm':
 			$datestring = _MEDIUMDATESTRING;
 		break;
-		case 'ms':
+		case 'monthnr':
 			$datestring = 'm';
 		break;
 		case 'mysql':
 			$datestring = 'Y-m-d H:i:s';
 		break;
-		case 'Ml':
+		case 'month':
 			$datestring = 'M';
 		break;
 		case 'n':
@@ -193,10 +193,10 @@ function formatTimestamp($time, $format='l', $timeoffset='')
 		case 's':
 			$datestring = _SHORTDATESTRING;
 		break;
-		case 'ss':
+		case 'seconds':
 			$datestring = 's';
 		break;
-		case 'Sl':
+		case 'suffix':
 			$datestring = 'S';
 		break;
 		case 't':
@@ -205,7 +205,7 @@ function formatTimestamp($time, $format='l', $timeoffset='')
 		case 'w':
 			$datestring = 'w';
 		break;
-		case 'ys':
+		case 'shortyear':
 			$datestring = 'y';
 		break;
 		case 'Y':
