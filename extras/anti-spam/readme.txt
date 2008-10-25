@@ -14,6 +14,10 @@ What is this ?
 
 register.php is a replacement for the shipped register.php which improves the registration process to get rid of robots registering on your site. It is still experimental, hence why it is not yet included in the core.
 
+Requirements
+
+allow_url_fopen needs to be set to TRUE in your php.ini file. We are working to improve that...
+
 Installation
 ==================================
 
