@@ -40,6 +40,7 @@ class IcmsStopSpammer {
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			$output .=curl_exec($ch);
 			curl_close($ch);
+
 			if (eregi("<appears>(.*)</appears>", $output, $out)) {
 				$spam = $out[1];
 			}
@@ -69,7 +70,7 @@ class IcmsStopSpammer {
 	 * @return true if spammer was found with this username
 	 */
 	function badUsername($username) {
-		$ret = $this->checkForField('username', $username);
+		return $this->checkForField('username', $username);
 	}
 
 	/**
@@ -79,7 +80,7 @@ class IcmsStopSpammer {
 	 * @return true if spammer was found with this email
 	 */
 	function badEmail($email) {
-		$ret = $this->checkForField('email', $email);
+		return $this->checkForField('email', $email);
 	}
 
 	/**
@@ -89,7 +90,7 @@ class IcmsStopSpammer {
 	 * @return true if spammer was found with this IP
 	 */
 	function badIP($ip) {
-		$ret = $this->checkForField('ip', $ip);
+		return $this->checkForField('ip', $ip);
 	}
 }
 
