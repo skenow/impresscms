@@ -67,7 +67,12 @@ $com_pid = $com_id;
 $com_text = '';
 $com_id = 0;
 $dosmiley = 1;
-$dohtml = 0;
+$groups   = (is_object($xoopsUser)) ? $xoopsUser->getGroups() : ICMS_GROUP_ANONYMOUS;
+if ($xoopsConfig ['editor_default'] != 'dhtmltextarea' && $gperm_handler->checkRight('use_wysiwygeditor', 1, $groups, 1, false)) {
+    $dohtml = 1;
+}else{
+    $dohtml = 0;
+}
 $doxcode = 1;
 $dobr = 1;
 $doimage = 1;
