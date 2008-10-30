@@ -79,10 +79,11 @@ if ($com_itemid > 0) {
 	$gperm_handler =& xoops_gethandler('groupperm');
 	if ($xoopsConfig ['editor_default'] != 'dhtmltextarea' && $gperm_handler->checkRight('use_wysiwygeditor', 1, $groups, 1, false)) {
 		$dohtml = 1;
+		$dobr = 0;
 	} else {
 		$dohtml = 0;
+		$dobr = 1;
 	}
-	$dobr = 1;
 	$doxcode = 1;
 	$com_icon = '';
 	$com_pid = 0;
