@@ -84,7 +84,7 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 		global $xoopsConfig, $xoopsUser,$xoopsModule;
 
 		$groups   = (is_object($xoopsUser)) ? $xoopsUser->getGroups() : ICMS_GROUP_ANONYMOUS;
-		$moduleid = (is_object($xoopsModule)) ? $xoopsModule->mid() : 1;
+ 		$moduleid = (is_object($xoopsModule) && $name != 'com_text') ? $xoopsModule->mid() : 1;
 
 		if (isset($options['editor']) && $options['editor'] != '' && $options['editor'] != $xoopsConfig['editor_default']){
 			$editor_default = $options['editor'];

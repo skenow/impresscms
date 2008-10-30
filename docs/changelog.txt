@@ -14,6 +14,7 @@ ImpressCMS ChangeLog
 * Fixed issues multiple time stamps. (Frederick/stranger)
 * Fixed security issue in snoopy.php: http://secunia.com/Advisories/32361/ (thanks to Gijoe)
 * Fixed issue on the pagination links of the image manager tinyMCE plugin.
+* The WYSIWYG group permission per module was confused when trying to know if a user should have permission to use WYSIWYG when posting a comment in a module that had such permission (malanciault/real_therplima)
 
 '''Added'''
 * Stop Spam Registration class and its experimental use in extra/anti-spam/register.php (stranger/malanciault)
