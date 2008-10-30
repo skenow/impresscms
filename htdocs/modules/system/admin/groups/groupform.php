@@ -117,9 +117,9 @@ if (!isset($g_id) || ($g_id != 1 && $g_id != 3)){
 }
 $form->addElement($a_mod_checkbox);
 $form->addElement($r_mod_checkbox);
-//if (!isset($g_id) || ($g_id != 1 && $g_id != 3)){
+if (!isset($g_id) || $g_id != 3){
     $form->addElement($ed_mod_checkbox);
-//}
+}
 if( !isset($g_id) || $g_id != 1 ){
 	$form->addElement($debug_mod_checkbox);
 }
