@@ -48,13 +48,13 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 	* Extended HTML editor definition
 	*
 	* Set this property value if you want the editor to delegate rendering to an external class.
-	* 
+	*
 	* Note: this functionality is experimental, but feedback is welcome.
 	* Note: the PM window doesn't use XoopsFormDhtmlTextArea, so no need to report it doesn't work here
-	* 
+	*
 	* array( 'bundleId' ): For XOS components (2.3+)
 	* array( 'className', 'classPath' ):  To create an instance of "className", declared in the file ICMS_ROOT_PATH . $classPath
-	* 
+	*
 	* Example:
 	* $htmlEditor = array( 'XoopsFormTinyeditorTextArea', '/class/xoopseditor/tinyeditor/formtinyeditortextarea.php' );
 	*/
@@ -85,23 +85,23 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 
 		$groups   = (is_object($xoopsUser)) ? $xoopsUser->getGroups() : ICMS_GROUP_ANONYMOUS;
 		$moduleid = (is_object($xoopsModule)) ? $xoopsModule->mid() : 1;
-		
+
 		if (isset($options['editor']) && $options['editor'] != '' && $options['editor'] != $xoopsConfig['editor_default']){
 			$editor_default = $options['editor'];
 		}else{
 			$editor_default = $xoopsConfig['editor_default'];
 		}
-		
+
 		$gperm_handler =& xoops_gethandler('groupperm');
-		if( file_exists( ICMS_EDITOR_PATH."/".$editor_default."/xoops_version.php" ) && $gperm_handler->checkRight('use_wysiwygeditor', $moduleid, $groups)){
+		if( file_exists( ICMS_EDITOR_PATH."/".$editor_default."/xoops_version.php" ) && $gperm_handler->checkRight('use_wysiwygeditor', $moduleid, $groups, 1, false)){
 			include(ICMS_EDITOR_PATH."/".$editor_default."/xoops_version.php");
 			$this->htmlEditor = array( $editorversion['class'], ICMS_EDITOR_PATH."/".$editorversion['dirname']."/".$editorversion['file'] );
 		}
-		
+
 		if ( !empty( $this->htmlEditor ) ) {
 			$options['name'] = $this->_name;
 			$options['value'] = $this->_value;
-			
+
 			if ( count( $this->htmlEditor ) == 1 ) {
 				$this->htmlEditor = XOS::create( $this->htmlEditor[0] );
 			} else {
@@ -189,7 +189,7 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 				return $this->htmlEditor->renderValidationJS();
 			}
 		}
-		return '';		
+		return '';
 	}
 
 

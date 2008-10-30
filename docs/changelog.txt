@@ -17,6 +17,9 @@ ImpressCMS ChangeLog
 '''Added'''
 * Stop Spam Registration class and its experimental use in extra/anti-spam/register.php (stranger/malanciault)
 
+''Improved'''
+* It is now possible to specify in which modules Webmasters can use WYSIWYG editor (malanciault)
+
 ===2008-10-17 : 1.1 RC 3===
 
 '''Added'''
