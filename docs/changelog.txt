@@ -21,6 +21,7 @@ ImpressCMS ChangeLog
 
 ''Improved'''
 * It is now possible to specify in which modules Webmasters can use WYSIWYG editor (malanciault)
+* Automatically check the Enable HTML check box when using TinyMCE in a comment post form (real_therplima)
 
 ===2008-10-17 : 1.1 RC 3===
 
