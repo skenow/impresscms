@@ -12,6 +12,7 @@ ImpressCMS ChangeLog
 * #2192679: Leading space in cache/index.html (dave_l)
 * Fixed issues with spambots. (Frederick/stranger)
 * Fixed issues multiple time stamps. (Frederick/stranger)
+* Fixed security issue in snoopy.php: http://secunia.com/Advisories/32361/ (thanks to Gijoe)
 
 '''Added'''
 * Stop Spam Registration class and its experimental use in extra/anti-spam/register.php (stranger/malanciault)
