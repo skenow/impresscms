@@ -1,7 +1,9 @@
-ImpressCMS 1.1 RC 3 release notes
+ImpressCMS 1.1 Final release notes
 ==================================
 
-The ImpressCMS Project is very proud to announce the RC 3 release of its highly expected 1.1 version Community Management System! This is not yet ready for production sites but should be the last release before hitting 1.1 Final !
+The ImpressCMS Project is very proud to announce the stable version of its highly expected 1.1 version Community Management System!
+
+As a "Final" version, this package is ready for production sites!
 
 Please see the full changelog for details in docs/changelog.txt.
 
@@ -28,7 +30,7 @@ Using wget command to download the .tar.gz full package
 
 This release can be downloaded directly on your server using the WGET command (providing you have SSH access to your server). To download it, simply use this code:
 
-wget http://www.impresscms.org/download/1.1-rc3/
+wget http://www.impresscms.org/download/
 
 
 Checking out ImpressCMS from the SVN
@@ -38,7 +40,7 @@ You can easily get ImpressCMS using SVN. Instructions about this can be found he
 http://wiki.impresscms.org/index.php?title=Install_and_update_using_SVN
 
 The path for this release is the following:
-https://impresscms.svn.sourceforge.net/svnroot/impresscms/core/tags/impresscms_1.1_rc3/
+https://impresscms.svn.sourceforge.net/svnroot/impresscms/core/tags/impresscms_1.1_final/
 
 If you feel like getting the latest "edge" version, you can checkout the core trunk at :
 
@@ -96,7 +98,7 @@ Home of ImpressCMS: http://www.impresscms.org
 Community support: http://community.impresscms.org
 Addons, modules, themes and languages: http://addons.impresscms.org
 Community driven documentation: http://wiki.impresscms.org
-ImpressCMS Blogs: http://blog.impresscms.org
+ImpressCMS Blogs: http://community.impresscms.org/modules/imblogging/
 ImpressCMS Core development updates on Twitter: http://twitter.com/impresscms_svn
 ImpressCMS IRC Channel: #impresscms on freenode.net or simply : http://community.impresscms.org/chat/
 
