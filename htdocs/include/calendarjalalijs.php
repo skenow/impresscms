@@ -82,32 +82,32 @@ Calendar._SMN = new Array
 
  // full month names
 Calendar._JMN = new Array
-("<?php echo _CAL_Far;?>",
- "<?php echo _CAL_Ord;?>",
- "<?php echo _CAL_Kho;?>",
- "<?php echo _CAL_Tir;?>",
- "<?php echo _CAL_Mor;?>",
- "<?php echo _CAL_Sha;?>",
- "<?php echo _CAL_Meh;?>",
- "<?php echo _CAL_Aba;?>",
- "<?php echo _CAL_Aza;?>",
- "<?php echo _CAL_Dey;?>",
- "<?php echo _CAL_Bah;?>",
- "<?php echo _CAL_Esf;?>");
+("<?php echo _CAL_FARVARDIN;?>",
+ "<?php echo _CAL_ORDIBEHEST;?>",
+ "<?php echo _CAL_KHORDAD;?>",
+ "<?php echo _CAL_TIR;?>",
+ "<?php echo _CAL_MORDAD;?>",
+ "<?php echo _CAL_SHAHRIVAR;?>",
+ "<?php echo _CAL_MEHR;?>",
+ "<?php echo _CAL_ABAN;?>",
+ "<?php echo _CAL_AZAR;?>",
+ "<?php echo _CAL_DEY;?>",
+ "<?php echo _CAL_BAHMAN;?>",
+ "<?php echo _CAL_ESFAND;?>");
 // short month names
 Calendar._JSMN = new Array
-("<?php echo _CAL_Far;?>",
- "<?php echo _CAL_Ord;?>",
- "<?php echo _CAL_Kho;?>",
- "<?php echo _CAL_Tir;?>",
- "<?php echo _CAL_Mor;?>",
- "<?php echo _CAL_Sha;?>",
- "<?php echo _CAL_Meh;?>",
- "<?php echo _CAL_Aba;?>",
- "<?php echo _CAL_Aza;?>",
- "<?php echo _CAL_Dey;?>",
- "<?php echo _CAL_Bah;?>",
- "<?php echo _CAL_Esf;?>");
+("<?php echo _CAL_FARVARDIN;?>",
+ "<?php echo _CAL_ORDIBEHEST;?>",
+ "<?php echo _CAL_KHORDAD;?>",
+ "<?php echo _CAL_TIR;?>",
+ "<?php echo _CAL_MORDAD;?>",
+ "<?php echo _CAL_SHAHRIVAR;?>",
+ "<?php echo _CAL_MEHR;?>",
+ "<?php echo _CAL_ABAN;?>",
+ "<?php echo _CAL_AZAR;?>",
+ "<?php echo _CAL_DEY;?>",
+ "<?php echo _CAL_BAHMAN;?>",
+ "<?php echo _CAL_ESFAND;?>");
 
 
  

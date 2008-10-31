@@ -252,7 +252,7 @@ if ($op == 'listimg') {
 	if ($imgcount > 0) {
 		if ($imgcount > 20) {
 			include_once XOOPS_ROOT_PATH.'/class/pagenav.php';
-			$nav = new XoopsPageNav($imgcount, 20, $start, 'start', 'op=listimg&amp;imgcat_id='.$imgcat_id);
+			$nav = new XoopsPageNav($imgcount, 20, $start, 'start', 'op=listimg&amp;imgcat_id='.$imgcat_id.'&amp;target='.$target);
 			echo '<div text-align="right">'.$nav->renderNav().'</div>';
 			}
 		//echo '<div style="text-align:center;"><input type="hidden" name="op" value="save" />'.$GLOBALS['xoopsSecurity']->getTokenHTML().'<input type="submit" name="submit" value="'._SUBMIT.'" /></div>';

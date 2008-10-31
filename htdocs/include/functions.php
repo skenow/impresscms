@@ -142,7 +142,7 @@ function formatTimestamp($time, $format='l', $timeoffset='')
 	$usertimestamp = xoops_getUserTimestamp($time, $timeoffset);
 	switch(strtolower($format))
 	{
-		case 'ds':
+		case 'daynumber':
 			$datestring = 'd';
 		break;
 		case 'D':
@@ -157,7 +157,7 @@ function formatTimestamp($time, $format='l', $timeoffset='')
 		case 'H':
 			$datestring = 'H';
 		break;
-		case 'gs':
+		case 'gg':
 			$datestring = 'g';
 		break;
 		case 'G':
@@ -175,13 +175,13 @@ function formatTimestamp($time, $format='l', $timeoffset='')
 		case 'm':
 			$datestring = _MEDIUMDATESTRING;
 		break;
-		case 'ms':
+		case 'monthnr':
 			$datestring = 'm';
 		break;
 		case 'mysql':
 			$datestring = 'Y-m-d H:i:s';
 		break;
-		case 'Ml':
+		case 'month':
 			$datestring = 'M';
 		break;
 		case 'n':
@@ -193,10 +193,10 @@ function formatTimestamp($time, $format='l', $timeoffset='')
 		case 's':
 			$datestring = _SHORTDATESTRING;
 		break;
-		case 'ss':
+		case 'seconds':
 			$datestring = 's';
 		break;
-		case 'Sl':
+		case 'suffix':
 			$datestring = 'S';
 		break;
 		case 't':
@@ -205,7 +205,7 @@ function formatTimestamp($time, $format='l', $timeoffset='')
 		case 'w':
 			$datestring = 'w';
 		break;
-		case 'ys':
+		case 'shortyear':
 			$datestring = 'y';
 		break;
 		case 'Y':
@@ -396,7 +396,11 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 	if(isset($_SESSION['xoopsUserTheme']) && in_array($_SESSION['xoopsUserTheme'], $xoopsConfig['theme_set_allowed'])) {$theme = $_SESSION['xoopsUserTheme'];}
 
 	require_once ICMS_ROOT_PATH.'/class/template.php';
-	require_once ICMS_ROOT_PATH.'/class/theme.php';
+	if ( file_exists(XOOPS_THEME_PATH . '/' . $xoopsConfig ['theme_set'] . '/theme_rtl.html') && defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
+    	require_once ICMS_ROOT_PATH.'/class/theme_rtl.php';
+    }else{
+    	require_once ICMS_ROOT_PATH.'/class/theme.php';
+    }
 
 	$xoopsThemeFactory =& new xos_opal_ThemeFactory();
 	$xoopsThemeFactory->allowedThemes = $xoopsConfig['theme_set_allowed'];
@@ -1391,10 +1395,14 @@ function StopXSS($text)
 	{
 		foreach($text as $k=>$t)
 		{
-			$t = preg_replace("/\(\)/si", "", $t);
-			$t = strip_tags($t);
-			$t = str_replace(array("'","\"",">","<","\\"), "", $t);
-			$text[$k] = $t;
+			if (is_array($t)) {
+				StopXSS($t);
+			} else {
+				$t = preg_replace("/\(\)/si", "", $t);
+				$t = strip_tags($t);
+				$t = str_replace(array("'","\"",">","<","\\"), "", $t);
+				$text[$k] = $t;
+			}
 		}
 	}
 	return $text;
@@ -1638,52 +1646,6 @@ function icms_escapeValue($value, $quotes = true)
 	}
 	return $value;
 }
-function Generate_PDF ($content, $doc_title, $doc_keywords){
- /*
-// Module developpers shall include this part of code everytime, it is weird but otherwise if we include these files from here, rtl won`t work.
-require_once ICMS_PDF_LIB_PATH.'/tcpdf.php';
-if(file_exists(ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/pdf.php')) {
-	include_once ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/pdf.php';
-} else {
-	include_once ICMS_ROOT_PATH.'/language/english/pdf.php';
-}
-*/
-$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true);
-// set document information
-$pdf->SetCreator(PDF_CREATOR);
-$pdf->SetAuthor(PDF_AUTHOR);
-$pdf->SetTitle($doc_title);
-$pdf->SetSubject($doc_title);
-$pdf->SetKeywords($doc_keywords);
-$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE, PDF_HEADER_STRING);
-
-//set margins
-$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-//set auto page breaks
-$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
-$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
-$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
-$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO); //set image scale factor
-
-$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
-
-$pdf->setLanguageArray($l); //set language items
-// set font
-if ( defined("_PDF_LOCAL_FONT") && _PDF_LOCAL_FONT && file_exists(ICMS_PDF_LIB_PATH.'/fonts/'._PDF_LOCAL_FONT.'.php')
-) {
-$pdf -> SetFont(_PDF_LOCAL_FONT);
-}else{
-$pdf -> SetFont("dejavusans");
-}
-//initialize document
-$pdf->AliasNbPages();
-$pdf->AddPage();
-$pdf->writeHTML($content, true, 0);
-$Generate = $pdf->Output();
-return $Generate;
-}
-
 	function icms_cleaning_write_folders() {
 	    global $xoopsConfig;
 		$dir = array();

@@ -14,7 +14,7 @@
 */
 
 if (!defined('ICMS_ROOT_PATH')) {
-	die("XOOPS root path not defined");
+	die("ImpressCMS root path not defined");
 }
 
 
@@ -48,13 +48,13 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 	* Extended HTML editor definition
 	*
 	* Set this property value if you want the editor to delegate rendering to an external class.
-	* 
+	*
 	* Note: this functionality is experimental, but feedback is welcome.
 	* Note: the PM window doesn't use XoopsFormDhtmlTextArea, so no need to report it doesn't work here
-	* 
+	*
 	* array( 'bundleId' ): For XOS components (2.3+)
 	* array( 'className', 'classPath' ):  To create an instance of "className", declared in the file ICMS_ROOT_PATH . $classPath
-	* 
+	*
 	* Example:
 	* $htmlEditor = array( 'XoopsFormTinyeditorTextArea', '/class/xoopseditor/tinyeditor/formtinyeditortextarea.php' );
 	*/
@@ -84,24 +84,24 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 		global $xoopsConfig, $xoopsUser,$xoopsModule;
 
 		$groups   = (is_object($xoopsUser)) ? $xoopsUser->getGroups() : ICMS_GROUP_ANONYMOUS;
-		$moduleid = (is_object($xoopsModule)) ? $xoopsModule->mid() : 1;
-		
+ 		$moduleid = (is_object($xoopsModule) && $name != 'com_text') ? $xoopsModule->mid() : 1;
+
 		if (isset($options['editor']) && $options['editor'] != '' && $options['editor'] != $xoopsConfig['editor_default']){
 			$editor_default = $options['editor'];
 		}else{
 			$editor_default = $xoopsConfig['editor_default'];
 		}
-		
+
 		$gperm_handler =& xoops_gethandler('groupperm');
-		if( file_exists( ICMS_EDITOR_PATH."/".$editor_default."/xoops_version.php" ) && $gperm_handler->checkRight('use_wysiwygeditor', $moduleid, $groups)){
+		if( file_exists( ICMS_EDITOR_PATH."/".$editor_default."/xoops_version.php" ) && $gperm_handler->checkRight('use_wysiwygeditor', $moduleid, $groups, 1, false)){
 			include(ICMS_EDITOR_PATH."/".$editor_default."/xoops_version.php");
 			$this->htmlEditor = array( $editorversion['class'], ICMS_EDITOR_PATH."/".$editorversion['dirname']."/".$editorversion['file'] );
 		}
-		
+
 		if ( !empty( $this->htmlEditor ) ) {
 			$options['name'] = $this->_name;
 			$options['value'] = $this->_value;
-			
+
 			if ( count( $this->htmlEditor ) == 1 ) {
 				$this->htmlEditor = XOS::create( $this->htmlEditor[0] );
 			} else {
@@ -134,29 +134,18 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 		if ( $editor ) {
 			return $this->htmlEditor->render();
 		}
-			$config_handler =& xoops_gethandler('config');
-			$xoopsConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
-        if ($xoopsConfigPersona['use_hidden'] == 1) {
 		$ele_name = $this->getName();
 		$ret = "<a name='moresmiley'></a>".
 		        "<img onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/images/url.gif' alt='url' onclick='xoopsCodeUrl(\"".$ele_name."\", \"".htmlspecialchars(_ENTERURL, ENT_QUOTES)."\", \"".htmlspecialchars(_ENTERWEBTITLE, ENT_QUOTES)."\");' />&nbsp;".
 		        "<img onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/images/email.gif' alt='email' onclick='javascript:xoopsCodeEmail(\"".$ele_name."\", \"".htmlspecialchars(_ENTEREMAIL, ENT_QUOTES)."\");' />&nbsp;".
 		        "<img onclick='javascript:xoopsCodeImg(\"".$ele_name."\", \"".htmlspecialchars(_ENTERIMGURL, ENT_QUOTES)."\", \"".htmlspecialchars(_ENTERIMGPOS, ENT_QUOTES)."\", \"".htmlspecialchars(_IMGPOSRORL, ENT_QUOTES)."\", \"".htmlspecialchars(_ERRORIMGPOS, ENT_QUOTES)."\");' onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/images/imgsrc.gif' alt='imgsrc' />&nbsp;".
-		        "<img onmouseover='style.cursor=\"hand\"' onclick='javascript:openWithSelfMain(\"".ICMS_URL."/imagemanager.php?target=".$ele_name."\",\"imgmanager\",400,430);' src='".ICMS_URL."/images/image.gif' alt='image' />&nbsp;".
-		        "<img onclick='javascript:xoopsCodeHidden(\"".$ele_name."\", \"".htmlspecialchars(_ENTERHIDDEN, ENT_QUOTES)."\");' onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/images/hide.gif' alt='hide' />&nbsp;".
-		        "<img src='".ICMS_URL."/images/code.gif' onmouseover='style.cursor=\"hand\"' alt='code' onclick='javascript:xoopsCodeCode(\"".$ele_name."\", \"".htmlspecialchars(_ENTERCODE, ENT_QUOTES)."\");' />&nbsp;".
+		        "<img onmouseover='style.cursor=\"hand\"' onclick='javascript:openWithSelfMain(\"".ICMS_URL."/imagemanager.php?target=".$ele_name."\",\"imgmanager\",400,430);' src='".ICMS_URL."/images/image.gif' alt='image' />&nbsp;";
+				$config_handler =& xoops_gethandler('config');
+				$xoopsConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
+		        if ($xoopsConfigPersona['use_hidden'] == 1) {$ret .= "<img onclick='javascript:xoopsCodeHidden(\"".$ele_name."\", \"".htmlspecialchars(_ENTERHIDDEN, ENT_QUOTES)."\");' onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/images/hide.gif' alt='hide' />&nbsp;";}
+		        $ret .= "<img src='".ICMS_URL."/images/code.gif' onmouseover='style.cursor=\"hand\"' alt='code' onclick='javascript:xoopsCodeCode(\"".$ele_name."\", \"".htmlspecialchars(_ENTERCODE, ENT_QUOTES)."\");' />&nbsp;".
 		        "<img onclick='javascript:xoopsCodeQuote(\"".$ele_name."\", \"".htmlspecialchars(_ENTERQUOTE, ENT_QUOTES)."\");' onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/images/quote.gif' alt='quote' /><br />\n";
-		}else{
-		$ele_name = $this->getName();
-		$ret = "<a name='moresmiley'></a>".
-		        "<img onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/images/url.gif' alt='url' onclick='xoopsCodeUrl(\"".$ele_name."\", \"".htmlspecialchars(_ENTERURL, ENT_QUOTES)."\", \"".htmlspecialchars(_ENTERWEBTITLE, ENT_QUOTES)."\");' />&nbsp;".
-		        "<img onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/images/email.gif' alt='email' onclick='javascript:xoopsCodeEmail(\"".$ele_name."\", \"".htmlspecialchars(_ENTEREMAIL, ENT_QUOTES)."\");' />&nbsp;".
-		        "<img onclick='javascript:xoopsCodeImg(\"".$ele_name."\", \"".htmlspecialchars(_ENTERIMGURL, ENT_QUOTES)."\", \"".htmlspecialchars(_ENTERIMGPOS, ENT_QUOTES)."\", \"".htmlspecialchars(_IMGPOSRORL, ENT_QUOTES)."\", \"".htmlspecialchars(_ERRORIMGPOS, ENT_QUOTES)."\");' onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/images/imgsrc.gif' alt='imgsrc' />&nbsp;".
-		        "<img onmouseover='style.cursor=\"hand\"' onclick='javascript:openWithSelfMain(\"".ICMS_URL."/imagemanager.php?target=".$ele_name."\",\"imgmanager\",400,430);' src='".ICMS_URL."/images/image.gif' alt='image' />&nbsp;".
-		        "<img src='".ICMS_URL."/images/code.gif' onmouseover='style.cursor=\"hand\"' alt='code' onclick='javascript:xoopsCodeCode(\"".$ele_name."\", \"".htmlspecialchars(_ENTERCODE, ENT_QUOTES)."\");' />&nbsp;".
-		        "<img onclick='javascript:xoopsCodeQuote(\"".$ele_name."\", \"".htmlspecialchars(_ENTERQUOTE, ENT_QUOTES)."\");' onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/images/quote.gif' alt='quote' /><br />\n";
-		}	
-		$sizearray = array("xx-small", "x-small", "small", "medium", "large", "x-large", "xx-large");
+	$sizearray = array("xx-small", "x-small", "small", "medium", "large", "x-large", "xx-large");
 		$ret .= "<select id='".$ele_name."Size' onchange='setVisible(\"".$this->_hiddenText."\");setElementSize(\"".$this->_hiddenText."\",this.options[this.selectedIndex].value);'>\n";
 		$ret .= "<option value='SIZE'>"._SIZE."</option>\n";
 		foreach ( $sizearray as $size ) {
@@ -200,7 +189,7 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 				return $this->htmlEditor->renderValidationJS();
 			}
 		}
-		return '';		
+		return '';
 	}
 
 

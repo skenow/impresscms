@@ -1,7 +1,9 @@
 ImpressCMS 1.1 Final release notes
 ==================================
 
-The ImpressCMS Project is very proud to announce the final version of its highly expected 1.1 version Community Management System! This is a stable release, ready for production sites !
+The ImpressCMS Project is very proud to announce the stable version of its highly expected 1.1 version Community Management System!
+
+As a "Final" version, this package is ready for production sites!
 
 Please see the full changelog for details in docs/changelog.txt.
 
@@ -70,7 +72,23 @@ If you are upgrading from a previous version of ImpressCMS, please follow these 
 6. You will then be asked to enter the admin area will see a message saying you are entering the admin area for the first time, click on the Submit button.
 7. You will then be asked to Update the System module. Follow the instructions.
 8. Flush your browsers cache (on windows IE & Firefox you can do this by pressing CTRL+F5. MAC & Safari users can press CTRL+R, Linux Users can also press CTRL+R or CTRL+F5 when using Firefox).
-9. Enjoy !
+9. A few folders were moved to other place in ImpressCMS structure to introduce more logic in the structure. Thus, you will need to remove these folders and files from your server:
+   a) htdocs/class/smarty
+   b) htdocs/class/phpmailer
+   c) htdocs/class/xoopseditor/dhtmltext
+   d) htdocs/class/xoopseditor/dhtmltextarea
+   e) htdocs/class/xoopseditor/textarea
+   f) htdocs/class/xoopseditor/readme.txt
+   g) htdocs/class/xoopseditor/sampleform.inc.php
+   h) htdocs/class/xoopseditor/xoopseditor.inc.php
+   i) htdocs/class/xoopseditor/xoops_version.php
+   j) htdocs/include/calendar-blue.css
+   k) htdocs/include/calendar.js
+   l) htdocs/modules/system/blocksadmin/blockspadmin.php
+   m) htdocs/modules/system/blocksadmin/pblockform.php
+   n) htdocs/themes/impresstheme_light/css
+   o) htdocs/themes/impresstheme_light/xotpl
+10. Enjoy !
 
 Revealing the blank page backtrace log
 ==================================
@@ -96,7 +114,8 @@ Home of ImpressCMS: http://www.impresscms.org
 Community support: http://community.impresscms.org
 Addons, modules, themes and languages: http://addons.impresscms.org
 Community driven documentation: http://wiki.impresscms.org
-ImpressCMS Blogs: http://blog.impresscms.org
+ImpressCMS Blogs: http://community.impresscms.org/modules/imblogging/
+ImpressCMS Core development updates on Twitter: http://twitter.com/impresscms_svn
 ImpressCMS IRC Channel: #impresscms on freenode.net or simply : http://community.impresscms.org/chat/
 
 ImpressCMS Mailing Lists

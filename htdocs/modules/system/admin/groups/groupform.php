@@ -82,7 +82,7 @@ $gperm_handler =& xoops_gethandler('groupperm');
 global $xoopsUser;
 foreach($groups as $group){
 	if($gperm_handler->checkRight('group_manager', $group->getVar('groupid'), $xoopsUser->getGroups()))
-		$group_manager_checkbox->addOption($group->getVar('groupid'),$group->getVar('name'));	
+		$group_manager_checkbox->addOption($group->getVar('groupid'),$group->getVar('name'));
 }
 
 $posarr = XoopsBlock::getBlockPositions(true);
@@ -117,7 +117,7 @@ if (!isset($g_id) || ($g_id != 1 && $g_id != 3)){
 }
 $form->addElement($a_mod_checkbox);
 $form->addElement($r_mod_checkbox);
-if (!isset($g_id) || ($g_id != 1 && $g_id != 3)){
+if (!isset($g_id) || $g_id != 3){
     $form->addElement($ed_mod_checkbox);
 }
 if( !isset($g_id) || $g_id != 1 ){

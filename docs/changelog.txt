@@ -2,18 +2,58 @@ ImpressCMS ChangeLog
 
 == Impresscms 1.1==
 
-===2008-09-28 : 1.1 FINAL===
+===2008-10-31 : 1.1 Final===
+
+'''Fixed'''
+* Issues with content menu in RTL. (stranger)
+* Issues with registration not completed with passwordmeter. (stranger)
+* Issues with too easy captcha configs. (stranger)
+* #2190687: When saving a block, if $options was a multi-levels array, StopXSS was failing to save array. StopXSS is now recursive and will all levels of $text parameter if it's an array (malanciault)
+* #2192679: Leading space in cache/index.html (dave_l)
+* Fixed issues with spambots. (Frederick/stranger)
+* Fixed issues multiple time stamps. (Frederick/stranger)
+* Fixed security issue in snoopy.php: http://secunia.com/Advisories/32361/ (thanks to Gijoe)
+* Fixed issue on the pagination links of the image manager tinyMCE plugin.
+* The WYSIWYG group permission per module was confused when trying to know if a user should have permission to use WYSIWYG when posting a comment in a module that had such permission (malanciault/real_therplima)
+* Fixed a bug with RTL, if this is not implemented, we will have troubles while sending posts in some modules like newbb (stranger)
+
+'''Added'''
+* Stop Spam Registration class and its experimental use in extra/anti-spam/register.php (stranger/malanciault)
+
+''Improved'''
+* It is now possible to specify in which modules Webmasters can use WYSIWYG editor (malanciault)
+* Automatically check the Enable HTML check box and uncheck the Enable Linebreaks when using TinyMCE in a comment post form (real_therplima)
+* Improved the installer so it is now possible to install ImpressCMS even with safe_mode ON (vaughan)
+
+===2008-10-17 : 1.1 RC 3===
+
+'''Added'''
+* Converter of 2.2.X to icms 1.0 then 1.1 (stranger/phppp)
+* Converter of 2.3.X to icms 1.0 then 1.1 (stranger)
+* TRUST_PATH to upgarder. (stranger)
+* a checker to see if TRUST_PATH exists in adminmenu, if it doesn't it will prompt admins from accessing admin menu. (stranger)
+* a checker to see if email address already exists in adminmenu. (stranger)
 
 '''Improved'''
 * Updated system to version 1.10. (stranger)
 * Function icms_cleaning_write_folders. (stranger)
+* Query execution during character set conversion
 
 '''Fixed'''
+* Issues with editors: switch from dhtml < > TinyMCE (sato-san)
 * Issues with google analytic textform in admin menu. (stranger)
 * Issues with Jalalijscalendar option in admin menu. (stranger)
 * Issues with new templates not being inserted in system module. (stranger)
 * Issues with Jalalijscalendar option in Persian language. (stranger)
 * Issues with reset buttons. (mcdonald3072)
+* When converting the db to another character set during an upgrade, the default values were being dropped if they were empty strings (skenow)
+* Issues with Jalalijscalendar button in forms. (stranger)
+* Issue with upgrader, blocks got twice inserted. (stranger)
+* Issue with upgrader, blocks permissions were not inserted. (skenow/stranger)
+* Issue with upgrader, system sub-module permissions were not inserted. (stranger)
+* Issue with theme_rtl. (stranger)
+* Issue with <{if $xoops_contents}>. (Vaughan/Trabis)
+* Removed intermediate conversion of data to binary during db character set conversion, now the data integrity is improved
 
 ===2008-09-21 : 1.1 RC 2===
 

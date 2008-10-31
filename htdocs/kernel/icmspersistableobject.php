@@ -11,7 +11,7 @@
 */
 
 if (!defined("XOOPS_ROOT_PATH")) {
-    die("XOOPS root path not defined");
+    die("ImpressCMS root path not defined");
 }
 
 icms_loadLanguageFile('system', 'common');
@@ -1084,13 +1084,13 @@ class IcmsPersistableObject extends XoopsObject {
 	 * @return content of the template if $fetchOnly or nothing if !$fetchOnly
 	 */
     function displaySingleObject($fetchOnly=false, $userSide=false, $actions=array(), $headerAsRow=true) {
-		include_once SMARTOBJECT_ROOT_PATH."class/smartobjectsingleview.php";
-		$singleview = new IcmsPersistableObjectSingleView($this, $userSide, $actions, $headerAsRow);
+		//include_once SMARTOBJECT_ROOT_PATH."class/smartobjectsingleview.php";
+		$singleview = new IcmsPersistableSingleView($this, $userSide, $actions, $headerAsRow);
 		// add all fields mark as displayOnSingleView except the keyid
 		foreach($this->vars as $key=>$var) {
 			if ($key != $this->handler->keyName && $var['displayOnSingleView']) {
 				$is_header = ($key == $this->handler->identifierName);
-				$singleview->addRow(new IcmsPersistableObjectRow($key, false, $is_header));
+				$singleview->addRow(new IcmsPersistableRow($key, false, $is_header));
 			}
 		}
 

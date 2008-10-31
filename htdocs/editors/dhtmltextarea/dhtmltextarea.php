@@ -10,7 +10,7 @@
  * @package		xoopseditor
  */
 if (!defined("XOOPS_ROOT_PATH")) {
-    die("XOOPS root path not defined");
+    die("ImpressCMS root path not defined");
 }
 
 require_once XOOPS_ROOT_PATH."/class/xoopsform/formdhtmltextarea.php";
@@ -42,7 +42,7 @@ class FormDhtmlTextArea extends XoopsFormDhtmlTextArea
 		$rows = isset($rows)? $rows : 5;
 		$cols = isset($cols)? $cols : 50;
 		$hiddentext = empty($hiddentext)? "xoopsHiddenText" : $hiddentext;
-		$this->XoopsFormDhtmlTextArea(@$caption, $name, $value, $rows, $cols, $hiddentext);
+		$this->XoopsFormDhtmlTextArea(@$caption, $name, $value, $rows, $cols, $hiddentext,$configs);
 	}
 }
 ?>

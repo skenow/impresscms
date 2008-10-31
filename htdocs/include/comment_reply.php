@@ -30,7 +30,7 @@
 // ------------------------------------------------------------------------- //
 
 if (!defined('XOOPS_ROOT_PATH')) {
-	die("XOOPS root path not defined");
+	die("ImpressCMS root path not defined");
 }
 include_once XOOPS_ROOT_PATH.'/include/comment_constants.php';
 if ( ('system' != $xoopsModule->getVar('dirname') && XOOPS_COMMENT_APPROVENONE == $xoopsModuleConfig['com_rule']) || (!is_object($xoopsUser) && !$xoopsModuleConfig['com_anonpost']) || !is_object($xoopsModule) ) {
@@ -67,9 +67,16 @@ $com_pid = $com_id;
 $com_text = '';
 $com_id = 0;
 $dosmiley = 1;
-$dohtml = 0;
+$groups   = (is_object($xoopsUser)) ? $xoopsUser->getGroups() : ICMS_GROUP_ANONYMOUS;
+$gperm_handler =& xoops_gethandler('groupperm');
+if ($xoopsConfig ['editor_default'] != 'dhtmltextarea' && $gperm_handler->checkRight('use_wysiwygeditor', 1, $groups, 1, false)) {
+    $dohtml = 1;
+    $dobr = 0;
+}else{
+    $dohtml = 0;
+    $dobr = 1;
+}
 $doxcode = 1;
-$dobr = 1;
 $doimage = 1;
 $com_icon = '';
 $com_rootid = $comment->getVar('com_rootid');

@@ -52,7 +52,7 @@ if ( !isset( $vars['DB_SALT'] ) ) {
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method='post'>
 <fieldset>
-	<legend><?php echo LEGEND_DATABASE; ?></legend>
+	<legend><?php echo DB_SALT_LABEL; ?></legend>
 	<?php echo xoFormField( 'DB_SALT',	$vars['DB_SALT'],	DB_SALT_LABEL, 255, DB_SALT_HELP ); ?>
 	
 </fieldset>
