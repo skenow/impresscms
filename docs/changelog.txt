@@ -15,13 +15,15 @@ ImpressCMS ChangeLog
 * Fixed security issue in snoopy.php: http://secunia.com/Advisories/32361/ (thanks to Gijoe)
 * Fixed issue on the pagination links of the image manager tinyMCE plugin.
 * The WYSIWYG group permission per module was confused when trying to know if a user should have permission to use WYSIWYG when posting a comment in a module that had such permission (malanciault/real_therplima)
+* Fixed a bug with RTL, if this is not implemented, we will have troubles while sending posts in some modules like newbb (stranger)
 
 '''Added'''
 * Stop Spam Registration class and its experimental use in extra/anti-spam/register.php (stranger/malanciault)
 
 ''Improved'''
 * It is now possible to specify in which modules Webmasters can use WYSIWYG editor (malanciault)
-* Automatically check the Enable HTML check box when using TinyMCE in a comment post form (real_therplima)
+* Automatically check the Enable HTML check box and uncheck the Enable Linebreaks when using TinyMCE in a comment post form (real_therplima)
+* Improved the installer so it is now possible to install ImpressCMS even with safe_mode ON (vaughan)
 
 ===2008-10-17 : 1.1 RC 3===
 
