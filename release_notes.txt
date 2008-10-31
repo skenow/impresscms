@@ -73,7 +73,8 @@ If you are upgrading from a previous version of ImpressCMS, please follow these 
 7. You will then be asked to Update the System module. Follow the instructions.
 8. Flush your browsers cache (on windows IE & Firefox you can do this by pressing CTRL+F5. MAC & Safari users can press CTRL+R, Linux Users can also press CTRL+R or CTRL+F5 when using Firefox).
 9. The Smarty folder has been moved the /libraries folder. Thus, you can remove the old copy by deleting htdocs/class/smarty/ on your server
-10. Enjoy !
+10. The phpmailer folder has been moved the /libraries folder. Thus, you can remove the old copy by deleting htdocs/class/phpmailer/ on your server
+11. Enjoy !
 
 Revealing the blank page backtrace log
 ==================================
