@@ -396,7 +396,11 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 	if(isset($_SESSION['xoopsUserTheme']) && in_array($_SESSION['xoopsUserTheme'], $xoopsConfig['theme_set_allowed'])) {$theme = $_SESSION['xoopsUserTheme'];}
 
 	require_once ICMS_ROOT_PATH.'/class/template.php';
-	require_once ICMS_ROOT_PATH.'/class/theme.php';
+	if ( file_exists(XOOPS_THEME_PATH . '/' . $xoopsConfig ['theme_set'] . '/theme_rtl.html') && defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
+    	require_once ICMS_ROOT_PATH.'/class/theme_rtl.php';
+    }else{
+    	require_once ICMS_ROOT_PATH.'/class/theme.php';
+    }
 
 	$xoopsThemeFactory =& new xos_opal_ThemeFactory();
 	$xoopsThemeFactory->allowedThemes = $xoopsConfig['theme_set_allowed'];
