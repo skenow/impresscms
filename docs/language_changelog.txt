@@ -104,12 +104,6 @@ INSERT INTO icmspage VALUES (1, 1, 'Welcome to ImpressCMS', 'content.php?page=Wh
 
 
 =====================
-# Directory: libraries
-=====================
-
-+  libraries/tcpdf/config/lang/en.php (added)
-
-=====================
 # Directory: editors
 =====================
 
