@@ -131,7 +131,7 @@ Ohloh project: http://www.ohloh.net/projects/10042?p=ImpressCMS
 Facebook group: http://www.facebook.com/group.php?gid=7395938599
 Facebook fans page: http://www.facebook.com/pages/The-ImpressCMS-Project/22332836800
 LinkedIn group: http://www.linkedin.com/e/gis/45459/3A9B02585174
-Delicious: http://del.icio.us/tags/impresscms
+Delicious: http://del.icio.us/tag/impresscms
 Flickr: http://www.flickr.com/photos/tags/impresscms/
 YouTube: http://www.youtube.com/impresscms
 LastFM Group: http://www.last.fm/group/ImpressCMS
