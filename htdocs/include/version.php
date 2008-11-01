@@ -23,12 +23,12 @@ define("XOOPS_VERSION", ICMS_VERSION_NAME);
  * 10 = Final
  */
 
-define("ICMS_VERSION_STATUS", 3);
+define("ICMS_VERSION_STATUS", 10);
 
 /*
  * Build number
  *
  * Every release has its own build number, incrementable by 1 everytime we make a release
  */
-define("ICMS_VERSION_BUILD", 13);
+define("ICMS_VERSION_BUILD", 17);
 ?>
