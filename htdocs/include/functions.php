@@ -1131,6 +1131,16 @@ function icms_html2text($document)
 }
 
 // ----- New Password System
+/**
+* This Function checks whether a users password has been expired
+*
+* @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
+*
+* @since 1.1
+* @param string	$uname		The username of the account to be checked
+*
+* @return int	returns 1 if password is expired, 0 if password is ot expired.
+*/
 function icms_passExpired($uname = '')
 {
 	$db =& Database::getInstance();
@@ -1142,7 +1152,17 @@ function icms_passExpired($uname = '')
 	else	{redirect_header('user.php',2,_US_SORRYNOTFOUND);}
 	return $pass_expired;
 }
-
+/**
+* This Function creates a unique random Salt Key for use with password encryptions
+* It can also be used to generate a random AlphaNumeric key sequence of any given length.
+*
+* @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
+*
+* @since 1.1
+* @param string	$slength		The length of the key to produce
+*
+* @return string	returns the generated random key.
+*/
 function icms_createSalt($slength=64)
 {
 	$salt= '';
@@ -1153,7 +1173,16 @@ function icms_createSalt($slength=64)
 		$salt.= substr($base, rand() % strlen($base), 1);
     	return $salt;
 }
-
+/**
+* This Function returns the User Salt key belonging to username.
+*
+* @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
+*
+* @since 1.1
+* @param string	$uname		Username to find User Salt key for..
+*
+* @return string	returns the Salt key of the user.
+*/
 function icms_getUserSaltFromUname($uname = '')
 {
 	$db =& Database::getInstance();
@@ -1165,6 +1194,16 @@ function icms_getUserSaltFromUname($uname = '')
 	else	{redirect_header('user.php',2,_US_SORRYNOTFOUND);}
 	return $salt;
 }
+/**
+* This Function returns the Username of the account linked to the inputted email address
+*
+* @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
+*
+* @since 1.1
+* @param string	$email		Email address to find username for.
+*
+* @return string	returns the username of the account linked to supplied email.
+*/
 function icms_getUnameFromUserEmail($email = '')
 {
 	$db =& Database::getInstance();
@@ -1177,6 +1216,20 @@ function icms_getUnameFromUserEmail($email = '')
 	return $uname;
 }
 
+/**
+* This Function is used to Encrypt User Passwords
+*
+* @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
+*
+* @since 1.1
+* @param string	$pass		plaintext password to be encrypted
+* @param string	$salt		unique user salt key used in encryption process
+* @param int		$enc_type		encryption type to use (this is required & only used when passwords are expired)
+* @param int		$reset		set to 1 if we have determined that the user password has been expired
+*							use in conjunction only with $enc_type above.
+*
+* @return string	returns the final encrypted hash of users password.
+*/
 function icms_encryptPass($pass, $salt, $enc_type = 0, $reset = 0)
 {
 	$config_handler =& xoops_gethandler('config');
