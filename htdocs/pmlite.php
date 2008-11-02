@@ -76,7 +76,6 @@ if ($xoopsUser) {
 						$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
 						$xoopsMailer->setFromName($xoopsConfig['sitename']);
 					}
-					$xoopsMailer->setFromEmail($xoopsUser->email());
 					$xoopsMailer->setTemplate('new_pm.tpl');
 					$xoopsMailer->assign('X_SITENAME', $xoopsConfig['sitename']);
 					$xoopsMailer->assign('X_SITEURL', ICMS_URL."/");
