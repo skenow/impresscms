@@ -69,6 +69,13 @@ if ($xoopsUser) {
 					$xoopsMailer =& getMailer();
 					$xoopsMailer->useMail();
 					$xoopsMailer->setToEmails($toUser->email());
+					if ($xoopsUser->getVar('user_viewemail')) {
+						$xoopsMailer->setFromEmail($xoopsUser->email());
+						$xoopsMailer->setFromName($xoopsUser->uname());
+					} else {
+						$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
+						$xoopsMailer->setFromName($xoopsConfig['sitename']);
+					}
 					$xoopsMailer->setFromEmail($xoopsUser->email());
 					$xoopsMailer->setTemplate('new_pm.tpl');
 					$xoopsMailer->assign('X_SITENAME', $xoopsConfig['sitename']);
@@ -79,7 +86,6 @@ if ($xoopsUser) {
 					$xoopsMailer->assign('X_SUBJECT', $myts->stripSlashesGPC($_POST['subject']));
 					$xoopsMailer->assign('X_MESSAGE', $myts->stripSlashesGPC($_POST['message']));
 					$xoopsMailer->assign('X_ITEM_URL', ICMS_URL . "/viewpmsg.php");
-					$xoopsMailer->setFromName($xoopsUser->uname());
 					$xoopsMailer->setSubject(sprintf(_PM_MESSAGEPOSTED_EMAILSUBJ, $xoopsConfig['sitename']));
 					$xoopsMailer->send();
 				}
