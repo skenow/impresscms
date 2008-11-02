@@ -6,6 +6,7 @@ ImpressCMS ChangeLog
 
 '''Added''''
 * Implementing SimplePie as a new library and IcmsSimpleRss extending it for ImpressCMS (malanciault)
+* Implementing IcmsPersistableSingleView which provides an easy way to quickly display a single object information (malanciault)
 
 '''Improved'''
 * If an email notification is sent on PM, the user's email will appear in the From header if he has activated "Allow other users to view my email address" (malanciaut)
