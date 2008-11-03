@@ -409,6 +409,16 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 	$xoopsTpl =& $xoTheme->template;
 
 	$xoopsTpl->assign(array(
+		'icms_style' => ICMS_URL."/icms".(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?"_rtl":"").".css",
+		'icms_theme' => $theme,
+		'icms_imageurl' => XOOPS_THEME_URL.'/'.$theme.'/',
+		'icms_themecss'=> xoops_getcss($theme),
+		'icms_requesturi' => htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES),
+		'icms_sitename' => htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES),
+		'icms_slogan' => htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES),
+		'icms_dirname' => @$xoopsModule ? $xoopsModule->getVar('dirname') : 'system',
+		'icms_banner' => $xoopsConfig['banners'] ? xoops_getbanner() : '&nbsp;',
+		'icms_pagetitle' => isset($xoopsModule) && is_object($xoopsModule) ? $xoopsModule->getVar('name') : htmlspecialchars( $xoopsConfig['slogan'], ENT_QUOTES),
 		'xoops_theme' => $theme,
 		'xoops_imageurl' => XOOPS_THEME_URL.'/'.$theme.'/',
 		'xoops_themecss'=> xoops_getcss($theme),
