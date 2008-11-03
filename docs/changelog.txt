@@ -14,7 +14,9 @@ ImpressCMS ChangeLog
 * If an email notification is sent on PM, the user's email will appear in the From header if he has activated "Allow other users to view my email address" (malanciaut)
 * Updated system to version 1.11. (stranger)
 * Updated HTML Purifier library from 3.1.1 to 3.2.0 (vaughan)
-
+* smarty values to make them use both $xoops_value and $icms_value. (stranger)
+* Fixed issues in redirection in RTL mode. (stranger)
+* Updated xoops_getcss to read rtl styles. (stranger)
 
 == Impresscms 1.1==
 
