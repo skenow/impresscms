@@ -365,12 +365,15 @@ class xos_opal_Theme {
 			ob_end_clean();
 		}
 		$this->template->assign_by_ref( 'xoops_contents', $this->content );
+		$this->template->assign_by_ref( 'icms_contents', $this->content );
 
 		$header = empty($xoopsOption['xoops_module_header']) ? $this->template->get_template_vars( 'xoops_module_header' ) : $xoopsOption['xoops_module_header'];
 		$this->template->assign( 'xoops_module_header', $header . "\n" . $this->renderMetas( null, true ) );
+		$this->template->assign( 'icms_module_header', $header . "\n" . $this->renderMetas( null, true ) );
 
 		if ( !empty($xoopsOption['xoops_pagetitle']) ) {
 			$this->template->assign( 'xoops_pagetitle', $xoopsOption['xoops_pagetitle'] );
+			$this->template->assign( 'icms_pagetitle', $xoopsOption['xoops_pagetitle'] );
 		}
 
 		// Do not cache the main (theme.html) template output

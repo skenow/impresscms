@@ -84,6 +84,12 @@ class XoopsTpl extends Smarty {
 		$this->Smarty();
 
 		$this->assign( array(
+			'icms_url' => XOOPS_URL,
+			'icms_rootpath' => XOOPS_ROOT_PATH,
+			'icms_langcode' => _LANGCODE,
+			'icms_charset' => _CHARSET,
+			'icms_version' => XOOPS_VERSION,
+			'icms_upload_url' => XOOPS_UPLOAD_URL,
 			'xoops_url' => XOOPS_URL,
 			'xoops_rootpath' => XOOPS_ROOT_PATH,
 			'xoops_langcode' => _LANGCODE,
