@@ -5,10 +5,11 @@ ImpressCMS ChangeLog
 ===2008-11-07 : 1.1.1 RC===
 
 '''Added''''
-* Implementing SimplePie as a new library and IcmsSimpleRss extending it for ImpressCMS (malanciault)
-* Implementing IcmsPersistableSingleView which provides an easy way to quickly display a single object information (malanciault)
-* Implementing IcmsPersistableTreeTable extending IcmsPersistableTable with the concept of nested objects (malanciault)
-* Implementing SimplePie as admin RSS (stranger)
+* Implementing SimplePie as a new library and IcmsSimpleRss extending it for ImpressCMS. (malanciault)
+* Implementing IcmsPersistableSingleView which provides an easy way to quickly display a single object information. (malanciault)
+* Implementing IcmsPersistableTreeTable extending IcmsPersistableTable with the concept of nested objects. (malanciault)
+* Implementing SimplePie as admin RSS. (stranger)
+* Implementing icmsstopspammer to stop spammers. (stranger)
 
 '''Improved'''
 * If an email notification is sent on PM, the user's email will appear in the From header if he has activated "Allow other users to view my email address" (malanciaut)
