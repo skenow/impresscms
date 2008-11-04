@@ -82,6 +82,9 @@ class XoopsTpl extends Smarty {
 		    }
 		}
 		$this->Smarty();
+	if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
+		$this->assign( 'icms_rtl', true );
+    }
 
 		$this->assign( array(
 			'icms_url' => XOOPS_URL,
