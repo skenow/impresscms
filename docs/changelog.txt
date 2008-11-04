@@ -10,6 +10,9 @@ ImpressCMS ChangeLog
 * Implementing IcmsPersistableTreeTable extending IcmsPersistableTable with the concept of nested objects. (malanciault)
 * Implementing SimplePie as admin RSS. (stranger)
 * Implementing icmsstopspammer to stop spammers. (stranger)
+* smarty to change a theme&template between RTL and LTR. (stranger)
+* smarty <{$smarty.const._GLOBAL_LEFT}> for templates. (stranger)
+* smarty <{$smarty.const._GLOBAL_RIGHT}> for templates. (stranger)
 
 '''Improved'''
 * If an email notification is sent on PM, the user's email will appear in the From header if he has activated "Allow other users to view my email address" (malanciaut)
@@ -18,6 +21,11 @@ ImpressCMS ChangeLog
 * smarty values to make them use both $xoops_value and $icms_value. (stranger)
 * Fixed issues in redirection in RTL mode. (stranger)
 * Updated xoops_getcss to read rtl styles. (stranger)
+* Method we use RTL. (stranger)
+* Removed theme_rtl system at all. (stranger)
+
+'''Changed'''
+* impresstheme is using $icms_values. (stranger)
 
 == Impresscms 1.1==
 
@@ -30,7 +38,7 @@ ImpressCMS ChangeLog
 * #2190687: When saving a block, if $options was a multi-levels array, StopXSS was failing to save array. StopXSS is now recursive and will all levels of $text parameter if it's an array (malanciault)
 * #2192679: Leading space in cache/index.html (dave_l)
 * Fixed issues with spambots. (Frederick/stranger)
-* Fixed issues multiple time stamps. (Frederick/stranger)
+* Fixed issues multiple time stamps. (stranger)
 * Fixed security issue in snoopy.php: http://secunia.com/Advisories/32361/ (thanks to Gijoe)
 * Fixed issue on the pagination links of the image manager tinyMCE plugin.
 * The WYSIWYG group permission per module was confused when trying to know if a user should have permission to use WYSIWYG when posting a comment in a module that had such permission (malanciault/real_therplima)
