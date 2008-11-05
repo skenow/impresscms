@@ -271,6 +271,4 @@ define('_PDF_LOCAL_FONT', '');
 define('_CALENDAR_TYPE','gregorian'); // this value is for the local java calendar used in this system, if you're not sure about this leave this value as it is!
 define('_CALENDAR','Calendar');
 define('_RETRYPOST','Sorry, a time-out occured. Would you like to post again ?'); // autologin hack GIJ
-define('_GLOBAL_LEFT','left'); // type here right in rtl languages
-define('_GLOBAL_RIGHT','right'); // type here left in rtl languages
 ?>

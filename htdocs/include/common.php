@@ -401,6 +401,8 @@ if ( file_exists(XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/theme.p
 } else {
 	include_once XOOPS_ROOT_PATH."/language/english/theme.php";
 }
+define('_GLOBAL_LEFT', (( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?"right":"left")); // type here right in rtl languages
+define('_GLOBAL_RIGHT', (( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?"left":"right")); // type here left in rtl languages
 
 // ################ Include page-specific lang file ################
 if (isset($xoopsOption['pagetype']) && false === strpos($xoopsOption['pagetype'], '.')) {
