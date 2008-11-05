@@ -23,6 +23,7 @@ ImpressCMS ChangeLog
 * Updated xoops_getcss to read rtl styles. (stranger)
 * Method we use RTL. (stranger)
 * Removed theme_rtl system at all. (stranger)
+* Updated Snoopy from v1.2.3 to v1.2.4. (stranger)
 
 '''Changed'''
 * impresstheme is using $icms_values. (stranger)
