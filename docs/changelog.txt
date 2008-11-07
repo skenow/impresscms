@@ -24,6 +24,7 @@ ImpressCMS ChangeLog
 * Method we use RTL. (stranger)
 * Removed theme_rtl system at all. (stranger)
 * Updated Snoopy from v1.2.3 to v1.2.4. (stranger)
+* Added check to preferences, if closesite is true (site closed) it is no longer possible to change password encryption until site is reopened. (vaughan)
 
 '''Changed'''
 * impresstheme is using $icms_values. (stranger)
