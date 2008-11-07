@@ -27,6 +27,7 @@ ImpressCMS ChangeLog
 
 '''Changed'''
 * impresstheme is using $icms_values. (stranger)
+* in installer config settings, changed some settings to use textsarea instead of textarea. as was causing problems with those fields if URI's were entered etc. (vaughan)
 
 == Impresscms 1.1==
 
