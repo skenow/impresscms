@@ -60,7 +60,6 @@ font-family: Tahoma; direction: rtl;}
 INPUT[type=text]
 {
     PADDING-RIGHT: 0.25em;
-    MIN-WIDTH: 60%;
     PADDING-LEFT: 0.25em;
     BACKGROUND: url(images/form-input.png) #fff no-repeat left top;
     PADDING-BOTTOM: 1px;
@@ -71,7 +70,6 @@ font-family: Tahoma; direction: rtl;}
 INPUT[type=password]
 {
     PADDING-RIGHT: 0.25em;
-    MIN-WIDTH: 60%;
     PADDING-LEFT: 0.25em;
     BACKGROUND: url(images/form-input.png) #fff no-repeat left top;
     PADDING-BOTTOM: 1px;
