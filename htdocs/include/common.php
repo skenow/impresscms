@@ -59,6 +59,9 @@ define( 'ICMS_LIBRARIES_URL', XOOPS_URL . '/libraries' );
 // ImpressCMS Third Party Library for PDF generator
 define( 'ICMS_PDF_LIB_PATH', ICMS_ROOT_PATH . '/libraries/tcpdf' );
 define( 'ICMS_PDF_LIB_URL', ICMS_URL . '/libraries/tcpdf' );
+// ImpressCMS Modules path & url
+define( 'ICMS_MODULES_PATH', ICMS_ROOT_PATH . '/modules' );
+define( 'ICMS_MODULES_URL', ICMS_URL . '/modules' );
 
 // ################# Preload Trigger startCoreBoot ##############
 $icmsPreloadHandler->triggerEvent('startCoreBoot');
