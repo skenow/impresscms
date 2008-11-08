@@ -12,7 +12,7 @@
   </tr>
   <{foreach item=module from=$modules}>
     <tr valign='middle'class="<{cycle values="even,odd"}>">
-      <td align="left" valign="middle">
+      <td align="<{$smarty.const._GLOBAL_LEFT}>" valign="middle">
         <div id="modlogo" style="padding: 2px;">
           <{if $module.hasadmin == 1 && $module.isactive == '1'}>
             <a href="<{$xoops_url}>/modules/<{$module.dirname}>/<{$module.adminindex}>">
