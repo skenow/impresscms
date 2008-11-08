@@ -14,10 +14,9 @@
 if (!defined('ICMS_ROOT_PATH')) {
 	exit();
 }
-require_once ICMS_PDF_LIB_PATH.'/tcpdf.php';
-
 	function Generate_PDF ($content, $doc_title, $doc_keywords){
 	    global $xoopsConfig;
+require_once ICMS_PDF_LIB_PATH.'/tcpdf.php';
 if(file_exists(ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/pdf.php')) {
 	include_once ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/pdf.php';
 } else {
