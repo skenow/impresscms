@@ -60,7 +60,7 @@ class XoopsFormCaptcha extends XoopsFormElement {
 	 *
 	 */
 	function XoopsFormCaptcha($caption = '', $name = 'xoopscaptcha', $skipmember = null, $numchar = null, $minfontsize = null, $maxfontsize = null, $backgroundtype = null, $backgroundnum = null) {
-		if(!class_exists("XoopsCaptcaha")) {
+		if(!class_exists("XoopsCaptcha")) {
 			require_once ICMS_ROOT_PATH."/class/captcha/captcha.php";
 		}
 		

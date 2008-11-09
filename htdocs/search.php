@@ -177,7 +177,7 @@ switch ($action) {
                     if (isset($results[$i]['image']) && $results[$i]['image'] != "") {
                         echo "<img style='vertical-align:middle;' src='modules/".$module->getVar('dirname')."/".$results[$i]['image']."' alt='".$myts->makeTboxData4Show($module->getVar('name'))."' />&nbsp;";
                     } else {
-                        echo "<img style='vertical-align:middle;' src='images/icons/posticon2.gif' alt='".$myts->makeTboxData4Show($module->getVar('name'))."' width='26' height='26' />&nbsp;";
+                        echo "<img style='vertical-align:middle;' src='images/icons/".$GLOBALS["xoopsConfig"]["language"]."/posticon2.gif' alt='".$myts->makeTboxData4Show($module->getVar('name'))."' width='26' height='26' />&nbsp;";
                     }
                     if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
                         $results[$i]['link'] = "modules/".$module->getVar('dirname')."/".$results[$i]['link'];
@@ -244,7 +244,7 @@ switch ($action) {
             if (isset($results[$i]['image']) && $results[$i]['image'] != '') {
                 echo "<img style='vertical-align:middle;' src='modules/".$module->getVar('dirname')."/".$results[$i]['image']."' alt='".$myts->makeTboxData4Show($module->getVar('name'))."' />&nbsp;";
             } else {
-                echo "<img style='vertical-align:middle;' src='images/icons/posticon2.gif' alt='".$myts->makeTboxData4Show($module->name())."' width='26' height='26' />&nbsp;";
+                echo "<img style='vertical-align:middle;' src='images/icons/".$GLOBALS["xoopsConfig"]["language"]."/posticon2.gif' alt='".$myts->makeTboxData4Show($module->name())."' width='26' height='26' />&nbsp;";
             }
             if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
                 $results[$i]['link'] = "modules/".$module->getVar('dirname')."/".$results[$i]['link'];

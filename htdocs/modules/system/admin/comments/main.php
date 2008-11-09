@@ -124,7 +124,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
                 }
             }
             $icon = $comments[$i]->getVar('com_icon');
-            $icon = empty( $icon ) ? '/images/icons/no_posticon.gif' : ( '/images/subject/' . htmlspecialchars( $icon, ENT_QUOTES ) );
+            $icon = empty( $icon ) ? '/images/icons/'.$GLOBALS["xoopsConfig"]["language"].'/no_posticon.gif' : ( '/images/subject/' . htmlspecialchars( $icon, ENT_QUOTES ) );
             $icon = '<img src="' . XOOPS_URL . $icon  . '" alt="" />';
 
             echo '<tr align="center"><td class="'.$class.'">'.$icon.'</td><td class="'.$class.'" align="left"><a href="admin.php?fct=comments&amp;op=jump&amp;com_id='.$i.'">'. $comments[$i]->getVar('com_title').'</a></td><td class="'.$class.'">'.formatTimestamp($comments[$i]->getVar('com_created'), 'm').'</td><td class="'.$class.'">'.$poster_uname.'</td><td class="'.$class.'">'.$comments[$i]->getVar('com_ip').'</td><td class="'.$class.'">'.$module_array[$comments[$i]->getVar('com_modid')].'</td><td class="'.$class.'">'.$status_array2[$comments[$i]->getVar('com_status')].'</td><td class="'.$class.'" align="right"><a href="admin/comments/comment_edit.php?com_id='.$i.'">'._EDIT.'</a> <a href="admin/comments/comment_delete.php?com_id='.$i.'">'._DELETE.'</a></td></tr>';

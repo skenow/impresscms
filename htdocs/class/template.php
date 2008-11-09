@@ -92,6 +92,7 @@ class XoopsTpl extends Smarty {
 			'modules_url' => ICMS_MODULES_URL,
 			'modules_rootpath' => ICMS_MODULES_PATH,
 			'icms_langcode' => _LANGCODE,
+			'icms_langname' => $GLOBALS["xoopsConfig"]["language"],
 			'icms_charset' => _CHARSET,
 			'icms_version' => XOOPS_VERSION,
 			'icms_upload_url' => XOOPS_UPLOAD_URL,
