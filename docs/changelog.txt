@@ -4,7 +4,10 @@ ImpressCMS ChangeLog
 
 ===2008-11-07 : 1.1.1 RC===
 
-'''Added''''
+'''Fixed'''
+* #2245090: Captcha being bypassed
+
+'''Added'''
 * Implementing SimplePie as a new library and IcmsSimpleRss extending it for ImpressCMS. (malanciault)
 * Implementing IcmsPersistableSingleView which provides an easy way to quickly display a single object information. (malanciault)
 * Implementing IcmsPersistableTreeTable extending IcmsPersistableTable with the concept of nested objects. (malanciault)

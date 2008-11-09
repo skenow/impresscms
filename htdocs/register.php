@@ -203,7 +203,7 @@ switch ($op) {
 		if (!$GLOBALS['xoopsSecurity']->check()) {
 			$stop .= implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()) . "<br />";
 		}
-		if (@ include_once ICMS_ROOT_PATH . "/libraries/captcha/captcha.php") {
+		if (@ include_once ICMS_ROOT_PATH . "/class/captcha/captcha.php") {
 			include_once (ICMS_ROOT_PATH . "/class/xoopsformloader.php");
 			if ($xoopsConfigUser['use_captcha'] == 1) {
 				$xoopsCaptcha = XoopsCaptcha :: instance();
