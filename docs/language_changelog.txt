@@ -21,6 +21,15 @@ modules/system/language/english/admin/preferences.php
 
 +  define("_MD_AM_UNABLEENCCLOSED","Database Update Failed, You can't change password encryption whilst the site is closed");
 
+language/english/global.php
+-----------------------------------------------------
++  define("_NONE_LOGGER", "None");
+
+
+
+
+
+
 
 ImpressCMS 1.1 (changes from ImpressCMS 1.0)
 =========================================
