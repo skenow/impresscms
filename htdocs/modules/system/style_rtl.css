@@ -196,15 +196,15 @@ form td.head {width: 30%;font-family: Tahoma; direction: rtl;}
  */
 div#logoHead{
 	padding: 0;
-	text-align: left;
+	text-align: right;
 	background: url(images/header-bg.png) repeat-x;
 	border-bottom: 4px solid #ffb500;
 font-family: Tahoma; direction: rtl;}
 div#logoHead span.right{
-	float: left;
+	float: right;
 }
 div#logoHead span.left{
-	float: right;
+	float: left;
 }
 div#navbarCP{
 	background: url(images/bg-lr-titles.gif);
