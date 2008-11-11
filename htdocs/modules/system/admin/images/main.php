@@ -140,7 +140,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
             if ($imgcount > 20) {
                 include_once XOOPS_ROOT_PATH.'/class/pagenav.php';
                 $nav = new XoopsPageNav($imgcount, 20, $start, 'start', 'fct=images&amp;op=listimg&amp;imgcat_id='.$imgcat_id);
-                echo '<div text-align="right">'.$nav->renderNav().'</div>';
+                echo '<div text-align="'._GLOBAL_RIGHT.'">'.$nav->renderNav().'</div>';
             }
             echo '<div style="text-align:center;"><input type="hidden" name="op" value="save" /><input type="hidden" name="fct" value="images" />'.$GLOBALS['xoopsSecurity']->getTokenHTML().'<input type="submit" name="submit" value="'._SUBMIT.'" /></div></form>';
         }
