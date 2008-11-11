@@ -273,7 +273,7 @@ switch ($action) {
         }
         if ( $start > 0 ) {
             $prev = $start - 20;
-            echo '<td align="left">
+            echo '<td align="'._GLOBAL_LEFT.'">
             ';
             $search_url_prev = $search_url."&start=$prev";
             echo '<a href="'.htmlspecialchars($search_url_prev).'">'._SR_PREVIOUS.'</a></td>
@@ -284,7 +284,7 @@ switch ($action) {
         if (false != $has_next) {
             $next = $start + 20;
             $search_url_next = $search_url."&start=$next";
-            echo '<td align="right"><a href="'.htmlspecialchars($search_url_next).'">'._SR_NEXT.'</a></td>
+            echo '<td align="'._GLOBAL_RIGHT.'"><a href="'.htmlspecialchars($search_url_next).'">'._SR_NEXT.'</a></td>
             ';
         }
         echo '

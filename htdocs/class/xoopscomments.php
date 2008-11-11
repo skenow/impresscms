@@ -321,7 +321,7 @@ class XoopsComments extends XoopsObject
 
 	function showTreeHead($width="100%")
 	{
-		echo "<table border='0' class='outer' cellpadding='0' cellspacing='0' align='center' width='$width'><tr class='bg3' align='center'><td colspan='3'>". _CM_REPLIES ."</td></tr><tr class='bg3' align='left'><td width='60%' class='fg2'>". _CM_TITLE ."</td><td width='20%' class='fg2'>". _CM_POSTER ."</td><td class='fg2'>". _CM_POSTED ."</td></tr>";
+		echo "<table border='0' class='outer' cellpadding='0' cellspacing='0' align='center' width='$width'><tr class='bg3' align='center'><td colspan='3'>". _CM_REPLIES ."</td></tr><tr class='bg3' align='"._GLOBAL_LEFT."'><td width='60%' class='fg2'>". _CM_TITLE ."</td><td width='20%' class='fg2'>". _CM_POSTER ."</td><td class='fg2'>". _CM_POSTED ."</td></tr>";
 	}
 
 	function showTreeItem($order, $mode, $color_num)
@@ -338,7 +338,7 @@ class XoopsComments extends XoopsObject
 		} else {
 			$icon = "icons/no_posticon.gif";
 		}
-		echo "<tr class='$bg' align='left'><td>".$prefix."<img src='".XOOPS_URL."/images/".$icon."'>&nbsp;<a href='".$_SERVER['PHP_SELF']."?item_id=".$this->getVar("item_id")."&amp;comment_id=".$this->getVar("comment_id")."&amp;mode=".$mode."&amp;order=".$order."#".$this->getVar("comment_id")."'>".$this->getVar("subject")."</a></td><td><a href='".XOOPS_URL."/userinfo.php?uid=".$this->getVar("user_id")."'>".XoopsUser::getUnameFromId($this->getVar("user_id"))."</a></td><td>".$date."</td></tr>";
+		echo "<tr class='$bg' align='"._GLOBAL_LEFT."'><td>".$prefix."<img src='".XOOPS_URL."/images/".$icon."'>&nbsp;<a href='".$_SERVER['PHP_SELF']."?item_id=".$this->getVar("item_id")."&amp;comment_id=".$this->getVar("comment_id")."&amp;mode=".$mode."&amp;order=".$order."#".$this->getVar("comment_id")."'>".$this->getVar("subject")."</a></td><td><a href='".XOOPS_URL."/userinfo.php?uid=".$this->getVar("user_id")."'>".XoopsUser::getUnameFromId($this->getVar("user_id"))."</a></td><td>".$date."</td></tr>";
 	}
 
 	function showTreeFoot()

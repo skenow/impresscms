@@ -138,7 +138,7 @@ class TinyMCE
 				$this->setting["theme_".$this->setting["theme"]."_toolbar_align"] = $this->config["toolbar_align"];
 				$configured[] = "toolbar_align";
 			}else{
-				$this->setting["theme_".$this->setting["theme"]."_toolbar_align"] = "left";
+				$this->setting["theme_".$this->setting["theme"]."_toolbar_align"] = _GLOBAL_LEFT;
 			}
 			
 			if(isset($this->config["statusbar_location"])) {

@@ -111,7 +111,7 @@ if ($op == 'list') {
 	$imagecategorys =& $imgcat_handler->getObjects();
 	//xoops_cp_header();
 	echo '<div>';
-	echo '<h4 style="text-align:left">'._IMGMANAGER.'</h4>';
+	echo '<h4 style="text-align:'._GLOBAL_LEFT.'">'._IMGMANAGER.'</h4>';
 	echo '<ul>';
 	$catcount = count($imagecategorys);
 	$image_handler =& xoops_gethandler('image');
