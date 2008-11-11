@@ -161,7 +161,7 @@ input.formTextBox { background: #fff; color:inherit; font-size: .8em; font-famil
 /* ===== tables ===== */
 caption {font-style: italic; font-weight: bold;}
 
-th, thead { background-color:#4e4e4e; color:#eeeeee; border:1px solid #AAAAAA; padding:2px; vertical-align:middle; }
+th, thead { background:transparent url(images/bg-lr-titles.gif) repeat scroll 0 0; color:#666; border:1px solid #AAAAAA; padding:2px; vertical-align:middle; }
 .head { background-color:#e3e3f3; color:inherit; border:1px solid #CCC;  padding:2px; font-weight:bold; }
 .even { background-color:#FFFFFF; color:inherit; border: 1px solid #CCCCCC; padding:2px; }
 .odd { background-color: #f1f4fb; color:inherit; border: 1px solid #CCCCCC; padding:2px; }

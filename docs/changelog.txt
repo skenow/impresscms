@@ -6,6 +6,7 @@ ImpressCMS ChangeLog
 
 '''Fixed'''
 * #2245090: Captcha being bypassed
+* #2098718: Sortlinks on Customtag-Table with bad color (sato-san)
 
 '''Added'''
 * Implementing SimplePie as a new library and IcmsSimpleRss extending it for ImpressCMS. (malanciault)
