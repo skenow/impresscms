@@ -116,7 +116,7 @@ h4 { font-size: 1.1em; font-weight: bold;font-family: Tahoma; direction: rtl;}
 /* ===== hypertext links ===== */
 a:link { background-color: transparent; color: #666; font-weight: bold; text-decoration: none;font-family: Tahoma; direction: rtl;}
 a:visited { background-color: transparent; color: #666; font-weight: bold; text-decoration: none;font-family: Tahoma; direction: rtl;}
-a:hover { background-color: transparent; color: #ff9966; font-weight: bold; text-decoration: none;font-family: Tahoma; direction: rtl;}
+a:hover { background-color: transparent; color: #E18A00; font-weight: bold; text-decoration: none;font-family: Tahoma; direction: rtl;}
 
 /* ===== Code and Quote Definition ===== */
 .xoopsCode { background-color: #FAFAFA; color: #006600; font-size: .9em; border: #c2cdd6 1px dashed;font-family: Tahoma; direction: rtl;}

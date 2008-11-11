@@ -102,7 +102,7 @@ h4 { font-size: 1.1em; font-weight: bold;}
 /* ===== hypertext links ===== */
 a:link { background-color: transparent; color: #666; font-weight: bold; text-decoration: none;}
 a:visited { background-color: transparent; color: #666; font-weight: bold; text-decoration: none;}
-a:hover { background-color: transparent; color: #ff9966; font-weight: bold; text-decoration: none;}
+a:hover { background-color: transparent; color: #E18A00; font-weight: bold; text-decoration: none;}
 
 /* ===== Code and Quote Definition ===== */
 .xoopsCode { background-color: #FAFAFA; color: #006600; font-size: .9em; border: #c2cdd6 1px dashed;}
