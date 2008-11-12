@@ -361,15 +361,15 @@ function xoops_module_update_system(&$module) {
 		}
 	    // Adding new function of Captcha
 	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_mode', '_MD_AM_CAPTCHA_MODE', 'image', '_MD_AM_CAPTCHA_MODEDSC', 'select', 'text', 1);
-            $config_id = $GLOBALS['xoopsDB']->getInsertId();
+            $config_id = $db->getInsertId();
             
-            $sql = "INSERT INTO " . $GLOBALS['xoopsDB']->prefix('configoption') . 
+            $sql = "INSERT INTO " . $db->prefix('configoption') . 
                     " (confop_id, confop_name, confop_value, conf_id)" .
                     " VALUES" .
                     " (NULL, '_MD_AM_CAPTCHA_OFF', 'none', {$config_id})," .
                     " (NULL, '_MD_AM_CAPTCHA_IMG', 'image', {$config_id})," .
                     " (NULL, '_MD_AM_CAPTCHA_TXT', 'text', {$config_id})";
-            if (!$GLOBALS['xoopsDB']->queryF( $sql )) {
+            if (!$db->queryF( $sql )) {
                 return false;
             }
 	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_skipmember', '_MD_AM_CAPTCHA_SKIPMEMBER', '', '_MD_AM_CAPTCHA_SKIPMEMBERDSC', 'group_multi', 'array', 2);
@@ -380,9 +380,9 @@ function xoops_module_update_system(&$module) {
 	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_fontsize_min', '_MD_AM_CAPTCHA_FONTMIN', '10', '_MD_AM_CAPTCHA_FONTMINDSC', 'textbox', 'int', 7);
 	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_fontsize_max', '_MD_AM_CAPTCHA_FONTMAX', '12', '_MD_AM_CAPTCHA_FONTMAXDSC', 'textbox', 'int', 8);
 	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_background_type', '_MD_AM_CAPTCHA_BGTYPE', '100', '_MD_AM_CAPTCHA_BGTYPEDSC', 'select', 'text', 9);
-            $config_id = $GLOBALS['xoopsDB']->getInsertId();
+            $config_id = $db->getInsertId();
             
-            $sql2 = "INSERT INTO " . $GLOBALS['xoopsDB']->prefix('configoption') . 
+            $sql2 = "INSERT INTO " . $db->prefix('configoption') . 
                     " (confop_id, confop_name, confop_value, conf_id)" .
                     " VALUES" .
                     " (NULL, '_MD_AM_BAR', '0', {$config_id})," .
@@ -392,11 +392,20 @@ function xoops_module_update_system(&$module) {
                     " (NULL, '_MD_AM_ELLIPSE', '4', {$config_id})," .
                     " (NULL, '_MD_AM_POLYGON', '5', {$config_id})," .
                     " (NULL, '_MD_AM_RANDOM', '100', {$config_id})";
-            if (!$GLOBALS['xoopsDB']->queryF( $sql2 )) {
+            if (!$db->queryF( $sql2 )) {
                 return false;
             }
 	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_background_num', '_MD_AM_CAPTCHA_BGNUM', '50', '_MD_AM_CAPTCHA_BGNUMDSC', 'textbox', 'int', 10);
 	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_polygon_point', '_MD_AM_CAPTCHA_POLPNT', '3', '_MD_AM_CAPTCHA_POLPNTDSC', 'textbox', 'int', 11);
+	
+        $db->queryF("UPDATE `" . $db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'array' WHERE conf_name = 'bad_unames'");
+        $db->queryF("UPDATE `" . $db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'array' WHERE conf_name = 'bad_emails'");
+        $db->queryF("UPDATE `" . $db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'text' WHERE conf_name = 'meta_keywords'");
+        $db->queryF("UPDATE `" . $db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'text' WHERE conf_name = 'meta_description'");
+        $db->queryF("UPDATE `" . $db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'array' WHERE conf_name = 'censor_words'");
+        $db->queryF("UPDATE `" . $db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'array' WHERE conf_name = 'ldap_users_bypass'");
+        $db->queryF("UPDATE `" . $db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'text' WHERE conf_name = 'ldap_field_mapping'");
+	
 	}
 
 	echo "</code>";
