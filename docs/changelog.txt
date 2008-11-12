@@ -17,6 +17,22 @@ ImpressCMS ChangeLog
 * smarty to change a theme&template between RTL and LTR. (stranger)
 * smarty <{$smarty.const._GLOBAL_LEFT}> for templates. (stranger)
 * smarty <{$smarty.const._GLOBAL_RIGHT}> for templates. (stranger)
+* TinyMCE plugin icmsmlcontent. (stranger)
+* Issues with ICMS Captcha Class. (stranger)
+* New preferences category for captcha. (stranger)
+* New option for "Captcha mode" in preferences. (stranger)
+* New option for "Case sensitive" in preferences. (stranger)
+* New option for "Maximum attemps" in preferences. (stranger)
+* New option for "Minimum attemps" in preferences. (stranger)
+* New option for "Minimum font-size" in preferences. (stranger)
+* New option for "Maximum font-size" in preferences. (stranger)
+* New option for "Background type" in preferences. (stranger)
+* New option for "image amounts" in preferences. (stranger)
+* New option for "polygon points" in preferences. (stranger)
+* New option for "check groups" in preferences. (stranger)
+* New option for "skip characters" in preferences. (stranger)
+* New option for "disable captcha" in preferences. (stranger)
+
 
 '''Improved'''
 * If an email notification is sent on PM, the user's email will appear in the From header if he has activated "Allow other users to view my email address" (malanciaut)
@@ -29,6 +45,9 @@ ImpressCMS ChangeLog
 * Removed theme_rtl system at all. (stranger)
 * Updated Snoopy from v1.2.3 to v1.2.4. (stranger)
 * Added check to preferences, if closesite is true (site closed) it is no longer possible to change password encryption until site is reopened. (vaughan)
+* Updated TinyMCE to version 3.2.1. (stranger)
+* Updated TCPDF to version 4.2.007. (stranger)
+* ICMS Captcha Class. (stranger)
 
 '''Changed'''
 * impresstheme is using $icms_values. (stranger)
