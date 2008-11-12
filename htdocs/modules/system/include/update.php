@@ -351,7 +351,56 @@ function xoops_module_update_system(&$module) {
 
         }
   
+    $newDbVersion = 11;
+
+    if ($dbVersion < $newDbVersion) {
+    	echo "Database migrate to version " . $newDbVersion . "<br />";
+        $db = $GLOBALS['xoopsDB'];
+        if (getDbValue($db, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_CAPTCHA"') == 0) {
+		$db->queryF(" INSERT INTO " . $db->prefix("configcategory") . " (confcat_id,confcat_name) VALUES ('11','_MD_AM_CAPTCHA')");
+		}
+	    // Adding new function of Captcha
+	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_mode', '_MD_AM_CAPTCHA_MODE', 'image', '_MD_AM_CAPTCHA_MODEDSC', 'select', 'text', 1);
+            $config_id = $GLOBALS['xoopsDB']->getInsertId();
+            
+            $sql = "INSERT INTO " . $GLOBALS['xoopsDB']->prefix('configoption') . 
+                    " (confop_id, confop_name, confop_value, conf_id)" .
+                    " VALUES" .
+                    " (NULL, '_MD_AM_CAPTCHA_OFF', 'none', {$config_id})," .
+                    " (NULL, '_MD_AM_CAPTCHA_IMG', 'image', {$config_id})," .
+                    " (NULL, '_MD_AM_CAPTCHA_TXT', 'text', {$config_id})";
+            if (!$GLOBALS['xoopsDB']->queryF( $sql )) {
+                return false;
+            }
+	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_skipmember', '_MD_AM_CAPTCHA_SKIPMEMBER', '', '_MD_AM_CAPTCHA_SKIPMEMBERDSC', 'group_multi', 'array', 2);
+	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_casesensitive', '_MD_AM_CAPTCHA_CASESENS', '0', '_MD_AM_CAPTCHA_CASESENSDSC', 'yesno', 'int', 3);
+	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_skip_characters', '_MD_AM_CAPTCHA_SKIPCHAR', '', '_MD_AM_CAPTCHA_SKIPCHARDSC', 'textarea', 'array', 4);
+	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_maxattempt', '_MD_AM_CAPTCHA_MAXATTEMP', '8', '_MD_AM_CAPTCHA_MAXATTEMPDSC', 'textbox', 'int', 5);
+	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_num_chars', '_MD_AM_CAPTCHA_NUMCHARS', '4', '_MD_AM_CAPTCHA_NUMCHARSDSC', 'textbox', 'int', 6);
+	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_fontsize_min', '_MD_AM_CAPTCHA_FONTMIN', '10', '_MD_AM_CAPTCHA_FONTMINDSC', 'textbox', 'int', 7);
+	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_fontsize_max', '_MD_AM_CAPTCHA_FONTMAX', '12', '_MD_AM_CAPTCHA_FONTMAXDSC', 'textbox', 'int', 8);
+	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_background_type', '_MD_AM_CAPTCHA_BGTYPE', '100', '_MD_AM_CAPTCHA_BGTYPEDSC', 'select', 'text', 9);
+            $config_id = $GLOBALS['xoopsDB']->getInsertId();
+            
+            $sql2 = "INSERT INTO " . $GLOBALS['xoopsDB']->prefix('configoption') . 
+                    " (confop_id, confop_name, confop_value, conf_id)" .
+                    " VALUES" .
+                    " (NULL, '_MD_AM_BAR', '0', {$config_id})," .
+                    " (NULL, '_MD_AM_CIRCLE', '1', {$config_id})," .
+                    " (NULL, '_MD_AM_LINE', '2', {$config_id})," .
+                    " (NULL, '_MD_AM_RECTANGLE', '3', {$config_id})," .
+                    " (NULL, '_MD_AM_ELLIPSE', '4', {$config_id})," .
+                    " (NULL, '_MD_AM_POLYGON', '5', {$config_id})," .
+                    " (NULL, '_MD_AM_RANDOM', '100', {$config_id})";
+            if (!$GLOBALS['xoopsDB']->queryF( $sql2 )) {
+                return false;
+            }
+	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_background_num', '_MD_AM_CAPTCHA_BGNUM', '50', '_MD_AM_CAPTCHA_BGNUMDSC', 'textbox', 'int', 10);
+	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_polygon_point', '_MD_AM_CAPTCHA_POLPNT', '3', '_MD_AM_CAPTCHA_POLPNTDSC', 'textbox', 'int', 11);
+	}
+
 	echo "</code>";
+
 
    $feedback = ob_get_clean();
     if (method_exists($module, "setMessage")) {

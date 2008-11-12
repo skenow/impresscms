@@ -115,7 +115,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
     $time = time();
 
 	// RMV-NOTIFY (updated for extra column in table)
-    $dbm->insert("modules", " VALUES (1, '"._MI_SYSTEM_NAME."', 111, ".$time.", 0, 1, 'system', 0, 1, 1, 0, 0, 0, 10)");
+    $dbm->insert("modules", " VALUES (1, '"._MI_SYSTEM_NAME."', 111, ".$time.", 0, 1, 'system', 0, 1, 1, 0, 0, 0, 11)");
 
     foreach ($modversion['templates'] as $tplfile) {
         if ($fp = fopen('../modules/system/templates/'.$tplfile['file'], 'r')) {
@@ -835,6 +835,68 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'use_jsjalali', '_MD_AM_JALALICAL', '0', '_MD_AM_JALALICALDSC', 'yesno', 'int', $p)");
+
+	// Data for Config Category 11 (CAPTCHA Settings)
+	$c=11; // sets config category id
+	$i++;
+	$p=0;
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'captcha_mode', '_MD_AM_CAPTCHA_MODE', 'image', '_MD_AM_CAPTCHA_MODEDSC', 'select', 'text', $p)");
+	// Insert data for Config Options in selection field. (must be placed before $i++)
+    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_CAPTCHA_OFF', 'none', $i)");
+	$ci++;
+    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_CAPTCHA_IMG', 'image', $i)");
+	$ci++;
+    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_CAPTCHA_TXT', 'text', $i)");
+	$ci++;
+	// ----------
+	$i++;
+	$p++;
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'captcha_skipmember', '_MD_AM_CAPTCHA_SKIPMEMBER', '".addslashes(serialize(array('2')))."', '_MD_AM_CAPTCHA_SKIPMEMBERDSC', 'group_multi', 'array', $p)");
+	$i++;
+	$p++;
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'captcha_casesensitive', '_MD_AM_CAPTCHA_CASESENS', '0', '_MD_AM_CAPTCHA_CASESENSDSC', 'yesno', 'int', $p)");
+	$i++;
+	$p++;
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'captcha_skip_characters', '_MD_AM_CAPTCHA_SKIPCHAR', '".addslashes(serialize(array('o', '0', 'i', 'l', '1')))."', '_MD_AM_CAPTCHA_SKIPCHARDSC', 'textarea', 'array', $p)");
+	$i++;
+	$p++;
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'captcha_maxattempt', '_MD_AM_CAPTCHA_MAXATTEMP', '8', '_MD_AM_CAPTCHA_MAXATTEMPDSC', 'textbox', 'int', $p)");
+	$i++;
+	$p++;
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'captcha_num_chars', '_MD_AM_CAPTCHA_NUMCHARS', '4', '_MD_AM_CAPTCHA_NUMCHARSDSC', 'textbox', 'int', $p)");
+	$i++;
+	$p++;
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'captcha_fontsize_min', '_MD_AM_CAPTCHA_FONTMIN', '10', '_MD_AM_CAPTCHA_FONTMINDSC', 'textbox', 'int', $p)");
+	$i++;
+	$p++;
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'captcha_fontsize_max', '_MD_AM_CAPTCHA_FONTMAX', '12', '_MD_AM_CAPTCHA_FONTMAXDSC', 'textbox', 'int', $p)");
+	$i++;
+	$p++;
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'captcha_background_type', '_MD_AM_CAPTCHA_BGTYPE', '100', '_MD_AM_CAPTCHA_BGTYPEDSC', 'select', 'text', $p)");
+	// Insert data for Config Options in selection field. (must be placed before $i++)
+    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_BAR', '0', $i)");
+	$ci++;
+    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_CIRCLE', '1', $i)");
+	$ci++;
+    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_LINE', '2', $i)");
+	$ci++;
+    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_RECTANGLE', '3', $i)");
+	$ci++;
+    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_ELLIPSE', '4', $i)");
+	$ci++;
+    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_POLYGON', '5', $i)");
+	$ci++;
+    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_RANDOM', '100', $i)");
+	$ci++;
+	// ----------
+	$i++;
+	$p++;
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'captcha_background_num', '_MD_AM_CAPTCHA_BGNUM', '50', '_MD_AM_CAPTCHA_BGNUMDSC', 'textbox', 'int', $p)");
+	$i++;
+	$p++;
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'captcha_polygon_point', '_MD_AM_CAPTCHA_POLPNT', '3', '_MD_AM_CAPTCHA_POLPNTDSC', 'textbox', 'int', $p)");
+
+
 
     return $gruops;
 }
