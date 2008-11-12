@@ -206,9 +206,9 @@ switch ($op) {
 		if (@ include_once ICMS_ROOT_PATH . "/class/captcha/captcha.php") {
 			include_once (ICMS_ROOT_PATH . "/class/xoopsformloader.php");
 			if ($xoopsConfigUser['use_captcha'] == 1) {
-				$xoopsCaptcha = XoopsCaptcha :: instance();
-				if (!$xoopsCaptcha->verify()) {
-					$stop = $xoopsCaptcha->getMessage();
+				$icmsCaptcha = IcmsCaptcha :: instance();
+				if (!$icmsCaptcha->verify()) {
+					$stop = $icmsCaptcha->getMessage();
 
 				}
 			}

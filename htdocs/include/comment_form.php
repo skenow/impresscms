@@ -124,7 +124,7 @@ if ('system' != $xoopsModule->getVar('dirname')) {
 }
 // Captcha Hack
 if ( $xoopsConfig['use_captchaf'] == 1 ) {
-$cform->addElement(new XoopsFormCaptcha());
+$cform->addElement(new IcmsFormCaptcha());
 }
 // Captcha Hack
 $button_tray->addElement(new XoopsFormButton('', 'com_dopreview', _PREVIEW, 'submit'));
