@@ -16,6 +16,7 @@ if (!defined('ICMS_ROOT_PATH')) {
 }
 	function Generate_PDF ($content, $doc_title, $doc_keywords){
 	    global $xoopsConfig;
+$myts =& MyTextSanitizer::getInstance();
 require_once ICMS_PDF_LIB_PATH.'/tcpdf.php';
 if(file_exists(ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/pdf.php')) {
 	include_once ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/pdf.php';
@@ -29,7 +30,10 @@ $pdf->SetAuthor(PDF_AUTHOR);
 $pdf->SetTitle($doc_title);
 $pdf->SetSubject($doc_title);
 $pdf->SetKeywords($doc_keywords);
-$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE, PDF_HEADER_STRING);
+	$sitename = $xoopsConfig['sitename'];
+	$siteslogan = $xoopsConfig['slogan'];
+	$pdfheader = $myts->undoHtmlSpecialChars($sitename.' - '.$siteslogan);
+$pdf->SetHeaderData("logo.gif", PDF_HEADER_LOGO_WIDTH, $pdfheader, ICMS_URL);
 
 //set margins
 $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
