@@ -36,6 +36,12 @@
 	margin-right:	-90px;
 }
 
+@media all and (min-width: 0px) {
+head~body #icms-canvas-rightcolumn {
+    margin-right:    -190px;
+}
+}
+
 /* ----------Canvas rules (when columns are visible) ---------- */
 
 #icms-canvas.leftcolumn-layout #icms-canvas-columns, #icms-canvas.threecolumns-layout #icms-canvas-columns { padding-left: 170px; }
