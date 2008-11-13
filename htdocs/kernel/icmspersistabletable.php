@@ -324,6 +324,7 @@ class IcmsPersistableTable {
 						}
 					}
 
+					$aColumn['keyname'] = $column->getKeyName();
 					$aColumn['value'] = $value;
 					$aColumn['class'] = $class;
 					$aColumn['width'] = $column->getWidth();

@@ -34,7 +34,6 @@ ImpressCMS ChangeLog
 * New option for "skip characters" in preferences. (stranger)
 * New option for "disable captcha" in preferences. (stranger)
 
-
 '''Improved'''
 * If an email notification is sent on PM, the user's email will appear in the From header if he has activated "Allow other users to view my email address" (malanciaut)
 * Updated system to version 1.11. (stranger)
@@ -49,6 +48,7 @@ ImpressCMS ChangeLog
 * Updated TinyMCE to version 3.2.1. (stranger)
 * Updated TCPDF to version 4.2.007. (stranger)
 * ICMS Captcha Class. (stranger)
+* Adding coumpound class when building the IcmsPersistabkeTable onbject. Now, instead of <td class="odd"> we will get <td class="<{$column.keyname}> odd"> which offrs much more granularity in the was we want individual columns to be displayed. (malanciault/jmorris)
 
 '''Changed'''
 * impresstheme is using $icms_values. (stranger)
