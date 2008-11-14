@@ -216,13 +216,15 @@ function formatTimestamp($time, $format='l', $timeoffset='')
 			else {$datestring = _DATESTRING;}
 		break;
 	}
-	//Start addition including extended date function
-	if(defined('_EXT_DATE_FUNC') && $xoopsConfig['use_ext_date'] == 1 && _EXT_DATE_FUNC && $format != 'mysql' && file_exists(ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/ext/ext_date_function.php'))
+	$basecheck = defined('_EXT_DATE_FUNC') && $xoopsConfig['use_ext_date'] == 1 && _EXT_DATE_FUNC && $format != 'mysql';
+	if($basecheck && file_exists(ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/local.date.php'))
 	{
-		include_once ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/ext/ext_date_function.php';
+		include_once ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/local.date.php';
 		return ucfirst(ext_date($datestring,$usertimestamp));
-	}
-	else {return ucfirst(date($datestring,$usertimestamp));}
+	}elseif ($basecheck && $xoopsConfig['language'] == 'persian'){
+		return ucfirst(icms_conv_nr2local(jdate($datestring,$usertimestamp)));
+	}else{
+	return ucfirst(date($datestring,$usertimestamp));}
 }
 
 /*
@@ -1738,5 +1740,403 @@ function icms_escapeValue($value, $quotes = true)
 		}
 			return true;
 	}
+function icms_conv_nr2local($string)
+{
+	$basecheck = defined('_USE_LOCAL_NUM') && _USE_LOCAL_NUM;
+	if ( $basecheck ){
+	$string = str_replace(
+		array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'),
+		array(_LCL_NUM0, _LCL_NUM1, _LCL_NUM2, _LCL_NUM3, _LCL_NUM4, _LCL_NUM5, _LCL_NUM6, _LCL_NUM7, _LCL_NUM8, _LCL_NUM9), $string);
+	}
+		return $string;
+}
+function icms_conv_local2nr($string)
+{
+	$basecheck = defined('_USE_LOCAL_NUM') && _USE_LOCAL_NUM;
+	if ( $basecheck ){
+	$string = str_replace(
+		array(_LCL_NUM0, _LCL_NUM1, _LCL_NUM2, _LCL_NUM3, _LCL_NUM4, _LCL_NUM5, _LCL_NUM6, _LCL_NUM7, _LCL_NUM8, _LCL_NUM9), 
+		array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'), 
+		$string);
+	}
+		return $string;
+}
 
+function Icms_getMonthNameById($month_id) {
+	global $xoopsConfig;
+	icms_loadLanguageFile('core', 'calendar');
+	if( defined('_EXT_DATE_FUNC') && $xoopsConfig['use_ext_date'] == 1 && _EXT_DATE_FUNC && $xoopsConfig['language'] == 'persian'){
+	switch($month_id) {
+		case 1:
+			return _CAL_FARVARDIN;
+		break;
+		case 2:
+			return _CAL_ORDIBEHESHT;
+		break;
+		case 3:
+			return _CAL_KHORDAD;
+		break;
+		case 4:
+			return _CAL_TIR;
+		break;
+		case 5:
+			return _CAL_MORDAD;
+		break;
+		case 6:
+			return _CAL_SHAHRIVAR;
+		break;
+		case 7:
+			return _CAL_MEHR;
+		break;
+		case 8:
+			return _CAL_ABAN;
+		break;
+		case 9:
+			return _CAL_AZAR;
+		break;
+		case 10:
+			return _CAL_DEY;
+		break;
+		case 11:
+			return _CAL_BAHMAN;
+		break;
+		case 12:
+			return _CAL_ESFAND;
+		break;
+	}
+	}else{
+	switch($month_id) {
+		case 1:
+			return _CAL_JANUARY;
+		break;
+		case 2:
+			return _CAL_FEBRUARY;
+		break;
+		case 3:
+			return _CAL_MARCH;
+		break;
+		case 4:
+			return _CAL_APRIL;
+		break;
+		case 5:
+			return _CAL_MAY;
+		break;
+		case 6:
+			return _CAL_JUNE;
+		break;
+		case 7:
+			return _CAL_JULY;
+		break;
+		case 8:
+			return _CAL_AUGUST;
+		break;
+		case 9:
+			return _CAL_SEPTEMBER;
+		break;
+		case 10:
+			return _CAL_OCTOBER;
+		break;
+		case 11:
+			return _CAL_NOVEMBER;
+		break;
+		case 12:
+			return _CAL_DECEMBER;
+		break;
+	}
+}
+}
+/* 
+ * These functions are some Persian users related functions
+ * In ImpressCMS we are trying to bring different calendar type in core, so this is the place to place them
+ * If you know other calendars, plaese contact ImpressCMS developpers to add them to core ;-)
+ * 
+ */
+function div($a,$b) {
+    return (int) ($a / $b);
+}
+function gregorian_to_jalali ($g_y, $g_m, $g_d)
+{
+    $g_days_in_month = array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
+    $j_days_in_month = array(31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29);
+
+
+
+
+
+   $gy = $g_y-1600;
+   $gm = $g_m-1;
+   $gd = $g_d-1;
+
+   $g_day_no = 365*$gy+div($gy+3,4)-div($gy+99,100)+div($gy+399,400);
+
+   for ($i=0; $i < $gm; ++$i)
+      $g_day_no += $g_days_in_month[$i];
+   if ($gm>1 && (($gy%4==0 && $gy%100!=0) || ($gy%400==0)))
+      /* leap and after Feb */
+      $g_day_no++;
+   $g_day_no += $gd;
+
+   $j_day_no = $g_day_no-79;
+
+   $j_np = div($j_day_no, 12053); /* 12053 = 365*33 + 32/4 */
+   $j_day_no = $j_day_no % 12053;
+
+   $jy = 979+33*$j_np+4*div($j_day_no,1461); /* 1461 = 365*4 + 4/4 */
+
+   $j_day_no %= 1461;
+
+   if ($j_day_no >= 366) {
+      $jy += div($j_day_no-1, 365);
+      $j_day_no = ($j_day_no-1)%365;
+   }
+
+   for ($i = 0; $i < 11 && $j_day_no >= $j_days_in_month[$i]; ++$i)
+      $j_day_no -= $j_days_in_month[$i];
+   $jm = $i+1;
+   $jd = $j_day_no+1;
+
+   return array($jy, $jm, $jd);
+}
+
+function jalali_to_gregorian($j_y, $j_m, $j_d)
+{
+    $g_days_in_month = array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
+    $j_days_in_month = array(31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29);
+
+
+
+   $jy = $j_y-979;
+   $jm = $j_m-1;
+   $jd = $j_d-1;
+
+   $j_day_no = 365*$jy + div($jy, 33)*8 + div($jy%33+3, 4);
+   for ($i=0; $i < $jm; ++$i)
+      $j_day_no += $j_days_in_month[$i];
+
+   $j_day_no += $jd;
+
+   $g_day_no = $j_day_no+79;
+
+   $gy = 1600 + 400*div($g_day_no, 146097); /* 146097 = 365*400 + 400/4 - 400/100 + 400/400 */
+   $g_day_no = $g_day_no % 146097;
+
+   $leap = true;
+   if ($g_day_no >= 36525) /* 36525 = 365*100 + 100/4 */
+   {
+      $g_day_no--;
+      $gy += 100*div($g_day_no,  36524); /* 36524 = 365*100 + 100/4 - 100/100 */
+      $g_day_no = $g_day_no % 36524;
+
+      if ($g_day_no >= 365)
+         $g_day_no++;
+      else
+         $leap = false;
+   }
+
+   $gy += 4*div($g_day_no, 1461); /* 1461 = 365*4 + 4/4 */
+   $g_day_no %= 1461;
+
+   if ($g_day_no >= 366) {
+      $leap = false;
+
+      $g_day_no--;
+      $gy += div($g_day_no, 365);
+      $g_day_no = $g_day_no % 365;
+   }
+
+   for ($i = 0; $g_day_no >= $g_days_in_month[$i] + ($i == 1 && $leap); $i++)
+      $g_day_no -= $g_days_in_month[$i] + ($i == 1 && $leap);
+   $gm = $i+1;
+   $gd = $g_day_no+1;
+
+   return array($gy, $gm, $gd);
+}
+// Begin of finding the begining day Of months
+function mstart($month,$day,$year)
+{
+	list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
+	list( $year, $month, $day ) = jalali_to_gregorian($jyear, $jmonth, "1");
+	$timestamp=mktime(0,0,0,$month,$day,$year);
+	return date("w",$timestamp);
+}
+// End of finding the begining day Of months
+
+function lastday ($month,$day,$year)
+{
+	$lastdayen=date("d",mktime(0,0,0,$month+1,0,$year));
+	list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
+	$lastdatep=$jday;
+	$jday=$jday2;
+	while($jday2!="1")
+	{
+		if($day<$lastdayen)
+		{
+			$day++;
+			list( $jyear, $jmonth, $jday2 ) = gregorian_to_jalali($year, $month, $day);
+			if($ext_date2=="1") break;
+			if($ext_date2!="1") $lastdatep++;
+		}
+		else
+		{
+			$day=0;
+			$month++;
+			if($month==13)
+			{
+					$month="1";
+					$year++;
+			}
+		}
+
+	}
+	return $lastdatep-1;
+}
+function jmaketime($hour,$minute,$second,$jmonth,$jday,$jyear)
+{
+	$basecheck = defined('_USE_LOCAL_NUM') && _USE_LOCAL_NUM;
+	if ( $basecheck ){
+	$hour = icms_conv_local2nr($hour);
+	$minute = icms_conv_local2nr($minute);
+	$second = icms_conv_local2nr($second);
+	$jmonth = icms_conv_local2nr($jday);
+	$jyear = icms_conv_local2nr($jyear);
+	}
+	list( $year, $month, $day ) = jalali_to_gregorian($jyear, $jmonth, $jday);
+	$i=mktime($hour,$minute,$second,$month,$day,$year);
+	return $i;
+}
+function jdate($type,$maket="now")
+{
+    global $xoopsConfig;
+	icms_loadLanguageFile('core', 'calendar');
+	define("_EXT_TZhours","0");
+	define("_EXT_TZminute","0");
+	$result="";
+	if($maket=="now"){
+		$year=date("Y");
+		$month=date("m");
+		$day=date("d");
+		list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
+		$maket=jmaketime(date("h")+_EXT_TZhours,date("i")+_EXT_TZminute,date("s"),$jmonth,$jday,$jyear);
+	}else{
+		$maket+=_EXT_TZhours*3600+_EXT_TZminute*60;
+		$date=date("Y-m-d",$maket);
+		list( $year, $month, $day ) = preg_split ( '/-/', $date );
+
+		list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
+		}
+
+	$need= $maket;
+	$year=date("Y",$need);
+	$month=date("m",$need);
+	$day=date("d",$need);
+	$i=0;
+	while($i<strlen($type))
+	{
+		$subtype=substr($type,$i,1);
+		switch ($subtype)
+		{
+
+			case "A":
+				$result1=date("a",$need);
+				if($result1=="pm") $result.=_CAL_PM_LONG;
+				else $result.=_CAL_AM_LONG;
+				break;
+
+			case "a":
+				$result1=date("a",$need);
+				if($result1=="pm") $result.=_CAL_PM;
+				else $result.=_CAL_AM;
+				break;
+			case "d":
+				list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
+				if($jday<10)$result1="0".$jday;
+				else 	$result1=$jday;
+				$result.=$result1;
+				break;
+			case "D":
+				$result1=date("D",$need);
+				if($result1=="Sat") $result1=_CAL_SAT;
+				else if($result1=="Sun") $result1=_CAL_SUN;
+				else if($result1=="Mon") $result1=_CAL_MON;
+				else if($result1=="Tue") $result1=_CAL_TUE;
+				else if($result1=="Wed") $result1=_CAL_WED;
+				else if($result1=="Thu") $result1=_CAL_THU;
+                                else if($result1=="Fri") $result1=_CAL_FRI;
+				$result.=$result1;
+				break;
+			case"F":
+				list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
+				$result.=Icms_getMonthNameById($jmonth);
+				break;
+			case "g":
+				$result.=date("g",$need);
+				break;
+			case "G":
+				$result.=date("G",$need);
+				break;
+				case "h":
+				$result.=date("h",$need);
+				break;
+			case "H":
+				$result.=date("H",$need);
+				break;
+			case "i":
+				$result.=date("i",$need);
+				break;
+			case "j":
+				list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
+				$result.=$jday;
+				break;
+			case "l":
+				$result1=date("l",$need);
+				if($result1=="Saturday") $result1=_CAL_SATURDAY;
+				else if($result1=="Sunday") $result1=_CAL_SUNDAY;
+				else if($result1=="Monday") $result1=_CAL_MONDAY;
+				else if($result1=="Tuesday") $result1=_CAL_TUESDAY;
+				else if($result1=="Wednesday") $result1=_CAL_WEDNESDAY;
+				else if($result1=="Thursday") $result1=_CAL_THURSDAY;
+				else if($result1=="Friday") $result1=_CAL_FRIDAY;
+				$result.=$result1;
+				break;
+			case "m":
+				list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
+				if($jmonth<10) $result1="0".$jmonth;
+				else	$result1=$jmonth;
+				$result.=$result1;
+				break;
+			case "M":
+				list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
+				$result.=Icms_getMonthNameById($jmonth);
+				break;
+			case "n":
+				list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
+				$result.=$jmonth;
+				break;
+			case "s":
+				$result.=date("s",$need);
+				break;
+			case "S":
+				$result.=_CAL_Suffix;
+				break;
+			case "t":
+				$result.=lastday ($month,$day,$year);
+				break;
+			case "w":
+				$result.=date("w",$need);
+				break;
+			case "y":
+				list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
+				$result.=substr($jyear,2,4);
+				break;
+			case "Y":
+				list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
+				$result.=$jyear;
+				break;
+			default:
+				$result.=$subtype;
+		}
+	$i++;
+	}
+	return $result;
+}
 ?>

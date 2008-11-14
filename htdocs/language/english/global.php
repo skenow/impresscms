@@ -272,4 +272,17 @@ define('_PDF_LOCAL_FONT', '');
 define('_CALENDAR_TYPE','gregorian'); // this value is for the local java calendar used in this system, if you're not sure about this leave this value as it is!
 define('_CALENDAR','Calendar');
 define('_RETRYPOST','Sorry, a time-out occured. Would you like to post again ?'); // autologin hack GIJ
+// Added since 1.1.1
+// change 0 to 1 if your language has a different numbering than latin`s alphabet
+define("_USE_LOCAL_NUM","0");
+define('_LCL_NUM0','0');
+define('_LCL_NUM1','1');
+define('_LCL_NUM2','2');
+define('_LCL_NUM3','3');
+define('_LCL_NUM4','4');
+define('_LCL_NUM5','5');
+define('_LCL_NUM6','6');
+define('_LCL_NUM7','7');
+define('_LCL_NUM8','8');
+define('_LCL_NUM9','9');
 ?>
