@@ -52,9 +52,9 @@ if($op == 'main')
 		$xoopsTpl->assign('lang_youremail', _US_YOUREMAIL);
 		$xoopsTpl->assign('lang_sendpassword', _US_SENDPASSWORD);
 		$xoopsTpl->assign('lang_rememberme', _US_REMEMBERME);
-		$xoopsTpl->assign('lang_youoid', _MB_SYSTEM_OPENID_URL);
-		$xoopsTpl->assign('lang_login_oid', _MB_SYSTEM_OPENID_LOGIN);
-		$xoopsTpl->assign('lang_back2normoid', _MB_SYSTEM_OPENID_NORMAL_LOGIN);
+		$xoopsTpl->assign('lang_youoid', _US_OPENID_URL);
+		$xoopsTpl->assign('lang_login_oid', _US_OPENID_LOGIN);
+		$xoopsTpl->assign('lang_back2normoid', _US_OPENID_NORMAL_LOGIN);
 		$xoopsTpl->assign('mailpasswd_token', $GLOBALS['xoopsSecurity']->createToken());
 		$config_handler =& xoops_gethandler('config');
 		$xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
