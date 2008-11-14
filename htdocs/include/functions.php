@@ -1397,7 +1397,7 @@ function icms_getLinkedUnameFromId($userid, $name = false, $users = array (), $w
 			$fullname2 = $user->getVar('name');
 			if(($name) && !empty($fullname2)) {$fullname = $user->getVar('name');}
 			if(!empty ($fullname)) {$linkeduser = "$fullname [<a href='".ICMS_URL."/userinfo.php?uid=".$userid."'>".$ts->htmlSpecialChars($username)."</a>]";}
-			else {$linkeduser = "<a href='".ICMS_URL."/userinfo.php?uid=".$userid."'>".ucwords($ts->htmlSpecialChars($username))."</a>";}
+			else {$linkeduser = "<a href='".ICMS_URL."/userinfo.php?uid=".$userid."'>".$ts->htmlSpecialChars($username)."</a>";}
 			// add contact info : email + PM
 			if($withContact)
 			{
@@ -1755,8 +1755,8 @@ function icms_conv_local2nr($string)
 	$basecheck = defined('_USE_LOCAL_NUM') && _USE_LOCAL_NUM;
 	if ( $basecheck ){
 	$string = str_replace(
-		array(_LCL_NUM0, _LCL_NUM1, _LCL_NUM2, _LCL_NUM3, _LCL_NUM4, _LCL_NUM5, _LCL_NUM6, _LCL_NUM7, _LCL_NUM8, _LCL_NUM9), 
-		array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'), 
+		array(_LCL_NUM0, _LCL_NUM1, _LCL_NUM2, _LCL_NUM3, _LCL_NUM4, _LCL_NUM5, _LCL_NUM6, _LCL_NUM7, _LCL_NUM8, _LCL_NUM9),
+		array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'),
 		$string);
 	}
 		return $string;
@@ -1849,7 +1849,7 @@ function Icms_getMonthNameById($month_id) {
  * These functions are some Persian users related functions
  * In ImpressCMS we are trying to bring different calendar type in core, so this is the place to place them
  * If you know other calendars, plaese contact ImpressCMS developpers to add them to core ;-)
- * 
+ *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @copyright (C) 2000  Roozbeh Pournader and Mohammad Toossi
  * @copyright (C) jalali Date function by Milad Rastian (miladmovie AT yahoo DOT com)
