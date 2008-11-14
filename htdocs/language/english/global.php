@@ -208,8 +208,6 @@ define('_LANGCODE', 'en');
 define("XOOPS_USE_MULTIBYTES", "0");
 // change 0 to 1 if this language is a RTL (right to left) language
 define("_ADM_USE_RTL","0");
-// change 0 to 1 if this language has an extended date function
-define("_EXT_DATE_FUNC","0");
 
 define('_MODULES','Modules');
 define('_IMPRESSCMS_PREFS','Preferences');
