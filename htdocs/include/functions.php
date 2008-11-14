@@ -2008,17 +2008,15 @@ function jdate($type,$maket="now")
 {
     global $xoopsConfig;
 	icms_loadLanguageFile('core', 'calendar');
-	define("_EXT_TZhours","0");
-	define("_EXT_TZminute","0");
 	$result="";
 	if($maket=="now"){
 		$year=date("Y");
 		$month=date("m");
 		$day=date("d");
 		list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
-		$maket=jmaketime(date("h")+_EXT_TZhours,date("i")+_EXT_TZminute,date("s"),$jmonth,$jday,$jyear);
+		$maket=jmaketime(date("h")+0,date("i")+0,date("s"),$jmonth,$jday,$jyear);
 	}else{
-		$maket+=_EXT_TZhours*3600+_EXT_TZminute*60;
+		$maket+=0*3600+0*60;
 		$date=date("Y-m-d",$maket);
 		list( $year, $month, $day ) = preg_split ( '/-/', $date );
 
