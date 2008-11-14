@@ -2024,9 +2024,8 @@ function jdate($type,$maket="now")
 		$month=date("m");
 		$day=date("d");
 		list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
-		$maket=jmaketime(date("h")+0,date("i")+0,date("s"),$jmonth,$jday,$jyear);
+		$maket=jmaketime(date("h"),date("i"),date("s"),$jmonth,$jday,$jyear);
 	}else{
-		$maket+=0*3600+0*60;
 		$date=date("Y-m-d",$maket);
 		list( $year, $month, $day ) = preg_split ( '/-/', $date );
 
@@ -2154,15 +2153,22 @@ function jdate($type,$maket="now")
  * @since		1.1.1
  * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
-function ext_date($type)
+function ext_date($type,$maket="now")
 {
     global $xoopsConfig;
 	icms_loadLanguageFile('core', 'calendar');
 	$result="";
+	if($maket=="now"){
 		$year=date("Y");
 		$month=date("m");
 		$day=date("d");
-		$need=mktime(date("H"), date("i"), date("s"), $month, $day, $year);;
+		$maket=mktime(date("H"), date("i"), date("s"), $month, $day, $year);;
+	}else{
+		$date=date("Y-m-d",$maket);
+		list( $year, $month, $day ) = preg_split ( '/-/', $date );
+		}
+
+	$need= $maket;
 	$year=date("Y",$need);
 	$month=date("m",$need);
 	$day=date("d",$need);
