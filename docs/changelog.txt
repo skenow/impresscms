@@ -61,6 +61,7 @@ ImpressCMS ChangeLog
 * Adding coumpound class when building the IcmsPersistabkeTable onbject. Now, instead of <td class="odd"> we will get <td class="<{$column.keyname}> odd"> which offrs much more granularity in the was we want individual columns to be displayed. (malanciault/jmorris)
 * Improved Function "formatTimestamp" To use Jalali Calendar and use ext_date function. (stranger)
 * Removing ucword() in icms_getLinkedUnameFromId() as we don't need to capitalized the first leter ofusername (malanciault/mcdonald3072)
+* Implementing ICMS_SYSTEM_DBVERSION in include/version.php to centralized the definition of the latest dbversion of the system module (malanciault)
 
 '''Changed'''
 * impresstheme is using $icms_values. (stranger)

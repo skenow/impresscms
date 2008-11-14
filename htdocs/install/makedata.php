@@ -14,9 +14,7 @@
 * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
 * @version		$Id$
 */
-/**
- *
- */
+
 include_once './class/dbmanager.php';
 
 // RMV
@@ -115,7 +113,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
     $time = time();
 
 	// RMV-NOTIFY (updated for extra column in table)
-    $dbm->insert("modules", " VALUES (1, '"._MI_SYSTEM_NAME."', 111, ".$time.", 0, 1, 'system', 0, 1, 1, 0, 0, 0, 11)");
+    $dbm->insert("modules", " VALUES (1, '"._MI_SYSTEM_NAME."', 111, ".$time.", 0, 1, 'system', 0, 1, 1, 0, 0, 0, " . ICMS_SYSTEM_DBVERSION . ")");
 
     foreach ($modversion['templates'] as $tplfile) {
         if ($fp = fopen('../modules/system/templates/'.$tplfile['file'], 'r')) {
