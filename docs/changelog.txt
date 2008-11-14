@@ -33,6 +33,16 @@ ImpressCMS ChangeLog
 * New option for "check groups" in preferences. (stranger)
 * New option for "skip characters" in preferences. (stranger)
 * New option for "disable captcha" in preferences. (stranger)
+* New Function "icms_conv_nr2local". (stranger)
+* New Function "icms_conv_local2nr". (stranger)
+* New Function "Icms_getMonthNameById". (stranger)
+* New Function "div". (stranger)
+* New Function "gregorian_to_jalali". (stranger)
+* New Function "jalali_to_gregorian". (stranger)
+* New Function "mstart". (stranger)
+* New Function "lastday". (stranger)
+* New Function "jmaketime". (stranger)
+* New Function "jdate". (stranger)
 
 '''Improved'''
 * If an email notification is sent on PM, the user's email will appear in the From header if he has activated "Allow other users to view my email address" (malanciaut)
@@ -49,6 +59,7 @@ ImpressCMS ChangeLog
 * Updated TCPDF to version 4.2.007. (stranger)
 * ICMS Captcha Class. (stranger)
 * Adding coumpound class when building the IcmsPersistabkeTable onbject. Now, instead of <td class="odd"> we will get <td class="<{$column.keyname}> odd"> which offrs much more granularity in the was we want individual columns to be displayed. (malanciault/jmorris)
+* Improved Function "formatTimestamp" To use Jalali Calendar and use ext_date function. (stranger)
 
 '''Changed'''
 * impresstheme is using $icms_values. (stranger)
