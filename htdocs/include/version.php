@@ -30,7 +30,7 @@ define('ICMS_VERSION_STATUS', 2);
  *
  * Every release has its own build number, incrementable by 1 everytime we make a release
  */
-define('CMS_VERSION_BUILD', 19);
+define('ICMS_VERSION_BUILD', 19);
 
 /**
  * Latest dbversion of the System Module
