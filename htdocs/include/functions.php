@@ -217,9 +217,11 @@ function formatTimestamp($time, $format='l', $timeoffset='')
 		break;
 	}
 	$basecheck = $xoopsConfig['use_ext_date'] == 1 && $format != 'mysql';
-	if($basecheck && file_exists(ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/local.date.php') && function_exists('ext_date'))
+	if($basecheck && file_exists(ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/local.date.php'))
 	{
 		include_once ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/local.date.php';
+		return ucfirst(local_date($datestring,$usertimestamp));
+	}elseif ($basecheck){
 		return ucfirst(ext_date($datestring,$usertimestamp));
 	}elseif ($basecheck && $xoopsConfig['language'] == 'persian'){
 		return ucfirst(icms_conv_nr2local(jdate($datestring,$usertimestamp)));
@@ -2123,7 +2125,7 @@ function jdate($type,$maket="now")
 				$result.=date("s",$need);
 				break;
 			case "S":
-				$result.=_CAL_Suffix;
+				$result.=_CAL_SUFFIX;
 				break;
 			case "t":
 				$result.=lastday ($month,$day,$year);
@@ -2138,6 +2140,128 @@ function jdate($type,$maket="now")
 			case "Y":
 				list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
 				$result.=$jyear;
+				break;
+			default:
+				$result.=$subtype;
+		}
+	$i++;
+	}
+	return $result;
+}
+/**
+ * This function is to convert date() function outputs into local values
+ *
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @since		1.1.1
+ * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ */
+function ext_date($type)
+{
+    global $xoopsConfig;
+	icms_loadLanguageFile('core', 'calendar');
+	$result="";
+		$year=date("Y");
+		$month=date("m");
+		$day=date("d");
+		$maket=mktime(date("H"), date("i"), date("s"), $month, $day, $year);;
+	$need= $maket;
+	$year=date("Y",$need);
+	$month=date("m",$need);
+	$day=date("d",$need);
+	$i=0;
+	while($i<strlen($type))
+	{
+		$subtype=substr($type,$i,1);
+		switch ($subtype)
+		{
+
+			case "A":
+				$result1=date("a",$need);
+				if($result1=="pm") $result.=_CAL_PM_LONG;
+				else $result.=_CAL_AM_LONG;
+				break;
+
+			case "a":
+				$result1=date("a",$need);
+				if($result1=="pm") $result.=_CAL_PM;
+				else $result.=_CAL_AM;
+				break;
+			case "d":
+				if($day<10)$result1="0".$day;
+				else 	$result1=$day;
+				$result.=$result1;
+				break;
+			case "D":
+				$result1=date("D",$need);
+				if($result1=="Sat") $result1=_CAL_SAT;
+				else if($result1=="Sun") $result1=_CAL_SUN;
+				else if($result1=="Mon") $result1=_CAL_MON;
+				else if($result1=="Tue") $result1=_CAL_TUE;
+				else if($result1=="Wed") $result1=_CAL_WED;
+				else if($result1=="Thu") $result1=_CAL_THU;
+                                else if($result1=="Fri") $result1=_CAL_FRI;
+				$result.=$result1;
+				break;
+			case"F":
+				$result.=Icms_getMonthNameById($month);
+				break;
+			case "g":
+				$result.=date("g",$need);
+				break;
+			case "G":
+				$result.=date("G",$need);
+				break;
+				case "h":
+				$result.=date("h",$need);
+				break;
+			case "H":
+				$result.=date("H",$need);
+				break;
+			case "i":
+				$result.=date("i",$need);
+				break;
+			case "j":
+				$result.=$day;
+				break;
+			case "l":
+				$result1=date("l",$need);
+				if($result1=="Saturday") $result1=_CAL_SATURDAY;
+				else if($result1=="Sunday") $result1=_CAL_SUNDAY;
+				else if($result1=="Monday") $result1=_CAL_MONDAY;
+				else if($result1=="Tuesday") $result1=_CAL_TUESDAY;
+				else if($result1=="Wednesday") $result1=_CAL_WEDNESDAY;
+				else if($result1=="Thursday") $result1=_CAL_THURSDAY;
+				else if($result1=="Friday") $result1=_CAL_FRIDAY;
+				$result.=$result1;
+				break;
+			case "m":
+				if($month<10) $result1="0".$month;
+				else	$result1=$month;
+				$result.=$result1;
+				break;
+			case "M":
+				$result.=Icms_getMonthNameById($month);
+				break;
+			case "n":
+				$result.= $month;
+				break;
+			case "s":
+				$result.=date("s",$need);
+				break;
+			case "S":
+				$result.=_CAL_SUFFIX;
+				break;
+			case "t":
+				$result.=date("t",$need);
+				break;
+			case "w":
+				$result.=date("w",$need);
+				break;
+			case "y":
+				$result.=substr($year,2,4);
+				break;
+			case "Y":
+				$result.=$year;
 				break;
 			default:
 				$result.=$subtype;
