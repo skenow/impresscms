@@ -216,8 +216,8 @@ function formatTimestamp($time, $format='l', $timeoffset='')
 			else {$datestring = _DATESTRING;}
 		break;
 	}
-	$basecheck = defined('_EXT_DATE_FUNC') && $xoopsConfig['use_ext_date'] == 1 && _EXT_DATE_FUNC && $format != 'mysql';
-	if($basecheck && file_exists(ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/local.date.php'))
+	$basecheck = $xoopsConfig['use_ext_date'] == 1 && $format != 'mysql';
+	if($basecheck && file_exists(ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/local.date.php') && function_exists('ext_date'))
 	{
 		include_once ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/local.date.php';
 		return ucfirst(ext_date($datestring,$usertimestamp));
