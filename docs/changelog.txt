@@ -2,7 +2,7 @@ ImpressCMS ChangeLog
 
 == Impresscms 1.1.1==
 
-===2008-11-15 : 1.1.1 RC===
+===2008-11-16 : 1.1.1 Beta===
 
 '''Fixed'''
 * #2245090: Captcha being bypassed
