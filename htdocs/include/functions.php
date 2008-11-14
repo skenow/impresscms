@@ -221,7 +221,7 @@ function formatTimestamp($time, $format='l', $timeoffset='')
 	{
 		include_once ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/local.date.php';
 		return ucfirst(local_date($datestring,$usertimestamp));
-	}elseif ($basecheck){
+	}elseif ($basecheck && $xoopsConfig['language'] != 'persian'){
 		return ucfirst(ext_date($datestring,$usertimestamp));
 	}elseif ($basecheck && $xoopsConfig['language'] == 'persian'){
 		return ucfirst(icms_conv_nr2local(jdate($datestring,$usertimestamp)));
@@ -1977,15 +1977,14 @@ function lastday ($month,$day,$year)
 	$lastdayen=date("d",mktime(0,0,0,$month+1,0,$year));
 	list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
 	$lastdatep=$jday;
-	$jday=$jday2;
-	while($jday2!="1")
+	while($jday!="1")
 	{
 		if($day<$lastdayen)
 		{
 			$day++;
-			list( $jyear, $jmonth, $jday2 ) = gregorian_to_jalali($year, $month, $day);
-			if($ext_date2=="1") break;
-			if($ext_date2!="1") $lastdatep++;
+			list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
+			if($jday=="1") break;
+			if($jday="1") $lastdatep++;
 		}
 		else
 		{
@@ -2163,8 +2162,7 @@ function ext_date($type)
 		$year=date("Y");
 		$month=date("m");
 		$day=date("d");
-		$maket=mktime(date("H"), date("i"), date("s"), $month, $day, $year);;
-	$need= $maket;
+		$need=mktime(date("H"), date("i"), date("s"), $month, $day, $year);;
 	$year=date("Y",$need);
 	$month=date("m",$need);
 	$day=date("d",$need);
