@@ -1765,7 +1765,7 @@ function icms_conv_local2nr($string)
 function Icms_getMonthNameById($month_id) {
 	global $xoopsConfig;
 	icms_loadLanguageFile('core', 'calendar');
-	if( defined('_EXT_DATE_FUNC') && $xoopsConfig['use_ext_date'] == 1 && _EXT_DATE_FUNC && $xoopsConfig['language'] == 'persian'){
+	if( $xoopsConfig['use_ext_date'] == 1 && $xoopsConfig['language'] == 'persian'){
 	switch($month_id) {
 		case 1:
 			return _CAL_FARVARDIN;
