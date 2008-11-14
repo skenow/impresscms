@@ -1845,11 +1845,20 @@ function Icms_getMonthNameById($month_id) {
 	}
 }
 }
-/* 
+/**
  * These functions are some Persian users related functions
  * In ImpressCMS we are trying to bring different calendar type in core, so this is the place to place them
  * If you know other calendars, plaese contact ImpressCMS developpers to add them to core ;-)
  * 
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @copyright (C) 2000  Roozbeh Pournader and Mohammad Toossi
+ * @copyright (C) jalali Date function by Milad Rastian (miladmovie AT yahoo DOT com)
+ * @copyright (C) 2003 FARSI PROJECTS GROUP
+ * @since		1.1.1
+ * @author		Roozbeh Pournader and Mohammad Toossi
+ * @author		jalali Date function by Milad Rastian (miladmovie AT yahoo DOT com)
+ * @author		FARSI PROJECTS GROUP
+ * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 function div($a,$b) {
     return (int) ($a / $b);
