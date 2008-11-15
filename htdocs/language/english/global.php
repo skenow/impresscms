@@ -169,6 +169,11 @@ define('_MONTH', '1 month');
 define("_DATESTRING","Y/n/j G:i:s");
 define("_MEDIUMDATESTRING","Y/n/j G:i");
 define("_SHORTDATESTRING","Y/n/j");
+define("_TODAY", "\T\o\d\a\y G:i");
+define("_YESTERDAY", "\Y\e\s\\t\e\\r\d\a\y G:i");
+define("_MONTHDAY", "n/j G:i");
+define("_YEARMONTHDAY", "Y/n/j G:i");
+define("_ELAPSE", "%s ago");
 /*
 The following characters are recognized in the format string:
 a - "am" or "pm"

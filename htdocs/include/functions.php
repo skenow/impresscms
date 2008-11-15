@@ -136,12 +136,49 @@ function xoops_getUserTimestamp($time, $timeoffset="")
 /*
 * Function to display formatted times in user timezone
 */
-function formatTimestamp($time, $format='l', $timeoffset='')
-{
-	global $xoopsConfig, $xoopsUser;
-	$usertimestamp = xoops_getUserTimestamp($time, $timeoffset);
-	switch(strtolower($format))
+	function formatTimestamp($time, $format = "l", $timeoffset = null)
 	{
+	    global $xoopsConfig, $xoopsUser;
+	    
+	    $format_copy = $format;
+	    $format = strtolower($format);
+	    
+	    if ($format == "rss" || $format == "r"){
+        	$TIME_ZONE = "";
+        	if (!empty($GLOBALS['xoopsConfig']['server_TZ'])){
+				$server_TZ = abs(intval($GLOBALS['xoopsConfig']['server_TZ'] * 3600.0));
+				$prefix = ($GLOBALS['xoopsConfig']['server_TZ'] < 0) ?  " -" : " +";
+				$TIME_ZONE = $prefix.date("Hi", $server_TZ);
+			}
+			$date = gmdate("D, d M Y H:i:s", intval($time)) . $TIME_ZONE;
+			return $date;
+    	}
+	    
+	    if ( ($format == "elapse" || $format == "e") && $time < time() ) {
+			$elapse = time() - $time;
+			if ( $days = floor( $elapse / (24 * 3600) ) ) {
+				$num = $days > 1 ? sprintf(_DAYS, $days) : _DAY;
+			} elseif ( $hours = floor( ( $elapse % (24 * 3600) ) / 3600 ) ) {
+				$num = $hours > 1 ? sprintf(_HOURS, $hours) : _HOUR;
+			} elseif ( $minutes = floor( ( $elapse % 3600 ) / 60 ) ) {
+				$num = $minutes > 1 ? sprintf(_MINUTES, $minutes) : _MINUTE;
+			} else {
+				$seconds = $elapse % 60;
+				$num = $seconds > 1 ? sprintf(_SECONDS, $seconds) : _SECOND;
+			}
+			$ret = sprintf(_ELAPSE, icms_conv_nr2local($num));
+	   		return $ret;
+    	}
+    	
+    	// disable user timezone calculation and use default timezone,
+    	// for cache consideration
+    	if ($timeoffset === null) {
+	    	$timeoffset = ($xoopsConfig['default_TZ'] == '') ? '0.0' : $xoopsConfig['default_TZ'];
+    	}
+    	
+	    $usertimestamp = xoops_getUserTimestamp($time, $timeoffset);
+	    
+	    switch ($format) {
 		case 'daynumber':
 			$datestring = 'd';
 		break;
@@ -187,9 +224,6 @@ function formatTimestamp($time, $format='l', $timeoffset='')
 		case 'n':
 			$datestring = 'n';
 		break;
-		case 'rss':
-			$datestring = 'r';
-		break;
 		case 's':
 			$datestring = _SHORTDATESTRING;
 		break;
@@ -211,11 +245,40 @@ function formatTimestamp($time, $format='l', $timeoffset='')
 		case 'Y':
 			$datestring = 'Y';
 		break;
-		default:
-			if($format != '') {$datestring = $format;}
-			else {$datestring = _DATESTRING;}
-		break;
-	}
+        case 'c':
+        case 'custom':
+		    static $current_timestamp, $today_timestamp, $monthy_timestamp;
+        	if (!isset($current_timestamp)) {
+		    	$current_timestamp = xoops_getUserTimestamp(time(), $timeoffset);
+	    	}
+	    	if (!isset($today_timestamp)) {
+		    	$today_timestamp = mktime(0, 0, 0, date("m", $current_timestamp), date("d", $current_timestamp), date("Y", $current_timestamp));
+	    	}
+	    	
+	        if ( abs($elapse_today = $usertimestamp - $today_timestamp) < 24*60*60) {
+				$datestring = ($elapse_today > 0) ? _TODAY : _YESTERDAY;
+			} else {
+		    	if (!isset($monthy_timestamp)) {
+			    	$monthy_timestamp[0] = mktime(0, 0, 0, 0, 0, date("Y", $current_timestamp));
+			    	$monthy_timestamp[1] = mktime(0, 0, 0, 0, 0, date("Y", $current_timestamp) + 1);
+		    	}
+		        if ($usertimestamp >= $monthy_timestamp[0] && $usertimestamp < $monthy_timestamp[1]) {
+					$datestring = _MONTHDAY;
+				} else{
+					$datestring = _YEARMONTHDAY;
+				}
+			}
+	        break;
+	        
+        default:
+	        if ($format != '') {
+	            $datestring = $format_copy;
+	        } else {
+	            $datestring = _DATESTRING;
+	        }
+	        break;
+	    }
+	    
 	$basecheck = $xoopsConfig['use_ext_date'] == 1 && $format != 'mysql';
 	if($basecheck && file_exists(ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/local.date.php'))
 	{
@@ -226,7 +289,8 @@ function formatTimestamp($time, $format='l', $timeoffset='')
 	}elseif ($basecheck && $xoopsConfig['language'] == 'persian'){
 		return ucfirst(icms_conv_nr2local(jdate($datestring,$usertimestamp)));
 	}else{
-	return ucfirst(date($datestring,$usertimestamp));}
+	return ucfirst(date($datestring,$usertimestamp));
+	}
 }
 
 /*
