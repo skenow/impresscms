@@ -284,7 +284,7 @@ function xoops_getUserTimestamp($time, $timeoffset="")
 	{
 		include_once ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/local.date.php';
 		return ucfirst(local_date($datestring,$usertimestamp));
-	}elseif ($basecheck && $xoopsConfig['language'] != 'persian'){
+	}elseif ($basecheck && $xoopsConfig['language'] != 'persian' && $xoopsConfig['language'] != 'english'){
 		return ucfirst(ext_date($datestring,$usertimestamp));
 	}elseif ($basecheck && $xoopsConfig['language'] == 'persian'){
 		return ucfirst(icms_conv_nr2local(jdate($datestring,$usertimestamp)));
