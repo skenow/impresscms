@@ -1831,6 +1831,7 @@ function icms_conv_local2nr($string)
 function Icms_getMonthNameById($month_id) {
 	global $xoopsConfig;
 	icms_loadLanguageFile('core', 'calendar');
+	$month_id = icms_conv_local2nr($month_id);
 	if( $xoopsConfig['use_ext_date'] == 1 && $xoopsConfig['language'] == 'persian'){
 	switch($month_id) {
 		case 1:
