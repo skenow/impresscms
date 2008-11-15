@@ -2255,9 +2255,7 @@ function ext_date($type,$maket="now")
 				else $result.=_CAL_AM;
 				break;
 			case "d":
-				if($day<10)$result1="0".$day;
-				else 	$result1=$day;
-				$result.=$result1;
+				$result.=$day;
 				break;
 			case "D":
 				$result1=date("D",$need);
