@@ -2254,9 +2254,6 @@ function ext_date($type,$maket="now")
 				if($result1=="pm") $result.=_CAL_PM;
 				else $result.=_CAL_AM;
 				break;
-			case "d":
-				$result.=$day;
-				break;
 			case "D":
 				$result1=date("D",$need);
 				if($result1=="Sat") $result1=_CAL_SAT;
@@ -2265,29 +2262,11 @@ function ext_date($type,$maket="now")
 				else if($result1=="Tue") $result1=_CAL_TUE;
 				else if($result1=="Wed") $result1=_CAL_WED;
 				else if($result1=="Thu") $result1=_CAL_THU;
-                                else if($result1=="Fri") $result1=_CAL_FRI;
+                else if($result1=="Fri") $result1=_CAL_FRI;
 				$result.=$result1;
 				break;
 			case"F":
 				$result.=Icms_getMonthNameById($month);
-				break;
-			case "g":
-				$result.=date("g",$need);
-				break;
-			case "G":
-				$result.=date("G",$need);
-				break;
-				case "h":
-				$result.=date("h",$need);
-				break;
-			case "H":
-				$result.=date("H",$need);
-				break;
-			case "i":
-				$result.=date("i",$need);
-				break;
-			case "j":
-				$result.=$day;
 				break;
 			case "l":
 				$result1=date("l",$need);
@@ -2300,34 +2279,11 @@ function ext_date($type,$maket="now")
 				else if($result1=="Friday") $result1=_CAL_FRIDAY;
 				$result.=$result1;
 				break;
-			case "m":
-				if($month<10) $result1="0".$month;
-				else	$result1=$month;
-				$result.=$result1;
-				break;
 			case "M":
 				$result.=Icms_getMonthNameById($month);
 				break;
-			case "n":
-				$result.= $month;
-				break;
-			case "s":
-				$result.=date("s",$need);
-				break;
 			case "S":
 				$result.=_CAL_SUFFIX;
-				break;
-			case "t":
-				$result.=date("t",$need);
-				break;
-			case "w":
-				$result.=date("w",$need);
-				break;
-			case "y":
-				$result.=substr($year,2,4);
-				break;
-			case "Y":
-				$result.=$year;
 				break;
 			default:
 				$result.=$subtype;
