@@ -10,6 +10,8 @@ ImpressCMS ChangeLog
 * #2245744: OpenID registration not possible from user.php (stranger)
 
 '''Added'''
+* TextSanitizer to admin users edit form, for sanitizing signature field when HTML is allowed. (vaughan)
+* choice of xoopsFormTextArea or xoopsFormDHTMLTextArea to edit user form (signature) depends on whether HTML sig is allowed or not. (vaughan)
 * Implementing SimplePie as a new library and IcmsSimpleRss extending it for ImpressCMS. (malanciault)
 * Implementing IcmsPersistableSingleView which provides an easy way to quickly display a single object information. (malanciault)
 * Implementing IcmsPersistableTreeTable extending IcmsPersistableTable with the concept of nested objects. (malanciault)
