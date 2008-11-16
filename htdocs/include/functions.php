@@ -556,18 +556,6 @@ function xoops_getcss($theme = '')
 	if(stristr($uagent, 'mac')) {$str_css = 'styleMAC.css';}
 	elseif(preg_match("/MSIE ([0-9]\.[0-9]{1,2})/i", $uagent)) {$str_css = 'style.css';}
 	else {$str_css = 'styleNN.css';}
-	if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
-	if(is_dir(XOOPS_THEME_PATH.'/'.$theme))
-	{
-		if(file_exists(XOOPS_THEME_PATH.'/'.$theme.'/rtl/'.$str_css)) {return XOOPS_THEME_URL.'/'.$theme.'/rtl/'.$str_css;}
-		elseif(file_exists(XOOPS_THEME_PATH.'/'.$theme.'/rtl/style.css')) {return XOOPS_THEME_URL.'/'.$theme.'/rtl/style.css';}
-	}
-	if(is_dir(XOOPS_THEME_PATH.'/'.$theme.'/css/rtl'))
-	{
-		if(file_exists(XOOPS_THEME_PATH.'/'.$theme.'/css/rtl/'.$str_css)) {return XOOPS_THEME_URL.'/'.$theme.'/css/rtl/'.$str_css;}
-		elseif(file_exists(XOOPS_THEME_PATH.'/'.$theme.'/css/rtl/style.css')) {return XOOPS_THEME_URL.'/'.$theme.'/css/rtl/style.css';}
-	}
-    }else{
 	if(is_dir(XOOPS_THEME_PATH.'/'.$theme))
 	{
 		if(file_exists(XOOPS_THEME_PATH.'/'.$theme.'/'.$str_css)) {return XOOPS_THEME_URL.'/'.$theme.'/'.$str_css;}
@@ -578,7 +566,6 @@ function xoops_getcss($theme = '')
 		if(file_exists(XOOPS_THEME_PATH.'/'.$theme.'/css/'.$str_css)) {return XOOPS_THEME_URL.'/'.$theme.'/css/'.$str_css;}
 		elseif(file_exists(XOOPS_THEME_PATH.'/'.$theme.'/css/style.css')) {return XOOPS_THEME_URL.'/'.$theme.'/css/style.css';}
 	}
-    }
 	return '';
 }
 
