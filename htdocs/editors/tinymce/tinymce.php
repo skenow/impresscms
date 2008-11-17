@@ -75,7 +75,7 @@ class TinyMCE
 		$configured[] = "language";
 		$configured[] = "theme";
 		$configured[] = "mode";
-		$this->setting["plugins"] = "bbcode,mlcontent,xoopsimagemanager,xoopsquotecode,xoopsemotions,table,advimage,advlink,emotions,insertdatetime,preview,media,contextmenu,paste,fullscreen,visualchars,nonbreaking" ;
+		$this->setting["plugins"] = "mlcontent,xoopsimagemanager,xoopsquotecode,xoopsemotions,table,advimage,advlink,emotions,insertdatetime,preview,media,contextmenu,paste,fullscreen,visualchars,nonbreaking" ;
 		$this->setting["plugins"] .= !empty($this->config["plugins"]) ? ",".$this->config["plugins"] : "";
 		$configured[] = "plugins";
 
