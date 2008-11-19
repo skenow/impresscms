@@ -420,8 +420,8 @@ define("_MD_AM_UNABLEENCCLOSED","Database Update Failed, You can't change passwo
 define("_MD_AM_CAPTCHA","Captcha Settings");
 define("_MD_AM_CAPTCHA_MODE","Captcha mode");
 define("_MD_AM_CAPTCHA_MODEDSC","Please select a type of Captcha for your website");
-define("_MD_AM_CAPTCHA_SKIPMEMBER","Select groups");
-define("_MD_AM_CAPTCHA_SKIPMEMBERDSC","Select groups to be controlled by Captcha.<br />Anonymous users will always be checked when Captcha is activated");
+define("_MD_AM_CAPTCHA_SKIPMEMBER","Captcha Free Groups");
+define("_MD_AM_CAPTCHA_SKIPMEMBERDSC","Select groups which are not requiring a captcha. These groups will never see the captcha field.");
 define("_MD_AM_CAPTCHA_CASESENS","Case sensitive");
 define("_MD_AM_CAPTCHA_CASESENSDSC","Characters in image mode are case-sensitive");
 define("_MD_AM_CAPTCHA_MAXATTEMP","Maximum attempts");
