@@ -46,6 +46,7 @@ ImpressCMS ChangeLog
 * New Function "lastday". (stranger)
 * New Function "jmaketime". (stranger)
 * New Function "jdate". (stranger)
+* New Function "icms_getmodulehandler". (stranger)
 
 '''Improved'''
 * If an email notification is sent on PM, the user's email will appear in the From header if he has activated "Allow other users to view my email address" (malanciaut)
@@ -58,7 +59,6 @@ ImpressCMS ChangeLog
 * Removed theme_rtl system at all. (stranger)
 * Updated Snoopy from v1.2.3 to v1.2.4. (stranger)
 * Added check to preferences, if closesite is true (site closed) it is no longer possible to change password encryption until site is reopened. (vaughan)
-* Updated TinyMCE to version 3.2.1. (stranger)
 * Updated TCPDF to version 4.2.007. (stranger)
 * ICMS Captcha Class. (stranger)
 * Adding coumpound class when building the IcmsPersistabkeTable onbject. Now, instead of <td class="odd"> we will get <td class="<{$column.keyname}> odd"> which offrs much more granularity in the was we want individual columns to be displayed. (malanciault/jmorris)
