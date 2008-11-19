@@ -2326,4 +2326,33 @@ function ext_date($type,$maket="now")
 	}
 	return $result;
 }
+function &icms_getmodulehandler($name = null, $module_dir = null, $module_basename = null, $optional = false)
+{
+	static $handlers;
+	// if $module_dir is not specified
+	if(!isset($module_dir))
+	{
+		//if a module is loaded
+		if(isset($GLOBALS['xoopsModule']) && is_object($GLOBALS['xoopsModule'])) {$module_dir = $GLOBALS['xoopsModule']->getVar('dirname');}
+		else {trigger_error('No Module is loaded', E_USER_ERROR);}
+	}
+	else {$module_dir = trim($module_dir);}
+	$name = (!isset($name)) ? $module_dir : trim($name);
+	if(!isset($handlers[$module_dir][$name]))
+	{
+		if($module_dir != 'system') {$hnd_file = ICMS_ROOT_PATH."/modules/{$module_dir}/class/{$name}.php";}
+		else {$hnd_file = ICMS_ROOT_PATH."/modules/{$module_dir}/admin/{$name}/class/{$name}.php";}
+		if(file_exists($hnd_file)) {include_once $hnd_file;}
+		$class = ucfirst(strtolower($module_basename)).ucfirst($name).'Handler';
+		if(class_exists($class)) {$handlers[$module_dir][$name] =& new $class($GLOBALS['xoopsDB']);}
+	}
+	if(!isset($handlers[$module_dir][$name]) && !$optional)
+	{
+		trigger_error('Handler does not exist<br />Module: '.$module_dir.'<br />Name: '.$name, E_USER_ERROR);
+	}
+	if(isset($handlers[$module_dir][$name])) {return $handlers[$module_dir][$name];}
+	$inst = false;
+	return $inst;
+}
+
 ?>
