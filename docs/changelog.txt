@@ -11,6 +11,7 @@ ImpressCMS ChangeLog
 * #2300634: Blocks Positions admin not totaly secured (real_therplima/trabis)
 * #2103517: Multilanguage tags & tables break translation (nachenko/malanciault)
 * #2178956: Empty space when rank doesn't have an icon (malanciault)
+* #2203239: Debugger stops icmsfeed (malanciault)
 
 '''Added'''
 * TextSanitizer to admin users edit form, for sanitizing signature field when HTML is allowed. (vaughan)
