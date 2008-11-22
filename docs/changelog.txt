@@ -9,6 +9,7 @@ ImpressCMS ChangeLog
 * #2098718: Sortlinks on Customtag-Table with bad color (sato-san)
 * #2245744: OpenID registration not possible from user.php (stranger)
 * #2300634: Blocks Positions admin not totaly secured (real_therplima/trabis)
+* #2103517: Multilanguage tags & tables break translation (nachenko/malanciault)
 
 '''Added'''
 * TextSanitizer to admin users edit form, for sanitizing signature field when HTML is allowed. (vaughan)
