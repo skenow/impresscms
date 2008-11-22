@@ -19,6 +19,7 @@ ImpressCMS ChangeLog
 * #2316120: Giving some group access is a high security risk (skenow)
 
 '''Added'''
+* Purifier Filters for GoogleVideo & Local Flash movies (movies that are stored locally on the same server as the site). (vaughan)
 * TextSanitizer to admin users edit form, for sanitizing signature field when HTML is allowed. (vaughan)
 * choice of xoopsFormTextArea or xoopsFormDHTMLTextArea to edit user form (signature) depends on whether HTML sig is allowed or not. (vaughan)
 * Implementing SimplePie as a new library and IcmsSimpleRss extending it for ImpressCMS. (malanciault)
