@@ -430,7 +430,7 @@ if ($op == 'delcat' && $admin) {
 	if ($imgcount > 0) {
 		if ($imgcount > 20) {
 			include_once XOOPS_ROOT_PATH.'/class/pagenav.php';
-			$nav = new XoopsPageNav($imgcount, 20, $start, 'start', 'op=listimg&amp;imgcat_id='.$imgcat_id);
+			$nav = new XoopsPageNav($imgcount, 20, $start, 'start', 'op=listimg&amp;imgcat_id='.$imgcat_id.'&target='.$target);
 			echo '<div style="text-align:right">'.$nav->renderNav().'</div>';
 		}
 	}

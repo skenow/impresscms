@@ -15,6 +15,7 @@ ImpressCMS ChangeLog
 * #2207696: Blocksform: Cancel button not working (malanciault)
 * #2215976: Character ' stripped out of website title (malanciault)
 * #2259562: Edit front end blocks with wrong groups (malanciault/skenow)
+* #2179432: Problem again with xoopsimagebrowser.php (real_therplima)
 
 '''Added'''
 * TextSanitizer to admin users edit form, for sanitizing signature field when HTML is allowed. (vaughan)
