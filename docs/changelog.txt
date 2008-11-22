@@ -66,6 +66,7 @@ ImpressCMS ChangeLog
 * Improved Function "formatTimestamp" To use Jalali Calendar and use ext_date function. (stranger)
 * Removing ucword() in icms_getLinkedUnameFromId() as we don't need to capitalized the first leter ofusername (malanciault/mcdonald3072)
 * Implementing ICMS_SYSTEM_DBVERSION in include/version.php to centralized the definition of the latest dbversion of the system module (malanciault)
+* Improving IcmsVersionChecker to use IcmsSimpleRss instead of Snoopy as we were having problems on some config (malanciault)
 
 '''Changed'''
 * impresstheme is using $icms_values. (stranger)

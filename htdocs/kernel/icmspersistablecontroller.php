@@ -95,6 +95,7 @@ class IcmsPersistableController {
 
     function &doStoreFromDefaultForm(&$icmsObj, $objectid, $created_success_msg, $modified_success_msg, $redirect_page=false, $debug=false)
     {
+		var_dump($_POST['post_content']);
 		$this->postDataToObject($icmsObj);
 
     	if ($icmsObj->isNew()) {
@@ -140,6 +141,8 @@ class IcmsPersistableController {
 
 			}
 		}
+
+icms_debug_vardump($icmsObj->getVar('post_content', 'n')); exit;
 
 		if ($debug) {
 			$storeResult = $this->handler->insertD($icmsObj);
