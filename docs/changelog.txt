@@ -12,6 +12,7 @@ ImpressCMS ChangeLog
 * #2103517: Multilanguage tags & tables break translation (nachenko/malanciault)
 * #2178956: Empty space when rank doesn't have an icon (malanciault)
 * #2203239: Debugger stops icmsfeed (malanciault)
+* #2207696: Blocksform: Cancel button not working (malanciault)
 
 '''Added'''
 * TextSanitizer to admin users edit form, for sanitizing signature field when HTML is allowed. (vaughan)
