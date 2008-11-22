@@ -139,10 +139,10 @@ function xoops_getUserTimestamp($time, $timeoffset="")
 	function formatTimestamp($time, $format = "l", $timeoffset = null)
 	{
 	    global $xoopsConfig, $xoopsUser;
-	    
+
 	    $format_copy = $format;
 	    $format = strtolower($format);
-	    
+
 	    if ($format == "rss" || $format == "r"){
         	$TIME_ZONE = "";
         	if (!empty($GLOBALS['xoopsConfig']['server_TZ'])){
@@ -153,7 +153,7 @@ function xoops_getUserTimestamp($time, $timeoffset="")
 			$date = gmdate("D, d M Y H:i:s", intval($time)) . $TIME_ZONE;
 			return $date;
     	}
-	    
+
 	    if ( ($format == "elapse" || $format == "e") && $time < time() ) {
 			$elapse = time() - $time;
 			if ( $days = floor( $elapse / (24 * 3600) ) ) {
@@ -169,15 +169,15 @@ function xoops_getUserTimestamp($time, $timeoffset="")
 			$ret = sprintf(_ELAPSE, icms_conv_nr2local($num));
 	   		return $ret;
     	}
-    	
+
     	// disable user timezone calculation and use default timezone,
     	// for cache consideration
     	if ($timeoffset === null) {
 	    	$timeoffset = ($xoopsConfig['default_TZ'] == '') ? '0.0' : $xoopsConfig['default_TZ'];
     	}
-    	
+
 	    $usertimestamp = xoops_getUserTimestamp($time, $timeoffset);
-	    
+
 	    switch ($format) {
 		case 'daynumber':
 			$datestring = 'd';
@@ -254,7 +254,7 @@ function xoops_getUserTimestamp($time, $timeoffset="")
 	    	if (!isset($today_timestamp)) {
 		    	$today_timestamp = mktime(0, 0, 0, date("m", $current_timestamp), date("d", $current_timestamp), date("Y", $current_timestamp));
 	    	}
-	    	
+
 	        if ( abs($elapse_today = $usertimestamp - $today_timestamp) < 24*60*60) {
 				$datestring = ($elapse_today > 0) ? _TODAY : _YESTERDAY;
 			} else {
@@ -269,7 +269,7 @@ function xoops_getUserTimestamp($time, $timeoffset="")
 				}
 			}
 	        break;
-	        
+
         default:
 	        if ($format != '') {
 	            $datestring = $format_copy;
@@ -278,7 +278,7 @@ function xoops_getUserTimestamp($time, $timeoffset="")
 	        }
 	        break;
 	    }
-	    
+
 	$basecheck = $xoopsConfig['use_ext_date'] == 1 && $format != 'mysql';
 	if($basecheck && file_exists(ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/local.date.php'))
 	{
@@ -1516,7 +1516,7 @@ function StopXSS($text)
 	{
 		$text = preg_replace("/\(\)/si", "", $text);
 		$text = strip_tags($text);
-		$text = str_replace(array("'","\"",">","<","\\"), "", $text);
+		$text = str_replace(array("\"",">","<","\\"), "", $text);
 	}
 	else
 	{
