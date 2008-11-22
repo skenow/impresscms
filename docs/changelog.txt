@@ -16,6 +16,7 @@ ImpressCMS ChangeLog
 * #2215976: Character ' stripped out of website title (malanciault)
 * #2259562: Edit front end blocks with wrong groups (malanciault/skenow)
 * #2179432: Problem again with xoopsimagebrowser.php (real_therplima)
+* #2316120: Giving some group access is a high security risk (skenow)
 
 '''Added'''
 * TextSanitizer to admin users edit form, for sanitizing signature field when HTML is allowed. (vaughan)
