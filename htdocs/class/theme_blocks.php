@@ -28,11 +28,11 @@ include_once XOOPS_ROOT_PATH . '/class/template.php';
  * @since       2.3.0
  */
 class xos_logos_PageBuilder {
-	
+
 	var $theme = false;
-	
+
 	var $blocks = array ( );
-	
+
 	function xoInit($options = array()) {
 		$this->retrieveBlocks ();
 		if ($this->theme) {
@@ -40,7 +40,7 @@ class xos_logos_PageBuilder {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Called before a specific zone is rendered
 	 */
@@ -51,24 +51,24 @@ class xos_logos_PageBuilder {
 	 */
 	function postRender($zone = '') {
 	}
-	
+
 	function retrieveBlocks() {
 		global $xoops, $xoopsUser, $xoopsModule, $xoopsConfig;
-		
+
 		//Getting the start module and page configured in the admin panel
 		$startMod = ($xoopsConfig ['startpage'] == '--') ? 'system' : $xoopsConfig ['startpage']; //Getting the top page
 
 		//Setting the full and relative url of the actual page
 		$fullurl = "http://" . $_SERVER ["SERVER_NAME"] . $_SERVER ["REQUEST_URI"];
 		$url = substr ( str_replace ( XOOPS_URL, '', $fullurl ), 1 );
-		
+
 		$page_handler = & xoops_gethandler ( 'page' );
 		$criteria = new CriteriaCompo ( new Criteria ( 'page_url', $fullurl ) );
 		if (!empty($url)){
 			$criteria->add(new Criteria ( 'page_url', $url ),'OR');
 		}
 		$pages = $page_handler->getCount ( $criteria );
-		
+
 		if ($pages > 0){ //We have a sym-link defined for this page
 			$pages = $page_handler->getObjects( $criteria );
 			$page = $pages[0];
@@ -89,9 +89,9 @@ class xos_logos_PageBuilder {
 			}
 			$pid = 0;
 		}
-		
 
-		
+
+
 		if ($isStart) {
 			$modid = '0-1';
 		} else {
@@ -117,7 +117,7 @@ class xos_logos_PageBuilder {
 			$modid = $mid . '-' . $pid;
 		}
 		$groups = @is_object ( $xoopsUser ) ? $xoopsUser->getGroups () : array (XOOPS_GROUP_ANONYMOUS );
-		
+
 		# Adding dynamic block area/position system - TheRpLima - 2007-10-21
 		/*
 		$oldzones = array(
@@ -156,20 +156,26 @@ class xos_logos_PageBuilder {
 			list ( $template->caching, $template->cache_lifetime ) = $backup;
 		}
 	}
-	
+
 	function generateCacheId($cache_id) {
 		if ($this->theme) {
 			$cache_id = $this->theme->generateCacheId ( $cache_id );
 		}
 		return $cache_id;
 	}
-	
+
 	function buildBlock($xobject, &$template) {
 		// The lame type workaround will change
 		// bid is added temporarily as workaround for specific block manipulation
+
+
 		global $xoopsUser, $xoopsConfigPersona;
+		$gperm =& xoops_gethandler ( 'groupperm' );
+		$ugroups = @is_object ( $xoopsUser ) ? $xoopsUser->getGroups () : array(XOOPS_GROUP_ANONYMOUS );
+		$agroups = $gperm->getGroupIds('system_admin',5); //XOOPS_SYSTEM_BLOCK constant not available?
+		$uagroups = array_intersect($ugroups, $agroups);
 		if ($xoopsConfigPersona ['editre_block'] == 1) {
-			if ($xoopsUser && $xoopsUser->isAdmin ()) {
+			if ($xoopsUser && count($uagroups) > 0) {
 				$titlebtns = ' <a href="#" onclick="changeDisplay(\'ed_block_'.$xobject->getVar ( 'bid' ).'\'); return false;"><img src="'. XOOPS_URL.'/modules/system/images/edit_med.png" title="'._EDIT.'" alt="'. _EDIT.'"  /></a><div id="ed_block_'.$xobject->getVar ( 'bid' ).'" class="ed_block_box">';
 				$titlebtns .= "<a href=" . XOOPS_URL . "/modules/system/admin.php?fct=blocksadmin&op=changestatus&bid=" . $xobject->getVar ( 'bid' ) . "&sts=1> <img src=" . XOOPS_URL . "/modules/system/images/off.png" . " title=" . _INVISIBLE . " alt=" . _INVISIBLE . "  /> " . _INVISIBLE . "</a><br />";
 				$titlebtns .= "<a href=" . XOOPS_URL . "/modules/system/admin.php?fct=blocksadmin&op=clone&bid=" . $xobject->getVar ( 'bid' ) . "> <img src=" . XOOPS_URL . "/modules/system/images/clone_med.png" . " title=" . _CLONE . " alt=" . _CLONE . "  /> " . _CLONE . "</a><br />";
@@ -184,20 +190,20 @@ class xos_logos_PageBuilder {
 		} else {
 			$titlebtns = '';
 		}
-		
+
 		$block = array (
-		    'id' => $xobject->getVar ( 'bid' ), 
-		    'module' => $xobject->getVar ( 'dirname' ), 
-		    'title' => $xobject->getVar ( 'title' ) . $titlebtns, 
+		    'id' => $xobject->getVar ( 'bid' ),
+		    'module' => $xobject->getVar ( 'dirname' ),
+		    'title' => $xobject->getVar ( 'title' ) . $titlebtns,
 		    //'name' => strtolower( preg_replace( '/[^0-9a-zA-Z_]/', '', str_replace( ' ', '_', $xobject->getVar( 'name' ) ) ) ),
-		    'weight' => $xobject->getVar ( 'weight' ), 
-		    'lastmod' => $xobject->getVar ( 'last_modified' ) 
+		    'weight' => $xobject->getVar ( 'weight' ),
+		    'lastmod' => $xobject->getVar ( 'last_modified' )
 		);
-		
+
 		//global $xoopsLogger;
-		
+
 		$xoopsLogger = & XoopsLogger::instance ();
-		
+
 		$bcachetime = intval ( $xobject->getVar ( 'bcachetime' ) );
 		//$template =& new XoopsTpl();
 		if (empty ( $bcachetime )) {
@@ -208,7 +214,7 @@ class xos_logos_PageBuilder {
 		}
 		$tplName = ($tplName = $xobject->getVar ( 'template' )) ? "db:$tplName" : "db:system_block_dummy.html";
 		$cacheid = $this->generateCacheId ( 'blk_' . $xobject->getVar ( 'dirname', 'n' ) . '_' . $xobject->getVar ( 'bid' )/*, $xobject->getVar( 'show_func', 'n' )*/ );
-		
+
 		if (! $bcachetime || ! $template->is_cached ( $tplName, $cacheid )) {
 			$xoopsLogger->addBlock ( $xobject->getVar ( 'name' ) );
 			if (! ($bresult = $xobject->buildBlock ())) {

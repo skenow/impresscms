@@ -14,6 +14,7 @@ ImpressCMS ChangeLog
 * #2203239: Debugger stops icmsfeed (malanciault)
 * #2207696: Blocksform: Cancel button not working (malanciault)
 * #2215976: Character ' stripped out of website title (malanciault)
+* #2259562: Edit front end blocks with wrong groups (malanciault/skenow)
 
 '''Added'''
 * TextSanitizer to admin users edit form, for sanitizing signature field when HTML is allowed. (vaughan)
