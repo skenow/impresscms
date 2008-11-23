@@ -17,6 +17,7 @@ ImpressCMS ChangeLog
 * #2259562: Edit front end blocks with wrong groups (malanciault/skenow)
 * #2179432: Problem again with xoopsimagebrowser.php (real_therplima)
 * #2316120: Giving some group access is a high security risk (skenow)
+* #2324673: Content page edit button shown on user side for wrong groups (real_therplima)
 
 '''Added'''
 * Purifier Filters for GoogleVideo & Local Flash movies (movies that are stored locally on the same server as the site). (vaughan)
