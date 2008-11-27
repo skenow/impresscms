@@ -417,6 +417,16 @@ function xoops_module_update_system(&$module) {
 
 	}
 
+	$newDbVersion = 12;
+
+    if ($dbVersion < $newDbVersion) {
+    	echo "Database migrate to version " . $newDbVersion . "<br />";
+
+        $db->queryF("UPDATE `" . $db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'array' WHERE conf_name = 'reg_disclaimer'");
+
+	}
+
+
 	echo "</code>";
 
 	 /**
