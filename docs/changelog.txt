@@ -20,6 +20,7 @@ ImpressCMS ChangeLog
 * #2324673: Content page edit button shown on user side for wrong groups (real_therplima)
 * #2333245: Setting managed groups when creating a new group failed (skenow)
 * #2353878: HTML editor for the disclaimer(felix)
+* Security issue in SESSION id (malanciault)
 
 '''Added'''
 * Purifier Filters for GoogleVideo & Local Flash movies (movies that are stored locally on the same server as the site). (vaughan)
