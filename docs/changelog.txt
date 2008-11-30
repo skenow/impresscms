@@ -61,6 +61,7 @@ ImpressCMS ChangeLog
 * New Function "jmaketime". (stranger)
 * New Function "jdate". (stranger)
 * New Function "icms_getmodulehandler". (stranger)
+* New tag which can we used in templates to switch language: change_lang_<lang> will produce the URL to swtich the current page to <lang> (malanciault)
 
 '''Improved'''
 * If an email notification is sent on PM, the user's email will appear in the From header if he has activated "Allow other users to view my email address" (malanciaut)
