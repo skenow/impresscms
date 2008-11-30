@@ -69,7 +69,7 @@ function xoops_module_list() {
     	$mod['hasadmin'] = $module->getVar('hasadmin');
     	$mod['hasmain'] = $module->getVar('hasmain');
     	$mod['isactive'] = $module->getVar('isactive');
-    	$mod['version'] = round($module -> getVar('version') / 100, 2);
+    	$mod['version'] = number_format($module->getVar('version')/100,2,'.','');
     	$mod['status'] = ($module->getInfo('status'))?$module->getInfo('status'):'&nbsp;';
     	$mod['last_update'] = ($module -> getVar('last_update') != 0)?formatTimestamp($module -> getVar('last_update'), 'm'):'&nbsp;';
     	$mod['weight'] = $module->getVar('weight');
@@ -91,7 +91,7 @@ function xoops_module_list() {
             $mod['dirname'] = $module->getInfo('dirname');
             $mod['name'] = $module->getInfo('name');
             $mod['image'] = $module->getInfo('image');
-            $mod['version'] = round($module->getInfo('version'), 2);
+            $mod['version'] = number_format($module->getVar('version')/100,2,'.','');
             $mod['status'] = $module->getInfo('status');
             $icmsAdminTpl->append('avmodules',$mod);
             unset($module);
