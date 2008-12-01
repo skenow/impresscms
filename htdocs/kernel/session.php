@@ -232,6 +232,8 @@ class XoopsSessionHandler
 		$new_session_id = session_id();
 	
 		session_id($old_session_id);
+
+		$this->destroy($old_session_id);
 		session_destroy();
 	
 		session_id($new_session_id);
