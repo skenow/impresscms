@@ -252,8 +252,8 @@ if ($xoopsConfig['use_ssl'] && isset($_POST[$xoopsConfig['sslpost_name']]) && $_
 
 session_set_save_handler(array(&$sess_handler, 'open'), array(&$sess_handler, 'close'), array(&$sess_handler, 'read'), array(&$sess_handler, 'write'), array(&$sess_handler, 'destroy'), array(&$sess_handler, 'gc'));
 
-//session_start();
-$sess_handler->regenerate_id(true); // generate a new session identifier
+session_start();
+session_regenerate_id(true); // generate a new session identifier
 
 // Remove expired session for xoopsUserId
 if ( $xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '' && !isset($_COOKIE[$xoopsConfig['session_name']]) && !empty($_SESSION['xoopsUserId']) ) {
@@ -338,7 +338,7 @@ if (!empty($_SESSION['xoopsUserId'])) {
     if (!is_object($xoopsUser)) {
     	$xoopsUser = '';
 		// Regenrate a new session id and destroy old session
-		$sess_handler->regenerate_id(true);
+		session_regenerate_id(true);
         $_SESSION = array();
 	} else {
     	if ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '') {
