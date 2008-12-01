@@ -1,5 +1,12 @@
 ImpressCMS ChangeLog
 
+== Impresscms 1.1.1==
+
+===2008-12-2 : 1.1.1 RC===
+
+'''Improved'''
+* If an email notification is sent on PM, the user's email will appear in the From header if he has activated "Allow other users to view my email address" (malanciaut)
+
 == Impresscms 1.1==
 
 ===2008-10-31 : 1.1 Final===
