@@ -6,6 +6,7 @@ ImpressCMS ChangeLog
 
 '''Fixed'''
 * #2354713: Security issue in SESSION id (vaughan/malanciault)
+* #2300634: Blocks Positions admin not totaly secured (real_therplima/trabis)
 
 '''Improved'''
 * If an email notification is sent on PM, the user's email will appear in the From header if he has activated "Allow other users to view my email address" (malanciaut)
