@@ -23,6 +23,7 @@ ImpressCMS ChangeLog
 * #2354713: Security issue in SESSION id (vaughan/malanciault)
 * #2316581: When viewing comments in Threaded View it does not display the threads right and add's a > with the title twice (malanciault)
 * #2181891: TinyMCE and XAMPP relative paths (nekro/malanciault)
+* #2339182: Mail to User > missing checkbox (malanciault)
 
 '''Added'''
 * Purifier Filters for GoogleVideo & Local Flash movies (movies that are stored locally on the same server as the site). (vaughan)
