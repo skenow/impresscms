@@ -22,6 +22,7 @@ ImpressCMS ChangeLog
 * #2353878: HTML editor for the disclaimer(felix)
 * #2354713: Security issue in SESSION id (vaughan/malanciault)
 * #2316581: When viewing comments in Threaded View it does not display the threads right and add's a > with the title twice (malanciault)
+* #2181891: TinyMCE and XAMPP relative paths (nekro/malanciault)
 
 '''Added'''
 * Purifier Filters for GoogleVideo & Local Flash movies (movies that are stored locally on the same server as the site). (vaughan)
