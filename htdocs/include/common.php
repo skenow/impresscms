@@ -252,7 +252,7 @@ if ($xoopsConfig['use_ssl'] && isset($_POST[$xoopsConfig['sslpost_name']]) && $_
 
 session_set_save_handler(array(&$sess_handler, 'open'), array(&$sess_handler, 'close'), array(&$sess_handler, 'read'), array(&$sess_handler, 'write'), array(&$sess_handler, 'destroy'), array(&$sess_handler, 'gc'));
 
-session_start();
+//session_start();
 $sess_handler->regenerate_id(true); // generate a new session identifier
 
 // Remove expired session for xoopsUserId
