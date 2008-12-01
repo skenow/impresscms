@@ -4,6 +4,9 @@ ImpressCMS ChangeLog
 
 ===2008-12-2 : 1.1.1 RC===
 
+'''Fixed'''
+* #2354713: Security issue in SESSION id (vaughan/malanciault)
+
 '''Improved'''
 * If an email notification is sent on PM, the user's email will appear in the From header if he has activated "Allow other users to view my email address" (malanciaut)
 
