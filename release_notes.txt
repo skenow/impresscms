@@ -57,12 +57,20 @@ Installing ImpressCMS
 For a complete installation documentation, please refer to /docs/install.html in the ImpressCMS package.
 
 
-Upgrading from a previous version of ImpressCMS or from XOOPS 2.0.18.1 or earlier
+Upgrading from ImpressCMS 1.1 or newer
 ==================================
 
-If you are upgrading from a previous version of ImpressCMS, please follow these instructions:
+1. Get the impresscms_1.1.1 package from the sourceforge file repository.
+2. Copy the content of htdocs/ over your existing files.
+3. On your server, delete the file cache/adminmenu.php
+4. Access <your.site.url>/admin.php
+5. Go in System > Modules and Update the System module
+6. Enjoy!
 
-1. Get the xoops-or-impresscms_1.0-to-impresscms-1.1 package from the sourceforge file repository.
+Upgrading from a ImpressCMS 1.0.3 or older or from XOOPS 2.0.18.1 or earlier
+==================================
+
+1. Get the upgrade_to_impresscms_1.1.1 package from the sourceforge file repository.
 2. Copy the content of htdocs/ over your existing files.
 3. On your server, delete the file cache/adminmenu.php
 4. Access <your.site.url>/upgrade/ with a browser.
