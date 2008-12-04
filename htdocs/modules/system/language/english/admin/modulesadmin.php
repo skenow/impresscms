@@ -62,4 +62,12 @@ define('_MD_AM_MODULESADMIN_SUPPORT', 'Module Support Site');
 define('_MD_AM_MODULESADMIN_STATUS', 'Status');
 define('_MD_AM_MODULESADMIN_MODULENAME', 'Module Name');
 define('_MD_AM_MODULESADMIN_MODULETITLE', 'Module Title');
+define('_MD_AM_FAILINSTEMP','ERROR: Could not insert template <b>%s</b> to the database.');
+define('_MD_AM_INSTEMP','Template <b>%s</b> added to the database. (ID: <b>%s</b>)');
+define('_MD_AM_FAILCOMPTEMP','ERROR: Failed compiling template <b>%s</b>.');
+define('_MD_AM_COMPTEMP','Template <b>%s</b> compiled.');
+define('_MD_AM_FAILINSTEMPFILE','ERROR: Could not insert template <b>%s</b> to the database.');
+define('_MD_AM_INSTEMPFILE','Template <b>%s</b> added to the database. (ID: <b>%s</b>)');
+define('_MD_AM_FAILCOMPTEMPFILE','ERROR: Failed compiling template <b>%s</b>.');
+define('_MD_AM_COMPTEMPFILE','Template <b>%s</b> compiled.');
 ?>
