@@ -70,4 +70,11 @@ define('_MD_AM_FAILINSTEMPFILE','ERROR: Could not insert template <b>%s</b> to t
 define('_MD_AM_INSTEMPFILE','Template <b>%s</b> added to the database. (ID: <b>%s</b>)');
 define('_MD_AM_FAILCOMPTEMPFILE','ERROR: Failed compiling template <b>%s</b>.');
 define('_MD_AM_COMPTEMPFILE','Template <b>%s</b> compiled.');
+define('_MD_AM_RECOMPTEMPFILE','Template <b>%s</b> recompiled.');
+define('_MD_AM_TEMPINS','Template <b>%s</b> inserted to the database.');
+define('_MD_AM_MOD_DATA_UPDATED','Module data updated.');
+define('_MD_AM_MOD_UP_TEM','Updating templates...');
+define('_MD_AM_MOD_REBUILD_BLOCKS','Rebuilding blocks...');
+define('_MD_AM_FUNCT_EXEC','Function <b>%s</b> is successfully executed.');
+define('_MD_AM_FAIL_EXEC','Failed to execute <b>%s</b>.');
 ?>
