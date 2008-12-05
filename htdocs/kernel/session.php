@@ -178,12 +178,8 @@ class XoopsSessionHandler
 	function regenerate_id($delete_old_session = false)
 	{
 		if(!$this->enableRegenerateId) {return true;}
-		$success = session_regenerate_id($delete_old_session);
-
 		$old_session_id = session_id();
-		$success = session_regenerate_id();
-		if($success && $delete_old_session) {$this->destroy($old_session_id);}
-		$success = true;
+		$success = session_regenerate_id($delete_old_session);
 
 		// Force updating cookie for session cookie is not issued correctly in some IE versions or not automatically issued prior to PHP 4.3.3 for all browsers 
 		if($success) {$this->update_cookie();}
