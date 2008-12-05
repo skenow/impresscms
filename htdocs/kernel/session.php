@@ -65,6 +65,10 @@ class XoopsSessionHandler
 	*/
 	var $enableRegenerateId = true;
     
+	var $salt_key = XOOPS_DB_SALT;
+
+	var $check_ip_blocks = 2;
+
 	/**
 	* Constructor
 	* @param object $db reference to the {@link XoopsDatabase} object
@@ -175,11 +179,11 @@ class XoopsSessionHandler
 	* @param   bool $delete_old_session
 	* @return  bool
 	**/
-	function regenerate_id($delete_old_session = false)
+	function icms_sessionRegenerateId($delete_old_session = false)
 	{
-		if(!$this->enableRegenerateId) {return true;}
 		$old_session_id = session_id();
 		$success = session_regenerate_id($delete_old_session);
+		if($this->enableRegenerateId) {$this->destroy($old_session_id);}
 
 		// Force updating cookie for session cookie is not issued correctly in some IE versions or not automatically issued prior to PHP 4.3.3 for all browsers 
 		if($success) {$this->update_cookie();}
@@ -204,6 +208,37 @@ class XoopsSessionHandler
 		$session_id = empty($sess_id) ? session_id() : $sess_id;
 		setcookie($session_name, $session_id, $session_expire ? time() + $session_expire : 0, '/',  '', 0);
 	}
+
+	// Call this when init session.
+	function icms_sessionOpen()
+	{
+		$_SESSION['icms_fprint'] = $this->icms_sessionFingerprint();
+		$this->icms_sessionRegenerateId();
+	}
+	
+	// Call this to check session.
+	function icms_sessionCheck()
+	{
+		$this->icms_sessionRegenerateId();
+		return (isset($_SESSION['icms_fprint']) && $_SESSION['icms_fprint'] == $this->icms_sessionFingerprint());
+	}
+
+	// Internal function. Returns md5 from fingerprint.
+	function icms_sessionFingerprint()
+	{
+		$fingerprint = $this->salt_key;
+		if($this->securityLevel >= 1) {$fingerprint .= $_SERVER['HTTP_USER_AGENT'];}
+		if($this->check_ip_blocks)
+		{
+			$num_blocks = abs(intval($this->check_ip_blocks));
+			if($num_blocks > 4) {$num_blocks = 4;}
+			$blocks = explode('.', $_SERVER['REMOTE_ADDR']);
+			for($i = 0; $i < $num_blocks; $i++) {$fingerprint .= $blocks[$i].'.';}
+		}
+		return md5($fingerprint);
+	}
+
+
 }
 
 ?>
