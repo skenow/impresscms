@@ -1,8 +1,8 @@
 <?php
-if (file_exists('../../../../mainfile.php')) include_once '../../../../mainfile.php';
-if (file_exists('../../../../../mainfile.php')) include_once '../../../../../mainfile.php';
-if (file_exists('../../../../../../mainfile.php')) include_once '../../../../../../mainfile.php';
 if (file_exists('../../../../../../../mainfile.php')) include_once '../../../../../../../mainfile.php';
+if (file_exists('../../../../../../mainfile.php')) include_once '../../../../../../mainfile.php';
+if (file_exists('../../../../../mainfile.php')) include_once '../../../../../mainfile.php';
+if (file_exists('../../../../mainfile.php')) include_once '../../../../mainfile.php';
 if (file_exists('../../../mainfile.php')) include_once '../../../mainfile.php';
 if (file_exists('../../mainfile.php')) include_once '../../mainfile.php';
 if (file_exists('../mainfile.php')) include_once '../mainfile.php';
@@ -10,7 +10,7 @@ if (!defined('XOOPS_ROOT_PATH')) exit();
 
 
 //only site users can access this file or if multilanguage is enabled
-        $easiestml_exist = false;
+        //$easiestml_exist = false;
 	$config_handler =& xoops_gethandler('config');
 	$icmsConfigMultiLanguage =& $config_handler->getConfigsByCat(IM_CONF_MULILANGUAGE);
         $easiestml_exist = ($icmsConfigMultiLanguage['ml_enable'] == '1' && defined('EASIESTML_LANGS') && defined('EASIESTML_LANGNAMES'));
