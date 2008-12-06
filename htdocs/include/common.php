@@ -441,7 +441,7 @@ if ($xoopsConfig['closesite'] == 1) {
 	include XOOPS_ROOT_PATH . "/include/site-closed.php";
 }
 
-if (file_exists('./xoops_version.php')) {
+if (file_exists('./xoops_version.php') || file_exists('./icms_version.php')) {
 	$url_arr = explode( '/', strstr( $_SERVER['PHP_SELF'],'/modules/') );
     $module_handler =& xoops_gethandler('module');
     $xoopsModule =& $module_handler->getByDirname($url_arr[2]);
