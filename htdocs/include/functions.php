@@ -284,9 +284,9 @@ function xoops_getUserTimestamp($time, $timeoffset="")
 	{
 		include_once ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/local.date.php';
 		return ucfirst(local_date($datestring,$usertimestamp));
-	}elseif ($basecheck && $xoopsConfig['language'] != 'persian' && $xoopsConfig['language'] != 'english'){
+	}elseif ($basecheck && _CALENDAR_TYPE != "jalali" && $xoopsConfig['language'] != 'english'){
 		return ucfirst(ext_date($datestring,$usertimestamp));
-	}elseif ($basecheck && $xoopsConfig['language'] == 'persian'){
+	}elseif ($basecheck && defined ('_CALENDAR_TYPE') && _CALENDAR_TYPE == "jalali"){
 		return ucfirst(icms_conv_nr2local(jdate($datestring,$usertimestamp)));
 	}else{
 	return ucfirst(date($datestring,$usertimestamp));
@@ -1819,7 +1819,7 @@ function Icms_getMonthNameById($month_id) {
 	global $xoopsConfig;
 	icms_loadLanguageFile('core', 'calendar');
 	$month_id = icms_conv_local2nr($month_id);
-	if( $xoopsConfig['use_ext_date'] == 1 && $xoopsConfig['language'] == 'persian'){
+	if( $xoopsConfig['use_ext_date'] == 1 && defined ('_CALENDAR_TYPE') && _CALENDAR_TYPE == "jalali"){
 	switch($month_id) {
 		case 1:
 			return _CAL_FARVARDIN;
