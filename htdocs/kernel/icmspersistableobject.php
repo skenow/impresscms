@@ -10,7 +10,7 @@
 * @version		$Id$
 */
 
-if (!defined("XOOPS_ROOT_PATH")) {
+if (!defined("ICMS_ROOT_PATH")) {
     die("ImpressCMS root path not defined");
 }
 
@@ -310,7 +310,7 @@ class IcmsPersistableObject extends XoopsObject {
      *
      * Here is a list of supported editor :
      * 		- tiny : TinyEditor
-     * 		- dhtmltextarea : XOOPS DHTML Area
+     * 		- dhtmltextarea : ImpressCMS DHTML Area
      * 		- fckeditor	: FCKEditor
      * 		- inbetween : InBetween
      * 		- koivi : Koivi
