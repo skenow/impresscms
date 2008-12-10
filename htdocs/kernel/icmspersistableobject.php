@@ -1084,7 +1084,7 @@ class IcmsPersistableObject extends XoopsObject {
 	 * @return content of the template if $fetchOnly or nothing if !$fetchOnly
 	 */
     function displaySingleObject($fetchOnly=false, $userSide=false, $actions=array(), $headerAsRow=true) {
-		//include_once SMARTOBJECT_ROOT_PATH."class/smartobjectsingleview.php";
+		include_once ICMS_ROOT_PATH."/kernel/icmspersistablesingleview.php";
 		$singleview = new IcmsPersistableSingleView($this, $userSide, $actions, $headerAsRow);
 		// add all fields mark as displayOnSingleView except the keyid
 		foreach($this->vars as $key=>$var) {
