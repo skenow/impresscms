@@ -42,7 +42,7 @@ function xoops_header($closehead=true)
 	<title>'.htmlspecialchars($xoopsConfig['sitename']).'</title>
 	<script type="text/javascript" src="'.ICMS_URL.'/include/xoops.js"></script>
 	<script type="text/javascript" src="'.ICMS_URL.'/include/linkexternal.js"></script>
-	<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/icms'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css" />';
+	<link rel="stylesheet" type="text/css" media="all" href="' . ICMS_URL . '/icms'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css" />';
 	$themecss = getcss($xoopsConfig['theme_set']);
 	if ($themecss) {
 		echo '<link rel="stylesheet" type="text/css" media="all" href="'.$themecss.'" />';
@@ -475,7 +475,7 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 	$xoopsTpl->assign(array(
 		'icms_style' => ICMS_URL."/icms".(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?"_rtl":"").".css",
 		'icms_theme' => $theme,
-		'icms_imageurl' => XOOPS_THEME_URL.'/'.$theme.'/',
+		'icms_imageurl' => ICMS_THEME_URL.'/'.$theme.'/',
 		'icms_themecss'=> xoops_getcss($theme),
 		'icms_requesturi' => htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES),
 		'icms_sitename' => htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES),
@@ -484,7 +484,7 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 		'icms_banner' => $xoopsConfig['banners'] ? xoops_getbanner() : '&nbsp;',
 		'icms_pagetitle' => isset($xoopsModule) && is_object($xoopsModule) ? $xoopsModule->getVar('name') : htmlspecialchars( $xoopsConfig['slogan'], ENT_QUOTES),
 		'xoops_theme' => $theme,
-		'xoops_imageurl' => XOOPS_THEME_URL.'/'.$theme.'/',
+		'xoops_imageurl' => ICMS_THEME_URL.'/'.$theme.'/',
 		'xoops_themecss'=> xoops_getcss($theme),
 		'xoops_requesturi' => htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES),
 		'xoops_sitename' => htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES),
@@ -556,15 +556,15 @@ function xoops_getcss($theme = '')
 	if(stristr($uagent, 'mac')) {$str_css = 'styleMAC.css';}
 	elseif(preg_match("/MSIE ([0-9]\.[0-9]{1,2})/i", $uagent)) {$str_css = 'style.css';}
 	else {$str_css = 'styleNN.css';}
-	if(is_dir(XOOPS_THEME_PATH.'/'.$theme))
+	if(is_dir(ICMS_THEME_PATH.'/'.$theme))
 	{
-		if(file_exists(XOOPS_THEME_PATH.'/'.$theme.'/'.$str_css)) {return XOOPS_THEME_URL.'/'.$theme.'/'.$str_css;}
-		elseif(file_exists(XOOPS_THEME_PATH.'/'.$theme.'/style.css')) {return XOOPS_THEME_URL.'/'.$theme.'/style.css';}
+		if(file_exists(ICMS_THEME_PATH.'/'.$theme.'/'.$str_css)) {return ICMS_THEME_URL.'/'.$theme.'/'.$str_css;}
+		elseif(file_exists(ICMS_THEME_PATH.'/'.$theme.'/style.css')) {return ICMS_THEME_URL.'/'.$theme.'/style.css';}
 	}
-	if(is_dir(XOOPS_THEME_PATH.'/'.$theme.'/css'))
+	if(is_dir(ICMS_THEME_PATH.'/'.$theme.'/css'))
 	{
-		if(file_exists(XOOPS_THEME_PATH.'/'.$theme.'/css/'.$str_css)) {return XOOPS_THEME_URL.'/'.$theme.'/css/'.$str_css;}
-		elseif(file_exists(XOOPS_THEME_PATH.'/'.$theme.'/css/style.css')) {return XOOPS_THEME_URL.'/'.$theme.'/css/style.css';}
+		if(file_exists(ICMS_THEME_PATH.'/'.$theme.'/css/'.$str_css)) {return ICMS_THEME_URL.'/'.$theme.'/css/'.$str_css;}
+		elseif(file_exists(ICMS_THEME_PATH.'/'.$theme.'/css/style.css')) {return ICMS_THEME_URL.'/'.$theme.'/css/style.css';}
 	}
 	return '';
 }
@@ -1501,7 +1501,7 @@ function showNav($id = null, $separador = '/', $style="style='font-weight:bold'"
 			{
 				$seo = $content_handler->makeLink($cont);
 				$ret = "<a href='".$url."?page=".$seo."'>".$cont->getVar('content_title')."</a>";
-				if($cont->getVar('content_supid') == 0) {return "<a href='".XOOPS_URL."'>"._CT_NAV."</a> $separador ".$ret;}
+				if($cont->getVar('content_supid') == 0) {return "<a href='".ICMS_URL."'>"._CT_NAV."</a> $separador ".$ret;}
 				elseif($cont->getVar('content_supid') > 0) {$ret = showNav($cont->getVar('content_supid'), $separador)." $separador ".$ret;}
 			}
 		}
@@ -1814,6 +1814,12 @@ function icms_conv_local2nr($string)
 	}
 		return $string;
 }
+/**
+ * Get month name by its ID
+ *
+ * @param int $month_id ID of the month
+ * @return string month name
+ */
 
 function Icms_getMonthNameById($month_id) {
 	global $xoopsConfig;
@@ -2354,5 +2360,149 @@ function &icms_getmodulehandler($name = null, $module_dir = null, $module_basena
 	$inst = false;
 	return $inst;
 }
+/**
+ * Get URL of previous page
+ *
+ * @param string $default default page if previous page is not found
+ * @return string previous page URL
+ */
+function icms_getPreviousPage($default=false) {
+	global $impresscms;
+	if (isset($impresscms->urls['previouspage'])) {
+		return $impresscms->urls['previouspage'];
+	} elseif($default) {
+		return $default;
+	} else {
+		return ICMS_URL;
+	}
+}
 
+/**
+ * Get module admion link
+ *
+ * @param string $moduleName dirname of the moodule
+ * @return string URL of the admin side of the module
+ */
+
+function icms_getModuleAdminLink($moduleName=false) {
+	global $xoopsModule;
+	if (!$moduleName && (isset ($xoopsModule) && is_object($xoopsModule))) {
+		$moduleName = $xoopsModule->getVar('dirname');
+	}
+	$ret = '';
+	if ($moduleName) {
+		$ret = "<a href='" . ICMS_URL . "/modules/$moduleName/admin/index.php'>" . _CO_ICMS_ADMIN_PAGE . "</a>";
+	}
+	return $ret;
+}
+function & icms_getcorehandler($name, $optional = false) {
+	static $handlers;
+	$name = strtolower(trim($name));
+	if (!isset ($handlers[$name])) {
+		if (file_exists($hnd_file = ICMS_ROOT_PATH . '/kernel/' . $name . '.php')) {
+			require_once $hnd_file;
+		}
+		$class = 'ImpressCMS' . ucfirst($name) . 'Handler';
+		if (class_exists($class)) {
+			$handlers[$name] = & new $class ($GLOBALS['xoopsDB'], 'xoops');
+		}
+	}
+	if (!isset ($handlers[$name]) && !$optional) {
+		trigger_error('Class <b>' . $class . '</b> does not exist<br />Handler Name: ' . $name, E_USER_ERROR);
+	}
+	if (isset ($handlers[$name])) {
+		return $handlers[$name];
+	}
+	$inst = false;
+}
+/**
+ * Finds the width and height of an image (can also be a flash file)
+ *
+ * @credit phppp
+ *
+ * @var string $url path of the image file
+ * @var string $width reference to the width
+ * @var string $height reference to the height
+ * @return bool false if impossible to find dimension
+ */
+function icms_getImageSize($url, & $width, & $height) {
+	if (empty ($width) || empty ($height)) {
+		if (!$dimension = @ getimagesize($url)) {
+			return false;
+		}
+		if (!empty ($width)) {
+			$height = $dimension[1] * $width / $dimension[0];
+		}
+		elseif (!empty ($height)) {
+			$width = $dimension[0] * $height / $dimension[1];
+		} else {
+			list ($width, $height) = array (
+				$dimension[0],
+				$dimension[1]
+			);
+		}
+		return true;
+	} else {
+		return true;
+	}
+}
+
+function icms_getCurrentUrls() {
+	$urls = array();
+	$http = ((strpos(ICMS_URL, "https://")) === false) ? ("http://") : ("https://");
+	$phpself = $_SERVER['PHP_SELF'];
+	$httphost = $_SERVER['HTTP_HOST'];
+	$querystring = $_SERVER['QUERY_STRING'];
+	if ($querystring != '') {
+		$querystring = '?' . $querystring;
+	}
+	$currenturl = $http . $httphost . $phpself . $querystring;
+	$urls = array ();
+	$urls['http'] = $http;
+	$urls['httphost'] = $httphost;
+	$urls['phpself'] = $phpself;
+	$urls['querystring'] = $querystring;
+	$urls['full_phpself'] = $http . $httphost . $phpself;
+	$urls['full'] = $currenturl;
+	$urls['isHomePage'] = (ICMS_URL . "/index.php") == ($http . $httphost . $phpself);
+	return $urls;
+}
+/**
+ * Deletes a file
+ *
+ * @var string $dirname path of the file
+ *
+ */
+function icms_deleteFile($dirname) {
+	// Simple delete for a file
+	if (is_file($dirname)) {
+		return unlink($dirname);
+	}
+}
+function icms_imageResize($src, $maxWidth, $maxHeight) {
+	$width = '';
+	$height = '';
+	$type = '';
+	$attr = '';
+	if (file_exists($src)) {
+		list ($width, $height, $type, $attr) = getimagesize($src);
+		if ($width > $maxWidth) {
+			$originalWidth = $width;
+			$width = $maxWidth;
+			$height = $width * $height / $originalWidth;
+		}
+		if ($height > $maxHeight) {
+			$originalHeight = $height;
+			$height = $maxHeight;
+			$width = $height * $width / $originalHeight;
+		}
+		$attr = " width='$width' height='$height'";
+	}
+	return array (
+		$width,
+		$height,
+		$type,
+		$attr
+	);
+}
 ?>
