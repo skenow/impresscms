@@ -2505,4 +2505,33 @@ function icms_imageResize($src, $maxWidth, $maxHeight) {
 		$attr
 	);
 }
+function icms_getModuleName($withLink = true, $forBreadCrumb = false, $moduleName = false) {
+	if (!$moduleName) {
+		global $xoopsModule;
+		$moduleName = $xoopsModule->getVar('dirname');
+	}
+	$icmsModule = icms_getModuleInfo($moduleName);
+	$icmsModuleConfig = icms_getModuleConfig($moduleName);
+	if (!isset ($icmsModule)) {
+		return '';
+	}
+
+	if (!$withLink) {
+		return $icmsModule->getVar('name');
+	} else {
+/*	    $seoMode = smart_getModuleModeSEO($moduleName);
+	    if ($seoMode == 'rewrite') {
+	    	$seoModuleName = smart_getModuleNameForSEO($moduleName);
+	    	$ret = XOOPS_URL . '/' . $seoModuleName . '/';
+	    } elseif ($seoMode == 'pathinfo') {
+	    	$ret = XOOPS_URL . '/modules/' . $moduleName . '/seo.php/' . $seoModuleName . '/';
+	    } else {
+			$ret = XOOPS_URL . '/modules/' . $moduleName . '/';
+	    }
+*/
+		$ret = ICMS_URL . '/modules/' . $moduleName . '/';
+		return '<a href="' . $ret . '">' . $icmsModule->getVar('name') . '</a>';
+	}
+}
+
 ?>
