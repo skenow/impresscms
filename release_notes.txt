@@ -1,4 +1,4 @@
-ImpressCMS 1.1.1 RC 1 release notes
+ImpressCMS 1.1.1 RC 2 release notes
 ==================================
 
 The ImpressCMS Project announces a security fix to its 1.1 Final release.

@@ -2,7 +2,7 @@ ImpressCMS ChangeLog
 
 == Impresscms 1.1.1==
 
-===2008-12-?? : 1.1.1 Final===
+===2008-12-12 : 1.1.1 RC2===
 
 '''Fixed'''
 * #2354713: Security issue in SESSION id (Fixation), previous fix caused problems with some users being logged out sporadically. (vaughan)

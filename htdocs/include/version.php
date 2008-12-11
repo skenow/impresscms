@@ -30,5 +30,5 @@ define("ICMS_VERSION_STATUS", 3);
  *
  * Every release has its own build number, incrementable by 1 everytime we make a release
  */
-define("ICMS_VERSION_BUILD", 19);
+define("ICMS_VERSION_BUILD", 20);
 ?>
