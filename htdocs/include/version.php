@@ -10,7 +10,7 @@
 * @version		$Id: version.php 897 2008-02-15 19:53:31Z malanciault $
 */
 
-define("ICMS_VERSION_NAME",'ImpressCMS 1.1.1 RC 1');
+define("ICMS_VERSION_NAME",'ImpressCMS 1.1.1 RC 2');
 
 // For backward compatibility with XOOPS
 define("XOOPS_VERSION", ICMS_VERSION_NAME);
