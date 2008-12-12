@@ -21,7 +21,7 @@ Web server
 Downloading ImpressCMS
 ==================================
 
-This release can be downloaded here : https://sourceforge.net/project/showfiles.php?group_id=205633&package_id=245707&release_id=644493
+This release can be downloaded here : https://sourceforge.net/project/showfiles.php?group_id=205633&package_id=245707&release_id=646771
 
 
 Using wget command to download the .tar.gz full package
