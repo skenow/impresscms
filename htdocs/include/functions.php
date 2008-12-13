@@ -279,14 +279,14 @@ function xoops_getUserTimestamp($time, $timeoffset="")
 	        break;
 	    }
 
-	$basecheck = $xoopsConfig['use_ext_date'] == 1 && $format != 'mysql';
+	$basecheck = $xoopsConfig['use_ext_date'] == 1 && defined ('_CALENDAR_TYPE') && $format != 'mysql';
 	if($basecheck && file_exists(ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/local.date.php'))
 	{
 		include_once ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/local.date.php';
 		return ucfirst(local_date($datestring,$usertimestamp));
 	}elseif ($basecheck && _CALENDAR_TYPE != "jalali" && $xoopsConfig['language'] != 'english'){
 		return ucfirst(icms_conv_nr2local(ext_date($datestring,$usertimestamp)));
-	}elseif ($basecheck && defined ('_CALENDAR_TYPE') && _CALENDAR_TYPE == "jalali"){
+	}elseif ($basecheck && _CALENDAR_TYPE == "jalali"){
 		return ucfirst(icms_conv_nr2local(jdate($datestring,$usertimestamp)));
 	}else{
 	return ucfirst(date($datestring,$usertimestamp));
