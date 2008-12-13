@@ -2024,25 +2024,25 @@ function jalali_to_gregorian($j_y, $j_m, $j_d)
 function mstart($month,$day,$year)
 {
 	list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
-	list( $year, $month, $day ) = jalali_to_gregorian($jyear, $jmonth, "1");
+	list( $year, $month, $day ) = jalali_to_gregorian($jyear, $jmonth, '1');
 	$timestamp=mktime(0,0,0,$month,$day,$year);
-	return date("w",$timestamp);
+	return date('w',$timestamp);
 }
 // End of finding the begining day Of months
 
 function lastday ($month,$day,$year)
 {
-	$lastdayen=date("d",mktime(0,0,0,$month+1,0,$year));
+	$lastdayen=date('d',mktime(0,0,0,$month+1,0,$year));
 	list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
 	$lastdatep=$jday;
-	while($jday!="1")
+	while($jday!='1')
 	{
 		if($day<$lastdayen)
 		{
 			$day++;
 			list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
-			if($jday=="1") break;
-			if($jday="1") $lastdatep++;
+			if($jday=='1') break;
+			if($jday='1') $lastdatep++;
 		}
 		else
 		{
@@ -2050,7 +2050,7 @@ function lastday ($month,$day,$year)
 			$month++;
 			if($month==13)
 			{
-					$month="1";
+					$month='1';
 					$year++;
 			}
 		}
@@ -2072,28 +2072,28 @@ function jmaketime($hour,$minute,$second,$jmonth,$jday,$jyear)
 	$i=mktime($hour,$minute,$second,$month,$day,$year);
 	return $i;
 }
-function jdate($type,$maket="now")
+function jdate($type,$maket='now')
 {
     global $xoopsConfig;
 	icms_loadLanguageFile('core', 'calendar');
-	$result="";
-	if($maket=="now"){
-		$year=date("Y");
-		$month=date("m");
-		$day=date("d");
+	$result='';
+	if($maket=='now'){
+		$year=date('Y');
+		$month=date('m');
+		$day=date('d');
 		list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
-		$maket=jmaketime(date("h"),date("i"),date("s"),$jmonth,$jday,$jyear);
+		$maket=jmaketime(date('h'),date('i'),date('s'),$jmonth,$jday,$jyear);
 	}else{
-		$date=date("Y-m-d",$maket);
+		$date=date('Y-m-d',$maket);
 		list( $year, $month, $day ) = preg_split ( '/-/', $date );
 
 		list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
 		}
 
 	$need= $maket;
-	$year=date("Y",$need);
-	$month=date("m",$need);
-	$day=date("d",$need);
+	$year=date('Y',$need);
+	$month=date('m',$need);
+	$day=date('d',$need);
 	$i=0;
 	while($i<strlen($type))
 	{
@@ -2101,99 +2101,99 @@ function jdate($type,$maket="now")
 		switch ($subtype)
 		{
 
-			case "A":
-				$result1=date("a",$need);
-				if($result1=="pm") $result.=_CAL_PM_LONG;
+			case 'A':
+				$result1=date('a',$need);
+				if($result1=='pm') $result.=_CAL_PM_LONG;
 				else $result.=_CAL_AM_LONG;
 				break;
 
-			case "a":
-				$result1=date("a",$need);
-				if($result1=="pm") $result.=_CAL_PM;
+			case 'a':
+				$result1=date('a',$need);
+				if($result1=='pm') $result.=_CAL_PM;
 				else $result.=_CAL_AM;
 				break;
-			case "d":
+			case 'd':
 				list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
-				if($jday<10)$result1="0".$jday;
+				if($jday<10)$result1='0'.$jday;
 				else 	$result1=$jday;
 				$result.=$result1;
 				break;
-			case "D":
-				$result1=date("D",$need);
-				if($result1=="Sat") $result1=_CAL_SAT;
-				else if($result1=="Sun") $result1=_CAL_SUN;
-				else if($result1=="Mon") $result1=_CAL_MON;
-				else if($result1=="Tue") $result1=_CAL_TUE;
-				else if($result1=="Wed") $result1=_CAL_WED;
-				else if($result1=="Thu") $result1=_CAL_THU;
-                                else if($result1=="Fri") $result1=_CAL_FRI;
+			case 'D':
+				$result1=date('D',$need);
+				if($result1=='Sat') $result1=_CAL_SAT;
+				else if($result1=='Sun') $result1=_CAL_SUN;
+				else if($result1=='Mon') $result1=_CAL_MON;
+				else if($result1=='Tue') $result1=_CAL_TUE;
+				else if($result1=='Wed') $result1=_CAL_WED;
+				else if($result1=='Thu') $result1=_CAL_THU;
+                                else if($result1=='Fri') $result1=_CAL_FRI;
 				$result.=$result1;
 				break;
-			case"F":
+			case'F':
 				list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
 				$result.=Icms_getMonthNameById($jmonth);
 				break;
-			case "g":
-				$result.=date("g",$need);
+			case 'g':
+				$result.=date('g',$need);
 				break;
-			case "G":
-				$result.=date("G",$need);
+			case 'G':
+				$result.=date('G',$need);
 				break;
-				case "h":
-				$result.=date("h",$need);
+				case 'h':
+				$result.=date('h',$need);
 				break;
-			case "H":
-				$result.=date("H",$need);
+			case 'H':
+				$result.=date('H',$need);
 				break;
-			case "i":
-				$result.=date("i",$need);
+			case 'i':
+				$result.=date('i',$need);
 				break;
-			case "j":
+			case 'j':
 				list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
 				$result.=$jday;
 				break;
-			case "l":
-				$result1=date("l",$need);
-				if($result1=="Saturday") $result1=_CAL_SATURDAY;
-				else if($result1=="Sunday") $result1=_CAL_SUNDAY;
-				else if($result1=="Monday") $result1=_CAL_MONDAY;
-				else if($result1=="Tuesday") $result1=_CAL_TUESDAY;
-				else if($result1=="Wednesday") $result1=_CAL_WEDNESDAY;
-				else if($result1=="Thursday") $result1=_CAL_THURSDAY;
-				else if($result1=="Friday") $result1=_CAL_FRIDAY;
+			case 'l':
+				$result1=date('l',$need);
+				if($result1=='Saturday') $result1=_CAL_SATURDAY;
+				else if($result1=='Sunday') $result1=_CAL_SUNDAY;
+				else if($result1=='Monday') $result1=_CAL_MONDAY;
+				else if($result1=='Tuesday') $result1=_CAL_TUESDAY;
+				else if($result1=='Wednesday') $result1=_CAL_WEDNESDAY;
+				else if($result1=='Thursday') $result1=_CAL_THURSDAY;
+				else if($result1=='Friday') $result1=_CAL_FRIDAY;
 				$result.=$result1;
 				break;
-			case "m":
+			case 'm':
 				list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
-				if($jmonth<10) $result1="0".$jmonth;
+				if($jmonth<10) $result1='0'.$jmonth;
 				else	$result1=$jmonth;
 				$result.=$result1;
 				break;
-			case "M":
+			case 'M':
 				list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
 				$result.=Icms_getMonthNameById($jmonth);
 				break;
-			case "n":
+			case 'n':
 				list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
 				$result.=$jmonth;
 				break;
-			case "s":
-				$result.=date("s",$need);
+			case 's':
+				$result.=date('s',$need);
 				break;
-			case "S":
+			case 'S':
 				$result.=_CAL_SUFFIX;
 				break;
-			case "t":
+			case 't':
 				$result.=lastday ($month,$day,$year);
 				break;
-			case "w":
-				$result.=date("w",$need);
+			case 'w':
+				$result.=date('w',$need);
 				break;
-			case "y":
+			case 'y':
 				list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
 				$result.=substr($jyear,2,4);
 				break;
-			case "Y":
+			case 'Y':
 				list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
 				$result.=$jyear;
 				break;
@@ -2211,25 +2211,25 @@ function jdate($type,$maket="now")
  * @since		1.1.2
  * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
-function ext_date($type,$maket="now")
+function ext_date($type,$maket='now')
 {
     global $xoopsConfig;
 	icms_loadLanguageFile('core', 'calendar');
-	$result="";
-	if($maket=="now"){
-		$year=date("Y");
-		$month=date("m");
-		$day=date("d");
-		$maket=mktime(date("H"), date("i"), date("s"), $month, $day, $year);;
+	$result='';
+	if($maket=='now'){
+		$year=date('Y');
+		$month=date('m');
+		$day=date('d');
+		$maket=mktime(date('H'), date('i'), date('s'), $month, $day, $year);;
 	}else{
-		$date=date("Y-m-d",$maket);
+		$date=date('Y-m-d',$maket);
 		list( $year, $month, $day ) = preg_split ( '/-/', $date );
 		}
 
 	$need= $maket;
-	$year=date("Y",$need);
-	$month=date("n",$need);
-	$day=date("j",$need);
+	$year=date('Y',$need);
+	$month=date('n',$need);
+	$day=date('j',$need);
 	$i=0;
 	while($i<strlen($type))
 	{
@@ -2237,92 +2237,92 @@ function ext_date($type,$maket="now")
 		switch ($subtype)
 		{
 
-			case "A":
-				$result1=date("a",$need);
-				if($result1=="pm") $result.=_CAL_PM_LONG;
+			case 'A':
+				$result1=date('a',$need);
+				if($result1=='pm') $result.=_CAL_PM_LONG;
 				else $result.=_CAL_AM_LONG;
 				break;
 
-			case "a":
-				$result1=date("a",$need);
-				if($result1=="pm") $result.=_CAL_PM;
+			case 'a':
+				$result1=date('a',$need);
+				if($result1=='pm') $result.=_CAL_PM;
 				else $result.=_CAL_AM;
 				break;
-			case "d":
-				if($day<10) $result1="0".$day;
+			case 'd':
+				if($day<10) $result1='0'.$day;
 				else	$result1=$day;
 				$result.=$result1;
 				break;
-			case "D":
-				$result1=date("D",$need);
-				if($result1=="Sat") $result1=_CAL_SAT;
-				else if($result1=="Sun") $result1=_CAL_SUN;
-				else if($result1=="Mon") $result1=_CAL_MON;
-				else if($result1=="Tue") $result1=_CAL_TUE;
-				else if($result1=="Wed") $result1=_CAL_WED;
-				else if($result1=="Thu") $result1=_CAL_THU;
-                else if($result1=="Fri") $result1=_CAL_FRI;
+			case 'D':
+				$result1=date('D',$need);
+				if($result1=='Sat') $result1=_CAL_SAT;
+				else if($result1=='Sun') $result1=_CAL_SUN;
+				else if($result1=='Mon') $result1=_CAL_MON;
+				else if($result1=='Tue') $result1=_CAL_TUE;
+				else if($result1=='Wed') $result1=_CAL_WED;
+				else if($result1=='Thu') $result1=_CAL_THU;
+                else if($result1=='Fri') $result1=_CAL_FRI;
 				$result.=$result1;
 				break;
-			case"F":
+			case'F':
 				$result.=Icms_getMonthNameById($month);
 				break;
-			case "g":
-				$result.=date("g",$need);
+			case 'g':
+				$result.=date('g',$need);
 				break;
-			case "G":
-				$result.=date("G",$need);
+			case 'G':
+				$result.=date('G',$need);
 				break;
-				case "h":
-				$result.=date("h",$need);
+				case 'h':
+				$result.=date('h',$need);
 				break;
-			case "H":
-				$result.=date("H",$need);
+			case 'H':
+				$result.=date('H',$need);
 				break;
-			case "i":
-				$result.=date("i",$need);
+			case 'i':
+				$result.=date('i',$need);
 				break;
-			case "j":
+			case 'j':
 				$result.=$day;
 				break;
-			case "l":
-				$result1=date("l",$need);
-				if($result1=="Saturday") $result1=_CAL_SATURDAY;
-				else if($result1=="Sunday") $result1=_CAL_SUNDAY;
-				else if($result1=="Monday") $result1=_CAL_MONDAY;
-				else if($result1=="Tuesday") $result1=_CAL_TUESDAY;
-				else if($result1=="Wednesday") $result1=_CAL_WEDNESDAY;
-				else if($result1=="Thursday") $result1=_CAL_THURSDAY;
-				else if($result1=="Friday") $result1=_CAL_FRIDAY;
+			case 'l':
+				$result1=date('l',$need);
+				if($result1=='Saturday') $result1=_CAL_SATURDAY;
+				else if($result1=='Sunday') $result1=_CAL_SUNDAY;
+				else if($result1=='Monday') $result1=_CAL_MONDAY;
+				else if($result1=='Tuesday') $result1=_CAL_TUESDAY;
+				else if($result1=='Wednesday') $result1=_CAL_WEDNESDAY;
+				else if($result1=='Thursday') $result1=_CAL_THURSDAY;
+				else if($result1=='Friday') $result1=_CAL_FRIDAY;
 				$result.=$result1;
 				break;
-			case "m":
-				if($month<10) $result1="0".$month;
+			case 'm':
+				if($month<10) $result1='0'.$month;
 				else	$result1=$month;
 				$result.=$result1;
 				break;
-			case "M":
+			case 'M':
 				$result.=Icms_getMonthNameById($month);
 				break;
-			case "n":
+			case 'n':
 				$result.= $month;
 				break;
-			case "s":
-				$result.=date("s",$need);
+			case 's':
+				$result.=date('s',$need);
 				break;
-			case "S":
+			case 'S':
 				$result.=_CAL_SUFFIX;
 				break;
-			case "t":
-				$result.=date("t",$need);
+			case 't':
+				$result.=date('t',$need);
 				break;
-			case "w":
-				$result.=date("w",$need);
+			case 'w':
+				$result.=date('w',$need);
 				break;
-			case "y":
+			case 'y':
 				$result.=substr($year,2,4);
 				break;
-			case "Y":
+			case 'Y':
 				$result.=$year;
 				break;
 			default:
