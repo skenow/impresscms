@@ -285,7 +285,7 @@ function xoops_getUserTimestamp($time, $timeoffset="")
 		include_once ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/local.date.php';
 		return ucfirst(local_date($datestring,$usertimestamp));
 	}elseif ($basecheck && _CALENDAR_TYPE != "jalali" && $xoopsConfig['language'] != 'english'){
-		return ucfirst(ext_date($datestring,$usertimestamp));
+		return ucfirst(icms_conv_nr2local(ext_date($datestring,$usertimestamp)));
 	}elseif ($basecheck && defined ('_CALENDAR_TYPE') && _CALENDAR_TYPE == "jalali"){
 		return ucfirst(icms_conv_nr2local(jdate($datestring,$usertimestamp)));
 	}else{
@@ -1914,7 +1914,7 @@ function Icms_getMonthNameById($month_id) {
  * @copyright (C) 2000  Roozbeh Pournader and Mohammad Toossi
  * @copyright (C) jalali Date function by Milad Rastian (miladmovie AT yahoo DOT com)
  * @copyright (C) 2003 FARSI PROJECTS GROUP
- * @since		1.1.1
+ * @since		1.1.2
  * @author		Roozbeh Pournader and Mohammad Toossi
  * @author		jalali Date function by Milad Rastian (miladmovie AT yahoo DOT com)
  * @author		FARSI PROJECTS GROUP
@@ -2208,7 +2208,7 @@ function jdate($type,$maket="now")
  * This function is to convert date() function outputs into local values
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @since		1.1.1
+ * @since		1.1.2
  * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  */
 function ext_date($type,$maket="now")
