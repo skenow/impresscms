@@ -62,7 +62,7 @@ if (is_object($xoopsUser) && $easiestml_exist) {
     <table border="0" cellpadding="4" cellspacing="0">
     <tr><td class="title">{#icmsmlcontent_dlg.subtitle}</td></tr>
     <tr><td class="title"><?php langDropdown(); ?></td></tr>
-    <tr><td nowrap="nowrap"><textarea name="mltext" type="text" id="mltext" value="" style="width: 370px;height:200px; vertical-align: middle;"></textarea></td></tr>
+    <tr><td nowrap="nowrap"><textarea name="mltext" type="text" id="mltext" value="" style="width: 370px;height:220px; vertical-align: middle;"></textarea></td></tr>
     <tr><td align="right">
         <input type="button" name="insert" id="insert" value="{#insert}" onclick="IcmsmlcontentDialog.insertMLC();" />
         <input type="button" name="cancel" id="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();" />
