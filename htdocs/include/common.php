@@ -40,7 +40,7 @@ if (!defined('ICMS_GROUP_ANONYMOUS')) {
 /**
  * Creating ICMS specific constants
  */
-define('ICMS_PRELOAD_PATH', XOOPS_ROOT_PATH . '/preload');
+define('ICMS_PRELOAD_PATH', XOOPS_ROOT_PATH . '/preloads');
 define('ICMS_PURIFIER_CACHE', ICMS_TRUST_PATH.'/cache/htmlpurifier');
 
 // ################# Creation of the IcmsPreloadHandler ##############
