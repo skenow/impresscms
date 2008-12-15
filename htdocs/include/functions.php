@@ -869,7 +869,7 @@ function icms_copyr($source, $dest)
 		// Skip pointers
 		if($entry == '.' || $entry == '..') {continue;}
 		// Deep copy directories
-		if(is_dir("$source/$entry") && ($dest !== "$source/$entry")) {copyr("$source/$entry", "$dest/$entry");}
+		if(is_dir("$source/$entry") && ($dest !== "$source/$entry")) {copy("$source/$entry", "$dest/$entry");}
 		else {copy("$source/$entry", "$dest/$entry");}
 	}
 	// Clean up
