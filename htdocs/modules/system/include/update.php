@@ -427,6 +427,19 @@ function xoops_module_update_system(&$module) {
 	}
 
 
+	$newDbVersion = 13;
+
+    if ($dbVersion < $newDbVersion) {
+    	echo "Database migrate to version " . $newDbVersion . "<br />";
+		icms_copyr(ICMS_ROOT_PATH.'/preload', ICMS_ROOT_PATH.'/preloads');
+		if (is_file(ICMS_ROOT_PATH.'/preloads')){
+			icms_deleteFile(ICMS_ROOT_PATH.'/preload');
+		}
+		
+	}
+
+
+
 	echo "</code>";
 
 	 /**
