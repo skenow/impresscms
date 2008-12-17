@@ -264,13 +264,9 @@ function addItem(itemurl, name, target, cat) {
 }
 //-->
 </script>
-<?php		if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
-	echo '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/icms_rtl.css" />';
-	echo '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/modules/system/style_rtl.css" />';
-	   } else {
-	echo '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/icms.css" />';
-	echo '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/modules/system/style.css" />';
-           }
+<?php
+	echo '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/icms'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css" />';
+	echo '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/modules/system/style'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css" />';
 ?>
 <style type="text/css">
 .tabberlive .tabbertabhide {

@@ -70,8 +70,8 @@ echo '<meta http-equiv="content-type" content="text/html; charset='._CHARSET.'" 
 echo '<meta http-equiv="content-language" content="'._LANGCODE.'" />';
 echo '<title>'.htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES).' Administration</title>';
 echo '<script type="text/javascript" src="'.XOOPS_URL.'/include/xoops.js"></script>';
-echo '<link rel="stylesheet" type="text/css" media="all" href="'.XOOPS_URL.'/modules/system/style.css" />';
-echo '<link rel="stylesheet" type="text/css" media="all" href="'.XOOPS_URL.'/xoops.css" />';
+echo '<link rel="stylesheet" type="text/css" media="all" href="'.XOOPS_URL.'/modules/system/style'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css" />';
+echo '<link rel="stylesheet" type="text/css" media="all" href="'.XOOPS_URL.'/icms'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css" />';
 ?>
 
 <script language="javascript" type="text/javascript">

@@ -473,7 +473,7 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 	$xoopsTpl =& $xoTheme->template;
 
 	$xoopsTpl->assign(array(
-		'icms_style' => ICMS_URL."/icms".(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?"_rtl":"").".css",
+		'icms_style' => ICMS_URL.'/icms'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css',
 		'icms_theme' => $theme,
 		'icms_imageurl' => ICMS_THEME_URL.'/'.$theme.'/',
 		'icms_themecss'=> xoops_getcss($theme),
