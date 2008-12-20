@@ -379,10 +379,10 @@ function impresscms_get_adminmenu() {
 			}
 			$subs = array ('title' => _PREFERENCES, 'link' => XOOPS_URL . '/modules/system/admin.php?fct=preferences&op=showmod&mod=' . $module->mid () );
 			$rtn ['subs'] [] = $subs;
-		} else {
+		}/* else {
 			$rtn ['hassubs'] = 0;
 			unset ( $rtn ['subs'] );
-		}
+		}*/
 		if ($module->dirname () == 'system') {
 			$systemadm = true;
 		}
