@@ -235,9 +235,12 @@ $xoopsUserIsAdmin = false;
 $member_handler =& xoops_gethandler('member');
 global $sess_handler;
 $sess_handler =& xoops_gethandler('session');
-if ($xoopsConfig['use_ssl'] && isset($_POST[$xoopsConfig['sslpost_name']]) && $_POST[$xoopsConfig['sslpost_name']] != '') {
+if($xoopsConfig['use_ssl'] && isset($_POST[$xoopsConfig['sslpost_name']]) && $_POST[$xoopsConfig['sslpost_name']] != '')
+{
 	session_id($_POST[$xoopsConfig['sslpost_name']]);
-} elseif ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '' && $xoopsConfig['session_expire'] > 0) {
+}
+elseif($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '' && $xoopsConfig['session_expire'] > 0)
+{
 	if (isset($_COOKIE[$xoopsConfig['session_name']])) {
     	session_id($_COOKIE[$xoopsConfig['session_name']]);
 	}
@@ -247,6 +250,9 @@ if ($xoopsConfig['use_ssl'] && isset($_POST[$xoopsConfig['sslpost_name']]) && $_
     @ini_set('session.gc_maxlifetime', $xoopsConfig['session_expire'] * 60);
 }
 session_set_save_handler(array(&$sess_handler, 'open'), array(&$sess_handler, 'close'), array(&$sess_handler, 'read'), array(&$sess_handler, 'write'), array(&$sess_handler, 'destroy'), array(&$sess_handler, 'gc'));
+
+if($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '') {session_name($xoopsConfig['session_name']);}
+else {session_name(substr($xoopsConfig['sitename'], 0, 10));}
 session_start();
 
 // Remove expired session for xoopsUserId
