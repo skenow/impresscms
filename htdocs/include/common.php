@@ -252,7 +252,7 @@ elseif($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '' && $x
 session_set_save_handler(array(&$sess_handler, 'open'), array(&$sess_handler, 'close'), array(&$sess_handler, 'read'), array(&$sess_handler, 'write'), array(&$sess_handler, 'destroy'), array(&$sess_handler, 'gc'));
 
 if($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '') {session_name($xoopsConfig['session_name']);}
-else {session_name(substr($xoopsConfig['sitename'], 0, 10));}
+else {session_name("ICMSSESSION");}
 session_start();
 
 // Remove expired session for xoopsUserId
