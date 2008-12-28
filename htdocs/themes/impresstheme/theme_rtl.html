@@ -7,13 +7,13 @@
 	*}>
 	<{assign var=theme_top_order value=lrc}>
 	<{assign var=theme_bottom_order value=lcr}>
-
+	
 <!-- Theme name -->
 	<{assign var=theme_name value=$xoTheme->folderName}>
 
 <!-- Title and meta -->
 	<title><{if $xoops_pagetitle !=''}><{$xoops_pagetitle}> : <{/if}><{$xoops_sitename}></title>
-	<meta http-equiv="content-type" content="text/html; charset=<{$xoops_charset}>" />
+	<meta http-equiv="content-type" content="text/html; charset=<{$xoops_charset}>" />	
 	<meta name="robots" content="<{$xoops_meta_robots}>" />
 	<meta name="keywords" content="<{$xoops_meta_keywords}>" />
 	<meta name="description" content="<{$xoops_meta_description}>" />
@@ -21,14 +21,14 @@
 	<meta name="author" content="<{$xoops_meta_author}>" />
 	<meta name="copyright" content="<{$xoops_meta_copyright}>" />
 	<meta name="generator" content="ImpressCMS" />
-
+	
 <!-- Favicon -->
 	<link rel="shortcut icon" type="image/ico" href="<{xoImgUrl icons/favicon.ico}>" />
 	<link rel="icon" type="image/png" href="<{xoImgUrl icons/icon.png}>" />
-
+	
 <!-- Sheet Css -->
-	<link rel="stylesheet" type="text/css" media="all" title="Style sheet" href="<{xoImgUrl  /style.css}>" />
-
+	<link rel="stylesheet" type="text/css" media="all" title="Style sheet" href="<{xoImgUrl  /rtl/style.css}>" />
+	
 <!-- Module Header -->
 <{$xoops_module_header}>
 </head>
@@ -44,27 +44,27 @@
 <div id="icms-canvas"<{if $columns_layout}> class="<{$columns_layout}>"<{/if}>>
 	<!-- Header -->
     <div id="icms-header">
-	    <div id="icms-headerlogo"><a href="<{xoAppUrl /}>" title=""><img src="<{xoImgUrl img/logo.png}>" alt="<{$xoops_sitename}>" /></a></div>
+	    <div id="icms-headerlogo"><a href="<{xoAppUrl /}>" title=""><img src="<{xoImgUrl img/logo_rtl.png}>" alt="<{$xoops_sitename}>" /></a></div>
 	    <div id="icms-headerbanner"><{$xoops_banner}></div>
     </div>
 	<!-- Header menu (optional) -->
 	<div id="icms-globalnav">
 		<ul>
-		  <li><a href="http://www.impresscms.org/" title="<{$smarty.const.THEME_ImpressCMS_DESC}>"><{$smarty.const._IMPRESSCMS_HOME}></a></li>
-		  <li><a href="http://community.impresscms.org/" title="<{$smarty.const.THEME_Community_DESC}>"><{$smarty.const._IMPRESSCMS_COMMUNITY}></a></li>
-		  <li><a href="http://addons.impresscms.org/" title="<{$smarty.const.THEME_Addons_DESC}>"><{$smarty.const._IMPRESSCMS_ADDONS}></a></li>
-		  <li><a href="http://wiki.impresscms.org/" title="<{$smarty.const.THEME_Wiki_DESC}>"><{$smarty.const._IMPRESSCMS_WIKI}></a></li>
-		  <li><a href="http://blog.impresscms.org/" title="<{$smarty.const.THEME_Blogs_DESC}>"><{$smarty.const._IMPRESSCMS_BLOG}></a></li>
 		  <li><a href="http://www.impresscms.org/donations/" title="<{$smarty.const.THEME_Support_DESC}>"><{$smarty.const._IMPRESSCMS_Support}></a></li>
+		  <li><a href="http://blog.impresscms.org/" title="<{$smarty.const.THEME_Blogs_DESC}>"><{$smarty.const._IMPRESSCMS_BLOG}></a></li>
+		  <li><a href="http://wiki.impresscms.org/" title="<{$smarty.const.THEME_Wiki_DESC}>"><{$smarty.const._IMPRESSCMS_WIKI}></a></li>
+		  <li><a href="http://addons.impresscms.org/" title="<{$smarty.const.THEME_Addons_DESC}>"><{$smarty.const._IMPRESSCMS_ADDONS}></a></li>
+		  <li><a href="http://community.impresscms.org/" title="<{$smarty.const.THEME_Community_DESC}>"><{$smarty.const._IMPRESSCMS_COMMUNITY}></a></li>
+		  <li><a href="http://www.impresscms.org/" title="<{$smarty.const.THEME_ImpressCMS_DESC}>"><{$smarty.const._IMPRESSCMS_HOME}></a></li>
 	  </ul>
 	</div>
 	<!-- Content -->
 	<div id="icms-canvas-content">
 		<div id="icms-canvas-columns">
-			<!-- Left column -->
-			<{if $xoBlocks.canvas_left}>
-			<{includeq file="$theme_name/blockszone.html" blocks=$xoBlocks.canvas_left
-				zoneClass='icms-canvas-column' zoneId='icms-canvas-leftcolumn'
+			<!-- Right column -->
+			<{if $xoBlocks.canvas_right}>
+			<{includeq file="$theme_name/blockszone.html" blocks=$xoBlocks.canvas_right
+				zoneClass='icms-canvas-column' zoneId='icms-canvas-rightcolumn'
 			}>
 			<{/if}>
 			<!-- Center column / page -->
@@ -90,10 +90,10 @@
 				</div>
 				<{/if}>
 			</div>
-			<!-- Right column -->
-			<{if $xoBlocks.canvas_right}>
-			<{includeq file="$theme_name/blockszone.html" blocks=$xoBlocks.canvas_right
-				zoneClass='icms-canvas-column' zoneId='icms-canvas-rightcolumn'
+			<!-- Left column -->
+			<{if $xoBlocks.canvas_left}>
+			<{includeq file="$theme_name/blockszone.html" blocks=$xoBlocks.canvas_left
+				zoneClass='icms-canvas-column' zoneId='icms-canvas-leftcolumn'
 			}>
 			<{/if}>
 		</div>
@@ -101,7 +101,7 @@
 	<!-- Footer -->
 	<div id="icms-footer">
 		<{$xoops_footer}>
-	</div>
+</div>
 </div>
 
 </body>

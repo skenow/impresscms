@@ -395,8 +395,12 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 	// if the user selected a theme in the theme block, let's use this theme
 	if(isset($_SESSION['xoopsUserTheme']) && in_array($_SESSION['xoopsUserTheme'], $xoopsConfig['theme_set_allowed'])) {$theme = $_SESSION['xoopsUserTheme'];}
 
-		require_once ICMS_ROOT_PATH.'/class/template.php';
+	require_once ICMS_ROOT_PATH.'/class/template.php';
+	if ( file_exists(XOOPS_THEME_PATH . '/' . $xoopsConfig ['theme_set'] . '/theme_rtl.html') && defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
+    	require_once ICMS_ROOT_PATH.'/class/theme_rtl.php';
+    }else{
     	require_once ICMS_ROOT_PATH.'/class/theme.php';
+    }
 
 	$xoopsThemeFactory =& new xos_opal_ThemeFactory();
 	$xoopsThemeFactory->allowedThemes = $xoopsConfig['theme_set_allowed'];
@@ -405,16 +409,6 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 	$xoopsTpl =& $xoTheme->template;
 
 	$xoopsTpl->assign(array(
-		'icms_style' => ICMS_URL.'/icms'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css',
-		'icms_theme' => $theme,
-		'icms_imageurl' => ICMS_THEME_URL.'/'.$theme.'/',
-		'icms_themecss'=> xoops_getcss($theme),
-		'icms_requesturi' => htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES),
-		'icms_sitename' => htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES),
-		'icms_slogan' => htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES),
-		'icms_dirname' => @$xoopsModule ? $xoopsModule->getVar('dirname') : 'system',
-		'icms_banner' => $xoopsConfig['banners'] ? xoops_getbanner() : '&nbsp;',
-		'icms_pagetitle' => isset($xoopsModule) && is_object($xoopsModule) ? $xoopsModule->getVar('name') : htmlspecialchars( $xoopsConfig['slogan'], ENT_QUOTES),
 		'xoops_theme' => $theme,
 		'xoops_imageurl' => XOOPS_THEME_URL.'/'.$theme.'/',
 		'xoops_themecss'=> xoops_getcss($theme),

@@ -27,12 +27,12 @@
 	<link rel="icon" type="image/png" href="<{xoImgUrl icons/icon.png}>" />
 	
 <!-- Sheet Css -->
-	<link rel="stylesheet" type="text/css" media="all" title="Style sheet" href="<{xoImgUrl  /style.css}>" />
-	<link rel="alternate stylesheet" type="text/css" media="all" title="blue" href="<{xoImgUrl  /blue.css}>" />
-	<link rel="alternate stylesheet" type="text/css" media="all" title="corp" href="<{xoImgUrl  /corp.css}>" />
-	<link rel="alternate stylesheet" type="text/css" media="all" title="green" href="<{xoImgUrl  /green.css}>" />
-	<link rel="alternate stylesheet" type="text/css" media="all" title="pink" href="<{xoImgUrl  /pink.css}>" />
-	<link rel="alternate stylesheet" type="text/css" media="all" title="sunset" href="<{xoImgUrl  /sunset.css}>" />
+	<link rel="stylesheet" type="text/css" media="all" title="Style sheet" href="<{xoImgUrl  /rtl/style.css}>" />
+	<link rel="alternate stylesheet" type="text/css" media="all" title="blue" href="<{xoImgUrl  /rtl/blue.css}>" />
+	<link rel="alternate stylesheet" type="text/css" media="all" title="corp" href="<{xoImgUrl  /rtl/corp.css}>" />
+	<link rel="alternate stylesheet" type="text/css" media="all" title="green" href="<{xoImgUrl  /rtl/green.css}>" />
+	<link rel="alternate stylesheet" type="text/css" media="all" title="pink" href="<{xoImgUrl  /rtl/pink.css}>" />
+	<link rel="alternate stylesheet" type="text/css" media="all" title="sunset" href="<{xoImgUrl  /rtl/sunset.css}>" />
 
 
 	
@@ -60,11 +60,11 @@
 	    <div id="xo-headerbanner">
 	<!-- Header menu (optional) -->
 	<div id="xo-globalnav">
-		  <a href="<{$xoops_url}>" title="<{$xoops_sitename}>">Home</a>
-		  <a href="#" title="Link 2">Link2</a>
-		  <a href="#" title="Link 3">Link3</a>
-		  <a href="#" title="Link 4">Link4</a>
-		  <a href="#" title="Link 5">Link5</a>
+		  <a href="#" title="Link 2"><{$smarty.const.THEME_MODULE4}></a>
+		  <a href="#" title="Link 3"><{$smarty.const.THEME_MODULE3}></a>
+		  <a href="#" title="Link 4"><{$smarty.const.THEME_MODULE2}></a>
+		  <a href="#" title="Link 5"><{$smarty.const.THEME_MODULE1}></a>
+		  <a href="<{$xoops_url}>" title="<{$xoops_sitename}>"><{$smarty.const.THEME_HOME}></a>
 	</div>
 	</div>
     </div>
@@ -73,19 +73,19 @@
 	<div id="xo-canvas-content">
 		<div id="xo-canvas-columns">
 			<!-- Left column -->
-			<{if $xoBlocks.canvas_left}>
-			<{includeq file="$theme_name/blockszone.html" blocks=$xoBlocks.canvas_left
-				zoneClass='xo-canvas-column' zoneId='xo-canvas-leftcolumn'
+			<{if $xoBlocks.canvas_right}>
+			<{includeq file="$theme_name/blockszone.html" blocks=$xoBlocks.canvas_right
+				zoneClass='xo-canvas-column' zoneId='xo-canvas-rightcolumn'
 			}>
 			<{/if}>
 			<!-- Center column / page -->
 			<div id="xo-page">
 				<div id="controlbar">
-					<div align="left">
-					<a title="Increase Font Size" href="" onclick="dw_fontSizerDX.adjust(2); return false">A+</a> | 
-  					<a title="Decrease Font Size" href="" onclick="dw_fontSizerDX.adjust(-2); return false">A-</a> |
-  					<a title="Restore Defaults" href="" onclick="dw_fontSizerDX.reset(); return false">Aa</a>
-					<div align="right" style="margin-top: -17px;">
+					<div align="right">
+  					<a title="Restore Defaults" href="" onclick="dw_fontSizerDX.reset(); return false"><{$smarty.const.THEME_Aa}></a> | 
+  					<a title="Decrease Font Size" href="" onclick="dw_fontSizerDX.adjust(-2); return false"><{$smarty.const.THEME_Amin}></a> |
+					<a title="Increase Font Size" href="" onclick="dw_fontSizerDX.adjust(2); return false"><{$smarty.const.THEME_Aplus}></a>
+					<div align="left" style="margin-top: -17px;">
 					<a href="#" onclick="setActiveStyleSheet('blue'); return false;"><img src="<{$xoops_imageurl}>img/icons/blue_icon.jpg" alt="Select Blue Style" /></a>
 					<a href="#" onclick="setActiveStyleSheet('green'); return false;"><img src="<{$xoops_imageurl}>img/icons/green_icon.jpg" alt="Select Green Style" /></a>
 					<a href="#" onclick="setActiveStyleSheet('pink'); return false;"><img src="<{$xoops_imageurl}>img/icons/pink_icon.jpg" alt="Select Pink Style" /></a>
@@ -116,9 +116,9 @@
 				<{/if}>
 			</div>
 			<!-- Right column -->
-			<{if $xoBlocks.canvas_right}>
-			<{includeq file="$theme_name/blockszone.html" blocks=$xoBlocks.canvas_right
-				zoneClass='xo-canvas-column' zoneId='xo-canvas-rightcolumn'
+			<{if $xoBlocks.canvas_left}>
+			<{includeq file="$theme_name/blockszone.html" blocks=$xoBlocks.canvas_left
+				zoneClass='xo-canvas-column' zoneId='xo-canvas-leftcolumn'
 			}>
 			<{/if}>
 		</div>
