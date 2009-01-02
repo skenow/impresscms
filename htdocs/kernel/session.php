@@ -210,7 +210,7 @@ class XoopsSessionHandler
 		$session_name = ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '') ? $xoopsConfig['session_name'] : session_name();
 		$session_expire = !is_null($expire) ? intval($expire) : ( ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '') ? $xoopsConfig['session_expire'] * 60 : ini_get('session.cookie_lifetime') );
 		$session_id = empty($sess_id) ? session_id() : $sess_id;
-		setcookie($session_name, $session_id, $session_expire ? time() + $session_expire : 0, '/',  '', 0);
+		setcookie($session_name, $session_id, $session_expire ? time() + $session_expire : 0, '/',  '', 0, 0);
 	}
 
 	// Call this when init session.

@@ -128,15 +128,14 @@ class XoopsAuthLdap extends XoopsAuth
 			if(!$userDN) return false;
 			// We bind as user to test the credentials   
 			$authenticated = ldap_bind($this->_ds, $userDN, stripslashes($pwd));
-			$sess_handler =& xoops_gethandler('session');
 			if($authenticated)
 			{
-				$sess_handler->icms_sessionOpen(true);
 				// We load the Xoops User database
 				return $this->loadXoopsUser($userDN, $uname, $pwd);
 			}
 			else
 			{
+				$sess_handler =& xoops_gethandler('session');
 				$sess_handler->destroy(session_id());
 				$this->setErrors(ldap_errno($this->_ds), ldap_err2str(ldap_errno($this->_ds)).'('.$userDN.')');
 			}

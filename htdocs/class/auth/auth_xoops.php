@@ -62,10 +62,9 @@ class XoopsAuthXoops extends XoopsAuth {
 			$uname = icms_getUnameFromUserEmail($uname);
 		}
 		$user =& $member_handler->loginUser($uname, $pwd);
-		$sess_handler =& xoops_gethandler('session');
-		$sess_handler->icms_sessionOpen(true);
 		if($user == false)
 		{
+			$sess_handler =& xoops_gethandler('session');
 			$sess_handler->destroy(session_id());
 			$this->setErrors(1, _US_INCORRECTLOGIN);
 		}

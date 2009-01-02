@@ -17,7 +17,7 @@ if(!defined("XOOPS_FOOTER_INCLUDED"))
 {
 	define("XOOPS_FOOTER_INCLUDED",1);
 
-$_SESSION['ad_sess_regen'] = false;
+$sess_handler = & xoops_gethandler('session');
 if(isset($_SESSION['sess_regen']) && $_SESSION['sess_regen'])
 {
 	$sess_handler->icms_sessionOpen(true);

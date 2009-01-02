@@ -21,13 +21,15 @@ if(!isset($icmsPreloadHandler)) {$icmsPreloadHandler =& $GLOBALS['icmsPreloadHan
 $xoopsLogger->stopTime('Module init');
 $xoopsLogger->startTime('ICMS output init');
 
+global $xoopsConfig;
+
 if($xoopsConfig['theme_set'] != 'default' && file_exists(ICMS_THEME_PATH.'/'.$xoopsConfig['theme_set'].'/theme.php'))
 {
 	require_once ICMS_ROOT_PATH.'/include/xoops13_header.php';
 }
 else
 {
-	global $xoopsOption, $xoopsConfig, $xoopsModule;
+	global $xoopsOption, $xoopsModule;
     	$xoopsOption['theme_use_smarty'] = 1;
 
     	// include Smarty template engine and initialize it

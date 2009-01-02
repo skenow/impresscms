@@ -28,11 +28,8 @@
 // URL: http://www.xoops.org/ http://jp.xoops.org/  http://www.myweb.ne.jp/  //
 // Project: The XOOPS Project (http://www.xoops.org/)                        //
 // ------------------------------------------------------------------------- //
-
-if (!defined('XOOPS_ROOT_PATH')) {
-    exit();
-}
-include_once XOOPS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/user.php';
+if(!defined('ICMS_ROOT_PATH')) {exit();}
+include_once ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/user.php';
 $uname = !isset($_POST['uname']) ? '' : trim($_POST['uname']);
 $pass = !isset($_POST['pass']) ? '' : trim($_POST['pass']);
 /**
@@ -45,137 +42,115 @@ $pass = !isset($_POST['pass']) ? '' : trim($_POST['pass']);
 $member_handler =& xoops_gethandler('member');
 $myts =& MyTextsanitizer::getInstance();
 
-include_once XOOPS_ROOT_PATH.'/class/auth/authfactory.php';
-include_once XOOPS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/auth.php';
-$xoopsAuth =& XoopsAuthFactory::getAuthConnection($myts->addSlashes($uname));
-//$user = $xoopsAuth->authenticate($myts->addSlashes($uname), $myts->addSlashes($pass));
-// uname&email hack GIJ
-$uname4sql = addslashes( $myts->stripSlashesGPC($uname) ) ;
-$pass4sql = addslashes( $myts->stripSlashesGPC($pass) ) ;
-/*if( strstr( $uname , '@' ) ) {
-	// check by email if uname includes '@'
-	$criteria = new CriteriaCompo(new Criteria('email', $uname4sql ));
-	$criteria->add(new Criteria('pass', $pass4sql));
-	$user_handler =& xoops_gethandler('user');
-	$users =& $user_handler->getObjects($criteria, false);
-	if( empty( $users ) || count( $users ) != 1 ) $user = false ;
-	else $user = $users[0] ;
-	unset( $users ) ;
-} */
-if(empty($user) || !is_object($user)) {$user =& $xoopsAuth->authenticate($uname4sql, $pass4sql);}
-// end of uname&email hack GIJ
+include_once ICMS_ROOT_PATH.'/class/auth/authfactory.php';
+include_once ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/auth.php';
 
-if (false != $user) {
-    if (0 == $user->getVar('level')) {
-        redirect_header(XOOPS_URL.'/index.php', 5, _US_NOACTTPADM);
-        exit();
-    }
-    $config_handler =& xoops_gethandler('config');
+$xoopsAuth =& XoopsAuthFactory::getAuthConnection($myts->addSlashes($uname));
+
+$uname4sql = addslashes($myts->stripSlashesGPC($uname));
+$pass4sql = addslashes($myts->stripSlashesGPC($pass));
+if(empty($user) || !is_object($user)) {$user =& $xoopsAuth->authenticate($uname4sql, $pass4sql);}
+
+if(false != $user)
+{
+	if(0 == $user->getVar('level')) {redirect_header(ICMS_URL.'/index.php', 5, _US_NOACTTPADM);}
+	$config_handler =& xoops_gethandler('config');
 	$xoopsConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
-	if ($xoopsConfigPersona['multi_login']){
-		if( is_object( $user ) ) {
+	$sess_handler =& xoops_gethandler('session');
+	if($xoopsConfigPersona['multi_login'])
+	{
+		if(is_object($user))
+		{
 			$online_handler =& xoops_gethandler('online');
 			$online_handler->gc(300);
 			$onlines =& $online_handler->getAll();
-			foreach( $onlines as $online ) {
-				if( $online['online_uid'] == $user->uid() ) {
+			foreach($onlines as $online)
+			{
+				if($online['online_uid'] == $user->uid())
+				{
 					$user = false;
-					redirect_header(XOOPS_URL.'/index.php',3,_US_MULTLOGIN);
+					redirect_header(ICMS_URL.'/index.php',3,_US_MULTLOGIN);
 				}
 			}
-			if( is_object( $user ) ) {
-				$online_handler->write($user->uid(), $user->uname(),
-				time(),0,$HTTP_SERVER_VARS['REMOTE_ADDR']);
-			}
+			if(is_object($user)) {$online_handler->write($user->uid(), $user->uname(), time() , 0, $HTTP_SERVER_VARS['REMOTE_ADDR']);}
 		}
 	}
-    if ($xoopsConfig['closesite'] == 1) {
-        $allowed = false;
-        foreach ($user->getGroups() as $group) {
-            if (in_array($group, $xoopsConfig['closesite_okgrp']) || XOOPS_GROUP_ADMIN == $group) {
-                $allowed = true;
-                break;
-            }
-        }
-        if (!$allowed) {
-            redirect_header(XOOPS_URL.'/index.php', 1, _NOPERM);
-            exit();
-        }
-    }
-    $user->setVar('last_login', time());
-    if (!$member_handler->insertUser($user)) {
-    }
-    // Regenrate a new session id and destroy old session
-    session_regenerate_id(true);
-    $_SESSION = array();
-    $_SESSION['xoopsUserId'] = $user->getVar('uid');
-    $_SESSION['xoopsUserGroups'] = $user->getGroups();
-    if ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '') {
-        setcookie($xoopsConfig['session_name'], session_id(), time()+(60 * $xoopsConfig['session_expire']), '/',  '', 0);
-    }
-    $_SESSION['xoopsUserLastLogin'] = $user->getVar('last_login');
-    if (!$member_handler->updateUserByField($user, 'last_login', time())) {
-    }
-    $user_theme = $user->getVar('theme');
-    if (in_array($user_theme, $xoopsConfig['theme_set_allowed'])) {
-        $_SESSION['xoopsUserTheme'] = $user_theme;
-    }
-    if (!empty($_POST['xoops_redirect']) && !strpos($_POST['xoops_redirect'], 'register')) {
-		$_POST['xoops_redirect'] = trim( $_POST['xoops_redirect'] );
-        $parsed = parse_url(XOOPS_URL);
-        $url = isset($parsed['scheme']) ? $parsed['scheme'].'://' : 'http://';
-        if ( isset( $parsed['host'] ) ) {
-        	$url .= $parsed['host'];
-			if ( isset( $parsed['port'] ) ) {
-				$url .= ':' . $parsed['port'];
+	if($xoopsConfig['closesite'] == 1)
+	{
+		$allowed = false;
+		foreach($user->getGroups() as $group)
+		{
+			if(in_array($group, $xoopsConfig['closesite_okgrp']) || XOOPS_GROUP_ADMIN == $group)
+			{
+				$allowed = true;
+				break;
 			}
-        } else {
-        	$url .= $_SERVER['HTTP_HOST'];
-        }
-        if ( @$parsed['path'] ) {
-        	if ( strncmp( $parsed['path'], $_POST['xoops_redirect'], strlen( $parsed['path'] ) ) ) {
-	        	$url .= $parsed['path'];
-        	}
-        }
-		$url .= $_POST['xoops_redirect'];
-    } else {
-        $url = XOOPS_URL.'/index.php';
-    }
-	if ($pos = strpos( $url, '://' )) {
-		$xoopsLocation = substr( XOOPS_URL, strpos( XOOPS_URL, '://' ) + 3 );
-	    if ( substr($url, $pos + 3, strlen($xoopsLocation)) != $xoopsLocation)  {
-			$url = XOOPS_URL;
-	     }elseif(substr($url, $pos + 3, strlen($xoopsLocation)+1) == $xoopsLocation.'.') {
-	        $url = XOOPS_URL;
-	     }
-	     if( substr($url, 0, strlen(XOOPS_URL)*2) ==  XOOPS_URL.XOOPS_URL){
-	     	$url = substr($url, strlen(XOOPS_URL));
+		}
+		if(!$allowed) {redirect_header(ICMS_URL.'/index.php', 1, _NOPERM);}
+	}
+	$user->setVar('last_login', time());
+	if(!$member_handler->insertUser($user)) {}
 
-	     }
+	// Opens the session with a new session_id() & creates a session fingerprint hash
+	$sess_handler->icms_sessionOpen(true);
+	
+	$_SESSION = array();
+	$_SESSION['xoopsUserId'] = $user->getVar('uid');
+	$_SESSION['xoopsUserGroups'] = $user->getGroups();
+	if($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '')
+	{
+		setcookie($xoopsConfig['session_name'], session_id(), time()+(60 * $xoopsConfig['session_expire']), '/',  '', 0, 0);
+	}
+	$_SESSION['xoopsUserLastLogin'] = $user->getVar('last_login');
+	if(!$member_handler->updateUserByField($user, 'last_login', time())) {}
+	$user_theme = $user->getVar('theme');
+	if(in_array($user_theme, $xoopsConfig['theme_set_allowed'])) {$_SESSION['xoopsUserTheme'] = $user_theme;}
+	if(!empty($_POST['xoops_redirect']) && !strpos($_POST['xoops_redirect'], 'register'))
+	{
+		$_POST['xoops_redirect'] = trim($_POST['xoops_redirect']);
+		$parsed = parse_url(ICMS_URL);
+		$url = isset($parsed['scheme']) ? $parsed['scheme'].'://' : 'http://';
+		if(isset($parsed['host']))
+		{
+			$url .= $parsed['host'];
+			if(isset($parsed['port'])) {$url .= ':'.$parsed['port'];}
+		}
+		else {$url .= $_SERVER['HTTP_HOST'];}
+		if(@$parsed['path'])
+		{
+			if(strncmp($parsed['path'], $_POST['xoops_redirect'], strlen( $parsed['path']))) {$url .= $parsed['path'];}
+		}
+		$url .= $_POST['xoops_redirect'];
+	}
+	else {$url = ICMS_URL.'/index.php';}
+	if($pos = strpos($url, '://'))
+	{
+		$xoopsLocation = substr(ICMS_URL, strpos(ICMS_URL, '://') + 3);
+		if(substr($url, $pos + 3, strlen($xoopsLocation)) != $xoopsLocation) {$url = ICMS_URL;}
+		elseif(substr($url, $pos + 3, strlen($xoopsLocation)+1) == $xoopsLocation.'.') {$url = ICMS_URL;}
+		if(substr($url, 0, strlen(ICMS_URL)*2) == ICMS_URL.ICMS_URL) {$url = substr($url, strlen(ICMS_URL));}
 	}
 
 	// autologin hack V3.1 GIJ (set cookie)
-	$xoops_cookie_path = defined('XOOPS_COOKIE_PATH') ? XOOPS_COOKIE_PATH : preg_replace( '?http://[^/]+(/.*)$?' , "$1" , XOOPS_URL ) ;
-	if( $xoops_cookie_path == XOOPS_URL ) $xoops_cookie_path = '/' ;
-	if (!empty($_POST['rememberme'])) {
-		$expire = time() + ( defined('XOOPS_AUTOLOGIN_LIFETIME') ? XOOPS_AUTOLOGIN_LIFETIME : 604800 ) ; // 1 week default
-		setcookie('autologin_uname', $user->getVar('uname'), $expire, $xoops_cookie_path, '', 0);
-		$Ynj = date( 'Y-n-j' ) ;
-		setcookie('autologin_pass', $Ynj . ':' . md5( $user->getVar('pass') . XOOPS_DB_PASS . XOOPS_DB_PREFIX . $Ynj ) , $expire, $xoops_cookie_path, '', 0);
+	$icms_cookie_path = defined('XOOPS_COOKIE_PATH') ? XOOPS_COOKIE_PATH : preg_replace('?http://[^/]+(/.*)$?', "$1", ICMS_URL);
+	if($icms_cookie_path == ICMS_URL) {$icms_cookie_path = '/';}
+	if(!empty($_POST['rememberme']))
+	{
+		$expire = time() + (defined('XOOPS_AUTOLOGIN_LIFETIME') ? XOOPS_AUTOLOGIN_LIFETIME : 604800) ; // 1 week default
+		setcookie('autologin_uname', $user->getVar('uname'), $expire, $icms_cookie_path, '', 0, 0);
+		$Ynj = date('Y-n-j') ;
+		setcookie('autologin_pass', $Ynj.':'.hash('sha256', $user->getVar('pass').XOOPS_DB_SALT.$Ynj), $expire, $icms_cookie_path, '', 0, 0);
 	}
 	// end of autologin hack V3.1 GIJ
 
-    // RMV-NOTIFY
-    // Perform some maintenance of notification records
-    $notification_handler =& xoops_gethandler('notification');
-    $notification_handler->doLoginMaintenance($user->getVar('uid'));
-
-    redirect_header($url, 1, sprintf(_US_LOGGINGU, $user->getVar('uname')), false);
-}elseif(empty($_POST['xoops_redirect'])){
-	redirect_header(XOOPS_URL.'/user.php', 5, $xoopsAuth->getHtmlErrors());
-}else{
-	redirect_header(XOOPS_URL.'/user.php?xoops_redirect='.urlencode(trim($_POST['xoops_redirect'])), 5, $xoopsAuth->getHtmlErrors(), false);
+	// RMV-NOTIFY
+	// Perform some maintenance of notification records
+	$notification_handler =& xoops_gethandler('notification');
+	$notification_handler->doLoginMaintenance($user->getVar('uid'));
+	
+	redirect_header($url, 1, sprintf(_US_LOGGINGU, $user->getVar('uname')), false);
 }
+elseif(empty($_POST['xoops_redirect'])) {redirect_header(ICMS_URL.'/user.php', 5, $xoopsAuth->getHtmlErrors());}
+else {redirect_header(ICMS_URL.'/user.php?xoops_redirect='.urlencode(trim($_POST['xoops_redirect'])), 5, $xoopsAuth->getHtmlErrors(), false);}
 exit();
-
 ?>
