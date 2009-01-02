@@ -40,7 +40,7 @@ if (!defined('ICMS_GROUP_ANONYMOUS')) {
 /**
  * Creating ICMS specific constants
  */
-define('ICMS_PRELOAD_PATH', XOOPS_ROOT_PATH . '/preloads');
+define('ICMS_PRELOAD_PATH', XOOPS_ROOT_PATH . '/preload');
 define('ICMS_PURIFIER_CACHE', ICMS_TRUST_PATH.'/cache/htmlpurifier');
 
 // ################# Creation of the IcmsPreloadHandler ##############
@@ -59,9 +59,6 @@ define( 'ICMS_LIBRARIES_URL', XOOPS_URL . '/libraries' );
 // ImpressCMS Third Party Library for PDF generator
 define( 'ICMS_PDF_LIB_PATH', ICMS_ROOT_PATH . '/libraries/tcpdf' );
 define( 'ICMS_PDF_LIB_URL', ICMS_URL . '/libraries/tcpdf' );
-// ImpressCMS Modules path & url
-define( 'ICMS_MODULES_PATH', ICMS_ROOT_PATH . '/modules' );
-define( 'ICMS_MODULES_URL', ICMS_URL . '/modules' );
 
 // ################# Preload Trigger startCoreBoot ##############
 $icmsPreloadHandler->triggerEvent('startCoreBoot');
@@ -238,9 +235,12 @@ $xoopsUserIsAdmin = false;
 $member_handler =& xoops_gethandler('member');
 global $sess_handler;
 $sess_handler =& xoops_gethandler('session');
-if ($xoopsConfig['use_ssl'] && isset($_POST[$xoopsConfig['sslpost_name']]) && $_POST[$xoopsConfig['sslpost_name']] != '') {
+if($xoopsConfig['use_ssl'] && isset($_POST[$xoopsConfig['sslpost_name']]) && $_POST[$xoopsConfig['sslpost_name']] != '')
+{
 	session_id($_POST[$xoopsConfig['sslpost_name']]);
-} elseif ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '' && $xoopsConfig['session_expire'] > 0) {
+}
+elseif($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '' && $xoopsConfig['session_expire'] > 0)
+{
 	if (isset($_COOKIE[$xoopsConfig['session_name']])) {
     	session_id($_COOKIE[$xoopsConfig['session_name']]);
 	}
@@ -249,16 +249,11 @@ if ($xoopsConfig['use_ssl'] && isset($_POST[$xoopsConfig['sslpost_name']]) && $_
 	}
     @ini_set('session.gc_maxlifetime', $xoopsConfig['session_expire'] * 60);
 }
-
 session_set_save_handler(array(&$sess_handler, 'open'), array(&$sess_handler, 'close'), array(&$sess_handler, 'read'), array(&$sess_handler, 'write'), array(&$sess_handler, 'destroy'), array(&$sess_handler, 'gc'));
 
+if($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '') {session_name($xoopsConfig['session_name']);}
+else {session_name("ICMSSESSION");}
 session_start();
-/*
-$sess_handler->securityLevel = 3;
-$sess_handler->check_ip_blocks = 2;
-$sess_handler->salt_key = XOOPS_DB_SALT;
-$sess_handler->enableRegenerateId = true;
-$sess_handler->icms_sessionOpen(); */
 
 // Remove expired session for xoopsUserId
 if ( $xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '' && !isset($_COOKIE[$xoopsConfig['session_name']]) && !empty($_SESSION['xoopsUserId']) ) {
@@ -416,6 +411,7 @@ if(!defined('_GLOBAL_LEFT')){
 define('_GLOBAL_LEFT', (( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'right':'left'));} // type here right in rtl languages
 if(!defined('_GLOBAL_RIGHT')){
 define('_GLOBAL_RIGHT', (( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'left':'right'));} // type here left in rtl languages
+
 // ################ Include page-specific lang file ################
 if (isset($xoopsOption['pagetype']) && false === strpos($xoopsOption['pagetype'], '.')) {
 	if ( file_exists(XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/".$xoopsOption['pagetype'].".php") ) {
@@ -442,7 +438,7 @@ if ($xoopsConfig['closesite'] == 1) {
 	include XOOPS_ROOT_PATH . "/include/site-closed.php";
 }
 
-if (file_exists('./xoops_version.php') || file_exists('./icms_version.php')) {
+if (file_exists('./xoops_version.php')) {
 	$url_arr = explode( '/', strstr( $_SERVER['PHP_SELF'],'/modules/') );
     $module_handler =& xoops_gethandler('module');
     $xoopsModule =& $module_handler->getByDirname($url_arr[2]);

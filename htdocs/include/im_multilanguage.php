@@ -34,7 +34,7 @@ define('EASIESTML_CHARSETS',$im_multilanguageConfig['ml_charset']);
 define('EASIESTML_IMAGETAG','mlimg');
 
 // make regular expression which disallows language tags to cross it
-define('EASIESTML_NEVERCROSSREGEX','');
+define('EASIESTML_NEVERCROSSREGEX','/\<\/table\>/');
 
 // the life time of language selection stored in cookie
 define('EASIESTML_COOKIELIFETIME',365*86400);
@@ -153,7 +153,6 @@ function easiestml( $s )
 	$langimage_html = '' ;
 	foreach( $easiestml_langs as $l => $lang ) {
 		$langimage_html .= '<a href="'.$link_base.urlencode($lang).'"><img src="'.XOOPS_URL.'/'.$langimages[$l].'" alt="'.$langnames[$l].'" /></a>&nbsp;' ;
-		$s = preg_replace( '/\[change_lang_'.$lang.'\]/' , $link_base.urlencode($lang) , $s ) ;
 	}
 	$s = preg_replace( '/\['.EASIESTML_IMAGETAG.'\]/' , $langimage_html , $s ) ;
 

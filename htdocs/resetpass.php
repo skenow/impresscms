@@ -62,6 +62,7 @@ else
 		$xoopsMailer->assign('ADMINMAIL', $xoopsConfig['adminmail']);
 		$xoopsMailer->assign('SITEURL', ICMS_URL.'/');
 		$xoopsMailer->assign('IP', $_SERVER['REMOTE_ADDR']);
+		$xoopsMailer->assign('RESETPWD', $password);
 		$xoopsMailer->setToUsers($getuser[0]);
 		$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
 		$xoopsMailer->setFromName($xoopsConfig['sitename']);

@@ -19,9 +19,7 @@
 */
 
 $xoopsOption['pagetype'] = 'admin';
-/** Including mainfile.php is required */
 include 'mainfile.php';
-/** Include the control panel functions */
 include ICMS_ROOT_PATH.'/include/cp_functions.php';
 
 // Admin Authentication
@@ -36,14 +34,11 @@ $op = isset($_GET['rssnews']) ? intval($_GET['rssnews']) : 0;
 if(!empty($_GET['op'])) {$op = intval($_GET['op']);}
 if(!empty($_POST['op'])) {$op = intval($_POST['op']);}
 
-	$sess_handler =& xoops_gethandler('session');
-	$sess_handler->securityLevel = 3;
-	$sess_handler->check_ip_blocks = 2;
-	$sess_handler->salt_key = XOOPS_DB_SALT;
-	if($_SESSION['reg_i']) {$sess_handler->enableRegenerateId = true;}
-	$sess_handler->icms_sessionOpen();
-	$_SESSION['reg_i'] = true;
-
+$sess_handler =& xoops_gethandler('session');
+if(!$_SESSION['ad_sess_regen']) {$sess_handler->icms_sessionOpen(true);}
+else {$sess_handler->icms_sessionOpen();}
+$_SESSION['ad_sess_regen'] = true;
+$_SESSION['sess_regen'] = true;
 
 if(!file_exists(ICMS_CACHE_PATH.'/adminmenu_'.$xoopsConfig['language'].'.php') && $op != 2)
 {
@@ -63,7 +58,7 @@ switch($op)
 		xoops_module_write_admin_menu(impresscms_get_adminmenu());
 		redirect_header('javascript:history.go(-1)', 1, _AD_LOGINADMIN);
 	break;
-/*	case 10:
+	case 10:
 		$rssurl = 'http://www.impresscms.org/modules/smartsection/backend.php?categoryid=1';
 		$rssfile = ICMS_CACHE_PATH.'/www_smartsection_category1.xml';
 		$caching_time = 1;
@@ -105,7 +100,7 @@ switch($op)
 						<img style="vertical-align: middle;" src="<?php ICMS_URL?>/modules/smartsection/images/icon/doc.png" alt="<?php $items[$i]['title']?>">&nbsp;<a href="<?php $items[$i]['guid']?>"><?php $items[$i]['title']?></a>
 					</div>
 					<div>
-						<img class="smartsection_item_image" src="<?php ICMS_URL?>/uploads/smartsection/images/item/impresscms_news.gif" alt="<?php $items[$i]['title']?>" title="<?php $items[$i]['title']?>" align="'._GLOBAL_RIGHT.'">
+						<img class="smartsection_item_image" src="<?php ICMS_URL?>/uploads/smartsection/images/item/impresscms_news.gif" alt="<?php $items[$i]['title']?>" title="<?php $items[$i]['title']?>" align="right">
 						<?php $items[$i]['description']?>
 					</div>
 					<div style="clear: both;">&nbsp;</div>
@@ -118,7 +113,7 @@ switch($op)
 				//echo $rss2parser->getErrors();
 			}
 		}
-	break;*/
+	break;
 	default:
 		$mods = xoops_cp_header(1);
 
@@ -129,10 +124,9 @@ switch($op)
 			echo '<br />';
 		}
 		$db = $GLOBALS['xoopsDB'];
-
-		if(getDbValue($db, 'modules', 'version', 'version="120"') == 0 AND getDbValue($db, 'modules', 'mid', 'mid="1"') == 1)
+		if(getDbValue($db, 'modules', 'version', 'version="110"') == 0 AND getDbValue($db, 'modules', 'mid', 'mid="1"') == 1)
 		{
-			xoops_error('<a href="'.ICMS_URL.'/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=system">'._WARNINGUPDATESYSTEM.'</a>');
+			xoops_error('<a href="'.ICMS_URL.'/modules/system/admin.php?fct=modulesadmin&op=update&module=system">'._WARNINGUPDATESYSTEM.'</a>');
 			echo '<br />';
 		}
 		if(is_writable(ICMS_ROOT_PATH.'/mainfile.php'))
@@ -271,7 +265,7 @@ function showRSS($op=1)
 			fclose($fp);
 		}
 	}
-/*	if($rssdata != '')
+	if($rssdata != '')
 	{
 		include_once ICMS_ROOT_PATH.'/class/xml/rss/xmlrss2parser.php';
 		$rss2parser = new XoopsXmlRss2Parser($rssdata);
@@ -302,83 +296,7 @@ function showRSS($op=1)
 			echo '</table>';
 		}
 		else {echo $rss2parser->getErrors();}
-	}*/
-	
-	
-	include_once(ICMS_ROOT_PATH . '/class/icmssimplerss.php');
-	
-	// Create a new instance of the SimplePie object
-	$feed = new IcmsSimpleRss($rssurl, 3600);
-
-	?>
-		<div id="sp_results"> 
-
-			<!-- As long as the feed has data to work with... -->
-			<?php if ($feed): ?>
-				<div class="chunk focus" align="center">
-
-					<!-- If the feed has a link back to the site that publishes it (which 99% of them do), link the feed's title to it. -->
-					<h3 class="header"><?php if ($feed->get_link()) echo '<a href="' . $feed->get_link() . '">'; echo $feed->get_title(); if ($feed->get_link()) echo '</a>'; ?></h3>
-
-					<!-- If the feed has a description, display it. -->
-					<?php echo $feed->get_description(); ?>
-
-				</div>
-
-				<!-- Let's begin looping through each individual news item in the feed. -->
-				<?php foreach($feed->get_items() as $item): ?>
-					<div class="chunk">
-
-						<?php
-						// Let's add a favicon for each item. If one doesn't exist, we'll use an alternate one.
-						if (!$favicon = $feed->get_favicon())
-						{
-							$favicon = './for_the_demo/favicons/alternate.png';
-						}
-						?>
-
-						<!-- If the item has a permalink back to the original post (which 99% of them do), link the item's title to it. -->
-						<h4><img src="<?php echo $favicon; ?>" alt="Favicon" class="favicon" /><?php if ($item->get_permalink()) echo '<a href="' . $item->get_permalink() . '">'; echo $item->get_title(); if ($item->get_permalink()) echo '</a>'; ?></h4>
-
-						<!-- Display the item's primary content. -->
-						<?php echo $item->get_content(); ?>
-
-						<?php
-						// Check for enclosures.  If an item has any, set the first one to the $enclosure variable.
-						if ($enclosure = $item->get_enclosure(0))
-						{
-							// Use the embed() method to embed the enclosure into the page inline.
-							echo '<div align="center">';
-							echo '<p>' . $enclosure->embed(array(
-								'audio' => './for_the_demo/place_audio.png',
-								'video' => './for_the_demo/place_video.png',
-								'mediaplayer' => './for_the_demo/mediaplayer.swf',
-								'alt' => '<img src="./for_the_demo/mini_podcast.png" class="download" border="0" title="Download the Podcast (' . $enclosure->get_extension() . '; ' . $enclosure->get_size() . ' MB)" />',
-								'altclass' => 'download'
-							)) . '</p>';
-							echo '<p class="footnote" align="center">(' . $enclosure->get_type();
-							if ($enclosure->get_size())
-							{
-								echo '; ' . $enclosure->get_size() . ' MB';								
-							}
-							echo ')</p>';
-							echo '</div>';
-						}
-						?>
-
-					</div>
-
-				<!-- Stop looping through each item once we've gone through all of them. -->
-				<?php endforeach; ?>
-
-			<!-- From here on, we're no longer using data from the feed. -->
-			<?php endif; ?>
-
-		</div>
-
-	</div>	
-	<?php
-
+	}
 }
 xoops_cp_footer();
 ?>

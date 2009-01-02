@@ -6,20 +6,20 @@
 <title><{$lang_imgmanager}> <{$xoops_sitename}></title>
 <{$image_form.javascript}>
 <style type="text/css" media="all">
-body {<{if $icms_rtl}> direction : rtl<{/if}>; margin: 0; font-family : <{if $icms_rtl}> Tahoma, <{/if}>verdana, arial, helvetica, sans-serif;}
+body {margin: 0;}
 img {border: 0;}
 table {width: 100%; margin: 0;}
 a:link {color: #3a76d6; font-weight: bold; background-color: transparent;}
 a:visited {color: #9eb2d6; font-weight: bold; background-color: transparent;}
 a:hover {color: #e18a00; background-color: transparent;}
-table td {background-color: white; font-size: 12px; padding: 0; border-width: 0; vertical-align: top; font-family:  <{if $icms_rtl}> Tahoma, <{/if}>Verdana, Arial, Helvetica, sans-serif;}
+table td {background-color: white; font-size: 12px; padding: 0; border-width: 0; vertical-align: top; font-family: Verdana, Arial, Helvetica, sans-serif;}
 table#imagenav td {vertical-align: bottom; padding: 5px;}
 td.body {padding: 5px; vertical-align: middle;}
-td.caption {border: 0; background-color: #2F5376; color:white; font-size: 12px; padding: 5px; vertical-align: top; text-align:<{$smarty.const._GLOBAL_LEFT}>; font-family: <{if $icms_rtl}> Tahoma, <{/if}> Verdana, Arial, Helvetica, sans-serif;}
+td.caption {border: 0; background-color: #2F5376; color:white; font-size: 12px; padding: 5px; vertical-align: top; text-align:left; font-family: Verdana, Arial, Helvetica, sans-serif;}
 table#imageform {border: 1px solid silver;}
 table#header td {width: 100%; background-color: #2F5376; vertical-align: middle;}
 table#header td#headerbar {border-bottom: 1px solid silver; background-color: #dddddd;}
-div#footer {text-align:<{$smarty.const._GLOBAL_RIGHT}>; padding: 5px;}
+div#footer {text-align:right; padding: 5px;}
 </style>
 </head>
 
@@ -35,7 +35,7 @@ div#footer {text-align:<{$smarty.const._GLOBAL_RIGHT}>; padding: 5px;}
 
   <table cellspacing="0" id="imagenav">
     <tr>
-      <td align="<{$smarty.const._GLOBAL_LEFT}>"><a href="<{$xoops_url}>/imagemanager.php?target=<{$target}>&cat_id=<{$show_cat}>" title="<{$lang_imgmanager}>"><{$lang_imgmanager}></a></td>
+      <td align="left"><a href="<{$xoops_url}>/imagemanager.php?target=<{$target}>&cat_id=<{$show_cat}>" title="<{$lang_imgmanager}>"><{$lang_imgmanager}></a></td>
     </tr>
   </table>
 

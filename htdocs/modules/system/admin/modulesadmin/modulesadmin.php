@@ -1,15 +1,33 @@
 <?php
-/**
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		Admin
-* @since		XOOPS
-* @author		http://www.xoops.org The XOOPS Project
-* @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @version		$Id$
-*/
+// $Id: modulesadmin.php 1029 2007-09-09 03:49:25Z phppp $
+//  ------------------------------------------------------------------------ //
+//                XOOPS - PHP Content Management System                      //
+//                    Copyright (c) 2000 XOOPS.org                           //
+//                       <http://www.xoops.org/>                             //
+//  ------------------------------------------------------------------------ //
+//  This program is free software; you can redistribute it and/or modify     //
+//  it under the terms of the GNU General Public License as published by     //
+//  the Free Software Foundation; either version 2 of the License, or        //
+//  (at your option) any later version.                                      //
+//                                                                           //
+//  You may not change or alter any portion of this comment or credits       //
+//  of supporting developers from this source code or any supporting         //
+//  source code which is considered copyrighted (c) material of the          //
+//  original comment or credit authors.                                      //
+//                                                                           //
+//  This program is distributed in the hope that it will be useful,          //
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
+//  GNU General Public License for more details.                             //
+//                                                                           //
+//  You should have received a copy of the GNU General Public License        //
+//  along with this program; if not, write to the Free Software              //
+//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
+//  ------------------------------------------------------------------------ //
+// Author: Kazumi Ono (AKA onokazu)                                          //
+// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
+// Project: The XOOPS Project                                                //
+// ------------------------------------------------------------------------- //
 
 if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid()) ) {
     exit("Access Denied");
@@ -51,7 +69,7 @@ function xoops_module_list() {
     	$mod['hasadmin'] = $module->getVar('hasadmin');
     	$mod['hasmain'] = $module->getVar('hasmain');
     	$mod['isactive'] = $module->getVar('isactive');
-    	$mod['version'] = number_format($module->getVar('version')/100,2,'.','');
+    	$mod['version'] = round($module -> getVar('version') / 100, 2);
     	$mod['status'] = ($module->getInfo('status'))?$module->getInfo('status'):'&nbsp;';
     	$mod['last_update'] = ($module -> getVar('last_update') != 0)?formatTimestamp($module -> getVar('last_update'), 'm'):'&nbsp;';
     	$mod['weight'] = $module->getVar('weight');
@@ -73,7 +91,7 @@ function xoops_module_list() {
             $mod['dirname'] = $module->getInfo('dirname');
             $mod['name'] = $module->getInfo('name');
             $mod['image'] = $module->getInfo('image');
-            $mod['version'] = number_format($module->getVar('version')/100,2,'.','');
+            $mod['version'] = round($module->getInfo('version'), 2);
             $mod['status'] = $module->getInfo('status');
             $icmsAdminTpl->append('avmodules',$mod);
             unset($module);
@@ -97,7 +115,7 @@ function xoops_module_install($dirname) {
         $errs = array();
         $sqlfile =& $module->getInfo('sqlfile');
         $msgs = array();
-        $msgs[] = '<h4 style="text-align:'._GLOBAL_LEFT.';margin-bottom: 0px;border-bottom: dashed 1px #000000;">Installing '.$module->getInfo('name').'</h4>';
+        $msgs[] = '<h4 style="text-align:left;margin-bottom: 0px;border-bottom: dashed 1px #000000;">Installing '.$module->getInfo('name').'</h4>';
         if ($module->getInfo('image') != false && trim($module->getInfo('image')) != '') {
             $msgs[] ='<img src="'.XOOPS_URL.'/modules/'.$dirname.'/'.trim($module->getInfo('image')).'" alt="" />';
         }
@@ -106,7 +124,7 @@ function xoops_module_install($dirname) {
             $msgs[] ='<b>Author:</b> '.trim($module->getInfo('author'));
         }
         $msgs[] = '';
-        $errs[] = '<h4 style="text-align:'._GLOBAL_LEFT.';margin-bottom: 0px;border-bottom: dashed 1px #000000;">Installing '.$module->getInfo('name').'</h4>';
+        $errs[] = '<h4 style="text-align:left;margin-bottom: 0px;border-bottom: dashed 1px #000000;">Installing '.$module->getInfo('name').'</h4>';
         if ($sqlfile != false && is_array($sqlfile)) {
 
             $sql_file_path = XOOPS_ROOT_PATH."/modules/".$dirname."/".$sqlfile[XOOPS_DB_TYPE];
@@ -200,17 +218,16 @@ function xoops_module_install($dirname) {
                         $tplfile->setVar('tpl_lastimported', 0);
                         $tplfile->setVar('tpl_type', 'module');
                         if (!$tplfile_handler->insert($tplfile)) {
-                            $msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'._MD_AM_FAILINSTEMPFILE.'</span>', $tpl['file']);
+                            $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not insert template <b>'.$tpl['file'].'</b> to the database.</span>';
                         } else {
                             $newtplid = $tplfile->getVar('tpl_id');
-                            $msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_INSTEMPFILE, $tpl['file'], $newtplid);
-                            
+                            $msgs[] = '&nbsp;&nbsp;Template <b>'.$tpl['file'].'</b> added to the database. (ID: <b>'.$newtplid.'</b>)';
                             // generate compiled file
                             include_once XOOPS_ROOT_PATH.'/class/template.php';
                             if (!xoops_template_touch($newtplid)) {
-                                $msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'._MD_AM_FAILCOMPTEMPFILE.'</span>', $tpl['file']);
+                                $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Failed compiling template <b>'.$tpl['file'].'</b>.</span>';
                             } else {
-                                $msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_COMPTEMPFILE, $tpl['file']);
+                                $msgs[] = '&nbsp;&nbsp;Template <b>'.$tpl['file'].'</b> compiled.</span>';
                             }
                         }
                         unset($tpldata);
@@ -264,7 +281,7 @@ function xoops_module_install($dirname) {
                                 $tplfile->setVar('tpl_lastimported', 0);
                                 $tplfile->setVar('tpl_lastmodified', time());
                                 if (!$tplfile_handler->insert($tplfile)) {
-                                    $msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'._MD_AM_FAILINSTEMP.'</span>', $block['template']);
+                                    $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not insert template <b>'.$block['template'].'</b> to the database.</span>';
                                 } else {
                                     $newtplid = $tplfile->getVar('tpl_id');
                                     $msgs[] = '&nbsp;&nbsp;Template <b>'.$block['template'].'</b> added to the database. (ID: <b>'.$newtplid.'</b>)';
@@ -422,25 +439,14 @@ function xoops_module_install($dirname) {
 
             // execute module specific install script if any
             $install_script = $module->getInfo('onInstall');
-            $ModName = $module->getInfo('modname');
             if (false != $install_script && trim($install_script) != '') {
                 include_once XOOPS_ROOT_PATH.'/modules/'.$dirname.'/'.trim($install_script);
                 if (function_exists('xoops_module_install_'.$dirname)) {
                     $func = 'xoops_module_install_'.$dirname;
                     if ( !( $lastmsg = $func($module) ) ) {
-                        $msgs[] = sprintf(_MD_AM_FAIL_EXEC, $func);
+                        $msgs[] = 'Failed to execute '.$func;
                     } else {
-                        $msgs[] = sprintf(_MD_AM_FUNCT_EXEC, $func);
-						if ( is_string( $lastmsg ) ) {
-							$msgs[] = $lastmsg;
-						}
-                    }
-                }elseif (function_exists('icms_module_install_'.$ModName)) {
-                    $func = 'icms_module_install_'.$ModName;
-                    if ( !( $lastmsg = $func($module) ) ) {
-                        $msgs[] = sprintf(_MD_AM_FAIL_EXEC, $func);
-                    } else {
-                        $msgs[] = sprintf(_MD_AM_FUNCT_EXEC, $func);
+                        $msgs[] = '<b>'.$func.'</b> executed successfully.';
 						if ( is_string( $lastmsg ) ) {
 							$msgs[] = $lastmsg;
 						}
@@ -650,7 +656,6 @@ function xoops_module_uninstall($dirname) {
 
             // execute module specific install script if any
             $uninstall_script = $module->getInfo('onUninstall');
-            $ModName = $module->getInfo('modname');
             if (false != $uninstall_script && trim($uninstall_script) != '') {
                 include_once XOOPS_ROOT_PATH.'/modules/'.$dirname.'/'.trim($uninstall_script);
                 if (function_exists('xoops_module_uninstall_'.$dirname)) {
@@ -658,17 +663,9 @@ function xoops_module_uninstall($dirname) {
                     if (!$func($module)) {
                         $msgs[] = 'Failed to execute <b>'.$func.'</b>';
                     } else {
-                        $msgs[] = sprintf(_MD_AM_FUNCT_EXEC, $func);
-                    }
-                }elseif (function_exists('icms_module_uninstall_'.$ModName)) {
-                    $func = 'icms_module_uninstall_'.$ModName;
-                    if (!$func($module)) {
-                        $msgs[] = 'Failed to execute <b>'.$func.'</b>';
-                    } else {
-                        $msgs[] = sprintf(_MD_AM_FUNCT_EXEC, $func);
+                        $msgs[] = '<b>'.$func.'</b> executed successfully.';
                     }
                 }
-
             }
 
             $msgs[] = '</code><p>'.sprintf(_MD_AM_OKUNINS, "<b>".$module->getVar('name')."</b>").'</p>';

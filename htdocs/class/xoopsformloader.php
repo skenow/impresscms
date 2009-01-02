@@ -47,5 +47,7 @@ include_once XOOPS_ROOT_PATH."/class/xoopsform/formhiddentoken.php";
 //include_once XOOPS_ROOT_PATH."/class/xoopsform/grouppermform.php";
 include_once XOOPS_ROOT_PATH."/class/xoopsform/formcolorpicker.php";
 include_once XOOPS_ROOT_PATH."/class/xoopsform/formselecteditor.php";
-include_once XOOPS_ROOT_PATH."/class/captcha/formcaptcha.php";
+if(!@include_once XOOPS_ROOT_PATH."/Frameworks/captcha/formcaptcha.php") {
+	@include_once XOOPS_ROOT_PATH."/class/captcha/formcaptcha.php";
+}
 ?>

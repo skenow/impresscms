@@ -21,7 +21,8 @@ if(empty($_SERVER['HTTP_REFERER']) || !preg_match("/^".preg_quote(ICMS_URL, '/')
 	exit();
 }
 
-class IcmsCaptchaImageHandler {
+class XoopsCaptchaImageHandler {
+	var $config	= array();
 	//var $mode = "gd"; // GD or bmp
 	var $code;
 	var $invalid = false;
@@ -31,9 +32,9 @@ class IcmsCaptchaImageHandler {
 	var $width;
 	var $height;
 	
-	function IcmsCaptchaImageHandler()
+	function XoopsCaptchaImageHandler()
 	{
-		if(empty($_SESSION['IcmsCaptcha_name'])) {
+		if(empty($_SESSION['XoopsCaptcha_name'])) {
 			$this->invalid = true;
 		}
 		
@@ -50,6 +51,15 @@ class IcmsCaptchaImageHandler {
 		}
 	}
 	
+	/**
+	 * Loading configs from CAPTCHA class
+	 */
+	function setConfig($config = array())
+	{
+		// Loading default preferences
+		$this->config =& $config;
+	}
+
 	function loadImage()
 	{
 		$this->createCode();
@@ -62,26 +72,18 @@ class IcmsCaptchaImageHandler {
 	*/
 	function createCode() 
 	{
-		$config_handler =& xoops_gethandler('config');
-		$IcmsConfigCaptcha =& $config_handler->getConfigsByCat(ICMS_CONF_CAPTCHA);
 		if($this->invalid) {
 			return;
 		}
 		
 		if($this->mode == "bmp") {
-			$IcmsConfigCaptcha['captcha_num_chars'] = 4;
-			$this->code = rand( pow(10, $IcmsConfigCaptcha['captcha_num_chars'] - 1), intval( str_pad("9", $IcmsConfigCaptcha['captcha_num_chars'], "9") ) );
+			$this->config["num_chars"] = 4;
+			$this->code = rand( pow(10, $this->config["num_chars"] - 1), intval( str_pad("9", $this->config["num_chars"], "9") ) );
 		}else{
-            $raw_code = md5(uniqid(mt_rand(), 1));
-            if (isset($IcmsConfigCaptcha['captcha_skip_characters'])) {
-                $valid_code = str_replace($IcmsConfigCaptcha['captcha_skip_characters'], "", $raw_code);
-                $this->code = substr( $valid_code, 0, $IcmsConfigCaptcha['captcha_num_chars'] );
-            } else {
-                $this->code = substr( $raw_code, 0, $IcmsConfigCaptcha['captcha_num_chars'] );
-            }
-            if (!$IcmsConfigCaptcha['captcha_casesensitive']) {
-                $this->code = strtoupper( $this->code );
-            }
+			$this->code = substr(md5(uniqid(mt_rand(), 1)), 0, $this->config["num_chars"] );
+			if (!$this->config["casesensitive"]) {
+				$this->code = strtoupper( $this->code );
+			}
 		}
 	}
 	
@@ -91,13 +93,13 @@ class IcmsCaptchaImageHandler {
 			return;
 		}
 		
-		$_SESSION['IcmsCaptcha_sessioncode'] = strval( $this->code );
-		$maxAttempts = intval( @$_SESSION['IcmsCaptcha_maxattempts'] );
+		$_SESSION['XoopsCaptcha_sessioncode'] = strval( $this->code );
+		$maxAttempts = intval( @$_SESSION['XoopsCaptcha_maxattempts'] );
 		
 		// Increase the attempt records on refresh
 		if(!empty($maxAttempts)) {
-			$_SESSION['IcmsCaptcha_attempt_'.$_SESSION['IcmsCaptcha_name']]++;
-			if($_SESSION['IcmsCaptcha_attempt_'.$_SESSION['IcmsCaptcha_name']] > $maxAttempts) {
+			$_SESSION['XoopsCaptcha_attempt_'.$_SESSION['XoopsCaptcha_name']]++;
+			if($_SESSION['XoopsCaptcha_attempt_'.$_SESSION['XoopsCaptcha_name']] > $maxAttempts) {
 				$this->invalid = true;
 			}
 		}
@@ -138,9 +140,7 @@ class IcmsCaptchaImageHandler {
 		$background = imagecolorallocate($this->oImage, 255, 255, 255);
 		imagefilledrectangle($this->oImage, 0, 0, $this->width, $this->height, $background);
 
-		$config_handler =& xoops_gethandler('config');
-		$IcmsConfigCaptcha =& $config_handler->getConfigsByCat(ICMS_CONF_CAPTCHA);
-		switch ($IcmsConfigCaptcha['captcha_background_type']) {
+		switch ($this->config["background_type"]) {
 			default:
 			case 0:
 			$this->drawBars();
@@ -177,7 +177,7 @@ class IcmsCaptchaImageHandler {
 			header("Content-type: image/jpeg");
 			imagejpeg ($this->oImage);
 		}else{
-			imagejpeg ($this->oImage, ICMS_ROOT_PATH. "/cache/captcha/". $file . ".jpg");
+			imagejpeg ($this->oImage, ICMS_ROOT_PATH. "/". $this->config["imagepath"]. "/". $file . ".jpg");
 		}
 		imagedestroy($this->oImage);
 	}
@@ -194,7 +194,7 @@ class IcmsCaptchaImageHandler {
 		}*/
 		
 		require_once ICMS_ROOT_PATH."/class/xoopslists.php";
-		$file_path = "../{$name}";
+		$file_path = $this->config["rootpath"]."/{$name}";
 		$files = XoopsLists::getFileListAsArray($file_path);
 		foreach( $files as $item) {
 			if ( empty($extension) || preg_match("/(\.{$extension})$/i",$item) ) {
@@ -210,7 +210,7 @@ class IcmsCaptchaImageHandler {
 	function loadFont() 
 	{
 		$fonts = $this->_getList("fonts", "ttf");
-		$this->font = "../fonts/".$fonts[array_rand($fonts)];
+		$this->font = $this->config["rootpath"]."/fonts/".$fonts[array_rand($fonts)];
 	}
 	
 	function setImageSize()
@@ -219,9 +219,7 @@ class IcmsCaptchaImageHandler {
 		$MaxCharHeight = 0;
 		$oImage = imagecreatetruecolor(100, 100);
 		$text_color = imagecolorallocate($oImage, mt_rand(0, 100), mt_rand(0, 100), mt_rand(0, 100));
-		$config_handler =& xoops_gethandler('config');
-		$IcmsConfigCaptcha =& $config_handler->getConfigsByCat(ICMS_CONF_CAPTCHA);
-		$FontSize = $IcmsConfigCaptcha['captcha_fontsize_max'];
+		$FontSize = $this->config["fontsize_max"];
 		for ($Angle = -30; $Angle <= 30; $Angle++) {
 			for ($i = 65; $i <= 90; $i++) {
 				$CharDetails = imageftbbox($FontSize, $Angle, $this->font, chr($i), array());
@@ -238,8 +236,8 @@ class IcmsCaptchaImageHandler {
 		imagedestroy($oImage);
 		
 		$this->height = $MaxCharHeight + 2;
-		$this->spacing = (int)( ($IcmsConfigCaptcha['captcha_num_chars'] * $MaxCharWidth) / $IcmsConfigCaptcha['captcha_num_chars']);
-		$this->width = ($IcmsConfigCaptcha['captcha_num_chars'] * $MaxCharWidth) + ($this->spacing/2);
+		$this->spacing = (int)( ($this->config["num_chars"] * $MaxCharWidth) / $this->config["num_chars"]);
+		$this->width = ($this->config["num_chars"] * $MaxCharWidth) + ($this->spacing/2);
 	}
 
 	/**
@@ -251,7 +249,7 @@ class IcmsCaptchaImageHandler {
 	{
 		$RandBackground = null;
 		if( $backgrounds = $this->_getList("backgrounds", "(gif|jpg|png)") ) {
-			$RandBackground = "../backgrounds/".$backgrounds[array_rand($backgrounds)];
+			$RandBackground = $this->config["rootpath"]."/backgrounds/".$backgrounds[array_rand($backgrounds)];
 		}
 		return $RandBackground;
 	}
@@ -290,9 +288,7 @@ class IcmsCaptchaImageHandler {
 	*/
 	function drawCode() 
 	{
-		$config_handler =& xoops_gethandler('config');
-		$IcmsConfigCaptcha =& $config_handler->getConfigsByCat(ICMS_CONF_CAPTCHA);
-		for ($i = 0; $i < $IcmsConfigCaptcha['captcha_num_chars'] ; $i++) {
+		for ($i = 0; $i < $this->config["num_chars"] ; $i++) {
 			// select random greyscale colour
 			$text_color = imagecolorallocate($this->oImage, mt_rand(0, 100), mt_rand(0, 100), mt_rand(0, 100));
 
@@ -303,7 +299,7 @@ class IcmsCaptchaImageHandler {
 			}
 
 			// select random font size
-			$FontSize = mt_rand($IcmsConfigCaptcha['captcha_fontsize_min'], $IcmsConfigCaptcha['captcha_fontsize_max']);
+			$FontSize = mt_rand($this->config["fontsize_min"], $this->config["fontsize_max"]);
 
 			$CharDetails = imageftbbox($FontSize, $Angle, $this->font, $this->code[$i], array());
 			$CharHeight = abs( $CharDetails[1] + $CharDetails[5] );
@@ -331,9 +327,7 @@ class IcmsCaptchaImageHandler {
 	*/
 	function drawCircles() 
 	{
-		$config_handler =& xoops_gethandler('config');
-		$IcmsConfigCaptcha =& $config_handler->getConfigsByCat(ICMS_CONF_CAPTCHA);
-		for($i = 1; $i <= $IcmsConfigCaptcha['captcha_background_num']; $i++){
+		for($i = 1; $i <= $this->config["background_num"]; $i++){
 			$randomcolor = imagecolorallocate ($this->oImage , mt_rand(190,255), mt_rand(190,255), mt_rand(190,255));
 			imagefilledellipse($this->oImage, mt_rand(0,$this->width-10), mt_rand(0,$this->height-3), mt_rand(10,20), mt_rand(20,30),$randomcolor);
 		}
@@ -344,9 +338,7 @@ class IcmsCaptchaImageHandler {
 	*/
 	function drawLines() 
 	{
-		$config_handler =& xoops_gethandler('config');
-		$IcmsConfigCaptcha =& $config_handler->getConfigsByCat(ICMS_CONF_CAPTCHA);
-		for ($i = 0; $i < $IcmsConfigCaptcha['captcha_background_num']; $i++) {
+		for ($i = 0; $i < $this->config["background_num"]; $i++) {
 			$randomcolor = imagecolorallocate($this->oImage, mt_rand(190,255), mt_rand(190,255), mt_rand(190,255));
 			imageline($this->oImage, mt_rand(0, $this->width), mt_rand(0, $this->height), mt_rand(0, $this->width), mt_rand(0, $this->height), $randomcolor);
 		}
@@ -357,9 +349,7 @@ class IcmsCaptchaImageHandler {
 	*/
 	function drawRectangles() 
 	{
-		$config_handler =& xoops_gethandler('config');
-		$IcmsConfigCaptcha =& $config_handler->getConfigsByCat(ICMS_CONF_CAPTCHA);
-		for ($i = 1; $i <= $IcmsConfigCaptcha['captcha_background_num']; $i++) {
+		for ($i = 1; $i <= $this->config["background_num"]; $i++) {
 			$randomcolor = imagecolorallocate ($this->oImage , mt_rand(190,255), mt_rand(190,255), mt_rand(190,255));
 			imagefilledrectangle($this->oImage, mt_rand(0,$this->width), mt_rand(0,$this->height), mt_rand(0, $this->width), mt_rand(0,$this->height),  $randomcolor);
 		}
@@ -387,9 +377,7 @@ class IcmsCaptchaImageHandler {
 	*/
 	function drawEllipses() 
 	{
-		$config_handler =& xoops_gethandler('config');
-		$IcmsConfigCaptcha =& $config_handler->getConfigsByCat(ICMS_CONF_CAPTCHA);
-		for($i = 1; $i <= $IcmsConfigCaptcha['captcha_background_num']; $i++){
+		for($i = 1; $i <= $this->config["background_num"]; $i++){
 			$randomcolor = imagecolorallocate ($this->oImage , mt_rand(190,255), mt_rand(190,255), mt_rand(190,255));
 			imageellipse($this->oImage, mt_rand(0,$this->width), mt_rand(0,$this->height), mt_rand(0,$this->width), mt_rand(0,$this->height), $randomcolor);
 		}
@@ -400,16 +388,14 @@ class IcmsCaptchaImageHandler {
 	*/
 	function drawPolygons() 
 	{
-		$config_handler =& xoops_gethandler('config');
-		$IcmsConfigCaptcha =& $config_handler->getConfigsByCat(ICMS_CONF_CAPTCHA);
-		for($i = 1; $i <= $IcmsConfigCaptcha['captcha_background_num']; $i++){
+		for($i = 1; $i <= $this->config["background_num"]; $i++){
 			$randomcolor = imagecolorallocate ($this->oImage , mt_rand(190,255), mt_rand(190,255), mt_rand(190,255));
 			$coords = array();
-			for ($j=1; $j <= $IcmsConfigCaptcha['captcha_polygon_point']; $j++) {
+			for ($j=1; $j <= $this->config["polygon_point"]; $j++) {
 				$coords[] = mt_rand(0,$this->width);
 				$coords[] = mt_rand(0,$this->height);
 			}
-			imagefilledpolygon($this->oImage, $coords, $IcmsConfigCaptcha['captcha_polygon_point'], $randomcolor);
+			imagefilledpolygon($this->oImage, $coords, $this->config["polygon_point"], $randomcolor);
 		}
 	}
 
@@ -430,7 +416,9 @@ class IcmsCaptchaImageHandler {
 	}
 }
 
-$image_handler = new IcmsCaptchaImageHandler();
+$config = @include "../config.php";
+$image_handler = new XoopsCaptchaImageHandler();
+$image_handler->setConfig($config);
 $image_handler->loadImage();
 
 ?>

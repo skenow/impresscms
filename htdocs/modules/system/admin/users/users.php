@@ -177,7 +177,7 @@ function modifyUser($user)
 	}
 	else
 	{
-		echo "<h4 style='text-align:"._GLOBAL_LEFT.";'>";
+		echo "<h4 style='text-align:left;'>";
 		echo _AM_USERDONEXIT;
 		echo "</h4>";
 	}
@@ -190,10 +190,6 @@ function updateUser($uid, $uname, $name, $url, $email, $user_icq, $user_aim, $us
 	global $xoopsConfig, $xoopsDB, $xoopsModule;
 	$member_handler =& xoops_gethandler('member');
 	$edituser =& $member_handler->getUser($uid);
-
-	$config_handler =& xoops_gethandler('config');
-	$xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
-
 	if($edituser->getVar('uname') != $uname && $member_handler->getUserCount(new Criteria('uname', $uname)) > 0)
 	{
 		xoops_cp_header();
@@ -203,8 +199,6 @@ function updateUser($uid, $uname, $name, $url, $email, $user_icq, $user_aim, $us
 	}
 	else
 	{
-		$myts =& MyTextSanitizer::getInstance();
-
 		$edituser->setVar('name', $name);
 		$edituser->setVar('uname', $uname);
 		$edituser->setVar('email', $email);
@@ -216,16 +210,7 @@ function updateUser($uid, $uname, $name, $url, $email, $user_icq, $user_aim, $us
 		//$edituser->setVar('user_avatar', $user_avatar);
 		$edituser->setVar('user_icq', $user_icq);
 		$edituser->setVar('user_from', $user_from);
-		if($xoopsConfigUser['allow_htsig'] == 0)
-		{
-			$signature = strip_tags($myts->xoopsCodeDecode($user_sig, 1));
-			$edituser->setVar('user_sig', xoops_substr($signature, 0, intval($xoopsConfigUser['sig_max_length'])));
-		}
-		else
-		{
-			$signature = $myts->displayTarea($user_sig, 1, 1, 1, 1, 1, 'display');
-			$edituser->setVar('user_sig', xoops_substr($signature, 0, intval($xoopsConfigUser['sig_max_length'])));
-		}
+		$edituser->setVar('user_sig', $user_sig);
 		$user_viewemail = (isset($user_viewemail) && $user_viewemail == 1) ? 1 : 0;
 		$edituser->setVar('user_viewemail', $user_viewemail);
 		$edituser->setVar('user_aim', $user_aim);
@@ -277,7 +262,7 @@ function updateUser($uid, $uname, $name, $url, $email, $user_icq, $user_aim, $us
 				if($edituser->getVar('uid') == $xoopsUser->getVar('uid') && (in_array(XOOPS_GROUP_ADMIN, $oldgroups)) && !(in_array(XOOPS_GROUP_ADMIN, $groups)))
 				{
 					//Add the webmaster's group to the groups array to prevent accidentally removing oneself from the webmaster's group
-					$groups[] = XOOPS_GROUP_ADMIN;
+					array_push($groups, XOOPS_GROUP_ADMIN);
 				}
 				$member_handler =& xoops_gethandler('member');
 				foreach($oldgroups as $groupid) {$member_handler->removeUsersFromGroup($groupid, array($edituser->getVar('uid')));}

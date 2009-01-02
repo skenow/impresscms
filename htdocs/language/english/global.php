@@ -142,7 +142,7 @@ define("_ENTERURL","Enter the URL of the link you want to add:");
 define("_ENTERWEBTITLE","Enter the web site title:");
 define("_ENTERIMGURL","Enter the URL of the image you want to add.");
 define("_ENTERIMGPOS","Now, enter the position of the image.");
-define("_IMGPOSRORL","'R' or 'r' for right, 'L' or 'l' for left, 'C' or 'c' for center, or leave it blank.");
+define("_IMGPOSRORL","'R' or 'r' for right, 'L' or 'l' for left, or leave it blank.");
 define("_ERRORIMGPOS","ERROR! Enter the position of the image.");
 define("_ENTEREMAIL","Enter the email address you want to add.");
 define("_ENTERCODE","Enter the codes that you want to add.");
@@ -169,13 +169,6 @@ define('_MONTH', '1 month');
 define("_DATESTRING","Y/n/j G:i:s");
 define("_MEDIUMDATESTRING","Y/n/j G:i");
 define("_SHORTDATESTRING","Y/n/j");
-// !!IMPORTANT!! insert '\' before any char among reserved chars: "a", "A", "B", "c", "d", "D", "F", "g", "G", "h", "H", "i", "I", "j", "l", "L", "m", "M", "n", "O", "r", "s", "S", "t", "T", "U", "w", "W", "Y", "y", "z", "Z"	
-// insert double '\' before 't', 'r', 'n'
-define("_TODAY", "\T\o\d\a\y G:i");
-define("_YESTERDAY", "\Y\e\s\\t\e\\r\d\a\y G:i");
-define("_MONTHDAY", "n/j G:i");
-define("_YEARMONTHDAY", "Y/n/j G:i");
-define("_ELAPSE", "%s ago");
 /*
 The following characters are recognized in the format string:
 a - "am" or "pm"
@@ -215,6 +208,8 @@ define('_LANGCODE', 'en');
 define("XOOPS_USE_MULTIBYTES", "0");
 // change 0 to 1 if this language is a RTL (right to left) language
 define("_ADM_USE_RTL","0");
+// change 0 to 1 if this language has an extended date function
+define("_EXT_DATE_FUNC","0");
 
 define('_MODULES','Modules');
 define('_IMPRESSCMS_PREFS','Preferences');
@@ -244,7 +239,6 @@ define("_SECURITYIMAGE_ERROR","Invalid security code");
 define("_SECURITYIMAGE_GDERROR","<b><font color='#CC0000'>Library GD not installed</font> : <a target='php' href='http://fr2.php.net/manual/fr/ref.image.php'>Manual PHP</a></b><br>");
 define("_SECURITYIMAGE_FONTERROR","<b><font color='#CC0000'>No true type fonts found</font>, verify your installation</b><br>");
 */
-define("_NONE_LOGGER", "None");
 define("_QUERIES", "Queries");
 define("_BLOCKS", "Blocks");
 define("_EXTRA", "Extra");
@@ -274,21 +268,7 @@ define( "_PROTECTOR_NOT_FOUND", "Warning: System is unable to find if Protector 
 define('_MODABOUT_ABOUT', 'About');
 // if you have troubles with this font on your language or it is not working, download tcpdf from: http://www.tecnick.com/public/code/cp_dpage.php?aiocp_dp=tcpdf and add the required font in libraries/tcpdf/fonts then write down the font name here. system will then load this font for your language.
 define('_PDF_LOCAL_FONT', '');
-define('_CALENDAR_TYPE',''); // this value is for the local calendar used in this system, if you're not sure about this leave this value as it is!
+define('_CALENDAR_TYPE','gregorian'); // this value is for the local java calendar used in this system, if you're not sure about this leave this value as it is!
 define('_CALENDAR','Calendar');
 define('_RETRYPOST','Sorry, a time-out occured. Would you like to post again ?'); // autologin hack GIJ
-// Added since 1.1.1
-// change 0 to 1 if your language has a different numbering than latin`s alphabet
-define("_USE_LOCAL_NUM","0");
-define('_LCL_NUM0','0');
-define('_LCL_NUM1','1');
-define('_LCL_NUM2','2');
-define('_LCL_NUM3','3');
-define('_LCL_NUM4','4');
-define('_LCL_NUM5','5');
-define('_LCL_NUM6','6');
-define('_LCL_NUM7','7');
-define('_LCL_NUM8','8');
-define('_LCL_NUM9','9');
-define('_TOGGLETINY','Toggle Editor');
 ?>

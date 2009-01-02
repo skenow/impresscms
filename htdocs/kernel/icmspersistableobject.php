@@ -10,7 +10,7 @@
 * @version		$Id$
 */
 
-if (!defined("ICMS_ROOT_PATH")) {
+if (!defined("XOOPS_ROOT_PATH")) {
     die("ImpressCMS root path not defined");
 }
 
@@ -310,7 +310,7 @@ class IcmsPersistableObject extends XoopsObject {
      *
      * Here is a list of supported editor :
      * 		- tiny : TinyEditor
-     * 		- dhtmltextarea : ImpressCMS DHTML Area
+     * 		- dhtmltextarea : XOOPS DHTML Area
      * 		- fckeditor	: FCKEditor
      * 		- inbetween : InBetween
      * 		- koivi : Koivi
@@ -1084,7 +1084,7 @@ class IcmsPersistableObject extends XoopsObject {
 	 * @return content of the template if $fetchOnly or nothing if !$fetchOnly
 	 */
     function displaySingleObject($fetchOnly=false, $userSide=false, $actions=array(), $headerAsRow=true) {
-		include_once ICMS_ROOT_PATH."/kernel/icmspersistablesingleview.php";
+		//include_once SMARTOBJECT_ROOT_PATH."class/smartobjectsingleview.php";
 		$singleview = new IcmsPersistableSingleView($this, $userSide, $actions, $headerAsRow);
 		// add all fields mark as displayOnSingleView except the keyid
 		foreach($this->vars as $key=>$var) {

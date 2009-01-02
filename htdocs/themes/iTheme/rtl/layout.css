@@ -45,8 +45,8 @@ head~body #xo-canvas-rightcolumn {
 
 /* ----------Canvas rules (when columns are visible) ---------- */
 
-#xo-canvas.leftcolumn-layout #xo-canvas-columns, #xo-canvas.threecolumns-layout #xo-canvas-columns { padding-right: 170px; }
-#xo-canvas.rightcolumn-layout #xo-canvas-columns, #xo-canvas.threecolumns-layout #xo-canvas-columns {	padding-left: 190px; }
+#xo-canvas.leftcolumn-layout #xo-canvas-columns, #xo-canvas.threecolumns-layout #xo-canvas-columns { padding-left: 170px; }
+#xo-canvas.rightcolumn-layout #xo-canvas-columns, #xo-canvas.threecolumns-layout #xo-canvas-columns {	padding-right: 190px; }
  #xo-footer { clear: both;}
 
 /* ----------Page [center column] rules ---------- */
@@ -85,7 +85,7 @@ head~body #xo-canvas-rightcolumn {
 /* ------- Top and bottom zones (3 columns) ------- */
 
 #xo-page-topblocks.xo-lcrpageblocks .xo-blockszone, #xo-page-bottomblocks.xo-lcrpageblocks .xo-blockszone {
-	float:			right;
+	float:			left;
 	clear:			none;
 	width:			31.2%;
 }

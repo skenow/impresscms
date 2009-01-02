@@ -25,20 +25,20 @@ function appendCode(addCode) {
 //-->
 </script>
 <style type="text/css" media="all">
-body {<{if $icms_rtl}> direction : rtl<{/if}>; margin: 0; font-family : <{if $icms_rtl}> Tahoma, <{/if}>verdana, arial, helvetica, sans-serif;}
+body {margin: 0;}
 img {border: 0;}
 table {width: 100%; margin: 0;}
 a:link {color: #3a76d6; font-weight: bold; background-color: transparent;}
 a:visited {color: #9eb2d6; font-weight: bold; background-color: transparent;}
 a:hover {color: #e18a00; background-color: transparent;}
-table td {background-color: white; font-size: 12px; padding: 0; border-width: 0; vertical-align: top; font-family: <{if $icms_rtl}> Tahoma, <{/if}>Verdana, Arial, Helvetica, sans-serif;}
+table td {background-color: white; font-size: 12px; padding: 0; border-width: 0; vertical-align: top; font-family: Verdana, Arial, Helvetica, sans-serif;}
 table#imagenav td {vertical-align: bottom; padding: 5px;}
 table#imagemain td {border-right: 1px solid silver; border-bottom: 1px solid silver; padding: 5px; vertical-align: middle;}
-table#imagemain th {border: 0; background-color: #2F5376; color:white; font-size: 12px; padding: 5px; vertical-align: top; text-align:center; font-family: <{if $icms_rtl}> Tahoma, <{/if}>Verdana, Arial, Helvetica, sans-serif;}
-table#header td {width: 100%; background-color: #FFFFFF; vertical-align: middle;}
+table#imagemain th {border: 0; background-color: #2F5376; color:white; font-size: 12px; padding: 5px; vertical-align: top; text-align:center; font-family: Verdana, Arial, Helvetica, sans-serif;}
+table#header td {width: 100%; background-color: #2F5376; vertical-align: middle;}
 table#header td#headerbar {border-bottom: 1px solid silver; background-color: #dddddd;}
 div#pagenav {text-align:center;}
-div#footer {text-align:<{$smarty.const._GLOBAL_RIGHT}>; padding: 5px;}
+div#footer {text-align:right; padding: 5px;}
 </style>
 </head>
 
@@ -60,7 +60,7 @@ div#footer {text-align:<{$smarty.const._GLOBAL_RIGHT}>; padding: 5px;}
         </td>
 
         <{if $show_cat > 0}>
-        <td align="<{$smarty.const._GLOBAL_RIGHT}>"><a href="<{$xoops_url}>/imagemanager.php?target=<{$target}>&op=upload&imgcat_id=<{$show_cat}>" title="<{$lang_addimage}>"><{$lang_addimage}></a></td>
+        <td align="right"><a href="<{$xoops_url}>/imagemanager.php?target=<{$target}>&op=upload&imgcat_id=<{$show_cat}>" title="<{$lang_addimage}>"><{$lang_addimage}></a></td>
         <{/if}>
 
       </tr>
@@ -82,7 +82,7 @@ div#footer {text-align:<{$smarty.const._GLOBAL_RIGHT}>; padding: 5px;}
       <td><input type="hidden" name="image_id[]" value="<{$images[i].id}>" /><{$images[i].nicename}></td>
       <td><img src="<{$images[i].src}>" alt="<{$images[i].nicename}>" /></td>
       <td><{$images[i].mimetype}></td>
-      <td><a href="#" onclick="javascript:appendCode('<{$images[i].lxcode}>');"><img src="<{$xoops_url}>/images/align<{$smarty.const._GLOBAL_LEFT}>.gif" alt="Left" /></a> <a href="#" onclick="javascript:appendCode('<{$images[i].xcode}>');"><img src="<{$xoops_url}>/images/aligncenter.gif" alt="Center" /></a> <a href="#" onclick="javascript:appendCode('<{$images[i].rxcode}>');"><img src="<{$xoops_url}>/images/align<{$smarty.const._GLOBAL_RIGHT}>.gif" alt="Right" /></a></td>
+      <td><a href="#" onclick="javascript:appendCode('<{$images[i].lxcode}>');"><img src="<{$xoops_url}>/images/alignleft.gif" alt="Left" /></a> <a href="#" onclick="javascript:appendCode('<{$images[i].xcode}>');"><img src="<{$xoops_url}>/images/aligncenter.gif" alt="Center" /></a> <a href="#" onclick="javascript:appendCode('<{$images[i].rxcode}>');"><img src="<{$xoops_url}>/images/alignright.gif" alt="Right" /></a></td>
     </tr>
     <{/section}>
   </table>

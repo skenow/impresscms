@@ -14,7 +14,9 @@
 * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
 * @version		$Id$
 */
-
+/**
+ *
+ */
 include_once './class/dbmanager.php';
 
 // RMV
@@ -80,7 +82,6 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
     $dbm->insert("group_permission", " VALUES(0,".$gruops['XOOPS_GROUP_USERS'].",1,1,'content_read')");
     $dbm->insert("group_permission", " VALUES(0,".$gruops['XOOPS_GROUP_ANONYMOUS'].",1,1,'content_read')");
     $dbm->insert("group_permission", " VALUES(0,".$gruops['XOOPS_GROUP_ADMIN'].",1,1,'content_admin')");
-    $dbm->insert("group_permission", " VALUES(0,".$gruops['XOOPS_GROUP_ADMIN'].",1,1,'use_wysiwygeditor')");
     // data for table 'banner'
 
     $dbm->insert("banner", " (bid, cid, imptotal, impmade, clicks, imageurl, clickurl, date, htmlcode) VALUES (1, 1, 0, 1, 0, '".XOOPS_URL."/images/banners/impresscms_banner.gif', '"._INSTALL_LOCAL_SITE."', 1008813250, '')");
@@ -113,7 +114,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
     $time = time();
 
 	// RMV-NOTIFY (updated for extra column in table)
-    $dbm->insert("modules", " VALUES (1, '"._MI_SYSTEM_NAME."', 120, ".$time.", 0, 1, 'system', 0, 1, 1, 0, 0, 0, " . ICMS_SYSTEM_DBVERSION . ")");
+    $dbm->insert("modules", " VALUES (1, '"._MI_SYSTEM_NAME."', 110, ".$time.", 0, 1, 'system', 0, 1, 1, 0, 0, 0, 10)");
 
     foreach ($modversion['templates'] as $tplfile) {
         if ($fp = fopen('../modules/system/templates/'.$tplfile['file'], 'r')) {
@@ -462,10 +463,10 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'rank_maxsize', '_MD_AM_RANKMAX', '35000', '_MD_AM_RANKMAXDSC', 'textbox', 'int', $p)");
 	$i++;
 	$p++;
-    	$dbm->insert('config', " VALUES ($i, 0, $c, 'bad_unames', '_MD_AM_BADUNAMES', '".addslashes(serialize(array('webmaster', '^impresscms', '^admin')))."', '_MD_AM_BADUNAMESDSC', 'textsarea', 'array', $p)");
+    	$dbm->insert('config', " VALUES ($i, 0, $c, 'bad_unames', '_MD_AM_BADUNAMES', '".addslashes(serialize(array('webmaster', '^impresscms', '^admin')))."', '_MD_AM_BADUNAMESDSC', 'textarea', 'array', $p)");
 	$i++;
 	$p++;
-    	$dbm->insert('config', " VALUES ($i, 0, $c, 'bad_emails', '_MD_AM_BADEMAILS', '".addslashes(serialize(array('impresscms.org$')))."', '_MD_AM_BADEMAILSDSC', 'textsarea', 'array', $p)");
+    	$dbm->insert('config', " VALUES ($i, 0, $c, 'bad_emails', '_MD_AM_BADEMAILS', '".addslashes(serialize(array('impresscms.org$')))."', '_MD_AM_BADEMAILSDSC', 'textarea', 'array', $p)");
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'remember_me', '_MD_AM_REMEMBERME', '0', '_MD_AM_REMEMBERMEDSC', 'yesno', 'int', $p)");
@@ -474,7 +475,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'reg_dispdsclmr', '_MD_AM_DSPDSCLMR', 1, '_MD_AM_DSPDSCLMRDSC', 'yesno', 'int', $p)");
 	$i++;
 	$p++;
-    	$dbm->insert('config', " VALUES ($i, 0, $c, 'reg_disclaimer', '_MD_AM_REGDSCLMR', '".addslashes(_INSTALL_DISCLMR)."', '_MD_AM_REGDSCLMRDSC', 'textsarea', 'text', $p)");
+    	$dbm->insert('config', " VALUES ($i, 0, $c, 'reg_disclaimer', '_MD_AM_REGDSCLMR', '".addslashes(_INSTALL_DISCLMR)."', '_MD_AM_REGDSCLMRDSC', 'textarea', 'text', $p)");
 	$i++;
 	$p++;
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'priv_dpolicy', '_MD_AM_PRIVDPOLICY', 0, '_MD_AM_PRIVDPOLICYDSC', 'yesno', 'int', $p)");
@@ -587,7 +588,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'censor_enable', '_MD_AM_DOCENSOR', '0', '_MD_AM_DOCENSORDSC', 'yesno', 'int', $p)");
 	$i++;
 	$p++;
-    	$dbm->insert('config', " VALUES ($i, 0, $c, 'censor_words', '_MD_AM_CENSORWRD', '".addslashes(serialize(array('fuck', 'shit', 'cunt', 'wanker', 'bastard')))."', '_MD_AM_CENSORWRDDSC', 'textsarea', 'array', $p)");
+    	$dbm->insert('config', " VALUES ($i, 0, $c, 'censor_words', '_MD_AM_CENSORWRD', '".addslashes(serialize(array('fuck', 'shit', 'cunt', 'wanker', 'bastard')))."', '_MD_AM_CENSORWRDDSC', 'textarea', 'array', $p)");
 	$i++;
 	$p++;
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'censor_replace', '_MD_AM_CENSORRPLC', '"._LOCAL_SENSORTXT."', '_MD_AM_CENSORRPLCDSC', 'textbox', 'text', $p)");
@@ -684,7 +685,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	$dbm->insert('config', " VALUES ($i,0,$c,'ldap_version','_MD_AM_LDAP_VERSION','3','_MD_AM_LDAP_VERSION_DESC','textbox','text', $p)");
 	$i++;
 	$p++;
-	$dbm->insert('config', " VALUES ($i,0,$c,'ldap_users_bypass','_MD_AM_LDAP_USERS_BYPASS','".serialize(array('admin'))."','_MD_AM_LDAP_USERS_BYPASS_DESC','textsarea','array', $p)");
+	$dbm->insert('config', " VALUES ($i,0,$c,'ldap_users_bypass','_MD_AM_LDAP_USERS_BYPASS','".serialize(array('admin'))."','_MD_AM_LDAP_USERS_BYPASS_DESC','textarea','array', $p)");
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i,0,$c,'ldap_loginname_asdn','_MD_AM_LDAP_LOGINNAME_ASDN','uid_asdn','_MD_AM_LDAP_LOGINNAME_ASDN_D','yesno','int', $p)");
@@ -714,7 +715,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	$dbm->insert('config', " VALUES ($i,0,$c,'ldap_surname_attr','_MD_AM_LDAP_SURNAME_ATTR','sn','_MD_AM_LDAP_SURNAME_ATTR_DESC','textbox','text', $p)");
 	$i++;
 	$p++;
-	$dbm->insert('config', " VALUES ($i,0,$c,'ldap_field_mapping','_MD_AM_LDAP_FIELD_MAPPING_ATTR','email=mail|name=displayname','_MD_AM_LDAP_FIELD_MAPPING_DESC','textsarea','text', $p)");
+	$dbm->insert('config', " VALUES ($i,0,$c,'ldap_field_mapping','_MD_AM_LDAP_FIELD_MAPPING_ATTR','email=mail|name=displayname','_MD_AM_LDAP_FIELD_MAPPING_DESC','textarea','text', $p)");
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i,0,$c,'ldap_provisionning_upd', '_MD_AM_LDAP_PROVIS_UPD', '1', '_MD_AM_LDAP_PROVIS_UPD_DESC', 'yesno', 'int', $p)");
@@ -833,68 +834,6 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'use_jsjalali', '_MD_AM_JALALICAL', '0', '_MD_AM_JALALICALDSC', 'yesno', 'int', $p)");
-
-	// Data for Config Category 11 (CAPTCHA Settings)
-	$c=11; // sets config category id
-	$i++;
-	$p=0;
-	$dbm->insert('config', " VALUES ($i, 0, $c, 'captcha_mode', '_MD_AM_CAPTCHA_MODE', 'image', '_MD_AM_CAPTCHA_MODEDSC', 'select', 'text', $p)");
-	// Insert data for Config Options in selection field. (must be placed before $i++)
-    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_CAPTCHA_OFF', 'none', $i)");
-	$ci++;
-    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_CAPTCHA_IMG', 'image', $i)");
-	$ci++;
-    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_CAPTCHA_TXT', 'text', $i)");
-	$ci++;
-	// ----------
-	$i++;
-	$p++;
-	$dbm->insert('config', " VALUES ($i, 0, $c, 'captcha_skipmember', '_MD_AM_CAPTCHA_SKIPMEMBER', '".addslashes(serialize(array('2')))."', '_MD_AM_CAPTCHA_SKIPMEMBERDSC', 'group_multi', 'array', $p)");
-	$i++;
-	$p++;
-	$dbm->insert('config', " VALUES ($i, 0, $c, 'captcha_casesensitive', '_MD_AM_CAPTCHA_CASESENS', '0', '_MD_AM_CAPTCHA_CASESENSDSC', 'yesno', 'int', $p)");
-	$i++;
-	$p++;
-	$dbm->insert('config', " VALUES ($i, 0, $c, 'captcha_skip_characters', '_MD_AM_CAPTCHA_SKIPCHAR', '".addslashes(serialize(array('o', '0', 'i', 'l', '1')))."', '_MD_AM_CAPTCHA_SKIPCHARDSC', 'textarea', 'array', $p)");
-	$i++;
-	$p++;
-	$dbm->insert('config', " VALUES ($i, 0, $c, 'captcha_maxattempt', '_MD_AM_CAPTCHA_MAXATTEMP', '8', '_MD_AM_CAPTCHA_MAXATTEMPDSC', 'textbox', 'int', $p)");
-	$i++;
-	$p++;
-	$dbm->insert('config', " VALUES ($i, 0, $c, 'captcha_num_chars', '_MD_AM_CAPTCHA_NUMCHARS', '4', '_MD_AM_CAPTCHA_NUMCHARSDSC', 'textbox', 'int', $p)");
-	$i++;
-	$p++;
-	$dbm->insert('config', " VALUES ($i, 0, $c, 'captcha_fontsize_min', '_MD_AM_CAPTCHA_FONTMIN', '10', '_MD_AM_CAPTCHA_FONTMINDSC', 'textbox', 'int', $p)");
-	$i++;
-	$p++;
-	$dbm->insert('config', " VALUES ($i, 0, $c, 'captcha_fontsize_max', '_MD_AM_CAPTCHA_FONTMAX', '12', '_MD_AM_CAPTCHA_FONTMAXDSC', 'textbox', 'int', $p)");
-	$i++;
-	$p++;
-	$dbm->insert('config', " VALUES ($i, 0, $c, 'captcha_background_type', '_MD_AM_CAPTCHA_BGTYPE', '100', '_MD_AM_CAPTCHA_BGTYPEDSC', 'select', 'text', $p)");
-	// Insert data for Config Options in selection field. (must be placed before $i++)
-    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_BAR', '0', $i)");
-	$ci++;
-    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_CIRCLE', '1', $i)");
-	$ci++;
-    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_LINE', '2', $i)");
-	$ci++;
-    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_RECTANGLE', '3', $i)");
-	$ci++;
-    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_ELLIPSE', '4', $i)");
-	$ci++;
-    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_POLYGON', '5', $i)");
-	$ci++;
-    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_RANDOM', '100', $i)");
-	$ci++;
-	// ----------
-	$i++;
-	$p++;
-	$dbm->insert('config', " VALUES ($i, 0, $c, 'captcha_background_num', '_MD_AM_CAPTCHA_BGNUM', '50', '_MD_AM_CAPTCHA_BGNUMDSC', 'textbox', 'int', $p)");
-	$i++;
-	$p++;
-	$dbm->insert('config', " VALUES ($i, 0, $c, 'captcha_polygon_point', '_MD_AM_CAPTCHA_POLPNT', '3', '_MD_AM_CAPTCHA_POLPNTDSC', 'textbox', 'int', $p)");
-
-
 
     return $gruops;
 }

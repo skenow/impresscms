@@ -93,8 +93,7 @@ $location_text = new XoopsFormText(_AM_LOCATION, "user_from", 30, 100, $location
 $occupation_text = new XoopsFormText(_AM_OCCUPATION, "user_occ", 30, 100, $occ_value);
 $interest_text = new XoopsFormText(_AM_INTEREST, "user_intrest", 30, 150, $interest_value);
 $sig_tray = new XoopsFormElementTray(_AM_SIGNATURE, "<br />");
-if($xoopsConfigUser['allow_htsig'] == 0) {$sig_tarea = new XoopsFormTextArea("", "user_sig", $sig_value);}
-else {$sig_tarea = new XoopsFormDhtmlTextArea("", "user_sig", $sig_value);}
+$sig_tarea = new XoopsFormTextArea("", "user_sig", $sig_value);
 $sig_tray->addElement($sig_tarea);
 $sig_cbox = new XoopsFormCheckBox("", "attachsig", $sig_cbox_value);
 $sig_cbox->addOption(1, _US_SHOWSIG);
@@ -131,19 +130,7 @@ $gperm_handler =& xoops_gethandler('groupperm');
 //If user has admin rights on groups
 if ($gperm_handler->checkRight("system_admin", XOOPS_SYSTEM_GROUP, $xoopsUser->getGroups(), 1)) {
     //add group selection
-    if ( in_array(XOOPS_GROUP_ADMIN, $xoopsUser->getGroups())){
-        $group_select = array(new XoopsFormSelectGroup(_US_GROUPS, 'groups', false, $groups, 5, true));
-    } else {
-        $group_manager_value = array_intersect_key(xoops_gethandler('member')->getGroupList(), array_flip($gperm_handler->getItemIds('group_manager', $xoopsUser->getGroups()))) ;
-        $group_array = new XoopsFormSelect(_US_GROUPS, 'groups',$groups, 5, true);
-        $group_array->addOptionArray($group_manager_value);
-        $group_select = array ($group_array);
-        //$group_hidden = array_diff(xoops_gethandler('member')->getGroupList(),$group_manager_value);
-        $group_hidden = array_diff($groups,array_flip($group_manager_value));
-	    foreach ($group_hidden as $key => $group) {
-	        $group_hidden_select[] = new XoopsFormHidden('groups_hidden[' . $key . ']', $group);
-	    }
-    }
+    $group_select[] = new XoopsFormSelectGroup(_US_GROUPS, 'groups', false, $groups, 5, true);
 }
 else {
     //add each user groups
@@ -204,12 +191,7 @@ foreach ($group_select as $group) {
     $form->addElement($group);
     unset($group);
 }
-if (@is_array($group_hidden_select)){
-	foreach ($group_hidden_select as $group) {
-	    $form->addElement($group);
-	    unset($group);
-	}
-}
+
 $form->addElement($fct_hidden);
 $form->addElement($op_hidden);
 $form->addElement($submit_button);

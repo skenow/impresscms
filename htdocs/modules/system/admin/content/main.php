@@ -131,7 +131,7 @@ function contmanager_index($content_supid,$start=0){
 		if ($pagecount > $limit) {
 			include_once XOOPS_ROOT_PATH.'/class/pagenav.php';
 			$nav = new XoopsPageNav($pagecount, $limit, $start, 'start', 'fct=content&amp;op=list&amp;content_supid='.$content_supid);
-			$icmsAdminTpl->assign('pag','<div style="float:'._GLOBAL_LEFT.'; padding-top:2px;" align="center">'.$nav->renderNav().'</div>');
+			$icmsAdminTpl->assign('pag','<div style="float:left; padding-top:2px;" align="center">'.$nav->renderNav().'</div>');
 		}else{
 			$icmsAdminTpl->assign('pag','');
 		}
@@ -455,11 +455,12 @@ function contentform($id=null,$clone=false){
 		$content_uid = $content->getVar('content_uid');
 		$grupos_ids = $gperm_handler->getGroupIds('content_read', $id);
 	}else{
+		if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
 		$ftitle = _MD_ADDCONTENT;
 		$title = '';
 		$menu = '';
 		$body = '';
-		$css = file_get_contents(XOOPS_ROOT_PATH.'/modules/system/admin/content/style'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css');
+		$css = file_get_contents(XOOPS_ROOT_PATH.'/modules/system/admin/content/style_rtl.css');
 		$weight = 0;
 		$status = 1;
 		$visibility = 3;
@@ -469,6 +470,22 @@ function contentform($id=null,$clone=false){
 		if (!in_array(XOOPS_GROUP_ANONYMOUS, $grupos_ids)) {
 			array_push($grupos_ids, XOOPS_GROUP_ANONYMOUS);
 		}
+	   } else {
+		$ftitle = _MD_ADDCONTENT;
+		$title = '';
+		$menu = '';
+		$body = '';
+		$css = file_get_contents(XOOPS_ROOT_PATH.'/modules/system/admin/content/style.css');
+		$weight = 0;
+		$status = 1;
+		$visibility = 3;
+		global $content_supid;
+		$content_uid = $xoopsUser->getVar('uid');
+		$grupos_ids = $xoopsUser->getGroups();
+		if (!in_array(XOOPS_GROUP_ANONYMOUS, $grupos_ids)) {
+			array_push($grupos_ids, XOOPS_GROUP_ANONYMOUS);
+		}
+           }
 	}
 
 	$form = new XoopsThemeForm($ftitle, 'content_form', 'admin.php', "post", true);

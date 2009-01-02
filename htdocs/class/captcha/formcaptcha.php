@@ -4,7 +4,7 @@
  *
  * Currently there are two types of CAPTCHA forms, text and image
  * The default mode is "text", it can be changed in the priority:
- * 1 If mode is set through IcmsFormCaptcha::setMode(), take it
+ * 1 If mode is set through XoopsFormCaptcha::setMode(), take it
  * 2 Elseif mode is set though captcha/config.php, take it
  * 3 Else, take "text"
  * 
@@ -30,21 +30,21 @@ require_once ICMS_ROOT_PATH."/class/xoopsform/formelement.php";
  * Usage
  *
  * For form creation:
- * 1 Add [include_once ICMS_ROOT_PATH."/class/captcha/formcaptcha.php";] to class/xoopsformloader.php, OR add to the file that uses CAPTCHA before calling IcmsFormCaptcha
- * 2 Add form element where proper: $xoopsform->addElement(new IcmsFormCaptcha($caption, $name, $skipmember, ...);
+ * 1 Add [include_once ICMS_ROOT_PATH."/class/captcha/formcaptcha.php";] to class/xoopsformloader.php, OR add to the file that uses CAPTCHA before calling XoopsFormCaptcha
+ * 2 Add form element where proper: $xoopsform->addElement(new XoopsFormCaptcha($caption, $name, $skipmember, ...);
  * 
  * For verification:
  *   if(@include_once ICMS_ROOT_PATH."/class/captcha/captcha.php") {
- *	    $icmsCaptcha = IcmsCaptcha::instance();
- *	    if(! $icmsCaptcha->verify() ) {
- *		    echo $icmsCaptcha->getMessage();
+ *	    $xoopsCaptcha = XoopsCaptcha::instance();
+ *	    if(! $xoopsCaptcha->verify() ) {
+ *		    echo $xoopsCaptcha->getMessage();
  *		    ...
  *	    }
  *  }
  *
  */
 
-class IcmsFormCaptcha extends XoopsFormElement {
+class XoopsFormCaptcha extends XoopsFormElement {
 
 	var $_captchaHandler;
 	
@@ -59,12 +59,12 @@ class IcmsFormCaptcha extends XoopsFormElement {
 	 * @param int		$backgroundnum	Number of background images in image mode
 	 *
 	 */
-	function IcmsFormCaptcha($caption = '', $name = 'icmscaptcha', $skipmember = null, $numchar = null, $minfontsize = null, $maxfontsize = null, $backgroundtype = null, $backgroundnum = null) {
-		if(!class_exists("IcmsCaptcha")) {
+	function XoopsFormCaptcha($caption = '', $name = 'xoopscaptcha', $skipmember = null, $numchar = null, $minfontsize = null, $maxfontsize = null, $backgroundtype = null, $backgroundnum = null) {
+		if(!class_exists("XoopsCaptcaha")) {
 			require_once ICMS_ROOT_PATH."/class/captcha/captcha.php";
 		}
 		
-		$this->_captchaHandler =& IcmsCaptcha::instance();
+		$this->_captchaHandler =& XoopsCaptcha::instance();
 		$this->_captchaHandler->init($name, $skipmember, $numchar, $minfontsize, $maxfontsize, $backgroundtype, $backgroundnum);
 		if(!$this->_captchaHandler->active) {
 			$this->setHidden();

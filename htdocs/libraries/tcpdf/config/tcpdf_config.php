@@ -2,7 +2,7 @@
 //============================================================+
 // File name   : tcpdf_config.php
 // Begin       : 2004-06-11
-// Last Update : 2008-10-10
+// Last Update : 2008-07-29
 //
 // Description : Congiguration file for TCPDF.
 //
@@ -29,6 +29,9 @@
  * @since 2004-10-27
  */
 
+// First we need to include the mainfile.
+include_once '../../../mainfile.php';
+$myts =& MyTextSanitizer::getInstance();
 // If you define the constant K_TCPDF_EXTERNAL_CONFIG, the following settings will be ignored.
 
 if (!defined("K_TCPDF_EXTERNAL_CONFIG")) {
@@ -123,13 +126,19 @@ if (!defined("K_TCPDF_EXTERNAL_CONFIG")) {
 	
 	/**
 	 * header title
+	 * Now if anybody include the default header, the site title and slogan will load.
 	 */
-	define ("PDF_HEADER_TITLE", "TCPDF Example");
+	$sitename = $xoopsConfig['sitename'];
+	$siteslogan = $xoopsConfig['slogan'];
+	$pdfheader = $sitename.' - '.$siteslogan;
+	$firstLine = $myts->undoHtmlSpecialChars($pdfheader);
+	define ("PDF_HEADER_TITLE", $firstLine);
 	
 	/**
 	 * header description string
+	 * The description contains the site url
 	 */
-	define ("PDF_HEADER_STRING", "by Nicola Asuni - Tecnick.com\nwww.tcpdf.org");
+	define ("PDF_HEADER_STRING", ICMS_URL);
 	
 	/**
 	 * image logo
@@ -179,15 +188,7 @@ if (!defined("K_TCPDF_EXTERNAL_CONFIG")) {
 	/**
 	 * main font name
 	 */
-	 // set font
-	if ( defined("_PDF_LOCAL_FONT") && _PDF_LOCAL_FONT && file_exists(ICMS_PDF_LIB_PATH.'/fonts/'._PDF_LOCAL_FONT.'.php')
-) {
-define('_PDF_FONT', _PDF_LOCAL_FONT);
-}else{
-define('_PDF_FONT', 'dejavusans');
-}
-
-	define ("PDF_FONT_NAME_MAIN", _PDF_FONT);
+	define ("PDF_FONT_NAME_MAIN", "dejavusans");
 	
 	/**
 	 * main font size
@@ -197,7 +198,7 @@ define('_PDF_FONT', 'dejavusans');
 	/**
 	 * data font name
 	 */
-	define ("PDF_FONT_NAME_DATA", _PDF_FONT);
+	define ("PDF_FONT_NAME_DATA", "dejavusans");
 	
 	/**
 	 * data font size
@@ -205,7 +206,7 @@ define('_PDF_FONT', 'dejavusans');
 	define ("PDF_FONT_SIZE_DATA", 8);
 	
 	/**
-	 * Ratio used to scale the images
+	 *  scale factor for images (number of points in user unit)
 	 */
 	define ("PDF_IMAGE_SCALE_RATIO", 4);
 	

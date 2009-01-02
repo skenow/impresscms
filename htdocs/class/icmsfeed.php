@@ -2,9 +2,9 @@
 
 /**
 *
-* Module RSS Feed Class
+* Module RSS Feed Class 
 *
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project 
 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
 * @package	    core
 * @since		1.1
@@ -15,8 +15,6 @@
 if (!defined('ICMS_ROOT_PATH')) {
 	exit();
 }
-
-include_once ICMS_ROOT_PATH . '/class/template.php';
 
 class IcmsFeed {
 
@@ -49,13 +47,10 @@ class IcmsFeed {
 	}
 
 	function render () {
-		global $xoopsLogger;
-		$xoopsLogger->disableLogger();
-
 		//header ('Content-Type:text/xml; charset='._CHARSET);
 		$xoopsOption['template_main'] = "db:system_rss.html";
 		$tpl = new XoopsTpl();
-
+		
 		$tpl->assign('channel_title', $this->title);
 		$tpl->assign('channel_link', $this->url);
 		$tpl->assign('channel_desc', $this->description);

@@ -264,9 +264,13 @@ function addItem(itemurl, name, target, cat) {
 }
 //-->
 </script>
-<?php
-	echo '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/icms'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css" />';
-	echo '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/modules/system/style'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css" />';
+<?php		if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
+	echo '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/icms_rtl.css" />';
+	echo '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/modules/system/style_rtl.css" />';
+	   } else {
+	echo '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/icms.css" />';
+	echo '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/modules/system/style.css" />';
+           }
 ?>
 <style type="text/css">
 .tabberlive .tabbertabhide {
@@ -426,7 +430,7 @@ if ($op == 'delcat' && $admin) {
 	if ($imgcount > 0) {
 		if ($imgcount > 20) {
 			include_once XOOPS_ROOT_PATH.'/class/pagenav.php';
-			$nav = new XoopsPageNav($imgcount, 20, $start, 'start', 'op=listimg&amp;imgcat_id='.$imgcat_id.'&target='.$target);
+			$nav = new XoopsPageNav($imgcount, 20, $start, 'start', 'op=listimg&amp;imgcat_id='.$imgcat_id);
 			echo '<div style="text-align:right">'.$nav->renderNav().'</div>';
 		}
 	}

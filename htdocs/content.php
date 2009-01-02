@@ -22,9 +22,7 @@ $im_contentConfig =& $config_handler->getConfigsByCat(IM_CONF_CONTENT);
 $page = (isset($_GET['page']))?trim(StopXSS($_GET['page'])):((isset($_POST['page']))?trim(StopXSS($_POST['page'])):0);
 
 $gperm_handler = & xoops_gethandler('groupperm');
-$groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
-$agroups = $gperm_handler->getGroupIds('system_admin',XOOPS_SYSTEM_CONTENT);
-$allowed_groups = array_intersect($groups, $agroups);
+$groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
 $uid = is_object($xoopsUser) ? intval($xoopsUser->getVar('uid')) : 0;
 $content_handler =& xoops_gethandler('content');
 
@@ -55,7 +53,7 @@ else
 if(!is_object($impress_content)) {redirect_header('index.php', 2, _CT_SELECTNG);}
 $content_id = $impress_content->getVar('content_id');
 $viewperm  = $gperm_handler->checkRight('content_read', $content_id, $groups);	// $viewperm is true if user has permition to see this page
-$adminperm = $gperm_handler->checkRight('content_admin', $content_id, $uid) || (is_object($xoopsUser) && count($allowed_groups) > 0);	// $adminperm is true if user has permition to admin this page
+$adminperm = $gperm_handler->checkRight('content_admin', $content_id, $uid) || (is_object($xoopsUser) && $xoopsUser->isAdmin());	// $adminperm is true if user has permition to admin this page
 
 if(!$viewperm) {redirect_header('index.php', 2, _NOPERM);}
 $myts =& MyTextSanitizer::getInstance();
@@ -70,7 +68,7 @@ $xoopsTpl->assign("content_admlinks", $options);
 $member_handler =& xoops_gethandler('member');
 $autor =& $member_handler->getUser($impress_content->getVar('content_uid'));
 $xoopsTpl->assign("show_pinfo",$im_contentConfig['show_pinfo']);
-$xoopsTpl->assign("content_tinfo", sprintf(_CT_PUBLISHEDBY.' <a href="'.ICMS_URL.'/userinfo.php?uid=%u">%s</a> '._CT_ON.' %s (%s '._CT_READS.')',$autor->getVar('uid'),$autor->getVar('uname'),formatTimestamp($impress_content->getVar('content_created'),"s"),icms_conv_nr2local($impress_content->getReads())));
+$xoopsTpl->assign("content_tinfo", sprintf(_CT_PUBLISHEDBY.' <a href="'.ICMS_URL.'/userinfo.php?uid=%u">%s</a> '._CT_ON.' %s (%u '._CT_READS.')',$autor->getVar('uid'),$autor->getVar('uname'),formatTimestamp($impress_content->getVar('content_created'),"s"),$impress_content->getReads()));
 $xoopsTpl->assign("content_body", $myts->displayTarea($impress_content->getVar('content_body', "n"),1,1,1,1,0));
 $xoopsTpl->assign("content_css", icms_sanitizeContentCss($impress_content->getVar('content_css')));
 
@@ -107,7 +105,7 @@ $xoopsTpl->assign('showNav',$im_contentConfig['show_nav']);
 $xoopsTpl->assign('nav', showNav($content_id));
 $xoopsTpl->assign("xoops_pagetitle", $impress_content->getVar('content_title'));
 //$xoopsTpl->assign("xoops_module_header", '<link rel="stylesheet" type="text/css" media="all" title="Style sheet" href="'.ICMS_URL.'/modules/system/admin/content/style.css" />');
-$xoTheme->addStylesheet(ICMS_URL.'/modules/system/admin/content/style'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css');
+$xoTheme->addStylesheet(ICMS_URL.'/modules/system/admin/content/style.css');
 
 if(!is_object($xoopsUser))
 {
@@ -117,6 +115,6 @@ else
 {
 	if($xoopsUser->getVar('uid') != $autor->getVar('uid')) {$impress_content->setReads();}
 }
-$content_handler->insert($impress_content);
+
 include ICMS_ROOT_PATH.'/footer.php';
 ?>
