@@ -1,6 +1,10 @@
 ImpressCMS ChangeLog
 
-== Impresscms 1.1.1==
+== Impresscms 1.1.2==
+
+'''Fixed'''
+* Issue when doubleclicking a link and unexpectedly getting logged out (PHP issue) (vaughan)
+* undefined index xoopsUserId in register.php (vaughan)
 
 ===2008-12-29 : 1.1.1 Final===
 

@@ -31,7 +31,7 @@ $xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 if ($xoopsConfigUser['allow_register'] == 0 && $xoopsConfigUser['activation_type'] != 3) {
 	redirect_header('index.php', 6, _US_NOREGISTER);
 }
-if($_SESSION['xoopsUserId']){
+if(!empty($_SESSION['xoopsUserId']) && $_SESSION['xoopsUserId']) {
 	redirect_header('index.php', 6, _US_ALREADY_LOGED_IN);
 }
 /**
