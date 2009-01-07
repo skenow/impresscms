@@ -6,6 +6,7 @@ ImpressCMS ChangeLog
 * Issue when doubleclicking a link and unexpectedly getting logged out (PHP issue) (vaughan)
 * undefined index xoopsUserId in register.php (vaughan)
 * #2483155: Register fails when disclaimer used & CAPTCHA enabled. (vaughan/rgriffith)
+* Activation key is not being sent along with the activation email when set to Activation by Admin. (vaughan)
 
 ===2008-12-29 : 1.1.1 Final===
 

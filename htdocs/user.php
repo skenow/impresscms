@@ -152,18 +152,19 @@ if($op == 'login')
 if($op == 'logout')
 {
 	$message = '';
+	$sess_handler = & xoops_gethandler('session');
 	// Regenrate a new session id and destroy old session
-	session_regenerate_id(true);
+	$sess_handler->icms_sessionRegenerateId(true);
 	$_SESSION = array();
 	if($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '')
 	{
-		setcookie($xoopsConfig['session_name'], '', time()- 3600, '/',  '', 0);
+		setcookie($xoopsConfig['session_name'], '', time()- 3600, '/',  '', 0, 0);
 	}
 	// autologin hack GIJ (clear autologin cookies)
 	$xoops_cookie_path = defined('XOOPS_COOKIE_PATH') ? XOOPS_COOKIE_PATH : preg_replace('?http://[^/]+(/.*)$?', '$1', ICMS_URL);
 	if($xoops_cookie_path == ICMS_URL) $xoops_cookie_path = '/';
-	setcookie('autologin_uname', '', time() - 3600, $xoops_cookie_path, '', 0);
-	setcookie('autologin_pass', '', time() - 3600, $xoops_cookie_path, '', 0);
+	setcookie('autologin_uname', '', time() - 3600, $xoops_cookie_path, '', 0, 0);
+	setcookie('autologin_pass', '', time() - 3600, $xoops_cookie_path, '', 0, 0);
 	// end of autologin hack GIJ
 	// clear entry from online users table
 	if(is_object($xoopsUser))

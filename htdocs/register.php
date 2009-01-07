@@ -154,7 +154,7 @@ case 'newuser':
 		}
 	}
 	$stop .= userCheck($uname, $email, $pass, $vpass);
-	if (empty($stop)) {enc_type
+	if (empty($stop)) {
 		echo _US_USERNAME.": ".$myts->htmlSpecialChars($uname)."<br />";
 		echo _US_EMAIL.": ".$myts->htmlSpecialChars($email)."<br />";
 		if ($url != '') {
@@ -286,7 +286,7 @@ case 'finish':
 			$xoopsMailer->setTemplate('adminactivate.tpl');
 			$xoopsMailer->assign('USERNAME', $uname);
 			$xoopsMailer->assign('USEREMAIL', $email);
-			$xoopsMailer->assign('USERACTLINK', ICMS_URL.'/user.php?op=actv&id='.$newid.'&actkey='.$actkey);
+			$xoopsMailer->assign('USERACTLINK', ICMS_URL.'/user.php?op=actv&id='.$newid.'&actkey='.$newuser->getVar('actkey'));
 			$xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
 			$xoopsMailer->assign('ADMINMAIL', $xoopsConfig['adminmail']);
 			$xoopsMailer->assign('SITEURL', ICMS_URL."/");
