@@ -6,6 +6,7 @@ htdocs/
 header.php
 footer.php
 admin.php
+register.php
 
 htdocs/class/auth/
 ==================

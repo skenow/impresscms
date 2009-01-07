@@ -154,7 +154,7 @@ case 'newuser':
 		}
 	}
 	$stop .= userCheck($uname, $email, $pass, $vpass);
-	if (empty($stop)) {
+	if (empty($stop)) {enc_type
 		echo _US_USERNAME.": ".$myts->htmlSpecialChars($uname)."<br />";
 		echo _US_EMAIL.": ".$myts->htmlSpecialChars($email)."<br />";
 		if ($url != '') {
@@ -175,6 +175,7 @@ case 'newuser':
 		<input type='hidden' name='actkey' value='".$myts->htmlSpecialChars($actkey)."' />
 		<input type='hidden' name='salt' value='".$myts->htmlSpecialChars($salt)."' />
 		<input type='hidden' name='enc_type' value='".intval($enc_type)."' />
+		<input type='hidden' name='agree_disc' value='".$agree_disc."' />
 		<br /><br /><input type='hidden' name='op' value='finish' />".$GLOBALS['xoopsSecurity']->getTokenHTML()."<input type='submit' value='". _US_FINISH ."' /></form>";
 	} else {
 		echo "<span style='color:#ff0000;'>$stop</span>";
@@ -201,10 +202,9 @@ case 'finish':
     }
 }
 
-	if ($xoopsConfigUser['reg_dispdsclmr'] != 0 && $xoopsConfigUser['reg_disclaimer'] != '') {
-		if (empty($agree_disc)) {
-			$stop .= _US_UNEEDAGREE.'<br />';
-		}
+	if ($xoopsConfigUser['reg_dispdsclmr'] != 0 && $xoopsConfigUser['reg_disclaimer'] != '')
+	{
+		if (empty($agree_disc) || $agree_disc !==1) {$stop .= _US_UNEEDAGREE.'<br />';}
 	}
 
 	if ( empty($stop) ) {

@@ -5,6 +5,7 @@ ImpressCMS ChangeLog
 '''Fixed'''
 * Issue when doubleclicking a link and unexpectedly getting logged out (PHP issue) (vaughan)
 * undefined index xoopsUserId in register.php (vaughan)
+* #2483155: Register fails when disclaimer used & CAPTCHA enabled. (vaughan/rgriffith)
 
 ===2008-12-29 : 1.1.1 Final===
 
