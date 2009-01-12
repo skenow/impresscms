@@ -160,6 +160,8 @@ if($op == 'logout')
 	{
 		setcookie($xoopsConfig['session_name'], '', time()- 3600, '/',  '', 0, 0);
 	}
+	// clear any admin session cookies
+	setcookie('ICMSADSESSION', '', time()- 3600, '/',  '', 0, 0); 
 	// autologin hack GIJ (clear autologin cookies)
 	$xoops_cookie_path = defined('XOOPS_COOKIE_PATH') ? XOOPS_COOKIE_PATH : preg_replace('?http://[^/]+(/.*)$?', '$1', ICMS_URL);
 	if($xoops_cookie_path == ICMS_URL) $xoops_cookie_path = '/';
