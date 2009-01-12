@@ -1,0 +1,14 @@
+<div style="position: relative;">
+	<fieldset style="padding: 10px;">
+		<legend style="font-weight: bold;"><{$lang_adminlogin}></legend>
+		<form action="admin.php" method="post">
+			<br />
+			<{$lang_password}><input type="password" name="pass" size="25" maxlength="255" /><br />
+			<input type="hidden" name="uname" value="<{$lang_username}>" />
+			<input type="hidden" name="op" value="11" />
+			<input type="hidden" name="xoops_redirect" value="<{$redirect_page}>"/>
+			<br />
+			<input type="submit" value="<{$lang_login}>" />
+		</form>
+	</fieldset>
+</div>
