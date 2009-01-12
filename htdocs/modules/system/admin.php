@@ -67,10 +67,9 @@ if(is_object($xoopsUser))
 	{
 		$myts =& MyTextSanitizer::getInstance();
 		$cookiepass = $myts->stripSlashesGPC($_COOKIE['ICMSADSESSION']);
-		$old_limit = time() - 600;
-		list($old_Ynj, $old_encpass) = explode(':', $cookiepass) ;
-		if(strtotime($old_Ynj) < $old_limit || hash('sha256', $xoopsUser->getVar('pass').XOOPS_DB_SALT.$old_Ynj) != $old_encpass)
+		if(hash('sha256', $xoopsUser->getVar('pass').XOOPS_DB_SALT) != $cookiepass)
 		{
+			unset($_COOKIE['ICMSADSESSION'], $_SESSION['xoopsAdminId']);
 			redirect_header(ICMS_URL.'/',3,_UNAUTHADMINACCESS);
 		}
 	}

@@ -114,16 +114,22 @@ switch($op)
 	break;
 	default:
 		$mods = xoops_cp_header(1);
-
-		include_once XOOPS_ROOT_PATH . '/class/template.php';
-		$admintemplate->_tpl =& new XoopsTpl();
-
-		$admintemplate->_tpl->assign('lang_adminlogin', _ADMINLOGIN);
-		$admintemplate->_tpl->assign('lang_login', _LOGIN);
-		$admintemplate->_tpl->assign('lang_username', $xoopsUser->getVar('uname'));
-		$admintemplate->_tpl->assign('redirect_page', ICMS_URL.'/modules/system/admin.php');
-		$admintemplate->_tpl->assign('lang_password', _PASSWORD);
-		$admintemplate->_tpl->display(XOOPS_ROOT_PATH . '/modules/system/templates/admin/system_adm_loginform.html');
+		if(!isset($_COOKIE['ICMSADSESSION']))
+		{
+			include_once XOOPS_ROOT_PATH . '/class/template.php';
+			$admintemplate->_tpl =& new XoopsTpl();
+			$admintemplate->_tpl->assign('lang_adminlogin', _ADMINLOGIN);
+			$admintemplate->_tpl->assign('lang_login', _LOGIN);
+			$admintemplate->_tpl->assign('lang_username', $xoopsUser->getVar('uname'));
+			$admintemplate->_tpl->assign('redirect_page', ICMS_URL.'/modules/system/admin.php');
+			$admintemplate->_tpl->assign('lang_password', _PASSWORD);
+			$admintemplate->_tpl->display(XOOPS_ROOT_PATH . '/modules/system/templates/admin/system_adm_loginform.html');
+		}
+		else
+		{
+			header('Location: '.ICMS_URL.'/modules/system/admin.php');
+			exit();
+		}
 	break;
 }
 

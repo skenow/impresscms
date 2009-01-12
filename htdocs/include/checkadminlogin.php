@@ -52,8 +52,7 @@ if(false != $user)
 	$adsess_handler =& xoops_gethandler('adminsession');
 	$_SESSION['xoopsAdminId'] = $user->getVar('uid');
 	$session_expire = ini_get('session.cookie_lifetime');
-	$Ynj = date('Y-n-j');
-	setcookie('ICMSADSESSION', $Ynj.':'.hash('sha256', $user->getVar('pass').XOOPS_DB_SALT.$Ynj), $session_expire ? time() + $session_expire : 0, '/',  '', 0, 0);
+	setcookie('ICMSADSESSION', hash('sha256', $user->getVar('pass').XOOPS_DB_SALT), $session_expire ? time() + $session_expire : 0, '/',  '', 0, 0);
 	redirect_header(ICMS_URL.'/modules/system/admin.php', 1, sprintf(_US_LOGGINGUAD, $user->getVar('uname')), false);
 }
 else {redirect_header(ICMS_URL.'/admin.php', 5, $xoopsAuth->getHtmlErrors());}
