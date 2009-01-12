@@ -271,4 +271,10 @@ define('_PDF_LOCAL_FONT', '');
 define('_CALENDAR_TYPE','gregorian'); // this value is for the local java calendar used in this system, if you're not sure about this leave this value as it is!
 define('_CALENDAR','Calendar');
 define('_RETRYPOST','Sorry, a time-out occured. Would you like to post again ?'); // autologin hack GIJ
+
+// added in 1.2
+define('_ADMINLOGIN', 'Admin Login');
+define('_ADNOTLOGIN', 'Admin Session Not Authenticated');
+define('_UNAUTHADMINACCESS', 'Unauthorised Admin Access');
+
 ?>

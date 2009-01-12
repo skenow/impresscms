@@ -60,7 +60,20 @@ $admintest = 0;
 if(is_object($xoopsUser))
 {
 	$xoopsModule =& XoopsModule::getByDirname('system');
+	$adsess_handler =& xoops_gethandler('adminsession');
 	if(!$xoopsUser->isAdmin($xoopsModule->mid())) {redirect_header(ICMS_URL.'/',3,_NOPERM);}
+	elseif(!isset($_COOKIE['ICMSADSESSION'])) {redirect_header(ICMS_URL.'/admin.php',3,_ADNOTLOGIN);}
+	else
+	{
+		$myts =& MyTextSanitizer::getInstance();
+		$cookiepass = $myts->stripSlashesGPC($_COOKIE['ICMSADSESSION']);
+		$old_limit = time() - 600;
+		list($old_Ynj, $old_encpass) = explode(':', $cookiepass) ;
+		if(strtotime($old_Ynj) < $old_limit || hash('sha256', $xoopsUser->getVar('pass').XOOPS_DB_SALT.$old_Ynj) != $old_encpass)
+		{
+			redirect_header(ICMS_URL.'/',3,_UNAUTHADMINACCESS);
+		}
+	}
 	$admintest=1;
 }
 else {redirect_header(ICMS_URL.'/',3,_NOPERM);}

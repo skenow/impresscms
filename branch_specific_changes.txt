@@ -1,25 +1,10 @@
 Changed files >
+---------------
 
 htdocs/
 =======
 
-header.php
-footer.php
 admin.php
-register.php
-user.php
-
-htdocs/class/auth/
-==================
-
-auth_xoops.php
-auth_ldap.php
-
-htdocs/include/
-===============
-
-checklogin.php
-common.php
 
 htdocs/kernel/
 ==============
@@ -30,3 +15,26 @@ htdocs/modules/system/
 ======================
 
 admin.php
+xoops_version.php
+
+htdocs/language/english/
+========================
+
+global.php
+user.php
+
+------------------------------------------------------------
+Added files >
+-------------
+
+htdocs/include/
+===============
+
+checkadminlogin.php
+
+htdocs/modules/system/templates/admin/
+======================================
+
+system_adm_loginform.html
+
+

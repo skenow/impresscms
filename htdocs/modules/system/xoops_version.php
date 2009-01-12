@@ -137,6 +137,10 @@ $modversion['templates'][$i]['file'] = 'admin/modulesadmin/system_adm_modulesadm
 $modversion['templates'][$i]['description'] = 'Template for the modules admin';
 
 $i++;
+$modversion['templates'][$i]['file'] = 'admin/system_adm_loginform.html';
+$modversion['templates'][$i]['description'] = 'Template for Admin Logon form';
+
+$i++;
 $modversion['templates'][$i]['file'] = 'system_common_form.html';
 $modversion['templates'][$i]['description'] = 'Common form template';
 
