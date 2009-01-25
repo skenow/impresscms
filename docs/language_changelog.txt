@@ -9,6 +9,27 @@ Legend :
   -  a constant was removed OR a whole file was removed
   #  Directory / Folders guide
 
+ImpressCMS 1.2 (changes from ImpressCMS 1.1.2)
+================================================
+
+===========================
+# Directory: modules/system
+===========================
+
+modules/system/language/english/admin/preferences.php
+
++-  define("_MD_AM_SESSEXPIREDSC","Maximum duration of session idle time in minutes (Valid only when 'use custom session' is enabled.");
++  define("_MD_AM_SHOWADMINWARNINGS","Show Admin Warning Messages?");
++  define("_MD_AM_SHOWADMINWARNINGSDSC","Select 'Yes' to display the warning messages when entering Admin, Selecting 'No' will result in the warning messages being suppressed.");
++  define("_MD_AM_ADMINUSEMYSESS", "Use custom admin session");
++  define("_MD_AM_ADMINUSEMYSESSDSC", "Select 'yes' to customise admin session related values.");
++  define("_MD_AM_ADMINSESSNAME", "Admin Session name");
++  define("_MD_AM_ADMINSESSNAMEDSC", "The name of Admin session (Valid only when 'use custom admin session' is enabled)");
++  define("_MD_AM_ADMINSESSEXPIRE", "Admin Session expiration");
++  define("_MD_AM_ADMINSESSEXPIREDSC", "Maximum duration of admin session idle time in minutes (Valid only when 'use admin custom session' is enabled.)");
+
+
+
 ImpressCMS 1.1.2 (changes from ImpressCMS 1.1.1)
 ================================================
 

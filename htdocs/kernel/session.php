@@ -379,7 +379,7 @@ class icmsAdminSessionHandler
 	{
 		if(rand(1, 100) < 11)
 		{
-			$expiration = empty($GLOBALS['xoopsConfig']['adm_session_expire']) ? @ini_get('session.gc_maxlifetime') : $GLOBALS['xoopsConfig']['adm_session_expire'] * 60;
+			$expiration = empty($GLOBALS['xoopsConfig']['admin_session_expire']) ? @ini_get('session.gc_maxlifetime') : $GLOBALS['xoopsConfig']['admin_session_expire'] * 60;
 			$this->gc($expiration);
 		}
 	}
@@ -417,8 +417,8 @@ class icmsAdminSessionHandler
 	function update_cookie($adm_sess_id = null, $expire = null)
 	{
 		global $xoopsConfig;
-		$adm_session_name = ($xoopsConfig['adm_use_mysession'] && $xoopsConfig['adm_session_name'] != '') ? $xoopsConfig['adm_session_name'] : session_name();
-		$adm_session_expire = !is_null($expire) ? intval($expire) : ( ($xoopsConfig['adm_use_mysession'] && $xoopsConfig['adm_session_name'] != '') ? $xoopsConfig['adm_session_expire'] * 60 : ini_get('session.cookie_lifetime') );
+		$adm_session_name = ($xoopsConfig['admin_use_mysession'] && $xoopsConfig['admin_session_name'] != '') ? $xoopsConfig['admin_session_name'] : session_name();
+		$adm_session_expire = !is_null($expire) ? intval($expire) : ( ($xoopsConfig['admin_use_mysession'] && $xoopsConfig['admin_session_name'] != '') ? $xoopsConfig['admin_session_expire'] * 60 : ini_get('session.cookie_lifetime') );
 		$adm_session_id = empty($adm_sess_id) ? session_id() : $adm_sess_id;
 		setcookie($adm_session_name, $adm_session_id, $adm_session_expire ? time() + $adm_session_expire : 0, '/',  '', 0, 0);
 	}

@@ -7,6 +7,11 @@ htdocs/
 admin.php
 user.php
 
+htdocs/install/
+===============
+
+makedata.php
+
 htdocs/install/sql/
 ===================
 
@@ -23,6 +28,11 @@ htdocs/modules/system/
 
 admin.php
 xoops_version.php
+
+htdocs/modules/system/language/admin/
+=====================================
+
+preferences.php
 
 htdocs/language/english/
 ========================

@@ -33,7 +33,7 @@ define("_MD_AM_USEMYSESSDSC","Select yes to customise session related values.");
 define("_MD_AM_SESSNAME","Session name");
 define("_MD_AM_SESSNAMEDSC","The name of session (Valid only when 'use custom session' is enabled)");
 define("_MD_AM_SESSEXPIRE","Session expiration");
-define("_MD_AM_SESSEXPIREDSC","Maximum duration of session idle time in minutes (Valid only when 'use custom session' is enabled. Works only when you are using PHP4.2.0 or later.)");
+define("_MD_AM_SESSEXPIREDSC","Maximum duration of session idle time in minutes (Valid only when 'use custom session' is enabled.");
 define("_MD_AM_BANNERS","Activate banner ads?");
 define("_MD_AM_MYIP","Your IP address");
 define("_MD_AM_MYIPDSC","This IP will not count as an impression for banners");
@@ -418,4 +418,14 @@ define("_MD_AM_JALALICALDSC","By selecting this, you`ll have an extended calenda
 // added in 1.1.2
 define("_MD_AM_UNABLEENCCLOSED","Database Update Failed, You can't change password encryption whilst the site is closed");
 
+// added in 1.2
+define("_MD_AM_SHOWADMINWARNINGS","Show Admin Warning Messages?");
+define("_MD_AM_SHOWADMINWARNINGSDSC","Select 'Yes' to display the warning messages when entering Admin, Selecting 'No' will result in the warning messages being suppressed.");
+
+define("_MD_AM_ADMINUSEMYSESS", "Use custom admin session");
+define("_MD_AM_ADMINUSEMYSESSDSC", "Select 'yes' to customise admin session related values.");
+define("_MD_AM_ADMINSESSNAME", "Admin Session name");
+define("_MD_AM_ADMINSESSNAMEDSC", "The name of Admin session (Valid only when 'use custom admin session' is enabled)");
+define("_MD_AM_ADMINSESSEXPIRE", "Admin Session expiration");
+define("_MD_AM_ADMINSESSEXPIREDSC", "Maximum duration of admin session idle time in minutes (Valid only when 'use admin custom session' is enabled.)");
 ?>

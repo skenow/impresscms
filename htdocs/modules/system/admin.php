@@ -129,6 +129,75 @@ if($admintest != 0)
 if(false != $error)
 {
 	xoops_cp_header();
+
+	if($xoopsConfig['show_admin_warnings'] !== 0)
+	{
+		echo '<table class="outer" cellpadding="4" cellspacing="1">';
+		echo '<tr><td>';
+		// ###### Output warn messages for security  ######
+		if(is_dir(ICMS_ROOT_PATH.'/install/'))
+		{
+			xoops_error(sprintf(_WARNINSTALL2,ICMS_ROOT_PATH.'/install/'));
+			echo '<br />';
+		}
+		$db = $GLOBALS['xoopsDB'];
+		if(getDbValue($db, 'modules', 'version', 'version="110"') == 0 AND getDbValue($db, 'modules', 'mid', 'mid="1"') == 1)
+		{
+			xoops_error('<a href="'.ICMS_URL.'/modules/system/admin.php?fct=modulesadmin&op=update&module=system">'._WARNINGUPDATESYSTEM.'</a>');
+			echo '<br />';
+		}
+		if(is_writable(ICMS_ROOT_PATH.'/mainfile.php'))
+		{
+			xoops_error(sprintf(_WARNINWRITEABLE,ICMS_ROOT_PATH.'/mainfile.php'));
+			echo '<br />';
+		}
+		if(is_dir(ICMS_ROOT_PATH.'/upgrade/'))
+		{
+			xoops_error(sprintf(_WARNINSTALL2,ICMS_ROOT_PATH.'/upgrade/'));
+			echo '<br />';
+		}
+	/*	if(!is_dir(XOOPS_TRUST_PATH))
+		{
+			xoops_error(_TRUST_PATH_HELP);
+			echo '<br />';
+		}*/
+		$sql1 = "SELECT conf_modid FROM `".$xoopsDB->prefix('config')."` WHERE conf_name = 'dos_skipmodules'";
+		if($result1 = $xoopsDB->query($sql1))
+		{
+			list($modid) = $xoopsDB->FetchRow($result1);
+			$protector_is_active = '0';
+			if(!is_null($modid))
+			{
+				$sql2 = "SELECT isactive FROM `".$xoopsDB->prefix('modules')."` WHERE mid =".$modid;
+				$result2 = $xoopsDB->query($sql2);
+				list($protector_is_active) = $xoopsDB->FetchRow($result2);
+			}
+		}
+		if($protector_is_active == 0)
+		{
+			xoops_error(_PROTECTOR_NOT_FOUND);
+			echo '<br />';
+		}
+		// ###### Output warn messages for correct functionality  ######
+		if(!is_writable(ICMS_CACHE_PATH))
+		{
+			xoops_warning(sprintf(_WARNINNOTWRITEABLE,ICMS_CACHE_PATH));
+			echo '<br />';
+		}
+		if(!is_writable(ICMS_UPLOAD_PATH))
+		{
+			xoops_warning(sprintf(_WARNINNOTWRITEABLE,ICMS_UPLOAD_PATH));
+			echo '<br />';
+		}
+		if(!is_writable(ICMS_COMPILE_PATH))
+		{
+			xoops_warning(sprintf(_WARNINNOTWRITEABLE,ICMS_COMPILE_PATH));
+			echo '<br />';
+		}
+		echo '</td></tr>';
+		echo '</table>';
+	}
+
 	echo '<h4>'._MD_AM_CONFIG.'</h4>';
 	echo '<table class="outer" cellpadding="4" cellspacing="1">';
 	echo '<tr>';

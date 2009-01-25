@@ -276,6 +276,15 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'session_expire', '_MD_AM_SESSEXPIRE', '15', '_MD_AM_SESSEXPIREDSC', 'textbox', 'int', $p)");
 	$i++;
 	$p++;
+    	$dbm->insert('config', " VALUES ($i, 0, $c, 'admin_use_mysession', '_MD_AM_ADMINUSEMYSESS', '0', '_MD_AM_ADMINUSEMYSESSDSC', 'yesno', 'int', $p)");
+	$i++;
+	$p++;
+    	$dbm->insert('config', " VALUES ($i, 0, $c, 'admin_session_name', '_MD_AM_ADMINSESSNAME', 'icms_adminsession', '_MD_AM_ADMINSESSNAMEDSC', 'textbox', 'text', $p)");
+	$i++;
+	$p++;
+    	$dbm->insert('config', " VALUES ($i, 0, $c, 'admin_session_expire', '_MD_AM_ADMINSESSEXPIRE', '15', '_MD_AM_ADMINSESSEXPIREDSC', 'textbox', 'int', $p)");
+	$i++;
+	$p++;
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'debug_mode', '_MD_AM_DEBUGMODE', '1', '_MD_AM_DEBUGMODEDSC', 'select', 'int', $p)");
 	// Insert data for Config Options in selection field. (must be placed before $i++)
 	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_DEBUGMODE0', 0, $i)");
@@ -342,6 +351,9 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'module_cache', '_MD_AM_MODCACHE', '', '_MD_AM_MODCACHEDSC', 'module_cache', 'array', $p)");
+	$i++;
+	$p++;
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'show_admin_warnings', '_MD_AM_SHOWADMINWARNINGS', '1', '_MD_AM_SHOWADMINWARNINGSDSC', 'yesno', 'int', $p)");
 
 	// Data for Config Category 2 (User Preferences)
 	$c=2; // sets config category id
