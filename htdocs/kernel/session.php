@@ -213,18 +213,28 @@ class XoopsSessionHandler
 		setcookie($session_name, $session_id, $session_expire ? time() + $session_expire : 0, '/',  '', 0, 0);
 	}
 
-	// Call this when init session.
+	/**
+	* Opens a session & creates a session fingerprint & unique session_id()
+	* @param   string  $unique    Unique identifier to use in the hash algorhythm
+	*						this should be unique to the user. ie. pass, uname, uid etc.
+	* @param   bool  $regenerate	true = regenerate the session_id(), false = keep same session_id()
+	**/
 	function icms_sessionOpen($unique = '', $regenerate = false)
 	{
-		$_SESSION['icms_fprint'] = $this->icms_sessionFingerprint();
+		$_SESSION['icms_fprint'] = $this->icms_sessionFingerprint($unique);
 		if($regenerate) {$this->icms_sessionRegenerateId(true);}
 	}
 	
-	// Call this to check session.
-	function icms_sessionCheck()
+	/**
+	* Check the $_SESSION fingerprint against the cookie fingerprint
+	* @param   string  $unique    Unique identifier to use in the hash algorhythm
+	*						this should be unique to the user. ie. pass, uname, uid etc.
+	* @return  bool.
+	**/
+	function icms_sessionCheck($unique = '')
 	{
 //		$this->icms_sessionRegenerateId();
-		return (isset($_SESSION['icms_fprint']) && $_SESSION['icms_fprint'] == $this->icms_sessionFingerprint());
+		return (isset($_SESSION['icms_fprint']) && $_SESSION['icms_fprint'] == $this->icms_sessionFingerprint($unique));
 	}
 
 	/**
@@ -423,10 +433,19 @@ class icmsAdminSessionHandler
 	function update_cookie($adm_sess_id = null, $expire = null)
 	{
 		global $xoopsConfig;
-		$adm_session_name = ($xoopsConfig['admin_use_mysession'] && $xoopsConfig['admin_session_name'] != '') ? $xoopsConfig['admin_session_name'] : session_name();
+		if($xoopsConfig['use_ssl'] && isset($_POST[$xoopsConfig['sslpost_name']]) && $_POST[$xoopsConfig['sslpost_name']] != '')
+		{
+			$adm_session_id($_POST[$xoopsConfig['sslpost_name']]);
+			$cookie_secure = 1;
+		}
+		else
+		{
+			$adm_session_id = empty($adm_sess_id) ? session_id() : $adm_sess_id;
+			$cookie_secure = 0;
+		}
+		$adm_session_name = ($xoopsConfig['admin_use_mysession'] && $xoopsConfig['admin_session_name'] != '') ? $xoopsConfig['admin_session_name'] : 'ICMSADSESSION';
 		$adm_session_expire = !is_null($expire) ? intval($expire) : ( ($xoopsConfig['admin_use_mysession'] && $xoopsConfig['admin_session_name'] != '') ? $xoopsConfig['admin_session_expire'] * 60 : ini_get('session.cookie_lifetime') );
-		$adm_session_id = empty($adm_sess_id) ? session_id() : $adm_sess_id;
-		setcookie($adm_session_name, $adm_session_id, $adm_session_expire ? time() + $adm_session_expire : 0, '/',  '', 0, 0);
+		setcookie($adm_session_name, $adm_session_id, $adm_session_expire ? time() + $adm_session_expire : 0, '/',  '', $cookie_secure, 1);
 	}
 
 	/**

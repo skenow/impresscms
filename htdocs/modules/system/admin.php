@@ -61,6 +61,8 @@ if(is_object($xoopsUser))
 {
 	$xoopsModule =& XoopsModule::getByDirname('system');
 	$adsess_handler =& xoops_gethandler('adminsession');
+	if(!$xoopsUser->isAdmin($xoopsModule->mid())) {redirect_header(ICMS_URL.'/',3,_NOPERM);}
+
 	if($xoopsConfig['admin_use_mysession'] && $xoopsConfig['admin_session_name'] != '')
 	{
 		$admin_sess_name = $xoopsConfig['admin_session_name'];
@@ -69,15 +71,14 @@ if(is_object($xoopsUser))
 	{
 		$admin_sess_name = 'ICMSADSESSION';
 	}
-	if(!$xoopsUser->isAdmin($xoopsModule->mid())) {redirect_header(ICMS_URL.'/',3,_NOPERM);}
-	elseif(!isset($_COOKIE[$admin_sess_name])) {redirect_header(ICMS_URL.'/admin.php',3,_ADNOTLOGIN);}
+	if(!isset($_COOKIE[$admin_sess_name])) {redirect_header(ICMS_URL.'/admin.php',3,_ADNOTLOGIN);}
 	else
 	{
 		$myts =& MyTextSanitizer::getInstance();
 		$cookie_fprint = $myts->stripSlashesGPC($_COOKIE[$admin_sess_name]);
-		if(!$adsess_handler->icms_sessionCheck($xoopsUser->getVar('pass')))
+		if($cookie_fprint !== $_SESSION['icms_admin_fprint'] || !$adsess_handler->icms_sessionCheck($xoopsUser->getVar('pass')))
 		{
-			setcookie($_COOKIE[$admin_sess_name], '', time()-3600)
+			setcookie($_COOKIE[$admin_sess_name], '', time()-3600);
 			unset($_COOKIE[$admin_sess_name], $_SESSION['xoopsAdminId'], $_SESSION['icms_admin_fprint']);
 			redirect_header(ICMS_URL.'/',3,_UNAUTHADMINACCESS);
 		}

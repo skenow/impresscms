@@ -49,24 +49,22 @@ $user =& $xoopsAuth->authenticate($uname4sql, $pass4sql);
 
 if(false != $user)
 {
+	$cookie_secure = 0;
 	$adsess_handler =& xoops_gethandler('adminsession');
 	$_SESSION['xoopsAdminId'] = $user->getVar('uid');
 	if($xoopsConfig['admin_use_mysession'] && $xoopsConfig['admin_session_name'] != '' && $xoopsConfig['admin_session_expire'] > 0)
 	{
-		if(isset($_COOKIE[$xoopsConfig['admin_session_name']]))
-		{
-			$admin_sess_name = $xoopsConfig['admin_session_name'];
-			$admin_sess_expire = 60*$xoopsConfig['admin_session_expire'];
-		}
+		$admin_sess_name = $xoopsConfig['admin_session_name'];
+		$admin_sess_expire = 60*$xoopsConfig['admin_session_expire'];
 	}
 	else
 	{
 		$admin_sess_name = 'ICMSADSESSION';
 		$admin_sess_expire = ini_get('session.cookie_lifetime');
 	}
-	$admin_sess_fprint = $adsess_handler->icms_sessionFingerprint($user->getVar('pass'));
 	$adsess_handler->icms_sessionOpen($user-getVar('pass'));
-	setcookie($admin_sess_name, $admin_sess_fprint, $admin_sess_expire ? time()+$admin_sess_expire : 0, '/',  '', 0, 1);
+	$admin_sess_fprint = $_SESSION['icms_admin_fprint'];
+	setcookie($admin_sess_name, $admin_sess_fprint, $admin_sess_expire ? time()+$admin_sess_expire : 0, '/',  '', $cookie_secure, 1);
 	redirect_header(ICMS_URL.'/modules/system/admin.php', 1, sprintf(_US_LOGGINGUAD, $user->getVar('uname')), false);
 }
 else {redirect_header(ICMS_URL.'/admin.php', 5, $xoopsAuth->getHtmlErrors());}
