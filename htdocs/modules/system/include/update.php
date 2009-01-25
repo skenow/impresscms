@@ -48,9 +48,18 @@ function xoops_module_update_system(&$module) {
 	 * of the new dbversion field we have added in the modules table. However, starting with release after 1.1, all
 	 * upgrade scripts will be added here. Doing so, only the System module will need to be updated by webmaster.
 	 */
+
+	 /**
+	  * DEVELOPPER, PLEASE NOTE !!!
+	  *
+	  * Everytime we add a new upgrade block here, the dbversion of the System Module will get
+	  * incremented. It is very important to modify the ICMS_SYSTEM_DBVERSION accordingly
+	  * in htdocs/include/version.php
+	  */
+
     $newDbVersion = 1;
 
-    if ($dbVersion <= $newDbVersion) {
+    if ($icmsDatabaseUpdater->dbVersion <= $newDbVersion) {
     	echo "Database migrate to version " . $newDbVersion . "<br />";
 
 		// Now, first, let's increment the conf_order of user option starting at new_user_notify
@@ -177,7 +186,7 @@ function xoops_module_update_system(&$module) {
      */
     $newDbVersion = 2;
 
-    if ($dbVersion < $newDbVersion) {
+    if ($icmsDatabaseUpdater->dbVersion < $newDbVersion) {
     	echo "Database migrate to version " . $newDbVersion . "<br />";
 		$configitem_handler = xoops_getHandler('configitem');
 		// fetch the rss_local configitem
@@ -200,7 +209,7 @@ function xoops_module_update_system(&$module) {
      */
     $newDbVersion = 3;
 
-    if ($dbVersion < $newDbVersion) {
+    if ($icmsDatabaseUpdater->dbVersion < $newDbVersion) {
     	echo "Database migrate to version " . $newDbVersion . "<br />";
    		$table = new IcmsDatabasetable('users');
 	    if (!$table->fieldExists('openid')) {
@@ -233,7 +242,7 @@ function xoops_module_update_system(&$module) {
 
     $newDbVersion = 4;
 
-    if($dbVersion < $newDbVersion) {
+    if($icmsDatabaseUpdater->dbVersion < $newDbVersion) {
     	echo "Database migrate to version " . $newDbVersion . "<br />";
 
    		$table = new IcmsDatabasetable('users');
@@ -246,7 +255,7 @@ function xoops_module_update_system(&$module) {
 
     $newDbVersion = 5;
 
-    if($dbVersion < $newDbVersion) {
+    if($icmsDatabaseUpdater->dbVersion < $newDbVersion) {
     	echo "Database migrate to version " . $newDbVersion . "<br />";
 		$icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'use_jsjalali', '_MD_AM_JALALICAL', '0', '_MD_AM_JALALICALDSC', 'yesno', 'int', 23);
 			unset($table);
@@ -254,7 +263,7 @@ function xoops_module_update_system(&$module) {
 	//Some users had used a copy of working branch and they got multiple option, this is to remove all those re-created options and make a single option
     $newDbVersion = 6;
 
-    if($dbVersion < $newDbVersion) {
+    if($icmsDatabaseUpdater->dbVersion < $newDbVersion) {
     	echo "Database migrate to version " . $newDbVersion . "<br />";
 	    global $xoopsDB;
         $xoopsDB->queryF("DELETE FROM `" . $xoopsDB->prefix('config') . "` WHERE conf_name='use_jsjalali'");
@@ -264,7 +273,7 @@ function xoops_module_update_system(&$module) {
 
     $newDbVersion = 7;
 
-    if ($dbVersion < $newDbVersion) {
+    if ($icmsDatabaseUpdater->dbVersion < $newDbVersion) {
     	echo "Database migrate to version " . $newDbVersion . "<br />";
 		$configitem_handler = xoops_getHandler('configitem');
 		// fetch the rss_local configitem
@@ -279,10 +288,10 @@ function xoops_module_update_system(&$module) {
 		}
 
 	}
-	
+
   $newDbVersion = 8;
 
-  if($dbVersion < $newDbVersion) {
+  if($icmsDatabaseUpdater->dbVersion < $newDbVersion) {
     	echo "Database migrate to version " . $newDbVersion . "<br />";
 
    		$table = new IcmsDatabasetable('modules');
@@ -295,20 +304,20 @@ function xoops_module_update_system(&$module) {
 
   $newDbVersion = 9;
 
-  if($dbVersion < $newDbVersion) {
+  if($icmsDatabaseUpdater->dbVersion < $newDbVersion) {
     	echo "Database migrate to version " . $newDbVersion . "<br />";
      $table = new IcmsDatabasetable('users');
-      $icmsDatabaseUpdater->runQuery("ALTER TABLE `" .$table->name()."` DROP INDEX unamepass, ADD INDEX unamepass (uname (10), pass (10))",'Successfully altered the index unamepass on table users','');      
+      $icmsDatabaseUpdater->runQuery("ALTER TABLE `" .$table->name()."` DROP INDEX unamepass, ADD INDEX unamepass (uname (10), pass (10))",'Successfully altered the index unamepass on table users','');
       $icmsDatabaseUpdater->runQuery("ALTER TABLE `" .$table->name()."` MODIFY pass_expired tinyint(1) unsigned NOT NULL default 0",'Successfully altered field pass_expired in table users','');
 	unset($table);
 	}
 
     $newDbVersion = 10;
-  if($dbVersion < $newDbVersion) {
+  if($icmsDatabaseUpdater->dbVersion < $newDbVersion) {
     echo "Database migrate to version " . $newDbVersion . "<br />";
- 
+
         $db = $GLOBALS['xoopsDB'];
- 
+
         if (getDbValue($db, 'newblocks', 'show_func', 'show_func="b_social_bookmarks"') == 0) {
 		$sql = "SELECT bid FROM `".$db->prefix('newblocks')."` WHERE show_func='b_social_bookmarks'";
 		$result = $db->query($sql);
@@ -316,7 +325,7 @@ function xoops_module_update_system(&$module) {
 		$db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0, 1);");
 		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
         }
- 
+
         if (getDbValue($db, 'newblocks', 'show_func', 'show_func="b_content_show"') == 0) {
 		$sql = "SELECT bid FROM `".$db->prefix('newblocks')."` WHERE show_func='b_content_show'";
 		$result = $db->query($sql);
@@ -324,7 +333,7 @@ function xoops_module_update_system(&$module) {
 		$db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0, 0);");
 		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
         }
- 
+
         if (getDbValue($db, 'newblocks', 'show_func', 'show_func="b_content_menu_show"') == 0) {
 		$sql = "SELECT bid FROM `".$db->prefix('newblocks')."` WHERE show_func='b_content_menu_show'";
 		$result = $db->query($sql);
@@ -332,7 +341,7 @@ function xoops_module_update_system(&$module) {
 		$db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0, 0);");
 		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
         }
- 
+
         if (getDbValue($db, 'newblocks', 'show_func', 'show_func="b_content_relmenu_show"') == 0) {
 		$sql = "SELECT bid FROM `".$db->prefix('newblocks')."` WHERE show_func='b_content_relmenu_show'";
 		$result = $db->query($sql);
@@ -350,8 +359,44 @@ function xoops_module_update_system(&$module) {
 		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, 3, 1, 'group_manager');");
 
         }
-  
+
+    $newDbVersion = 11;
+
+    if ($icmsDatabaseUpdater->dbVersion < $newDbVersion) {
+    	echo "Database migrate to version " . $newDbVersion . "<br />";
+        $db = $GLOBALS['xoopsDB'];
+        $db->queryF("UPDATE `" . $db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'array' WHERE conf_name = 'bad_unames'");
+        $db->queryF("UPDATE `" . $db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'array' WHERE conf_name = 'bad_emails'");
+        $db->queryF("UPDATE `" . $db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'text' WHERE conf_name = 'meta_keywords'");
+        $db->queryF("UPDATE `" . $db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'text' WHERE conf_name = 'meta_description'");
+        $db->queryF("UPDATE `" . $db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'array' WHERE conf_name = 'censor_words'");
+        $db->queryF("UPDATE `" . $db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'array' WHERE conf_name = 'ldap_users_bypass'");
+        $db->queryF("UPDATE `" . $db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'text' WHERE conf_name = 'ldap_field_mapping'");
+
+	}
+
+	$newDbVersion = 12;
+
+    if ($icmsDatabaseUpdater->dbVersion < $newDbVersion) {
+    	echo "Database migrate to version " . $newDbVersion . "<br />";
+
+        $db->queryF("UPDATE `" . $db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'array' WHERE conf_name = 'reg_disclaimer'");
+        $db->queryF("UPDATE `" . $db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'array' WHERE conf_name = 'bad_ips'");
+        $db->queryF("UPDATE `" . $db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'array' WHERE conf_name = 'smtphost'");
+        $db->queryF("UPDATE `" . $db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'text' WHERE conf_name = 'multi_login_msg'");
+	}
+
+
 	echo "</code>";
+
+	 /**
+	  * DEVELOPPER, PLEASE NOTE !!!
+	  *
+	  * Everytime we add a new upgrade block here, the dbversion of the System Module will get
+	  * incremented. It is very important to modify the ICMS_SYSTEM_DBVERSION accordingly
+	  * in htdocs/include/version.php
+	  */
+
 
    $feedback = ob_get_clean();
     if (method_exists($module, "setMessage")) {

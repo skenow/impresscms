@@ -168,24 +168,29 @@ class xos_logos_PageBuilder {
 		// The lame type workaround will change
 		// bid is added temporarily as workaround for specific block manipulation
 		global $xoopsUser, $xoopsConfigPersona;
-		if ($xoopsConfigPersona ['editre_block'] == 1) {
-			if ($xoopsUser && $xoopsUser->isAdmin ()) {
-				$titlebtns = ' <a href="#" onclick="changeDisplay(\'ed_block_'.$xobject->getVar ( 'bid' ).'\'); return false;"><img src="'. XOOPS_URL.'/modules/system/images/edit_med.png" title="'._EDIT.'" alt="'. _EDIT.'"  /></a><div id="ed_block_'.$xobject->getVar ( 'bid' ).'" class="ed_block_box">';
+		$gperm =& xoops_gethandler('groupperm');
+		$ugroups = @is_object($xoopsUser) ? $xoopsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
+		$agroups = $gperm->getGroupIds('system_admin',5); //XOOPS_SYSTEM_BLOCK constant not available? 
+		$uagroups = array_intersect($ugroups, $agroups); 
+		if($xoopsConfigPersona['editre_block'] == 1)
+		{
+			if($xoopsUser && count($uagroups) > 0)
+			{
+				$titlebtns = '<a href="#" onclick="changeDisplay(\'ed_block_'.$xobject->getVar ( 'bid' ).'\'); return false;"><img src="'. XOOPS_URL.'/modules/system/images/edit_med.png" title="'._EDIT.'" alt="'. _EDIT.'"  /></a><div id="ed_block_'.$xobject->getVar ( 'bid' ).'" class="ed_block_box">';
 				$titlebtns .= "<a href=" . XOOPS_URL . "/modules/system/admin.php?fct=blocksadmin&op=changestatus&bid=" . $xobject->getVar ( 'bid' ) . "&sts=1> <img src=" . XOOPS_URL . "/modules/system/images/off.png" . " title=" . _INVISIBLE . " alt=" . _INVISIBLE . "  /> " . _INVISIBLE . "</a><br />";
 				$titlebtns .= "<a href=" . XOOPS_URL . "/modules/system/admin.php?fct=blocksadmin&op=clone&bid=" . $xobject->getVar ( 'bid' ) . "> <img src=" . XOOPS_URL . "/modules/system/images/clone_med.png" . " title=" . _CLONE . " alt=" . _CLONE . "  /> " . _CLONE . "</a><br />";
 				$titlebtns .= "<a href=" . XOOPS_URL . "/modules/system/admin.php?fct=blocksadmin&op=edit&bid=" . $xobject->getVar ( 'bid' ) . "> <img src=" . XOOPS_URL . "/modules/system/images/edit_med.png" . " title=" . _EDIT . " alt=" . _EDIT . "  /> " . _EDIT . "</a>";
-				if ($xobject->getVar ( 'dirname' ) == '') {
+				if($xobject->getVar('dirname') == '')
+				{
 					$titlebtns .= "<br /><a href=" . XOOPS_URL . "/modules/system/admin.php?fct=blocksadmin&op=delete&bid=" . $xobject->getVar ( 'bid' ) . "> <img src=" . XOOPS_URL . "/modules/system/images/delete_med.png" . " title=" . _DELETE . " alt=" . _DELETE . "  /> " . _DELETE . "</a>";
 				}
 				$titlebtns .= '</div>';
-			} else {
-				$titlebtns = '';
 			}
-		} else {
-			$titlebtns = '';
+			else {$titlebtns = '';}
 		}
+		else {$titlebtns = '';}
 		
-		$block = array (
+		$block = array(
 		    'id' => $xobject->getVar ( 'bid' ), 
 		    'module' => $xobject->getVar ( 'dirname' ), 
 		    'title' => $xobject->getVar ( 'title' ) . $titlebtns, 

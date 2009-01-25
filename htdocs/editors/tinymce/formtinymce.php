@@ -34,7 +34,7 @@ class XoopsFormTinymce extends XoopsFormTextArea {
 		$current_path = __FILE__;
 		if (DIRECTORY_SEPARATOR != "/")
 			$current_path = str_replace ( strpos ( $current_path, "\\\\", 2 ) ? "\\\\" : DIRECTORY_SEPARATOR, "/", $current_path );
-		$this->rootpath = substr ( dirname ( $current_path ), strlen ( XOOPS_ROOT_PATH ) );
+		$this->rootpath = substr(strstr(dirname($current_path), XOOPS_ROOT_PATH), strlen(XOOPS_ROOT_PATH));
 		
 		if (is_array ( $configs )) {
 			$vars = array_keys ( get_object_vars ( $this ) );
@@ -72,7 +72,7 @@ class XoopsFormTinymce extends XoopsFormTextArea {
 					break;
 				case "media":
 					break;
-				case "flash": 
+				case "flash":
 					break;
 				case "file":
 					break;
@@ -90,7 +90,7 @@ class XoopsFormTinymce extends XoopsFormTextArea {
                 input : field_name
             });
             
-/*            return false;			
+/*            return false;
 			var fileBrowserWindow = new Array();
 			fileBrowserWindow["file"] = ajaxfilemanagerurl;
 			fileBrowserWindow["title"] = "Ajax File Manager";

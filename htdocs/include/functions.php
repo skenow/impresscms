@@ -1389,7 +1389,7 @@ function StopXSS($text)
 	{
 		$text = preg_replace("/\(\)/si", "", $text);
 		$text = strip_tags($text);
-		$text = str_replace(array("'","\"",">","<","\\"), "", $text);
+		$text = str_replace(array("\"",">","<","\\"), "", $text);
 	}
 	else
 	{
@@ -1400,7 +1400,7 @@ function StopXSS($text)
 			} else {
 				$t = preg_replace("/\(\)/si", "", $t);
 				$t = strip_tags($t);
-				$t = str_replace(array("'","\"",">","<","\\"), "", $t);
+				$t = str_replace(array("\"",">","<","\\"), "", $t);
 				$text[$k] = $t;
 			}
 		}

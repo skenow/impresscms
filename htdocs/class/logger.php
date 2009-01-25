@@ -78,9 +78,15 @@ class XoopsLogger {
     }
 
 	/**
-	 * Returns the current microtime in seconds.
-	 * @return float
-	 */
+	* Disabling logger for some special occasion like AJAX requests and XML 
+	* When the logger absolutely needs to be disabled whatever it is enabled or not in the preferences 
+	* and wether user has permission or not to view it 
+	*/
+	function disableLogger() {$this->activated = false;}
+	/**
+	* Returns the current microtime in seconds.
+	* @return float
+	*/
 	function microtime() {
 		$now = explode( ' ', microtime() );
 		return (float)$now[0] + (float)$now[1];

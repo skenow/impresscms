@@ -1,49 +1,35 @@
 <?php
-
 /**
- * This is the file handling multilanguage on the site
- *
- * @license GNU
- * @author GIJOE
- * @version $Id: smartobject.php,v 1.22 2007/11/06 13:25:30 felix Exp $
- * @package ImpressCMS
- */
+* This is the file handling multilanguage on the site
+* @license GNU
+* @author GIJOE
+* @version $Id: smartobject.php,v 1.22 2007/11/06 13:25:30 felix Exp $
+* @package ImpressCMS
+*/
 
 // CONFIGURATIONS BEGIN
-
 // list the language tags separated with comma
 //define('EASIESTML_LANGS','xlang:en,xlang:ja'); // This is a sample of long pattern against tag misunderstanding [xlang:en]english[/xlang:en]
 define('EASIESTML_LANGS',$im_multilanguageConfig['ml_tags']); // [en]english[/en]  [ja]japananese[/ja] common
-
 // list the language images separated with comma
 define('EASIESTML_LANGIMAGES','images/flags/english.gif,images/flags/french.gif');
-
 // list the language names separated with comma (these will be alt of <img>)
 define('EASIESTML_LANGNAMES',$im_multilanguageConfig['ml_captions']);
-
 // list language - accept_chaset patterns (perl regex) separated with comma
 define('EASIESTML_ACCEPT_CHARSET_REGEXES',',/shift_jis/i');
-
 // list language - accept_language patterns (perl regex) separated with comma
 define('EASIESTML_ACCEPT_LANGUAGE_REGEXES','/^en/,/^ja/');
-
 // charset in Content-Type separated with comma (only for fastestcache)
 define('EASIESTML_CHARSETS',$im_multilanguageConfig['ml_charset']);
-
 // tag name for language image  (default [mlimg]. don't include specialchars)
 define('EASIESTML_IMAGETAG','mlimg');
-
 // make regular expression which disallows language tags to cross it
-define('EASIESTML_NEVERCROSSREGEX','/\<\/table\>/');
-
+define('EASIESTML_NEVERCROSSREGEX','');
 // the life time of language selection stored in cookie
 define('EASIESTML_COOKIELIFETIME',365*86400);
-
 // default language
 define('EASIESTML_DEFAULT_LANG',0);
-
 // CONFIGURATIONS END
-
 
 // Patch check
 //if( ! defined( 'XOOPS_ROOT_PATH' ) || ! defined( 'XOOPS_URL' ) || defined( 'XOOPS_SIDEBLOCK_LEFT' ) ) die( "You should patch just after define('XOOPS_URL', ... ) in mainfile.php" ) ;

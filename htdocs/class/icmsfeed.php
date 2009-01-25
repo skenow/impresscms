@@ -46,7 +46,11 @@ class IcmsFeed {
 		$this->feeds = array ();
 	}
 
-	function render () {
+	function render()
+	{
+		global $xoopsLogger;
+		$xoopsLogger->disableLogger();
+
 		//header ('Content-Type:text/xml; charset='._CHARSET);
 		$xoopsOption['template_main'] = "db:system_rss.html";
 		$tpl = new XoopsTpl();
