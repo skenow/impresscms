@@ -64,7 +64,9 @@ if(false != $user)
 		$admin_sess_name = 'ICMSADSESSION';
 		$admin_sess_expire = ini_get('session.cookie_lifetime');
 	}
-	setcookie($admin_sess_name, session_id(), $admin_sess_expire ? time()+$admin_sess_expire : 0, '/',  '', 0, 0);
+	$admin_sess_fprint = $adsess_handler->icms_sessionFingerprint($user->getVar('pass'));
+	$adsess_handler->icms_sessionOpen($user-getVar('pass'));
+	setcookie($admin_sess_name, $admin_sess_fprint, $admin_sess_expire ? time()+$admin_sess_expire : 0, '/',  '', 0, 1);
 	redirect_header(ICMS_URL.'/modules/system/admin.php', 1, sprintf(_US_LOGGINGUAD, $user->getVar('uname')), false);
 }
 else {redirect_header(ICMS_URL.'/admin.php', 5, $xoopsAuth->getHtmlErrors());}

@@ -214,7 +214,7 @@ class XoopsSessionHandler
 	}
 
 	// Call this when init session.
-	function icms_sessionOpen($regenerate = false)
+	function icms_sessionOpen($unique = '', $regenerate = false)
 	{
 		$_SESSION['icms_fprint'] = $this->icms_sessionFingerprint();
 		if($regenerate) {$this->icms_sessionRegenerateId(true);}
@@ -227,11 +227,17 @@ class XoopsSessionHandler
 		return (isset($_SESSION['icms_fprint']) && $_SESSION['icms_fprint'] == $this->icms_sessionFingerprint());
 	}
 
-	// Internal function. Returns sha256 from fingerprint.
-	function icms_sessionFingerprint()
+	/**
+	* Create a Unique Fingerprint hash of session
+	* @param   string  $unique    Unique identifier to use in the hash algorhythm
+	*						this should be unique to the user. ie. pass, uname, uid etc.
+	* @return  string	sha256 encrypted hash.
+	**/
+	function icms_sessionFingerprint($unique = '')
 	{
+		if(!isset($unique) || $unique = '') {$unique = XOOPS_DB_SALT;}
 		$securityLevel = $this->securityLevel;
-		$fingerprint = XOOPS_DB_SALT;
+		$fingerprint = $unique;
 		if($securityLevel >= 1) {$fingerprint .= $_SERVER['HTTP_USER_AGENT'];}
 		if($securityLevel >= 2)
 		{
@@ -423,25 +429,41 @@ class icmsAdminSessionHandler
 		setcookie($adm_session_name, $adm_session_id, $adm_session_expire ? time() + $adm_session_expire : 0, '/',  '', 0, 0);
 	}
 
-	// Call this when init session.
-	function icms_sessionOpen($regenerate = false)
+	/**
+	* Opens a session & creates a session fingerprint & unique session_id()
+	* @param   string  $unique    Unique identifier to use in the hash algorhythm
+	*						this should be unique to the user. ie. pass, uname, uid etc.
+	* @param   bool  $regenerate	true = regenerate the session_id(), false = keep same session_id()
+	**/
+	function icms_sessionOpen($unique = '', $regenerate = false)
 	{
-		$_SESSION['icms_fprint'] = $this->icms_sessionFingerprint();
+		$_SESSION['icms_admin_fprint'] = $this->icms_sessionFingerprint($unique);
 		if($regenerate) {$this->icms_sessionRegenerateId(true);}
 	}
 	
-	// Call this to check session.
-	function icms_sessionCheck()
+	/**
+	* Check the $_SESSION fingerprint against the cookie fingerprint
+	* @param   string  $unique    Unique identifier to use in the hash algorhythm
+	*						this should be unique to the user. ie. pass, uname, uid etc.
+	* @return  bool.
+	**/
+	function icms_sessionCheck($unique = '')
 	{
 //		$this->icms_sessionRegenerateId();
-		return (isset($_SESSION['icms_fprint']) && $_SESSION['icms_fprint'] == $this->icms_sessionFingerprint());
+		return (isset($_SESSION['icms_admin_fprint']) && $_SESSION['icms_admin_fprint'] == $this->icms_sessionFingerprint($unique));
 	}
 
-	// Internal function. Returns sha256 from fingerprint.
-	function icms_sessionFingerprint()
+	/**
+	* Create a Unique Fingerprint hash of admin session
+	* @param   string  $unique    Unique identifier to use in the hash algorhythm
+	*						this should be unique to the user. ie. pass, uname, uid etc.
+	* @return  string	sha256 encrypted hash.
+	**/
+	function icms_sessionFingerprint($unique = '')
 	{
+		if(!isset($unique) || $unique = '') {$unique = XOOPS_DB_SALT;}
 		$securityLevel = $this->securityLevel;
-		$fingerprint = XOOPS_DB_SALT;
+		$fingerprint = $unique;
 		if($securityLevel >= 1) {$fingerprint .= $_SERVER['HTTP_USER_AGENT'];}
 		if($securityLevel >= 2)
 		{
