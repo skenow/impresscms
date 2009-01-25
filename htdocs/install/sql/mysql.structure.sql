@@ -4,9 +4,9 @@
 #
 # Host: localhost
 # Generation Time: Jan 09, 2003 at 12:35 AM
-# Server version: 3.23.54
-# PHP Version: 4.2.2
-# Database : `xoops2`
+# Server version: 4.1.1
+# PHP Version: 5.2.6
+# Database : `impresscms`
 # --------------------------------------------------------
 
 #
@@ -512,8 +512,26 @@ CREATE TABLE session (
   sess_updated int(10) unsigned NOT NULL default '0',
   sess_ip varchar(15) NOT NULL default '',
   sess_data text NOT NULL,
+  sess_uagent varchar(255) NOT NULL default '',
+  sess_fprint varchar(255) NOT NULL default '',
   PRIMARY KEY  (sess_id),
   KEY updated (sess_updated)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+
+#
+# Table structure for table `admin_session`
+#
+
+CREATE TABLE admin_session (
+  adm_sess_id varchar(32) NOT NULL default '',
+  adm_sess_updated int(10) unsigned NOT NULL default '0',
+  adm_sess_ip varchar(15) NOT NULL default '',
+  adm_sess_data text NOT NULL,
+  adm_sess_uagent varchar(255) NOT NULL default '',
+  adm_sess_fprint varchar(255) NOT NULL default '',
+  PRIMARY KEY  (adm_sess_id),
+  KEY updated (adm_sess_updated)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 

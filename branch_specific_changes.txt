@@ -7,6 +7,12 @@ htdocs/
 admin.php
 user.php
 
+htdocs/install/sql/
+===================
+
+mysqli.structure.sql
+mysql.structure.sql
+
 htdocs/kernel/
 ==============
 

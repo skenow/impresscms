@@ -102,7 +102,7 @@ class XoopsSessionHandler
 	*/
 	function read($sess_id)
 	{
-		$sql = sprintf('SELECT sess_data, sess_ip FROM %s WHERE sess_id = %s', $this->db->prefix('session'), $this->db->quoteString($sess_id));
+		$sql = sprintf('SELECT sess_data, sess_ip, sess_uagent, sess_fprint FROM %s WHERE sess_id = %s', $this->db->prefix('session'), $this->db->quoteString($sess_id));
 		if(false != $result = $this->db->query($sql))
 		{
 			if(list($sess_data, $sess_ip) = $this->db->fetchRow($result))
@@ -131,7 +131,7 @@ class XoopsSessionHandler
 		$this->db->queryF($sql);
 		if(!$this->db->getAffectedRows())
 		{
-			$sql = sprintf("INSERT INTO %s (sess_id, sess_updated, sess_ip, sess_data) VALUES (%s, '%u', %s, %s)", $this->db->prefix('session'), $sess_id, time(), $this->db->quoteString($_SERVER['REMOTE_ADDR']), $this->db->quoteString($sess_data));
+			$sql = sprintf("INSERT INTO %s (sess_id, sess_updated, sess_ip, sess_data, sess_uagent, sess_fprint) VALUES (%s, '%u', %s, %s, %s, %s)", $this->db->prefix('session'), $sess_id, time(), $this->db->quoteString($_SERVER['REMOTE_ADDR']), $this->db->quoteString($sess_data), $this->db->quoteString($_SERVER['HTTP_USER_AGENT']), $this->db->quoteString($this->icms_sessionFingerprint()));
 			return $this->db->queryF($sql);
 		}
 		return true;
@@ -275,7 +275,7 @@ class icmsAdminSessionHandler
 	var $securityLevel = 3;
     
 	/**
-	* Enable regenerate_id
+	* Enable adm_regenerate_id
 	* @var	bool
 	* @access	public
 	*/
@@ -288,15 +288,15 @@ class icmsAdminSessionHandler
 	function icmsAdminSessionHandler(&$db) {$this->db =& $db;}
 
 	/**
-	* Open a session
-	* @param	string  $save_path
-	* @param	string  $session_name
+	* Open an admin session
+	* @param	string  $adm_save_path
+	* @param	string  $adm_session_name
 	* @return	bool
 	*/
-	function open($save_path, $session_name) {return true;}
+	function open($adm_save_path, $adm_session_name) {return true;}
 
 	/**
-	* Close a session
+	* Close an admin session
 	* @return	bool
 	*/
 	function close()
@@ -306,42 +306,42 @@ class icmsAdminSessionHandler
 	}
 
 	/**
-	* Read a session from the database
-	* @param	string  &sess_id    ID of the session
-	* @return	array   Session data
+	* Read an admin session from the database
+	* @param	string  &adm_sess_id    ID of the admin session
+	* @return	array   adm_Session data
 	*/
-	function read($sess_id)
+	function read($adm_sess_id)
 	{
-		$sql = sprintf('SELECT sess_data, sess_ip FROM %s WHERE sess_id = %s', $this->db->prefix('session'), $this->db->quoteString($sess_id));
+		$sql = sprintf('SELECT adm_sess_data, adm_sess_ip, adm_sess_uagent, adm_sess_fprint FROM %s WHERE adm_sess_id = %s', $this->db->prefix('admin_session'), $this->db->quoteString($adm_sess_id));
 		if(false != $result = $this->db->query($sql))
 		{
-			if(list($sess_data, $sess_ip) = $this->db->fetchRow($result))
+			if(list($adm_sess_data, $adm_sess_ip) = $this->db->fetchRow($result))
 			{
 				if($this->securityLevel > 1)
 				{
-					$pos = strpos($sess_ip, ".", $this->securityLevel - 1);
-					if(strncmp($sess_ip, $_SERVER['REMOTE_ADDR'], $pos)) {$sess_data = '';}
+					$pos = strpos($adm_sess_ip, ".", $this->securityLevel - 1);
+					if(strncmp($adm_sess_ip, $_SERVER['REMOTE_ADDR'], $pos)) {$adm_sess_data = '';}
 				}
-				return $sess_data;
+				return $adm_sess_data;
 			}
 		}
 		return '';
 	}
 
 	/**
-	* Inserts a session into the database
-	* @param   string  $sess_id
-	* @param   string  $sess_data
-	* @return  bool    
+	* Inserts an admin session into the database
+	* @param   string  $adm_sess_id
+	* @param   string  $adm_sess_data
+	* @return  bool
 	**/
-	function write($sess_id, $sess_data)
+	function write($adm_sess_id, $adm_sess_data)
 	{
-		$sess_id = $this->db->quoteString($sess_id);
-		$sql = sprintf("UPDATE %s SET sess_updated = '%u', sess_data = %s WHERE sess_id = %s", $this->db->prefix('session'), time(), $this->db->quoteString($sess_data), $sess_id);
+		$adm_sess_id = $this->db->quoteString($adm_sess_id);
+		$sql = sprintf("UPDATE %s SET adm_sess_updated = '%u', adm_sess_data = %s WHERE adm_sess_id = %s", $this->db->prefix('admin_session'), time(), $this->db->quoteString($adm_sess_data), $adm_sess_id);
 		$this->db->queryF($sql);
 		if(!$this->db->getAffectedRows())
 		{
-			$sql = sprintf("INSERT INTO %s (sess_id, sess_updated, sess_ip, sess_data) VALUES (%s, '%u', %s, %s)", $this->db->prefix('session'), $sess_id, time(), $this->db->quoteString($_SERVER['REMOTE_ADDR']), $this->db->quoteString($sess_data));
+			$sql = sprintf("INSERT INTO %s (adm_sess_id, adm_sess_updated, adm_sess_ip, adm_sess_data, adm_sess_uagent, adm_sess_fprint) VALUES (%s, '%u', %s, %s, %s, %s)", $this->db->prefix('admin_session'), $adm_sess_id, time(), $this->db->quoteString($_SERVER['REMOTE_ADDR']), $this->db->quoteString($adm_sess_data), $this->db->quoteString($_SERVER['HTTP_USER_AGENT']), $this->db->quoteString($this->icms_sessionFingerprint()));
 			return $this->db->queryF($sql);
 		}
 		return true;
@@ -349,26 +349,26 @@ class icmsAdminSessionHandler
 
 	/**
 	* Destroy a session
-	* @param   string  $sess_id
+	* @param   string  $adm_sess_id
 	* @return  bool
 	**/
-	function destroy($sess_id)
+	function destroy($adm_sess_id)
 	{
-		$sql = sprintf('DELETE FROM %s WHERE sess_id = %s', $this->db->prefix('session'), $this->db->quoteString($sess_id));
+		$sql = sprintf('DELETE FROM %s WHERE adm_sess_id = %s', $this->db->prefix('admin_session'), $this->db->quoteString($adm_sess_id));
 		if(!$result = $this->db->queryF($sql)) {return false;}
 		return true;
 	}
 
 	/**
 	* Garbage Collector
-	* @param   int $expire Time in seconds until a session expires
+	* @param   int $expire Time in seconds until an admin session expires
 	* @return  bool
 	**/
 	function gc($expire)
 	{
 		if(empty($expire)) {return true;}
 		$mintime = time() - intval($expire);
-		$sql = sprintf("DELETE FROM %s WHERE sess_updated < '%u'", $this->db->prefix('session'), $mintime);
+		$sql = sprintf("DELETE FROM %s WHERE adm_sess_updated < '%u'", $this->db->prefix('admin_session'), $mintime);
 		return $this->db->queryF($sql);
 	}
 
@@ -379,7 +379,7 @@ class icmsAdminSessionHandler
 	{
 		if(rand(1, 100) < 11)
 		{
-			$expiration = empty($GLOBALS['xoopsConfig']['session_expire']) ? @ini_get('session.gc_maxlifetime') : $GLOBALS['xoopsConfig']['session_expire'] * 60;
+			$expiration = empty($GLOBALS['xoopsConfig']['adm_session_expire']) ? @ini_get('session.gc_maxlifetime') : $GLOBALS['xoopsConfig']['adm_session_expire'] * 60;
 			$this->gc($expiration);
 		}
 	}
@@ -414,13 +414,13 @@ class icmsAdminSessionHandler
 	* @param   int     $expire     Time in seconds until a session expires
 	* @return  bool
 	**/
-	function update_cookie($sess_id = null, $expire = null)
+	function update_cookie($adm_sess_id = null, $expire = null)
 	{
 		global $xoopsConfig;
-		$session_name = ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '') ? $xoopsConfig['session_name'] : session_name();
-		$session_expire = !is_null($expire) ? intval($expire) : ( ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '') ? $xoopsConfig['session_expire'] * 60 : ini_get('session.cookie_lifetime') );
-		$session_id = empty($sess_id) ? session_id() : $sess_id;
-		setcookie($session_name, $session_id, $session_expire ? time() + $session_expire : 0, '/',  '', 0, 0);
+		$adm_session_name = ($xoopsConfig['adm_use_mysession'] && $xoopsConfig['adm_session_name'] != '') ? $xoopsConfig['adm_session_name'] : session_name();
+		$adm_session_expire = !is_null($expire) ? intval($expire) : ( ($xoopsConfig['adm_use_mysession'] && $xoopsConfig['adm_session_name'] != '') ? $xoopsConfig['adm_session_expire'] * 60 : ini_get('session.cookie_lifetime') );
+		$adm_session_id = empty($adm_sess_id) ? session_id() : $adm_sess_id;
+		setcookie($adm_session_name, $adm_session_id, $adm_session_expire ? time() + $adm_session_expire : 0, '/',  '', 0, 0);
 	}
 
 	// Call this when init session.
