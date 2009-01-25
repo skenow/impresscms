@@ -51,8 +51,20 @@ if(false != $user)
 {
 	$adsess_handler =& xoops_gethandler('adminsession');
 	$_SESSION['xoopsAdminId'] = $user->getVar('uid');
-	$session_expire = ini_get('session.cookie_lifetime');
-	setcookie('ICMSADSESSION', hash('sha256', $user->getVar('pass').XOOPS_DB_SALT), $session_expire ? time() + $session_expire : 0, '/',  '', 0, 0);
+	if($xoopsConfig['admin_use_mysession'] && $xoopsConfig['admin_session_name'] != '' && $xoopsConfig['admin_session_expire'] > 0)
+	{
+		if(isset($_COOKIE[$xoopsConfig['admin_session_name']]))
+		{
+			$admin_sess_name = $xoopsConfig['admin_session_name'];
+			$admin_sess_expire = 60*$xoopsConfig['admin_session_expire'];
+		}
+	}
+	else
+	{
+		$admin_sess_name = 'ICMSADSESSION';
+		$admin_sess_expire = ini_get('session.cookie_lifetime');
+	}
+	setcookie($admin_sess_name, session_id(), $admin_sess_expire ? time()+$admin_sess_expire : 0, '/',  '', 0, 0);
 	redirect_header(ICMS_URL.'/modules/system/admin.php', 1, sprintf(_US_LOGGINGUAD, $user->getVar('uname')), false);
 }
 else {redirect_header(ICMS_URL.'/admin.php', 5, $xoopsAuth->getHtmlErrors());}

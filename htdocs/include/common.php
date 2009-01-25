@@ -234,6 +234,12 @@ if($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '' && !isset
 	unset($_SESSION['xoopsUserId']);
 }
 
+// Remove expired admin session for xoopsAdminId
+if($xoopsConfig['admin_use_mysession'] && $xoopsConfig['admin_session_name'] != '' && !isset($_COOKIE[$xoopsConfig['admin_session_name']]) && !empty($_SESSION['xoopsAdminId']))
+{
+	unset($_SESSION['xoopsAdminId']);
+}
+
 // autologin hack GIJ
 if(empty($_SESSION['xoopsUserId']) && isset($_COOKIE['autologin_uname']) && isset($_COOKIE['autologin_pass']))
 {
