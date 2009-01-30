@@ -11,7 +11,7 @@ ImpressCMS ChangeLog
 * #163: Removed password from 'Reset Password' confirmation email (was changed in 1.1. Final but not carried to 1.1.1.) (vaughan)
 * #161: Fatal Error in footer.php & header.php. (vaughan)
 * #179: some preference settings are being sanitized inappropriately due to textarea being used instead of textsarea. (vaughan)
-* #184: TextSanitizer to admin users edit form, for sanitizing signature field when HTML is allowed. (vaughan) 
+* #184: TextSanitizer to admin users edit form, for sanitizing signature field when HTML is allowed. (vaughan)
 * #178: HTTP_GET_VARS used instead of $_GET['p'] in protection.php causing issues with email protection image. (thanks to hisapapa)
 * #185: Blocks Positions admin not totaly secured (real_therplima)
 * #193: Character ' stripped out of website title (malanciault)
@@ -32,12 +32,22 @@ ImpressCMS ChangeLog
 * #169: captcha was being bypassed because it had been moved from libraries to class folder. (skenow)
 * #199: Admin Side > Preferences Main > Personalization > Edit and Remove blocks from user side? settings not work. (algalochkin)
 * #182: fixed a bug in pdf.php (pesian_stranger)
+* #198: "Show ImpressCMS Project drop down menu?" needs to only affect admin side, not user side (malanciault)
+* #224: Admin RSS feed was not UTF-8 compatible (malanciault)
+* #228: Password field was missing the * even thought it is mandatory (malanciault)
+* #228: Security code field was missing the * even thought it is mandatory (malanciault)
 
 '''Improved'''
 * #177: SMARTY updated to 2.6.22 (vaughan)
 * #180: If site is closed, you are now unable to change password encryption. (previous caused issues as you couldn't access reset password page in order to reset your password after encryption change if the site was set to closed. which meant you could not login afterwards). (vaughan)
 * #184: choice of xoopsFormTextArea or xoopsFormDHTMLTextArea to edit user form (signature) depends on whether HTML sig is allowed or not. (vaughan)
 * #208: Databasefactory.php update (GIJoe) for latest protector module (3.30). (gijoe)
+* #189: Improving IcmsVersionChecker to use IcmsSimpleRss instead of Snoopy as we were having problems on some config (malanciault)
+* #224: Admin RSS now using SimplePie innstead of Snoopy (malanciault)
+
+'''Added'''
+
+* #189: Implementing SimplePie as a new library and IcmsSimpleRss extending it for ImpressCMS (malanciault)
 
 ===2008-12-29 : 1.1.1 Final===
 

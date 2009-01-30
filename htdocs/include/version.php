@@ -29,8 +29,10 @@ define('ICMS_VERSION_STATUS', 3);
  * Build number
  *
  * Every release has its own build number, incrementable by 1 everytime we make a release
+ * impresscms_1.1.1_final = 21
  */
-define('ICMS_VERSION_BUILD', 22);
+
+define('ICMS_VERSION_BUILD', 24);
 
 /**
  * Latest dbversion of the System Module

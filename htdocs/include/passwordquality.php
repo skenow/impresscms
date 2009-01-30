@@ -2,16 +2,16 @@
 ##################################################################################################
 # Medidor de Qualidade de Senhas
 # Tipo: Core Hack
-# Descrição: Este hack cria um medidor de qualidade das senhas digitadas pelo usuário na hora do
-# cadastro ou edição do perfil. Ele só habilita o envio do formulário caso a senha digitada estiver
-# dentro do padrão definido na administração (Sistema=>Preferências=>Configuração dos usuários).
-# Este hack não altera o formulário de cadastro/edição de usuários da administração pois é de se
+# Descriï¿½ï¿½o: Este hack cria um medidor de qualidade das senhas digitadas pelo usuï¿½rio na hora do
+# cadastro ou ediï¿½ï¿½o do perfil. Ele sï¿½ habilita o envio do formulï¿½rio caso a senha digitada estiver
+# dentro do padrï¿½o definido na administraï¿½ï¿½o (Sistema=>Preferï¿½ncias=>Configuraï¿½ï¿½o dos usuï¿½rios).
+# Este hack nï¿½o altera o formulï¿½rio de cadastro/ediï¿½ï¿½o de usuï¿½rios da administraï¿½ï¿½o pois ï¿½ de se
 # que o administrador do site que necessita usar um hack deste use senhas seguras na hora de criar
-# os usuários.
+# os usuï¿½rios.
 ##################################################################################################
 # Rodrigo Pereira Lima aka TheRplima
 # therplima@gmail.com
-# Última Atualização: 16/09/2006
+# ï¿½ltima Atualizaï¿½ï¿½o: 16/09/2006
 # Veja o hack funcionando aqui http://rwbanner.brinfo.com.br/register.php
 ##################################################################################################
 
@@ -95,7 +95,7 @@ if ($tipo[count($tipo)-1] == 'register.php'){
   $tipo1 = $xoopsUser->getVar('email');
 }
 echo '<script type="text/javascript">
-//Texto dos nomes dos níveis de qualidade
+//Texto dos nomes dos nï¿½veis de qualidade
 var qualityName1 = "'._MD_AM_PASSLEVEL1.'";
 var qualityName2 = "'._MD_AM_PASSLEVEL2.'";
 var qualityName3 = "'._MD_AM_PASSLEVEL3.'";
@@ -107,20 +107,20 @@ var passField = "'.$passField.'";
 var tipo = "'.$tipo.'";
 var tipo1 = "'.$tipo1.'";
 
-//Obtendo informações de configuração do xoops
+//Obtendo informaï¿½ï¿½es de configuraï¿½ï¿½o do xoops
 var minpass = "'.$passConfig['minpass'].'";
 var pass_level = "'.$passConfig['pass_level'].'";
 </script>';
 
-//Campo senha do formulário mais barra de progresso
+//Campo senha do formulï¿½rio mais barra de progresso
 if ($passField == 'pass'){
   //Regras Regex para filtrar senha digitada
-  $reg_form->addElement(new XoopsFormHidden("regex",'[^0-9]'));      //Regex para filrar somente os digitos numéricos da string
-  $reg_form->addElement(new XoopsFormHidden("regex3",'([0-9])\1+')); //Regex para filrar somente os digitos numéricos repetidos e em sequência da string
-  $reg_form->addElement(new XoopsFormHidden("regex1",'[0-9a-zA-Z]'));//Regex para filtrar os símbolos da string
-  $reg_form->addElement(new XoopsFormHidden("regex4",'(\W)\1+'));    //Regex para filtrar os símbolos repetidos e em sequência da string
-  $reg_form->addElement(new XoopsFormHidden("regex2",'[^A-Z]'));     //Regex para filtrar as letras maiúsculas da string
-  $reg_form->addElement(new XoopsFormHidden("regex5",'([A-Z])\1+')); //Regex para filtrar as letras maiúsculas repetidas e em sequência da string
+  $reg_form->addElement(new XoopsFormHidden("regex",'[^0-9]'));      //Regex para filrar somente os digitos numï¿½ricos da string
+  $reg_form->addElement(new XoopsFormHidden("regex3",'([0-9])\1+')); //Regex para filrar somente os digitos numï¿½ricos repetidos e em sequï¿½ncia da string
+  $reg_form->addElement(new XoopsFormHidden("regex1",'[0-9a-zA-Z]'));//Regex para filtrar os sï¿½mbolos da string
+  $reg_form->addElement(new XoopsFormHidden("regex4",'(\W)\1+'));    //Regex para filtrar os sï¿½mbolos repetidos e em sequï¿½ncia da string
+  $reg_form->addElement(new XoopsFormHidden("regex2",'[^A-Z]'));     //Regex para filtrar as letras maiï¿½sculas da string
+  $reg_form->addElement(new XoopsFormHidden("regex5",'([A-Z])\1+')); //Regex para filtrar as letras maiï¿½sculas repetidas e em sequï¿½ncia da string
 
   $pass_tray = new XoopsFormElementTray(_US_PASSWORD, '');
   $pass_tray->setDescription(_US_REGFORM_WARNING);
@@ -130,7 +130,7 @@ if ($passField == 'pass'){
 	   } else {
   $pass_inp->setExtra('style="float:left;"');
            }
-  $pass_tray->addElement($pass_inp);
+  $pass_tray->addElement($pass_inp, true);
 		if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
   $div_progress = new XoopsFormLabel('',' <script language="javascript" src="'.XOOPS_URL.'/include/percent_bar_rtl.js"></script>');
 	   } else {
@@ -140,12 +140,12 @@ if ($passField == 'pass'){
   $reg_form->addElement($pass_tray);
 }else{
   //Regras Regex para filtrar senha digitada
-  $form->addElement(new XoopsFormHidden("regex",'[^0-9]'));      //Regex para filrar somente os digitos numéricos da string
-  $form->addElement(new XoopsFormHidden("regex3",'([0-9])\1+')); //Regex para filrar somente os digitos numéricos repetidos e em sequência da string
-  $form->addElement(new XoopsFormHidden("regex1",'[0-9a-zA-Z]'));//Regex para filtrar os símbolos da string
-  $form->addElement(new XoopsFormHidden("regex4",'(\W)\1+'));    //Regex para filtrar os símbolos repetidos e em sequência da string
-  $form->addElement(new XoopsFormHidden("regex2",'[^A-Z]'));     //Regex para filtrar as letras maiúsculas da string
-  $form->addElement(new XoopsFormHidden("regex5",'([A-Z])\1+')); //Regex para filtrar as letras maiúsculas repetidas e em sequência da string
+  $form->addElement(new XoopsFormHidden("regex",'[^0-9]'));      //Regex para filrar somente os digitos numï¿½ricos da string
+  $form->addElement(new XoopsFormHidden("regex3",'([0-9])\1+')); //Regex para filrar somente os digitos numï¿½ricos repetidos e em sequï¿½ncia da string
+  $form->addElement(new XoopsFormHidden("regex1",'[0-9a-zA-Z]'));//Regex para filtrar os sï¿½mbolos da string
+  $form->addElement(new XoopsFormHidden("regex4",'(\W)\1+'));    //Regex para filtrar os sï¿½mbolos repetidos e em sequï¿½ncia da string
+  $form->addElement(new XoopsFormHidden("regex2",'[^A-Z]'));     //Regex para filtrar as letras maiï¿½sculas da string
+  $form->addElement(new XoopsFormHidden("regex5",'([A-Z])\1+')); //Regex para filtrar as letras maiï¿½sculas repetidas e em sequï¿½ncia da string
 
   $pwd_text = new XoopsFormElementTray('', '');
   $pass_inp = new XoopsFormPassword('', $passField, 10, 72);

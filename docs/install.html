@@ -65,7 +65,7 @@ servers path. Example: www.yourdomian.com </div>
 <br>
 To install ImpressCMS for the first time, you'll need to have the minimum following server software pre-installed:<br><br>
 <div class="indent">* HTTP Server (<a href="http://www.apache.org/">Apache</a>, IIS, Roxen ect.)<br>
-* <a href="http://www.php.net/" rel="external">PHP</a> 5.1 or higher (5.2 or higher recommended)<br>
+* <a href="http://www.php.net/" rel="external">PHP</a> 5.2 or higher (5.2.6 or higher recommended) &amp; 16mb minimum memory allocation<br>
 * <a href="http://www.mysql.com/" rel="external">MySQL</a> 4.1.0 or higher</div>
 <br>
 Before starting the install, be sure to have:<br><br>
@@ -167,7 +167,7 @@ should be a pretty painless step.<br>
 I use Linux here and as the above screenshot shows, there are problems
 with permissions. In order to meet required permission you have to
 change them as Wizard is telling you in a tip box.<br>
-Give CHMOD 777 to mainfile.php, /templates_c, /cache, /uploads And hit Refresh button.<br>
+Give CHMOD 777 (755 on PHPSuexec Servers) to mainfile.php, /templates_c, /cache, /uploads And hit Refresh button.<br>
 Phisical path and Web locations address will be defined by script
 itself. If you want to learn a bit more about them, click Show/hide
 help button.<br>
@@ -175,7 +175,7 @@ If you did last action properly, you should get a message like on the
 screen above. Now, the only thing you have to set up is Trust path. To
 get more info about this click the Show/hide help button.<br>
 Click help button for more informations This folder should be writable
-(CHMOD 777). After we set up the Trust path and script said "Trust path
+(CHMOD 777) or (CHMOD 755 on PHPSuexec Servers). After we set up the Trust path and script said "Trust path
 found", we can move forward to the next step.<br>
 <br>
 <img src="images/install005.png"><br>

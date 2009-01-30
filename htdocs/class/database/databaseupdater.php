@@ -83,12 +83,15 @@ class IcmsDatabasetable {
 	 */
 	var $force=false;
 
+	/** For backward compat */
+	var $_db;
+
 	/**
 	 * xoopsDB database object
 	 *
 	 * @var @link XoopsDatabase object
 	 */
-	var $_db;
+	var $db;
 
 	/**
 	 * Constructor
@@ -99,7 +102,10 @@ class IcmsDatabasetable {
 	function IcmsDatabasetable($name) {
 		global $xoopsDB;
 
+		$this->db = $xoopsDB;
+		/** For backward compat */
 		$this->_db = $xoopsDB;
+
 		$this->_name = $name;
 		$this->_data = array ();
 	}

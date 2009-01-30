@@ -1,7 +1,7 @@
-ImpressCMS 1.1.1 Final release notes
+ImpressCMS 1.1.2 RC release notes
 ==================================
 
-The ImpressCMS Project announces a security fix to its 1.1 Final release.
+The ImpressCMS Project announces a bug fix release to its 1.1.1 Final release. ImpressCMS 1.1.2 addresses many little bugs that were discovered after 1.1.1 final release. This release is currently a Release Candidate, and all users are encourage to test it as much as possible. If no major bugs are found, a final release will follow in the next 2 weeks.
 
 Please see the full changelog for details in docs/changelog.txt.
 
@@ -10,7 +10,7 @@ System requirements
 ==================================
 
 PHP
-   PHP 5.1 or higher (5.2 or higher recommended)
+   PHP 5.2 or higher
    16 Mb Memory Limit (minimum)
 MySQL
     MySQL 4.1.0 or higher (5.0 or higher recommended)
@@ -21,7 +21,7 @@ Web server
 Downloading ImpressCMS
 ==================================
 
-This release can be downloaded here : https://sourceforge.net/project/showfiles.php?group_id=205633&package_id=245707&release_id=646771
+This release can be downloaded here : https://sourceforge.net/project/showfiles.php?group_id=205633&package_id=245707&release_id=656633
 
 
 Using wget command to download the .tar.gz full package
@@ -29,7 +29,7 @@ Using wget command to download the .tar.gz full package
 
 This release can be downloaded directly on your server using the WGET command (providing you have SSH access to your server). To download it, simply use this code:
 
-wget http://www.impresscms.org/download/
+wget http://www.impresscms.org/download/1.1.2_rc
 
 
 Checking out ImpressCMS from the SVN
@@ -39,19 +39,13 @@ You can easily get ImpressCMS using SVN. Instructions about this can be found he
 http://wiki.impresscms.org/index.php?title=Install_and_update_using_SVN
 
 The path for this release is the following:
-https://impresscms.svn.sourceforge.net/svnroot/impresscms/core/tags/impresscms_1.1.1_final/
-
-If you feel like getting the latest "edge" version, you can checkout the core trunk at :
-
-https://impresscms.svn.sourceforge.net/svnroot/impresscms/core/trunk/
-
-The ImpressCMS trunk is always the latest as-stable-as-possible development code. It is, of course, not to be used on production sites.
+https://svn.impresscms.org/core/releases/impresscms_1.1.2_rc/
 
 
 Installing ImpressCMS
 ==================================
 
-	1. Get the full impresscms_1.1.1 package from the sourceforge file repository
+	1. Get the full impresscms_1.1.2 package from the sourceforge file repository
 	2. Copy the content of the htdocs/ folder where it can be accessed by your server
 	3. Ensure mainfile.php, cache, templates_c and uploads are writable by the webserver
 	4. Using your web browser, access <your.site.url>/folder, "folder" being where you uploaded the htdocs/ files to launch the installation wizard
@@ -63,7 +57,7 @@ For a complete installation documentation, please refer to /docs/install.html in
 Upgrading from ImpressCMS 1.1 or newer
 ==================================
 
-	1. Get the impresscms_1.1_to_impresscms_1.1.1 package from the sourceforge file repository.
+	1. Get the impresscms_1.1.1_to_impresscms_1.1.2 package from the sourceforge file repository.
 	2. Copy the content of htdocs/ over your existing files
 	3. On your server, delete the file cache/adminmenu.php
 	4. Access <http://your.site.url>/admin.php
@@ -73,7 +67,7 @@ Upgrading from ImpressCMS 1.1 or newer
 Upgrading from a ImpressCMS 1.0.3 or older or from XOOPS 2.0.18.1 or earlier
 ==================================
 
-	1. Get the xoops-or-impresscms_1.0_to_impresscms_1.1.1 package from the sourceforge file repository
+	1. Get the xoops-or-impresscms_1.0_to_impresscms_1.1.2 package from the sourceforge file repository
 	2. Copy the content of htdocs/ over your existing files
 	3. On your server, delete the file cache/adminmenu.php
 	4. Access <http://your.site.url>/upgrade/ with a browser
@@ -118,6 +112,8 @@ Where to find more information ?
 
 The ImpressCMS Network
 ------------------------
+ImpressCMS Core Trac: http://trac.impresscms.org/core
+ImpressCMS Addons Trac: http://trac.impresscms.org/addons
 Sourceforge Project: http://www.sourceforge.net/projects/impresscms
 Home of ImpressCMS: http://www.impresscms.org
 Community support: http://community.impresscms.org
@@ -125,7 +121,7 @@ Addons, modules, themes and languages: http://addons.impresscms.org
 Community driven documentation: http://wiki.impresscms.org
 ImpressCMS Blogs: http://community.impresscms.org/modules/imblogging/
 ImpressCMS Core development updates on Twitter: http://twitter.com/impresscms_svn
-ImpressCMS IRC Channel: #impresscms on freenode.net or simply : http://community.impresscms.org/chat/
+ImpressCMS IRC Channel: #impresscms on freenode.net
 
 ImpressCMS Mailing Lists
 ------------------------

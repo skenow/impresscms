@@ -156,6 +156,10 @@ $i++;
 $modversion['templates'][$i]['file'] = 'system_default_form.html';
 $modversion['templates'][$i]['description'] = 'Default form template';
 
+$i++;
+$modversion['templates'][$i]['file'] = 'admin/system_adm_rss.html';
+$modversion['templates'][$i]['description'] = 'Template of Admin RSS';
+
 // Blocks
 $i=0;
 
