@@ -251,11 +251,13 @@ class XoopsSessionHandler
 	**/
 	function icms_sessionFingerprint($unique = '')
 	{
+		global $xoopsConfig;
 		if(!isset($unique) || $unique = '') {$unique = XOOPS_DB_SALT;}
 		$serve_uagent = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT');
 		$serve_aclang = filter_input(INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE');
 		$serve_remaddr = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP);
-		$securityLevel = $this->securityLevel;
+		$securityLevel = $xoopsConfig['session_chk_level'];
+
 		$fingerprint = $unique;
 		if($securityLevel >= 1) {$fingerprint .= $serve_uagent.$serve_aclang;}
 		if($securityLevel >= 2)
@@ -343,9 +345,9 @@ class icmsAdminSessionHandler
 		$serve_remaddr = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP);
 		if(false != $result = $this->db->query($sql))
 		{
-			if(list($adm_sess_data, $adm_sess_ip) = $this->db->fetchRow($result))
+			if(list($adm_sess_data, $adm_sess_ip, $adm_sess_uagent, $adm_sess_aclang) = $this->db->fetchRow($result))
 			{
-				if($this->securityLevel > 1)
+				if($this->securityLevel >= 1)
 				{
 					$pos = strpos($adm_sess_ip, ".", $this->securityLevel - 1);
 					if(strncmp($adm_sess_ip, $serve_remaddr, $pos)) {$adm_sess_data = '';}
@@ -495,11 +497,13 @@ class icmsAdminSessionHandler
 	**/
 	function icms_sessionFingerprint($unique = '')
 	{
+		global $xoopsConfig;
 		if(!isset($unique) || $unique = '') {$unique = XOOPS_DB_SALT;}
-		$securityLevel = $this->securityLevel;
 		$serve_uagent = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT');
 		$serve_aclang = filter_input(INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE');
 		$serve_remaddr = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP);
+		$securityLevel = $xoopsConfig['admin_session_chk_level'];
+
 		$fingerprint = $unique;
 		if($securityLevel >= 1) {$fingerprint .= $serve_uagent.$serve_aclang;}
 		if($securityLevel >= 2)

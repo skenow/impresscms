@@ -422,10 +422,20 @@ define("_MD_AM_UNABLEENCCLOSED","Database Update Failed, You can't change passwo
 define("_MD_AM_SHOWADMINWARNINGS","Show Admin Warning Messages?");
 define("_MD_AM_SHOWADMINWARNINGSDSC","Select 'Yes' to display the warning messages when entering Admin, Selecting 'No' will result in the warning messages being suppressed.");
 
+define('_MD_AM_SESS_CHKLEVEL','PHP Session Checking Level');
+define('_MD_AM_SESS_CHKLEVELDSC','Select the level of session checking.<br />This will set the level of checking against each user session.<br />(Session Fixation Protection).');
+define('_MD_AM_SESS_BROWSER','Browser (User-Agent + Accept-Language)');
+define('_MD_AM_SESS_IPAB','Browser + IP blocks A.B');
+define('_MD_AM_SESS_IPABC','Browser + IP Blocks A.B.C');
+define('_MD_AM_SESS_IPABCD','Browser + IP Blocks A.B.C.D');
+define('_MD_AM_SESSIP_GROUP','Groups Allowed To Change IP');
+define('_MD_AM_SESSIP_GROUPDSC','Disallow IP change from group(s).<br />This will disallow changing of IP address during a user\'s session<br />(Only works if PHP Session Checking Level is set to check the IP block aswell).');
 define("_MD_AM_ADMINUSEMYSESS", "Use custom admin session");
 define("_MD_AM_ADMINUSEMYSESSDSC", "Select 'yes' to customise admin session related values.");
 define("_MD_AM_ADMINSESSNAME", "Admin Session name");
 define("_MD_AM_ADMINSESSNAMEDSC", "The name of Admin session (Valid only when 'use custom admin session' is enabled)");
 define("_MD_AM_ADMINSESSEXPIRE", "Admin Session expiration");
 define("_MD_AM_ADMINSESSEXPIREDSC", "Maximum duration of admin session idle time in minutes (Valid only when 'use admin custom session' is enabled.)");
+define('_MD_AM_ADMINSESS_CHKLEVEL','PHP Admin Session Checking Level');
+define('_MD_AM_ADMINSESS_CHKLEVELDSC','Select the level of admin session checking.<br />This will set the level of checking against each admin session.<br />(Session Fixation Protection).');
 ?>

@@ -276,6 +276,22 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'session_expire', '_MD_AM_SESSEXPIRE', '15', '_MD_AM_SESSEXPIREDSC', 'textbox', 'int', $p)");
 	$i++;
 	$p++;
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'session_chk_level', '_MD_AM_SESS_CHKLEVEL', '3', '_MD_AM_SESS_CHKLEVELDSC', 'select', 'int', $p)");
+	// Insert data for ConfigSec Options in selection field. (must be placed before $is++)
+    	$dbm->insert('config_option', " VALUES ($ci, '_MD_AM_NONE', '0', $i)");
+	$ci++;
+    	$dbm->insert('config_option', " VALUES ($ci, '_MD_AM_SESS_BROWSER', '1', $i)");
+	$ci++;
+    	$dbm->insert('config_option', " VALUES ($ci, '_MD_AM_SESS_IPAB', '2', $i)");
+	$ci++;
+    	$dbm->insert('config_option', " VALUES ($ci, '_MD_AM_SESS_IPABC', '3', $i)");
+	$ci++;
+    	$dbm->insert('config_option', " VALUES ($ci, '_MD_AM_SESS_IPABCD', '4', $i)");
+	$ci++;
+	// ----------
+	$i++;
+	$p++;
+	$dbm->insert('configsec', " VALUES ($i, 0, $c, 'session_ip_group', '_MD_AM_SESSIP_GROUP', 'a:1:{i:0;s:1:\"2\";}', '_MD_AM_SESSIP_GROUPDSC', 'group_multi', 'array', $p)");
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'admin_use_mysession', '_MD_AM_ADMINUSEMYSESS', '0', '_MD_AM_ADMINUSEMYSESSDSC', 'yesno', 'int', $p)");
 	$i++;
 	$p++;
@@ -283,6 +299,21 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	$i++;
 	$p++;
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'admin_session_expire', '_MD_AM_ADMINSESSEXPIRE', '15', '_MD_AM_ADMINSESSEXPIREDSC', 'textbox', 'int', $p)");
+	$i++;
+	$p++;
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'admin_session_chk_level', '_MD_AM_ADMINSESS_CHKLEVEL', '3', '_MD_AM_ADMINSESS_CHKLEVELDSC', 'select', 'int', $p)");
+	// Insert data for ConfigSec Options in selection field. (must be placed before $is++)
+    	$dbm->insert('config_option', " VALUES ($ci, '_MD_AM_NONE', '0', $i)");
+	$ci++;
+    	$dbm->insert('config_option', " VALUES ($ci, '_MD_AM_SESS_BROWSER', '1', $i)");
+	$ci++;
+    	$dbm->insert('config_option', " VALUES ($ci, '_MD_AM_SESS_IPAB', '2', $i)");
+	$ci++;
+    	$dbm->insert('config_option', " VALUES ($ci, '_MD_AM_SESS_IPABC', '3', $i)");
+	$ci++;
+    	$dbm->insert('config_option', " VALUES ($ci, '_MD_AM_SESS_IPABCD', '4', $i)");
+	$ci++;
+	// ----------
 	$i++;
 	$p++;
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'debug_mode', '_MD_AM_DEBUGMODE', '1', '_MD_AM_DEBUGMODEDSC', 'select', 'int', $p)");
