@@ -513,6 +513,7 @@ CREATE TABLE session (
   sess_ip varchar(15) NOT NULL default '',
   sess_data text NOT NULL,
   sess_uagent varchar(255) NOT NULL default '',
+  sess_aclang varchar(255) NOT NULL default '',
   sess_fprint varchar(255) NOT NULL default '',
   PRIMARY KEY  (sess_id),
   KEY updated (sess_updated)
@@ -529,6 +530,7 @@ CREATE TABLE admin_session (
   adm_sess_ip varchar(15) NOT NULL default '',
   adm_sess_data text NOT NULL,
   adm_sess_uagent varchar(255) NOT NULL default '',
+  adm_sess_aclang varchar(255) NOT NULL default '',
   adm_sess_fprint varchar(255) NOT NULL default '',
   PRIMARY KEY  (adm_sess_id),
   KEY updated (adm_sess_updated)

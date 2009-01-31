@@ -31,6 +31,11 @@ htdocs/modules/system/
 admin.php
 xoops_version.php
 
+htdocs/modules/system/include/
+==============================
+
+update.php
+
 htdocs/modules/system/language/admin/
 =====================================
 

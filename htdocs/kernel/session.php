@@ -53,7 +53,7 @@ class XoopsSessionHandler
 	* Security checking level
 	* Possible value: 
 	*	0 - no check;
-	*	1 - check browser characteristics (HTTP_USER_AGENT/HTTP_ACCEPT_LANGUAGE), to be implemented in the future now;
+	*	1 - check browser characteristics (HTTP_USER_AGENT/HTTP_ACCEPT_LANGUAGE)
 	*	2 - check browser and IP A.B;
 	*	3 - check browser and IP A.B.C, recommended;
 	*	4 - check browser and IP A.B.C.D;
@@ -103,6 +103,9 @@ class XoopsSessionHandler
 	function read($sess_id)
 	{
 		$sql = sprintf('SELECT sess_data, sess_ip, sess_uagent, sess_fprint FROM %s WHERE sess_id = %s', $this->db->prefix('session'), $this->db->quoteString($sess_id));
+		$serve_uagent = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT');
+		$serve_aclang = filter_input(INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE');
+		$serve_remaddr = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP);
 		if(false != $result = $this->db->query($sql))
 		{
 			if(list($sess_data, $sess_ip) = $this->db->fetchRow($result))
@@ -110,7 +113,7 @@ class XoopsSessionHandler
 				if($this->securityLevel > 1)
 				{
 					$pos = strpos($sess_ip, ".", $this->securityLevel - 1);
-					if(strncmp($sess_ip, $_SERVER['REMOTE_ADDR'], $pos)) {$sess_data = '';}
+					if(strncmp($sess_ip, $serve_remaddr, $pos)) {$sess_data = '';}
 				}
 				return $sess_data;
 			}
@@ -129,9 +132,12 @@ class XoopsSessionHandler
 		$sess_id = $this->db->quoteString($sess_id);
 		$sql = sprintf("UPDATE %s SET sess_updated = '%u', sess_data = %s WHERE sess_id = %s", $this->db->prefix('session'), time(), $this->db->quoteString($sess_data), $sess_id);
 		$this->db->queryF($sql);
+		$serve_uagent = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT');
+		$serve_aclang = filter_input(INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE');
+		$serve_remaddr = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP);
 		if(!$this->db->getAffectedRows())
 		{
-			$sql = sprintf("INSERT INTO %s (sess_id, sess_updated, sess_ip, sess_data, sess_uagent, sess_fprint) VALUES (%s, '%u', %s, %s, %s, %s)", $this->db->prefix('session'), $sess_id, time(), $this->db->quoteString($_SERVER['REMOTE_ADDR']), $this->db->quoteString($sess_data), $this->db->quoteString($_SERVER['HTTP_USER_AGENT']), $this->db->quoteString($this->icms_sessionFingerprint()));
+			$sql = sprintf("INSERT INTO %s (sess_id, sess_updated, sess_ip, sess_data, sess_uagent, sess_aclang, sess_fprint) VALUES (%s, '%u', %s, %s, %s, %s, %s)", $this->db->prefix('session'), $sess_id, time(), $this->db->quoteString($serve_remaddr), $this->db->quoteString($sess_data), $this->db->quoteString($serve_uagent), $this->db->quoteString($serve_aclang), $this->db->quoteString($this->icms_sessionFingerprint()));
 			return $this->db->queryF($sql);
 		}
 		return true;
@@ -246,14 +252,17 @@ class XoopsSessionHandler
 	function icms_sessionFingerprint($unique = '')
 	{
 		if(!isset($unique) || $unique = '') {$unique = XOOPS_DB_SALT;}
+		$serve_uagent = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT');
+		$serve_aclang = filter_input(INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE');
+		$serve_remaddr = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP);
 		$securityLevel = $this->securityLevel;
 		$fingerprint = $unique;
-		if($securityLevel >= 1) {$fingerprint .= $_SERVER['HTTP_USER_AGENT'];}
+		if($securityLevel >= 1) {$fingerprint .= $serve_uagent.$serve_aclang;}
 		if($securityLevel >= 2)
 		{
 			$num_blocks = abs(intval($securityLevel));
 			if($num_blocks > 4) {$num_blocks = 4;}
-			$blocks = explode('.', $_SERVER['REMOTE_ADDR']);
+			$blocks = explode('.', $serve_remaddr);
 			for($i = 0; $i < $num_blocks; $i++) {$fingerprint .= $blocks[$i].'.';}
 		}
 		return hash('sha256',$fingerprint);
@@ -281,7 +290,7 @@ class icmsAdminSessionHandler
 	* Security checking level
 	* Possible value: 
 	*	0 - no check;
-	*	1 - check browser characteristics (HTTP_USER_AGENT/HTTP_ACCEPT_LANGUAGE), to be implemented in the future now;
+	*	1 - check browser characteristics (HTTP_USER_AGENT/HTTP_ACCEPT_LANGUAGE)
 	*	2 - check browser and IP A.B;
 	*	3 - check browser and IP A.B.C, recommended;
 	*	4 - check browser and IP A.B.C.D;
@@ -328,7 +337,10 @@ class icmsAdminSessionHandler
 	*/
 	function read($adm_sess_id)
 	{
-		$sql = sprintf('SELECT adm_sess_data, adm_sess_ip, adm_sess_uagent, adm_sess_fprint FROM %s WHERE adm_sess_id = %s', $this->db->prefix('admin_session'), $this->db->quoteString($adm_sess_id));
+		$sql = sprintf('SELECT adm_sess_data, adm_sess_ip, adm_sess_uagent, adm_sess_aclang, adm_sess_fprint FROM %s WHERE adm_sess_id = %s', $this->db->prefix('admin_session'), $this->db->quoteString($adm_sess_id));
+		$serve_uagent = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT');
+		$serve_aclang = filter_input(INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE');
+		$serve_remaddr = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP);
 		if(false != $result = $this->db->query($sql))
 		{
 			if(list($adm_sess_data, $adm_sess_ip) = $this->db->fetchRow($result))
@@ -336,7 +348,7 @@ class icmsAdminSessionHandler
 				if($this->securityLevel > 1)
 				{
 					$pos = strpos($adm_sess_ip, ".", $this->securityLevel - 1);
-					if(strncmp($adm_sess_ip, $_SERVER['REMOTE_ADDR'], $pos)) {$adm_sess_data = '';}
+					if(strncmp($adm_sess_ip, $serve_remaddr, $pos)) {$adm_sess_data = '';}
 				}
 				return $adm_sess_data;
 			}
@@ -355,9 +367,12 @@ class icmsAdminSessionHandler
 		$adm_sess_id = $this->db->quoteString($adm_sess_id);
 		$sql = sprintf("UPDATE %s SET adm_sess_updated = '%u', adm_sess_data = %s WHERE adm_sess_id = %s", $this->db->prefix('admin_session'), time(), $this->db->quoteString($adm_sess_data), $adm_sess_id);
 		$this->db->queryF($sql);
+		$serve_uagent = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT');
+		$serve_aclang = filter_input(INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE');
+		$serve_remaddr = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP);
 		if(!$this->db->getAffectedRows())
 		{
-			$sql = sprintf("INSERT INTO %s (adm_sess_id, adm_sess_updated, adm_sess_ip, adm_sess_data, adm_sess_uagent, adm_sess_fprint) VALUES (%s, '%u', %s, %s, %s, %s)", $this->db->prefix('admin_session'), $adm_sess_id, time(), $this->db->quoteString($_SERVER['REMOTE_ADDR']), $this->db->quoteString($adm_sess_data), $this->db->quoteString($_SERVER['HTTP_USER_AGENT']), $this->db->quoteString($this->icms_sessionFingerprint()));
+			$sql = sprintf("INSERT INTO %s (adm_sess_id, adm_sess_updated, adm_sess_ip, adm_sess_data, adm_sess_uagent, adm_sess_aclang, adm_sess_fprint) VALUES (%s, '%u', %s, %s, %s, %s, %s)", $this->db->prefix('admin_session'), $adm_sess_id, time(), $this->db->quoteString($serve_remaddr), $this->db->quoteString($adm_sess_data), $this->db->quoteString($serve_uagent), $this->db->quoteString($serve_aclang), $this->db->quoteString($this->icms_sessionFingerprint()));
 			return $this->db->queryF($sql);
 		}
 		return true;
@@ -482,13 +497,16 @@ class icmsAdminSessionHandler
 	{
 		if(!isset($unique) || $unique = '') {$unique = XOOPS_DB_SALT;}
 		$securityLevel = $this->securityLevel;
+		$serve_uagent = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT');
+		$serve_aclang = filter_input(INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE');
+		$serve_remaddr = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP);
 		$fingerprint = $unique;
-		if($securityLevel >= 1) {$fingerprint .= $_SERVER['HTTP_USER_AGENT'];}
+		if($securityLevel >= 1) {$fingerprint .= $serve_uagent.$serve_aclang;}
 		if($securityLevel >= 2)
 		{
 			$num_blocks = abs(intval($securityLevel));
 			if($num_blocks > 4) {$num_blocks = 4;}
-			$blocks = explode('.', $_SERVER['REMOTE_ADDR']);
+			$blocks = explode('.', $serve_remaddr);
 			for($i = 0; $i < $num_blocks; $i++) {$fingerprint .= $blocks[$i].'.';}
 		}
 		return hash('sha256',$fingerprint);
