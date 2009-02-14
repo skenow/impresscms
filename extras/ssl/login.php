@@ -61,7 +61,7 @@ if ($op == 'dologin') {
 		if (!$member_handler->insertUser($user)) {
 		}
 		$_SESSION = array();
-		$_SESSION['xoopsUserId'] = $user->getVar('uid');
+		$_SESSION['icmsUserId'] = $user->getVar('uid');
 		$_SESSION['xoopsUserGroups'] = $user->getGroups();
 		if (!empty($xoopsConfig['use_ssl'])) {
 			xoops_confirm(array($xoopsConfig['sslpost_name'] => session_id()), XOOPS_URL.'/misc.php?action=showpopups&amp;type=ssllogin', _US_PRESSLOGIN, _LOGIN);

@@ -237,8 +237,8 @@ $xoops =& new xos_kernel_Xoops2();
     session_set_save_handler(array(&$sess_handler, 'open'), array(&$sess_handler, 'close'), array(&$sess_handler, 'read'), array(&$sess_handler, 'write'), array(&$sess_handler, 'destroy'), array(&$sess_handler, 'gc'));
     session_start();
 
-    if (!empty($_SESSION['xoopsUserId'])) {
-        $xoopsUser =& $member_handler->getUser($_SESSION['xoopsUserId']);
+    if (!empty($_SESSION['icmsUserId'])) {
+        $xoopsUser =& $member_handler->getUser($_SESSION['icmsUserId']);
         if (!is_object($xoopsUser)) {
             $xoopsUser = '';
             $_SESSION = array();

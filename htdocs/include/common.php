@@ -228,20 +228,20 @@ if($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '') {session
 else {session_name("ICMSSESSION");}
 session_start();
 
-// Remove expired session for xoopsUserId
-if($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '' && !isset($_COOKIE[$xoopsConfig['session_name']]) && !empty($_SESSION['xoopsUserId']))
+// Remove expired session for icmsUserId
+if($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '' && !isset($_COOKIE[$xoopsConfig['session_name']]) && !empty($_SESSION['icmsUserId']))
 {
-	unset($_SESSION['xoopsUserId']);
+	unset($_SESSION['icmsUserId']);
 }
 
 // Remove expired admin session for xoopsAdminId
-if($xoopsConfig['admin_use_mysession'] && $xoopsConfig['admin_session_name'] != '' && !isset($_COOKIE[$xoopsConfig['admin_session_name']]) && !empty($_SESSION['xoopsAdminId']))
+if($xoopsConfig['admin_use_mysession'] && $xoopsConfig['admin_session_name'] != '' && !isset($_COOKIE[$xoopsConfig['admin_session_name']]) && !empty($_SESSION['icmsAdminId']))
 {
-	unset($_SESSION['xoopsAdminId']);
+	unset($_SESSION['icmsAdminId']);
 }
 
 // autologin hack GIJ
-if(empty($_SESSION['xoopsUserId']) && isset($_COOKIE['autologin_uname']) && isset($_COOKIE['autologin_pass']))
+if(empty($_SESSION['icmsUserId']) && isset($_COOKIE['autologin_uname']) && isset($_COOKIE['autologin_pass']))
 {
 	// autologin V2 GIJ
 	if(!empty($_POST))
@@ -288,7 +288,7 @@ if(empty($_SESSION['xoopsUserId']) && isset($_COOKIE['autologin_uname']) && isse
 		$user->setVar('last_login', time());
 		if(!$member_handler->insertUser($user, true)) {}
 		//$_SESSION = array();
-		$_SESSION['xoopsUserId'] = $user->getVar('uid');
+		$_SESSION['icmsUserId'] = $user->getVar('uid');
 		$_SESSION['xoopsUserGroups'] = $user->getGroups();
 		$user_theme = $user->getVar('theme');
 		$user_language = $user->language();
@@ -310,9 +310,9 @@ if(empty($_SESSION['xoopsUserId']) && isset($_COOKIE['autologin_uname']) && isse
 }
 // end of autologin hack GIJ
 
-if(!empty($_SESSION['xoopsUserId']))
+if(!empty($_SESSION['icmsUserId']))
 {
-	$xoopsUser =& $member_handler->getUser($_SESSION['xoopsUserId']);
+	$xoopsUser =& $member_handler->getUser($_SESSION['icmsUserId']);
 	if(!is_object($xoopsUser))
 	{
 		$xoopsUser = '';

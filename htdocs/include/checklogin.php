@@ -96,7 +96,7 @@ if(false != $user)
 	$sess_handler->icms_sessionOpen($user->getVar('pass'), true);
 	
 	$_SESSION = array();
-	$_SESSION['xoopsUserId'] = $user->getVar('uid');
+	$_SESSION['icmsUserId'] = $user->getVar('uid');
 	$_SESSION['xoopsUserGroups'] = $user->getGroups();
 	if($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '')
 	{

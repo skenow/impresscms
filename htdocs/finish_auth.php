@@ -242,7 +242,7 @@ switch ($xoopsAuth->step) {
 			redirect_header($redirect_url, 3, _US_OPENID_NEW_USER_AUTH_NOT_ACTIVATED);
 		}
 
-		$_SESSION['xoopsUserId'] = $newUser->getVar('uid');
+		$_SESSION['icmsUserId'] = $newUser->getVar('uid');
 		$_SESSION['xoopsUserGroups'] = $newUser->getGroups();
 		$user_theme = $newUser->getVar('theme');
 
@@ -292,7 +292,7 @@ switch ($xoopsAuth->step) {
 			redirect_header($redirect_url, 3, _US_OPENID_LINKED_AUTH_CANNOT_SAVE);
 		}
 
-		$_SESSION['xoopsUserId'] = $thisUser->getVar('uid');
+		$_SESSION['icmsUserId'] = $thisUser->getVar('uid');
 		$_SESSION['xoopsUserGroups'] = $thisUser->getGroups();
 		$user_theme = $thisUser->getVar('theme');
 

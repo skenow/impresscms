@@ -32,7 +32,7 @@ $xoopsConfigUser = & $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 if ($xoopsConfigUser['allow_register'] == 0 && $xoopsConfigUser['activation_type'] != 3) {
 	redirect_header('index.php', 6, _US_NOREGISTER);
 }
-if ($_SESSION['xoopsUserId']) {
+if ($_SESSION['icmsUserId']) {
 	redirect_header('index.php', 6, _US_ALREADY_LOGED_IN);
 }
 include_once ICMS_ROOT_PATH . "/kernel/icmsstopspammer.php";

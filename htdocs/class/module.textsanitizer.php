@@ -195,7 +195,7 @@ class MyTextSanitizer
         	if($xoopsConfigPersona['use_hidden'] == 1)
 		{
         		$patterns[] = "/\[hide](.*)\[\/hide\]/sU";
-			if($_SESSION['xoopsUserId'])
+			if($_SESSION['icmsUserId'])
 			{
 				$replacements[] = _HIDDENC.'<div class="xoopsQuote">\\1</div>';
 			}
