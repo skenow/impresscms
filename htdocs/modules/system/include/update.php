@@ -379,8 +379,9 @@ function xoops_module_update_system(& $module) {
 	if ($dbVersion < $newDbVersion) {
 		echo "Database migrate to version " . $newDbVersion . "<br />";
 		$icmsDatabaseUpdater->db->queryF("ALTER TABLE `" . $icmsDatabaseUpdater->db->prefix('session') . "` ADD COLUMN sess_uagent varchar(255) NOT NULL default ''");
+		$icmsDatabaseUpdater->db->queryF("ALTER TABLE `" . $icmsDatabaseUpdater->db->prefix('session') . "` ADD COLUMN sess_aclang varchar(255) NOT NULL default ''");
 		$icmsDatabaseUpdater->db->queryF("ALTER TABLE `" . $icmsDatabaseUpdater->db->prefix('session') . "` ADD COLUMN sess_fprint varchar(255) NOT NULL default ''");
-		$icmsDatabaseUpdater->db->queryF("CREATE TABLE `" . $icmsDatabaseUpdater->db->prefix('admin_session') . "` (adm_sess_id varchar(32) NOT NULL default '', adm_sess_updated int(10) unsigned NOT NULL default '0', adm_sess_ip varchar(15) NOT NULL default '', adm_sess_data text NOT NULL, adm_sess_uagent varchar(255) NOT NULL default '', adm_sess_fprint varchar(255) NOT NULL default '', PRIMARY KEY (adm_sess_id), KEY updated (adm_sess_updated)) ENGINE = MyISAM");
+		$icmsDatabaseUpdater->db->queryF("CREATE TABLE `" . $icmsDatabaseUpdater->db->prefix('admin_session') . "` (adm_sess_id varchar(32) NOT NULL default '', adm_sess_updated int(10) unsigned NOT NULL default '0', adm_sess_ip varchar(15) NOT NULL default '', adm_sess_data text NOT NULL, adm_sess_uagent varchar(255) NOT NULL default '', adm_sess_aclang varchar(255) NOT NULL default '', adm_sess_fprint varchar(255) NOT NULL default '', PRIMARY KEY (adm_sess_id), KEY updated (adm_sess_updated)) ENGINE = MyISAM");
 
 		$icmsDatabaseUpdater->insertConfig(XOOPS_CONF, 'show_admin_warnings', '_MD_AM_SHOWADMINWARNINGS', 1, '_MD_AM_SHOWADMINWARNINGSDSC', 'yesno', 'int');
 		$icmsDatabaseUpdater->insertConfig(XOOPS_CONF, 'admin_use_mysession', '_MD_AM_ADMINUSEMYSESS', 0, '_MD_AM_ADMINUSEMYSESSDSC', 'yesno', 'int', 21);

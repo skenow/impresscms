@@ -72,7 +72,7 @@ if(false != $user)
 					redirect_header(ICMS_URL.'/index.php',3,_US_MULTLOGIN);
 				}
 			}
-			if(is_object($user)) {$online_handler->write($user->uid(), $user->uname(), time() , 0, $HTTP_SERVER_VARS['REMOTE_ADDR']);}
+			if(is_object($user)) {$online_handler->write($user->uid(), $user->uname(), time() , 0, $_SERVER['REMOTE_ADDR']);}
 		}
 	}
 	if($xoopsConfig['closesite'] == 1)

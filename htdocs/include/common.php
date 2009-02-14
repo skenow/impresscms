@@ -473,7 +473,7 @@ if($xoopsConfigPersona['multi_login'])
 	if(is_object($xoopsUser))
 	{
 		$online_handler =& xoops_gethandler('online');
-		$online_handler->write($xoopsUser->uid(), $xoopsUser->uname(),time(),0,$HTTP_SERVER_VARS['REMOTE_ADDR']);
+		$online_handler->write($xoopsUser->uid(), $xoopsUser->uname(),time(),0,$_SERVER['REMOTE_ADDR']);
 	}
 }
 // ################# Preload Trigger finishCoreBoot ##############

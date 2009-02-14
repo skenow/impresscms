@@ -200,6 +200,7 @@ define('_US_INVALIDIP','ERROR: This IP adress is not allowed to register');
 
 /* define('_US_AUTORESIZE_ATV', 'Automatic resizing enabled'); */
 /* define('_US_AUTORESIZE_ATV_DESC', 'Images larger than %u x %u will be automatically resized, keeping the aspect ratio, so that it is within the maximum pixels set. The function accepts images JPG, PNG and GIF (including animated gif), but yet does not function satisfactorily for animated gifs with transparent background.'); */
+define('_US_MULTLOGIN', 'You are already logged in on the site. Or someone else logged in and using your username and password.<br />Wait a few minutes and try again later. If the problems still persists contact the site administrator.');
 
 // added in 1.2
 define('_US_LOGGINGUAD','Admin Authenticated, %s.');
