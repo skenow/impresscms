@@ -102,19 +102,12 @@ class XoopsSessionHandler
 	*/
 	function read($sess_id)
 	{
-		$sql = sprintf('SELECT sess_data, sess_ip, sess_uagent, sess_fprint FROM %s WHERE sess_id = %s', $this->db->prefix('session'), $this->db->quoteString($sess_id));
-		$serve_uagent = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT');
-		$serve_aclang = filter_input(INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE');
-		$serve_remaddr = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP);
+		$sql = sprintf('SELECT sess_data, sess_ip, sess_uagent, sess_aclang, sess_fprint FROM %s WHERE sess_id = %s', $this->db->prefix('session'), $this->db->quoteString($sess_id));
 		if(false != $result = $this->db->query($sql))
 		{
-			if(list($sess_data, $sess_ip) = $this->db->fetchRow($result))
+			if(list($sess_data, $sess_ip, $sess_uagent, $sess_aclang, $sess_fprint) = $this->db->fetchRow($result))
 			{
-				if($this->securityLevel > 1)
-				{
-					$pos = strpos($sess_ip, ".", $this->securityLevel - 1);
-					if(strncmp($sess_ip, $serve_remaddr, $pos)) {$sess_data = '';}
-				}
+				if(!isset($_SESSION['icms_fprint']) || (isset($_SESSION['icms_fprint']) && $_SESSION['icms_fprint'] != $sess_fprint)) {$sess_data = '';}
 				return $sess_data;
 			}
 		}
@@ -123,11 +116,13 @@ class XoopsSessionHandler
 
 	/**
 	* Inserts a session into the database
-	* @param   string  $sess_id
-	* @param   string  $sess_data
+	* @param   string  $sess_id	Session ID to be stored in DB
+	* @param   string  $sess_data	Session Data to be stored in DB
+	* @param   string  $unique	Unique identifier to use in the hash algorhythm
+	*						this should be unique to the user. ie. pass, uname, uid etc.
 	* @return  bool    
 	**/
-	function write($sess_id, $sess_data)
+	function write($sess_id, $sess_data, $unique = '')
 	{
 		$sess_id = $this->db->quoteString($sess_id);
 		$sql = sprintf("UPDATE %s SET sess_updated = '%u', sess_data = %s WHERE sess_id = %s", $this->db->prefix('session'), time(), $this->db->quoteString($sess_data), $sess_id);
@@ -137,7 +132,7 @@ class XoopsSessionHandler
 		$serve_remaddr = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP);
 		if(!$this->db->getAffectedRows())
 		{
-			$sql = sprintf("INSERT INTO %s (sess_id, sess_updated, sess_ip, sess_data, sess_uagent, sess_aclang, sess_fprint) VALUES (%s, '%u', %s, %s, %s, %s, %s)", $this->db->prefix('session'), $sess_id, time(), $this->db->quoteString($serve_remaddr), $this->db->quoteString($sess_data), $this->db->quoteString($serve_uagent), $this->db->quoteString($serve_aclang), $this->db->quoteString($this->icms_sessionFingerprint()));
+			$sql = sprintf("INSERT INTO %s (sess_id, sess_updated, sess_ip, sess_data, sess_uagent, sess_aclang, sess_fprint) VALUES (%s, '%u', %s, %s, %s, %s, %s)", $this->db->prefix('session'), $sess_id, time(), $this->db->quoteString($serve_remaddr), $this->db->quoteString($sess_data), $this->db->quoteString($serve_uagent), $this->db->quoteString($serve_aclang), $this->db->quoteString($this->icms_sessionFingerprint($unique)));
 			return $this->db->queryF($sql);
 		}
 		return true;
@@ -182,22 +177,15 @@ class XoopsSessionHandler
 
 	/**
 	* Update the current session id with a newly generated one
-	* To be refactored 
-	* @param   bool $delete_old_session
+	* @param   bool $regenerate	true = regenerate the session_id(), false = keep same session_id()
 	* @return  bool
 	**/
 	function icms_sessionRegenerateId($regenerate = false)
 	{
-		$old_session_id = session_id();
-		if($regenerate)
-		{
-			$success = session_regenerate_id(true);
-//			$this->destroy($old_session_id);
-		}
+		if($regenerate) {$success = session_regenerate_id(true);}
 		else {$success = session_regenerate_id();}
 		// Force updating cookie for session cookie is not issued correctly in some IE versions or not automatically issued prior to PHP 4.3.3 for all browsers 
 		if($success) {$this->update_cookie();}
-		
 		return $success;
 	}
 
@@ -232,14 +220,13 @@ class XoopsSessionHandler
 	}
 	
 	/**
-	* Check the $_SESSION fingerprint against the cookie fingerprint
+	* Check the $_SESSION fingerprint
 	* @param   string  $unique    Unique identifier to use in the hash algorhythm
 	*						this should be unique to the user. ie. pass, uname, uid etc.
 	* @return  bool.
 	**/
 	function icms_sessionCheck($unique = '')
 	{
-//		$this->icms_sessionRegenerateId();
 		return (isset($_SESSION['icms_fprint']) && $_SESSION['icms_fprint'] == $this->icms_sessionFingerprint($unique));
 	}
 
@@ -335,22 +322,18 @@ class icmsAdminSessionHandler
 	/**
 	* Read an admin session from the database
 	* @param	string  &adm_sess_id    ID of the admin session
-	* @return	array   adm_Session data
+	* @return	array   adm_session data
 	*/
-	function read($adm_sess_id)
+	function read($adm_sess_id, $unique = '')
 	{
 		$sql = sprintf('SELECT adm_sess_data, adm_sess_ip, adm_sess_uagent, adm_sess_aclang, adm_sess_fprint FROM %s WHERE adm_sess_id = %s', $this->db->prefix('admin_session'), $this->db->quoteString($adm_sess_id));
-		$serve_uagent = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT');
-		$serve_aclang = filter_input(INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE');
-		$serve_remaddr = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP);
 		if(false != $result = $this->db->query($sql))
 		{
 			if(list($adm_sess_data, $adm_sess_ip, $adm_sess_uagent, $adm_sess_aclang) = $this->db->fetchRow($result))
 			{
-				if($this->securityLevel >= 1)
+				if(!isset($_SESSION['icms_admin_fprint']) || (isset($_SESSION['icms_admin_fprint']) && $_SESSION['icms_admin_fprint'] != $adm_sess_fprint))
 				{
-					$pos = strpos($adm_sess_ip, ".", $this->securityLevel - 1);
-					if(strncmp($adm_sess_ip, $serve_remaddr, $pos)) {$adm_sess_data = '';}
+					$adm_sess_data = '';
 				}
 				return $adm_sess_data;
 			}
@@ -364,7 +347,7 @@ class icmsAdminSessionHandler
 	* @param   string  $adm_sess_data
 	* @return  bool
 	**/
-	function write($adm_sess_id, $adm_sess_data)
+	function write($adm_sess_id, $adm_sess_data, $unique = '')
 	{
 		$adm_sess_id = $this->db->quoteString($adm_sess_id);
 		$sql = sprintf("UPDATE %s SET adm_sess_updated = '%u', adm_sess_data = %s WHERE adm_sess_id = %s", $this->db->prefix('admin_session'), time(), $this->db->quoteString($adm_sess_data), $adm_sess_id);
@@ -374,7 +357,7 @@ class icmsAdminSessionHandler
 		$serve_remaddr = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP);
 		if(!$this->db->getAffectedRows())
 		{
-			$sql = sprintf("INSERT INTO %s (adm_sess_id, adm_sess_updated, adm_sess_ip, adm_sess_data, adm_sess_uagent, adm_sess_aclang, adm_sess_fprint) VALUES (%s, '%u', %s, %s, %s, %s, %s)", $this->db->prefix('admin_session'), $adm_sess_id, time(), $this->db->quoteString($serve_remaddr), $this->db->quoteString($adm_sess_data), $this->db->quoteString($serve_uagent), $this->db->quoteString($serve_aclang), $this->db->quoteString($this->icms_sessionFingerprint()));
+			$sql = sprintf("INSERT INTO %s (adm_sess_id, adm_sess_updated, adm_sess_ip, adm_sess_data, adm_sess_uagent, adm_sess_aclang, adm_sess_fprint) VALUES (%s, '%u', %s, %s, %s, %s, %s)", $this->db->prefix('admin_session'), $adm_sess_id, time(), $this->db->quoteString($serve_remaddr), $this->db->quoteString($adm_sess_data), $this->db->quoteString($serve_uagent), $this->db->quoteString($serve_aclang), $this->db->quoteString($this->icms_sessionFingerprint($unique)));
 			return $this->db->queryF($sql);
 		}
 		return true;
@@ -418,31 +401,23 @@ class icmsAdminSessionHandler
 	}
 
 	/**
-	* Update the current session id with a newly generated one
+	* Update the current admin session id with a newly generated one
 	* To be refactored 
-	* @param   bool $delete_old_session
+	* @param   bool $regenerate	true = regenerate the session_id(), false = keep same session_id()
 	* @return  bool
 	**/
 	function icms_sessionRegenerateId($regenerate = false)
 	{
-		$old_session_id = session_id();
-		if($regenerate)
-		{
-			$success = session_regenerate_id(true);
-//			$this->destroy($old_session_id);
-		}
+		if($regenerate) {$success = session_regenerate_id(true);}
 		else {$success = session_regenerate_id();}
 		// Force updating cookie for session cookie is not issued correctly in some IE versions or not automatically issued prior to PHP 4.3.3 for all browsers 
 		if($success) {$this->update_cookie();}
-		
 		return $success;
 	}
 
 	/**
-	* Update cookie status for current session
-	* To be refactored 
-	* FIXME: how about $xoopsConfig['use_ssl'] is enabled?
-	* 
+	* Update cookie status for current admin session
+	* cookie to be made http-only.
 	* @param   string  $sess_id    session ID
 	* @param   int     $expire     Time in seconds until a session expires
 	* @return  bool
@@ -461,12 +436,12 @@ class icmsAdminSessionHandler
 			$cookie_secure = 0;
 		}
 		$adm_session_name = ($xoopsConfig['admin_use_mysession'] && $xoopsConfig['admin_session_name'] != '') ? $xoopsConfig['admin_session_name'] : 'ICMSADSESSION';
-		$adm_session_expire = !is_null($expire) ? intval($expire) : ( ($xoopsConfig['admin_use_mysession'] && $xoopsConfig['admin_session_name'] != '') ? $xoopsConfig['admin_session_expire'] * 60 : ini_get('session.cookie_lifetime') );
+		$adm_session_expire = !is_null($expire) ? intval($expire) : (($xoopsConfig['admin_use_mysession'] && $xoopsConfig['admin_session_name'] != '') ? $xoopsConfig['admin_session_expire'] * 60 : ini_get('session.cookie_lifetime'));
 		setcookie($adm_session_name, $adm_session_id, $adm_session_expire ? time() + $adm_session_expire : 0, '/',  '', $cookie_secure, 1);
 	}
 
 	/**
-	* Opens a session & creates a session fingerprint & unique session_id()
+	* Opens an admin session & creates a session fingerprint & unique session_id()
 	* @param   string  $unique    Unique identifier to use in the hash algorhythm
 	*						this should be unique to the user. ie. pass, uname, uid etc.
 	* @param   bool  $regenerate	true = regenerate the session_id(), false = keep same session_id()
@@ -478,14 +453,13 @@ class icmsAdminSessionHandler
 	}
 	
 	/**
-	* Check the $_SESSION fingerprint against the cookie fingerprint
+	* Check the $_SESSION fingerprint
 	* @param   string  $unique    Unique identifier to use in the hash algorhythm
 	*						this should be unique to the user. ie. pass, uname, uid etc.
 	* @return  bool.
 	**/
 	function icms_sessionCheck($unique = '')
 	{
-//		$this->icms_sessionRegenerateId();
 		return (isset($_SESSION['icms_admin_fprint']) && $_SESSION['icms_admin_fprint'] == $this->icms_sessionFingerprint($unique));
 	}
 
@@ -515,7 +489,5 @@ class icmsAdminSessionHandler
 		}
 		return hash('sha256',$fingerprint);
 	}
-
 }
-
 ?>
