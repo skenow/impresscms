@@ -3,16 +3,29 @@ ImpressCMS Admin Login Access
 Changed files >
 ---------------
 
+extras/ssl/
+===========
+
+login.php
+
+extras/anti-spam/
+=================
+
+register.php
+
 htdocs/
 =======
 
 admin.php
 user.php
+finish_auth.php
+register.php
 
 htdocs/install/
 ===============
 
 makedata.php
+common.php
 
 htdocs/install/sql/
 ===================
@@ -20,10 +33,22 @@ htdocs/install/sql/
 mysqli.structure.sql
 mysql.structure.sql
 
+htdocs/class/
+=============
+
+module.textsanitizer.php
+
 htdocs/kernel/
 ==============
 
 session.php
+
+htdocs/include/
+==============
+
+common.php
+checklogin.php
+cp_header.php
 
 htdocs/modules/system/
 ======================
@@ -60,5 +85,3 @@ htdocs/modules/system/templates/admin/
 ======================================
 
 system_adm_loginform.html
-
-

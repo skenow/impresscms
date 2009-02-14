@@ -1,5 +1,11 @@
 ImpressCMS ChangeLog
 
+== ImpressCMS 1.2==
+
+'''Added'''
+
+* #158: Admin Login session, users now have to enter their password again in order to access Admin. (vaughan)
+
 == Impresscms 1.1.2==
 
 '''Fixed'''
