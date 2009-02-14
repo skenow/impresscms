@@ -91,8 +91,9 @@ if(false != $user)
 	$user->setVar('last_login', time());
 	if(!$member_handler->insertUser($user)) {}
 
-	// Opens the session with a new session_id() & creates a session fingerprint hash
-	$sess_handler->icms_sessionOpen(true);
+	// Opens the session with a new session_id() & creates a session fingerprint hash based on the current password hash
+	// if password is changed during session, then the session check will fail & the user will be asked to login again 
+	$sess_handler->icms_sessionOpen($user->getVar('pass'), true);
 	
 	$_SESSION = array();
 	$_SESSION['xoopsUserId'] = $user->getVar('uid');

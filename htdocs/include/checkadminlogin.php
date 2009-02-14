@@ -1,33 +1,15 @@
 <?php
-// $Id: checkadminlogin.php 1083 2007-10-16 16:42:51Z phppp $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu)                                          //
-// URL: http://www.xoops.org/ http://jp.xoops.org/  http://www.myweb.ne.jp/  //
-// Project: The XOOPS Project (http://www.xoops.org/)                        //
-// ------------------------------------------------------------------------- //
+/**
+* Checks & starts the ICMS Admin Session.
+*
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @package	core
+* @since	ImpressCMS 1.2
+* @author	Vaughan Montgomery <vaughan@impresscms.org>
+* @author	The ImpressCMS Project
+* @version	$Id$
+*/
 if(!defined('ICMS_ROOT_PATH')) {exit();}
 include_once ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/user.php';
 $uname = !isset($_POST['uname']) ? '' : trim($_POST['uname']);
@@ -51,7 +33,7 @@ if(false != $user)
 {
 	$cookie_secure = 0;
 	$adsess_handler =& xoops_gethandler('adminsession');
-	$_SESSION['xoopsAdminId'] = $user->getVar('uid');
+	$_SESSION['icmsAdminId'] = $user->getVar('uid');
 	if($xoopsConfig['admin_use_mysession'] && $xoopsConfig['admin_session_name'] != '' && $xoopsConfig['admin_session_expire'] > 0)
 	{
 		$admin_sess_name = $xoopsConfig['admin_session_name'];

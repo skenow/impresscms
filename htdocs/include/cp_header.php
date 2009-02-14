@@ -29,7 +29,7 @@ if($xoopsUser)
 		if($cookie_fprint !== $_SESSION['icms_admin_fprint'] || !$adsess_handler->icms_sessionCheck($xoopsUser->getVar('pass')))
 		{
 			setcookie($_COOKIE[$admin_sess_name], '', time()-3600);
-			unset($_COOKIE[$admin_sess_name], $_SESSION['xoopsAdminId'], $_SESSION['icms_admin_fprint']);
+			unset($_COOKIE[$admin_sess_name], $_SESSION['icmsAdminId'], $_SESSION['icms_admin_fprint']);
 			redirect_header(ICMS_URL.'/',3,_UNAUTHADMINACCESS);
 		}
 	}
