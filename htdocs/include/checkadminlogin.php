@@ -44,8 +44,12 @@ if(false != $user)
 		$admin_sess_name = 'ICMSADSESSION';
 		$admin_sess_expire = ini_get('session.cookie_lifetime');
 	}
-	$adsess_handler->icms_sessionOpen($user-getVar('pass'));
+	$adsess_handler->icms_sessionOpen($user->getVar('pass'));
+
 	$admin_sess_fprint = $_SESSION['icms_admin_fprint'];
+
+//	session_set_save_handler(array(&$adsess_handler, 'open'), array(&$adsess_handler, 'close'), array(&$adsess_handler, 'read'), array(&$adsess_handler, 'write'), array(&$adsess_handler, 'destroy'), array(&$adsess_handler, 'gc'));
+
 	setcookie($admin_sess_name, $admin_sess_fprint, $admin_sess_expire ? time()+$admin_sess_expire : 0, '/',  '', $cookie_secure, 1);
 	redirect_header(ICMS_URL.'/modules/system/admin.php', 1, sprintf(_US_LOGGINGUAD, $user->getVar('uname')), false);
 }

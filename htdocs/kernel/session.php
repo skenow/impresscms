@@ -102,12 +102,16 @@ class XoopsSessionHandler
 	*/
 	function read($sess_id)
 	{
-		$sql = sprintf('SELECT sess_data, sess_ip, sess_uagent, sess_aclang, sess_fprint FROM %s WHERE sess_id = %s', $this->db->prefix('session'), $this->db->quoteString($sess_id));
+		$sql = sprintf('SELECT sess_data, sess_ip FROM %s WHERE sess_id = %s', $this->db->prefix('session'), $this->db->quoteString($sess_id));
 		if(false != $result = $this->db->query($sql))
 		{
-			if(list($sess_data, $sess_ip, $sess_uagent, $sess_aclang, $sess_fprint) = $this->db->fetchRow($result))
+			if(list($sess_data, $sess_ip) = $this->db->fetchRow($result))
 			{
-				if(!isset($_SESSION['icms_fprint']) || (isset($_SESSION['icms_fprint']) && $_SESSION['icms_fprint'] != $sess_fprint)) {$sess_data = '';}
+				if($this->securityLevel > 1)
+				{
+					$pos = strpos($sess_ip, ".", $this->securityLevel - 1);
+					if(strncmp($sess_ip, $_SERVER['REMOTE_ADDR'], $pos)) {$sess_data = '';}
+				}
 				return $sess_data;
 			}
 		}
@@ -127,12 +131,9 @@ class XoopsSessionHandler
 		$sess_id = $this->db->quoteString($sess_id);
 		$sql = sprintf("UPDATE %s SET sess_updated = '%u', sess_data = %s WHERE sess_id = %s", $this->db->prefix('session'), time(), $this->db->quoteString($sess_data), $sess_id);
 		$this->db->queryF($sql);
-		$serve_uagent = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT');
-		$serve_aclang = filter_input(INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE');
-		$serve_remaddr = filter_input(INPUT_SERVER, 'REMOTE_ADDR', FILTER_VALIDATE_IP);
 		if(!$this->db->getAffectedRows())
 		{
-			$sql = sprintf("INSERT INTO %s (sess_id, sess_updated, sess_ip, sess_data, sess_uagent, sess_aclang, sess_fprint) VALUES (%s, '%u', %s, %s, %s, %s, %s)", $this->db->prefix('session'), $sess_id, time(), $this->db->quoteString($serve_remaddr), $this->db->quoteString($sess_data), $this->db->quoteString($serve_uagent), $this->db->quoteString($serve_aclang), $this->db->quoteString($this->icms_sessionFingerprint($unique)));
+			$sql = sprintf("INSERT INTO %s (sess_id, sess_updated, sess_ip, sess_data) VALUES (%s, '%u', %s, %s)", $this->db->prefix('session'), $sess_id, time(), $this->db->quoteString($_SERVER['REMOTE_ADDR']), $this->db->quoteString($sess_data));
 			return $this->db->queryF($sql);
 		}
 		return true;
