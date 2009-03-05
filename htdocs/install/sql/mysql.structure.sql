@@ -521,23 +521,6 @@ CREATE TABLE session (
 # --------------------------------------------------------
 
 #
-# Table structure for table `admin_session`
-#
-
-CREATE TABLE admin_session (
-  adm_sess_id varchar(32) NOT NULL default '',
-  adm_sess_updated int(10) unsigned NOT NULL default '0',
-  adm_sess_ip varchar(15) NOT NULL default '',
-  adm_sess_data text NOT NULL,
-  adm_sess_uagent varchar(255) NOT NULL default '',
-  adm_sess_aclang varchar(255) NOT NULL default '',
-  adm_sess_fprint varchar(255) NOT NULL default '',
-  PRIMARY KEY  (adm_sess_id),
-  KEY updated (adm_sess_updated)
-) TYPE=MyISAM;
-# --------------------------------------------------------
-
-#
 # Table structure for table `smiles`
 #
 
