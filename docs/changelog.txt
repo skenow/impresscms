@@ -8,6 +8,32 @@ ImpressCMS ChangeLog
 
 == Impresscms 1.1.2==
 
+===2009-03-08 : 1.1.2 Final===
+
+* Released 1.1.2 RC2 as Final
+
+===2009-03-01 : 1.1.2 RC2===
+
+'''Fixed'''
+* #244: $HTTP_SERVER_VARS replaced with $_SERVER in checklogin.php (vaughan)
+* #245: $HTTP_SERVER_VARS replaced with $_SERVER in common.php (vaughan)
+* #246: <>\/ specialchars were being stripped from password fields unneccessarily. changed from stopXSS to filter_var() (and use FILTER_SANITIZE_URL) which sanitizes and only allows characters that can be used in a URL (which is applicable for passwords) (vaughan)
+* #246: SMTPAuth not working - xoopsmultimailer was setting authentication type to ssl (which is correct, but other issues with phpmailer prevent it) (skenow)
+* #247: height & width attributes were being stripped from <img> elements. (vaughan)
+* #257: Wrong blocks showed in the content manager pages when startpage = none. (realtherplima)
+* #237: "Protect email addresses against SPAM?" - do not work. (stranger)
+* #49: issue with multi language. (stranger)
+* #273: xoThem Bug in Content.php. (stranger)
+* #279: standard attributes (style, class, id) missing from anchor elements in purifier. (vaughan)
+* #289:Lizenz Problem iTheme with .js file. (Nachenko/ stranger)
+* #278: Missing Edit Button over Content Sites in Frontendview. (stranger)
+* #293: The Update/Upgrade Script does not check the PHP-Version. (stranger)
+
+'''Changed'''
+* Updated HTMLPurifier Library from 3.2.0 to 3.3.0 (various bugfixes in the library including a bugfix in youtube filter). (vaughan)
+
+===2009-01-31 : 1.1.2 RC===
+
 '''Fixed'''
 * #167: Issue when doubleclicking a link and unexpectedly getting logged out (PHP issue) (vaughan)
 * #166: undefined index xoopsUserId in register.php (vaughan)
@@ -54,6 +80,8 @@ ImpressCMS ChangeLog
 '''Added'''
 
 * #189: Implementing SimplePie as a new library and IcmsSimpleRss extending it for ImpressCMS (malanciault)
+
+== Impresscms 1.1.1==
 
 ===2008-12-29 : 1.1.1 Final===
 

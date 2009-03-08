@@ -28,10 +28,17 @@ modules/system/language/english/admin/preferences.php
 +  define("_MD_AM_ADMINSESSEXPIRE", "Admin Session expiration");
 +  define("_MD_AM_ADMINSESSEXPIREDSC", "Maximum duration of admin session idle time in minutes (Valid only when 'use admin custom session' is enabled.)");
 
-
-
 ImpressCMS 1.1.2 (changes from ImpressCMS 1.1.1)
 ================================================
+
+=============================
+# Directory: language/english
+=============================
+
+language/english/user.php
+-------------------------
++ define('_US_MULTLOGIN', 'You are already logged in on the site. Or someone else logged in and using your username and password.<br />Wait a few minutes and try again later. If the problems still persists contact the site administrator.');
+
 
 ===========================
 # Directory: modules/system

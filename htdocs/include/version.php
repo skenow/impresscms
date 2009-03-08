@@ -32,7 +32,7 @@ define('ICMS_VERSION_STATUS', 1);
  * impresscms_1.1.1_final = 21
  */
 
-define('ICMS_VERSION_BUILD', 24);
+define('ICMS_VERSION_BUILD', 25);
 
 /**
  * Latest dbversion of the System Module

@@ -1291,7 +1291,32 @@ class Smarty
         $this->_cache_including = $_cache_including;
 
         if ($display) {
-            if (isset($_smarty_results)) { echo $_smarty_results; }
+            if (isset($_smarty_results)) {
+				##############################################################################################
+				# Code to protect email against spam. All email in the content of the site will be changed		
+				# by TheRplima
+				##############################################################################################
+				$config_handler = & xoops_gethandler ( 'config' );
+				$xoopsConfigPersona = & $config_handler->getConfigsByCat ( XOOPS_CONF_PERSONA );
+				if (($xoopsConfigPersona ['email_protect']) && (function_exists ( 'gd_info' ))) {
+					if (preg_match_all ( "/([a-z0-9\-_\.]+?)@([^, \r\n\"\(\)'<>\[\]]+)/i", $_smarty_results, $texto )) {
+						$patterns = array ( );
+						$replacements = array ( );
+						foreach ( $texto [0] as $email ) {
+							if (preg_match_all ( "/value=['\"]$email/i", $_smarty_results, $texto1 ) || preg_match_all ( "/$email(.*?)<\/textarea>/i", $_smarty_results, $texto1 )) { //Dont allow to change the email inside input or textarea form fields
+								continue;
+							}
+							$patterns [] = '/' . $email . '/';
+							$replacements [] = "<img src='" . XOOPS_URL . "/include/protection.php?p=" . base64_encode ( urlencode ( $email ) ) . "'>";
+						}
+						$_smarty_results = preg_replace ( $patterns, $replacements, $_smarty_results );
+					}
+				}
+				##############################################################################################
+				# Fim
+				##############################################################################################	
+            echo $_smarty_results;
+            }
             if ($this->debugging) {
                 // capture time for debugging info
                 $_params = array();
@@ -1304,7 +1329,32 @@ class Smarty
             return;
         } else {
             error_reporting($_smarty_old_error_level);
-            if (isset($_smarty_results)) { return $_smarty_results; }
+			if (isset ( $_smarty_results )) {
+				##############################################################################################
+				# Code to protect email against spam. All email in the content of the site will be changed		
+				# by TheRplima
+				##############################################################################################
+				$config_handler = & xoops_gethandler ( 'config' );
+				$xoopsConfigPersona = & $config_handler->getConfigsByCat ( XOOPS_CONF_PERSONA );
+				if (($xoopsConfigPersona ['email_protect']) && (function_exists ( 'gd_info' ))) {
+					if (preg_match_all ( "/([a-z0-9\-_\.]+?)@([^, \r\n\"\(\)'<>\[\]]+)/i", $_smarty_results, $texto )) {
+						$patterns = array ( );
+						$replacements = array ( );
+						foreach ( $texto [0] as $email ) {
+							if (preg_match_all ( "/value=['\"]$email/i", $_smarty_results, $texto1 ) || preg_match_all ( "/$email(.*?)<\/textarea>/i", $_smarty_results, $texto1 )) { //Dont allow to change the email inside input or textarea form fields
+								continue;
+							}
+							$patterns [] = '/' . $email . '/';
+							$replacements [] = "<img src='" . XOOPS_URL . "/include/protection.php?p=" . base64_encode ( urlencode ( $email ) ) . "'>";
+						}
+						$_smarty_results = preg_replace ( $patterns, $replacements, $_smarty_results );
+					}
+				}
+				##############################################################################################
+				# Fim
+				##############################################################################################	
+				return $_smarty_results;
+			}
         }
     }
 
