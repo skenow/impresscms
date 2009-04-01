@@ -20,8 +20,8 @@ class icms_HTMLPurifier
 
 	function icms_HTMLPurifier()
 	{
-		require ICMS_ROOT_PATH.'/libraries/htmlpurifier/HTMLPurifier.standalone.php';
-		require ICMS_ROOT_PATH.'/libraries/htmlpurifier/HTMLPurifier.autoload.php';
+		require_once ICMS_ROOT_PATH.'/libraries/htmlpurifier/HTMLPurifier.standalone.php';
+		require_once ICMS_ROOT_PATH.'/libraries/htmlpurifier/HTMLPurifier.autoload.php';
 	}
 
 	/**
@@ -325,10 +325,7 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('Filter', 'YouTube', true); // setting to true will allow Youtube files to be embedded into your site & w3c validated.
 			$icms_PurifyConfig->set('Filter', 'Custom', $Filter_Custom);
 		}
-		$def = $icms_PurifyConfig->getHTMLDefinition(true);
 
-		// Custom Attribute Definitions
-		$def->addAttribute('a', 'rel', 'Enum#external,nofollow,external nofollow,lightbox,gb_page_fs[],gb_page_center[]');
 		$this->purifier = new HTMLPurifier($icms_PurifyConfig);
 
 		if($config = 'protector') {$html = $this->icms_purify_recursive($html);}
