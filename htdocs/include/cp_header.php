@@ -14,39 +14,15 @@ $moduleperm_handler = xoops_gethandler( 'groupperm' );
 
 if($xoopsUser)
 {
-	if($xoopsConfig['admin_use_mysession'] && $xoopsConfig['admin_session_name'] != '' && $xoopsConfig['admin_session_expire'] > 0)
+	if(!icms_adminConfirmSession($xoopsUser->getVar('pass')))
 	{
-		$admin_sess_name = $xoopsConfig['admin_session_name'];
-		$expiry_time = $xoopsConfig['admin_session_expire'];
+		redirect_header(ICMS_URL.'/admin.php',3,_UNAUTHADMINACCESS);
 	}
-	else
-	{
-		$admin_sess_name = 'ICMSADSESSION';
-		$expiry_time = ini_get('session.cookie_lifetime');
-	}
-	$cookie_expires = (time()-$_COOKIE[$admin_sess_name]);
-	if(!isset($_COOKIE[$admin_sess_name]) || !isset($_SESSION['icms_admin_fprint']))
-	{
-		redirect_header(ICMS_URL.'/admin.php',3,_ADNOTLOGIN);
-	}
-	else
-	{
-		$adsess_handler = xoops_gethandler('adminsession');
-	
-		$myts = MyTextSanitizer::getInstance();
-		$cookie_fprint = $myts->stripSlashesGPC($_COOKIE[$admin_sess_name]);
-		if((!$adsess_handler->icms_sessionCheck($xoopsUser->getVar('pass')) && $cookie_fprint !== $_SESSION['icms_admin_fprint']) || $cookie_expires > $expiry_time)
-		{
-			setcookie($_COOKIE[$admin_sess_name], '', time()-3600);
-			unset($_COOKIE[$admin_sess_name], $_SESSION['icmsAdminId'], $_SESSION['icms_admin_fprint']);
-			redirect_header(ICMS_URL.'/',3,_UNAUTHADMINACCESS);
-		}
-	}
+
 	$url_arr = explode('/',strstr($xoopsRequestUri,'/modules/'));
 	$module_handler = xoops_gethandler('module');
 	$xoopsModule = $module_handler->getByDirname($url_arr[2]);
 	unset($url_arr);
-	
 	if(!$moduleperm_handler->checkRight('module_admin', $xoopsModule->getVar('mid'), $xoopsUser->getGroups()))
 	{
 		redirect_header(ICMS_URL.'/user.php', 1, _NOPERM);

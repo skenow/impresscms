@@ -46,7 +46,7 @@ if(false != $user)
 	}
 	$adsess_handler->icms_sessionOpen($user->getVar('pass'));
 	$admin_sess_fprint = $_SESSION['icms_admin_fprint'];
-	setcookie($admin_sess_name, $admin_sess_fprint, $admin_sess_expire ? time()+$admin_sess_expire : 0, '/',  '', $cookie_secure, 1);
+	setcookie($admin_sess_name, $admin_sess_fprint, $admin_sess_expire ? time()+$admin_sess_expire : 0, '/',  '', $cookie_secure, 0);
 	redirect_header(ICMS_URL.'/modules/system/admin.php', 1, sprintf(_US_LOGGINGUAD, $user->getVar('uname')), false);
 }
 else {redirect_header(ICMS_URL.'/admin.php', 5, $xoopsAuth->getHtmlErrors());}

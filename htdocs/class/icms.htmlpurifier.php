@@ -325,8 +325,10 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('Filter', 'YouTube', true); // setting to true will allow Youtube files to be embedded into your site & w3c validated.
 			$icms_PurifyConfig->set('Filter', 'Custom', $Filter_Custom);
 		}
-		$icms_PurifyDef = $icms_PurifyConfig->getHTMLDefinition(true);
+		$def = $icms_PurifyConfig->getHTMLDefinition(true);
 
+		// Custom Attribute Definitions
+		$def->addAttribute('a', 'rel', 'Enum#external,nofollow,external nofollow,lightbox,gb_page_fs[],gb_page_center[]');
 		$this->purifier = new HTMLPurifier($icms_PurifyConfig);
 
 		if($config = 'protector') {$html = $this->icms_purify_recursive($html);}

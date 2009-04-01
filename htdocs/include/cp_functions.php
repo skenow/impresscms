@@ -29,7 +29,7 @@ $icmsAdminTpl->assign ( 'xoops_sitename', $xoopsConfig ['sitename'] );
 
 function xoops_cp_header($ret = 0) {
 	global $xoopsConfig, $xoopsModule, $xoopsUser, $icmsAdminTpl, $im_multilanguageConfig, $icmsPreloadHandler;
-	
+
 	if (! headers_sent ()) {
 		header ( 'Content-Type:text/html; charset=' . _CHARSET );
 		header ( 'Expires: Mon, 26 Jul 1997 05:00:00 GMT' );
@@ -91,8 +91,8 @@ window.onload=startList;
 	$file = file_get_contents ( XOOPS_CACHE_PATH . "/adminmenu_" . $xoopsConfig ['language'] . ".php" );
 	$admin_menu = eval ( 'return ' . $file . ';' );
 	
-	$moduleperm_handler = & xoops_gethandler ( 'groupperm' );
-	$module_handler = & xoops_gethandler ( 'module' );
+	$moduleperm_handler = xoops_gethandler ( 'groupperm' );
+	$module_handler = xoops_gethandler ( 'module' );
 	foreach ( $admin_menu as $k => $navitem ) {
 		if ($navitem ['id'] == 'modules') { //Getting array of allowed modules to use in admin home
 			$perm_itens = array ( );
@@ -111,8 +111,8 @@ window.onload=startList;
 			$groups = $xoopsUser->getGroups ();
 			$all_ok = false;
 			if (! in_array ( XOOPS_GROUP_ADMIN, $groups )) {
-				$sysperm_handler = & xoops_gethandler ( 'groupperm' );
-				$ok_syscats = & $sysperm_handler->getItemIds ( 'system_admin', $groups );
+				$sysperm_handler = xoops_gethandler ( 'groupperm' );
+				$ok_syscats = $sysperm_handler->getItemIds ( 'system_admin', $groups );
 			} else {
 				$all_ok = true;
 			}
@@ -532,5 +532,38 @@ function xoops_write_index_file($path = '') {
 	}
 	fclose ( $file );
 	return true;
+}
+
+function icms_adminConfirmSession($unique = '')
+{
+	global $xoopsConfig;
+
+     $adsess_handler = xoops_gethandler('adminsession');
+
+	if($xoopsConfig['admin_use_mysession'] && $xoopsConfig['admin_session_name'] != '' && $xoopsConfig['admin_session_expire'] > 0)
+	{
+		$admin_sess_name = $xoopsConfig['admin_session_name'];
+	}
+	else
+	{
+		$admin_sess_name = 'ICMSADSESSION';
+	}
+
+     if(isset($_COOKIE["$admin_sess_name"]))
+     {
+          $cookie_fprint = $_COOKIE["$admin_sess_name"];
+     }
+	else
+     {
+          $cookie_fprint = '';
+          $cookie_expires = time();
+     }
+     if($cookie_fprint !== $adsess_handler->icms_sessionFingerprint($unique))
+     {
+          setcookie($admin_sess_name, FALSE, time()-3600);
+          unset($_COOKIE["$admin_sess_name"], $unique, $_SESSION['icms_admin_fprint']);
+          return false;
+     }
+     return true;
 }
 ?>

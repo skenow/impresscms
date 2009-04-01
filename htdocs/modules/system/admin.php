@@ -61,6 +61,10 @@ if(is_object($xoopsUser))
 {
 	$xoopsModule =& XoopsModule::getByDirname('system');
 	$adsess_handler =& xoops_gethandler('adminsession');
+	if(!icms_adminConfirmSession($xoopsUser->getVar('pass')))
+	{
+		redirect_header(ICMS_URL.'/admin.php',3,_UNAUTHADMINACCESS);
+	}
 	if(!$xoopsUser->isAdmin($xoopsModule->mid())) {redirect_header(ICMS_URL.'/',3,_NOPERM);}
 	$admintest=1;
 }
