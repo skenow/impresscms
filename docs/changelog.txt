@@ -1,4 +1,24 @@
 ImpressCMS ChangeLog
+=== ImpressCMS 1.3 Alpha ===
+Release date:
+Revision:
+DB Version:
+Build Version:
+
+Note: 	From this release forward, the detailed changelog will not be included with the 
+		release package. The tickets are all in Trac and can easily be found and retrieved
+		from there.
+		
+		The release notes will contain a summary of new features introduced, items that were 
+		improved and any bugs from previous versions that were fixed. 
+
+
+=== ImpressCMS 1.2 Final ===
+Release date:
+Revision:
+DB Version:
+Build Version:
+
 === ImpressCMS 1.2 RC2 ===
 Release date: 6 Dec 2009
 Revision: 9635
