@@ -1,14 +1,14 @@
 <?php
 /**
-* Friendships page
-*
-* @copyright	GNU General Public License (GPL)
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @since		1.3
-* @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @package		profile
-* @version		$Id$
-*/
+ * Friendships page
+ *
+ * @copyright	GNU General Public License (GPL)
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since		1.3
+ * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @package		profile
+ * @version		$Id$
+ */
 
 $profile_template = 'profile_friendship.html';
 include_once 'header.php';
@@ -77,10 +77,10 @@ if (in_array($clean_op,$valid_op,true)){
 				'lang_friendship_reject'    => _MD_PROFILE_FRIENDSHIP_REJECT,
 				'image_ok'                  => ICMS_IMAGES_SET_URL."/actions/button_ok.png",
                                 'image_cancel'              => ICMS_IMAGES_SET_URL."/actions/button_cancel.png"
-			));
+                                ));
 
-			break;
-		}
+                                break;
+	}
 }
 $icmsTpl->assign('profile_category_path', _MD_PROFILE_FRIENDS);
 

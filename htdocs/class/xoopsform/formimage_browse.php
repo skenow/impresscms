@@ -1,16 +1,16 @@
 <?php
 /**
-* Images Manager - Image Browser
-*
-* Used to create an instance of the image manager in a popup window to use with the dhmtl textarea object
-*
-* @copyright	The ImpressCMS Project http://www.impresscms.org/
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		XoopsForms
-* @since		1.2
-* @author		Rodrigo Pereira Lima (aka TheRplima) <therplima@impresscms.org>
-* @version		$Id$
-*/
+ * Images Manager - Image Browser
+ *
+ * Used to create an instance of the image manager in a popup window to use with the dhmtl textarea object
+ *
+ * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		XoopsForms
+ * @since		1.2
+ * @author		Rodrigo Pereira Lima (aka TheRplima) <therplima@impresscms.org>
+ * @version		$Id$
+ */
 
 if ( file_exists("../../mainfile.php") ) {
 	include_once("../../mainfile.php");
@@ -255,7 +255,6 @@ function imanager_index($imgcat_id=null){
 	return $icmsTpl->fetch(ICMS_ROOT_PATH.'/modules/system/templates/admin/images/system_popup_imagemanager.html');
 }
 
-
 /**
  * The listing of the images for the image manager
  * @param   int   $imgcat_id  The imageCatID to get the listing for
@@ -286,7 +285,7 @@ function imanager_listimg($imgcat_id,$start=0) {
 		redirect_header($_SERVER['PHP_SELF'].'?op=list&target='.$target.'&type='.$type,1);
 	}
 
-  $icmsTpl->assign('admnav',adminNav($imgcat_id,'/',1));
+	$icmsTpl->assign('admnav',adminNav($imgcat_id,'/',1));
 	$icmsTpl->assign('lang_imanager_title',_IMGMANAGER);
 	$icmsTpl->assign('lang_imanager_catmsize',_MD_IMAGECATMSIZE);
 	$icmsTpl->assign('lang_imanager_catmwidth',_MD_IMAGECATMWIDTH);
@@ -389,7 +388,7 @@ function imanager_listimg($imgcat_id,$start=0) {
 	$icmsTpl->assign('imgcount',$imgcount);
 
 	$arrimg = array();
-    foreach (array_keys($images) as $i) {
+	foreach (array_keys($images) as $i) {
 		$arrimg[$i]['id'] = $images[$i]->getVar('image_id');
 		$arrimg[$i]['name'] = $images[$i]->getVar('image_name');
 		$arrimg[$i]['nicename'] = $images[$i]->getVar('image_nicename');
@@ -456,7 +455,7 @@ function imanager_listimg($imgcat_id,$start=0) {
 
 		$arrimg[$i]['ed_token'] = $GLOBALS['xoopsSecurity']->getTokenHTML();
 		$arrimg[$i]['clone_token'] = $GLOBALS['xoopsSecurity']->getTokenHTML();
-    }
+	}
 
 	$icmsTpl->assign('images',$arrimg);
 	if ($imgcount > 0) {
@@ -465,8 +464,8 @@ function imanager_listimg($imgcat_id,$start=0) {
 			$nav = new XoopsPageNav($imgcount, 15, $start, 'start', 'op=listimg&amp;imgcat_id='.$imgcat_id.'&type='.$type.'&target='.$target);
 			$icmsTpl->assign('pag','<div class="img_list_info_panel" align="center">'.$nav->renderNav().'</div>');
 		}else{
-		    $icmsTpl->assign('pag','');
-	    }
+			$icmsTpl->assign('pag','');
+		}
 	}else{
 		$icmsTpl->assign('pag','');
 	}
@@ -474,7 +473,6 @@ function imanager_listimg($imgcat_id,$start=0) {
 
 	return $icmsTpl->fetch(ICMS_ROOT_PATH.'/modules/system/templates/admin/images/system_popup_imagemanager_imglist.html');
 }
-
 
 /**
  * This Method starts the parsing of the specified RDF File. The File can be a local or a remote File.
@@ -486,7 +484,7 @@ function imanager_listimg($imgcat_id,$start=0) {
  * @see
  */
 function imanager_addcat() {
-    if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
+	if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
 	if (!$GLOBALS['xoopsSecurity']->check()) {
 		redirect_header($_SERVER['PHP_SELF'].'?op=list&target='.$target.'&type='.$type, 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 	}
@@ -551,12 +549,11 @@ function imanager_addcat() {
 	redirect_header($_SERVER['PHP_SELF'].'?op=list&target='.$target.'&type='.$type,2,_ICMS_DBUPDATED);
 }
 
-
 /**
-* Add file for the image manager
-*/
+ * Add file for the image manager
+ */
 function imanager_addfile() {
-    if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
+	if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
 	if (!$GLOBALS['xoopsSecurity']->check()) {
 		redirect_header($_SERVER['PHP_SELF'].'?op=list&target='.$target.'&type='.$type, 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 	}
@@ -622,12 +619,11 @@ function imanager_addfile() {
 	redirect_header($_SERVER['PHP_SELF'].$redir,2,_ICMS_DBUPDATED);
 }
 
-
 /**
-* Update image for the image manager
-*/
+ * Update image for the image manager
+ */
 function imanager_updateimage() {
-    if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
+	if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
 	if (!$GLOBALS['xoopsSecurity']->check()) {
 		redirect_header($_SERVER['PHP_SELF'].'?op=list&target='.$target.'&type='.$type, 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 	}
@@ -687,10 +683,9 @@ function imanager_updateimage() {
 	redirect_header($_SERVER['PHP_SELF'].$redir,2,_ICMS_DBUPDATED);
 }
 
-
 /**
-* Check if the file was deleted ok
-*/
+ * Check if the file was deleted ok
+ */
 function imanager_delfileok($image_id,$redir=null) {
 	global $target,$type;
 	if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
@@ -724,10 +719,9 @@ function imanager_delfileok($image_id,$redir=null) {
 	redirect_header($_SERVER['PHP_SELF'].$redir,2,_ICMS_DBUPDATED);
 }
 
-
 /**
-* Clone the file using the image manager
-*/
+ * Clone the file using the image manager
+ */
 function imanager_clone() {
 	global $target,$type;
 
@@ -787,11 +781,10 @@ function imanager_clone() {
 	redirect_header($_SERVER['PHP_SELF'].$redir,2,$msg);
 }
 
-
 /**
-* The header piece for the popup
-* Just echoes the whole HTML
-*/
+ * The header piece for the popup
+ * Just echoes the whole HTML
+ */
 function icmsPopupHeader(){
 	global $icmsConfig,$icmsPreloadHandler;
 	if (! headers_sent ()) {
@@ -827,23 +820,21 @@ function icmsPopupHeader(){
 	echo "<div id='containBodyCP'><br /><div id='bodyCP'>";
 }
 
-
 /**
-* The footer piece for the popup
-* Just echoes the whole HTML
-*/
+ * The footer piece for the popup
+ * Just echoes the whole HTML
+ */
 function icmsPopupFooter(){
 	echo "</div>";
 	echo '<div style="float: right; padding:11px;"><input type="button" id="cancel" name="cancel" value="'._CLOSE.'" onclick="window.close();" /></div><br style="clear:both;" />';
 	echo "</div></body></html>";
 }
 
-
 /**
-* Adding an image for the Image manager
-*
-* @return	string    The constructed HTML form for the adding of an image
-*/
+ * Adding an image for the Image manager
+ *
+ * @return	string    The constructed HTML form for the adding of an image
+ */
 function showAddImgForm($imgcat_id){
 	global $target,$type;
 	include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
@@ -870,14 +861,11 @@ function showAddImgForm($imgcat_id){
 	return $form->render();
 }
 
-
-
-
 /**
-* Shows the admin navigation
-*
-* @return	string  $ret  the generated HTML for the admin navigation
-*/
+ * Shows the admin navigation
+ *
+ * @return	string  $ret  the generated HTML for the admin navigation
+ */
 function adminNav($id = null, $separador = "/", $list = false, $style="style='font-weight:bold'"){
 	global $target,$type;
 
@@ -907,18 +895,16 @@ function adminNav($id = null, $separador = "/", $list = false, $style="style='fo
 	return $ret;
 }
 
-
 /**
-* Redirect to the imagelisting showing a certain image catID and showing a certain message
-*
-* @param	string    $imgcat_id
-* @param	string    $msg
-*/
+ * Redirect to the imagelisting showing a certain image catID and showing a certain message
+ *
+ * @param	string    $imgcat_id
+ * @param	string    $msg
+ */
 function redir($imgcat_id,$msg=null){
 	global $target,$type;
 
 	redirect_header($_SERVER['PHP_SELF'].'?op=listimg&imgcat_id='.$imgcat_id.'&target='.$target.'&type='.$type,2,$msg);
 }
-
 
 ?>

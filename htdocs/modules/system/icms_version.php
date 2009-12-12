@@ -196,8 +196,8 @@ if (function_exists('xoops_gethandler')){
 	$module = $icms_modules_handler->getByDirname('content');
 
 	if (!is_object($module)){
-	//Content Manager
-	$modversion['blocks'][] = array(
+		//Content Manager
+		$modversion['blocks'][] = array(
 		'file' => 'content_blocks.php',
 		'name' => _MI_SYSTEM_BNAME15,
 		'description' => '',
@@ -206,7 +206,7 @@ if (function_exists('xoops_gethandler')){
 		'options' => '1|1|1|1',
 		'template' => 'system_block_content.html');
 
-	$modversion['blocks'][] = array(
+		$modversion['blocks'][] = array(
 		'file' => 'content_blocks.php',
 		'name' => _MI_SYSTEM_BNAME16,
 		'description' => '',
@@ -215,7 +215,7 @@ if (function_exists('xoops_gethandler')){
 		'options' => 'content_weight|ASC|1|#F2E2A0|0',
 		'template' => 'system_block_contentmenu.html');
 
-	$modversion['blocks'][] = array(
+		$modversion['blocks'][] = array(
 		'file' => 'content_blocks.php',
 		'name' => _MI_SYSTEM_BNAME17,
 		'description' => '',

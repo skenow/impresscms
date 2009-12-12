@@ -1,31 +1,31 @@
 <?php
 /**
-* System admin blocks
-*
-* @copyright      http://www.impresscms.org/ The ImpressCMS Project
-* @license         LICENSE.txt
-* @package	Systemblocks
-* @since            1.3
-* @version		$Id$
-*/
+ * System admin blocks
+ *
+ * @copyright      http://www.impresscms.org/ The ImpressCMS Project
+ * @license         LICENSE.txt
+ * @package	Systemblocks
+ * @since            1.3
+ * @version		$Id$
+ */
 
 /**
  * Admin Warnings Block
- * 
- * @copyright The ImpressCMS Project <http://www.impresscms.org> 
+ *
+ * @copyright The ImpressCMS Project <http://www.impresscms.org>
  * @license GNU GPL v2
- * 
+ *
  * @since ImpressCMS 1.3
  * @version $Id: $
- * 
+ *
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  *
  * @return array
- * 
+ *
  * @todo This code is the copy of the one wich was in the admin.php, it should be improved.
  */
 function b_system_admin_warnings_show(){
-	
+
 	global $xoopsDB;
 	$block = array();
 	$block['msg'] = array();
@@ -50,48 +50,48 @@ function b_system_admin_warnings_show(){
 		list($modid) = $xoopsDB->FetchRow($result1);
 		$protector_is_active = '0';
 		if (!is_null($modid)){
-		$sql2 = "SELECT isactive FROM `".$xoopsDB->prefix('modules')."` WHERE mid =".$modid;
-		$result2 = $xoopsDB->query($sql2);
-		list($protector_is_active) = $xoopsDB->FetchRow($result2);
+			$sql2 = "SELECT isactive FROM `".$xoopsDB->prefix('modules')."` WHERE mid =".$modid;
+			$result2 = $xoopsDB->query($sql2);
+			list($protector_is_active) = $xoopsDB->FetchRow($result2);
 		}
 	}
 	if($protector_is_active == 0){
 		array_push($block['msg'], icms_error_msg(_PROTECTOR_NOT_FOUND, '', false));
 		echo '<br />';
 	}
-	
+
 	// ###### Output warn messages for correct functionality  ######
 	if(!is_writable(ICMS_CACHE_PATH))
-			array_push($block['msg'], icms_warning_msg(sprintf(_WARNINNOTWRITEABLE,ICMS_CACHE_PATH)), '', false);
+	array_push($block['msg'], icms_warning_msg(sprintf(_WARNINNOTWRITEABLE,ICMS_CACHE_PATH)), '', false);
 	if(!is_writable(ICMS_UPLOAD_PATH))
-		array_push($block['msg'], icms_warning_msg(sprintf(_WARNINNOTWRITEABLE,ICMS_UPLOAD_PATH)), '', false);
+	array_push($block['msg'], icms_warning_msg(sprintf(_WARNINNOTWRITEABLE,ICMS_UPLOAD_PATH)), '', false);
 	if(!is_writable(ICMS_COMPILE_PATH))
-		array_push($block['msg'], icms_warning_msg(sprintf(_WARNINNOTWRITEABLE,ICMS_COMPILE_PATH)), '', false);
-	
+	array_push($block['msg'], icms_warning_msg(sprintf(_WARNINNOTWRITEABLE,ICMS_COMPILE_PATH)), '', false);
+
 	if(count($block['msg'] ) > 0){
-		return $block;	
+		return $block;
 	}
-	
+
 }
 
 /**
  * Admin Control Panel Block
- * 
+ *
  * @since ImpressCMS 1.3
  * @version $Id: $
- * 
+ *
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  *
  * @return array
- * 
+ *
  * @todo This code is the copy of the one wich was in the admin.php, it should be improved.
  */
 function b_system_admin_cp_show(){
 	global $icmsTpl, $xoopsConfig, $icmsUser;
-	
+
 	$block['lang_cp']= _CPHOME;
 	$block['lang_insmodules'] = _AD_INSTALLEDMODULES;
-	
+
 	// Loading System Configuration Links
 	$groups = $icmsUser->getGroups();
 	$all_ok = false;
@@ -114,7 +114,7 @@ function b_system_admin_cp_show(){
 	foreach($dirlist as $file){
 		$mod_version_file = 'xoops_version.php';
 		if(file_exists($admin_dir.'/'.$file.'/icms_version.php')){
-		$mod_version_file = 'icms_version.php';
+			$mod_version_file = 'icms_version.php';
 		}
 		include $admin_dir.'/'.$file.'/'.$mod_version_file;
 		if($modversion['hasAdmin']){
@@ -127,19 +127,19 @@ function b_system_admin_cp_show(){
 		unset($modversion);
 	}
 	if(count($block['sysmod']) > 0)
-		return $block;
+	return $block;
 }
 
 /**
  * System Admin Modules Block Show Fuction
- * 
+ *
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
- * 
+ *
  * @since ImpressCMS 1.3
  * @version $Id: $
- * 
+ *
  * @return array
- * 
+ *
  * @todo Maybe it can be improved a little, is just a copy of the generate menu function.
  */
 function b_system_admin_modules_show(){
@@ -199,10 +199,10 @@ function b_system_admin_modules_show(){
 				$block['mods'][] = $rtn;
 			}
 		}
-		
+
 	}
-	
+
 	if(count($block['mods'] > 0))
-		return $block;
+	return $block;
 }
 ?>

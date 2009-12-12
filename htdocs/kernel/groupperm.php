@@ -1,18 +1,18 @@
 <?php
 /**
-* Manage groups and memberships
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license		LICENSE.txt
-* @package		core
-* @subpackage	member
-* @since		XOOPS
-* @author		Kazumi Ono (aka onokazo)
-* @author		http://www.xoops.org The XOOPS Project
-* @version		$Id$
-*/
+ * Manage groups and memberships
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		LICENSE.txt
+ * @package		core
+ * @subpackage	member
+ * @since		XOOPS
+ * @author		Kazumi Ono (aka onokazo)
+ * @author		http://www.xoops.org The XOOPS Project
+ * @version		$Id$
+ */
 
 if (!defined('XOOPS_ROOT_PATH')) {
 	exit();

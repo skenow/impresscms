@@ -137,15 +137,15 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		$icmsDatabaseUpdater->insertConfig ( IM_CONF_CONTENT, 'show_subs', '_MD_AM_CONT_SHOWSUBS', '1', '_MD_AM_CONT_SHOWSUBSDSC', 'yesno', 'int', 3 );
 		$icmsDatabaseUpdater->insertConfig ( IM_CONF_CONTENT, 'show_pinfo', '_MD_AM_CONT_SHOWPINFO', '1', '_MD_AM_CONT_SHOWPINFODSC', 'yesno', 'int', 4 );
 		/*
-		$default_login_content_file = XOOPS_ROOT_PATH . '/upgrade/language/' . $icmsConfig['language'] . '/' . 'login.tpl';
-		if (!file_exists($default_login_content_file)) {
+		 $default_login_content_file = XOOPS_ROOT_PATH . '/upgrade/language/' . $icmsConfig['language'] . '/' . 'login.tpl';
+		 if (!file_exists($default_login_content_file)) {
 			$default_login_content_file = XOOPS_ROOT_PATH . '/upgrade/language/english/' . 'login.tpl';
-		}
-		$fp = fopen($default_login_content_file, 'r');
-		if ($fp) {
+			}
+			$fp = fopen($default_login_content_file, 'r');
+			if ($fp) {
 			$default_login_content = fread($fp, filesize($default_login_content_file));
-		}
-*/
+			}
+			*/
 		// Adding new function of Personalization
 		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_PERSONA, 'adm_left_logo', '_MD_AM_LLOGOADM', '/uploads/img482278e29e81c.png', '_MD_AM_LLOGOADM_DESC', 'select_image', 'text', 1 );
 		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_PERSONA, 'adm_left_logo_url', '_MD_AM_LLOGOADM_URL', '' . XOOPS_URL . '/index.php', '_MD_AM_LLOGOADM_URL_DESC', 'textbox', 'text', 2 );
@@ -189,9 +189,9 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 			$table->addNewField ( 'page_id', "smallint(5) NOT NULL default '0'" );
 		}
 		if (! $icmsDatabaseUpdater->updateTable ( $table )) {
-		/**
-		 * @todo trap the errors
-		 */
+			/**
+			 * @todo trap the errors
+			 */
 		}
 
 		$icmsDatabaseUpdater->runQuery ( 'UPDATE ' . $table->name () . ' SET module_id=0, page_id=1 WHERE module_id=-1', 'Block Visibility Restructured Successfully', 'Failed in Restructure the Block Visibility' );
@@ -567,11 +567,11 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	/*	$newDbVersion = 23;
 
 	if($dbVersion < $newDbVersion) {
-		echo $action;
-		$icmsDB->queryF("DELETE FROM `" . $icmsDB->prefix('config') . "` WHERE conf_name='pass_level'");
-		$icmsDatabaseUpdater->insertConfig(XOOPS_CONF_USER, 'pass_level', '_MD_AM_PASSLEVEL', '1', '_MD_AM_PASSLEVEL_DESC', 'yesno', 'int', 2);
+	echo $action;
+	$icmsDB->queryF("DELETE FROM `" . $icmsDB->prefix('config') . "` WHERE conf_name='pass_level'");
+	$icmsDatabaseUpdater->insertConfig(XOOPS_CONF_USER, 'pass_level', '_MD_AM_PASSLEVEL', '1', '_MD_AM_PASSLEVEL_DESC', 'yesno', 'int', 2);
 	}
-*/
+	*/
 
 	$newDbVersion = 24;
 
@@ -871,13 +871,13 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
 		/*
-		$table = new IcmsDatabasetable('icmscontent');
-		if (!$table->fieldExists('content_tags')) {
-		$table->addNewField('content_tags', "text");
-		$icmsDatabaseUpdater->updateTable($table);
-		}
-		unset($table);
-		*/
+		 $table = new IcmsDatabasetable('icmscontent');
+		 if (!$table->fieldExists('content_tags')) {
+		 $table->addNewField('content_tags', "text");
+		 $icmsDatabaseUpdater->updateTable($table);
+		 }
+		 unset($table);
+		 */
 		$table = new IcmsDatabasetable ( 'imagecategory' );
 		if (! $table->fieldExists ( 'imgcat_foldername' )) {
 			$table->addNewField ( 'imgcat_foldername', "varchar(100) default ''" );
@@ -928,17 +928,17 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 			"NULL, 1, '" . _MI_SYSTEM_ADMENU10 . "', 'modules/system/admin.php?fct=users*', 1",
 			"NULL, 1, '" . _MD_AM_VRSN . "', 'modules/system/admin.php?fct=version*', 1"
 			);
-		foreach ( $new_pages as $new_page ) {
-			$table->setData ( $new_page );
-		}
-		$table->addData ();
-		unset ( $table );
+			foreach ( $new_pages as $new_page ) {
+				$table->setData ( $new_page );
+			}
+			$table->addData ();
+			unset ( $table );
 	}
 
 	$newDbVersion = 34;
 	/* The admin control panel now consists of blocks - these need to be set as visible
-		 * Control Panel, System Warnings, Modules Installed
-		 */
+	 * Control Panel, System Warnings, Modules Installed
+	 */
 	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
 		$admin_blocks = array (array ('b_system_admin_cp_show', 'page_topleft_admin' ), array ('b_system_admin_modules_show', 'page_topright_admin' ), array ('b_system_admin_warnings_show', 'page_topcenter_admin' ) );
@@ -1089,11 +1089,11 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	}
 
 	/* DEVELOPER, PLEASE NOTE !!!
-  *
-  * Everytime we add a new upgrade block here, the dbversion of the System Module will get
-  * incremented. It is very important to modify the ICMS_SYSTEM_DBVERSION accordingly
-  * in htdocs/include/version.php
-  */
+	 *
+	 * Everytime we add a new upgrade block here, the dbversion of the System Module will get
+	 * incremented. It is very important to modify the ICMS_SYSTEM_DBVERSION accordingly
+	 * in htdocs/include/version.php
+	 */
 
 	$feedback = ob_get_clean ();
 	if (method_exists ( $module, "setMessage" )) {

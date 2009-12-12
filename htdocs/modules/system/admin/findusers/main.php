@@ -1,21 +1,21 @@
 <?php
 // $Id$
 /**
-* Administration of finding users, main file
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	Administration
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * Administration of finding users, main file
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	Administration
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @version	$Id$
+ */
 
 if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
-    exit("Access Denied");
+	exit("Access Denied");
 }
 if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
 if(!empty($_GET)) foreach($_GET as $k => $v) ${$k} = StopXSS($v);
@@ -144,69 +144,69 @@ elseif ($op == "submit" & $GLOBALS['xoopsSecurity']->check()) {
 	if ( !empty($_POST['user_uname']) ) {
 		$match = (!empty($_POST['user_uname_match'])) ? intval($_POST['user_uname_match']) : XOOPS_MATCH_START;
 		switch ($match) {
-		case XOOPS_MATCH_START:
-		    $criteria->add(new Criteria('uname', $myts->addSlashes(trim($_POST['user_uname'])).'%', 'LIKE'));
-		    break;
-		case XOOPS_MATCH_END:
-		    $criteria->add(new Criteria('uname', '%'.$myts->addSlashes(trim($_POST['user_uname'])), 'LIKE'));
-		    break;
-		case XOOPS_MATCH_EQUAL:
-		    $criteria->add(new Criteria('uname', $myts->addSlashes(trim($_POST['user_uname']))));
-		    break;
-		case XOOPS_MATCH_CONTAIN:
-		    $criteria->add(new Criteria('uname', '%'.$myts->addSlashes(trim($_POST['user_uname'])).'%', 'LIKE'));
-		    break;
+			case XOOPS_MATCH_START:
+				$criteria->add(new Criteria('uname', $myts->addSlashes(trim($_POST['user_uname'])).'%', 'LIKE'));
+				break;
+			case XOOPS_MATCH_END:
+				$criteria->add(new Criteria('uname', '%'.$myts->addSlashes(trim($_POST['user_uname'])), 'LIKE'));
+				break;
+			case XOOPS_MATCH_EQUAL:
+				$criteria->add(new Criteria('uname', $myts->addSlashes(trim($_POST['user_uname']))));
+				break;
+			case XOOPS_MATCH_CONTAIN:
+				$criteria->add(new Criteria('uname', '%'.$myts->addSlashes(trim($_POST['user_uname'])).'%', 'LIKE'));
+				break;
 		}
 	}
 	if ( !empty($_POST['user_name']) ) {
 		$match = (!empty($_POST['user_name_match'])) ? intval($_POST['user_name_match']) : XOOPS_MATCH_START;
 		switch ($match) {
-		case XOOPS_MATCH_START:
-		    $criteria->add(new Criteria('name', $myts->addSlashes(trim($_POST['user_name'])).'%', 'LIKE'));
-		    break;
-		case XOOPS_MATCH_END:
-		    $criteria->add(new Criteria('name', '%'.$myts->addSlashes(trim($_POST['user_name'])), 'LIKE'));
-		    break;
-		case XOOPS_MATCH_EQUAL:
-		    $criteria->add(new Criteria('name', $myts->addSlashes(trim($_POST['user_name']))));
-		    break;
-		case XOOPS_MATCH_CONTAIN:
-		    $criteria->add(new Criteria('name', '%'.$myts->addSlashes(trim($_POST['user_name'])).'%', 'LIKE'));
-		    break;
+			case XOOPS_MATCH_START:
+				$criteria->add(new Criteria('name', $myts->addSlashes(trim($_POST['user_name'])).'%', 'LIKE'));
+				break;
+			case XOOPS_MATCH_END:
+				$criteria->add(new Criteria('name', '%'.$myts->addSlashes(trim($_POST['user_name'])), 'LIKE'));
+				break;
+			case XOOPS_MATCH_EQUAL:
+				$criteria->add(new Criteria('name', $myts->addSlashes(trim($_POST['user_name']))));
+				break;
+			case XOOPS_MATCH_CONTAIN:
+				$criteria->add(new Criteria('name', '%'.$myts->addSlashes(trim($_POST['user_name'])).'%', 'LIKE'));
+				break;
 		}
 	}
 	if ( !empty($_POST['user_login_name']) ) {
 		$match = (!empty($_POST['user_login_name_match'])) ? intval($_POST['user_login_name_match']) : XOOPS_MATCH_START;
 		switch ($match) {
-		case XOOPS_MATCH_START:
-		    $criteria->add(new Criteria('login_name', $myts->addSlashes(trim($_POST['user_login_name'])).'%', 'LIKE'));
-		    break;
-		case XOOPS_MATCH_END:
-		    $criteria->add(new Criteria('login_name', '%'.$myts->addSlashes(trim($_POST['user_login_name'])), 'LIKE'));
-		    break;
-		case XOOPS_MATCH_EQUAL:
-		    $criteria->add(new Criteria('login_name', $myts->addSlashes(trim($_POST['user_login_name']))));
-		    break;
-		case XOOPS_MATCH_CONTAIN:
-		    $criteria->add(new Criteria('login_name', '%'.$myts->addSlashes(trim($_POST['user_login_name'])).'%', 'LIKE'));
-		    break;
+			case XOOPS_MATCH_START:
+				$criteria->add(new Criteria('login_name', $myts->addSlashes(trim($_POST['user_login_name'])).'%', 'LIKE'));
+				break;
+			case XOOPS_MATCH_END:
+				$criteria->add(new Criteria('login_name', '%'.$myts->addSlashes(trim($_POST['user_login_name'])), 'LIKE'));
+				break;
+			case XOOPS_MATCH_EQUAL:
+				$criteria->add(new Criteria('login_name', $myts->addSlashes(trim($_POST['user_login_name']))));
+				break;
+			case XOOPS_MATCH_CONTAIN:
+				$criteria->add(new Criteria('login_name', '%'.$myts->addSlashes(trim($_POST['user_login_name'])).'%', 'LIKE'));
+				break;
 		}
 	}
 	if ( !empty($_POST['user_email']) ) {
 		$match = (!empty($_POST['user_email_match'])) ? intval($_POST['user_email_match']) : XOOPS_MATCH_START;
 		switch ($match) {
-		case XOOPS_MATCH_START:
-		    $criteria->add(new Criteria('email', $myts->addSlashes(trim($_POST['user_email'])).'%', 'LIKE'));
-		    break;
-		case XOOPS_MATCH_END:
-		    $criteria->add(new Criteria('email', '%'.$myts->addSlashes(trim($_POST['user_email'])), 'LIKE'));
-		    break;
-		case XOOPS_MATCH_EQUAL:
-		    $criteria->add(new Criteria('email', $myts->addSlashes(trim($_POST['user_email']))));
-		    break;
-		case XOOPS_MATCH_CONTAIN:
-		    $criteria->add(new Criteria('email', '%'.$myts->addSlashes(trim($_POST['user_email'])).'%', 'LIKE'));
-		    break;
+			case XOOPS_MATCH_START:
+				$criteria->add(new Criteria('email', $myts->addSlashes(trim($_POST['user_email'])).'%', 'LIKE'));
+				break;
+			case XOOPS_MATCH_END:
+				$criteria->add(new Criteria('email', '%'.$myts->addSlashes(trim($_POST['user_email'])), 'LIKE'));
+				break;
+			case XOOPS_MATCH_EQUAL:
+				$criteria->add(new Criteria('email', $myts->addSlashes(trim($_POST['user_email']))));
+				break;
+			case XOOPS_MATCH_CONTAIN:
+				$criteria->add(new Criteria('email', '%'.$myts->addSlashes(trim($_POST['user_email'])).'%', 'LIKE'));
+				break;
 		}
 	}
 	if ( !empty($_POST['user_url']) ) {
@@ -216,69 +216,69 @@ elseif ($op == "submit" & $GLOBALS['xoopsSecurity']->check()) {
 	if ( !empty($_POST['user_icq']) ) {
 		$match = (!empty($_POST['user_icq_match'])) ? intval($_POST['user_icq_match']) : XOOPS_MATCH_START;
 		switch ($match) {
-		case XOOPS_MATCH_START:
-		    $criteria->add(new Criteria('user_icq', $myts->addSlashes(trim($_POST['user_icq'])).'%', 'LIKE'));
-		    break;
-		case XOOPS_MATCH_END:
-		    $criteria->add(new Criteria('user_icq', '%'.$myts->addSlashes(trim($_POST['user_icq'])), 'LIKE'));
-		    break;
-		case XOOPS_MATCH_EQUAL:
-		    $criteria->add(new Criteria('user_icq', '%'.$myts->addSlashes(trim($_POST['user_icq']))));
-		    break;
-		case XOOPS_MATCH_CONTAIN:
-		    $criteria->add(new Criteria('user_icq', '%'.$myts->addSlashes(trim($_POST['user_icq'])).'%', 'LIKE'));
-		    break;
+			case XOOPS_MATCH_START:
+				$criteria->add(new Criteria('user_icq', $myts->addSlashes(trim($_POST['user_icq'])).'%', 'LIKE'));
+				break;
+			case XOOPS_MATCH_END:
+				$criteria->add(new Criteria('user_icq', '%'.$myts->addSlashes(trim($_POST['user_icq'])), 'LIKE'));
+				break;
+			case XOOPS_MATCH_EQUAL:
+				$criteria->add(new Criteria('user_icq', '%'.$myts->addSlashes(trim($_POST['user_icq']))));
+				break;
+			case XOOPS_MATCH_CONTAIN:
+				$criteria->add(new Criteria('user_icq', '%'.$myts->addSlashes(trim($_POST['user_icq'])).'%', 'LIKE'));
+				break;
 		}
 	}
 	if ( !empty($_POST['user_aim']) ) {
 		$match = (!empty($_POST['user_aim_match'])) ? intval($_POST['user_aim_match']) : XOOPS_MATCH_START;
 		switch ($match) {
-		case XOOPS_MATCH_START:
-		    $criteria->add(new Criteria('user_aim', $myts->addSlashes(trim($_POST['user_aim'])).'%', 'LIKE'));
-		    break;
-		case XOOPS_MATCH_END:
-		    $criteria->add(new Criteria('user_aim', '%'.$myts->addSlashes(trim($_POST['user_aim'])), 'LIKE'));
-		    break;
-		case XOOPS_MATCH_EQUAL:
-		    $criteria->add(new Criteria('user_aim', $myts->addSlashes(trim($_POST['user_aim']))));
-		    break;
-		case XOOPS_MATCH_CONTAIN:
-		    $criteria->add(new Criteria('user_aim', '%'.$myts->addSlashes(trim($_POST['user_aim'])).'%', 'LIKE'));
-		    break;
+			case XOOPS_MATCH_START:
+				$criteria->add(new Criteria('user_aim', $myts->addSlashes(trim($_POST['user_aim'])).'%', 'LIKE'));
+				break;
+			case XOOPS_MATCH_END:
+				$criteria->add(new Criteria('user_aim', '%'.$myts->addSlashes(trim($_POST['user_aim'])), 'LIKE'));
+				break;
+			case XOOPS_MATCH_EQUAL:
+				$criteria->add(new Criteria('user_aim', $myts->addSlashes(trim($_POST['user_aim']))));
+				break;
+			case XOOPS_MATCH_CONTAIN:
+				$criteria->add(new Criteria('user_aim', '%'.$myts->addSlashes(trim($_POST['user_aim'])).'%', 'LIKE'));
+				break;
 		}
 	}
 	if ( !empty($_POST['user_yim']) ) {
 		$match = (!empty($_POST['user_yim_match'])) ? intval($_POST['user_yim_match']) : XOOPS_MATCH_START;
 		switch ($match) {
-		case XOOPS_MATCH_START:
-		    $criteria->add(new Criteria('user_yim', $myts->addSlashes(trim($_POST['user_yim'])).'%', 'LIKE'));
-		    break;
-		case XOOPS_MATCH_END:
-		    $criteria->add(new Criteria('user_yim', '%'.$myts->addSlashes(trim($_POST['user_yim'])), 'LIKE'));
-		    break;
-		case XOOPS_MATCH_EQUAL:
-		    $criteria->add(new Criteria('user_yim', $myts->addSlashes(trim($_POST['user_yim']))));
-		    break;
-		case XOOPS_MATCH_CONTAIN:
-		    $criteria->add(new Criteria('user_yim', '%'.$myts->addSlashes(trim($_POST['user_yim'])).'%', 'LIKE'));
-		    break;
+			case XOOPS_MATCH_START:
+				$criteria->add(new Criteria('user_yim', $myts->addSlashes(trim($_POST['user_yim'])).'%', 'LIKE'));
+				break;
+			case XOOPS_MATCH_END:
+				$criteria->add(new Criteria('user_yim', '%'.$myts->addSlashes(trim($_POST['user_yim'])), 'LIKE'));
+				break;
+			case XOOPS_MATCH_EQUAL:
+				$criteria->add(new Criteria('user_yim', $myts->addSlashes(trim($_POST['user_yim']))));
+				break;
+			case XOOPS_MATCH_CONTAIN:
+				$criteria->add(new Criteria('user_yim', '%'.$myts->addSlashes(trim($_POST['user_yim'])).'%', 'LIKE'));
+				break;
 		}
 	}
 	if ( !empty($_POST['user_msnm']) ) {
 		$match = (!empty($_POST['user_msnm_match'])) ? intval($_POST['user_msnm_match']) : XOOPS_MATCH_START;
 		switch ($match) {
-		case XOOPS_MATCH_START:
-		    $criteria->add(new Criteria('user_msnm', $myts->addSlashes(trim($_POST['user_msnm'])).'%', 'LIKE'));
-		    break;
-		case XOOPS_MATCH_END:
-		    $criteria->add(new Criteria('user_msnm', '%'.$myts->addSlashes(trim($_POST['user_msnm'])), 'LIKE'));
-		    break;
-		case XOOPS_MATCH_EQUAL:
-		    $criteria->add(new Criteria('user_msnm', '%'.$myts->addSlashes(trim($_POST['user_msnm']))));
-		    break;
-		case XOOPS_MATCH_CONTAIN:
-		    $criteria->add(new Criteria('user_msnm', '%'.$myts->addSlashes(trim($_POST['user_msnm'])).'%', 'LIKE'));
-		    break;
+			case XOOPS_MATCH_START:
+				$criteria->add(new Criteria('user_msnm', $myts->addSlashes(trim($_POST['user_msnm'])).'%', 'LIKE'));
+				break;
+			case XOOPS_MATCH_END:
+				$criteria->add(new Criteria('user_msnm', '%'.$myts->addSlashes(trim($_POST['user_msnm'])), 'LIKE'));
+				break;
+			case XOOPS_MATCH_EQUAL:
+				$criteria->add(new Criteria('user_msnm', '%'.$myts->addSlashes(trim($_POST['user_msnm']))));
+				break;
+			case XOOPS_MATCH_CONTAIN:
+				$criteria->add(new Criteria('user_msnm', '%'.$myts->addSlashes(trim($_POST['user_msnm'])).'%', 'LIKE'));
+				break;
 		}
 	}
 	if ( !empty($_POST['user_from']) ) {
@@ -290,7 +290,7 @@ elseif ($op == "submit" & $GLOBALS['xoopsSecurity']->check()) {
 	if ( !empty($_POST['user_occ']) ) {
 		$criteria->add(new Criteria('user_occ', '%'.$myts->addSlashes(trim($_POST['user_occ'])).'%', 'LIKE'));
 	}
-	
+
 	if ( !empty($_POST['user_lastlog_more']) && is_numeric($_POST['user_lastlog_more']) ) {
 		$f_user_lastlog_more = intval(trim($_POST['user_lastlog_more']));
 		$time = time() - (60 * 60 * 24 * $f_user_lastlog_more);

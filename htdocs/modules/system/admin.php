@@ -1,19 +1,18 @@
 <?php
 // $Id$
 /**
-* The beginning of the admin interface for ImpressCMS
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license		LICENSE.txt
-* @package	Administration
-* @subpackage System
-* @since		XOOPS
-* @author		http://www.xoops.org The XOOPS Project
-* @version		$Id$
-*/
-
+ * The beginning of the admin interface for ImpressCMS
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		LICENSE.txt
+ * @package	Administration
+ * @subpackage System
+ * @since		XOOPS
+ * @author		http://www.xoops.org The XOOPS Project
+ * @version		$Id$
+ */
 
 include_once '../../include/functions.php';
 if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
@@ -85,7 +84,7 @@ if($admintest != 0)
 	else {$error = true;}
 }
 if(isset($fct) && $fct == 'users' && icms_get_module_status('profile')){
-		header("Location:".ICMS_MODULES_URL."/profile/admin/user.php");
+	header("Location:".ICMS_MODULES_URL."/profile/admin/user.php");
 
 }
 if($false != $error){

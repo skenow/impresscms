@@ -1,20 +1,20 @@
 <?php
 /**
-* Videos page
-*
-* @copyright	GNU General Public License (GPL)
-* @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @since	1.3
-* @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @package	profile
-* @version	$Id:$
-*/
+ * Videos page
+ *
+ * @copyright	GNU General Public License (GPL)
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since	1.3
+ * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @package	profile
+ * @version	$Id:$
+ */
 
 /**
  * Edit a Video
  *
  * @param object $videosObj ProfileVideo object to be edited
-*/
+ */
 function editvideos($videosObj, $hideForm=false)
 {
 	global $profile_videos_handler, $xoTheme, $icmsTpl, $icmsUser;
@@ -40,7 +40,6 @@ function editvideos($videosObj, $hideForm=false)
 		$icmsTpl->assign('lang_videosform_title', _MD_PROFILE_VIDEOS_SUBMIT);
 	}
 }
-
 
 $profile_template = 'profile_videos.html';
 include_once 'header.php';

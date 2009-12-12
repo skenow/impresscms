@@ -82,10 +82,10 @@ if ($icmsModuleConfig['index_real_name'] == 'real' && trim($thisUser->getVar('na
 // check whether icmsUser is allowed to view profile of thisUser
 if ($isAnonym) {
 	if (array_intersect($thisUser->getGroups(), $icmsModuleConfig['view_group_anonymous']) != $thisUser->getGroups())
-		redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
+	redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
 } elseif (!$icmsUser->isAdmin(0)) {
 	if (array_intersect($thisUser->getGroups(), $icmsModuleConfig['view_group_registered']) != $thisUser->getGroups())
-		redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
+	redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
 }
 
 include_once ICMS_ROOT_PATH.'/modules/'.$dirname.'/include/common.php';

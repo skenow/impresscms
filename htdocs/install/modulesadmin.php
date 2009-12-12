@@ -1,22 +1,22 @@
 <?php
 /**
-* Installer tables creation page
-*
-* See the enclosed file license.txt for licensing information.
-* If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
-*
-* @copyright	The ImpressCMS project http://www.impresscms.org/
-* @license	  http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
-* @package		installer
-* @since		1.0
-* @author		Kazumi Ono (AKA onokazu)
-* @author		RpLima
-* @author		Martijn Hertog (AKA wtravel) <martin@efqconsultancy.com>
-* @version		$Id$
-*/
+ * Installer tables creation page
+ *
+ * See the enclosed file license.txt for licensing information.
+ * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
+ *
+ * @copyright	The ImpressCMS project http://www.impresscms.org/
+ * @license	  http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
+ * @package		installer
+ * @since		1.0
+ * @author		Kazumi Ono (AKA onokazu)
+ * @author		RpLima
+ * @author		Martijn Hertog (AKA wtravel) <martin@efqconsultancy.com>
+ * @version		$Id$
+ */
 /**
  *
- */ 
+ */
 icms_loadLanguageFile('system', 'modulesadmin', true);
 
 function xoops_module_install($dirname) {
@@ -361,7 +361,7 @@ function xoops_module_install($dirname) {
 			}
 			unset($blocks);
 			unset($groups);
-			
+				
 			// add module specific tasks to system autotasks list
 			$atasks = $module->getInfo('autotasks');
 			$atasks_handler = &xoops_getModuleHandler('autotasks', 'system');
@@ -390,7 +390,7 @@ function xoops_module_install($dirname) {
 			$ModName = ($module->getInfo('modname') != '') ? trim($module->getInfo('modname')) : $dirname;
 			if (false != $install_script && trim($install_script) != '') {
 				include_once XOOPS_ROOT_PATH.'/modules/'.$dirname.'/'.trim($install_script);
-				
+
 				$is_IPF = $module->getInfo('object_items');
 				if(!empty($is_IPF)){
 					$icmsDatabaseUpdater = XoopsDatabaseFactory::getDatabaseUpdater();
@@ -809,7 +809,7 @@ function icms_module_update($dirname) {
 					} else {
 						$confobj->setConfValueForInput($config['default'], true);
 
-				    //$confobj->setVar('conf_value', $config['default'], true);
+						//$confobj->setVar('conf_value', $config['default'], true);
 					}
 					$confobj->setVar('conf_order', $order);
 					$confop_msgs = '';
@@ -835,14 +835,14 @@ function icms_module_update($dirname) {
 			unset($configs);
 		}
 
-        // add module specific tasks to system autotasks list
-        $atasks = $module->getInfo('autotasks');
-        $atasks_handler = &xoops_getModuleHandler('autotasks', 'system');
-        if (count($atasks) > 0) {
+		// add module specific tasks to system autotasks list
+		$atasks = $module->getInfo('autotasks');
+		$atasks_handler = &xoops_getModuleHandler('autotasks', 'system');
+		if (count($atasks) > 0) {
 			$msgs[] = 'Updating autotasks...';
-      	  	$criteria = new CriteriaCompo();
-        	$criteria->add( new Criteria( 'sat_type', 'addon/'.$module->getInfo('dirname')));
-        	$items_atasks = $atasks_handler->getObjects( $criteria , false );
+			$criteria = new CriteriaCompo();
+			$criteria->add( new Criteria( 'sat_type', 'addon/'.$module->getInfo('dirname')));
+			$items_atasks = $atasks_handler->getObjects( $criteria , false );
 			foreach ($items_atasks as $task) {
 				$taskID = intval($task->getVar('sat_addon_id'));
 				$atasks[$taskID]['enabled'] = $task->getVar('sat_enabled');
@@ -851,8 +851,8 @@ function icms_module_update($dirname) {
 				$atasks[$taskID]['name'] = $task->getVar('sat_name');
 			}
 			$atasks_handler->deleteAll($criteria);
-        	foreach ($atasks as $taskID => $taskData) {
-        		if (!isset($taskData['code']) || trim($taskData['code']) == '') continue;
+			foreach ($atasks as $taskID => $taskData) {
+				if (!isset($taskData['code']) || trim($taskData['code']) == '') continue;
 				$task = &$atasks_handler->create();
 				if (isset($taskData['enabled'])) $task->setVar('sat_enabled', $taskData['enabled']);
 				if (isset($taskData['repeat'])) $task->setVar('sat_repeat', $taskData['repeat']);
@@ -867,8 +867,8 @@ function icms_module_update($dirname) {
 				} else {
 					$msgs[] = '&nbsp;&nbsp;Updated task from autotasks list. Task Name: <b>'.$taskData['name'].'</b>';
 				}
-        	}
-        	unset($atasks, $atasks_handler, $task, $taskData, $criteria, $items, $taskID);
+			}
+			unset($atasks, $atasks_handler, $task, $taskData, $criteria, $items, $taskID);
 		}
 
 		// execute module specific update script if any
@@ -876,7 +876,7 @@ function icms_module_update($dirname) {
 		$ModName = ($module->getInfo('modname') != '') ? trim($module->getInfo('modname')) : $dirname;
 		if (false != $update_script && trim($update_script) != '') {
 			include_once XOOPS_ROOT_PATH.'/modules/'.$dirname.'/'.trim($update_script);
-			
+				
 			$is_IPF = $module->getInfo('object_items');
 			if(!empty($is_IPF)){
 				$icmsDatabaseUpdater = XoopsDatabaseFactory::getDatabaseUpdater();
@@ -903,14 +903,13 @@ function icms_module_update($dirname) {
 			}
 		}
 
-
-			$msgs[] = '</code><p>'.sprintf(_MD_AM_OKUPD, '<b>'.$module->getVar('name').'</b>').'</p>';
-		}
-		$ret = '<code>';
-		foreach ($msgs as $msg) {
-			$ret .= $msg.'<br />';
-		}
-		return $ret;
+		$msgs[] = '</code><p>'.sprintf(_MD_AM_OKUPD, '<b>'.$module->getVar('name').'</b>').'</p>';
+	}
+	$ret = '<code>';
+	foreach ($msgs as $msg) {
+		$ret .= $msg.'<br />';
+	}
+	return $ret;
 }
 
 ?>

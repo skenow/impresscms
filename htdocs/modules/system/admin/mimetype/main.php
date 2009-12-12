@@ -1,17 +1,17 @@
 <?php
 /**
-* ImpressCMS Mimetypes
-*
-* @copyright	The ImpressCMS Project http://www.impresscms.org/
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		Administration
-* @since		1.2
-* @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @version		$Id$
-*/
+ * ImpressCMS Mimetypes
+ *
+ * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		Administration
+ * @since		1.2
+ * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @version		$Id$
+ */
 
 if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
-    exit("Access Denied");
+	exit("Access Denied");
 }
 
 function editmimetype($showmenu = false, $mimetypeid = 0, $clone=false)
@@ -57,7 +57,7 @@ switch ($op) {
 
 		break;
 
-	/*case "clone":
+		/*case "clone":
 
 		$mimetypeid = isset($_GET['mimetypeid']) ? intval($_GET['mimetypeid']) : 0 ;
 
@@ -65,14 +65,14 @@ switch ($op) {
 		break;*/
 
 	case "addmimetype":
-        include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-        $controller = new IcmsPersistableController($icms_mimetype_handler);
+		include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
+		$controller = new IcmsPersistableController($icms_mimetype_handler);
 		$controller->storeFromDefaultForm(_CO_ICMS_MIMETYPE_CREATED, _CO_ICMS_MIMETYPE_MODIFIED);
 		break;
 
 	case "del":
 		include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-	    $controller = new IcmsPersistableController($icms_mimetype_handler);
+		$controller = new IcmsPersistableController($icms_mimetype_handler);
 		$controller->handleObjectDeletion();
 
 		break;

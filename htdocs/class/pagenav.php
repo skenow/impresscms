@@ -1,17 +1,17 @@
 <?php
 /**
-* Generates pagination
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	core
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * Generates pagination
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	core
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @version	$Id$
+ */
 
 /**
  * Class to facilitate navigation in a multi page document/list
@@ -28,24 +28,24 @@ class XoopsPageNav
 	 * @access	private
 	 */
 
-  /**
-   * @public int $total  Total of pages to show
-   */
+	/**
+	 * @public int $total  Total of pages to show
+	 */
 	public $total;
 
-  /**
-   * @public int $perpage  Total of items to show per page
-   */
+	/**
+	 * @public int $perpage  Total of items to show per page
+	 */
 	public $perpage;
 
-  /**
-   * @public int $current  What is the current page
-   */
+	/**
+	 * @public int $current  What is the current page
+	 */
 	public $current;
 
-  /**
-   * @public string $url   What is the current url
-   */
+	/**
+	 * @public string $url   What is the current url
+	 */
 	public $url;
 	/**#@-*/
 
@@ -76,16 +76,16 @@ class XoopsPageNav
 	 * @return  string
 	 **/
 	function renderNav($offset = 4)
-	{	
+	{
 		global $icmsConfigPersona, $xoTheme;
-		
+
 		$style = (isset($icmsConfigPersona['pagstyle']) && file_exists(ICMS_LIBRARIES_PATH . '/paginationstyles/paginationstyles.php'))?$icmsConfigPersona['pagstyle']:'default';
 		$ret = '';
 		if(isset($xoTheme)){
-		$xoTheme->addStylesheet(ICMS_LIBRARIES_URL . '/paginationstyles/css/'.$icmsConfigPersona['pagstyle'].'.css', array("media" => "all"));
+			$xoTheme->addStylesheet(ICMS_LIBRARIES_URL . '/paginationstyles/css/'.$icmsConfigPersona['pagstyle'].'.css', array("media" => "all"));
 		}else{
 			echo'<link rel="stylesheet" type="text/css" href="'.ICMS_LIBRARIES_URL . '/paginationstyles/css/'.$icmsConfigPersona['pagstyle'].'.css" />';
-		} 
+		}
 		if ( $this->total <= $this->perpage ) {
 			return $ret;
 		}
@@ -137,7 +137,7 @@ class XoopsPageNav
 		$total_pages = ceil($this->total / $this->perpage);
 		$ret = '';
 		if ( $total_pages > 1 ) {
-   			$ret = '<form name="pagenavform">';
+			$ret = '<form name="pagenavform">';
 			$ret .= '<select name="pagenavselect" onchange="location=this.options[this.options.selectedIndex].value;">';
 			$counter = 1;
 			$current_page = intval(floor(($this->current + $this->perpage) / $this->perpage));
@@ -172,7 +172,7 @@ class XoopsPageNav
 		$total_pages = ceil($this->total / $this->perpage);
 		$ret = '';
 		if ( $total_pages > 1 ) {
-   			$ret = '<table><tr>';
+			$ret = '<table><tr>';
 			$prev = $this->current - $this->perpage;
 			if ( $prev >= 0 ) {
 				$ret .= '<td class="pagneutral"><a href="'.$this->url.$prev.'">&lt;</a></td><td><img src="'.ICMS_URL.'/images/blank.gif" width="6" alt="" /></td>';

@@ -1,15 +1,15 @@
 <?php
 /**
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		Administration
-* @since		XOOPS
-* @author		http://www.xoops.org The XOOPS Project
-* @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @version		$Id$
-*/
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		Administration
+ * @since		XOOPS
+ * @author		http://www.xoops.org The XOOPS Project
+ * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @version		$Id$
+ */
 
 if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
 	exit("Access Denied");
@@ -623,9 +623,9 @@ function xoops_module_uninstall($dirname) {
 						if ($btcount > 0) {
 							for ($j = 0; $j < $btcount; $j++) {
 								if (!$tplfile_handler->delete($templates[$j])) {
-								$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete block template '.$templates[$j]->getVar('tpl_file').' from the database. Template ID: <b>'.icms_conv_nr2local($templates[$j]->getVar('tpl_id')).'</b></span>';
+									$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete block template '.$templates[$j]->getVar('tpl_file').' from the database. Template ID: <b>'.icms_conv_nr2local($templates[$j]->getVar('tpl_id')).'</b></span>';
 								} else {
-								$msgs[] = '&nbsp;&nbsp;Block template <b>'.$templates[$j]->getVar('tpl_file').'</b> deleted from the database. Template ID: <b>'.icms_conv_nr2local($templates[$j]->getVar('tpl_id')).'</b>';
+									$msgs[] = '&nbsp;&nbsp;Block template <b>'.$templates[$j]->getVar('tpl_file').'</b> deleted from the database. Template ID: <b>'.icms_conv_nr2local($templates[$j]->getVar('tpl_id')).'</b>';
 								}
 							}
 						}
@@ -754,15 +754,15 @@ function xoops_module_activate($mid) {
 	xoops_template_clear_module_cache($module->getVar('mid'));
 	$module->setVar('isactive', 1);
 	if (!$module_handler->insert($module)) {
-			$ret = "<p>".sprintf(_MD_AM_FAILACT, "<b>".$module->getVar('name')."</b>")."&nbsp;"._MD_AM_ERRORSC."<br />".$module->getHtmlErrors();
-			return $ret."</p>";
+		$ret = "<p>".sprintf(_MD_AM_FAILACT, "<b>".$module->getVar('name')."</b>")."&nbsp;"._MD_AM_ERRORSC."<br />".$module->getHtmlErrors();
+		return $ret."</p>";
 	}
 	$icms_block_handler = xoops_getmodulehandler ( 'blocksadmin', 'system' );
 	$blocks =& $icms_block_handler->getByModule($module->getVar('mid'));
 	$bcount = count($blocks);
 	for ($i = 0; $i < $bcount; $i++) {
-			$blocks[$i]->setVar('isactive', 1);
-			$blocks[$i]->store();
+		$blocks[$i]->setVar('isactive', 1);
+		$blocks[$i]->store();
 	}
 	return "<p>".sprintf(_MD_AM_OKACT, "<b>".$module->getVar('name')."</b>")."</p>";
 }
@@ -770,7 +770,7 @@ function xoops_module_activate($mid) {
 function xoops_module_deactivate($mid) {
 	global $icms_page_handler, $icms_block_handler, $xoopsConfig;
 	if(!isset($icms_page_handler)){
-	   $icms_page_handler = xoops_getmodulehandler ( 'pages', 'system' );
+		$icms_page_handler = xoops_getmodulehandler ( 'pages', 'system' );
 	}
 
 	$module_handler =& xoops_gethandler('module');
@@ -1155,7 +1155,7 @@ function icms_module_update($dirname) {
 					} else {
 						$confobj->setConfValueForInput($config['default'], true);
 
-					//$confobj->setVar('conf_value', $config['default'], true);
+						//$confobj->setVar('conf_value', $config['default'], true);
 					}
 					$confobj->setVar('conf_order', $order);
 					$confop_msgs = '';
@@ -1186,7 +1186,7 @@ function icms_module_update($dirname) {
 		$atasks_handler = &xoops_getModuleHandler('autotasks', 'system');
 		if (isset($atasks) && is_array($atasks) && (count($atasks) > 0)) {
 			$msgs[] = 'Updating autotasks...';
-	  	  	$criteria = new CriteriaCompo();
+			$criteria = new CriteriaCompo();
 			$criteria->add( new Criteria( 'sat_type', 'addon/'.$module->getInfo('dirname')));
 			$items_atasks = $atasks_handler->getObjects( $criteria , false );
 			foreach ($items_atasks as $task) {
@@ -1253,13 +1253,13 @@ function icms_module_update($dirname) {
 			}
 		}
 
-			$msgs[] = '</code><p>'.sprintf(_MD_AM_OKUPD, '<b>'.$module->getVar('name').'</b>').'</p>';
-		}
-		$ret = '<code>';
-		foreach ($msgs as $msg) {
-			$ret .= $msg.'<br />';
-		}
-		return $ret;
+		$msgs[] = '</code><p>'.sprintf(_MD_AM_OKUPD, '<b>'.$module->getVar('name').'</b>').'</p>';
+	}
+	$ret = '<code>';
+	foreach ($msgs as $msg) {
+		$ret .= $msg.'<br />';
+	}
+	return $ret;
 }
 
 ?>

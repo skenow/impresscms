@@ -1,18 +1,18 @@
 <?php
 // $Id$
 /**
-* Administration of usergroups, functionfile
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	Administration
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * Administration of usergroups, functionfile
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	Administration
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @version	$Id$
+ */
 
 if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
 	exit("Access Denied");
@@ -99,7 +99,7 @@ function modifyGroup($g_id)
 	if (XOOPS_GROUP_ADMIN == $g_id) {
 		$s_cat_disable = true;
 	}
-	
+
 	$sysperm_handler =& xoops_gethandler('groupperm');
 	$s_cat_value =& $sysperm_handler->getItemIds('system_admin', $g_id);
 
@@ -123,7 +123,7 @@ function modifyGroup($g_id)
 		$users =& array_diff($userslist, $mlist);
 		echo '<table class="outer">
 		<tr><th align="center">'._AM_NONMEMBERS.'<br />';
-		
+
 		echo '</th><th></th><th align="center">'._AM_MEMBERS.'<br />';
 		echo '</th></tr>
 		<tr><td class="even">

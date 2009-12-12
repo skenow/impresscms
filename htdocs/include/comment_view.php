@@ -1,17 +1,17 @@
 <?php
 /**
-* The commentview include file
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	core
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * The commentview include file
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	core
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @version	$Id$
+ */
 
 if (!defined('ICMS_ROOT_PATH') || !is_object($icmsModule)) {
 	exit();
@@ -168,18 +168,18 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 		$link_extra = '';
 		if (isset($comment_config['extraParams']) && is_array($comment_config['extraParams'])) {
 			foreach ($comment_config['extraParams'] as $extra_param) {
-  		if (isset(${$extra_param})) {
-		  $link_extra .= '&amp;'.$extra_param.'='.${$extra_param};
-		  $hidden_value = htmlspecialchars(${$extra_param}, ENT_QUOTES);
-		  $extra_param_val = ${$extra_param};
-  		} elseif (isset($_POST[$extra_param])) {
-  			$extra_param_val = $_POST[$extra_param];
-  		} elseif (isset($_GET[$extra_param])) {
-			$extra_param_val = $_GET[$extra_param];
-  		}
-  		if (isset($extra_param_val)) {
-			$link_extra .= '&amp;'.$extra_param.'='.$extra_param_val;
-			$hidden_value = htmlspecialchars($extra_param_val, ENT_QUOTES);
+				if (isset(${$extra_param})) {
+					$link_extra .= '&amp;'.$extra_param.'='.${$extra_param};
+					$hidden_value = htmlspecialchars(${$extra_param}, ENT_QUOTES);
+					$extra_param_val = ${$extra_param};
+				} elseif (isset($_POST[$extra_param])) {
+					$extra_param_val = $_POST[$extra_param];
+				} elseif (isset($_GET[$extra_param])) {
+					$extra_param_val = $_GET[$extra_param];
+				}
+				if (isset($extra_param_val)) {
+					$link_extra .= '&amp;'.$extra_param.'='.$extra_param_val;
+					$hidden_value = htmlspecialchars($extra_param_val, ENT_QUOTES);
 					$navbar .= '<input type="hidden" name="'.$extra_param.'" value="'.$hidden_value.'" />';
 				}
 			}

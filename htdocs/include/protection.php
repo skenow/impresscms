@@ -1,14 +1,14 @@
-<?php 
+<?php
 /**
-* Config emailprotection.php
-*
-* @author	Kuba Zygmunt (kuba.zygmunt@gmail.com)
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license		LICENSE.txt
-* @package	core
-* @since		1.2
-* @version		$Id$
-*/
+ * Config emailprotection.php
+ *
+ * @author	Kuba Zygmunt (kuba.zygmunt@gmail.com)
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		LICENSE.txt
+ * @package	core
+ * @since		1.2
+ * @version		$Id$
+ */
 
 include '../mainfile.php';
 $font = ICMS_ROOT_PATH.'/class/captcha/fonts/'.$icmsConfigPersona['email_font'];
@@ -24,7 +24,6 @@ $emailAddressLength = strlen($emailAddress);
 $width = $emailAddressLength * ($fontSize*1.00);
 
 $image = imagecreate($width,$height);
-
 
 /********* COLORS ************/
 $fg = $icmsConfigPersona['email_cor'];
@@ -53,19 +52,16 @@ if ($icmsConfigPersona['email_shadow']!=""){
 $white = ImageColorAllocate($image,255,255,255);
 $frente = imagecolorallocate($image, $red,$green,$blue);
 
-
 /*****************************/
 
 ImageColorTransparent($image, $white);
 ImageFilledRectangle($image,0,0,$width,$height,$white);
-
 
 // Add the text using TTF
 if ($icmsConfigPersona['email_shadow']!=""){
 	imagettftext($image, $fontSize, 0, intval($icmsConfigPersona['shadow_y']), $height-intval($icmsConfigPersona['shadow_x'])-10, $shadow , $font, $emailAddress);
 }
 imagettftext($image, $fontSize, 0, 0, $height-10, $frente, $font, $emailAddress);
-
 
 // If you don't want to use TTF fonts, and display default font uncomment line above
 

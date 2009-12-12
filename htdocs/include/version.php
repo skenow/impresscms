@@ -1,14 +1,14 @@
 <?php
 /**
-* Version information about ImpressCMS
-*
-* @copyright	The ImpressCMS Project http://www.impresscms.org/
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		core
-* @since		1.0
-* @author		marcan <marcan@impresscms.org>
-* @version		$Id$
-*/
+ * Version information about ImpressCMS
+ *
+ * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		core
+ * @since		1.0
+ * @author		marcan <marcan@impresscms.org>
+ * @version		$Id$
+ */
 
 define('ICMS_VERSION_NAME','ImpressCMS 1.3 Alpha');
 /**

@@ -45,7 +45,7 @@ if (! $allowed) {
 	$xoopsTpl = & $xoTheme->template;
 
 	$xoopsTpl->assign ( array ('xoops_theme' => $icmsConfig ['theme_set'], 'xoops_imageurl' => ICMS_THEME_URL . '/' . $icmsConfig ['theme_set'] . '/', 'xoops_themecss' => xoops_getcss ( $icmsConfig ['theme_set'] ), 'xoops_requesturi' => htmlspecialchars ( $_SERVER ['REQUEST_URI'], ENT_QUOTES ), 'xoops_sitename' => htmlspecialchars ( $icmsConfig ['sitename'], ENT_QUOTES ), 'xoops_slogan' => htmlspecialchars ( $icmsConfig ['slogan'], ENT_QUOTES ), 'xoops_dirname' => @$icmsModule ? $icmsModule->getVar ( 'dirname' ) : 'system', 'xoops_banner' => $icmsConfig ['banners'] ? xoops_getbanner () : '&nbsp;', 'xoops_pagetitle' => isset ( $icmsModule ) && is_object ( $icmsModule ) ? $icmsModule->getVar ( 'name' ) : htmlspecialchars ( $icmsConfig ['slogan'], ENT_QUOTES ), 'lang_login' => _LOGIN, 'lang_username' => _USERNAME, 'lang_password' => _PASSWORD, 'lang_siteclosemsg' => $icmsConfig ['closesite_text'] )
-	 );
+	);
 
 	$config_handler = & xoops_gethandler ( 'config' );
 	$criteria = new CriteriaCompo ( new Criteria ( 'conf_modid', 0 ) );
@@ -74,7 +74,7 @@ if (! $allowed) {
 		}
 		$xoopsTpl->assign ( 'icmsCustomtags', $customtags_array );
 	}
-	
+
 	$xoopsTpl->display ( 'db:system_siteclosed.html' );
 	exit ();
 }

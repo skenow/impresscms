@@ -1,20 +1,20 @@
 <?php
 /**
-* Tribes page
-*
-* @copyright	GNU General Public License (GPL)
-* @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @since	1.3
-* @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @package	profile
-* @version	$Id$
-*/
+ * Tribes page
+ *
+ * @copyright	GNU General Public License (GPL)
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since	1.3
+ * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @package	profile
+ * @version	$Id$
+ */
 
 /**
  * Edit a Tribeuser
  *
  * @param object $tribesObj ProfileTribes object
-*/
+ */
 function edittribeuser($tribesObj, $hideForm=false) {
 	global $profile_tribeuser_handler, $icmsTpl, $icmsUser, $real_uid;
 
@@ -59,7 +59,7 @@ function edittribeuser($tribesObj, $hideForm=false) {
  * Edit a Tribe
  *
  * @param object $tribesObj ProfileTribes object to be edited
-*/
+ */
 function edittribes($tribesObj, $hideForm=false) {
 	global $profile_tribes_handler, $icmsTpl, $icmsUser;
 
@@ -126,8 +126,8 @@ function edittribepost($tribetopic_id, $tribepost_id, $tribesObj, $hideForm = fa
 		$tribetopicObj = $profile_tribetopic_handler->get($tribetopic_id);
 		// check permissions
 		if (!($tribepostObj->userCanEditAndDelete() || $isOwner)) {
-				redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
-				exit();
+			redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
+			exit();
 		}
 
 		// set topic or post specific options
@@ -271,11 +271,11 @@ if (in_array($clean_op,$valid_op,true)){
 				redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
 				exit();
 			}
-			
+				
 			$clean_post_id = isset($_POST['post_id']) ? intval($_POST['post_id']) : 0;
 			$clean_topic_id = isset($_POST['topic_id']) ? intval($_POST['topic_id']) : 0;
 			$clean_tribes_id = isset($_POST['tribes_id']) ? intval($_POST['tribes_id']) : 0;
-			
+				
 			// check permissions and set redirect page
 			if ($clean_topic_id == 0 || ($clean_topic_id > 0 && $clean_post_id == 0)) {
 				// new topic or post
@@ -335,10 +335,10 @@ if (in_array($clean_op,$valid_op,true)){
 			}
 
 			if (isset($_POST['confirm'])) {
-			    if (!$xoopsSecurity->check()) {
-				redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
-				exit();
-			    }
+				if (!$xoopsSecurity->check()) {
+					redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
+					exit();
+				}
 			}
 			include_once ICMS_ROOT_PATH.'/kernel/icmspersistablecontroller.php';
 			$controller = new IcmsPersistableController($profile_tribepost_handler);
@@ -356,9 +356,9 @@ if (in_array($clean_op,$valid_op,true)){
 			} else {
 				redirect_header(icms_getPreviousPage('index.php'), 3, _CO_ICMS_SAVE_ERROR.$tribetopicObj->getHtmlErrors());
 			}
-			
+				
 			break;
-		
+
 		case "addtribes":
 			if (!$xoopsSecurity->check()) {
 				redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
@@ -375,10 +375,10 @@ if (in_array($clean_op,$valid_op,true)){
 				exit();
 			}
 			if (isset($_POST['confirm'])) {
-			    if (!$xoopsSecurity->check()) {
-				redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
-				exit();
-			    }
+				if (!$xoopsSecurity->check()) {
+					redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
+					exit();
+				}
 			}
 			include_once ICMS_ROOT_PATH.'/kernel/icmspersistablecontroller.php';
 			$controller = new IcmsPersistableController($profile_tribes_handler);

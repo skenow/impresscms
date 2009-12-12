@@ -326,8 +326,8 @@ $modversion['config'][$i]['valuetype'] = 'text';
 $modversion['config'][$i]['default'] = 'nick';
 $modversion['config'][$i]['category'] = 'settings';
 $modversion['config'][$i]['options'] = array(_PROFILE_MI_NICKNAME  => 'nick',
-										_PROFILE_MI_REALNAME  => 'real',
-										_PROFILE_MI_BOTH  => 'both');
+_PROFILE_MI_REALNAME  => 'real',
+_PROFILE_MI_BOTH  => 'both');
 
 $member_handler = &xoops_gethandler('member');
 $criteria = new CriteriaCompo();
@@ -510,7 +510,6 @@ $modversion['config'][$i]['formtype'] = 'textbox';
 $modversion['config'][$i]['valuetype'] = 'int';
 $i++;
 
-
 $modversion['config'][$i]['name'] = 'width_tube';
 $modversion['config'][$i]['title'] = '_MI_PROFILE_TUBEW_TITLE';
 $modversion['config'][$i]['description'] = '_MI_PROFILE_TUBEW_DESC';
@@ -614,21 +613,21 @@ $modversion['notification']['event'][2] = array(
   'mail_subject'=> _MI_PROFILE_VIDEO_NEWVIDEO_NOTIFYSBJ);
 
 /*
-$modversion['notification']['category'][4] = array (
-  'name' => 'friendship',
-  'title' => _MI_PROFILE_FRIENDSHIP_NOTIFYTIT,
-  'description' => _MI_PROFILE_FRIENDSHIP_NOTIFYDSC,
-  'subscribe_from' => 'friends.php',
-  'item_name' => 'uid',
-  'allow_bookmark' => 0 );
+ $modversion['notification']['category'][4] = array (
+ 'name' => 'friendship',
+ 'title' => _MI_PROFILE_FRIENDSHIP_NOTIFYTIT,
+ 'description' => _MI_PROFILE_FRIENDSHIP_NOTIFYDSC,
+ 'subscribe_from' => 'friends.php',
+ 'item_name' => 'uid',
+ 'allow_bookmark' => 0 );
 
-$modversion['notification']['event'][4] = array(
-  'name' => 'new_friendship',
-  'category'=> 'friendship',
-  'title'=> _MI_PROFILE_FRIEND_NEWPETITION_NOTIFY,
-  'caption'=> _MI_PROFILE_FRIEND_NEWPETITION_NOTIFYCAP,
-  'description'=> _MI_PROFILE_FRIEND_NEWPETITION_NOTIFYDSC,
-  'mail_template'=> 'friendship_newpetition_notify',
-  'mail_subject'=> _MI_PROFILE_FRIEND_NEWPETITION_NOTIFYSBJ);
-*/
+ $modversion['notification']['event'][4] = array(
+ 'name' => 'new_friendship',
+ 'category'=> 'friendship',
+ 'title'=> _MI_PROFILE_FRIEND_NEWPETITION_NOTIFY,
+ 'caption'=> _MI_PROFILE_FRIEND_NEWPETITION_NOTIFYCAP,
+ 'description'=> _MI_PROFILE_FRIEND_NEWPETITION_NOTIFYDSC,
+ 'mail_template'=> 'friendship_newpetition_notify',
+ 'mail_subject'=> _MI_PROFILE_FRIEND_NEWPETITION_NOTIFYSBJ);
+ */
 ?>

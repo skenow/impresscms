@@ -1,34 +1,34 @@
 <?php
 /**
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package	core
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @version	$Id$
-**/
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package	core
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @version	$Id$
+ **/
 
 /**
-* Allows banner clients to login and manage their banners
-* 
-* Clients can view the statistics for their banners, send the statistics to their
-* email address, or change the target url for the banner
-*
-* @package banners
-**/
- 
+ * Allows banner clients to login and manage their banners
+ *
+ * Clients can view the statistics for their banners, send the statistics to their
+ * email address, or change the target url for the banner
+ *
+ * @package banners
+ **/
+
 $xoopsOption['pagetype'] = "banners";
 /** Including mainfile.php is required */
 include 'mainfile.php';
 
 /**
-* Function to let your client login to see 
-* the stats
-*/
+ * Function to let your client login to see
+ * the stats
+ */
 function clientlogin()
 {
 	global $xoopsDB, $xoopsLogger, $icmsConfig, $icmsConfigMetaFooter, $icmsConfigPlugins, $sess_handler;
@@ -50,9 +50,9 @@ function clientlogin()
 }
 
 /**
-* Function to display the banners stats for 
-* each client
-**/
+ * Function to display the banners stats for
+ * each client
+ **/
 function bannerstats()
 {
 	global $xoopsDB, $icmsConfig, $xoopsLogger, $icmsConfigMetaFooter, $icmsConfigPlugins, $sess_handler;
@@ -75,7 +75,7 @@ function bannerstats()
 		<td>"._BANNERS_PER_CLICKS."</td>
 		<td>"._BANNERS_FUNCTIONS."</td></tr></thead>
 		<tfoot><tr><td colspan='7'></td></tr></tfoot>";
-		
+
 		$result = $xoopsDB->query("select bid, imptotal, impmade, clicks, date from ".$xoopsDB->prefix('banner')." where cid='".intval($cid)."'");
 		$i = 0;
 		while(list($bid, $imptotal, $impmade, $clicks, $date) = $xoopsDB->fetchRow($result))
@@ -163,7 +163,7 @@ function bannerstats()
 			<td>"._BANNERS_STARTED."</td>
 			<td>"._BANNERS_ENDED."</td></tr></thead>
 			<tfoot><tr><td colspan='6'></td></tr></tfoot>";
-			
+				
 			$i=0;
 			while(list($bid, $impressions, $clicks, $datestart, $dateend) = $xoopsDB->fetchRow($result))
 			{
@@ -188,12 +188,12 @@ function bannerstats()
 }
 
 /**
-* Function to let the client E-mail his     
-* banner Stats
-* 
-* @param int $cid client id
-* @param int $bid banner id
-*/
+ * Function to let the client E-mail his
+ * banner Stats
+ *
+ * @param int $cid client id
+ * @param int $bid banner id
+ */
 function EmailStats($cid, $bid)
 {
 	global $xoopsDB, $icmsConfig;
@@ -253,13 +253,13 @@ function EmailStats($cid, $bid)
 }
 
 /**
-* Function to let the client to change the  
-* url for his banner     
-* 
-* @param int $cid client id
-* @param int $bid banner id
-* @param str $url new target url for the banner
-*/
+ * Function to let the client to change the
+ * url for his banner
+ *
+ * @param int $cid client id
+ * @param int $bid banner id
+ * @param str $url new target url for the banner
+ */
 function change_banner_url_by_client($cid, $bid, $url)
 {
 	global $xoopsDB;
@@ -283,9 +283,9 @@ function change_banner_url_by_client($cid, $bid, $url)
 
 /**
  * Updates the click counter for a banner
- * 
+ *
  * @param int $bid banner id
- */   
+ */
 function clickbanner($bid)
 {
 	global $xoopsDB;
@@ -317,7 +317,7 @@ switch($op)
 		$bid = 0;
 		if(!empty($_GET['bid'])) {$bid = intval($_GET['bid']);}
 		clickbanner($bid);
-	break;
+		break;
 
 	case 'Ok':
 		if($_SERVER['REQUEST_METHOD'] == 'POST')
@@ -330,7 +330,7 @@ switch($op)
 			$_SESSION['banner_pass'] = $myts->stripslashesGPC(trim($_POST['pass']));
 		}
 		bannerstats();
-	break;
+		break;
 
 	case _BANNERS_CHANGE:
 		if(!$GLOBALS['xoopsSecurity']->check(true,false,'BANNER_EDIT'))
@@ -342,18 +342,18 @@ switch($op)
 		if(!empty($_POST['bid'])) {$bid = intval($_POST['bid']);}
 		if(!empty($_POST['cid'])) {$cid = intval($_POST['cid']);}
 		change_banner_url_by_client($cid, $bid, $url);
-	break;
+		break;
 
 	case 'EmailStats':
 		$bid = $cid = 0;
 		if(!empty($_GET['bid'])) {$bid = intval($_GET['bid']);}
 		if(!empty($_GET['cid'])) {$cid = intval($_GET['cid']);}
 		EmailStats($cid, $bid);
-	break;
+		break;
 
 	case 'login':
 	default:
 		clientlogin();
-	break;
+		break;
 }
 ?>

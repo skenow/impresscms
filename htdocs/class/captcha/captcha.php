@@ -18,8 +18,7 @@
  * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @version		$Id$
-*/
-
+ */
 
 icms_loadLanguageFile('core', 'captcha');
 class IcmsCaptcha {
@@ -28,7 +27,6 @@ class IcmsCaptcha {
 	var $config	= array();
 
 	var $message = array(); // Logging error messages
-
 
 	/**
 	 * Constructor
@@ -42,10 +40,9 @@ class IcmsCaptcha {
 		$this->setMode($icmsConfigCaptcha['captcha_mode']);
 	}
 
-
 	/**
 	 * Creates instance of IcmsCaptcha Object
-   * @return  object Reference to the IcmsCaptcha Object
+	 * @return  object Reference to the IcmsCaptcha Object
 	 */
 	function &instance()
 	{
@@ -56,12 +53,11 @@ class IcmsCaptcha {
 		return $instance;
 	}
 
-
 	/**
 	 * Sets the Captcha Config
-   * @param   string $name Config Name
-   * @param   string $val Config Value
-   * @return  bool  Always returns true if the setting of the config has succeeded
+	 * @param   string $name Config Name
+	 * @param   string $val Config Value
+	 * @return  bool  Always returns true if the setting of the config has succeeded
 	 */
 	function setConfig($name, $val)
 	{
@@ -74,10 +70,6 @@ class IcmsCaptcha {
 		}
 		return true;
 	}
-
-
-
-
 
 	/**
 	 * Set CAPTCHA mode
@@ -111,19 +103,15 @@ class IcmsCaptcha {
 
 	}
 
-
-
-
-
 	/**
 	 * Initializing the CAPTCHA class
-   * @param   string  $name			 name of the instance
-   * @param   string  $skipmember	   Skip the captcha because the user is member / logged in
-   * @param   string  $num_chars		comes from config, just initializes the variable
-   * @param   string  $fontsize_min	 comes from config, just initializes the variable
-   * @param   string  $fontsize_max	 comes from config, just initializes the variable
-   * @param   string  $background_type  comes from config, just initializes the variable
-   * @param   string  $background_num   comes from config, just initializes the variable
+	 * @param   string  $name			 name of the instance
+	 * @param   string  $skipmember	   Skip the captcha because the user is member / logged in
+	 * @param   string  $num_chars		comes from config, just initializes the variable
+	 * @param   string  $fontsize_min	 comes from config, just initializes the variable
+	 * @param   string  $fontsize_max	 comes from config, just initializes the variable
+	 * @param   string  $background_type  comes from config, just initializes the variable
+	 * @param   string  $background_num   comes from config, just initializes the variable
 	 */
 	function init($name = 'icmscaptcha', $skipmember = null, $num_chars = null, $fontsize_min = null, $fontsize_max = null, $background_type = null, $background_num = null)
 	{
@@ -147,12 +135,6 @@ class IcmsCaptcha {
 		}
 	}
 
-
-
-
-
-
-
 	/**
 	 * Verify user submission
 	 * @param bool	$skipMember	Skip Captcha because user is member / logged in
@@ -167,13 +149,13 @@ class IcmsCaptcha {
 		$is_valid = false;
 
 		// Skip CAPTCHA for member if set & Kept for backward compatibilities
-/*		if( is_object($GLOBALS["xoopsUser"]) && !empty($skipMember) ) {
+		/*		if( is_object($GLOBALS["xoopsUser"]) && !empty($skipMember) ) {
 			$is_valid = true;
-*/
+			*/
 		// Kill too many attempts
 		/*}else*/
-        include_once ICMS_ROOT_PATH . '/kernel/icmsstopspammer.php';
-        $icmsStopSpammers = new IcmsStopSpammer();
+		include_once ICMS_ROOT_PATH . '/kernel/icmsstopspammer.php';
+		$icmsStopSpammers = new IcmsStopSpammer();
 		$icmsUser = $GLOBALS["xoopsUser"];
 		$groups = is_object($icmsUser) ? $icmsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
 		if(array_intersect($groups, $icmsConfigCaptcha['captcha_skipmember']) && is_object($icmsUser)) {
@@ -185,12 +167,12 @@ class IcmsCaptcha {
 				}
 			}
 			unset($bi);
-        }elseif($icmsStopSpammers->badIP($_SERVER['REMOTE_ADDR'])){
-            $is_valid = false;
+		}elseif($icmsStopSpammers->badIP($_SERVER['REMOTE_ADDR'])){
+			$is_valid = false;
 		}elseif(!empty($maxAttempts) && $_SESSION['IcmsCaptcha_attempt_'.$sessionName] > $maxAttempts) {
 			$this->message[] = ICMS_CAPTCHA_TOOMANYATTEMPTS;
 
-		// Verify the code
+			// Verify the code
 		}elseif(!empty($_SESSION['IcmsCaptcha_sessioncode'])){
 			$func = ($icmsConfigCaptcha['captcha_casesensitive']) ? "strcmp" : "strcasecmp";
 			$is_valid = ! $func( trim(@$_POST[$sessionName]), $_SESSION['IcmsCaptcha_sessioncode']);
@@ -214,8 +196,6 @@ class IcmsCaptcha {
 		return $is_valid;
 	}
 
-
-
 	/**
 	 * Get Caption
 	 * @return string	The Caption Constant
@@ -224,7 +204,6 @@ class IcmsCaptcha {
 	{
 		return defined("ICMS_CAPTCHA_CAPTION") ? constant("ICMS_CAPTCHA_CAPTION") : "";
 	}
-
 
 	/**
 	 * Set Message
@@ -235,14 +214,10 @@ class IcmsCaptcha {
 		return implode("<br />", $this->message);
 	}
 
-
-
-
-
 	/**
 	 * Destory historical stuff
 	 * @param bool	$clearSession	also clear session variables?
-   * @return bool True if destroying succeeded
+	 * @return bool True if destroying succeeded
 	 */
 	function destroyGarbage($clearSession = false)
 	{
@@ -264,13 +239,9 @@ class IcmsCaptcha {
 		return true;
 	}
 
-
-
-
-
 	/**
 	 * Render
-   * @return  string  the rendered form
+	 * @return  string  the rendered form
 	 */
 	function render()
 	{
@@ -286,25 +257,21 @@ class IcmsCaptcha {
 		$maxAttempts = $icmsConfigCaptcha['captcha_maxattempt'];
 		$_SESSION['IcmsCaptcha_maxattempts'] = $maxAttempts;
 		/*
-		if(!empty($maxAttempts)) {
+		 if(!empty($maxAttempts)) {
 			$_SESSION['IcmsCaptcha_maxattempts_'.$_SESSION['IcmsCaptcha_name']] = $maxAttempts;
-		}
-		*/
+			}
+			*/
 
 		// Fail on too many attempts
 		if(!empty($maxAttempts) && @$_SESSION['IcmsCaptcha_attempt_'.$this->config["name"]] > $maxAttempts) {
 			$form = ICMS_CAPTCHA_TOOMANYATTEMPTS;
-		// Load the form element
+			// Load the form element
 		}else{
 			$form = $this->loadForm();
 		}
 
 		return $form;
 	}
-
-
-
-
 
 	/**
 	 * Load Form

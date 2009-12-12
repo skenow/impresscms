@@ -9,9 +9,6 @@
  * @author		MekDrop <mekdrop@gmail.com>
  */
 
-
-
-
 $modversion['name'] = _MD_AM_AUTOTASKS;
 $modversion['version'] = "1.0";
 $modversion['description'] = "AutoTasks Administration";

@@ -18,11 +18,11 @@
  * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @author	  Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @version		$Id$
-*/
+ */
 
 $config = array(
 	"name"				=> 'icmscaptcha', 
-	);
-	
+);
+
 return $config;
 ?>

@@ -1,28 +1,28 @@
 <?php
 // $Id$
 /**
-* Banner administration functions
-* 
-* Functions to allow adminstrators to add, edit, delete banners and clients
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	Administration
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * Banner administration functions
+ *
+ * Functions to allow adminstrators to add, edit, delete banners and clients
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	Administration
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @version	$Id$
+ */
 
 if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
 	exit("Access Denied");
 } else {
 
 	/**
-	/* Banners Administration Functions
-	*/
+	 /* Banners Administration Functions
+	 */
 	function BannersAdmin()
 	{
 		global $xoopsConfig, $icmsModule;
@@ -183,27 +183,27 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 		echo "</td></tr></table>";
 		xoops_cp_footer();
 	}
-	
+
 	/**
 	 * Deletes a banner
-	 * 
+	 *
 	 * @param int $bid banner id
 	 */
 	function BannerDelete($bid)
 	{
-	  global $xoopsConfig, $icmsModule;
-	  $xoopsDB =& Database::getInstance();
-	  $myts =& MyTextSanitizer::getInstance();
-	  xoops_cp_header();
-	  $result=$xoopsDB->query("SELECT cid, imptotal, impmade, clicks, imageurl, clickurl, htmlbanner, htmlcode FROM ".$xoopsDB->prefix("banner")." where bid='".intval($bid)."'");
-	  list($cid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $htmlbanner, $htmlcode) = $xoopsDB->fetchRow($result);
-	  $imageurl = htmlspecialchars($imageurl, ENT_QUOTES);
-	  $clickurl = htmlspecialchars($clickurl, ENT_QUOTES);
-	  echo"<table width='100%' border='0' cellspacing='1' class='outer'><tr><td class=\"odd\">";
-	  echo "<h4>"._AM_DELEBNR."</h4>";
-	  if ($htmlbanner){
-		echo $myts->displayTarea($htmlcode,1);
-	  }else{
+		global $xoopsConfig, $icmsModule;
+		$xoopsDB =& Database::getInstance();
+		$myts =& MyTextSanitizer::getInstance();
+		xoops_cp_header();
+		$result=$xoopsDB->query("SELECT cid, imptotal, impmade, clicks, imageurl, clickurl, htmlbanner, htmlcode FROM ".$xoopsDB->prefix("banner")." where bid='".intval($bid)."'");
+		list($cid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $htmlbanner, $htmlcode) = $xoopsDB->fetchRow($result);
+		$imageurl = htmlspecialchars($imageurl, ENT_QUOTES);
+		$clickurl = htmlspecialchars($clickurl, ENT_QUOTES);
+		echo"<table width='100%' border='0' cellspacing='1' class='outer'><tr><td class=\"odd\">";
+		echo "<h4>"._AM_DELEBNR."</h4>";
+		if ($htmlbanner){
+			echo $myts->displayTarea($htmlcode,1);
+		}else{
 			if(strtolower(substr($imageurl,strrpos($imageurl,".")))==".swf") {
 				echo '<object type="application/x-shockwave-flash" data="'.$imageurl.'" width="468" height="60">';
 				echo '<param name="movie" value="'.$imageurl.'" />';
@@ -212,18 +212,18 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			} else {
 				echo '<img src="'.$imageurl.'" alt="" />';
 			}
-	  }
-	  echo "<a href='$clickurl'>$clickurl</a><br /><br /><table width='100%' border='0'><tr align='center'><td align='center'>"._AM_BANNERID."</td><td align='center'>"._AM_IMPRESION."</td><td align='center'>"._AM_IMPLEFT."</td><td align='center'>"._AM_CLICKS."</td><td align='center'>"._AM_NCLICKS."</td><td align='center'>"._AM_CLINAME."</td></tr><tr align='center'>";
-	  $result2 = $xoopsDB->query("SELECT cid, name FROM ".$xoopsDB->prefix("bannerclient")." WHERE cid='".intval($cid)."'");
-	  list($cid, $name) = $xoopsDB->fetchRow($result2);
-	  $name = $myts->makeTboxData4Show($name);
-	  $percent = substr(100 * $clicks / $impmade, 0, 5);
-	  if ( $imptotal == 0 ) {
+		}
+		echo "<a href='$clickurl'>$clickurl</a><br /><br /><table width='100%' border='0'><tr align='center'><td align='center'>"._AM_BANNERID."</td><td align='center'>"._AM_IMPRESION."</td><td align='center'>"._AM_IMPLEFT."</td><td align='center'>"._AM_CLICKS."</td><td align='center'>"._AM_NCLICKS."</td><td align='center'>"._AM_CLINAME."</td></tr><tr align='center'>";
+		$result2 = $xoopsDB->query("SELECT cid, name FROM ".$xoopsDB->prefix("bannerclient")." WHERE cid='".intval($cid)."'");
+		list($cid, $name) = $xoopsDB->fetchRow($result2);
+		$name = $myts->makeTboxData4Show($name);
+		$percent = substr(100 * $clicks / $impmade, 0, 5);
+		if ( $imptotal == 0 ) {
 			$left = 'unlimited';
-	  } else {
+		} else {
 			$left = $imptotal-$impmade;
-	  }
-	  echo "
+		}
+		echo "
 			<td align='center'>".icms_conv_nr2local($bid)."</td>
 			<td align='center'>".icms_conv_nr2local($impmade)."</td>
 			<td align='center'>".icms_conv_nr2local($left)."</td>
@@ -231,11 +231,11 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			<td align='center'>".icms_conv_nr2local($percent)."%</td>
 			<td align='center'>$name</td>
 			</tr></table><br />";
-	  xoops_confirm(array('fct' => 'banners', 'op' => 'BannerDelete2', 'bid' => $bid), 'admin.php', _AM_SUREDELE);
-	  echo"</td></tr></table>";
-	  xoops_cp_footer();
+		xoops_confirm(array('fct' => 'banners', 'op' => 'BannerDelete2', 'bid' => $bid), 'admin.php', _AM_SUREDELE);
+		echo"</td></tr></table>";
+		xoops_cp_footer();
 	}
-	
+
 	/**
 	 * Edit the banner
 	 * @param int $bid banner id
@@ -309,11 +309,11 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 		echo"</td></tr></table>";
 		xoops_cp_footer();
 	}
-	
+
 	/**
 	 * Deletes a client
 	 * @param int $cid client id
-	 */  
+	 */
 	function BannerClientDelete($cid)
 	{
 		global $xoopsConfig, $icmsModule;
@@ -357,7 +357,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 		echo "</td></tr></table>";
 		xoops_cp_footer();
 	}
-	
+
 	/**
 	 * Edits a client's information
 	 * @param int $cid client id

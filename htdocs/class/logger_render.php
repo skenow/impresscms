@@ -1,23 +1,21 @@
 <?php
 /**
-* The Renderer functions of the Error logger
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	Core
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * The Renderer functions of the Error logger
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	Core
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @version	$Id$
+ */
 
 defined( 'ICMS_ROOT_PATH' ) or die();
 
 $ret = '';
-
-
 
 if ( $mode == 'popup' ) {
 	$dump = $this->dump( '' );
@@ -69,12 +67,12 @@ if ( empty( $mode ) ) {
 
 if ( empty($mode) || $mode == 'errors' ) {
 	$types = array(
-		E_USER_NOTICE => _NOTICE,
-		E_USER_WARNING => _WARNING,
-		E_USER_ERROR => _ERROR,
-		E_NOTICE => _NOTICE,
-		E_WARNING => _WARNING,
-		E_STRICT => _STRICT,
+	E_USER_NOTICE => _NOTICE,
+	E_USER_WARNING => _WARNING,
+	E_USER_ERROR => _ERROR,
+	E_NOTICE => _NOTICE,
+	E_WARNING => _WARNING,
+	E_STRICT => _STRICT,
 	);
 	$class = 'even';
 	$ret .= '<table id="xo-logger-errors" class="outer"><tr><th>'._ERRORS.'</th></tr>';
@@ -136,8 +134,6 @@ if ( empty($mode) || $mode == 'timers' ) {
 	$ret .= '</table>';
 }
 
-
-
 if ( empty( $mode ) ) {
 	$ret .= <<<EOT
 </div>
@@ -181,6 +177,5 @@ if ( empty( $mode ) ) {
 	
 EOT;
 }
-
 
 ?>

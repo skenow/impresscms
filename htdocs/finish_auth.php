@@ -1,17 +1,17 @@
 <?php
 /**
-* Short summary of the purpose of this file
-*
-* Longer description about this page
-*
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project 
-* @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package     kernel
-* @subpackage  auth
-* @since	 1.1
-* @author malanciault <marcan@impresscms.org>
-* @version	$Id$
-*/
+ * Short summary of the purpose of this file
+ *
+ * Longer description about this page
+ *
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package     kernel
+ * @subpackage  auth
+ * @since	 1.1
+ * @author malanciault <marcan@impresscms.org>
+ * @version	$Id$
+ */
 /**
  * Set this to true to troubleshoot OpenID login
  */
@@ -50,7 +50,7 @@ switch ($xoopsAuth->step) {
 		$xoopsTpl->assign('cid', $xoopsAuth->openid);
 		$xoopsTpl->assign('uname', isset ($sreg['nickname']) ? $sreg['nickname'] : '');
 		$xoopsTpl->assign('email', isset ($sreg['email']) ? $sreg['email'] : '');
-    /** Including footer.php to complete page rendering */
+		/** Including footer.php to complete page rendering */
 		include_once ICMS_ROOT_PATH . '/footer.php';
 		break;
 
@@ -151,7 +151,7 @@ switch ($xoopsAuth->step) {
 
 	case OPENID_STEP_USER_FOUND :
 		/** Including the login authentication page */
-    include_once 'include/checklogin.php';
+		include_once 'include/checklogin.php';
 		exit;
 		break;
 

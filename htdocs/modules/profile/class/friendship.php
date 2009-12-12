@@ -1,15 +1,15 @@
 <?php
 
 /**
-* Classes responsible for managing profile friendship objects
-*
-* @copyright	GNU General Public License (GPL)
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @since		1.3
-* @author		Jan Pedersen, Marcello Brandao, Sina Asghari, Gustavo Pilla <contact@impresscms.org>
-* @package		profile
-* @version		$Id$
-*/
+ * Classes responsible for managing profile friendship objects
+ *
+ * @copyright	GNU General Public License (GPL)
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since		1.3
+ * @author		Jan Pedersen, Marcello Brandao, Sina Asghari, Gustavo Pilla <contact@impresscms.org>
+ * @package		profile
+ * @version		$Id$
+ */
 
 if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
 
@@ -38,16 +38,16 @@ class ProfileFriendship extends IcmsPersistableObject {
 		$this->quickInitVar('friend2_uid', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('creation_time', XOBJ_DTYPE_LTIME, false);
 		$this->quickInitVar('status', XOBJ_DTYPE_INT, true, false, false, PROFILE_FRIENDSHIP_STATUS_PENDING);
-		
+
 		$this->setControl('friend1_uid', 'user');
 		$this->setControl('status', array(
 				'itemHandler' => 'friendship',
 				'method' => 'getFriendship_statusArray',
 				'module' => 'profile'
-		));
+				));
 
-		$this->hideFieldFromForm('friend2_uid');
-		$this->hideFieldFromForm('creation_time');
+				$this->hideFieldFromForm('friend2_uid');
+				$this->hideFieldFromForm('creation_time');
 	}
 
 	/**
@@ -122,7 +122,7 @@ class ProfileFriendship extends IcmsPersistableObject {
 	 */
 	function userCanEditAndDelete() {
 		global $icmsUser, $profile_isAdmin;
-		
+
 		if ($profile_isAdmin) return true;
 		if (!is_object($icmsUser)) return false;
 		if ($this->getVar('status') == PROFILE_FRIENDSHIP_STATUS_ACCEPTED) {
@@ -252,9 +252,9 @@ class ProfileFriendshipHandler extends IcmsPersistableObjectHandler {
 			$this->_friendship_statusArray[PROFILE_FRIENDSHIP_STATUS_REJECTED] = _CO_PROFILE_FRIENDSHIP_STATUS_REJECTED;
 		}
 		return $this->_friendship_statusArray;
-	
+
 	}
-	
+
 	/**
 	 * Check wether the current user can submit a new friendship or not
 	 *

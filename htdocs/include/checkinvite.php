@@ -1,24 +1,24 @@
 <?php
 /**
-* The check invite include file
-*
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	core
-* @since	1.1
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * The check invite include file
+ *
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	core
+ * @since	1.1
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @version	$Id$
+ */
 
 if (!defined('ICMS_ROOT_PATH')) {
 	exit();
 }
 
 /**
-* Loads the invite code
-*
-* @param	string	$code	 Invitation code
-**/
+ * Loads the invite code
+ *
+ * @param	string	$code	 Invitation code
+ **/
 function load_invite_code($code) {
 	// validate if code is of valid length.
 	if (empty($code) || strlen($code) != 8) {
@@ -54,11 +54,11 @@ function load_invite_code($code) {
 }
 
 /**
-* Checks if invite code is correct
-*
-* @param	string	$code	 Invitation code
-* @return   bool
-**/
+ * Checks if invite code is correct
+ *
+ * @param	string	$code	 Invitation code
+ * @return   bool
+ **/
 function check_invite_code($code) {
 	// validate if code is of valid length.
 	if (empty($code) || strlen($code) != 8) {
@@ -75,18 +75,18 @@ function check_invite_code($code) {
 }
 
 /**
-* Updates the invite code into the database
-*
-* @param	string	$code	 Invitation code
-* @param	int	   $new_id   New registration id
-* @return   true
-**/
+ * Updates the invite code into the database
+ *
+ * @param	string	$code	 Invitation code
+ * @param	int	   $new_id   New registration id
+ * @return   true
+ **/
 function update_invite_code($code, $new_id) {
 	$xoopsDB =& Database::getInstance();
 	// update register_id
 	$sql = sprintf('UPDATE '.$xoopsDB->prefix('invites').' SET register_id = %d WHERE invite_code = %s AND register_id = 0', $new_id, $xoopsDB->quoteString(addslashes($code)));
 	$result = $xoopsDB->query($sql);
-	return true;	
+	return true;
 }
 
 ?>

@@ -1,21 +1,21 @@
 <?php
 /**
-* All functions for lost password generator are going through here.
-*
-* Form and process for sending a new password to a user
-* 
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @since		XOOPS
-* @author		http://www.xoops.org The XOOPS Project
-* @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @version		$Id$
-* 
-* @package	kernel 
-* @subpackage	users
-**/
+ * All functions for lost password generator are going through here.
+ *
+ * Form and process for sending a new password to a user
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since		XOOPS
+ * @author		http://www.xoops.org The XOOPS Project
+ * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @version		$Id$
+ *
+ * @package	kernel
+ * @subpackage	users
+ **/
 
 $xoopsOption['pagetype'] = 'user';
 /** Include mainfile.php - required */
@@ -42,7 +42,7 @@ if(empty($getuser))
 else
 {
 	include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
-        $icmspass = new icms_Password();
+	$icmspass = new icms_Password();
 
 	$code = isset($_GET['code']) ? trim(StopXSS($_GET['code'])) : '';
 	$areyou = substr($getuser[0]->getVar('pass'), 0, 5);
@@ -71,7 +71,7 @@ else
 		if(!$xoopsDB->queryF($sql))
 		{
 			/** Include header.php to start page rendering */
-      include 'header.php';
+			include 'header.php';
 			echo _US_MAILPWDNG;
 			/** Include footer.php to complete page rendering */
 			include 'footer.php';
@@ -95,7 +95,7 @@ else
 		$xoopsMailer->setFromName($icmsConfig['sitename']);
 		$xoopsMailer->setSubject(sprintf(_US_NEWPWDREQ,$icmsConfig['sitename']));
 		/** Include header.php to start page rendering */
-    include 'header.php';
+		include 'header.php';
 		if(!$xoopsMailer->send()) {echo $xoopsMailer->getErrors();}
 		echo '<h4>';
 		printf(_US_CONFMAIL,$getuser[0]->getVar('uname'));

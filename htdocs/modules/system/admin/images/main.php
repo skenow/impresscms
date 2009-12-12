@@ -1,16 +1,16 @@
 <?php
 /**
-* Images Manager
-*
-* System tool that allow manage images to use in the site
-*
-* @copyright	The ImpressCMS Project http://www.impresscms.org/
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		Administration
-* @since		1.2
-* @author		Rodrigo Pereira Lima (AKA TheRplima) <therplima@impresscms.org>
-* @version		$Id$
-*/
+ * Images Manager
+ *
+ * System tool that allow manage images to use in the site
+ *
+ * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		Administration
+ * @since		1.2
+ * @author		Rodrigo Pereira Lima (AKA TheRplima) <therplima@impresscms.org>
+ * @version		$Id$
+ */
 
 if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
 	exit(_CT_ACCESS_DENIED);
@@ -86,8 +86,6 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			break;
 	}
 }
-
-
 
 function imanager_index($imgcat_id=null){
 	global $icmsAdminTpl,$icmsUser,$xoopsConfig,$limit;
@@ -302,7 +300,7 @@ function imanager_listimg($imgcat_id,$start=0) {
 		redirect_header('admin.php?fct=images',1,'');
 	}
 
-	   $icmsAdminTpl->assign('admnav',adminNav($imgcat_id,'/',1));
+	$icmsAdminTpl->assign('admnav',adminNav($imgcat_id,'/',1));
 	$icmsAdminTpl->assign('lang_imanager_title',_IMGMANAGER);
 	$icmsAdminTpl->assign('lang_imanager_catmsize',_MD_IMAGECATMSIZE);
 	$icmsAdminTpl->assign('lang_imanager_catmwidth',_MD_IMAGECATMWIDTH);
@@ -404,7 +402,7 @@ function imanager_listimg($imgcat_id,$start=0) {
 	$icmsAdminTpl->assign('imgcount',$imgcount);
 
 	$arrimg = array();
-	   foreach (array_keys($images) as $i) {
+	foreach (array_keys($images) as $i) {
 		$arrimg[$i]['id'] = $images[$i]->getVar('image_id');
 		$arrimg[$i]['name'] = $images[$i]->getVar('image_name');
 		$arrimg[$i]['nicename'] = $images[$i]->getVar('image_nicename');
@@ -451,7 +449,7 @@ function imanager_listimg($imgcat_id,$start=0) {
 			$arrimg[$i]['hasextra_link'] = 0;
 		}
 
-	   	$list =& $imgcat_handler->getList(array(), null, null, $imagecategory->getVar('imgcat_storetype'));
+		$list =& $imgcat_handler->getList(array(), null, null, $imagecategory->getVar('imgcat_storetype'));
 		$div = '';
 		foreach ($list as $value => $name) {
 			$sel = '';
@@ -464,7 +462,7 @@ function imanager_listimg($imgcat_id,$start=0) {
 
 		$arrimg[$i]['ed_token'] = $GLOBALS['xoopsSecurity']->getTokenHTML();
 		$arrimg[$i]['clone_token'] = $GLOBALS['xoopsSecurity']->getTokenHTML();
-	   }
+	}
 
 	$icmsAdminTpl->assign('images',$arrimg);
 	if ($imgcount > 0) {
@@ -473,8 +471,8 @@ function imanager_listimg($imgcat_id,$start=0) {
 			$nav = new XoopsPageNav($imgcount, 15, $start, 'start', 'fct=images&amp;op=listimg&amp;imgcat_id='.$imgcat_id);
 			$icmsAdminTpl->assign('pag','<div class="img_list_info_panel" align="center">'.$nav->renderNav().'</div>');
 		}else{
-		    $icmsAdminTpl->assign('pag','');
-	    }
+			$icmsAdminTpl->assign('pag','');
+		}
 	}else{
 		$icmsAdminTpl->assign('pag','');
 	}
@@ -518,7 +516,7 @@ function imanager_addcat() {
 				redirect_header('admin.php?fct=images',1,_MD_FAILADDCAT);
 			} else {
 				if ($fh = @fopen($categ_path.'/index.html', 'w'))
-					fwrite($fh, '<script>history.go(-1);</script>');
+				fwrite($fh, '<script>history.go(-1);</script>');
 				@fclose($fh);
 			}
 		}
@@ -567,7 +565,6 @@ function imanager_addcat() {
 	}
 	redirect_header('admin.php?fct=images',2,_MD_AM_DBUPDATED);
 }
-
 
 function imanager_editcat($imgcat_id){
 	if ($imgcat_id <= 0) {

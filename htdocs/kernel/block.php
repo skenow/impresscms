@@ -356,7 +356,7 @@ class IcmsBlock extends IcmsPersistableObject {
 	 * @deprecated
 	 */
 	public function countSimilarBlocks($moduleId, $funcNum, $showFunc = null) {
-   		return $this->handler->getCountSimilarBlocks( $moduleId, $funcNum, $showFunc );
+		return $this->handler->getCountSimilarBlocks( $moduleId, $funcNum, $showFunc );
 	}
 
 }
@@ -392,9 +392,9 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 		if( !count($this->block_positions ) ){
 			// TODO: Implement IPF for block_positions
 			$icms_blockposition_handler = xoops_gethandler('blockposition');
-//			$sql = 'SELECT * FROM '.$this->db->prefix('block_positions').' ORDER BY id ASC';
-//			$result = $this->db->query($sql);
-//			while ($row = $this->db->fetchArray($result)) {
+			//			$sql = 'SELECT * FROM '.$this->db->prefix('block_positions').' ORDER BY id ASC';
+			//			$result = $this->db->query($sql);
+			//			while ($row = $this->db->fetchArray($result)) {
 			$block_positions = $icms_blockposition_handler->getObjects();
 			foreach( $block_positions as $bp){
 				$this->block_positions[$bp->getVar('id')]['pname'] = $bp->getVar('pname');
@@ -405,29 +405,28 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 			}
 		}
 		if (!$full)
-			foreach($this->block_positions as $k => $block_position)
-				$rtn[ $k ] = $block_position['pname'];
+		foreach($this->block_positions as $k => $block_position)
+		$rtn[ $k ] = $block_position['pname'];
 		else
-			$rtn = $this->block_positions;
+		$rtn = $this->block_positions;
 		return $rtn;
 	}
 
-
-   /**
-	* getByModule
-	*
-	* @param unknown_type $mid
-	* @param boolean $asObject
-	* @return array
-	*
-	* @deprecated
-	* @see $this->getObjects($criteria, false, $asObject);
-	* @todo Rewrite all the core to dont use any more this method.
-	*/
+	/**
+	 * getByModule
+	 *
+	 * @param unknown_type $mid
+	 * @param boolean $asObject
+	 * @return array
+	 *
+	 * @deprecated
+	 * @see $this->getObjects($criteria, false, $asObject);
+	 * @todo Rewrite all the core to dont use any more this method.
+	 */
 	public function getByModule($mid, $asObject = true){
 		$mid = intval($mid);
 		$criteria = new CriteriaCompo();
-  		$criteria->add(new Criteria('mid', $mid));
+		$criteria->add(new Criteria('mid', $mid));
 		$ret = $this->getObjects($criteria, false, $asObject);
 		return $ret;
 	}
@@ -456,13 +455,13 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 			// get both sides in sidebox? (some themes need this)
 			$tp = ($side == -2)?'L':($side == -6)?'C':'';
 			if ( $tp != '') {
-			 	$side = "";
-			 	$icms_blockposition_handler = xoops_gethandler('blockposition');
-			 	$criteria = new CriteriaCompo();
-			 	$criteria->add( new Criteria('block_type', $tp) );
-			 	$blockpositions = $icms_blockposition_handler->getObjects($criteria);
+				$side = "";
+				$icms_blockposition_handler = xoops_gethandler('blockposition');
+				$criteria = new CriteriaCompo();
+				$criteria->add( new Criteria('block_type', $tp) );
+				$blockpositions = $icms_blockposition_handler->getObjects($criteria);
 				foreach( $blockpositions as $bp ){
-				$side .= "side='".intval( $bp->getVar('id') )."' OR ";
+					$side .= "side='".intval( $bp->getVar('id') )."' OR ";
 				}
 				$side = "('".substr($side,0,strlen($side)-4)."')";
 			} else {
@@ -476,29 +475,29 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 		}
 		$where_query .= " ORDER BY $orderby";
 		switch ($rettype) {
-		case "object":
-			$sql = "SELECT * FROM ".$this->db->prefix("newblocks")."".$where_query;
-			$result = $this->db->query($sql);
-			while ( $myrow = $this->db->fetchArray($result) ) {
-				$ret[] = $this->get($myrow['bid']);
-			}
-			break;
-		case "list":
-			$sql = "SELECT * FROM ".$this->db->prefix("newblocks")."".$where_query;
-			$result = $this->db->query($sql);
-			while ( $myrow = $this->db->fetchArray($result) ) {
-				$block = $this->get($myrow['bid']);
-				$name = $block->getVar("title");
-				$ret[$block->getVar("bid")] = $name;
-			}
-			break;
-		case "id":
-			$sql = "SELECT bid FROM ".$this->db->prefix("newblocks")."".$where_query;
-			$result = $this->db->query($sql);
-			while ( $myrow = $this->db->fetchArray($result) ) {
-				$ret[] = $myrow['bid'];
-			}
-			break;
+			case "object":
+				$sql = "SELECT * FROM ".$this->db->prefix("newblocks")."".$where_query;
+				$result = $this->db->query($sql);
+				while ( $myrow = $this->db->fetchArray($result) ) {
+					$ret[] = $this->get($myrow['bid']);
+				}
+				break;
+			case "list":
+				$sql = "SELECT * FROM ".$this->db->prefix("newblocks")."".$where_query;
+				$result = $this->db->query($sql);
+				while ( $myrow = $this->db->fetchArray($result) ) {
+					$block = $this->get($myrow['bid']);
+					$name = $block->getVar("title");
+					$ret[$block->getVar("bid")] = $name;
+				}
+				break;
+			case "id":
+				$sql = "SELECT bid FROM ".$this->db->prefix("newblocks")."".$where_query;
+				$result = $this->db->query($sql);
+				while ( $myrow = $this->db->fetchArray($result) ) {
+					$ret[] = $myrow['bid'];
+				}
+				break;
 		}
 		//echo $sql;
 		return $ret;

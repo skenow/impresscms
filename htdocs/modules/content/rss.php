@@ -1,14 +1,14 @@
 <?php
 /**
-* Generating an RSS feed
-*
-* @copyright	The ImpressCMS Project
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @since		1.0
-* @author		Rodrigo P Lima aka TheRplima <therplima@impresscms.org>
-* @package		content
-* @version		$Id$
-*/
+ * Generating an RSS feed
+ *
+ * @copyright	The ImpressCMS Project
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since		1.0
+ * @author		Rodrigo P Lima aka TheRplima <therplima@impresscms.org>
+ * @package		content
+ * @version		$Id$
+ */
 
 /** Include the module's header for all pages */
 include_once 'header.php';
@@ -33,13 +33,13 @@ $content_post_handler = xoops_getModuleHandler('post');
 $postsArray = $content_post_handler->getPosts(0, 10, $clean_post_uid);
 
 foreach($postsArray as $postArray) {
-	$content_feed->feeds[] = array (
-	  'title' => $postArray['post_title'],
-	  'link' => str_replace('&', '&amp;', $postArray['itemUrl']),
-	  'description' => htmlspecialchars(str_replace('&', '&amp;', $postArray['post_lead']), ENT_QUOTES),
-	  'pubdate' => $postArray['post_published_date_int'],
-	  'guid' => str_replace('&', '&amp;', $postArray['itemUrl']),
-	);
+$content_feed->feeds[] = array (
+'title' => $postArray['post_title'],
+'link' => str_replace('&', '&amp;', $postArray['itemUrl']),
+'description' => htmlspecialchars(str_replace('&', '&amp;', $postArray['post_lead']), ENT_QUOTES),
+'pubdate' => $postArray['post_published_date_int'],
+'guid' => str_replace('&', '&amp;', $postArray['itemUrl']),
+);
 }
 
 $content_feed->render();

@@ -1,18 +1,18 @@
 <?php
 // $Id$
 /**
-* Administration of users, main functions file
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	Administration
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * Administration of users, main functions file
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	Administration
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @version	$Id$
+ */
 
 if(!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid())) {exit('Access Denied');}
 
@@ -53,7 +53,7 @@ function displayUsers()
 	$editform->addElement($submit_button);
 	$editform->addElement($fct_hidden);
 	$editform->display();
-	
+
 	echo "<br />\n";
 	$usercount = $member_handler->getUserCount(new Criteria('level', '-1'));
 	$nav = new XoopsPageNav($usercount, 200, $userstart, 'userstart', 'fct=users');
@@ -79,7 +79,7 @@ function displayUsers()
 	$editform->addElement($submit_button);
 	$editform->addElement($fct_hidden);
 	$editform->display();
-	
+
 	echo "<br />\n";
 	$uid_value = '';
 	$uname_value = '';
@@ -269,8 +269,8 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 				xoops_cp_footer();
 				exit();
 			}
-			   include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
-			   $icmspass = new icms_Password();
+			include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
+			$icmspass = new icms_Password();
 			$edituser->setVar('salt', $salt);
 			$edituser->setVar('enc_type', $enc_type);
 			$edituser->setVar('pass_expired', $pass_expired);
@@ -332,7 +332,7 @@ function synchronize($id, $type)
 			}
 			$sql = "UPDATE ".$xoopsDB->prefix("users")." SET posts = '".intval($total_posts)."' WHERE uid = '".intval($id)."'";
 			if(!$result = $xoopsDB->query($sql)) {exit(sprintf(_AM_CNUUSER %s ,$id));}
-		break;
+			break;
 
 		case 'all users':
 			$sql = "SELECT uid FROM ".$xoopsDB->prefix('users')."";
@@ -342,10 +342,10 @@ function synchronize($id, $type)
 				$id = $row['uid'];
 				synchronize($id, "user");
 			}
-		break;
+			break;
 
 		default:
-		break;
+			break;
 	}
 	redirect_header('admin.php?fct=users&amp;op=modifyUser&amp;uid='.$id,1,_AM_DBUPDATED);
 	exit();

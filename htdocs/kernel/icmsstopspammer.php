@@ -1,17 +1,17 @@
 <?php
 /**
-* IcmsStopSpammer object
-*
-* This class is responsible for cross referencing register information with StopForumSpam.com API
-*
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	IcmsPersistableObject
-* @since	1.2
-* @author		marcan <marcan@impresscms.org>
-* @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @version		$Id
-*/
+ * IcmsStopSpammer object
+ *
+ * This class is responsible for cross referencing register information with StopForumSpam.com API
+ *
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	IcmsPersistableObject
+ * @since	1.2
+ * @author		marcan <marcan@impresscms.org>
+ * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @version		$Id
+ */
 class IcmsStopSpammer {
 	private $api_url;
 

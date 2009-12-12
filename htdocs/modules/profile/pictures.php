@@ -1,21 +1,21 @@
 <?php
 /**
-* Pictures page
-*
-* @copyright	GNU General Public License (GPL)
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @since		1.3
-* @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @package		profile
-* @version		$Id$
-*/
+ * Pictures page
+ *
+ * @copyright	GNU General Public License (GPL)
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since		1.3
+ * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @package		profile
+ * @version		$Id$
+ */
 
 /**
  * Edit a Picture
  *
  * @param object $picturesObj ProfilePicture object to be edited
  * @param bool   $hideForm
-*/
+ */
 function editpictures($picturesObj, $hideForm=false)
 {
 	global $profile_pictures_handler, $xoTheme, $icmsTpl, $icmsUser;
@@ -38,7 +38,6 @@ function editpictures($picturesObj, $hideForm=false)
 		$icmsTpl->assign('lang_picturesform_title', _MD_PROFILE_PICTURES_SUBMIT);
 	}
 }
-
 
 $profile_template = 'profile_pictures.html';
 include_once 'header.php';
@@ -164,7 +163,7 @@ if (in_array($clean_op,$valid_op,true)){
 
 		default:
 			$clean_start = isset($_GET['start']) ? intval($_GET['start']) : 0;
-			
+				
 			if($real_uid && $real_uid == $uid){
 				$picturesObj = $profile_pictures_handler->get($clean_pictures_id);
 				editpictures($picturesObj, true);

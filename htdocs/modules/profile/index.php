@@ -17,7 +17,7 @@
  * Edit a Friendship
  *
  * @param object $friendshipObj ProfileFriendship object to be edited
-*/
+ */
 function editfriendship($friendshipObj, $uid=false, $hideForm=false) {
 	global $profile_friendship_handler, $xoTheme, $icmsTpl, $icmsUser;
 
@@ -101,7 +101,7 @@ if (in_array($clean_op,$valid_op,true) && is_object($icmsUser)){
 					editfriendship($friendshipObj, $uid, true);
 				}
 			}
-		break;
+			break;
 	}
 }
 

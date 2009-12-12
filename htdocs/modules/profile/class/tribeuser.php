@@ -1,15 +1,15 @@
 <?php
 
 /**
-* Classes responsible for managing profile tribeuser objects
-*
-* @copyright	GNU General Public License (GPL)
-* @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @since	1.3
-* @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @package	profile
-* @version	$Id$
-*/
+ * Classes responsible for managing profile tribeuser objects
+ *
+ * @copyright	GNU General Public License (GPL)
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since	1.3
+ * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @package	profile
+ * @version	$Id$
+ */
 
 if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
 
@@ -224,7 +224,7 @@ class ProfileTribeuserHandler extends IcmsPersistableObjectHandler {
 	function getApprovals($tribes_id = false) {
 		return $this->getTribeusers(0, 0, false, false, $tribes_id, '=', 0);
 	}
-	
+
 	/**
 	 * Check wether the current user can submit a new tribeuser or not
 	 *

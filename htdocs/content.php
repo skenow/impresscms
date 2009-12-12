@@ -91,7 +91,5 @@ $icms_metagen->createMetaTags ();
 $xoTheme->addStylesheet ( ICMS_URL . '/modules/content/include/content.css' );
 $icmsTpl->assign ( 'content_module_home', content_getModuleName ( true, true ) );
 
-
-
 include_once CONTENT_ROOT_PATH.'footer.php';
 ?>

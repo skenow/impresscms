@@ -35,7 +35,7 @@ class ProfileTribetopic extends IcmsPersistableSeoObject {
 		$this->quickInitVar('views', XOBJ_DTYPE_INT, false);
 		$this->quickInitVar('last_post_id', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('last_post_time', XOBJ_DTYPE_LTIME, false);
-		
+
 		$this->setControl('poster_uid', 'user');
 		$this->setControl('closed', 'yesno');
 
@@ -109,7 +109,7 @@ class ProfileTribetopic extends IcmsPersistableSeoObject {
 			// link to close the topic
 			$ret['toggleCloseLink'] = '<a href="'.$ret['itemUrl'].'&amp;op=toggleclose"><img src="'.$this->handler->_moduleUrl.'/images/lock.gif" title="'._MD_PROFILE_TRIBETOPIC_CLOSE.'" style="vertical-align:middle;" /></a>';
 		}
-		
+
 		return $ret;
 	}
 }

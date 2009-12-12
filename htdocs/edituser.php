@@ -1,20 +1,20 @@
 <?php
 /**
-* Generates form and validation for editing users
-* 
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		core
-* @since		XOOPS
-* @author		http://www.xoops.org The XOOPS Project
-* @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @version		$Id$
-*
-* @package kernel 
-* @subpackage users
-*/
+ * Generates form and validation for editing users
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		core
+ * @since		XOOPS
+ * @author		http://www.xoops.org The XOOPS Project
+ * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @version		$Id$
+ *
+ * @package kernel
+ * @subpackage users
+ */
 $xoopsOption['pagetype'] = 'user';
 /** Include mainfile - required */
 include 'mainfile.php';
@@ -34,8 +34,8 @@ if(!is_object($icmsUser))
 }
 
 $allowedHTML = array('htmlcode');
-	if(!empty($_POST)){ foreach($_POST as $k => $v){ if (!in_array($k,$allowedHTML)){${$k} = StopXSS($v);}else{${$k} = $v;}}}
-	if(!empty($_GET)){ foreach($_GET as $k => $v){ if (!in_array($k,$allowedHTML)){${$k} = StopXSS($v);}else{${$k} = $v;}}}
+if(!empty($_POST)){ foreach($_POST as $k => $v){ if (!in_array($k,$allowedHTML)){${$k} = StopXSS($v);}else{${$k} = $v;}}}
+if(!empty($_GET)){ foreach($_GET as $k => $v){ if (!in_array($k,$allowedHTML)){${$k} = StopXSS($v);}else{${$k} = $v;}}}
 $op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'editprofile');
 
 if($op == 'saveuser')
@@ -64,7 +64,7 @@ if($op == 'saveuser')
 		$email = '';
 		if(!empty($_POST['email']))
 		{
-		$email = $myts->stripSlashesGPC(trim($_POST['email']));
+			$email = $myts->stripSlashesGPC(trim($_POST['email']));
 		}
 
 		if($email == '' || !checkEmail($email) )
@@ -83,7 +83,7 @@ if($op == 'saveuser')
 		}
 	}
 
- 	if($icmsConfigUser['allow_chguname'] == 1)
+	if($icmsConfigUser['allow_chguname'] == 1)
 	{
 		$uname = '';
 		if(!empty($_POST['uname']))
@@ -120,12 +120,11 @@ if($op == 'saveuser')
 			}
 		}
 
-/*	if (strrpos($uname, ' ') > 0) {
-$errors[] .= _US_NICKNAMENOSPACES."<br />";
-}*/
+		/*	if (strrpos($uname, ' ') > 0) {
+		 $errors[] .= _US_NICKNAMENOSPACES."<br />";
+		 }*/
 
 	}
-
 
 	$username = xoops_getLinkedUnameFromId($uid);
 	$password = $oldpass = '';
@@ -165,7 +164,6 @@ $errors[] .= _US_NICKNAMENOSPACES."<br />";
 
 	}
 
-
 	if(count($errors) > 0)
 	{
 		/** Include the header that starts page rendering */
@@ -196,7 +194,7 @@ $errors[] .= _US_NICKNAMENOSPACES."<br />";
 		$edituser->setVar('url', formatURL($_POST['url']));
 		$edituser->setVar('user_icq', $_POST['user_icq']);
 		$edituser->setVar('user_from', $_POST['user_from']);
-		$edituser->setVar('openid', isset($_POST['openid']) ? trim($_POST['openid']) : '');		
+		$edituser->setVar('openid', isset($_POST['openid']) ? trim($_POST['openid']) : '');
 		if($icmsConfigUser['allwshow_sig'] == 1)
 		{
 			if($icmsConfigUser['allow_htsig'] == 0)
@@ -206,8 +204,8 @@ $errors[] .= _US_NICKNAMENOSPACES."<br />";
 			}
 			else
 			{
-			$signature = $myts->displayTarea($_POST['user_sig'], 1, 1, 1, 1, 1, 'display');
-			$edituser->setVar('user_sig', xoops_substr($signature, 0, intval($icmsConfigUser['sig_max_length'])));
+				$signature = $myts->displayTarea($_POST['user_sig'], 1, 1, 1, 1, 1, 'display');
+				$edituser->setVar('user_sig', xoops_substr($signature, 0, intval($icmsConfigUser['sig_max_length'])));
 			}
 		}
 
@@ -220,10 +218,10 @@ $errors[] .= _US_NICKNAMENOSPACES."<br />";
 		$edituser->setVar('user_msnm', $_POST['user_msnm']);
 		if($password != '')
 		{
-                        include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
-                        $icmspass = new icms_Password();
-                        $salt = $icmspass->icms_createSalt();
-                        $edituser->setVar('salt', $salt, true);
+			include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
+			$icmspass = new icms_Password();
+			$salt = $icmspass->icms_createSalt();
+			$edituser->setVar('salt', $salt, true);
 			$edituser->setVar('enc_type', $icmsConfigUser['enc_type'], true);
 			$pass = $icmspass->icms_encryptPass($password, $salt);
 			$edituser->setVar('pass', $pass, true);
@@ -305,7 +303,7 @@ if($op == 'editprofile')
 	$email_cbox->addOption(1, _US_ALLOWVIEWEMAIL);
 	$email_tray->addElement($email_cbox);
 	$form->addElement($email_tray);
-	
+
 	if ($icmsConfigAuth['auth_openid'] == 1) {
 		$openid_tray = new XoopsFormElementTray(_US_OPENID_FORM_CAPTION, '<br />');
 		$openid_text = new XoopsFormText('', 'openid', 30, 255, $icmsUser->getVar('openid'));
@@ -465,16 +463,16 @@ if($op == 'avatarform')
 
 	if($icmsConfigUser['avatar_allow_upload'] == 1 && $icmsUser->getVar('posts') >= $icmsConfigUser['avatar_minposts'])
 	{
-		/* since this has been included at the beginning of the file, we shouldn't need it here 
-		include_once 'class/xoopsformloader.php'; */
+		/* since this has been included at the beginning of the file, we shouldn't need it here
+		 include_once 'class/xoopsformloader.php'; */
 		$form = new XoopsThemeForm(_US_UPLOADMYAVATAR, 'uploadavatar', 'edituser.php', 'post', true);
 		$form->setExtra('enctype="multipart/form-data"');
 		/* the avatar resizer shall later be included
-		if($icmsConfigUser['avatar_auto_resize'])
-		{
-		$form->addElement(new XoopsFormLabel(_US_AUTORESIZE_ATV, sprintf(_US_AUTORESIZE_ATV_DESC,$icmsConfigUser['avatar_width'],$icmsConfigUser['avatar_height'])));
-		}
-		*/
+		 if($icmsConfigUser['avatar_auto_resize'])
+		 {
+		 $form->addElement(new XoopsFormLabel(_US_AUTORESIZE_ATV, sprintf(_US_AUTORESIZE_ATV_DESC,$icmsConfigUser['avatar_width'],$icmsConfigUser['avatar_height'])));
+		 }
+		 */
 		$form->addElement(new XoopsFormLabel(_US_MAXPIXEL, icms_conv_nr2local($icmsConfigUser['avatar_width']).' x '.icms_conv_nr2local($icmsConfigUser['avatar_height'])));
 		$form->addElement(new XoopsFormLabel(_US_MAXIMGSZ, icms_conv_nr2local($icmsConfigUser['avatar_maxsize'])));
 		$form->addElement(new XoopsFormFile(_US_SELFILE, 'avatarfile', icms_conv_nr2local($icmsConfigUser['avatar_maxsize'])), true);
@@ -492,14 +490,14 @@ if($op == 'avatarform')
 	$avatar_tray->addElement($avatar_select);
 	$avatar_tray->addElement(new XoopsFormLabel('', "<img src='".ICMS_UPLOAD_URL."/".$icmsUser->getVar("user_avatar", "E")."' name='avatar' id='avatar' alt='' /> <a href=\"javascript:openWithSelfMain('".ICMS_URL."/misc.php?action=showpopups&amp;type=avatars','avatars',600,400);\">"._LIST."</a>"));
 	if($icmsConfigUser['avatar_allow_upload'] == 1 && $icmsUser->getVar('posts') < $icmsConfigUser['avatar_minposts']){
-	$form2->addElement(new XoopsFormLabel(sprintf(_US_POSTSNOTENOUGH,icms_conv_nr2local($icmsConfigUser['avatar_minposts'])),_US_UNCHOOSEAVT));}
-	$form2->addElement($avatar_tray);
-	$form2->addElement(new XoopsFormHidden('uid', intval($icmsUser->getVar('uid'))));
-	$form2->addElement(new XoopsFormHidden('op', 'avatarchoose'));
-	$form2->addElement(new XoopsFormButton('', 'submit2', _SUBMIT, 'submit'));
-	$form2->display();
-	/** Include the footer file to complete page rendering */
-	include ICMS_ROOT_PATH.'/footer.php';
+		$form2->addElement(new XoopsFormLabel(sprintf(_US_POSTSNOTENOUGH,icms_conv_nr2local($icmsConfigUser['avatar_minposts'])),_US_UNCHOOSEAVT));}
+		$form2->addElement($avatar_tray);
+		$form2->addElement(new XoopsFormHidden('uid', intval($icmsUser->getVar('uid'))));
+		$form2->addElement(new XoopsFormHidden('op', 'avatarchoose'));
+		$form2->addElement(new XoopsFormButton('', 'submit2', _SUBMIT, 'submit'));
+		$form2->display();
+		/** Include the footer file to complete page rendering */
+		include ICMS_ROOT_PATH.'/footer.php';
 }
 
 if($op == 'avatarupload')

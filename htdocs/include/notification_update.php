@@ -1,17 +1,17 @@
 <?php
 /**
-* Handles all notification update functions within ImpressCMS
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	core
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * Handles all notification update functions within ImpressCMS
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	core
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @version	$Id$
+ */
 
 // RMV-NOTIFY
 
@@ -69,7 +69,7 @@ foreach ($update_list as $update_item) {
 
 	list($category, $item_id, $event) = split (',', $update_item['params']);
 	$status = !empty($update_item['status']) ? 1 : 0;
-	
+
 	if (!$status) {
 		$notification_handler->unsubscribe($category, $item_id, $event, $module_id, $user_id);
 	} else {

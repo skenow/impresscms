@@ -1,15 +1,15 @@
 <?php
 
 /**
-* Classes responsible for managing profile configs objects
-*
-* @copyright	GNU General Public License (GPL)
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @since		1.3
-* @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @package		profile
-* @version		$Id$
-*/
+ * Classes responsible for managing profile configs objects
+ *
+ * @copyright	GNU General Public License (GPL)
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since		1.3
+ * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @package		profile
+ * @version		$Id$
+ */
 
 if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
 
@@ -69,47 +69,47 @@ class ProfileConfigs extends IcmsPersistableObject {
 			'itemHandler' => 'configs',
 			'method' => 'getConfig_statusArray',
 			'module' => 'profile'
-		));
-		$this->setControl('audio', array (
+			));
+			$this->setControl('audio', array (
 			'itemHandler' => 'configs',
 			'method' => 'getConfig_statusArray',
 			'module' => 'profile'
-		));
-		$this->setControl('videos', array (
+			));
+			$this->setControl('videos', array (
 			'itemHandler' => 'configs',
 			'method' => 'getConfig_statusArray',
 			'module' => 'profile'
-		));
-		$this->setControl('friendship', array (
+			));
+			$this->setControl('friendship', array (
 			'itemHandler' => 'configs',
 			'method' => 'getConfig_statusArray',
 			'module' => 'profile'
-		));
-		$this->setControl('tribes', array (
+			));
+			$this->setControl('tribes', array (
 			'itemHandler' => 'configs',
 			'method' => 'getConfig_statusArray',
 			'module' => 'profile'
-		));
-		$this->setControl('profile_contact', array (
+			));
+			$this->setControl('profile_contact', array (
 			'itemHandler' => 'configs',
 			'method' => 'getConfig_statusArray',
 			'module' => 'profile'
-		));
-		$this->setControl('profile_general', array (
+			));
+			$this->setControl('profile_general', array (
 			'itemHandler' => 'configs',
 			'method' => 'getConfig_statusArray',
 			'module' => 'profile'
-		));
-		$this->setControl('profile_stats', array (
+			));
+			$this->setControl('profile_stats', array (
 			'itemHandler' => 'configs',
 			'method' => 'getConfig_statusArray',
 			'module' => 'profile'
-		));
-		$this->setControl('profile_usercontributions', array (
+			));
+			$this->setControl('profile_usercontributions', array (
 			'itemHandler' => 'configs',
 			'method' => 'getConfig_statusArray',
 			'module' => 'profile'
-		));
+			));
 	}
 
 	/**
@@ -276,7 +276,6 @@ class ProfileConfigsHandler extends IcmsPersistableObjectHandler {
 		return true;
 	}
 
-
 	function afterUpdate(& $obj) {
 		$obj->_user_suspended = false;
 		$obj->_user_status = false;
@@ -317,7 +316,7 @@ class ProfileConfigsHandler extends IcmsPersistableObjectHandler {
 			$processUser->setVar('email', $email);
 			$processUser->setVar('user_sig', $sig);
 			if(!$member_handler->insertUser($processUser)){
-			echo $processUser->getHtmlErrors();
+				echo $processUser->getHtmlErrors();
 			}
 			$obj->setVar('suspension', 0);
 			$obj->setVar('status', 0);

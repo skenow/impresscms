@@ -1,16 +1,16 @@
 <?php
 /**
-* Block Positions Manager
-*
-* System tool that allow create and manage positions/areas to disply the blocks
-*
-* @copyright	The ImpressCMS Project http://www.impresscms.org/
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		Administration
-* @since		1.1
-* @author		Rodrigo Pereira Lima (AKA TheRplima) <therplima@impresscms.org>
-* @version		$Id$
-*/
+ * Block Positions Manager
+ *
+ * System tool that allow create and manage positions/areas to disply the blocks
+ *
+ * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		Administration
+ * @since		1.1
+ * @author		Rodrigo Pereira Lima (AKA TheRplima) <therplima@impresscms.org>
+ * @version		$Id$
+ */
 
 $modversion['name'] = _MD_AM_BKPOSAD;
 $modversion['version'] = "";
