@@ -34,8 +34,8 @@ $modversion = array(
 	'image'=> "images/system_slogo.png", /* for backward compatibility */
 
 /**  Development information */
-	'status_version'=> "RC2",
-	'status'=> "RC",
+	'status_version'=> "Final",
+	'status'=> "Final",
 	'date'=> "",
 	'author_word'=> "",
 
@@ -68,7 +68,7 @@ $modversion['autotasks'][] = array(
 /** Manual */
 $modversion['manual']['wiki'][] = "<a href='http://wiki.impresscms.org/index.php?title=Extended_Profile/"._LANGCODE."' target='_blank'>"._LANGNAME."</a>";
 
-$modversion['warning'] = _CO_ICMS_WARNING_ALPHA;
+$modversion['warning'] = _CO_ICMS_WARNING_FINAL;
 
 /** Administrative information */
 $modversion['hasAdmin'] = true;
@@ -196,8 +196,8 @@ if (function_exists('xoops_gethandler')){
 	$module = $icms_modules_handler->getByDirname('content');
 
 	if (!is_object($module)){
-		//Content Manager
-		$modversion['blocks'][] = array(
+	//Content Manager
+	$modversion['blocks'][] = array(
 		'file' => 'content_blocks.php',
 		'name' => _MI_SYSTEM_BNAME15,
 		'description' => '',
@@ -206,7 +206,7 @@ if (function_exists('xoops_gethandler')){
 		'options' => '1|1|1|1',
 		'template' => 'system_block_content.html');
 
-		$modversion['blocks'][] = array(
+	$modversion['blocks'][] = array(
 		'file' => 'content_blocks.php',
 		'name' => _MI_SYSTEM_BNAME16,
 		'description' => '',
@@ -215,7 +215,7 @@ if (function_exists('xoops_gethandler')){
 		'options' => 'content_weight|ASC|1|#F2E2A0|0',
 		'template' => 'system_block_contentmenu.html');
 
-		$modversion['blocks'][] = array(
+	$modversion['blocks'][] = array(
 		'file' => 'content_blocks.php',
 		'name' => _MI_SYSTEM_BNAME17,
 		'description' => '',

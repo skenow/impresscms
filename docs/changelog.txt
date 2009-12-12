@@ -14,10 +14,12 @@ Note: 	From this release forward, the detailed changelog will not be included wi
 
 
 === ImpressCMS 1.2 Final ===
-Release date:
+Release date: 13 Dec 2009
 Revision:
-DB Version:
-Build Version:
+DB Version: 38
+Build Version: 32
+
+* #862: Removing inclusion to deprecated sqlutility classes (malanciault)
 
 === ImpressCMS 1.2 RC2 ===
 Release date: 6 Dec 2009
