@@ -375,21 +375,25 @@ function CloseWaitBox()
 }
 
 /*
- * Checks if email is of correct formatting
- *
- * @param string  $email  The email address
- * @param string  $antispam  Generate an email address that is protected from spammers
- * @return string  $email  The generated email address
- */
-function checkEmail($email,$antispam = false)
+* Checks if email is of correct formatting
+*
+* @param string     $email      The email address
+* @param string     $antispam   Generate an email address that is protected from spammers
+* @return string    $email      The generated email address
+*/
+function checkEmail($email, $antispam = false)
 {
-	if(!$email || !preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i",$email)) {return false;}
-	if($antispam)
-	{
-		$email = str_replace('@', ' at ', $email);
-		$email = str_replace('.', ' dot ', $email);
-	}
-	return $email;
+    $email = filter_var($email, FILTER_SANITIZE_EMAIL);
+    if(!$email || !filter_var($email, FILTER_VALIDATE_EMAIL))
+    {
+        return false;
+    }
+    if($antispam)
+    {
+        $email = str_replace('@', ' at ', $email);
+        $email = str_replace('.', ' dot ', $email);
+    }
+    return $email;
 }
 
 /*
