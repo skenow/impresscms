@@ -1078,6 +1078,31 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		$icmsDatabaseUpdater->runQuery ( $sql_extract_esc, 'System Preferences textarea controls set to textsarea', true );
 	}
 
+	/* 1.2.1 release */
+
+	$newDbVersion = 39;
+	if (!$abortUpdate && $dbVersion < $newDbVersion) {
+		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
+		// retrieve config_id for purifier_HTML_Doctype
+		$sql = "SELECT conf_id " . $icmsDB->prefix ( 'config' ) . " WHERE conf_name='purifier_HTML_Doctype'";
+		$result = $icmsDB->query ($sql);
+		if (!$result) return false;
+		$myrow = $icmsDB->fetchArray($result);
+		if (!isset($myrow[0]['conf_id'])) return false;
+		$conf_id = $myrow[0]['conf_id'];
+
+		$sql = "INSERT INTO " . $icmsDB->prefix ( 'configoption' ) . " (confop_id, confop_name, confop_value, conf_id)" . " VALUES" . " (NULL, '_MD_AM_PURIFIER_401T', 'HTML 4.01 Transitional', {$config_id})";
+		if (!$icmsDB->queryF($sql)) return false;
+		$sql = "INSERT INTO " . $icmsDB->prefix ( 'configoption' ) . " (confop_id, confop_name, confop_value, conf_id)" . " VALUES" . " (NULL, '_MD_AM_PURIFIER_401S', 'HTML 4.01 Strict', {$config_id})";
+		if (!$icmsDB->queryF($sql)) return false;
+		$sql = "INSERT INTO " . $icmsDB->prefix ( 'configoption' ) . " (confop_id, confop_name, confop_value, conf_id)" . " VALUES" . " (NULL, '_MD_AM_PURIFIER_X10T', 'XHTML 1.0 Transitional', {$config_id})";
+		if (!$icmsDB->queryF($sql)) return false;
+		$sql = "INSERT INTO " . $icmsDB->prefix ( 'configoption' ) . " (confop_id, confop_name, confop_value, conf_id)" . " VALUES" . " (NULL, '_MD_AM_PURIFIER_X10S', 'XHTML 1.0 Strict', {$config_id})";
+		if (!$icmsDB->queryF($sql)) return false;
+		$sql = "INSERT INTO " . $icmsDB->prefix ( 'configoption' ) . " (confop_id, confop_name, confop_value, conf_id)" . " VALUES" . " (NULL, '_MD_AM_PURIFIER_X11', 'XHTML 1.1', {$config_id})";
+		if (!$icmsDB->queryF($sql)) return false;
+	}
+
 	echo "</code>";
 
 	if ($from_112) {
