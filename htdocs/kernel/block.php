@@ -31,16 +31,16 @@ class IcmsBlock extends IcmsPersistableObject {
 		$this->IcmsPersistableObject($handler);
 
 		$this->quickInitVar('name', XOBJ_DTYPE_TXTBOX);
-		$this->quickInitVar('bid', XOBJ_DTYPE_INT);
-		$this->quickInitVar('mid', XOBJ_DTYPE_INT);
+		$this->quickInitVar('bid', XOBJ_DTYPE_INT, true);
+		$this->quickInitVar('mid', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('func_num', XOBJ_DTYPE_INT);
-		$this->quickInitVar('title', XOBJ_DTYPE_TXTBOX);
+		$this->quickInitVar('title', XOBJ_DTYPE_TXTBOX, true);
 		$this->quickInitVar('content', XOBJ_DTYPE_TXTAREA);
-		$this->quickInitVar('side', XOBJ_DTYPE_INT);
-		$this->quickInitVar('weight', XOBJ_DTYPE_INT);
-		$this->quickInitVar('visible', XOBJ_DTYPE_INT);
+		$this->quickInitVar('side', XOBJ_DTYPE_INT, true);
+		$this->quickInitVar('weight', XOBJ_DTYPE_INT, true, false, false, 0);
+		$this->quickInitVar('visible', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('block_type', XOBJ_DTYPE_TXTBOX);
-		$this->quickInitVar('c_type', XOBJ_DTYPE_TXTBOX);
+		$this->quickInitVar('c_type', XOBJ_DTYPE_TXTBOX, true);
 		$this->quickInitVar('isactive', XOBJ_DTYPE_INT);
 		$this->quickInitVar('dirname', XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar('func_file', XOBJ_DTYPE_TXTBOX);
