@@ -1,4 +1,12 @@
 ImpressCMS ChangeLog
+=== ImpressCMS 1.2.1 Alpha ===
+Release date: Not Released
+Revision:
+DB Version: 
+Build Version
+
+* #874: Fixing error on Admin Installed Modules Block about calling a method from a non-object with annonymous users.
+* #875: Fixing error on Admin CP Block about calling a method from a non-object with annonymous users.
 
 === ImpressCMS 1.2 Final ===
 Release date: 13 Dec 2009
