@@ -94,7 +94,10 @@ function b_system_admin_cp_show(){
 	$block['lang_insmodules'] = _AD_INSTALLEDMODULES;
 	
 	// Loading System Configuration Links
-	$groups = $icmsUser->getGroups();
+	if( is_object( $icmsUser ) )
+		$groups = $icmsUser->getGroups();	
+	else
+		$groups = array();
 	$all_ok = false;
 	if(!in_array(XOOPS_GROUP_ADMIN, $groups))
 	{
