@@ -1,13 +1,14 @@
 <?php
 /**
-* System admin blocks
-*
-* @copyright      http://www.impresscms.org/ The ImpressCMS Project
-* @license         LICENSE.txt
-* @package	Systemblocks
-* @since            1.3
-* @version		$Id$
-*/
+ * System Admin Blocks File
+ *
+ * @copyright	The ImpressCMS Project <http://www.impresscms.org/>
+ * @license	LICENSE.txt
+ * @package	SystemBlocks
+ * @since	ImpressCMS 1.2
+ * @version	$Id$
+ * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
+ */
 
 /**
  * Admin Warnings Block
@@ -15,10 +16,10 @@
  * @copyright The ImpressCMS Project <http://www.impresscms.org> 
  * @license GNU GPL v2
  * 
- * @since ImpressCMS 1.3
+ * @since ImpressCMS 1.2
  * @version $Id: $
  * 
- * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
  *
  * @return array
  * 
@@ -62,7 +63,7 @@ function b_system_admin_warnings_show(){
 	
 	// ###### Output warn messages for correct functionality  ######
 	if(!is_writable(ICMS_CACHE_PATH))
-			array_push($block['msg'], icms_warning_msg(sprintf(_WARNINNOTWRITEABLE,ICMS_CACHE_PATH)), '', false);
+		array_push($block['msg'], icms_warning_msg(sprintf(_WARNINNOTWRITEABLE,ICMS_CACHE_PATH)), '', false);
 	if(!is_writable(ICMS_UPLOAD_PATH))
 		array_push($block['msg'], icms_warning_msg(sprintf(_WARNINNOTWRITEABLE,ICMS_UPLOAD_PATH)), '', false);
 	if(!is_writable(ICMS_COMPILE_PATH))
@@ -77,10 +78,10 @@ function b_system_admin_warnings_show(){
 /**
  * Admin Control Panel Block
  * 
- * @since ImpressCMS 1.3
+ * @since ImpressCMS 1.2
  * @version $Id: $
  * 
- * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
  *
  * @return array
  * 
@@ -133,9 +134,9 @@ function b_system_admin_cp_show(){
 /**
  * System Admin Modules Block Show Fuction
  * 
- * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
  * 
- * @since ImpressCMS 1.3
+ * @since ImpressCMS 1.2
  * @version $Id: $
  * 
  * @return array
@@ -193,7 +194,8 @@ function b_system_admin_modules_show(){
 		if ($module->dirname () == 'system') {
 			$systemadm = true;
 		}
-		$admin_perm = $moduleperm_handler->checkRight ( 'module_admin', $module->mid (), $icmsUser->getGroups () );
+		if( is_object( $icmsUser ) )
+			$admin_perm = $moduleperm_handler->checkRight ( 'module_admin', $module->mid (), $icmsUser->getGroups () );
 		if ($admin_perm) {
 			if ($rtn ['dir'] != 'system') {
 				$block['mods'][] = $rtn;
@@ -201,7 +203,7 @@ function b_system_admin_modules_show(){
 		}
 		
 	}
-	
+	// If there is any module listed, then show the block.
 	if(count($block['mods'] > 0))
 		return $block;
 }
