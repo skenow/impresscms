@@ -442,11 +442,13 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		if (is_writable ( ICMS_PLUGINS_PATH ) || (is_dir(ICMS_ROOT_PATH . '/plugins/preloads') && is_writable ( ICMS_ROOT_PATH . '/plugins/preloads' ))) {
 			echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
 			if (is_dir ( ICMS_ROOT_PATH . '/preload' )) {
-				icms_copyr ( ICMS_ROOT_PATH . '/preload', ICMS_ROOT_PATH . '/plugins/preloads' );
-				icms_unlinkRecursive ( ICMS_ROOT_PATH . '/preload' );
-			}
-			if (is_dir ( ICMS_ROOT_PATH . '/plugins/preloads' )) {
-				icms_unlinkRecursive ( ICMS_ROOT_PATH . '/preload' );
+				if( icms_copyr ( ICMS_ROOT_PATH . '/preload', ICMS_ROOT_PATH . '/plugins/preloads' ) ) {
+					icms_unlinkRecursive ( ICMS_ROOT_PATH . '/preload' );
+				} else {
+					$newDbVersion = 13;
+					echo '<br />'.sprintf(_MD_AM_PLUGINSFOLDER_UPDATE_TEXT, ICMS_PLUGINS_PATH,ICMS_ROOT_PATH . '/plugins/preloads');
+					$abortUpdate = true;
+				}
 			}
 		} else {
 			$newDbVersion = 13;
@@ -1037,14 +1039,24 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 				} else {
 					$new_folder = $row ['imgcat_foldername '];
 				}
-				icms_mkdir ( ICMS_IMANAGER_FOLDER_PATH . '/' . $new_folder );
+				if( icms_mkdir ( ICMS_IMANAGER_FOLDER_PATH . '/' . $new_folder ) ) {
 
-				$result1 = $icmsDB->query ( 'SELECT * FROM `' . $icmsDB->prefix ( 'image' ) . '` WHERE imgcat_id=' . $row ['imgcat_id'] );
-				while ( $row1 = $icmsDB->fetchArray ( $result1 ) ) {
-					if (! file_exists ( ICMS_IMANAGER_FOLDER_PATH . '/' . $new_folder . '/' . $row1 ['image_name'] ) && file_exists ( ICMS_UPLOAD_PATH . '/' . $row1 ['image_name'] )) {
-						icms_copyr ( ICMS_UPLOAD_PATH . '/' . $row1 ['image_name'], ICMS_IMANAGER_FOLDER_PATH . '/' . $new_folder . '/' . $row1 ['image_name'] );
-						@unlink ( ICMS_UPLOAD_PATH . '/' . $row1 ['image_name'] );
+					$result1 = $icmsDB->query ( 'SELECT * FROM `' . $icmsDB->prefix ( 'image' ) . '` WHERE imgcat_id=' . $row ['imgcat_id'] );
+					while( $row1 = $icmsDB->fetchArray ( $result1 ) && ! $abortUpdate ) {
+						if( ! file_exists ( ICMS_IMANAGER_FOLDER_PATH . '/' . $new_folder . '/' . $row1 ['image_name'] ) && file_exists ( ICMS_UPLOAD_PATH . '/' . $row1 ['image_name'] )) {
+							if( icms_copyr ( ICMS_UPLOAD_PATH . '/' . $row1 ['image_name'], ICMS_IMANAGER_FOLDER_PATH . '/' . $new_folder . '/' . $row1 ['image_name'] ) ) {
+								@unlink ( ICMS_UPLOAD_PATH . '/' . $row1 ['image_name'] );
+							} else {
+								$newDbVersion = 36;
+								echo '<br />'.sprintf(_MD_AM_IMAGESFOLDER_UPDATE_TEXT, ICMS_IMANAGER_FOLDER_PATH);
+								$abortUpdate = true;
+							}
+						}
 					}
+				} else {
+					$newDbVersion = 36;
+					echo '<br />'.sprintf(_MD_AM_IMAGESFOLDER_UPDATE_TEXT, ICMS_IMANAGER_FOLDER_PATH);
+					$abortUpdate = true;
 				}
 			}
 			/**
@@ -1105,7 +1117,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 	echo "</code>";
 
-	if ($from_112) {
+	if ($from_112 && ! $abortUpdate ) {
 		/**
 		 * @todo create a language constant for this text
 		 */
