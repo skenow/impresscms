@@ -27,10 +27,12 @@
  */
 function imcms_install_mkdir($target, $mode = 0777 ) {
 
+	if( is_dir( $target ) ) return TRUE;
+	
 	$metachars = array('[', '?', '"', '<', '>', '|', ' ' ); // Need to exclude . and : because they may occur in the root path
 	$target = str_replace( $metachars , '_', strtolower ( $target ));
 
-	if( $res = mkdir($target, $mode, TRUE) ) {
+	if( mkdir($target, $mode, TRUE) ) {
 		// create an index.html file in this directory
 		if ($fh = @fopen($target.'/index.html', 'w')) {
 			fwrite($fh, '<script>history.go(-1);</script>');
@@ -42,7 +44,7 @@ function imcms_install_mkdir($target, $mode = 0777 ) {
   		chmod($target, $mode);
   	}
 
-	return $res;
+	return is_dir( $target );
 }
 
 /**
