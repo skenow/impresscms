@@ -1,12 +1,16 @@
 ImpressCMS ChangeLog
+
 === ImpressCMS 1.2.1 Alpha ===
 Release date: Not Released
 Revision:
 DB Version: 
-Build Version
+Build Version:
 
-* #874: Fixing error on Admin Installed Modules Block about calling a method from a non-object with annonymous users.
-* #875: Fixing error on Admin CP Block about calling a method from a non-object with annonymous users.
+* #874: Fixing error on Admin Installed Modules Block about calling a method from a non-object with annonymous users. (nekro)
+* #875: Fixing error on Admin CP Block about calling a method from a non-object with annonymous users. (nekro)
+* #876: Adding a default value for the field Weight of the blocks. (nekro)
+* #806: Adding requited labels to block, blockposition and symlink objects. (nekro)
+* #879: Removing rank images from the uploads folder. (nekro)
 
 === ImpressCMS 1.2 Final ===
 Release date: 13 Dec 2009
