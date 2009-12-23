@@ -197,12 +197,6 @@ case 'finish':
 			$xoopsMailer =& getMailer();
 			$xoopsMailer->useMail();
 			$xoopsMailer->setTemplate('register.tpl');
-			$xoopsMailer->assign('USERNAME', $uname);
-			$xoopsMailer->assign('USERLOGINNAME', $login_name);
-			$xoopsMailer->assign('USERPASSWORD', $pass);
-			$xoopsMailer->assign('SITENAME', $icmsConfig['sitename']);
-			$xoopsMailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
-			$xoopsMailer->assign('SITEURL', ICMS_URL."/");
 			$xoopsMailer->setToUsers(new XoopsUser($newid));
 			$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
 			$xoopsMailer->setFromName($icmsConfig['sitename']);
@@ -220,10 +214,7 @@ case 'finish':
 			$xoopsMailer->assign('USERNAME', $uname);
 			$xoopsMailer->assign('USERLOGINNAME', $login_name);
 			$xoopsMailer->assign('USEREMAIL', $email);
-			$xoopsMailer->assign('USERACTLINK', ICMS_URL.'/user.php?op=actv&id='.$newid.'&actkey='.$actkey);
-			$xoopsMailer->assign('SITENAME', $icmsConfig['sitename']);
-			$xoopsMailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
-			$xoopsMailer->assign('SITEURL', ICMS_URL."/");
+			$xoopsMailer->assign('USERACTLINK', ICMS_URL.'/user.php?op=actv&id='.$newid.'&actkey='.$newuser->getVar('actkey'));
 			$member_handler =& xoops_gethandler('member');
 			$xoopsMailer->setToGroups($member_handler->getGroup($icmsConfigUser['activation_group']));
 			$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
