@@ -73,7 +73,10 @@ function xoDiagIfWritable( $path ) {
     <div class="clear">&nbsp;</div>
      <h4><?php echo _PHP_VERSION; ?>:&nbsp;
         <?php
-            if ( version_compare( phpversion(), '5.2', '>=') ) {
+            if ( version_compare( phpversion(), '5.3', '>=') ) {
+            	echo xoDiag( -1, phpversion() );
+				$php_version_error = true;
+			} elseif ( version_compare( phpversion(), '5.2', '>=') ) {
             	echo xoDiag( 1, phpversion() );
             } elseif ( version_compare( phpversion(), '5.1', '>=') ) {
             	echo xoDiag( 0, phpversion() );
@@ -81,7 +84,7 @@ function xoDiagIfWritable( $path ) {
             	echo xoDiag( -1, phpversion() );
             }
      		?>
-    <img src="img/yes.png" alt="Success" class="rootimg" />
+    <img src="img/<?php echo (isset($php_version_error) ? "no" : "yes") ?>.png" alt="Success" class="rootimg" />
     </h4>
     <div class="clear">&nbsp;</div>
     <h4><?php printf( PHP_EXTENSION, 'MySQL' ); ?>:&nbsp;

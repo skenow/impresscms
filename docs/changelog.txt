@@ -11,6 +11,7 @@ Build Version: 33
 * #876: Adding a default value for the field Weight of the blocks. (nekro)
 * #806: Adding requited labels to block, blockposition and symlink objects. (nekro)
 * #879: Removing rank images from the uploads folder. (nekro)
+* #867: installer is now checking for PHP 5.3 (phoenyx)
 
 === ImpressCMS 1.2 Final ===
 Release date: 13 Dec 2009
