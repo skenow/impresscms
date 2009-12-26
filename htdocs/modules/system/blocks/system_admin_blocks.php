@@ -1,18 +1,19 @@
 <?php
 /**
- * System admin blocks
+ * System Admin Blocks File
  *
- * @copyright      http://www.impresscms.org/ The ImpressCMS Project
- * @license         LICENSE.txt
- * @package	Systemblocks
- * @since            1.3
- * @version		$Id$
+ * @copyright	The ImpressCMS Project <http://www.impresscms.org/>
+ * @license	LICENSE.txt
+ * @package	SystemBlocks
+ * @since	ImpressCMS 1.2
+ * @version	$Id$
+ * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
  */
 
 /**
  * Admin Warnings Block
- *
- * @copyright The ImpressCMS Project <http://www.impresscms.org>
+ * 
+ * @copyright The ImpressCMS Project <http://www.impresscms.org> 
  * @license GNU GPL v2
  *
  * @since ImpressCMS 1.3
@@ -93,7 +94,10 @@ function b_system_admin_cp_show(){
 	$block['lang_insmodules'] = _AD_INSTALLEDMODULES;
 
 	// Loading System Configuration Links
-	$groups = $icmsUser->getGroups();
+	if( is_object( $icmsUser ) )
+		$groups = $icmsUser->getGroups();	
+	else
+		$groups = array();
 	$all_ok = false;
 	if(!in_array(XOOPS_GROUP_ADMIN, $groups))
 	{
@@ -135,7 +139,7 @@ function b_system_admin_cp_show(){
  *
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  *
- * @since ImpressCMS 1.3
+ * @since ImpressCMS 1.2
  * @version $Id: $
  *
  * @return array
@@ -193,7 +197,8 @@ function b_system_admin_modules_show(){
 		if ($module->dirname () == 'system') {
 			$systemadm = true;
 		}
-		$admin_perm = $moduleperm_handler->checkRight ( 'module_admin', $module->mid (), $icmsUser->getGroups () );
+		if( is_object( $icmsUser ) )
+			$admin_perm = $moduleperm_handler->checkRight ( 'module_admin', $module->mid (), $icmsUser->getGroups () );
 		if ($admin_perm) {
 			if ($rtn ['dir'] != 'system') {
 				$block['mods'][] = $rtn;
@@ -202,6 +207,7 @@ function b_system_admin_modules_show(){
 
 	}
 
+	// If there is any module listed, then show the block.
 	if(count($block['mods'] > 0))
 	return $block;
 }

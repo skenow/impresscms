@@ -66,7 +66,7 @@ switch ( $op ) {
 					messageloc:		0
 				});
 			});
-');
+		');
 		$stop = '';
 		if (!$GLOBALS['xoopsSecurity']->check()) {
 			$stop .= implode('<br />', $GLOBALS['xoopsSecurity']->getErrors())."<br />";
@@ -88,19 +88,19 @@ switch ( $op ) {
 			$f_timezone = ($timezone_offset < 0) ? 'GMT '.$timezone_offset : 'GMT +'.$timezone_offset;
 			echo _US_TIMEZONE.": $f_timezone<br />";
 			echo "<form action='register.php' method='post'>
-		<input type='hidden' name='login_name' value='".$myts->htmlSpecialChars($login_name)."' />
-		<input type='hidden' name='uname' value='".$myts->htmlSpecialChars($uname)."' />
-		<input type='hidden' name='email' value='".$myts->htmlSpecialChars($email)."' />";
+				<input type='hidden' name='login_name' value='".$myts->htmlSpecialChars($login_name)."' />
+				<input type='hidden' name='uname' value='".$myts->htmlSpecialChars($uname)."' />
+				<input type='hidden' name='email' value='".$myts->htmlSpecialChars($email)."' />";
 			echo "<input type='hidden' name='user_viewemail' value='".$user_viewemail."' />
-		<input type='hidden' name='timezone_offset' value='".$timezone_offset."' />
-		<input type='hidden' name='url' value='".$myts->htmlSpecialChars($url)."' />
-		<input type='hidden' name='pass' value='".$myts->htmlSpecialChars($pass)."' />
-		<input type='hidden' name='vpass' value='".$myts->htmlSpecialChars($vpass)."' />
-		<input type='hidden' name='user_mailok' value='".$user_mailok."' />
-		<input type='hidden' name='actkey' value='".$myts->htmlSpecialChars($actkey)."' />
-		<input type='hidden' name='salt' value='".$myts->htmlSpecialChars($salt)."' />
-		<input type='hidden' name='enc_type' value='".intval($enc_type)."' />
-		<br /><br /><input type='hidden' name='op' value='finish' />".$GLOBALS['xoopsSecurity']->getTokenHTML()."<input type='submit' value='". _US_FINISH ."' /></form>";
+				<input type='hidden' name='timezone_offset' value='".$timezone_offset."' />
+				<input type='hidden' name='url' value='".$myts->htmlSpecialChars($url)."' />
+				<input type='hidden' name='pass' value='".$myts->htmlSpecialChars($pass)."' />
+				<input type='hidden' name='vpass' value='".$myts->htmlSpecialChars($vpass)."' />
+				<input type='hidden' name='user_mailok' value='".$user_mailok."' />
+				<input type='hidden' name='actkey' value='".$myts->htmlSpecialChars($actkey)."' />
+				<input type='hidden' name='salt' value='".$myts->htmlSpecialChars($salt)."' />
+				<input type='hidden' name='enc_type' value='".intval($enc_type)."' />
+				<br /><br /><input type='hidden' name='op' value='finish' />".$GLOBALS['xoopsSecurity']->getTokenHTML()."<input type='submit' value='". _US_FINISH ."' /></form>";
 		} else {
 			echo "<span style='color:#ff0000;'>$stop</span>";
 			include 'include/registerform.php';
@@ -196,12 +196,6 @@ switch ( $op ) {
 				$xoopsMailer =& getMailer();
 				$xoopsMailer->useMail();
 				$xoopsMailer->setTemplate('register.tpl');
-				$xoopsMailer->assign('USERNAME', $uname);
-				$xoopsMailer->assign('USERLOGINNAME', $login_name);
-				$xoopsMailer->assign('USERPASSWORD', $pass);
-				$xoopsMailer->assign('SITENAME', $icmsConfig['sitename']);
-				$xoopsMailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
-				$xoopsMailer->assign('SITEURL', ICMS_URL."/");
 				$xoopsMailer->setToUsers(new XoopsUser($newid));
 				$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
 				$xoopsMailer->setFromName($icmsConfig['sitename']);
@@ -220,9 +214,6 @@ switch ( $op ) {
 				$xoopsMailer->assign('USERLOGINNAME', $login_name);
 				$xoopsMailer->assign('USEREMAIL', $email);
 				$xoopsMailer->assign('USERACTLINK', ICMS_URL.'/user.php?op=actv&id='.$newid.'&actkey='.$actkey);
-				$xoopsMailer->assign('SITENAME', $icmsConfig['sitename']);
-				$xoopsMailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
-				$xoopsMailer->assign('SITEURL', ICMS_URL."/");
 				$member_handler =& xoops_gethandler('member');
 				$xoopsMailer->setToGroups($member_handler->getGroup($icmsConfigUser['activation_group']));
 				$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
