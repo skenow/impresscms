@@ -80,7 +80,7 @@ echo '<body>';
 <div id="page">
 	<form action='<?php echo $_SERVER['PHP_SELF']; ?>' method='post'>
 	<div id="leftside">
-			<h3>Steps</h3>
+			<h3><?php echo INSTALL_H3_STEPS; ?></h3>
 			<ul>
 			<?php foreach ( $wizard->pages as $k => $page ) {
 				$class = '';
