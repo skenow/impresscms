@@ -15,6 +15,7 @@ Build Version: 33
 * #878: fixed missing variable in user activision email (phoenyx)
 * #662: fixed check for theme_use_smarty in footer.php (phoenyx)
 * #905: XOBJ_DTYPE_STIME, XOBJ_DTYPE_MTIME, XOBJ_DTYPE_LTIME is now handled correctly (phoenyx)
+* #907: Simplified inclusions in the image editor library (skenow)
 
 === ImpressCMS 1.2 Final ===
 Release date: 13 Dec 2009
