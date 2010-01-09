@@ -79,7 +79,7 @@ case 'newuser':
 	$stop .= $thisuser->userCheck($login_name, $uname, $email, $pass, $vpass);
 	if (empty($stop)) {
 		echo _US_LOGINNAME.": ".$myts->htmlSpecialChars($login_name)."<br />";
-		echo _US_USERNAME.": ".$myts->htmlSpecialChars($uname)."<br />";
+		echo _US_NICKNAME.": ".$myts->htmlSpecialChars($uname)."<br />";
 		echo _US_EMAIL.": ".$myts->htmlSpecialChars($email)."<br />";
 		if ($url != '') {
 			$url = formatURL($url);
@@ -100,6 +100,7 @@ case 'newuser':
 		<input type='hidden' name='actkey' value='".$myts->htmlSpecialChars($actkey)."' />
 		<input type='hidden' name='salt' value='".$myts->htmlSpecialChars($salt)."' />
 		<input type='hidden' name='enc_type' value='".intval($enc_type)."' />
+		<input type='hidden' name='agree_disc' value='" . (int) $agree_disc . "' />
 		<br /><br /><input type='hidden' name='op' value='finish' />".$GLOBALS['xoopsSecurity']->getTokenHTML()."<input type='submit' value='". _US_FINISH ."' /></form>";
 	} else {
 		echo "<span style='color:#ff0000;'>$stop</span>";
