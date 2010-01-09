@@ -777,6 +777,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$c=9; // sets config category id
 	$i++;
 	$p=0;
+	/* These have been deprecated in 1.2 and should not be inserted. They are part of the content module now
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'default_page', '_MD_AM_DEFAULT_CONTPAGE', '0', '_MD_AM_DEFAULT_CONTPAGEDSC', 'select_pages', 'int', $p)");
 	$i++;
 	$p++;
@@ -793,7 +794,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'teaser_length', '_MD_AM_CONT_TEASERLENGTH', '500', '_MD_AM_CONT_TEASERLENGTHDSC', 'textbox', 'int', $p)");
-
+	*/
 
 	// Data for Config Category 10 (Personalization Settings)
 	$c=10; // sets config category id
