@@ -28,9 +28,9 @@
 function imcms_install_mkdir($target, $mode = 0777 ) {
 
 	if( is_dir( $target ) ) return TRUE;
-	
+
 	$metachars = array('[', '?', '"', '<', '>', '|', ' ' ); // Need to exclude . and : because they may occur in the root path
-	$target = str_replace( $metachars , '_', strtolower ( $target ));
+	$target = str_replace( $metachars , '_', $target );
 
 	if( mkdir($target, $mode, TRUE) ) {
 		// create an index.html file in this directory

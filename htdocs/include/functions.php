@@ -993,11 +993,11 @@ function icms_mkdir($target, $mode = 0777, $base = ICMS_ROOT_PATH ) {
 	if( is_dir( $target )) return TRUE;
 
 	$metachars = array('[', '?', '"', '.', '<', '>', '|', ' ', ':' );
-	
+
 	$base = preg_replace ( '/[\\|\/]/', DIRECTORY_SEPARATOR, $base);
 	$target = preg_replace ( '/[\\|\/]/', DIRECTORY_SEPARATOR, $target);
 	$target = str_ireplace( $base . DIRECTORY_SEPARATOR, '', $target );
-	$target = $base . DIRECTORY_SEPARATOR . str_replace( $metachars , '_', strtolower ( $target ));
+	$target = $base . DIRECTORY_SEPARATOR . str_replace( $metachars , '_', $target );
 
 	if( mkdir($target, $mode, TRUE) ) {
 		// create an index.html file in this directory
