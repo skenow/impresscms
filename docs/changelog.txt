@@ -6,6 +6,7 @@ Revision:
 DB Version: 
 Build Version: 33
 
+* #913: Fixing isue with Code / Pre tag (thomas)
 * #874: Fixing error on Admin Installed Modules Block about calling a method from a non-object with annonymous users. (nekro)
 * #875: Fixing error on Admin CP Block about calling a method from a non-object with annonymous users. (nekro)
 * #876: Adding a default value for the field Weight of the blocks. (nekro)

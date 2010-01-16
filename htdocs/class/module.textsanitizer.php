@@ -561,15 +561,13 @@ $urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $url
 			$patterns = "/\[code](.*)\[\/code\]/esU";
 			if($image != 0)
 			{
-				$replacements = "'<div
-class=\"xoopsCode\"><code><pre>'.MyTextSanitizer::textsanitizer_syntaxhighlight(MyTextSanitizer::codeSanitizer('$1')).'<
-/pre></code></div>'";
+				$replacements = "'<div 
+class=\"xoopsCode\"><code><pre>'.MyTextSanitizer::textsanitizer_syntaxhighlight(MyTextSanitizer::codeSanitizer('$1')).'</pre></code></div>'";
 			}
 			else
 			{
 				$replacements = "'<div
-class=\"xoopsCode\"><code><pre>'.MyTextSanitizer::textsanitizer_syntaxhighlight(MyTextSanitizer::codeSanitizer('$1',
-0)).'</pre></code></div>'";
+class=\"xoopsCode\"><code><pre>'.MyTextSanitizer::textsanitizer_syntaxhighlight(MyTextSanitizer::codeSanitizer('$1',0)).'</pre></code></div>'";
 			}
 			$text = preg_replace($patterns, $replacements, $text);
 		}
