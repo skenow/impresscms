@@ -570,7 +570,6 @@ $urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $url
 			$text = preg_replace($patterns, $replacements, $text);
 		}
 		return $text;
-		return $text;
 	}
 
 
@@ -813,7 +812,7 @@ $urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $url
 		$addedtag_open = 0;
 		if(!strpos($text, '<?php') and (substr($text, 0, 5) != '<?php'))
 		{
-			$text = '<?php\n' . $text;
+			$text = "<?php\n" . $text;
 			$addedtag_open = 1;
 		}
 		$addedtag_close = 0;
