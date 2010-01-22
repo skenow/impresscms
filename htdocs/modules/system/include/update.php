@@ -478,9 +478,9 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		$sql = "SELECT conf_id FROM `" . $icmsDB->prefix ( 'config' ) . "` WHERE conf_name = 'email_protect'";
 		$result = $icmsDB->query ( $sql );
 		list ( $conf_id ) = $icmsDB->FetchRow ( $result );
-		$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "configoption" ) . " VALUES ('', '_MD_AM_NOMAILPROTECT', '0', " . $conf_id . ");" );
-		$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "configoption" ) . " VALUES ('', '_MD_AM_GDMAILPROTECT', '1', " . $conf_id . ");" );
-		$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "configoption" ) . " VALUES ('', '_MD_AM_REMAILPROTECT', '2', " . $conf_id . ");" );
+		$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "configoption" ) . " VALUES ( NULL, '_MD_AM_NOMAILPROTECT', '0', " . $conf_id . ");" );
+		$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "configoption" ) . " VALUES ( NULL, '_MD_AM_GDMAILPROTECT', '1', " . $conf_id . ");" );
+		$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "configoption" ) . " VALUES ( NULL, '_MD_AM_REMAILPROTECT', '2', " . $conf_id . ");" );
 		$icmsDB->queryF ( "UPDATE `" . $icmsDB->prefix ( 'config' ) . "` SET conf_formtype = 'select', conf_valuetype = 'text' WHERE conf_name = 'email_protect'" );
 		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_PERSONA, 'recprvkey', '_MD_AM_RECPRVKEY', '', '_MD_AM_RECPRVKEY_DESC', 'textbox', 'text', 17 );
 		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_PERSONA, 'recpubkey', '_MD_AM_RECPUBKEY', '', '_MD_AM_RECPUBKEY_DESC', 'textbox', 'text', 17 );
