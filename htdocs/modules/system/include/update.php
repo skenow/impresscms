@@ -332,7 +332,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	if ($dbVersion < $newDbVersion) {
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
 
-		if (getDbValue ( $icmsDB, 'newblocks', 'show_func', 'show_func="b_social_bookmarks"' ) == 0) {
+		if (getDbValue ( $icmsDB, 'newblocks', 'show_func', 'show_func="b_social_bookmarks"' ) == FALSE ) {
 			$sql = "SELECT bid FROM `" . $icmsDB->prefix ( 'newblocks' ) . "` WHERE show_func='b_social_bookmarks'";
 			$result = $icmsDB->query ( $sql );
 			list ( $new_block_id ) = $icmsDB->FetchRow ( $result );
@@ -340,7 +340,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 			$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "group_permission" ) . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');" );
 		}
 
-		if (getDbValue ( $icmsDB, 'newblocks', 'show_func', 'show_func="b_content_show"' ) == 0) {
+		if (getDbValue ( $icmsDB, 'newblocks', 'show_func', 'show_func="b_content_show"' ) == FALSE ) {
 			$sql = "SELECT bid FROM `" . $icmsDB->prefix ( 'newblocks' ) . "` WHERE show_func='b_content_show'";
 			$result = $icmsDB->query ( $sql );
 			list ( $new_block_id ) = $icmsDB->FetchRow ( $result );
@@ -348,7 +348,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 			$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "group_permission" ) . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');" );
 		}
 
-		if (getDbValue ( $icmsDB, 'newblocks', 'show_func', 'show_func="b_content_menu_show"' ) == 0) {
+		if (getDbValue ( $icmsDB, 'newblocks', 'show_func', 'show_func="b_content_menu_show"' ) == FALSE ) {
 			$sql = "SELECT bid FROM `" . $icmsDB->prefix ( 'newblocks' ) . "` WHERE show_func='b_content_menu_show'";
 			$result = $icmsDB->query ( $sql );
 			list ( $new_block_id ) = $icmsDB->FetchRow ( $result );
@@ -356,7 +356,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 			$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "group_permission" ) . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');" );
 		}
 
-		if (getDbValue ( $icmsDB, 'newblocks', 'show_func', 'show_func="b_content_relmenu_show"' ) == 0) {
+		if (getDbValue ( $icmsDB, 'newblocks', 'show_func', 'show_func="b_content_relmenu_show"' ) == FALSE ) {
 			$sql = "SELECT bid FROM `" . $icmsDB->prefix ( 'newblocks' ) . "` WHERE show_func='b_content_relmenu_show'";
 			$result = $icmsDB->query ( $sql );
 			list ( $new_block_id ) = $icmsDB->FetchRow ( $result );
@@ -397,7 +397,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	if ($dbVersion < $newDbVersion) {
 		$from_112 = true;
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
-		if (getDbValue ( $icmsDB, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_CAPTCHA"' ) == 0) {
+		if (getDbValue ( $icmsDB, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_CAPTCHA"' ) == FALSE ) {
 			$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "configcategory" ) . " (confcat_id,confcat_name) VALUES ('11','_MD_AM_CAPTCHA')" );
 		}
 		$icmsDB->queryF ( "DELETE FROM `" . $icmsDB->prefix ( 'config' ) . "` WHERE (conf_modid='1' AND conf_catid='11')" );
@@ -491,7 +491,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	if ($dbVersion < $newDbVersion) {
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
 		//$icmsDatabaseUpdater->insertConfig(XOOPS_CONF_USER, 'delusers', '_MD_AM_DELUSRES', '90', '_MD_AM_DELUSRESDSC', 'textbox', 'int', 3);
-		if (getDbValue ( $icmsDB, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_PLUGINS"' ) == 0) {
+		if (getDbValue ( $icmsDB, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_PLUGINS"' ) == FALSE ) {
 			$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "configcategory" ) . " (confcat_id,confcat_name) VALUES ('12','_MD_AM_PLUGINS')" );
 		}
 		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PLUGINS, 'sanitizer_plugins', '_MD_AM_SELECTSPLUGINS',  serialize ( array ('' ) ), '_MD_AM_SELECTSPLUGINS_DESC', 'select_plugin', 'array', 1 );
@@ -687,7 +687,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		}
 		unset ( $table );
 
-		if (getDbValue ( $icmsDB, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_AUTOTASKS"' ) == 0) {
+		if (getDbValue ( $icmsDB, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_AUTOTASKS"' ) == FALSE ) {
 			$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "configcategory" ) . " (confcat_id,confcat_name) VALUES (13, '_MD_AM_AUTOTASKS')" );
 		}
 
@@ -706,7 +706,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	if( !$abortUpdate) $newDbVersion = 29;
 
 	if ($dbVersion < $newDbVersion) {
-		if (getDbValue ( $icmsDB, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_PURIFIER"' ) == 0) {
+		if (getDbValue ( $icmsDB, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_PURIFIER"' ) == FALSE ) {
 			$icmsDB->queryF ( "INSERT INTO " . $icmsDB->prefix ( 'configcategory' ) . " (confcat_id,confcat_name) VALUES ('14', '_MD_AM_PURIFIER')" );
 		}
 
