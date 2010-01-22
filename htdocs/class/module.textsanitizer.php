@@ -356,7 +356,7 @@ $urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $url
 	**/
 	function undoHtmlSpecialChars($text)
 	{
-		return htmlspecialchars_decode($text, ENT_NOQUOTES);
+		return htmlspecialchars_decode($text, ENT_QUOTES);
 	}
 
 	function icms_htmlEntities($text)
@@ -561,15 +561,11 @@ $urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $url
 			$patterns = "/\[code](.*)\[\/code\]/esU";
 			if($image != 0)
 			{
-				$replacements = "'<div
-class=\"xoopsCode\"><code><pre>'.MyTextSanitizer::textsanitizer_syntaxhighlight(MyTextSanitizer::codeSanitizer('$1')).'<
-/pre></code></div>'";
+				$replacements = "'<div class=\"xoopsCode\"><pre><code>'.MyTextSanitizer::textsanitizer_syntaxhighlight(MyTextSanitizer::codeSanitizer('$1')).'</code></pre></div>'";
 			}
 			else
 			{
-				$replacements = "'<div
-class=\"xoopsCode\"><code><pre>'.MyTextSanitizer::textsanitizer_syntaxhighlight(MyTextSanitizer::codeSanitizer('$1',
-0)).'</pre></code></div>'";
+				$replacements = "'<div class=\"xoopsCode\"><pre><code>'.MyTextSanitizer::textsanitizer_syntaxhighlight(MyTextSanitizer::codeSanitizer('$1',0)).'</code></pre></div>'";
 			}
 			$text = preg_replace($patterns, $replacements, $text);
 		}
@@ -586,7 +582,7 @@ class=\"xoopsCode\"><code><pre>'.MyTextSanitizer::textsanitizer_syntaxhighlight(
 	*/
 	function codeSanitizer($str, $image = 1)
 	{
-		$str = str_replace('\"', '"', base64_decode($str));
+		$str = $this->htmlSpecialChars(str_replace('\"', '"', base64_decode($str)));
 		$str = $this->xoopsCodeDecode($str, $image);
 		return $str;
 	}
@@ -792,13 +788,14 @@ class=\"xoopsCode\"><code><pre>'.MyTextSanitizer::textsanitizer_syntaxhighlight(
 	function textsanitizer_syntaxhighlight(&$text)
 	{
 		global $icmsConfigPlugins;
-		$text = $this->undoHtmlSpecialChars($text);
 		if($icmsConfigPlugins['code_sanitizer'] == 'php')
 		{
+			$text = $this->undoHtmlSpecialChars($text);
 			$text = $this->textsanitizer_php_highlight($text);
 		}
 		elseif($icmsConfigPlugins['code_sanitizer'] == 'geshi' )
 		{
+			$text = $this->undoHtmlSpecialChars($text);
 			$text = $this->textsanitizer_geshi_highlight($text);
 		}
 		return $text;
