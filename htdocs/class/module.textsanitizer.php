@@ -220,11 +220,11 @@ $urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $url
 		$patterns[] = "/\[img align=center](.*)\[\/img\]/sU";
 		if($allowimage != 1)
 		{
-			$replacements[] = '<div align=center><a href="\\1" rel="external">\\1</a></div>';
+			$replacements[] = '<div style="margin: 0 auto; text-align: center;"><a href="\\1" rel="external">\\1</a></div>';
 		}
 		else
 		{
-			$replacements[] = '<div align=center><img src="\\1" alt="" /></div>';
+			$replacements[] = '<div style="margin: 0 auto; text-align: center;"><img src="\\1" alt="" /></div>';
 		}
 		$patterns[] = "/\[img align=(['\"]?)(left|right)\\1]([^\"\(\)\?\&'<>]*)\[\/img\]/sU";
 		$patterns[] = "/\[img]([^\"\(\)\?\&'<>]*)\[\/img\]/sU";
