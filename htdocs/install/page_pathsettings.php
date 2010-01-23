@@ -60,7 +60,7 @@ class PathStuffController {
 
 			$docroot = resolveDocumentRoot();
 
-			$this->xoopsTrustPath = $docroot . 'trust_path' . substr( md5( time() ), 0, 5);
+			$this->xoopsTrustPath = $docroot . substr( md5( time() ), 0, 15);
 		}
 		if ( isset( $_SESSION['settings']['URL'] ) ) {
 			$this->xoopsUrl = $_SESSION['settings']['URL'];
