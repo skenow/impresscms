@@ -414,7 +414,7 @@ function imanager_listimg($imgcat_id,$start=0) {
 			@unlink(ICMS_IMANAGER_FOLDER_PATH.'/'.$images[$i]->getVar('image_name'));
 			$path = ICMS_IMANAGER_FOLDER_PATH.'/';
 			$arrimg[$i]['lcode'] = '[img align=left id='.$images[$i]->getVar('image_id').']'.$images[$i]->getVar('image_nicename').'[/img]';
-			$arrimg[$i]['code'] = '[img id='.$images[$i]->getVar('image_id').']'.$images[$i]->getVar('image_nicename').'[/img]';
+			$arrimg[$i]['code'] = '[img align=center id='.$images[$i]->getVar('image_id').']'.$images[$i]->getVar('image_nicename').'[/img]';
 			$arrimg[$i]['rcode'] = '[img align=right id='.$images[$i]->getVar('image_id').']'.$images[$i]->getVar('image_nicename').'[/img]';
 		} else {
 			$url = (substr($categ_url,-1) != '/')?$categ_url.'/':$categ_url;
@@ -425,7 +425,7 @@ function imanager_listimg($imgcat_id,$start=0) {
 			$arrimg[$i]['width'] = $img_info->getWidth();
 			$arrimg[$i]['height'] = $img_info->getHeight();
 			$arrimg[$i]['lcode'] = '[img align=left]'.$url.$images[$i]->getVar('image_name').'[/img]';
-			$arrimg[$i]['code'] = '[img]'.$url.$images[$i]->getVar('image_name').'[/img]';
+			$arrimg[$i]['code'] = '[img align=center]'.$url.$images[$i]->getVar('image_name').'[/img]';
 			$arrimg[$i]['rcode'] = '[img align=right]'.$url.$images[$i]->getVar('image_name').'[/img]';
 		}
 		$arrimg[$i]['src'] = $src.'?'.time();
