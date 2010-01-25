@@ -136,6 +136,13 @@ class XoopsMultiMailer extends PHPMailer {
 	var $Password	= "";
 
 	/**
+	 * Sets default SMTP Port to use?
+	 * @var 	boolean
+	 * @access	private
+	 */
+	var $Port	= 25;
+
+	/**
 	 * Constuctor
 	 *
 	 * @access public
@@ -154,13 +161,12 @@ class XoopsMultiMailer extends PHPMailer {
 		if ($icmsConfigMailer["mailmethod"] == "smtpauth") {
 		    	$this->Mailer = "smtp";
 			$this->SMTPAuth = true;
-			// @todo create a config option for authentication type: none, ssl, tls
-            		//$this->SMTPSecure = "ssl";
+            $this->SMTPSecure = $icmsConfigMailer['smtpsecure'];
 			// TODO: change value type of xoopsConfig "smtphost" from array to text
 			$this->Host = implode(';',$icmsConfigMailer['smtphost']);
 			$this->Username = $icmsConfigMailer['smtpuser'];
 			$this->Password = $icmsConfigMailer['smtppass'];
-			//$this->Port = 465;
+			$this->Port = $icmsConfigMailer['smtpauthport'];
 		} else {
 			$this->Mailer = $icmsConfigMailer['mailmethod'];
 			$this->SMTPAuth = false;

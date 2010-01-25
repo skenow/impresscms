@@ -678,7 +678,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$p++;
 	$dbm->insert('config', " VALUES ($i,0,$c,'smtpsecure','_MD_AM_SMTPSECURE','ssl','_MD_AM_SMTPSECUREDESC','select','text', $p)");
 	// Insert data for Config Options in selection field. (must be placed before $i++)
-    	$dbm->insert('configoption', " VALUES ($ci, 'None','none', $i)");
+    	$dbm->insert('configoption', " VALUES ($ci, 'None','', $i)");
 	$ci++;
     	$dbm->insert('configoption', " VALUES ($ci, 'SSL','ssl', $i)");
 	$ci++;
