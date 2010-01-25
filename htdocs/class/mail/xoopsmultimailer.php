@@ -141,13 +141,13 @@ class XoopsMultiMailer extends PHPMailer {
 	 * @access public
 	 * @return void
 	 *
-	 * @global	$icmsConfigPersona
+	 * @global	$icmsConfig
 	 */
 	function XoopsMultiMailer(){
-		global $icmsConfigPersona, $icmsConfigMailer;
+		global $icmsConfig, $icmsConfigMailer;
 		$this->From = $icmsConfigMailer['from'];
 		if ($this->From == '') {
-		    $this->From = $icmsConfigPersona['adminmail'];
+		    $this->From = $icmsConfig['adminmail'];
 		}
 		$this->Sender = $this->From;
 
