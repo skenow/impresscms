@@ -426,7 +426,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_CAPTCHA, 'captcha_background_num', '_MD_AM_CAPTCHA_BGNUM', '50', '_MD_AM_CAPTCHA_BGNUMDSC', 'textbox', 'int', 10 );
 		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_CAPTCHA, 'captcha_polygon_point', '_MD_AM_CAPTCHA_POLPNT', '3', '_MD_AM_CAPTCHA_POLPNTDSC', 'textbox', 'int', 11 );
 
-		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) );
+		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
 	}
 
 	if( !$abortUpdate) $newDbVersion = 13;
@@ -1107,21 +1107,30 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		// retrieve config_id for purifier_HTML_Doctype
 		$sql = "SELECT conf_id FROM " . $icmsDB->prefix ( 'config' ) . " WHERE conf_name='purifier_HTML_Doctype'";
 		$result = $icmsDB->query ($sql);
-		if (!$result) return false;
+		if (!$result) $abortUpdate = true;
 		$myrow = $icmsDB->fetchArray($result);
-		if (!isset($myrow['conf_id'])) return false;
+		if (!isset($myrow['conf_id'])) $abortUpdate = true;
 		$config_id = $myrow['conf_id'];
 
-		$sql = "INSERT INTO " . $icmsDB->prefix ( 'configoption' ) . " (confop_id, confop_name, confop_value, conf_id)" . " VALUES" . " (NULL, '_MD_AM_PURIFIER_401T', 'HTML 4.01 Transitional', {$config_id})";
-		if (!$icmsDB->queryF($sql)) return false;
-		$sql = "INSERT INTO " . $icmsDB->prefix ( 'configoption' ) . " (confop_id, confop_name, confop_value, conf_id)" . " VALUES" . " (NULL, '_MD_AM_PURIFIER_401S', 'HTML 4.01 Strict', {$config_id})";
-		if (!$icmsDB->queryF($sql)) return false;
-		$sql = "INSERT INTO " . $icmsDB->prefix ( 'configoption' ) . " (confop_id, confop_name, confop_value, conf_id)" . " VALUES" . " (NULL, '_MD_AM_PURIFIER_X10T', 'XHTML 1.0 Transitional', {$config_id})";
-		if (!$icmsDB->queryF($sql)) return false;
-		$sql = "INSERT INTO " . $icmsDB->prefix ( 'configoption' ) . " (confop_id, confop_name, confop_value, conf_id)" . " VALUES" . " (NULL, '_MD_AM_PURIFIER_X10S', 'XHTML 1.0 Strict', {$config_id})";
-		if (!$icmsDB->queryF($sql)) return false;
-		$sql = "INSERT INTO " . $icmsDB->prefix ( 'configoption' ) . " (confop_id, confop_name, confop_value, conf_id)" . " VALUES" . " (NULL, '_MD_AM_PURIFIER_X11', 'XHTML 1.1', {$config_id})";
-		if (!$icmsDB->queryF($sql)) return false;
+		$sql = "INSERT INTO " . $icmsDB->prefix ( 'configoption' ) . " (confop_id, confop_name, confop_value, conf_id)" . " VALUES" . " (NULL, '_MD_AM_PURIFIER_401T', 'HTML 4.01 Transitional', {$config_id}), "
+		. " (NULL, '_MD_AM_PURIFIER_401S', 'HTML 4.01 Strict', {$config_id}), "
+		. " (NULL, '_MD_AM_PURIFIER_X10T', 'XHTML 1.0 Transitional', {$config_id}), "
+		. " (NULL, '_MD_AM_PURIFIER_X10S', 'XHTML 1.0 Strict', {$config_id}), "
+		. " (NULL, '_MD_AM_PURIFIER_X11', 'XHTML 1.1', {$config_id})";
+		if (!$icmsDB->queryF($sql)) $abortUpdate = true;
+
+	/* New config options and values for mail settings */
+		$sql = 'UPDATE `' . $icmsDB->prefix( 'config' ) . '` SET `conf_order`=9 WHERE `conf_name`="sendmailpath"';
+		$result = $icmsDB->query( $sql );
+		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_MAILER, 'smtpsecure', '_MD_AM_SMTPSECURE', 'ssl', '_MD_AM_SMTPSECUREDESC', 'select', 'text', 7 );
+		$config_id = $icmsDB->getInsertId();
+		$sql = "INSERT INTO " . $icmsDB->prefix ( 'configoption' ) . " (confop_id, confop_name, confop_value, conf_id)"
+		. " VALUES" . " (NULL, 'None', 'none', {$config_id}), "
+		. " (NULL, 'SSL', 'ssl', {$config_id}), "
+		. " (NULL, 'TLS', 'tls', {$config_id})";
+		if (!$icmsDB->queryF($sql)) $abortUpdate = true;
+		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_MAILER, 'smtpauthport', '_MD_AM_SMTPAUTHPORT', '465', '_MD_AM_SMTPAUTHPORTDESC', 'textbox', 'int', 8 );
+
 		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
 	}
 
