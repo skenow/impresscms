@@ -676,6 +676,20 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$dbm->insert('config', " VALUES ($i,0,$c,'smtppass','_MD_AM_SMTPPASS','','_MD_AM_SMTPPASSDESC','password','text', $p)");
 	$i++;
 	$p++;
+	$dbm->insert('config', " VALUES ($i,0,$c,'smtpsecure','_MD_AM_SMTPSECURE','ssl','_MD_AM_SMTPSECUREDESC','select','text', $p)");
+	// Insert data for Config Options in selection field. (must be placed before $i++)
+    	$dbm->insert('configoption', " VALUES ($ci, 'None','none', $i)");
+	$ci++;
+    	$dbm->insert('configoption', " VALUES ($ci, 'SSL','ssl', $i)");
+	$ci++;
+    	$dbm->insert('configoption', " VALUES ($ci, 'TLS','tls', $i)");
+	$ci++;
+	// ----------
+	$i++;
+	$p++;
+	$dbm->insert('config', " VALUES ($i,0,$c,'smtpauthport','_MD_AM_SMTPAUTHPORT','465','_MD_AM_SMTPAUTHPORTDESC','textbox','int', $p)");
+	$i++;
+	$p++;
 	$dbm->insert('config', " VALUES ($i,0,$c,'sendmailpath','_MD_AM_SENDMAILPATH','/usr/sbin/sendmail','_MD_AM_SENDMAILPATHDESC','textbox','text', $p)");
 
 	// Data for Config Category 7 (Authentication Settings)
