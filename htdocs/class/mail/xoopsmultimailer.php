@@ -19,8 +19,8 @@ if (!defined("ICMS_ROOT_PATH")) {
 /**
  * @package		class
  * @subpackage	mail
- * 
- * @filesource 
+ *
+ * @filesource
  *
  * @author		Jochen Büînagel	<jb@buennagel.com>
  * @copyright	copyright (c) 2000-2003 The XOOPS Project (http://www.xoops.org)
@@ -35,15 +35,15 @@ require_once(ICMS_LIBRARIES_PATH.'/phpmailer/class.phpmailer.php');
 
 /**
  * Mailer Class.
- * 
+ *
  * At the moment, this does nothing but send email through PHP's "mail()" function,
  * but it has the abiltiy to do much more.
- * 
+ *
  * If you have problems sending mail with "mail()", you can edit the member variables
  * to suit your setting. Later this will be possible through the admin panel.
  *
  * @todo		Make a page in the admin panel for setting mailer preferences.
- * 
+ *
  * @package		class
  * @subpackage	mail
  *
@@ -59,7 +59,7 @@ class XoopsMultiMailer extends PHPMailer {
 	 * @access	private
 	 */
 	var $From 		= "";
-	
+
 	/**
 	 * "from" name
 	 * @var 	string
@@ -70,15 +70,15 @@ class XoopsMultiMailer extends PHPMailer {
 	// can be "smtp", "sendmail", or "mail"
 	/**
 	 * Method to be used when sending the mail.
-	 * 
+	 *
 	 * This can be:
 	 * <li>mail (standard PHP function "mail()") (default)
 	 * <li>smtp	(send through any SMTP server, SMTPAuth is supported.
-	 * You must set {@link $Host}, for SMTPAuth also {@link $SMTPAuth}, 
+	 * You must set {@link $Host}, for SMTPAuth also {@link $SMTPAuth},
 	 * {@link $Username}, and {@link $Password}.)
-	 * <li>sendmail (manually set the path to your sendmail program 
-	 * to something different than "mail()" uses in {@link $Sendmail}) 
-	 * 
+	 * <li>sendmail (manually set the path to your sendmail program
+	 * to something different than "mail()" uses in {@link $Sendmail})
+	 *
 	 * @var 	string
 	 * @access	private
 	 */
@@ -86,7 +86,7 @@ class XoopsMultiMailer extends PHPMailer {
 
 	/**
 	 * set if $Mailer is "sendmail"
-	 * 
+	 *
 	 * Only used if {@link $Mailer} is set to "sendmail".
 	 * Contains the full path to your sendmail program or replacement.
 	 * @var 	string
@@ -96,7 +96,7 @@ class XoopsMultiMailer extends PHPMailer {
 
 	/**
 	 * SMTP Host.
-	 * 
+	 *
 	 * Only used if {@link $Mailer} is set to "smtp"
 	 * @var 	string
 	 * @access	private
@@ -119,7 +119,7 @@ class XoopsMultiMailer extends PHPMailer {
 
 	/**
 	 * Username for authentication with your SMTP host.
-	 * 
+	 *
 	 * Only used if {@link $Mailer} is "smtp" and {@link $SMTPAuth} is TRUE
 	 * @var 	string
 	 * @access	private
@@ -128,19 +128,19 @@ class XoopsMultiMailer extends PHPMailer {
 
 	/**
 	 * Password for SMTPAuth.
-	 * 
+	 *
 	 * Only used if {@link $Mailer} is "smtp" and {@link $SMTPAuth} is TRUE
 	 * @var 	string
 	 * @access	private
 	 */
 	var $Password	= "";
-	
+
 	/**
 	 * Constuctor
-	 * 
+	 *
 	 * @access public
-	 * @return void 
-	 * 
+	 * @return void
+	 *
 	 * @global	$icmsConfigPersona
 	 */
 	function XoopsMultiMailer(){
@@ -168,12 +168,7 @@ class XoopsMultiMailer extends PHPMailer {
 			$this->Host = implode(';',$icmsConfigMailer['smtphost']);
 		}
 		$this->CharSet = strtolower( _CHARSET );
-		if ( file_exists( ICMS_ROOT_PATH . "/language/{$icmsConfigPersona['language']}/phpmailer.php" ) ) {
-			include( ICMS_ROOT_PATH . "/language/{$icmsConfigPersona['language']}/phpmailer.php" );
-			$this->language = $PHPMAILER_LANG;
-		} else {
-			$this->SetLanguage( 'en', ICMS_LIBRARIES_PATH . "/phpmailer/language/" );
-		}
+		$this->SetLanguage( 'en', ICMS_LIBRARIES_PATH . "/phpmailer/language/" );
 		$this->PluginDir = ICMS_LIBRARIES_PATH."/phpmailer/";
 	}
 
@@ -214,7 +209,7 @@ class XoopsMultiMailer extends PHPMailer {
 
     if (!$this->SmtpConnect()) {
         return false;
-    }            
+    }
 
     $smtp_from = ($this->Sender == "") ? $this->From : $this->Sender;
     if (!$this->smtp->Mail($smtp_from)) {
@@ -247,18 +242,18 @@ class XoopsMultiMailer extends PHPMailer {
     $count = count($bad_rcpt);
     if ($count > 0) {
         for ($i = 0; $i < $count; $i++) {
-            if ($i != 0) { 
+            if ($i != 0) {
                 $error .= ", ";
             }
             $error .= $bad_rcpt[$i];
         }
-        
+
         //To rebuild a correct header, it should to rebuild a correct adress array
         $this->to = array_values($this->to);
         $this->cc = array_values($this->cc);
         $this->bcc = array_values($this->bcc);
         $header = $this->CreateHeader();
-        
+
         $error = $this->Lang("recipients_failed") . $error;
         $this->SetError($error);
     }
