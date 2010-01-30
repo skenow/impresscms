@@ -1135,7 +1135,9 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	}
 
 	echo "</code>";
-
+    if( $abortUpdate ) {
+        icms_error_msg( sprintf( _DATABASEUPDATER_UPDATE_ERR, icms_conv_nr2local( ICMS_SYSTEM_DBVERSION ) ), _DATABASEUPDATER_UPDATE_DB, TRUE);
+    }
 	if ($from_112 && ! $abortUpdate ) {
 		/**
 		 * @todo create a language constant for this text
