@@ -21,7 +21,7 @@ Build Version: 33
 
 === ImpressCMS 1.2 Final ===
 Release date: 13 Dec 2009
-Revision:
+Revision: 9648
 DB Version: 38
 Build Version: 32
 
