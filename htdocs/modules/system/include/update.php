@@ -1043,7 +1043,6 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 			while ( $row = $icmsDB->fetchArray ( $result ) ) {
 				if (empty ( $row ['imgcat_foldername'] ) && $row[ 'imgcat_storetype' ] = 'file' ) {
 					$new_folder =  preg_replace( '/[:?".<>\/\\\|\s]/', '_', strtolower ( $row[ 'imgcat_name' ] ));
-					$icmsDB->queryF ( 'UPDATE `' . $icmsDB->prefix ( 'imagecategory' ) . '` SET imgcat_foldername="' . $new_folder . '" WHERE imgcat_id=' . $row ['imgcat_id'] );
 				} else {
 					$new_folder = $row ['imgcat_foldername '];
 				}
@@ -1054,6 +1053,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 						if( ! file_exists ( ICMS_IMANAGER_FOLDER_PATH . '/' . $new_folder . '/' . $row1 ['image_name'] ) && file_exists ( ICMS_UPLOAD_PATH . '/' . $row1 ['image_name'] )) {
 							if( icms_copyr ( ICMS_UPLOAD_PATH . '/' . $row1 ['image_name'], ICMS_IMANAGER_FOLDER_PATH . '/' . $new_folder . '/' . $row1 ['image_name'] ) ) {
 								@unlink ( ICMS_UPLOAD_PATH . '/' . $row1 ['image_name'] );
+                                $icmsDB->queryF ( 'UPDATE `' . $icmsDB->prefix ( 'imagecategory' ) . '` SET imgcat_foldername="' . $new_folder . '" WHERE imgcat_id=' . $row ['imgcat_id'] );
 							} else {
 								$newDbVersion = 36;
 								echo '<br />'.sprintf('Unable to copy image - %s', $row1['image_name']);
