@@ -233,7 +233,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
         if (empty($not_id)) {
             $not_id = $this->db->getInsertId();
         }
-        $notification->assignVar('not_id', $not_id);
+        $notification->assignVar('not_id', (int)$not_id);
         return true;
     }
 
@@ -672,7 +672,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
                     if (!empty($not_config['tags_func'])) {
                         $tags_func = $not_config['tags_func'];
                         if (function_exists($tags_func)) {
-                            $tags = $tags_func($category, (int)$item_id, $event);
+                            $tags = $tags_func(mysql_real_escape_string($category), (int)$item_id, mysql_real_escape_string($event));
                         }
                     }
                 }
@@ -685,7 +685,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
     					if (!empty($not_config['lookup_func'])) {
     						$lookup_func = $not_config['lookup_func'];
     						if (function_exists($lookup_func)) {
-    							$item_info = $lookup_func($category, (int)$item_id);
+    							$item_info = $lookup_func(mysql_real_escape_string($category), (int)$item_id);
     						}
     					}
     				}
