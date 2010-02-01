@@ -468,7 +468,7 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 			} else {
 				$side = "side='".intval($side)."'";
 			}
-			$where_query .= " AND ".$side;
+			$where_query .= " AND ".(int)$side;
 		}
 
 		if ( isset($visible) ) {
