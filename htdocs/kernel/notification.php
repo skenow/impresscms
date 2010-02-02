@@ -770,7 +770,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
         $criteria->add (new Criteria('not_modid', (int)$module_id));
         $criteria->add (new Criteria('not_category', mysql_real_escape_string($category)));
         $criteria->add (new Criteria('not_itemid', (int)$item_id));
-        $criteria->add (new Criteria('not_uid', (int)$user_id)));
+        $criteria->add (new Criteria('not_uid', (int)$user_id));
         if (!is_array($events)) {
             $events = array($events);
         }
