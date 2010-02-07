@@ -204,19 +204,19 @@ $urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $url
 		$patterns[] = "/\[email]([^;<>\*\(\)\"']*)\[\/email\]/sU";
 		$replacements[] = '<a href="mailto:\\1">\\1</a>';
 		$patterns[] = "/\[b](.*)\[\/b\]/sU";
-		$replacements[] = '<b>\\1</b>';
+		$replacements[] = '<strong>\\1</strong>';
 		$patterns[] = "/\[i](.*)\[\/i\]/sU";
-		$replacements[] = '<i>\\1</i>';
+		$replacements[] = '<em>\\1</em>';
 		$patterns[] = "/\[u](.*)\[\/u\]/sU";
 		$replacements[] = '<u>\\1</u>';
 		$patterns[] = "/\[d](.*)\[\/d\]/sU";
 		$replacements[] = '<del>\\1</del>';
 		$patterns[] = "/\[center](.*)\[\/center\]/sU";
-		$replacements[] = '<div align=center>\\1</div>';
+		$replacements[] = '<div align="center">\\1</div>';
 		$patterns[] = "/\[left](.*)\[\/left\]/sU";
-		$replacements[] = '<div align=left>\\1</div>';
+		$replacements[] = '<div align="left">\\1</div>';
 		$patterns[] = "/\[right](.*)\[\/right\]/sU";
-		$replacements[] = '<div align=right>\\1</div>';
+		$replacements[] = '<div align="right">\\1</div>';
 		$patterns[] = "/\[img align=center](.*)\[\/img\]/sU";
 		if($allowimage != 1)
 		{
@@ -561,11 +561,11 @@ $urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $url
 			$patterns = "/\[code](.*)\[\/code\]/esU";
 			if($image != 0)
 			{
-				$replacements = "'<div class=\"xoopsCode\"><pre><code>'.MyTextSanitizer::textsanitizer_syntaxhighlight(MyTextSanitizer::codeSanitizer('$1')).'</code></pre></div>'";
+				$replacements = "'<div class=\"xoopsCode\">'.MyTextSanitizer::textsanitizer_syntaxhighlight(MyTextSanitizer::codeSanitizer('$1')).'</div>'";
 			}
 			else
 			{
-				$replacements = "'<div class=\"xoopsCode\"><pre><code>'.MyTextSanitizer::textsanitizer_syntaxhighlight(MyTextSanitizer::codeSanitizer('$1',0)).'</code></pre></div>'";
+				$replacements = "'<div class=\"xoopsCode\">'.MyTextSanitizer::textsanitizer_syntaxhighlight(MyTextSanitizer::codeSanitizer('$1',0)).'</div>'";
 			}
 			$text = preg_replace($patterns, $replacements, $text);
 		}
@@ -785,18 +785,16 @@ $urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $url
 	* @param	 string	$text	 purifies (lightly) and then syntax highlights the text
 	* @return	string	$text	 the syntax highlighted text
 	*/
-	function textsanitizer_syntaxhighlight(&$text)
-	{
+	function textsanitizer_syntaxhighlight(&$text) {
 		global $icmsConfigPlugins;
-		if($icmsConfigPlugins['code_sanitizer'] == 'php')
-		{
+		if( $icmsConfigPlugins['code_sanitizer'] == 'php' ) {
 			$text = $this->undoHtmlSpecialChars($text);
-			$text = $this->textsanitizer_php_highlight($text);
-		}
-		elseif($icmsConfigPlugins['code_sanitizer'] == 'geshi' )
-		{
+			$text = '<code>' . $this->textsanitizer_php_highlight($text) . '</code>';
+		} elseif($icmsConfigPlugins['code_sanitizer'] == 'geshi' ) {
 			$text = $this->undoHtmlSpecialChars($text);
-			$text = $this->textsanitizer_geshi_highlight($text);
+			$text = '<code>' . $this->textsanitizer_geshi_highlight($text) . '</code>';
+		} else {
+			$text = '<pre><code>' . $text . '</code></pre>';
 		}
 		return $text;
 	}
