@@ -789,14 +789,14 @@ $urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $url
 		global $icmsConfigPlugins;
 		if( $icmsConfigPlugins['code_sanitizer'] == 'php' ) {
 			$text = $this->undoHtmlSpecialChars($text);
-			$text = '<code>' . $this->textsanitizer_php_highlight($text) . '</code>';
+			$text = $this->textsanitizer_php_highlight($text);
 		} elseif($icmsConfigPlugins['code_sanitizer'] == 'geshi' ) {
 			$text = $this->undoHtmlSpecialChars($text);
 			$text = '<code>' . $this->textsanitizer_geshi_highlight($text) . '</code>';
 		} else {
 			$text = '<pre><code>' . $text . '</code></pre>';
 		}
-		return $text;
+	    return $text;
 	}
 
 	/**
