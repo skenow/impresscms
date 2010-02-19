@@ -462,9 +462,9 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 			 	$criteria->add( new Criteria('block_type', $tp) );
 			 	$blockpositions = $icms_blockposition_handler->getObjects($criteria);
 				foreach( $blockpositions as $bp ){
-				$q_side .= "side='". (int) $bp->getVar('id') . "' OR ";
+					$q_side .= "side='". (int) $bp->getVar('id') . "' OR ";
 				}
-				$q_side = "('".substr($side,0,strlen($side)-4)."')";
+				$q_side = "('".substr($q_side,0,strlen($q_side)-4)."')";
 			} else {
 				$q_side = "side='". (int) $side . "'";
 			}
