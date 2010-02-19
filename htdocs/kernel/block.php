@@ -450,25 +450,25 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 	public function getAllBlocks($rettype="object", $side=null, $visible=null, $orderby="side,weight,bid", $isactive=1)
 	{
 		$ret = array();
-		$where_query = " WHERE isactive='".intval($isactive)."'";
+		$where_query = " WHERE isactive='". (int) $isactive . "'";
 
 		if ( isset($side) ) {
 			// get both sides in sidebox? (some themes need this)
 			$tp = ($side == -2)?'L':($side == -6)?'C':'';
 			if ( $tp != '') {
-			 	$side = "";
+			 	$q_side = "";
 			 	$icms_blockposition_handler = xoops_gethandler('blockposition');
 			 	$criteria = new CriteriaCompo();
 			 	$criteria->add( new Criteria('block_type', $tp) );
 			 	$blockpositions = $icms_blockposition_handler->getObjects($criteria);
 				foreach( $blockpositions as $bp ){
-				$side .= "side='".intval( $bp->getVar('id') )."' OR ";
+				$q_side .= "side='". (int) $bp->getVar('id') . "' OR ";
 				}
-				$side = "('".substr($side,0,strlen($side)-4)."')";
+				$q_side = "('".substr($side,0,strlen($side)-4)."')";
 			} else {
-				$side = "side='".intval($side)."'";
+				$q_side = "side='". (int) $side . "'";
 			}
-			$where_query .= " AND ".(int)$side;
+			$where_query .= " AND ". $q_side;
 		}
 
 		if ( isset($visible) ) {
