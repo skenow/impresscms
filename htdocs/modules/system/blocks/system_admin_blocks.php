@@ -33,7 +33,8 @@ function b_system_admin_warnings_show(){
 	if(is_dir(ICMS_ROOT_PATH.'/install/')){
 		array_push($block['msg'], icms_error_msg(sprintf(_WARNINSTALL2,ICMS_ROOT_PATH.'/install/'), '', false));
 	}
-	if(getDbValue($xoopsDB, 'modules', 'version', 'version="120"') !== FALSE AND getDbValue($xoopsDB, 'modules', 'mid', 'mid="1"') == 1){
+	/** @todo make this dynamic, so the value is updated automatically */
+	if(getDbValue($xoopsDB, 'modules', 'version', 'version="120" AND mid="1"') !== FALSE ){
 		array_push($block['msg'], icms_error_msg('<a href="'.ICMS_URL.'/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=system">'._WARNINGUPDATESYSTEM.'</a>'));
 	}
 	if(is_writable(ICMS_ROOT_PATH.'/mainfile.php')){
