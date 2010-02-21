@@ -16,10 +16,9 @@
  * @copyright The ImpressCMS Project <http://www.impresscms.org> 
  * @license GNU GPL v2
  *
- * @since ImpressCMS 1.3
- * @version $Id: $
+ * @since ImpressCMS 1.2
  *
- * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * @author Gustavo Pilla (aka nekro) <gpilla@nubee.com.ar>
  *
  * @return array
  *
@@ -34,7 +33,8 @@ function b_system_admin_warnings_show(){
 	if(is_dir(ICMS_ROOT_PATH.'/install/')){
 		array_push($block['msg'], icms_error_msg(sprintf(_WARNINSTALL2,ICMS_ROOT_PATH.'/install/'), '', false));
 	}
-	if(getDbValue($xoopsDB, 'modules', 'version', 'version="120"') == 0 AND getDbValue($xoopsDB, 'modules', 'mid', 'mid="1"') == 1){
+	/** @todo make this dynamic, so the value is updated automatically */
+	if(getDbValue($xoopsDB, 'modules', 'version', 'version="120" AND mid="1"') !== FALSE ){
 		array_push($block['msg'], icms_error_msg('<a href="'.ICMS_URL.'/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=system">'._WARNINGUPDATESYSTEM.'</a>'));
 	}
 	if(is_writable(ICMS_ROOT_PATH.'/mainfile.php')){
@@ -78,10 +78,9 @@ function b_system_admin_warnings_show(){
 /**
  * Admin Control Panel Block
  *
- * @since ImpressCMS 1.3
- * @version $Id: $
+ * @since ImpressCMS 1.2
  *
- * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
  *
  * @return array
  *
@@ -137,10 +136,9 @@ function b_system_admin_cp_show(){
 /**
  * System Admin Modules Block Show Fuction
  *
- * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
  *
  * @since ImpressCMS 1.2
- * @version $Id: $
  *
  * @return array
  *

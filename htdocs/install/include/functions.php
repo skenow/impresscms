@@ -28,9 +28,9 @@
 function imcms_install_mkdir($target, $mode = 0777 ) {
 
 	if( is_dir( $target ) ) return TRUE;
-	
+
 	$metachars = array('[', '?', '"', '<', '>', '|', ' ' ); // Need to exclude . and : because they may occur in the root path
-	$target = str_replace( $metachars , '_', strtolower ( $target ));
+	$target = str_replace( $metachars , '_', $target );
 
 	if( mkdir($target, $mode, TRUE) ) {
 		// create an index.html file in this directory
@@ -38,11 +38,11 @@ function imcms_install_mkdir($target, $mode = 0777 ) {
 			fwrite($fh, '<script>history.go(-1);</script>');
 			@fclose($fh);
 		}
-  	}
+	}
 
-  	if( substr( decoct( fileperms( $target ) ),2) != $mode ) {
-  		chmod($target, $mode);
-  	}
+	if( substr( decoct( fileperms( $target ) ),2) != $mode ) {
+		chmod($target, $mode);
+	}
 
 	return is_dir( $target );
 }
@@ -102,12 +102,12 @@ function unlinkRecursive($dir, $deleteRootToo=true)
 	}
 
 	closedir($dh);
-	 
+
 	if ($deleteRootToo)
 	{
 		@rmdir($dir);
 	}
-	 
+
 	return;
 }
 

@@ -92,7 +92,7 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
 	function &get($id)
 	{
 		$pm = false;
-		$id = intval($id);
+		$id = (int)$id;
 		if ($id > 0) {
 			$sql = "SELECT * FROM ".$this->db->prefix('priv_msgs')." WHERE msg_id='".$id."'";
 			if (!$result = $this->db->query($sql)) {
@@ -134,9 +134,9 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
 		}
 		if ($pm->isNew()) {
 			$msg_id = $this->db->genId('priv_msgs_msg_id_seq');
-			$sql = sprintf("INSERT INTO %s (msg_id, msg_image, subject, from_userid, to_userid, msg_time, msg_text, read_msg) VALUES ('%u', %s, %s, '%u', '%u', '%u', %s, '%u')", $this->db->prefix('priv_msgs'), intval($msg_id), $this->db->quoteString($msg_image), $this->db->quoteString($subject), intval($from_userid), intval($to_userid), time(), $this->db->quoteString($msg_text), 0);
+			$sql = sprintf("INSERT INTO %s (msg_id, msg_image, subject, from_userid, to_userid, msg_time, msg_text, read_msg) VALUES ('%u', %s, %s, '%u', '%u', '%u', %s, '%u')", $this->db->prefix('priv_msgs'), (int)$msg_id, $this->db->quoteString($msg_image), $this->db->quoteString($subject), (int)$from_userid, (int)$to_userid, time(), $this->db->quoteString($msg_text), 0);
 		} else {
-			$sql = sprintf("UPDATE %s SET msg_image = %s, subject = %s, from_userid = '%u', to_userid = '%u', msg_text = %s, read_msg = '%u' WHERE msg_id = '%u'", $this->db->prefix('priv_msgs'), $this->db->quoteString($msg_image), $this->db->quoteString($subject), intval($from_userid), intval($to_userid), $this->db->quoteString($msg_text), intval($read_msg), intval($msg_id));
+			$sql = sprintf("UPDATE %s SET msg_image = %s, subject = %s, from_userid = '%u', to_userid = '%u', msg_text = %s, read_msg = '%u' WHERE msg_id = '%u'", $this->db->prefix('priv_msgs'), $this->db->quoteString($msg_image), $this->db->quoteString($subject), (int)$from_userid, (int)$to_userid, $this->db->quoteString($msg_text), (int)$read_msg, (int)$msg_id);
 		}
 		$queryFunc = empty($force)?"query":"queryF";
 		if (!$result = $this->db->{$queryFunc}($sql)) {
@@ -145,7 +145,7 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
 		if (empty($msg_id)) {
 			$msg_id = $this->db->getInsertId();
 		}
-		$pm->assignVar('msg_id', $msg_id);
+		$pm->assignVar('msg_id', (int)$msg_id);
 		return true;
 	}
 
@@ -163,7 +163,7 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
 			return false;
 		}
 
-		if (!$result = $this->db->query(sprintf("DELETE FROM %s WHERE msg_id = '%u'", $this->db->prefix('priv_msgs'), intval($pm->getVar('msg_id'))))) {
+		if (!$result = $this->db->query(sprintf("DELETE FROM %s WHERE msg_id = '%u'", $this->db->prefix('priv_msgs'), (int)$pm->getVar('msg_id')))) {
 			return false;
 		}
 		return true;
@@ -236,7 +236,7 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
 			return false;
 		}
 
-		$sql = sprintf("UPDATE %s SET read_msg = '1' WHERE msg_id = '%u'", $this->db->prefix('priv_msgs'), intval($pm->getVar('msg_id')));
+		$sql = sprintf("UPDATE %s SET read_msg = '1' WHERE msg_id = '%u'", $this->db->prefix('priv_msgs'), (int)$pm->getVar('msg_id'));
 		if (!$this->db->queryF($sql)) {
 			return false;
 		}

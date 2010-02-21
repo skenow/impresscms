@@ -449,25 +449,25 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 	public function getAllBlocks($rettype="object", $side=null, $visible=null, $orderby="side,weight,bid", $isactive=1)
 	{
 		$ret = array();
-		$where_query = " WHERE isactive='".intval($isactive)."'";
+		$where_query = " WHERE isactive='". (int) $isactive . "'";
 
 		if ( isset($side) ) {
 			// get both sides in sidebox? (some themes need this)
 			$tp = ($side == -2)?'L':($side == -6)?'C':'';
 			if ( $tp != '') {
-				$side = "";
+			 	$q_side = "";
 				$icms_blockposition_handler = xoops_gethandler('blockposition');
 				$criteria = new CriteriaCompo();
 				$criteria->add( new Criteria('block_type', $tp) );
 				$blockpositions = $icms_blockposition_handler->getObjects($criteria);
 				foreach( $blockpositions as $bp ){
-					$side .= "side='".intval( $bp->getVar('id') )."' OR ";
+					$q_side .= "side='". (int) $bp->getVar('id') . "' OR ";
 				}
-				$side = "('".substr($side,0,strlen($side)-4)."')";
+				$q_side = "('".substr($q_side,0,strlen($q_side)-4)."')";
 			} else {
-				$side = "side='".intval($side)."'";
+				$q_side = "side='". (int) $side . "'";
 			}
-			$where_query .= " AND ".$side;
+			$where_query .= " AND ". $q_side;
 		}
 
 		if ( isset($visible) ) {
@@ -517,26 +517,13 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 	 * @deprecated
 	 */
 	function getAllByGroupModule($groupid, $module_id='0-0', $toponlyblock=false, $visible=null, $orderby='b.weight,b.bid', $isactive=1) {
-		// TODO: use $this->getObjects($criteria);
 
 		$isactive = intval($isactive);
-		$ret = array();
-		$sql = "SELECT DISTINCT gperm_itemid FROM ".$this->db->prefix('group_permission')." WHERE gperm_name = 'block_read' AND gperm_modid = '1'";
-		if ( is_array($groupid) ) {
-			$gid = array_map(create_function('$a', '$r = "\'" . intval($a) . "\'"; return($r);'), $groupid);
-			$sql .= " AND gperm_groupid IN (".implode(',', $gid).")";
-		} else {
-			if (intval($groupid) > 0) {
-				$sql .= " AND gperm_groupid='".intval($groupid)."'";
-			}
-		}
-		$result = $this->db->query($sql);
-		$blockids = array();
-		while ( $myrow = $this->db->fetchArray($result) ) {
-			$blockids[] = $myrow['gperm_itemid'];
-		}
+		$bid = array();
+		$icms_groupperm_handler = xoops_gethandler('groupperm');
+		$bid = $icms_groupperm_handler->getItemIds('block_read', $groupid);
 
-		if (!empty($blockids)) {
+		if (count($bid) > 0) {
 			$sql = "SELECT b.* FROM ".$this->db->prefix('newblocks')." b, ".$this->db->prefix('block_module_link')." m WHERE m.block_id=b.bid";
 			$sql .= " AND b.isactive='".$isactive."'";
 			if (isset($visible)) {
@@ -560,14 +547,16 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 				}
 			}
 
-			$sql .= " AND b.bid IN (".implode(',', $blockids).")";
+			$sql .= " AND b.bid IN (".implode(',', $bid).")";
 			$sql .= " ORDER BY ".$orderby;
 			$result = $this->db->query($sql);
+			$bid = array();
 			while ( $myrow = $this->db->fetchArray($result) ) {
-				$block =& $this->get($myrow['bid']);
-				$ret[$myrow['bid']] =& $block;
-				unset($block);
+				$bid[] =$myrow['bid'];
 			}
+			$criteria = new CriteriaCompo();
+			$criteria->add(new Criteria('bid' , '('.implode(',', $bid).')', 'IN'));
+			$ret = $this->getObjects($criteria);
 		}
 		return $ret;
 

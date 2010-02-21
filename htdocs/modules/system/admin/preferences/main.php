@@ -152,7 +152,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 				case 'editor_source' :
 					$type = explode('_', $config [$i]->getVar ( 'conf_formtype' ));
 					$count = count($type);
-					$isMulti = $type[$count-1] == 'multi';					
+					$isMulti = $type[$count-1] == 'multi';
 					if ($isMulti) {
 						$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput (), 5, true );
 						$type = $type[$count-2];
@@ -516,6 +516,8 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 		$theme_updated = false;
 		$startmod_updated = false;
 		$lang_updated = false;
+		$encryption_updated = false;
+		$purifier_style_updated = false;
 		$saved_config_items = array();
 		if ($count > 0) {
 			for($i = 0; $i < $count; $i ++) {
@@ -527,25 +529,26 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
                 if(is_array($new_value) || $new_value != $config->getVar('conf_value'))
                 {
                     // if language has been changed
-                    if(!$lang_updated && $config->getVar('conf_catid') == XOOPS_CONF && $config->getVar('conf_name') == 'language')
+                    if(!$lang_updated && $config->getVar('conf_catid') == ICMS_CONF && $config->getVar('conf_name') == 'language')
                     {
                         $xoopsConfig['language'] = ${$config->getVar('conf_name')};
                         $lang_updated = true;
                     }
                     // if default theme has been changed
-                    if(!$theme_updated && $config->getVar('conf_catid') == XOOPS_CONF && $config->getVar('conf_name') == 'theme_set')
+                    if(!$theme_updated && $config->getVar('conf_catid') == ICMS_CONF && $config->getVar('conf_name') == 'theme_set')
                     {
                         $member_handler = xoops_gethandler('member');
                         $member_handler->updateUsersByField('theme', ${$config->getVar('conf_name')});
                         $theme_updated = true;
                     }
                     // if password encryption has been changed
-                    if($config->getVar('conf_catid') == XOOPS_CONF_USER && $config->getVar('conf_name') == 'enc_type')
+                    if(!$encryption_updated && $config->getVar('conf_catid') == ICMS_CONF_USER && $config->getVar('conf_name') == 'enc_type')
                     {
                         if($config->getVar('closesite') !== 1)
                         {
                             $member_handler = xoops_gethandler('member');
                             $member_handler->updateUsersByField('pass_expired', 1);
+							$encryption_updated = true;
                         }
                         else
                         {
@@ -553,7 +556,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
                         }
                     }
 
-                    if($config->getVar('conf_catid') == ICMS_CONF_PURIFIER &&
+                    if(!$purifier_style_updated && $config->getVar('conf_catid') == ICMS_CONF_PURIFIER &&
                         $config->getVar('conf_name') == 'purifier_Filter_ExtractStyleBlocks')
                     {
                         if($config->getVar('purifier_Filter_ExtractStyleBlocks') == 1)
@@ -562,11 +565,12 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
                             {
                                 redirect_header('admin.php?fct=preferences', 5, _MD_AM_UNABLECSSTIDY);
                             }
+							$purifier_style_updated = true;
                         }
                     }
 
 					// if default template set has been changed
-					if (! $tpl_updated && $config->getVar ( 'conf_catid' ) == XOOPS_CONF && $config->getVar ( 'conf_name' ) == 'template_set') {
+					if (! $tpl_updated && $config->getVar ( 'conf_catid' ) == ICMS_CONF && $config->getVar ( 'conf_name' ) == 'template_set') {
 						// clear cached/compiled files and regenerate them if default theme has been changed
 						if ($xoopsConfig ['template_set'] != ${$config->getVar ( 'conf_name' )}) {
 							$newtplset = ${$config->getVar ( 'conf_name' )};
@@ -607,7 +611,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 					}
 
 					// add read permission for the start module to all groups
-					if (! $startmod_updated && $new_value != '--' && $config->getVar ( 'conf_catid' ) == XOOPS_CONF && $config->getVar ( 'conf_name' ) == 'startpage') {
+					if (! $startmod_updated && $new_value != '--' && $config->getVar ( 'conf_catid' ) == ICMS_CONF && $config->getVar ( 'conf_name' ) == 'startpage') {
 						$moduleperm_handler = & xoops_gethandler ( 'groupperm' );
 						$module_handler = & xoops_gethandler ( 'module' );
 

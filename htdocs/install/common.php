@@ -217,7 +217,7 @@ include_once XOOPS_ROOT_PATH."/class/module.textsanitizer.php";
 
 // ################# Load Config Settings ##############
 $config_handler =& xoops_gethandler('config');
-$xoopsConfig =& $config_handler->getConfigsByCat(XOOPS_CONF);
+$xoopsConfig =& $config_handler->getConfigsByCat(ICMS_CONF);
 $icmsConfig =& $xoopsConfig;
 
 // #################### Error reporting settings ##################

@@ -11,6 +11,7 @@
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
  * @author		This was inspired by Mithrandir PersistableObjectHanlder: Jan Keller Pedersen <mithrandir@xoops.org> - IDG Danmark A/S <www.idg.dk>
+* @author	Gustavo Alejandro Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
  * @version		$Id$
  */
 
@@ -35,6 +36,12 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
 	 */
 	var $table;
 
+	/**
+	 * Dinamic unique wildcard for IPF querys.
+	 *
+	 * @var string
+	 */
+	public $wildcard;
 	/**
 	 * Name of the table key that uniquely identify each {@link IcmsPersistableObject}
 	 *
@@ -152,6 +159,7 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
 			$this->_moduleName = $modulename;
 			$this->table = $db->prefix($modulename . "_" . $itemname);
 		}
+		$this->wildcard = $db->wildcard($this->table);
 		$this->keyName = $keyname;
 		$this->className = ucfirst($modulename) . ucfirst($itemname);
 		$this->identifierName = $idenfierName;
@@ -248,7 +256,7 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
 				 * Is the fact that we removed the intval() represents a security risk ?
 				 */
 				//$criteria->add(new Criteria($this->keyName[$i], ($id[$i]), '=', $this->_itemname));
-				$criteria->add(new Criteria($this->keyName[$i], $id[$i], '=', $this->_itemname));
+				$criteria->add(new Criteria($this->keyName[$i], $id[$i], '=', $this->wildcard));
 			}
 		}
 		else {
@@ -257,7 +265,7 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
 			 * In some situations, the $id is not an INTEGER. IcmsPersistableObjectTag is an example.
 			 * Is the fact that we removed the intval() represents a security risk ?
 			 */
-			$criteria->add(new Criteria($this->keyName, $id, '=', $this->_itemname));
+			$criteria->add(new Criteria($this->keyName, $id, '=', $this->wildcard));
 		}
 		$criteria->setLimit(1);
 		if ($debug) {
@@ -308,7 +316,7 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
 		if ($this->generalSQL) {
 			$sql = $this->generalSQL;
 		} elseif(!$sql) {
-			$sql = 'SELECT * FROM '.$this->table . " AS " . $this->_itemname;
+			$sql = 'SELECT * FROM '.$this->table . " AS " . $this->wildcard;
 		}
 
 		if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
@@ -475,7 +483,7 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
 		if(!empty($this->identifierName)){
 			$sql .= ', '.$this->getIdentifierName();
 		}
-		$sql .= ' FROM '.$this->table . " AS " . $this->_itemname;
+		$sql .= ' FROM '.$this->table . " AS " . $this->wildcard;
 		if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
 			$sql .= ' '.$criteria->renderWhere();
 			if ($criteria->getSort() != '') {
@@ -526,7 +534,7 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
 			$sql = $this->generalSQL;
 			$sql = str_replace('SELECT *', 'SELECT COUNT(*)', $sql);
 		} else {
-			$sql = 'SELECT '.$field.'COUNT(*) FROM '.$this->table . ' AS ' . $this->_itemname;
+			$sql = 'SELECT '.$field.'COUNT(*) FROM '.$this->table . ' AS ' . $this->wildcard;
 		}
 		if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
 			$sql .= ' '.$criteria->renderWhere();
@@ -898,7 +906,7 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
 
 	function getIdentifierName($withprefix=true) {
 		if ($withprefix) {
-			return $this->_itemname . "." . $this->identifierName;
+			return $this->wildcard . "." . $this->identifierName;
 		} else {
 			return $this->identifierName;
 		}

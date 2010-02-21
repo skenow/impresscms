@@ -136,31 +136,37 @@ class XoopsMultiMailer extends PHPMailer {
 	var $Password	= "";
 
 	/**
+	 * Sets default SMTP Port to use?
+	 * @var 	boolean
+	 * @access	private
+	 */
+	var $Port	= 25;
+
+	/**
 	 * Constuctor
 	 *
 	 * @access public
 	 * @return void
 	 *
-	 * @global	$icmsConfigPersona
+	 * @global	$icmsConfig
 	 */
 	function XoopsMultiMailer(){
-		global $icmsConfigPersona, $icmsConfigMailer;
+		global $icmsConfig, $icmsConfigMailer;
 		$this->From = $icmsConfigMailer['from'];
 		if ($this->From == '') {
-			$this->From = $icmsConfigPersona['adminmail'];
+			$this->From = $icmsConfig['adminmail'];
 		}
 		$this->Sender = $this->From;
 
 		if ($icmsConfigMailer["mailmethod"] == "smtpauth") {
 			$this->Mailer = "smtp";
 			$this->SMTPAuth = true;
-			// @todo create a config option for authentication type: none, ssl, tls
-			//$this->SMTPSecure = "ssl";
+			$this->SMTPSecure = $icmsConfigMailer['smtpsecure'];
 			// TODO: change value type of xoopsConfig "smtphost" from array to text
 			$this->Host = implode(';',$icmsConfigMailer['smtphost']);
 			$this->Username = $icmsConfigMailer['smtpuser'];
 			$this->Password = $icmsConfigMailer['smtppass'];
-			//$this->Port = 465;
+			$this->Port = $icmsConfigMailer['smtpauthport'];
 		} else {
 			$this->Mailer = $icmsConfigMailer['mailmethod'];
 			$this->SMTPAuth = false;
@@ -168,12 +174,7 @@ class XoopsMultiMailer extends PHPMailer {
 			$this->Host = implode(';',$icmsConfigMailer['smtphost']);
 		}
 		$this->CharSet = strtolower( _CHARSET );
-		if ( file_exists( ICMS_ROOT_PATH . "/language/{$icmsConfigPersona['language']}/phpmailer.php" ) ) {
-			include( ICMS_ROOT_PATH . "/language/{$icmsConfigPersona['language']}/phpmailer.php" );
-			$this->language = $PHPMAILER_LANG;
-		} else {
-			$this->SetLanguage( 'en', ICMS_LIBRARIES_PATH . "/phpmailer/language/" );
-		}
+		$this->SetLanguage( 'en', ICMS_LIBRARIES_PATH . "/phpmailer/language/" );
 		$this->PluginDir = ICMS_LIBRARIES_PATH."/phpmailer/";
 	}
 
@@ -190,85 +191,6 @@ class XoopsMultiMailer extends PHPMailer {
 		$formatted = sprintf('%s <%s>', '=?'.$this->CharSet.'?B?'.base64_encode($addr[1]).'?=', $addr[0]);
 
 		return $formatted;
-	}
-
-	/**
-	 * Sends mail via SMTP using PhpSMTP (Author:
-	 * Chris Ryan).  Returns bool.  Returns false if there is a
-	 * bad MAIL FROM, or DATA input.
-	 * Rebuild Header if there is a bad RCPT
-	 * @access protected
-	 * @param string    $header the header to be sent
-	 * @param string    $body   the body of the email to be sent
-	 * @return bool
-	 */
-	function SmtpSend($header, $body) {
-		include_once($this->PluginDir . "class.smtp.php");
-		$error = "";
-		$bad_rcpt = array();
-
-		if (!$this->SmtpConnect()) {
-			return false;
-		}
-
-		$smtp_from = ($this->Sender == "") ? $this->From : $this->Sender;
-		if (!$this->smtp->Mail($smtp_from)) {
-			$error = $this->Lang("from_failed") . $smtp_from;
-			$this->SetError($error);
-			$this->smtp->Reset();
-			return false;
-		}
-		// Attempt to send attach all recipients
-		for ($i = 0; $i < count($this->to); $i++) {
-			if (!$this->smtp->Recipient($this->to[$i][0])) {
-				$bad_rcpt[] = $this->to[$i][0];
-				unset($this->to[$i]);
-			}
-		}
-		for ($i = 0; $i < count($this->cc); $i++) {
-			if (!$this->smtp->Recipient($this->cc[$i][0])) {
-				$bad_rcpt[] = $this->cc[$i][0];
-				unset($this->cc[$i]);
-			}
-		}
-		for ($i = 0; $i < count($this->bcc); $i++) {
-			if (!$this->smtp->Recipient($this->bcc[$i][0])) {
-				$bad_rcpt[] = $this->bcc[$i][0];
-				unset($this->bcc[$i]);
-			}
-		}
-
-		// Create error message
-		$count = count($bad_rcpt);
-		if ($count > 0) {
-			for ($i = 0; $i < $count; $i++) {
-				if ($i != 0) {
-					$error .= ", ";
-				}
-				$error .= $bad_rcpt[$i];
-			}
-
-			//To rebuild a correct header, it should to rebuild a correct adress array
-			$this->to = array_values($this->to);
-			$this->cc = array_values($this->cc);
-			$this->bcc = array_values($this->bcc);
-			$header = $this->CreateHeader();
-
-			$error = $this->Lang("recipients_failed") . $error;
-			$this->SetError($error);
-		}
-		if (!$this->smtp->Data($header . $body)) {
-			$this->SetError($this->Lang("data_not_accepted"));
-			$this->smtp->Reset();
-			return false;
-		}
-		if ($this->SMTPKeepAlive == true) {
-			$this->smtp->Reset();
-		} else {
-			$this->SmtpClose();
-		}
-
-		return true;
 	}
 }
 

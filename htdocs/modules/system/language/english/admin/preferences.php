@@ -658,4 +658,11 @@ define("_MD_AM_AUTOTASKS_USERDSC", "System user to be used for task execution.")
 //source editedit
 define("_MD_AM_SRCEDITOR_DEFAULT","Default Source Code Editor");
 define("_MD_AM_SRCEDITOR_DEFAULT_DESC","Select the default Editor for editing source codes.");
+
+// added in 1.2.1
+define("_MD_AM_SMTPSECURE","SMTP Secure Method");
+define("_MD_AM_SMTPSECUREDESC","Authentication Method used for SMTPAuthentication. (default is ssl)");
+define("_MD_AM_SMTPAUTHPORT","SMTP Port");
+define("_MD_AM_SMTPAUTHPORTDESC","The Port use by your SMTP Mail server (default is 465)");
+
 ?>
