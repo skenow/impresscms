@@ -283,7 +283,7 @@ function xoops_getUserTimestamp($time, $timeoffset="")
 		if($icmsUser) {$timeoffset = $icmsUser->getVar('timezone_offset');}
 		else {$timeoffset = $icmsConfig['default_TZ'];}
 	}
-	$usertimestamp = (int) ($time) + (floatval($timeoffset) - $icmsConfig['server_TZ'])*3600;
+	$usertimestamp = (int) ($time) + ((float)($timeoffset) - $icmsConfig['server_TZ'])*3600;
 	return $usertimestamp;
 }
 
@@ -1203,17 +1203,17 @@ function icms_getfloat($str, $set=FALSE)
 		{
 			// A comma exists, that makes it easy, cos we assume it separates the decimal part.
 			$str = str_replace('.', '', $str); // Erase thousand seps
-			$str = str_replace(',', '.', $str); // Convert , to . for floatval command
-			return floatval($str);
+			$str = str_replace(',', '.', $str); // Convert , to . for (float) command
+			return (float)($str);
 		}
 		else
 		{
 			// No comma exists, so we have to decide, how a single dot shall be treated
-			if(preg_match("/^[0-9\-]*[\.]{1}[0-9-]+$/", $str) == TRUE && $set['single_dot_as_decimal'] == TRUE) {return floatval($str);}
+			if(preg_match("/^[0-9\-]*[\.]{1}[0-9-]+$/", $str) == TRUE && $set['single_dot_as_decimal'] == TRUE) {return (float)($str);}
 			else
 			{
 				$str = str_replace('.', '', $str);	// Erase thousand seps
-				return floatval($str);
+				return (float)($str);
 			}
 		}
 	}
