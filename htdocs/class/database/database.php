@@ -97,17 +97,6 @@ if ( !defined("XOOPS_C_DATABASE_INCLUDED") ) {
 				return $this->prefix;
 			}
 		}
-		
-		/**
-		 * 
-		 *
-		 * @since	ImpressCMS 1.3
-		 * @param	string 	$tablename	tablename
-		 */
-		public function wildcard($tablename=''){
-			$wildcard = 'a'.substr( md5( $tablename ) , 0, 4);
-			return $wildcard;
-		}
 	}
 
 	/**
