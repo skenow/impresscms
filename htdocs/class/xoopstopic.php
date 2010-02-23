@@ -42,7 +42,7 @@ class XoopsTopic
 		if ( is_array($topicid) ) {
 			$this->makeTopic($topicid);
 		} elseif ( $topicid != 0 ) {
-			$this->getTopic(intval($topicid));
+			$this->getTopic( (int) ($topicid));
 		} else {
 			$this->topic_id = $topicid;
 		}
@@ -82,7 +82,7 @@ class XoopsTopic
 	 **/
 	function getTopic($topicid)
 	{
-		$topicid = intval($topicid);
+		$topicid = (int) ($topicid);
 		$sql = "SELECT * FROM ".$this->table." WHERE topic_id='".$topicid."'";
 		$array = $this->db->fetchArray($this->db->query($sql));
 		$this->makeTopic($array);
@@ -131,9 +131,9 @@ class XoopsTopic
 		}
 		if ( empty($this->topic_id) ) {
 			$this->topic_id = $this->db->genId($this->table."_topic_id_seq");
-			$sql = sprintf("INSERT INTO %s (topic_id, topic_pid, topic_imgurl, topic_title) VALUES ('%u', '%u', '%s', '%s')", $this->table, intval($this->topic_id), intval($this->topic_pid), $imgurl, $title);
+			$sql = sprintf("INSERT INTO %s (topic_id, topic_pid, topic_imgurl, topic_title) VALUES ('%u', '%u', '%s', '%s')", $this->table, (int) ($this->topic_id), (int) ($this->topic_pid), $imgurl, $title);
 		} else {
-			$sql = sprintf("UPDATE %s SET topic_pid = '%u', topic_imgurl = '%s', topic_title = '%s' WHERE topic_id = '%u'", $this->table, intval($this->topic_pid), $imgurl, $title, intval($this->topic_id));
+			$sql = sprintf("UPDATE %s SET topic_pid = '%u', topic_imgurl = '%s', topic_title = '%s' WHERE topic_id = '%u'", $this->table, (int) ($this->topic_pid), $imgurl, $title, (int) ($this->topic_id));
 		}
 		if ( !$result = $this->db->query($sql) ) {
 			ErrorHandler::show('0022');
@@ -214,7 +214,7 @@ class XoopsTopic
 	 **/
 	function delete()
 	{
-		$sql = sprintf("DELETE FROM %s WHERE topic_id = '%u'", $this->table, intval($this->topic_id));
+		$sql = sprintf("DELETE FROM %s WHERE topic_id = '%u'", $this->table, (int) ($this->topic_id));
 		$this->db->query($sql);
 	}
 
@@ -415,7 +415,7 @@ class XoopsTopic
 	 * @return  bool
 	 **/
 	function topicExists($pid, $title) {
-		$sql = "SELECT COUNT(*) from ".$this->table." WHERE topic_pid = ".intval($pid)." AND topic_title = '".trim($title)."'";
+		$sql = "SELECT COUNT(*) from ".$this->table." WHERE topic_pid = ". (int) ($pid)." AND topic_title = '".trim($title)."'";
 		$rs = $this->db->query($sql);
 		list($count) = $this->db->fetchRow($rs);
 		if ($count > 0) {

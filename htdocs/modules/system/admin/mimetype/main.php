@@ -51,7 +51,7 @@ $op = (isset($_POST['op']))?trim(StopXSS($_POST['op'])):((isset($_GET['op']))?tr
 switch ($op) {
 	case "mod":
 
-		$mimetypeid = isset($_GET['mimetypeid']) ? intval($_GET['mimetypeid']) : 0 ;
+		$mimetypeid = isset($_GET['mimetypeid']) ? (int) ($_GET['mimetypeid']) : 0 ;
 
 		editmimetype(true, $mimetypeid);
 
@@ -59,7 +59,7 @@ switch ($op) {
 
 		/*case "clone":
 
-		$mimetypeid = isset($_GET['mimetypeid']) ? intval($_GET['mimetypeid']) : 0 ;
+		$mimetypeid = isset($_GET['mimetypeid']) ? (int) ($_GET['mimetypeid']) : 0 ;
 
 		editmimetype(true, $mimetypeid, true);
 		break;*/

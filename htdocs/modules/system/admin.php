@@ -54,7 +54,7 @@ if($admintest != 0)
 			icms_loadLanguageFile('system', $fct, true);
 			include ICMS_ROOT_PATH.'/modules/system/admin/'.$fct.'/xoops_version.php';
 			$sysperm_handler =& xoops_gethandler('groupperm');
-			$category = !empty($modversion['category']) ? intval($modversion['category']) : 0;
+			$category = !empty($modversion['category']) ? (int) ($modversion['category']) : 0;
 			unset($modversion);
 			if($category > 0)
 			{

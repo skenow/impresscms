@@ -150,11 +150,11 @@ if (in_array($clean_op, $valid_op, true)) {
 				$obj = $icms_block_handler->get($v);
 
 				if ($obj->getVar('side', 'e') != $_POST['block_side'][$k]) {
-					$obj->setVar('side', intval($_POST['block_side'][$k]));
+					$obj->setVar('side', (int) ($_POST['block_side'][$k]));
 					$changed = true;
 				}
 				if ($obj->getVar('weight', 'e') != $_POST['block_weight'][$k]) {
-					$obj->setVar('weight', intval($_POST['block_weight'][$k]));
+					$obj->setVar('weight', (int) ($_POST['block_weight'][$k]));
 					$changed = true;
 				}
 				if ($changed) {

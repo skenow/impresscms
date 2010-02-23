@@ -32,8 +32,8 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			$limit = 0;
 			$otherorder = 'DESC';
 			$comments = array();
-			$status = (!isset($_GET['status']) || !in_array(intval($_GET['status']), array_keys($status_array))) ? 0 : intval($_GET['status']);
-			$module = !isset($_GET['module']) ? 0 : intval($_GET['module']);
+			$status = (!isset($_GET['status']) || !in_array( (int) ($_GET['status']), array_keys($status_array))) ? 0 : (int) ($_GET['status']);
+			$module = !isset($_GET['module']) ? 0 : (int) ($_GET['module']);
 			$module_handler =& xoops_gethandler('module');
 			$module_array =& $module_handler->getList(new Criteria('hascomments', 1));
 			$comment_handler =& xoops_gethandler('comment');
@@ -46,8 +46,8 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			}
 			$total = $comment_handler->getCount($criteria);
 			if ($total > 0) {
-				$start = isset($_GET['start']) ? intval($_GET['start']) : 0;
-				$limit = isset($_GET['limit']) ? intval($_GET['limit']) : 0;
+				$start = isset($_GET['start']) ? (int) ($_GET['start']) : 0;
+				$limit = isset($_GET['limit']) ? (int) ($_GET['limit']) : 0;
 				if (!in_array($limit, $limit_array)) {
 					$limit = 50;
 				}
@@ -126,7 +126,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			break;
 
 		case 'jump':
-			$com_id = (isset($_GET['com_id'])) ? intval($_GET['com_id']) : 0;
+			$com_id = (isset($_GET['com_id'])) ? (int) ($_GET['com_id']) : 0;
 			if ($com_id > 0) {
 				$comment_handler =& xoops_gethandler('comment');
 				$comment =& $comment_handler->get($com_id);

@@ -36,17 +36,17 @@ switch($op)
 			redirect_header('admin.php?fct=banners&amp;op=BannersAdmin#top', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 		}
 		$name = isset($_POST['name']) ? trim($_POST['name']) : '';
-		$cid = isset($_POST['cid']) ? intval($_POST['cid']) : 0;
+		$cid = isset($_POST['cid']) ? (int) ($_POST['cid']) : 0;
 		$imageurl = isset($_POST['imageurl']) ? trim($_POST['imageurl']) : '';
 		$clickurl = isset($_POST['clickurl']) ? trim($_POST['clickurl']) : '';
-		$imptotal = isset($_POST['imptotal']) ? intval($_POST['imptotal']) : 0;
-		$htmlbanner = isset($_POST['htmlbanner']) ? intval($_POST['htmlbanner']) : 0;
+		$imptotal = isset($_POST['imptotal']) ? (int) ($_POST['imptotal']) : 0;
+		$htmlbanner = isset($_POST['htmlbanner']) ? (int) ($_POST['htmlbanner']) : 0;
 		$htmlcode = isset($_POST['htmlcode']) ? trim($_POST['htmlcode']) : '';
 		if($cid <= 0) {redirect_header('admin.php?fct=banners&amp;op=BannersAdmin#top');}
 		$db =& Database::getInstance();
 		$myts =& MyTextSanitizer::getInstance();
 		$newid = $db->genId($db->prefix('banner').'_bid_seq');
-		$sql = sprintf("INSERT INTO %s (bid, cid, imptotal, impmade, clicks, imageurl, clickurl, date, htmlbanner, htmlcode) VALUES ('%d', '%d', '%d', '1', '0', %s, %s, '%d', '%d', %s)", $db->prefix('banner'), intval($newid), $cid, $imptotal, $db->quoteString($myts->stripSlashesGPC($imageurl)), $db->quoteString($myts->stripSlashesGPC($clickurl)), time(), $htmlbanner, $db->quoteString($myts->stripSlashesGPC($htmlcode)));
+		$sql = sprintf("INSERT INTO %s (bid, cid, imptotal, impmade, clicks, imageurl, clickurl, date, htmlbanner, htmlcode) VALUES ('%d', '%d', '%d', '1', '0', %s, %s, '%d', '%d', %s)", $db->prefix('banner'), (int) ($newid), $cid, $imptotal, $db->quoteString($myts->stripSlashesGPC($imageurl)), $db->quoteString($myts->stripSlashesGPC($clickurl)), time(), $htmlbanner, $db->quoteString($myts->stripSlashesGPC($htmlcode)));
 		$db->query($sql);
 		redirect_header('admin.php?fct=banners&amp;op=BannersAdmin#top',1,_AM_DBUPDATED);
 		break;
@@ -65,19 +65,19 @@ switch($op)
 		$db =& Database::getInstance();
 		$myts =& MyTextSanitizer::getInstance();
 		$newid = $db->genId($xoopsDB->prefix('bannerclient').'_cid_seq');
-		$sql = sprintf("INSERT INTO %s (cid, name, contact, email, login, passwd, extrainfo) VALUES ('%d', %s, %s, %s, %s, %s, %s)", $db->prefix("bannerclient"), intval($newid), $db->quoteString($myts->stripSlashesGPC($name)), $db->quoteString($myts->stripSlashesGPC($contact)), $db->quoteString($myts->stripSlashesGPC($email)), $db->quoteString($myts->stripSlashesGPC($login)), $db->quoteString($myts->stripSlashesGPC($passwd)), $db->quoteString($myts->stripSlashesGPC($extrainfo)));
+		$sql = sprintf("INSERT INTO %s (cid, name, contact, email, login, passwd, extrainfo) VALUES ('%d', %s, %s, %s, %s, %s, %s)", $db->prefix("bannerclient"), (int) ($newid), $db->quoteString($myts->stripSlashesGPC($name)), $db->quoteString($myts->stripSlashesGPC($contact)), $db->quoteString($myts->stripSlashesGPC($email)), $db->quoteString($myts->stripSlashesGPC($login)), $db->quoteString($myts->stripSlashesGPC($passwd)), $db->quoteString($myts->stripSlashesGPC($extrainfo)));
 		$db->query($sql);
 		redirect_header('admin.php?fct=banners&amp;op=BannersAdmin#top',1,_AM_DBUPDATED);
 		break;
 
 	case 'BannerFinishDelete':
 		xoops_cp_header();
-		xoops_confirm(array('op' => 'BannerFinishDelete2', 'bid' => intval($_GET['bid']), 'fct' => 'banners'), 'admin.php', _AM_SUREDELE);
+		xoops_confirm(array('op' => 'BannerFinishDelete2', 'bid' => (int) ($_GET['bid']), 'fct' => 'banners'), 'admin.php', _AM_SUREDELE);
 		xoops_cp_footer();
 		break;
 
 	case 'BannerFinishDelete2':
-		$bid = isset($_POST['bid']) ? intval($_POST['bid']) : 0;
+		$bid = isset($_POST['bid']) ? (int) ($_POST['bid']) : 0;
 		if($bid <= 0 | !$GLOBALS['xoopsSecurity']->check())
 		{
 			redirect_header('admin.php?fct=banners&amp;op=BannersAdmin#top', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
@@ -89,12 +89,12 @@ switch($op)
 		break;
 
 	case 'BannerDelete':
-		$bid = isset($_GET['bid']) ? intval($_GET['bid']) : 0;
+		$bid = isset($_GET['bid']) ? (int) ($_GET['bid']) : 0;
 		if($bid > 0) {BannerDelete($bid);}
 		break;
 
 	case 'BannerDelete2':
-		$bid = isset($_POST['bid']) ? intval($_POST['bid']) : 0;
+		$bid = isset($_POST['bid']) ? (int) ($_POST['bid']) : 0;
 		if($bid <= 0 | !$GLOBALS['xoopsSecurity']->check())
 		{
 			redirect_header('admin.php?fct=banners&amp;op=BannersAdmin#top', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
@@ -106,22 +106,22 @@ switch($op)
 		break;
 
 	case 'BannerEdit':
-		$bid = isset($_GET['bid']) ? intval($_GET['bid']) : 0;
+		$bid = isset($_GET['bid']) ? (int) ($_GET['bid']) : 0;
 		if($bid > 0) {BannerEdit($bid);}
 		break;
 
 	case 'BannerChange':
-		$bid = isset($_POST['bid']) ? intval($_POST['bid']) : 0;
-		$cid = isset($_POST['cid']) ? intval($_POST['cid']) : 0;
+		$bid = isset($_POST['bid']) ? (int) ($_POST['bid']) : 0;
+		$cid = isset($_POST['cid']) ? (int) ($_POST['cid']) : 0;
 		if(($cid <= 0 || $bid <= 0) | !$GLOBALS['xoopsSecurity']->check())
 		{
 			redirect_header('admin.php?fct=banners&amp;op=BannersAdmin#top', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 		}
 		$imageurl = isset($_POST['imageurl']) ? trim($_POST['imageurl']) : '';
 		$clickurl = isset($_POST['clickurl']) ? trim($_POST['clickurl']) : '';
-		$imptotal = isset($_POST['imptotal']) ? intval($_POST['imptotal']) : 0;
-		$impadded = isset($_POST['impadded']) ? intval($_POST['impadded']) : 0;
-		$htmlbanner = isset($_POST['htmlbanner']) ? intval($_POST['htmlbanner']) : 0;
+		$imptotal = isset($_POST['imptotal']) ? (int) ($_POST['imptotal']) : 0;
+		$impadded = isset($_POST['impadded']) ? (int) ($_POST['impadded']) : 0;
+		$htmlbanner = isset($_POST['htmlbanner']) ? (int) ($_POST['htmlbanner']) : 0;
 		$htmlcode = isset($_POST['htmlcode']) ? trim($_POST['htmlcode']) : '';
 		$db =& Database::getInstance();
 		$myts =& MyTextSanitizer::getInstance();
@@ -131,12 +131,12 @@ switch($op)
 		break;
 
 	case 'BannerClientDelete':
-		$cid = isset($_GET['cid']) ? intval($_GET['cid']) : 0;
+		$cid = isset($_GET['cid']) ? (int) ($_GET['cid']) : 0;
 		if($cid > 0) {BannerClientDelete($cid);}
 		break;
 
 	case 'BannerClientDelete2':
-		$cid = isset($_POST['cid']) ? intval($_POST['cid']) : 0;
+		$cid = isset($_POST['cid']) ? (int) ($_POST['cid']) : 0;
 		$db =& Database::getInstance();
 		if($cid <= 0 | !$GLOBALS['xoopsSecurity']->check())
 		{
@@ -150,12 +150,12 @@ switch($op)
 		break;
 
 	case 'BannerClientEdit':
-		$cid = isset($_GET['cid']) ? intval($_GET['cid']) : 0;
+		$cid = isset($_GET['cid']) ? (int) ($_GET['cid']) : 0;
 		if($cid > 0) {BannerClientEdit($cid);}
 		break;
 
 	case 'BannerClientChange':
-		$cid = isset($_POST['cid']) ? intval($_POST['cid']) : 0;
+		$cid = isset($_POST['cid']) ? (int) ($_POST['cid']) : 0;
 		if($cid <= 0 | !$GLOBALS['xoopsSecurity']->check())
 		{
 			redirect_header('admin.php?fct=banners&amp;op=BannersAdmin#top', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));

@@ -35,7 +35,7 @@ function load_invite_code($code) {
 		exit();
 	}
 	// discard if already registered or invite is more than 3 days old
-	if (! empty($register_id) || intval($invite_date) < time() - 3 * 86400) {
+	if (! empty($register_id) || (int) ($invite_date) < time() - 3 * 86400) {
 		redirect_header('invite.php', 3, _US_INVITEEXPIRED);
 		exit();
 	}
@@ -68,7 +68,7 @@ function check_invite_code($code) {
 	$sql = sprintf('SELECT invite_to, invite_date FROM %s WHERE invite_code = %s AND register_id = 0', $xoopsDB->prefix('invites'), $xoopsDB->quoteString(addslashes($code)));
 	$result = $xoopsDB->query($sql);
 	list($invite_to, $invite_date) = $xoopsDB->fetchRow($result);
-	if (empty($invite_to) || !empty($register_id) || intval($invite_date) < time() - 3 * 86400) {
+	if (empty($invite_to) || !empty($register_id) || (int) ($invite_date) < time() - 3 * 86400) {
 		return false;
 	}
 	return true;

@@ -688,8 +688,8 @@ class IcmsPersistableObject extends XoopsObject {
 							$this->setErrors( sprintf( _XOBJ_ERR_REQUIRED, $k ) );
 							continue;
 						}
-						if (isset($v['maxlength']) && strlen($cleanv) > intval($v['maxlength'])) {
-							$this->setErrors( sprintf( _XOBJ_ERR_SHORTERTHAN, $k, intval( $v['maxlength'] ) ) );
+						if (isset($v['maxlength']) && strlen($cleanv) > (int) ($v['maxlength'])) {
+							$this->setErrors( sprintf( _XOBJ_ERR_SHORTERTHAN, $k, (int) ( $v['maxlength'] ) ) );
 							continue;
 						}
 						if (!$v['not_gpc']) {
@@ -718,7 +718,7 @@ class IcmsPersistableObject extends XoopsObject {
 						break;
 					case XOBJ_DTYPE_INT:
 					case XOBJ_DTYPE_TIME_ONLY:
-						$cleanv = intval($cleanv);
+						$cleanv = (int) ($cleanv);
 						break;
 
 					case XOBJ_DTYPE_CURRENCY:
@@ -762,7 +762,7 @@ class IcmsPersistableObject extends XoopsObject {
 					case XOBJ_DTYPE_STIME:
 					case XOBJ_DTYPE_MTIME:
 					case XOBJ_DTYPE_LTIME:
-						$cleanv = !is_string($cleanv) ? intval($cleanv) : strtotime($cleanv);
+						$cleanv = !is_string($cleanv) ? (int) ($cleanv) : strtotime($cleanv);
 						if (!($cleanv > 0)) {
 							$cleanv = strtotime($cleanv);
 						}

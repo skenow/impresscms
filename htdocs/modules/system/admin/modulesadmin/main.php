@@ -93,13 +93,13 @@ if ( $op == "confirm" ) {
 			echo $weight[$mid];
 		}
 		echo "
-		<input type='hidden' name='module[]' value='".intval($mid)."' />
+		<input type='hidden' name='module[]' value='". (int) ($mid)."' />
 		<input type='hidden' name='oldname[".$mid."]' value='".htmlspecialchars($oldname[$mid], ENT_QUOTES)."' />
 		<input type='hidden' name='newname[".$mid."]' value='".htmlspecialchars($newname[$mid], ENT_QUOTES)."' />
-		<input type='hidden' name='oldstatus[".$mid."]' value='".intval($oldstatus[$mid])."' />
-		<input type='hidden' name='newstatus[".$mid."]' value='".intval($newstatus[$mid])."' />
-		<input type='hidden' name='oldweight[".$mid."]' value='".intval($oldweight[$mid])."' />
-		<input type='hidden' name='weight[".$mid."]' value='".intval($weight[$mid])."' />
+		<input type='hidden' name='oldstatus[".$mid."]' value='". (int) ($oldstatus[$mid])."' />
+		<input type='hidden' name='newstatus[".$mid."]' value='". (int) ($newstatus[$mid])."' />
+		<input type='hidden' name='oldweight[".$mid."]' value='". (int) ($oldweight[$mid])."' />
+		<input type='hidden' name='weight[".$mid."]' value='". (int) ($weight[$mid])."' />
 		</td></tr>";
 	}
 

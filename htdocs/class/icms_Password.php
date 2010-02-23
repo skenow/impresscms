@@ -116,7 +116,7 @@ final class icms_Password
 
 		if($reset == 0)
 		{
-			$enc_type = intval($icmsConfigUser['enc_type']);
+			$enc_type = (int) ($icmsConfigUser['enc_type']);
 		}
 		if($enc_type == 0)
 		{

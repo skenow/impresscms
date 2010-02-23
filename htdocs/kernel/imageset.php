@@ -86,7 +86,7 @@ class XoopsImagesetHandler extends XoopsObjectHandler
 	 **/
 	function &get($id)
 	{
-		$id = intval($id);
+		$id = (int) ($id);
 		$imgset = false;
 		if ($id > 0) {
 			$sql = "SELECT * FROM ".$this->db->prefix('imgset')." WHERE imgset_id='".$id."'";
@@ -128,9 +128,9 @@ class XoopsImagesetHandler extends XoopsObjectHandler
 		}
 		if ($imgset->isNew()) {
 			$imgset_id = $this->db->genId('imgset_imgset_id_seq');
-			$sql = sprintf("INSERT INTO %s (imgset_id, imgset_name, imgset_refid) VALUES ('%u', %s, '%u')", $this->db->prefix('imgset'), intval($imgset_id), $this->db->quoteString($imgset_name), intval($imgset_refid));
+			$sql = sprintf("INSERT INTO %s (imgset_id, imgset_name, imgset_refid) VALUES ('%u', %s, '%u')", $this->db->prefix('imgset'), (int) ($imgset_id), $this->db->quoteString($imgset_name), (int) ($imgset_refid));
 		} else {
-			$sql = sprintf("UPDATE %s SET imgset_name = %s, imgset_refid = '%u' WHERE imgset_id = '%u'", $this->db->prefix('imgset'), $this->db->quoteString($imgset_name), intval($imgset_refid), intval($imgset_id));
+			$sql = sprintf("UPDATE %s SET imgset_name = %s, imgset_refid = '%u' WHERE imgset_id = '%u'", $this->db->prefix('imgset'), $this->db->quoteString($imgset_name), (int) ($imgset_refid), (int) ($imgset_id));
 		}
 		if (!$result = $this->db->query($sql)) {
 			return false;
@@ -157,11 +157,11 @@ class XoopsImagesetHandler extends XoopsObjectHandler
 			return false;
 		}
 
-		$sql = sprintf("DELETE FROM %s WHERE imgset_id = '%u'", $this->db->prefix('imgset'), intval($imgset->getVar('imgset_id')));
+		$sql = sprintf("DELETE FROM %s WHERE imgset_id = '%u'", $this->db->prefix('imgset'), (int) ($imgset->getVar('imgset_id')));
 		if (!$result = $this->db->query($sql)) {
 			return false;
 		}
-		$sql = sprintf("DELETE FROM %s WHERE imgset_id = '%u'", $this->db->prefix('imgset_tplset_link'), intval($imgset->getVar('imgset_id')));
+		$sql = sprintf("DELETE FROM %s WHERE imgset_id = '%u'", $this->db->prefix('imgset_tplset_link'), (int) ($imgset->getVar('imgset_id')));
 		$this->db->query($sql);
 		return true;
 	}
@@ -207,7 +207,7 @@ class XoopsImagesetHandler extends XoopsObjectHandler
 	 **/
 	function linkThemeset($imgset_id, $tplset_name)
 	{
-		$imgset_id = intval($imgset_id);
+		$imgset_id = (int) ($imgset_id);
 		$tplset_name = trim($tplset_name);
 		if ($imgset_id <= 0 || $tplset_name == '') {
 			return false;
@@ -232,7 +232,7 @@ class XoopsImagesetHandler extends XoopsObjectHandler
 	 **/
 	function unlinkThemeset($imgset_id, $tplset_name)
 	{
-		$imgset_id = intval($imgset_id);
+		$imgset_id = (int) ($imgset_id);
 		$tplset_name = trim($tplset_name);
 		if ($imgset_id <= 0 || $tplset_name == '') {
 			return false;
@@ -256,7 +256,7 @@ class XoopsImagesetHandler extends XoopsObjectHandler
 	{
 		$criteria = new CriteriaCompo();
 		if (isset($refid)) {
-			$criteria->add(new Criteria('imgset_refid', intval($refid)));
+			$criteria->add(new Criteria('imgset_refid', (int) ($refid)));
 		}
 		if (isset($tplset)) {
 			$criteria->add(new Criteria('tplset_name', $tplset));

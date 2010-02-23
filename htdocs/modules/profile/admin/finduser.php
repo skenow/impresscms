@@ -69,7 +69,7 @@ switch ($op) {
 		if($_POST["selected_action"] == 'delete_sel'){
 
 			if ($_POST['confirm']) {
-				if($smartshop_transaction_handler->batchDelete(explode('|', intval($_POST['ids'])))){
+				if($smartshop_transaction_handler->batchDelete(explode('|', (int) ($_POST['ids'])))){
 					redirect_header("transaction.php", 2, _AM_SSHOP_TRANSDELETED);
 					exit();
 				}else{
@@ -81,7 +81,7 @@ switch ($op) {
 				icms_adminMenu(2, _AM_SSHOP_TRANSACTIONS);
 
 				// no confirm: show deletion condition
-				xoops_confirm(array('op' => 'with_selected_actions', 'selected_action'=>'delete_sel', 'ids' => implode('|', intval($_POST['selected_smartobjects'])), 'confirm' => 1), 'transaction.php', _AM_SSSHOP_DELETETHOSETRANS . " <br />'" .implode(', ', $_POST['selected_smartobjects']). "'. <br /> <br />", _AM_SSHOP_DELETE);
+				xoops_confirm(array('op' => 'with_selected_actions', 'selected_action'=>'delete_sel', 'ids' => implode('|', (int) ($_POST['selected_smartobjects'])), 'confirm' => 1), 'transaction.php', _AM_SSSHOP_DELETETHOSETRANS . " <br />'" .implode(', ', $_POST['selected_smartobjects']). "'. <br /> <br />", _AM_SSHOP_DELETE);
 			}
 
 			break;

@@ -41,7 +41,7 @@ function profile_search($queryarray, $andor, $limit, $offset, $userid)
 	$ret = array();
 	$sql = "SELECT cod_img,	title, 	data_creation, 	uid_owner, url FROM ".$xoopsDB->prefix("profile_images")." WHERE ";
 	if ( $userid != 0 ) {
-		$sql .= "(uid_owner =".intval($userid).")";
+		$sql .= "(uid_owner =". (int) ($userid).")";
 
 	}
 

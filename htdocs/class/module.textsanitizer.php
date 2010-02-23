@@ -161,9 +161,9 @@ rel=\"external\">www.\\2.\\3</a>", "\\1<a href=\"ftp://ftp.\\2.\\3\" rel=\"exter
 				$length = $end - $begin;
 				$urlname = substr($link, $begin, $length);
 
-				$maxlength = intval($icmsConfigPersona['max_url_long']);
-				$cutlength = intval($icmsConfigPersona['pre_chars_left']);
-				$endlength = -intval($icmsConfigPersona['last_chars_left']);
+				$maxlength = (int) ($icmsConfigPersona['max_url_long']);
+				$cutlength = (int) ($icmsConfigPersona['pre_chars_left']);
+				$endlength = - (int) ($icmsConfigPersona['last_chars_left']);
 				$middleurl = " ... ";
 				$chunked = (strlen($urlname) > $maxlength && preg_match('#^(https://|http://|ftp://|www\.)#is',
 				$urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $urlname;

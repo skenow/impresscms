@@ -65,7 +65,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 				}
 			}
 			if ( !empty($_POST['mail_idle_more']) && is_numeric($_POST['mail_idle_more']) ) {
-				$f_mail_idle_more = intval(trim($_POST['mail_idle_more']));
+				$f_mail_idle_more = (int) (trim($_POST['mail_idle_more']));
 				$time = 60 * 60 * 24 * $f_mail_idle_more;
 				$time = time() - $time;
 				if ( $time > 0 ) {
@@ -73,7 +73,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 				}
 			}
 			if ( !empty($_POST['mail_idle_less']) && is_numeric($_POST['mail_idle_less']) ) {
-				$f_mail_idle_less = intval(trim($_POST['mail_idle_less']));
+				$f_mail_idle_less = (int) (trim($_POST['mail_idle_less']));
 				$time = 60 * 60 * 24 * $f_mail_idle_less;
 				$time = time() - $time;
 				if ( $time > 0 ) {
@@ -109,7 +109,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 				$criteria_object->add($crit, 'AND');
 			}
 			$member_handler =& xoops_gethandler('member');
-			$groups = empty($_POST['mail_to_group']) ? array() : array_map("intval", $_POST['mail_to_group']);
+			$groups = empty($_POST['mail_to_group']) ? array() : array_map(" (int) ", $_POST['mail_to_group']);
 			$getusers = $member_handler->getUsersByGroupLink($groups, $criteria_object, true);
 			$count_criteria = $member_handler->getUserCountByGroupLink($groups, $criteria_object);
 			foreach ($getusers as $getuser) {

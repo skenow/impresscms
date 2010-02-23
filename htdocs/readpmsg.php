@@ -26,7 +26,7 @@ if ( !is_object($icmsUser) ) {
 			echo implode('<br />', $GLOBALS['xoopsSecurity']->getErrors());
 			exit();
 		}
-		$pm =& $pm_handler->get(intval($_POST['msg_id']));
+		$pm =& $pm_handler->get( (int) ($_POST['msg_id']));
 		if (!is_object($pm) || $pm->getVar('to_userid') != $icmsUser->getVar('uid') || !$pm_handler->delete($pm)) {
 			exit();
 		} else {
@@ -34,15 +34,15 @@ if ( !is_object($icmsUser) ) {
 			exit();
 		}
 	}
-	$start = !empty($_GET['start']) ? intval($_GET['start']) : 0;
-	$total_messages = !empty($_GET['total_messages']) ? intval($_GET['total_messages']) : 0;
+	$start = !empty($_GET['start']) ? (int) ($_GET['start']) : 0;
+	$total_messages = !empty($_GET['total_messages']) ? (int) ($_GET['total_messages']) : 0;
 	include ICMS_ROOT_PATH.'/header.php';
-	$criteria = new Criteria('to_userid', intval($icmsUser->getVar('uid')));
+	$criteria = new Criteria('to_userid', (int) ($icmsUser->getVar('uid')));
 	$criteria->setLimit(1);
 	$criteria->setStart($start);
 	$criteria->setSort('msg_time');
 	$pm_arr =& $pm_handler->getObjects($criteria);
-	echo "<div><h4>". _PM_PRIVATEMESSAGE."</h4></div><br /><a href='userinfo.php?uid=". intval($icmsUser->getVar("uid")) ."'>". _PM_PROFILE ."</a>&nbsp;<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;<a href='viewpmsg.php'>". _PM_INBOX ."</a>&nbsp;<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;\n";
+	echo "<div><h4>". _PM_PRIVATEMESSAGE."</h4></div><br /><a href='userinfo.php?uid=". (int) ($icmsUser->getVar("uid")) ."'>". _PM_PROFILE ."</a>&nbsp;<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;<a href='viewpmsg.php'>". _PM_INBOX ."</a>&nbsp;<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;\n";
 	if (empty($pm_arr)) {
 		echo '<br /><br />'._PM_YOUDONTHAVE;
 	} else {
@@ -50,13 +50,13 @@ if ( !is_object($icmsUser) ) {
 			//echo "failed";
 		}
 		echo $pm_arr[0]->getVar("subject")."<br /><form action='readpmsg.php' method='post' name='delete".$pm_arr[0]->getVar("msg_id")."'><table border='0' cellpadding='4' cellspacing='1' class='outer' width='100%'><tr><th colspan='2'>". _PM_FROM ."</th></tr><tr class='even'>\n";
-		$poster = new XoopsUser(intval($pm_arr[0]->getVar("from_userid")));
+		$poster = new XoopsUser( (int) ($pm_arr[0]->getVar("from_userid")));
 		if ( !$poster->isActive() ) {
 			$poster = false;
 		}
 		echo "<td valign='top'>";
 		if ( $poster != false ) { // we need to do this for deleted users
-			echo "<a href='userinfo.php?uid=".intval($poster->getVar("uid"))."'>".$poster->getVar("uname")."</a><br />\n";
+			echo "<a href='userinfo.php?uid=". (int) ($poster->getVar("uid"))."'>".$poster->getVar("uname")."</a><br />\n";
 			if ( $poster->getVar("user_avatar") != "" ) {
 				echo "<img src='uploads/".$poster->getVar("user_avatar")."' alt='' /><br />\n";
 			}
@@ -85,12 +85,12 @@ if ( !is_object($icmsUser) ) {
 		$previous = $start - 1;
 		$next = $start + 1;
 		if ( $previous >= 0 ) {
-			echo "<a href='readpmsg.php?start=".intval($previous)."&amp;total_messages=".intval($total_messages)."'>"._PM_PREVIOUS."</a> | ";
+			echo "<a href='readpmsg.php?start=". (int) ($previous)."&amp;total_messages=". (int) ($total_messages)."'>"._PM_PREVIOUS."</a> | ";
 		} else {
 			echo _PM_PREVIOUS." | ";
 		}
 		if ( $next < $total_messages ) {
-			echo "<a href='readpmsg.php?start=".intval($next)."&amp;total_messages=".intval($total_messages)."'>"._PM_NEXT."</a>";
+			echo "<a href='readpmsg.php?start=". (int) ($next)."&amp;total_messages=". (int) ($total_messages)."'>"._PM_NEXT."</a>";
 		} else {
 			echo _PM_NEXT;
 		}

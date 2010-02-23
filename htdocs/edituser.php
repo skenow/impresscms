@@ -48,7 +48,7 @@ if($op == 'saveuser')
 	$uid = 0;
 	if(!empty($_POST['uid']))
 	{
-		$uid = intval($_POST['uid']);
+		$uid = (int) ($_POST['uid']);
 	}
 
 	if(empty($uid) || $icmsUser->getVar('uid') != $uid)
@@ -200,12 +200,12 @@ if($op == 'saveuser')
 			if($icmsConfigUser['allow_htsig'] == 0)
 			{
 				$signature = strip_tags($myts->xoopsCodeDecode($_POST['user_sig'], 1));
-				$edituser->setVar('user_sig', xoops_substr($signature, 0, intval($icmsConfigUser['sig_max_length'])));
+				$edituser->setVar('user_sig', xoops_substr($signature, 0, (int) ($icmsConfigUser['sig_max_length'])));
 			}
 			else
 			{
 				$signature = $myts->displayTarea($_POST['user_sig'], 1, 1, 1, 1, 1, 'display');
-				$edituser->setVar('user_sig', xoops_substr($signature, 0, intval($icmsConfigUser['sig_max_length'])));
+				$edituser->setVar('user_sig', xoops_substr($signature, 0, (int) ($icmsConfigUser['sig_max_length'])));
 			}
 		}
 
@@ -283,7 +283,7 @@ if($op == 'editprofile')
 		icms_PasswordMeter();
 	}
 
-	echo '<a href="userinfo.php?uid='.intval($icmsUser->getVar('uid')).'">'._US_PROFILE.'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._US_EDITPROFILE.'<br /><br />';
+	echo '<a href="userinfo.php?uid='. (int) ($icmsUser->getVar('uid')).'">'._US_PROFILE.'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._US_EDITPROFILE.'<br /><br />';
 	$form = new XoopsThemeForm(_US_EDITPROFILE, 'userinfo', 'edituser.php', 'post', true);
 	$login_name_label = new XoopsFormLabel(_US_LOGINNAME, $icmsUser->getVar('login_name'));
 	$form->addElement($login_name_label);
@@ -399,9 +399,9 @@ if($op == 'editprofile')
 	$pwd_tray->addElement($pwd_text);
 	$pwd_tray->addElement($pwd_text2);
 	$pwd_text_old = new XoopsFormPassword(_US_OLD_PASSWORD, 'old_password', 10, 255);
-	$mailok_radio = new XoopsFormRadioYN(_US_MAILOK, 'user_mailok', intval($icmsUser->getVar('user_mailok')));
+	$mailok_radio = new XoopsFormRadioYN(_US_MAILOK, 'user_mailok', (int) ($icmsUser->getVar('user_mailok')));
 	$salt_hidden = new XoopsFormHidden('salt', $icmsUser->getVar('salt'));
-	$uid_hidden = new XoopsFormHidden('uid', intval($icmsUser->getVar('uid')));
+	$uid_hidden = new XoopsFormHidden('uid', (int) ($icmsUser->getVar('uid')));
 	$op_hidden = new XoopsFormHidden('op', 'saveuser');
 	$submit_button = new XoopsFormButton('', 'submit', _US_SAVECHANGES, 'submit');
 
@@ -453,7 +453,7 @@ if($op == 'avatarform')
 {
 	/** Include the header that starts page rendering */
 	include ICMS_ROOT_PATH.'/header.php';
-	echo '<a href="userinfo.php?uid='.intval($icmsUser->getVar('uid')).'">'._US_PROFILE.'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._US_UPLOADMYAVATAR.'<br /><br />';
+	echo '<a href="userinfo.php?uid='. (int) ($icmsUser->getVar('uid')).'">'._US_PROFILE.'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._US_UPLOADMYAVATAR.'<br /><br />';
 	$oldavatar = $icmsUser->getVar('user_avatar');
 	if(!empty($oldavatar) && $oldavatar != 'blank.gif')
 	{
@@ -477,7 +477,7 @@ if($op == 'avatarform')
 		$form->addElement(new XoopsFormLabel(_US_MAXIMGSZ, icms_conv_nr2local($icmsConfigUser['avatar_maxsize'])));
 		$form->addElement(new XoopsFormFile(_US_SELFILE, 'avatarfile', icms_conv_nr2local($icmsConfigUser['avatar_maxsize'])), true);
 		$form->addElement(new XoopsFormHidden('op', 'avatarupload'));
-		$form->addElement(new XoopsFormHidden('uid', intval($icmsUser->getVar('uid'))));
+		$form->addElement(new XoopsFormHidden('uid', (int) ($icmsUser->getVar('uid'))));
 		$form->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
 		$form->display();
 	}
@@ -492,7 +492,7 @@ if($op == 'avatarform')
 	if($icmsConfigUser['avatar_allow_upload'] == 1 && $icmsUser->getVar('posts') < $icmsConfigUser['avatar_minposts']){
 		$form2->addElement(new XoopsFormLabel(sprintf(_US_POSTSNOTENOUGH,icms_conv_nr2local($icmsConfigUser['avatar_minposts'])),_US_UNCHOOSEAVT));}
 		$form2->addElement($avatar_tray);
-		$form2->addElement(new XoopsFormHidden('uid', intval($icmsUser->getVar('uid'))));
+		$form2->addElement(new XoopsFormHidden('uid', (int) ($icmsUser->getVar('uid'))));
 		$form2->addElement(new XoopsFormHidden('op', 'avatarchoose'));
 		$form2->addElement(new XoopsFormButton('', 'submit2', _SUBMIT, 'submit'));
 		$form2->display();
@@ -515,7 +515,7 @@ if($op == 'avatarupload')
 
 	if(!empty($_POST['uid']))
 	{
-		$uid = intval($_POST['uid']);
+		$uid = (int) ($_POST['uid']);
 	}
 
 	if(empty($uid) || $icmsUser->getVar('uid') != $uid )
@@ -558,10 +558,10 @@ if($op == 'avatarupload')
 							}
 						}
 					}
-					$sql = sprintf("UPDATE %s SET user_avatar = %s WHERE uid = '%u'", $xoopsDB->prefix('users'), $xoopsDB->quoteString($uploader->getSavedFileName()), intval($icmsUser->getVar('uid')));
+					$sql = sprintf("UPDATE %s SET user_avatar = %s WHERE uid = '%u'", $xoopsDB->prefix('users'), $xoopsDB->quoteString($uploader->getSavedFileName()), (int) ($icmsUser->getVar('uid')));
 					$xoopsDB->query($sql);
-					$avt_handler->addUser($avatar->getVar('avatar_id'), intval($icmsUser->getVar('uid')));
-					redirect_header('userinfo.php?t='.time().'&amp;uid='.intval($icmsUser->getVar('uid')),0, _US_PROFUPDATED);
+					$avt_handler->addUser($avatar->getVar('avatar_id'), (int) ($icmsUser->getVar('uid')));
+					redirect_header('userinfo.php?t='.time().'&amp;uid='. (int) ($icmsUser->getVar('uid')),0, _US_PROFUPDATED);
 				}
 			}
 		}
@@ -584,7 +584,7 @@ if($op == 'avatarchoose')
 	$uid = 0;
 	if(!empty($_POST['uid']))
 	{
-		$uid = intval($_POST['uid']);
+		$uid = (int) ($_POST['uid']);
 	}
 
 	if(empty($uid) || $icmsUser->getVar('uid') != $uid)

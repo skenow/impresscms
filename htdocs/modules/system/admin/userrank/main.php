@@ -49,7 +49,7 @@ $op = (isset($_POST['op'])) ? trim(StopXSS($_POST['op'])) : ((isset($_GET['op'])
 switch ($op) {
 	case 'mod' :
 
-		$rank_id = isset($_GET['rank_id']) ? intval($_GET['rank_id']) : 0 ;
+		$rank_id = isset($_GET['rank_id']) ? (int) ($_GET['rank_id']) : 0 ;
 
 		edituserrank(true, $rank_id);
 
@@ -57,7 +57,7 @@ switch ($op) {
 
 	case 'clone' :
 
-		$rank_id = isset($_GET['rank_id']) ? intval($_GET['rank_id']) : 0 ;
+		$rank_id = isset($_GET['rank_id']) ? (int) ($_GET['rank_id']) : 0 ;
 
 		edituserrank(true, $rank_id, true);
 		break;

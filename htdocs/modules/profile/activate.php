@@ -20,7 +20,7 @@ include ICMS_ROOT_PATH.'/header.php';
 
 if (isset($_REQUEST['op']) && $_REQUEST['op'] == "actv") {
 	icms_loadLanguageFile('core', 'user');
-	$id = intval($_GET['id']);
+	$id = (int) ($_GET['id']);
 	$actkey = trim($_GET['actkey']);
 	if (empty($id)) {
 		redirect_header(ICMS_URL,1,'');

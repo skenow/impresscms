@@ -691,7 +691,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			 }
 			 break;
 			 case 'showimage':
-			 $image_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+			 $image_id = isset($_GET['id']) ? (int) ($_GET['id']) : 0;
 			 if (empty($image_id)) {
 			 header('Content-type: image/gif');
 			 readfile(XOOPS_UPLOAD_PATH.'/blank.gif');
@@ -765,7 +765,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 
 		case 'downloadtpl':
 			$tpltpl_handler =& xoops_gethandler('tplfile');
-			$tpl =& $tpltpl_handler->get(intval($id), true);
+			$tpl =& $tpltpl_handler->get( (int) ($id), true);
 			if (is_object($tpl)) {
 				$output = $tpl->getVar('tpl_source');
 				strlen($output);
@@ -784,7 +784,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 
 		case 'uploadtpl':
 			$tpltpl_handler =& xoops_gethandler('tplfile');
-			$id = intval($_GET['id']);
+			$id = (int) ($_GET['id']);
 			$tpl =& $tpltpl_handler->get($id);
 			xoops_cp_header();
 			echo '<a href="admin.php?fct=tplsets">'. _MD_TPLMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;<a href="./admin.php?fct=tplsets&amp;op=listtpl&amp;moddir='.$tpl->getVar('tpl_module').'&amp;tplset='.$tpl->getVar('tpl_tplset').'">'.$tpl->getVar('tpl_tplset').'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._MD_UPLOAD.'<br /><br />';

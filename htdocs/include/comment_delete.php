@@ -21,12 +21,12 @@ $op = 'delete';
 if (!empty($_POST)) {
 	extract($_POST);
 	$com_mode = isset($com_mode) ? htmlspecialchars(trim($com_mode), ENT_QUOTES) : 'flat';
-	$com_order = isset($com_order) ? intval($com_order) : XOOPS_COMMENT_OLD1ST;
-	$com_id = isset($com_id) ? intval($com_id) : 0;
+	$com_order = isset($com_order) ? (int) ($com_order) : XOOPS_COMMENT_OLD1ST;
+	$com_id = isset($com_id) ? (int) ($com_id) : 0;
 } else {
 	$com_mode = isset($_GET['com_mode']) ? htmlspecialchars(trim($_GET['com_mode']), ENT_QUOTES) : 'flat';
-	$com_order = isset($_GET['com_order']) ? intval($_GET['com_order']) : XOOPS_COMMENT_OLD1ST;
-	$com_id = isset($_GET['com_id']) ? intval($_GET['com_id']) : 0;
+	$com_order = isset($_GET['com_order']) ? (int) ($_GET['com_order']) : XOOPS_COMMENT_OLD1ST;
+	$com_id = isset($_GET['com_id']) ? (int) ($_GET['com_id']) : 0;
 
 }
 
@@ -84,7 +84,7 @@ if (false != $accesserror) {
 	if ($ref != '') {
 		redirect_header($ref, 2, _NOPERM);
 	} else {
-		redirect_header($redirect_page.'?'.$comment_config['itemName'].'='.intval($com_itemid), 2, _NOPERM);
+		redirect_header($redirect_page.'?'.$comment_config['itemName'].'='. (int) ($com_itemid), 2, _NOPERM);
 	}
 	exit();
 }

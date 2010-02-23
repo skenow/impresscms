@@ -50,7 +50,7 @@ $op = (isset($_POST['op']))?trim(StopXSS($_POST['op'])):((isset($_GET['op']))?tr
 switch ($op) {
 	case "mod":
 
-		$customtagid = isset($_GET['customtagid']) ? intval($_GET['customtagid']) : 0 ;
+		$customtagid = isset($_GET['customtagid']) ? (int) ($_GET['customtagid']) : 0 ;
 
 		editcustomtag(true, $customtagid);
 
@@ -58,7 +58,7 @@ switch ($op) {
 
 	case "clone":
 
-		$customtagid = isset($_GET['customtagid']) ? intval($_GET['customtagid']) : 0 ;
+		$customtagid = isset($_GET['customtagid']) ? (int) ($_GET['customtagid']) : 0 ;
 
 		editcustomtag(true, $customtagid, true);
 		break;

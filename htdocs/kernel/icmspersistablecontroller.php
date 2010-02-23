@@ -213,7 +213,7 @@ class IcmsPersistableController {
 	 */
 	function &storeFromDefaultForm($created_success_msg, $modified_success_msg, $redirect_page=false, $debug=false, $x_param = false)
 	{
-		$objectid = (isset($_POST[$this->handler->keyName])) ? intval($_POST[$this->handler->keyName]) : 0;
+		$objectid = (isset($_POST[$this->handler->keyName])) ? (int) ($_POST[$this->handler->keyName]) : 0;
 		if ($debug) {
 			if($x_param){
 				$icmsObj = $this->handler->getD($objectid, true,  $x_param);
@@ -283,7 +283,7 @@ class IcmsPersistableController {
 	{
 		global $impresscms;
 
-		$objectid = (isset($_REQUEST[$this->handler->keyName])) ? intval($_REQUEST[$this->handler->keyName]) : 0;
+		$objectid = (isset($_REQUEST[$this->handler->keyName])) ? (int) ($_REQUEST[$this->handler->keyName]) : 0;
 		$icmsObj = $this->handler->get($objectid);
 
 		if ($icmsObj->isNew()) {
@@ -329,7 +329,7 @@ class IcmsPersistableController {
 	function handleObjectDeletionFromUserSide($confirm_msg = false, $op='del') {
 		global $xoopsTpl, $impresscms;
 
-		$objectid = (isset($_REQUEST[$this->handler->keyName])) ? intval($_REQUEST[$this->handler->keyName]) : 0;
+		$objectid = (isset($_REQUEST[$this->handler->keyName])) ? (int) ($_REQUEST[$this->handler->keyName]) : 0;
 		$icmsObj = $this->handler->get($objectid);
 
 		if ($icmsObj->isNew()) {

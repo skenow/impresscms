@@ -192,12 +192,12 @@ class IcmsMediaUploader {
 				$this->allowedMimeTypes = & $allowedMimeTypes;
 			}
 			$this->uploadDir = $uploadDir;
-			$this->maxFileSize = intval($maxFileSize);
+			$this->maxFileSize = (int) ($maxFileSize);
 			if (isset ($maxWidth)) {
-				$this->maxWidth = intval($maxWidth);
+				$this->maxWidth = (int) ($maxWidth);
 			}
 			if (isset ($maxHeight)) {
-				$this->maxHeight = intval($maxHeight);
+				$this->maxHeight = (int) ($maxHeight);
 			}
 
 			icms_loadLanguageFile('core', 'uploader');
@@ -226,7 +226,7 @@ class IcmsMediaUploader {
 				return false;
 			}
 			elseif (is_array($_FILES[$media_name]['name']) && isset ($index)) {
-				$index = intval($index);
+				$index = (int) ($index);
 				$this->mediaName = (get_magic_quotes_gpc()) ? stripslashes($_FILES[$media_name]['name'][$index]) : $_FILES[$media_name]['name'][$index];
 				$this->mediaType = $_FILES[$media_name]['type'][$index];
 				$this->mediaSize = $_FILES[$media_name]['size'][$index];
@@ -248,7 +248,7 @@ class IcmsMediaUploader {
 				}
 			}
 			$this->errors = array ();
-			if (intval($this->mediaSize) < 0) {
+			if ( (int) ($this->mediaSize) < 0) {
 				$this->setErrors(_ER_UP_INVALIDFILESIZE);
 				return false;
 			}

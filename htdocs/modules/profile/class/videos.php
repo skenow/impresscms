@@ -145,7 +145,7 @@ class ProfileVideosHandler extends IcmsPersistableObjectHandler {
 			$criteria->setStart($start);
 		}
 		if ($limit) {
-			$criteria->setLimit(intval($limit));
+			$criteria->setLimit( (int) ($limit));
 		}
 		$criteria->setSort('creation_time');
 		$criteria->setOrder('DESC');

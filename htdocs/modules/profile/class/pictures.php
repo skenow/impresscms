@@ -148,7 +148,7 @@ class ProfilePicturesHandler extends IcmsPersistableObjectHandler {
 			$criteria->setStart($start);
 		}
 		if ($limit) {
-			$criteria->setLimit(intval($limit));
+			$criteria->setLimit( (int) ($limit));
 		}
 		$criteria->setSort('creation_time');
 		if ($icmsModuleConfig['images_order']) $criteria->setOrder('DESC');
@@ -301,7 +301,7 @@ class ProfilePicturesHandler extends IcmsPersistableObjectHandler {
 			$user_handler =& xoops_gethandler('user');
 
 			if($user_handler->insert($icmsUser)) {
-				$avt_handler->addUser($avatarObj->getVar('avatar_id'), intval($icmsUser->getVar('uid')));
+				$avt_handler->addUser($avatarObj->getVar('avatar_id'), (int) ($icmsUser->getVar('uid')));
 				redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_PICTURES_AVATAR_EDITED);
 			} else {
 				redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_PICTURES_AVATAR_NOTEDITED);

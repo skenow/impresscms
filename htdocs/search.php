@@ -35,12 +35,12 @@ $andor = 'AND';
 if(!empty($_GET['andor'])) {$andor = StopXSS($_GET['andor']);}
 elseif(!empty($_POST['andor'])) {$andor = StopXSS($_POST['andor']);}
 $mid = $uid = $start = 0;
-if(!empty($_GET['mid'])) {$mid = intval($_GET['mid']);}
-elseif(!empty($_POST['mid'])) {$mid = intval($_POST['mid']);}
-if(!empty($_GET['uid'])) {$uid = intval($_GET['uid']);}
-elseif(!empty($_POST['uid'])) {$uid = intval($_POST['uid']);}
-if(!empty($_GET['start'])) {$start = intval($_GET['start']);}
-elseif(!empty($_POST['start'])) {$start = intval($_POST['start']);}
+if(!empty($_GET['mid'])) {$mid = (int) ($_GET['mid']);}
+elseif(!empty($_POST['mid'])) {$mid = (int) ($_POST['mid']);}
+if(!empty($_GET['uid'])) {$uid = (int) ($_GET['uid']);}
+elseif(!empty($_POST['uid'])) {$uid = (int) ($_POST['uid']);}
+if(!empty($_GET['start'])) {$start = (int) ($_GET['start']);}
+elseif(!empty($_POST['start'])) {$start = (int) ($_POST['start']);}
 
 $xoopsTpl->assign("start", $start + 1);
 
@@ -167,7 +167,7 @@ $all_results = array();
 $all_results_counts = array();
 switch ($action) {
 	case "results":
-		$max_results_per_page = intval($icmsConfigSearch['num_shallow_search']);
+		$max_results_per_page = (int) ($icmsConfigSearch['num_shallow_search']);
 		$module_handler =& xoops_gethandler('module');
 		$criteria = new CriteriaCompo(new Criteria('hassearch', 1));
 		$criteria->add(new Criteria('isactive', 1));
@@ -180,7 +180,7 @@ switch ($action) {
 		}
 
 		foreach ($mids as $mid) {
-			$mid = intval($mid);
+			$mid = (int) ($mid);
 			if ( in_array($mid, $available_modules) ) {
 				$module =& $modules[$mid];
 				$results =& $module->search($queries, $andor, $search_limiter, 0);
@@ -210,13 +210,13 @@ switch ($action) {
 						}
 						/*UnderDog Mark*/
 						if( $icmsConfigSearch['search_user_date']){
-							$results[$i]['uid'] = @intval($results[$i]['uid']);
+							$results[$i]['uid'] = @ (int) ($results[$i]['uid']);
 							if ( !empty($results[$i]['uid']) ) {
 								$uname = XoopsUser::getUnameFromId($results[$i]['uid']);
 								$results[$i]['processed_user_name'] = $uname;
 								$results[$i]['processed_user_url'] = ICMS_URL."/userinfo.php?uid=".$results[$i]['uid'];
 							}
-							$results[$i]['processed_time'] = !empty($results[$i]['time']) ? " (". formatTimestamp(intval($results[$i]['time'])).")" : "";
+							$results[$i]['processed_time'] = !empty($results[$i]['time']) ? " (". formatTimestamp( (int) ($results[$i]['time'])).")" : "";
 						}
 					}
 
@@ -248,7 +248,7 @@ switch ($action) {
 
 	case "showall":
 	case 'showallbyuser':
-		$max_results_per_page = intval($icmsConfigSearch['search_per_page']);
+		$max_results_per_page = (int) ($icmsConfigSearch['search_per_page']);
 		$module_handler =& xoops_gethandler('module');
 		$module =& $module_handler->get($mid);
 		$results =& $module->search($queries, $andor, 0, $start, $uid);
@@ -270,13 +270,13 @@ switch ($action) {
 				}
 				$results[$i]['processed_title'] = $myts->displayTarea($results[$i]['title']);
 				if( $icmsConfigSearch['search_user_date']){
-					$results[$i]['uid'] = @intval($results[$i]['uid']);
+					$results[$i]['uid'] = @ (int) ($results[$i]['uid']);
 					if ( !empty($results[$i]['uid']) ) {
 						$uname = XoopsUser::getUnameFromId($results[$i]['uid']);
 						$results[$i]['processed_user_name'] = $uname;
 						$results[$i]['processed_user_url'] = ICMS_URL."/userinfo.php?uid=".$results[$i]['uid'];
 					}
-					$results[$i]['processed_time'] = !empty($results[$i]['time']) ? " (". formatTimestamp(intval($results[$i]['time'])).")" : "";
+					$results[$i]['processed_time'] = !empty($results[$i]['time']) ? " (". formatTimestamp( (int) ($results[$i]['time'])).")" : "";
 				}
 			}
 

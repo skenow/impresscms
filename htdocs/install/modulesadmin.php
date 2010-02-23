@@ -180,7 +180,7 @@ function xoops_module_install($dirname) {
 							$template = trim($block['template']);
 						}
 						$block_name = addslashes(trim($block['name']));
-						$sql = "INSERT INTO ".$db->prefix("newblocks")." (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, c_type, isactive, dirname, func_file, show_func, edit_func, template, bcachetime, last_modified) VALUES ('".intval($newbid)."', '".intval($newmid)."', '".intval($blockkey)."', '$options', '".$block_name."','".$block_name."', '', '1', '0', '0', 'M', 'H', '1', '".addslashes($dirname)."', '".addslashes(trim($block['file']))."', '".addslashes(trim($block['show_func']))."', '".addslashes($edit_func)."', '".$template."', '0', '".time()."')";
+						$sql = "INSERT INTO ".$db->prefix("newblocks")." (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, c_type, isactive, dirname, func_file, show_func, edit_func, template, bcachetime, last_modified) VALUES ('". (int) ($newbid)."', '". (int) ($newmid)."', '". (int) ($blockkey)."', '$options', '".$block_name."','".$block_name."', '', '1', '0', '0', 'M', 'H', '1', '".addslashes($dirname)."', '".addslashes(trim($block['file']))."', '".addslashes(trim($block['show_func']))."', '".addslashes($edit_func)."', '".$template."', '0', '".time()."')";
 						if (!$db->query($sql)) {
 							$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not add block <b>'.$block['name'].'</b> to the database! Database error: <b>'.$db->error().'</b></span>';
 						} else {
@@ -188,7 +188,7 @@ function xoops_module_install($dirname) {
 								$newbid = $db->getInsertId();
 							}
 							$msgs[] = '&nbsp;&nbsp;Block <b>'.$block['name'].'</b> added. Block ID: <b>'.icms_conv_nr2local($newbid).'</b>';
-							$sql = 'INSERT INTO '.$db->prefix('block_module_link').' (block_id, module_id,page_id) VALUES ('.intval($newbid).', 0,1)';
+							$sql = 'INSERT INTO '.$db->prefix('block_module_link').' (block_id, module_id,page_id) VALUES ('. (int) ($newbid).', 0,1)';
 							$db->query($sql);
 							if ($template != '') {
 								$tplfile =& $tplfile_handler->create();
@@ -375,7 +375,7 @@ function xoops_module_install($dirname) {
 					$task->setVar('sat_name', $taskData['name']);
 					$task->setVar('sat_code', $taskData['code']);
 					$task->setVar('sat_type', 'addon/'.$module->getInfo('dirname'));
-					$task->setVar('sat_addon_id', intval($taskID));
+					$task->setVar('sat_addon_id', (int) ($taskID));
 					if (!($atasks_handler->insert($task))) {
 						$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not insert autotask to db. Name: <b>'.$taskData['name'].'</b></span>';
 					} else {
@@ -583,12 +583,12 @@ function icms_module_update($dirname) {
 					if (!empty($blocks[$i]['options'])) {
 						$options = $blocks[$i]['options'];
 					}
-					$sql = "SELECT bid, name FROM ".$db->prefix('newblocks')." WHERE mid='".intval($module->getVar('mid'))."' AND func_num='".intval($i)."' AND show_func='".addslashes($blocks[$i]['show_func'])."' AND func_file='".addslashes($blocks[$i]['file'])."'";
+					$sql = "SELECT bid, name FROM ".$db->prefix('newblocks')." WHERE mid='". (int) ($module->getVar('mid'))."' AND func_num='". (int) ($i)."' AND show_func='".addslashes($blocks[$i]['show_func'])."' AND func_file='".addslashes($blocks[$i]['file'])."'";
 					$fresult = $db->query($sql);
 					$fcount = 0;
 					while ($fblock = $db->fetchArray($fresult)) {
 						$fcount++;
-						$sql = "UPDATE ".$db->prefix("newblocks")." SET name='".addslashes($blocks[$i]['name'])."', edit_func='".addslashes($editfunc)."', content='', template='".$template."', last_modified=".time()." WHERE bid='".intval($fblock['bid'])."'";
+						$sql = "UPDATE ".$db->prefix("newblocks")." SET name='".addslashes($blocks[$i]['name'])."', edit_func='".addslashes($editfunc)."', content='', template='".$template."', last_modified=".time()." WHERE bid='". (int) ($fblock['bid'])."'";
 						$result = $db->query($sql);
 						if (!$result) {
 							$msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_COULDNOTUPDATE,$fblock['name']);
@@ -599,7 +599,7 @@ function icms_module_update($dirname) {
 								if (count($tplfile) == 0) {
 									$tplfile_new =& $tplfile_handler->create();
 									$tplfile_new->setVar('tpl_module', $dirname);
-									$tplfile_new->setVar('tpl_refid', intval($fblock['bid']));
+									$tplfile_new->setVar('tpl_refid', (int) ($fblock['bid']));
 									$tplfile_new->setVar('tpl_tplset', 'default');
 									$tplfile_new->setVar('tpl_file', $blocks[$i]['template'], true);
 									$tplfile_new->setVar('tpl_type', 'block');
@@ -630,7 +630,7 @@ function icms_module_update($dirname) {
 					if ($fcount == 0) {
 						$newbid = $db->genId($db->prefix('newblocks').'_bid_seq');
 						$block_name = addslashes($blocks[$i]['name']);
-						$sql = "INSERT INTO ".$db->prefix("newblocks")." (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, c_type, isactive, dirname, func_file, show_func, edit_func, template, bcachetime, last_modified) VALUES ('".intval($newbid)."', '".intval($module->getVar('mid'))."', '".intval($i)."','".addslashes($options)."','".$block_name."', '".$block_name."', '', '1', '0', '0', 'M', 'H', '1', '".addslashes($dirname)."', '".addslashes($blocks[$i]['file'])."', '".addslashes($blocks[$i]['show_func'])."', '".addslashes($editfunc)."', '".$template."', '0', '".time()."')";
+						$sql = "INSERT INTO ".$db->prefix("newblocks")." (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, c_type, isactive, dirname, func_file, show_func, edit_func, template, bcachetime, last_modified) VALUES ('". (int) ($newbid)."', '". (int) ($module->getVar('mid'))."', '". (int) ($i)."','".addslashes($options)."','".$block_name."', '".$block_name."', '', '1', '0', '0', 'M', 'H', '1', '".addslashes($dirname)."', '".addslashes($blocks[$i]['file'])."', '".addslashes($blocks[$i]['show_func'])."', '".addslashes($editfunc)."', '".$template."', '0', '".time()."')";
 						$result = $db->query($sql);
 						if (!$result) {
 							$msgs[] = '&nbsp;&nbsp;ERROR: Could not create '.$blocks[$i]['name'];echo $sql;
@@ -642,8 +642,8 @@ function icms_module_update($dirname) {
 							$gperm_handler =& xoops_gethandler('groupperm');
 							foreach ($groups as $mygroup) {
 								$bperm =& $gperm_handler->create();
-								$bperm->setVar('gperm_groupid', intval($mygroup));
-								$bperm->setVar('gperm_itemid', intval($newbid));
+								$bperm->setVar('gperm_groupid', (int) ($mygroup));
+								$bperm->setVar('gperm_itemid', (int) ($newbid));
 								$bperm->setVar('gperm_name', 'block_read');
 								$bperm->setVar('gperm_modid', 1);
 								if (!$gperm_handler->insert($bperm)) {
@@ -656,7 +656,7 @@ function icms_module_update($dirname) {
 							if ($template != '') {
 								$tplfile =& $tplfile_handler->create();
 								$tplfile->setVar('tpl_module', $dirname);
-								$tplfile->setVar('tpl_refid', intval($newbid));
+								$tplfile->setVar('tpl_refid', (int) ($newbid));
 								$tplfile->setVar('tpl_source', $content, true);
 								$tplfile->setVar('tpl_tplset', 'default');
 								$tplfile->setVar('tpl_file', $blocks[$i]['template'], true);
@@ -679,7 +679,7 @@ function icms_module_update($dirname) {
 								}
 							}
 							$msgs[] = '&nbsp;&nbsp;Block <b>'.$blocks[$i]['name'].'</b> created. Block ID: <b>'.$newbid.'</b>';
-							$sql = "INSERT INTO ".$db->prefix('block_module_link')." (block_id, module_id, page_id) VALUES ('".intval($newbid)."', '0', '1')";
+							$sql = "INSERT INTO ".$db->prefix('block_module_link')." (block_id, module_id, page_id) VALUES ('". (int) ($newbid)."', '0', '1')";
 							$db->query($sql);
 						}
 					}
@@ -690,7 +690,7 @@ function icms_module_update($dirname) {
 			$block_arr = $icms_block_handler->getByModule($module->getVar('mid'));
 			foreach ($block_arr as $block) {
 				if (!in_array($block->getVar('show_func'), $showfuncs) || !in_array($block->getVar('func_file'), $funcfiles)) {
-					$sql = sprintf("DELETE FROM %s WHERE bid = '%u'", $db->prefix('newblocks'), intval($block->getVar('bid')));
+					$sql = sprintf("DELETE FROM %s WHERE bid = '%u'", $db->prefix('newblocks'), (int) ($block->getVar('bid')));
 					if(!$db->query($sql)) {
 						$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete block <b>'.$block->getVar('name').'</b>. Block ID: <b>'.$block->getVar('bid').'</b></span>';
 					} else {
@@ -795,7 +795,7 @@ function icms_module_update($dirname) {
 				// only insert ones that have been deleted previously with success
 				if (!in_array($config['name'], $config_delng)) {
 					$confobj =& $config_handler->createConfig();
-					$confobj->setVar('conf_modid', intval($newmid));
+					$confobj->setVar('conf_modid', (int) ($newmid));
 					$confobj->setVar('conf_catid', 0);
 					$confobj->setVar('conf_name', $config['name']);
 					$confobj->setVar('conf_title', $config['title'], true);
@@ -844,7 +844,7 @@ function icms_module_update($dirname) {
 			$criteria->add( new Criteria( 'sat_type', 'addon/'.$module->getInfo('dirname')));
 			$items_atasks = $atasks_handler->getObjects( $criteria , false );
 			foreach ($items_atasks as $task) {
-				$taskID = intval($task->getVar('sat_addon_id'));
+				$taskID = (int) ($task->getVar('sat_addon_id'));
 				$atasks[$taskID]['enabled'] = $task->getVar('sat_enabled');
 				$atasks[$taskID]['repeat'] = $task->getVar('sat_repeat');
 				$atasks[$taskID]['interval'] = $task->getVar('sat_interval');
@@ -861,7 +861,7 @@ function icms_module_update($dirname) {
 				$task->setVar('sat_name', $taskData['name']);
 				$task->setVar('sat_code', sprintf("require(XOOPS_ROOT_PATH . \"/modules/%s/%s\");", $module->getInfo('dirname') , addslashes($taskData['code'])));
 				$task->setVar('sat_type', 'addon/'.$module->getInfo('dirname'));
-				$task->setVar('sat_addon_id', intval($taskID));
+				$task->setVar('sat_addon_id', (int) ($taskID));
 				if (!($atasks_handler->insert($task))) {
 					$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not insert autotask to db. Name: <b>'.$taskData['name'].'</b></span>';
 				} else {

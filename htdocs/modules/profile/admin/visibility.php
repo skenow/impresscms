@@ -36,13 +36,13 @@ $fields = $field_handler->getList();
 
 if (isset($_REQUEST['submit'])) {
 	$visibility = $visibility_handler->create();
-	$visibility->setVar('fieldid', intval($_REQUEST['fieldid']));
+	$visibility->setVar('fieldid', (int) ($_REQUEST['fieldid']));
 	$visibility->setVar('user_group', $_REQUEST['ug']);
 	$visibility->setVar('profile_group', $_REQUEST['pg']);
 	$visibility_handler->insert($visibility);
 }
 if ($op == "del") {
-	$visibility = $visibility_handler->get(array(intval($_REQUEST['fieldid']), $_REQUEST['ug'], $_REQUEST['pg']));
+	$visibility = $visibility_handler->get(array( (int) ($_REQUEST['fieldid']), $_REQUEST['ug'], $_REQUEST['pg']));
 	$visibility_handler->delete($visibility, true);
 	header("Location: visibility.php");
 }

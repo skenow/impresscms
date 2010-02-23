@@ -89,7 +89,7 @@ class XoopsXmlRpcTag
 	}
 
 	function setFault($fault = true){
-		$this->_fault = (intval($fault) > 0) ? true : false;
+		$this->_fault = ( (int) ($fault) > 0) ? true : false;
 	}
 
 	function isFault()
@@ -111,7 +111,7 @@ class XoopsXmlRpcFault extends XoopsXmlRpcTag
 	function XoopsXmlRpcFault($code, $extra = null)
 	{
 		$this->setFault(true);
-		$this->_code = intval($code);
+		$this->_code = (int) ($code);
 		$this->_extra = isset($extra) ? trim($extra) : '';
 	}
 
@@ -167,7 +167,7 @@ class XoopsXmlRpcInt extends XoopsXmlRpcTag
 
 	function XoopsXmlRpcInt($value)
 	{
-		$this->_value = intval($value);
+		$this->_value = (int) ($value);
 	}
 
 	function render()
@@ -234,7 +234,7 @@ class XoopsXmlRpcDatetime extends XoopsXmlRpcTag
 		if (!is_numeric($value)) {
 			$this->_value = strtotime($value);
 		} else {
-			$this->_value = intval($value);
+			$this->_value = (int) ($value);
 		}
 	}
 

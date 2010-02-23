@@ -83,7 +83,7 @@ class IcmsCaptchaImageHandler {
 
 		if($this->mode == "bmp") {
 			$icmsConfigCaptcha['captcha_num_chars'] = 4;
-			$this->code = rand( pow(10, $icmsConfigCaptcha['captcha_num_chars'] - 1), intval( str_pad("9", $icmsConfigCaptcha['captcha_num_chars'], "9") ) );
+			$this->code = rand( pow(10, $icmsConfigCaptcha['captcha_num_chars'] - 1), (int) ( str_pad("9", $icmsConfigCaptcha['captcha_num_chars'], "9") ) );
 		}else{
 			$raw_code = md5(uniqid(mt_rand(), 1));
 			if (isset($icmsConfigCaptcha['captcha_skip_characters'])) {
@@ -108,7 +108,7 @@ class IcmsCaptchaImageHandler {
 		}
 
 		$_SESSION['IcmsCaptcha_sessioncode'] = strval( $this->code );
-		$maxAttempts = intval( @$_SESSION['IcmsCaptcha_maxattempts'] );
+		$maxAttempts = (int) ( @$_SESSION['IcmsCaptcha_maxattempts'] );
 
 		// Increase the attempt records on refresh
 		if(!empty($maxAttempts)) {

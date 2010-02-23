@@ -95,7 +95,7 @@ switch ( $op ) {
 			$newuser->setVar('uname', isset($_POST['uname']) ? trim($_POST['uname']) : '');
 			$newuser->setVar('email', isset($_POST['email']) ? trim($_POST['email']) : '');
 			$vpass = isset($_POST['vpass']) ? $myts->stripSlashesGPC($_POST['vpass']) : '';
-			$agree_disc = (isset($_POST['agree_disc']) && intval($_POST['agree_disc'])) ? 1 : 0;
+			$agree_disc = (isset($_POST['agree_disc']) && (int) ($_POST['agree_disc'])) ? 1 : 0;
 			$salt = $icmspass->icms_createSalt();
 			$pass = $icmspass->icms_encryptPass(trim($_POST['pass']), $salt);
 			$newuser->setVar('pass', isset($_POST['pass']) ? $pass : '');

@@ -241,7 +241,7 @@ class ProfileTribesHandler extends IcmsPersistableObjectHandler {
 			$criteria->setStart($start);
 		}
 		if ($limit) {
-			$criteria->setLimit(intval($limit));
+			$criteria->setLimit( (int) ($limit));
 		}
 		if ($sortByTitle) {
 			$criteria->setSort('title');

@@ -66,8 +66,8 @@ if (isset($_POST['op'])) $clean_op = $_POST['op'];
 
 /** Again, use a naming convention that indicates the source of the content of the variable */
 global $icmsUser, $profile_isAdmin;
-$real_uid = is_object($icmsUser)?intval($icmsUser->uid()):0;
-$clean_uid = isset($_GET['uid']) ? intval($_GET['uid']) : $real_uid ;
+$real_uid = is_object($icmsUser)? (int) ($icmsUser->uid()):0;
+$clean_uid = isset($_GET['uid']) ? (int) ($_GET['uid']) : $real_uid ;
 $configs_id = $profile_configs_handler->getConfigIdPerUser($clean_uid);
 $clean_configs_id = !empty($configs_id)?$configs_id:0;
 $configsObj = $profile_configs_handler->get($clean_configs_id);

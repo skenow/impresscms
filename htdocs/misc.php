@@ -85,7 +85,7 @@ if($action == 'showpopups')
 	$avatar_handler =& xoops_gethandler('avatar');
 	$avatarslist =& $avatar_handler->getList('S');
 	$cntavs = 0;
-	$counter = isset($_GET['start']) ? intval($_GET['start']) : 0;
+	$counter = isset($_GET['start']) ? (int) ($_GET['start']) : 0;
 	foreach($avatarslist as $file => $name)
 	{
 		echo '<td><img src="uploads/'.$file.'" alt="'.$name.'" style="padding:10px; vertical-align:top;" /><br />'.$name.'<br /><input name="myimage" type="button" value="'._SELECT.'" onclick="myimage_onclick('.$counter.')" /></td>';
@@ -168,7 +168,7 @@ case 'friend':
 case 'online':
 	$isadmin = $icmsUserIsAdmin;
 	echo '<table  width="100%" cellspacing="1" class="outer"><tr><th colspan="3">'._WHOSONLINE.'</th></tr>';
-	$start = isset($_GET['start']) ? intval($_GET['start']) : 0;
+	$start = isset($_GET['start']) ? (int) ($_GET['start']) : 0;
 	$online_handler =& xoops_gethandler('online');
 	$online_total =& $online_handler->getCount();
 	$limit = ($online_total > 20) ? 20 : $online_total;

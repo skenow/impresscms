@@ -19,8 +19,8 @@ include "mainfile.php";
 $reply = !empty($_GET['reply']) ? 1 : 0;
 $send = !empty($_GET['send']) ? 1 : 0;
 $send2 = !empty($_GET['send2']) ? 1 : 0;
-$to_userid = !empty($_GET['to_userid']) ? intval($_GET['to_userid']) : 0;
-$msg_id = !empty($_GET['msg_id']) ? intval($_GET['msg_id']) : 0;
+$to_userid = !empty($_GET['to_userid']) ? (int) ($_GET['to_userid']) : 0;
+$msg_id = !empty($_GET['msg_id']) ? (int) ($_GET['msg_id']) : 0;
 if ( empty($_GET['refresh'] ) && isset($_POST['op']) && $_POST['op'] != "submit" ) {
 	$jump = "pmlite.php?refresh=".time()."";
 	if ( $send == 1 ) {
@@ -41,7 +41,7 @@ if ($icmsUser) {
 		if (!$GLOBALS['xoopsSecurity']->check()) {
 			$security_error = true;
 		}
-		$res = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("users")." WHERE uid='".intval($_POST['to_userid'])."'");
+		$res = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("users")." WHERE uid='". (int) ($_POST['to_userid'])."'");
 		list($count) = $xoopsDB->fetchRow($res);
 		if ($count != 1) {
 			echo "<br /><br /><div><h4>"._PM_USERNOEXIST."<br />";
@@ -55,15 +55,15 @@ if ($icmsUser) {
 			$pm =& $pm_handler->create();
 			$pm->setVar("subject", $_POST['subject']);
 			$pm->setVar("msg_text", $_POST['message']);
-			$pm->setVar("to_userid", intval($_POST['to_userid']));
-			$pm->setVar("from_userid", intval($icmsUser->getVar("uid")));
+			$pm->setVar("to_userid", (int) ($_POST['to_userid']));
+			$pm->setVar("from_userid", (int) ($icmsUser->getVar("uid")));
 			if (!$pm_handler->insert($pm)) {
 				echo $pm->getHtmlErrors();
 				echo "<br /><a href='javascript:history.go(-1)'>"._PM_GOBACK."</a>";
 			} else {
 				// Send a Private Message email notification
 				$userHandler =& xoops_gethandler('user');
-				$toUser =& $userHandler->get(intval($_POST['to_userid']));
+				$toUser =& $userHandler->get( (int) ($_POST['to_userid']));
 				// Only send email notif if notification method is mail
 				if ($toUser->notify_method() == 2) {
 					$xoopsMailer =& getMailer();
@@ -96,7 +96,7 @@ if ($icmsUser) {
 		if ($reply == 1) {
 			$pm_handler =& xoops_gethandler('privmessage');
 			$pm =& $pm_handler->get($msg_id);
-			if ($pm->getVar("to_userid") == intval($icmsUser->getVar('uid'))) {
+			if ($pm->getVar("to_userid") == (int) ($icmsUser->getVar('uid'))) {
 				$pm_uname = XoopsUser::getUnameFromId($pm->getVar("from_userid"));
 				$message  = "[quote]\n";
 				$message .= sprintf(_PM_USERWROTE,$pm_uname);
@@ -139,7 +139,7 @@ if ($icmsUser) {
 		if ($reply == 1) {
 			$pm_handler =& xoops_gethandler('privmessage');
 			$pm =& $pm_handler->get($msg_id);
-			if ($pm->getVar("to_userid") == intval($icmsUser->getVar('uid'))) {
+			if ($pm->getVar("to_userid") == (int) ($icmsUser->getVar('uid'))) {
 				$pm_uname = XoopsUser::getUnameFromId($pm->getVar("from_userid"));
 				$message  = "[quote]\n";
 				$message .= sprintf(_PM_USERWROTE,$pm_uname);

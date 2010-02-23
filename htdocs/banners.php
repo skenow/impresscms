@@ -76,7 +76,7 @@ function bannerstats()
 		<td>"._BANNERS_FUNCTIONS."</td></tr></thead>
 		<tfoot><tr><td colspan='7'></td></tr></tfoot>";
 
-		$result = $xoopsDB->query("select bid, imptotal, impmade, clicks, date from ".$xoopsDB->prefix('banner')." where cid='".intval($cid)."'");
+		$result = $xoopsDB->query("select bid, imptotal, impmade, clicks, date from ".$xoopsDB->prefix('banner')." where cid='". (int) ($cid)."'");
 		$i = 0;
 		while(list($bid, $imptotal, $impmade, $clicks, $date) = $xoopsDB->fetchRow($result))
 		{
@@ -111,7 +111,7 @@ function bannerstats()
 		<br /><br />
 		<h4 class='content_title'>". _BANNERS_FOW_IN . htmlspecialchars( $icmsConfig['sitename'] ). "</h4><hr />";
 
-		$result = $xoopsDB->query("select bid, imageurl, clickurl, htmlbanner, htmlcode from ".$xoopsDB->prefix('banner')." where cid='".intval($cid)."'");
+		$result = $xoopsDB->query("select bid, imageurl, clickurl, htmlbanner, htmlcode from ".$xoopsDB->prefix('banner')." where cid='". (int) ($cid)."'");
 		while(list($bid, $imageurl, $clickurl, $htmlbanner, $htmlcode) = $xoopsDB->fetchRow($result))
 		{
 			$numrows = $xoopsDB->getRowsNum($result);
@@ -150,7 +150,7 @@ function bannerstats()
 
 		/* Finished Banners */
 		echo "<br />";
-		if($result = $xoopsDB->query("select bid, impressions, clicks, datestart, dateend from ".$xoopsDB->prefix('bannerfinish')." where cid='".intval($cid)."'"))
+		if($result = $xoopsDB->query("select bid, impressions, clicks, datestart, dateend from ".$xoopsDB->prefix('bannerfinish')." where cid='". (int) ($cid)."'"))
 		{
 			echo "<h4 class='content_title'>".sprintf(_BANNERS_FINISHED, $name)."</h4><hr />
 			<table summary=''>
@@ -199,8 +199,8 @@ function EmailStats($cid, $bid)
 	global $xoopsDB, $icmsConfig;
 	if($_SESSION['banner_login'] != "" && $_SESSION['banner_pass'] != "")
 	{
-		$cid = intval($cid);
-		$bid = intval($bid);
+		$cid = (int) ($cid);
+		$bid = (int) ($bid);
 		if($result2 = $xoopsDB->query(sprintf("select name, email, passwd from %s where cid='%u' AND login=%s", $xoopsDB->prefix('bannerclient'), $cid, $xoopsDB->quoteString($_SESSION['banner_login']))))
 		{
 			list($name, $email, $passwd) = $xoopsDB->fetchRow($result2);
@@ -265,8 +265,8 @@ function change_banner_url_by_client($cid, $bid, $url)
 	global $xoopsDB;
 	if($_SESSION['banner_login'] != "" && $_SESSION['banner_pass'] != "" && $url != "")
 	{
-		$cid = intval($cid);
-		$bid = intval($bid);
+		$cid = (int) ($cid);
+		$bid = (int) ($bid);
 		$sql = sprintf("select passwd from %s where cid='%u' and login=%s", $xoopsDB->prefix('bannerclient'), $cid, $xoopsDB->quoteString($_SESSION['banner_login']));
 		if($result = $xoopsDB->query($sql))
 		{
@@ -289,7 +289,7 @@ function change_banner_url_by_client($cid, $bid, $url)
 function clickbanner($bid)
 {
 	global $xoopsDB;
-	$bid = intval($bid);
+	$bid = (int) ($bid);
 	if($bid > 0)
 	{
 		if(xoops_refcheck())
@@ -315,7 +315,7 @@ switch($op)
 {
 	case 'click':
 		$bid = 0;
-		if(!empty($_GET['bid'])) {$bid = intval($_GET['bid']);}
+		if(!empty($_GET['bid'])) {$bid = (int) ($_GET['bid']);}
 		clickbanner($bid);
 		break;
 
@@ -339,15 +339,15 @@ switch($op)
 		}
 		$bid = $cid = 0;
 		if(!empty($_POST['url'])) {$url = $myts->stripslashesGPC(trim($_POST['url']));}
-		if(!empty($_POST['bid'])) {$bid = intval($_POST['bid']);}
-		if(!empty($_POST['cid'])) {$cid = intval($_POST['cid']);}
+		if(!empty($_POST['bid'])) {$bid = (int) ($_POST['bid']);}
+		if(!empty($_POST['cid'])) {$cid = (int) ($_POST['cid']);}
 		change_banner_url_by_client($cid, $bid, $url);
 		break;
 
 	case 'EmailStats':
 		$bid = $cid = 0;
-		if(!empty($_GET['bid'])) {$bid = intval($_GET['bid']);}
-		if(!empty($_GET['cid'])) {$cid = intval($_GET['cid']);}
+		if(!empty($_GET['bid'])) {$bid = (int) ($_GET['bid']);}
+		if(!empty($_GET['cid'])) {$cid = (int) ($_GET['cid']);}
 		EmailStats($cid, $bid);
 		break;
 

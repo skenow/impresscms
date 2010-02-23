@@ -52,11 +52,11 @@ if (isset($_POST['op'])) $clean_op = $_POST['op'];
 
 /** Again, use a naming convention that indicates the source of the content of the variable */
 $clean_pictures_id = 0;
-if (isset($_GET['pictures_id'])) $clean_pictures_id = intval($_GET['pictures_id']);
-if (isset($_POST['pictures_id'])) $clean_pictures_id = intval($_POST['pictures_id']);
+if (isset($_GET['pictures_id'])) $clean_pictures_id = (int) ($_GET['pictures_id']);
+if (isset($_POST['pictures_id'])) $clean_pictures_id = (int) ($_POST['pictures_id']);
 
-$real_uid = is_object($icmsUser) ? intval($icmsUser->uid()) : 0;
-$clean_uid = isset($_GET['uid']) ? intval($_GET['uid']) : $real_uid ;
+$real_uid = is_object($icmsUser) ? (int) ($icmsUser->uid()) : 0;
+$clean_uid = isset($_GET['uid']) ? (int) ($_GET['uid']) : $real_uid ;
 $picturesObj = $profile_pictures_handler->get($clean_pictures_id);
 
 /** Create a whitelist of valid values, be sure to use appropriate types for each value
@@ -162,7 +162,7 @@ if (in_array($clean_op,$valid_op,true)){
 			break;
 
 		default:
-			$clean_start = isset($_GET['start']) ? intval($_GET['start']) : 0;
+			$clean_start = isset($_GET['start']) ? (int) ($_GET['start']) : 0;
 				
 			if($real_uid && $real_uid == $uid){
 				$picturesObj = $profile_pictures_handler->get($clean_pictures_id);

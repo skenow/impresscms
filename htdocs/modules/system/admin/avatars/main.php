@@ -55,7 +55,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 		echo '</div><br /><br /><br />';
 		$criteria = new Criteria('avatar_type', $type);
 		$avtcount = $avt_handler->getCount($criteria);
-		$start = isset($_GET['start']) ? intval($_GET['start']) : 0;
+		$start = isset($_GET['start']) ? (int) ($_GET['start']) : 0;
 		$criteria->setStart($start);
 		$criteria->setLimit(10);
 		$avatars =& $avt_handler->getObjects($criteria, true);
@@ -172,8 +172,8 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 
 	if ($op == 'delfile') {
 		xoops_cp_header();
-		$user_id = isset($_GET['user_id']) ? intval($_GET['user_id']) : 0;
-		xoops_confirm(array('op' => 'delfileok', 'avatar_id' => intval($_GET['avatar_id']), 'fct' => 'avatars', 'user_id' => $user_id), 'admin.php', _MD_RUDELIMG);
+		$user_id = isset($_GET['user_id']) ? (int) ($_GET['user_id']) : 0;
+		xoops_confirm(array('op' => 'delfileok', 'avatar_id' => (int) ($_GET['avatar_id']), 'fct' => 'avatars', 'user_id' => $user_id), 'admin.php', _MD_RUDELIMG);
 		xoops_cp_footer();
 		exit();
 	}
@@ -182,7 +182,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 		if (!$GLOBALS['xoopsSecurity']->check()) {
 			redirect_header('admin.php?fct=avatars',1, 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 		}
-		$avatar_id = intval($avatar_id);
+		$avatar_id = (int) ($avatar_id);
 		if ($avatar_id <= 0) {
 			redirect_header('admin.php?fct=avatars',1);
 		}
@@ -200,7 +200,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 		$file = $avatar->getVar('avatar_file');
 		@unlink(XOOPS_UPLOAD_PATH.'/'.$file);
 		if (isset($user_id) && $avatar->getVar('avatar_type') == 'C') {
-			$xoopsDB->query("UPDATE ".$xoopsDB->prefix('users')." SET user_avatar='blank.gif' WHERE uid='".intval($user_id)."'");
+			$xoopsDB->query("UPDATE ".$xoopsDB->prefix('users')." SET user_avatar='blank.gif' WHERE uid='". (int) ($user_id)."'");
 		} else {
 			$xoopsDB->query("UPDATE ".$xoopsDB->prefix('users')." SET user_avatar='blank.gif' WHERE user_avatar='".$file."'");
 		}

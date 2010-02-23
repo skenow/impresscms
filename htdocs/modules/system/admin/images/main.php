@@ -20,10 +20,10 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 	if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
 	if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
 	$op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'list');
-	$image_id = (isset($_GET['image_id']))?intval($_GET['image_id']):((isset($_POST['image_id']))?intval($_POST['image_id']):null);
-	$imgcat_id = (isset($_GET['imgcat_id']))?intval($_GET['imgcat_id']):((isset($_POST['imgcat_id']))?intval($_POST['imgcat_id']):null);
-	$limit = (isset($_GET['limit']))?intval($_GET['limit']):((isset($_POST['limit']))?intval($_POST['limit']):15);
-	$start = (isset($_GET['start']))?intval($_GET['start']):((isset($_POST['start']))?intval($_POST['start']):0);
+	$image_id = (isset($_GET['image_id']))? (int) ($_GET['image_id']):((isset($_POST['image_id']))? (int) ($_POST['image_id']):null);
+	$imgcat_id = (isset($_GET['imgcat_id']))? (int) ($_GET['imgcat_id']):((isset($_POST['imgcat_id']))? (int) ($_POST['imgcat_id']):null);
+	$limit = (isset($_GET['limit']))? (int) ($_GET['limit']):((isset($_POST['limit']))? (int) ($_POST['limit']):15);
+	$start = (isset($_GET['start']))? (int) ($_GET['start']):((isset($_POST['start']))? (int) ($_POST['start']):0);
 
 	switch ($op){
 		case 'list':
@@ -667,7 +667,7 @@ function imanager_delcatok($imgcat_id) {
 		redirect_header('admin.php?fct=images', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 	}
 
-	$imgcat_id = intval($imgcat_id);
+	$imgcat_id = (int) ($imgcat_id);
 	if ($imgcat_id <= 0) {
 		redirect_header('admin.php?fct=images',1,'1');
 	}
@@ -761,7 +761,7 @@ function imanager_addfile() {
 		redirect_header('admin.php?fct=images', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 	}
 	$imgcat_handler =& xoops_gethandler('imagecategory');
-	$imagecategory =& $imgcat_handler->get(intval($imgcat_id));
+	$imagecategory =& $imgcat_handler->get( (int) ($imgcat_id));
 	if (!is_object($imagecategory)) {
 		redirect_header('admin.php?fct=images',1);
 	}
@@ -857,10 +857,10 @@ function imanager_updateimage() {
 			}
 			if ($changedCat){
 				$imgcat_handler =& xoops_gethandler('imagecategory');
-				$imagecategory  =& $imgcat_handler->get(intval($imgcat_id[$i]));
+				$imagecategory  =& $imgcat_handler->get( (int) ($imgcat_id[$i]));
 				$dest_categ_path = $imgcat_handler->getCategFolder($imagecategory);
 				if ($imagecategory->getVar('imgcat_storetype') != 'db') {
-					$oldimgcategory =& $imgcat_handler->get(intval($oldcat));
+					$oldimgcategory =& $imgcat_handler->get( (int) ($oldcat));
 					$src_categ_path = $imgcat_handler->getCategFolder($oldimgcategory);
 					$src = $src_categ_path.'/'.$image->getVar('image_name');
 					$dest = $dest_categ_path.'/'.$image->getVar('image_name');
@@ -894,7 +894,7 @@ function imanager_delfileok($image_id,$redir=null) {
 	if (!$GLOBALS['xoopsSecurity']->check()) {
 		redirect_header('admin.php?fct=images', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 	}
-	$image_id = intval($image_id);
+	$image_id = (int) ($image_id);
 	if ($image_id <= 0) {
 		redirect_header('admin.php?fct=images',1);
 	}
@@ -904,7 +904,7 @@ function imanager_delfileok($image_id,$redir=null) {
 		redirect_header('admin.php?fct=images',1);
 	}
 	$imgcat_handler =& xoops_gethandler('imagecategory');
-	$imagecategory  =& $imgcat_handler->get(intval($image->getVar('imgcat_id')));
+	$imagecategory  =& $imgcat_handler->get( (int) ($image->getVar('imgcat_id')));
 	$categ_path = $imgcat_handler->getCategFolder($imagecategory);
 	if (!$image_handler->delete($image)) {
 		xoops_cp_header();
@@ -927,7 +927,7 @@ function showAddImgForm($imgcat_id){
 	$form = new XoopsThemeForm(_ADDIMAGE, 'image_form', 'admin.php', 'post', true);
 	$form->setExtra('enctype="multipart/form-data"');
 	$form->addElement(new XoopsFormText(_IMAGENAME, 'image_nicename', 50, 255), true);
-	$select = new XoopsFormSelect(_IMAGECAT, 'imgcat_id',intval($imgcat_id));
+	$select = new XoopsFormSelect(_IMAGECAT, 'imgcat_id', (int) ($imgcat_id));
 	$select->addOptionArray($imgcat_handler->getCategList());
 	$form->addElement($select, true);
 	$form->addElement(new XoopsFormFile(_IMAGEFILE, 'image_file', 5000000));
@@ -950,11 +950,11 @@ function imanager_clone() {
 		redirect_header('admin.php?fct=images', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 	}
 
-	$imgcat_id = intval($_POST['imgcat_id']);
-	$image_id = intval($_POST['image_id']);
+	$imgcat_id = (int) ($_POST['imgcat_id']);
+	$image_id = (int) ($_POST['image_id']);
 
 	$imgcat_handler =& xoops_gethandler('imagecategory');
-	$imagecategory =& $imgcat_handler->get(intval($imgcat_id));
+	$imagecategory =& $imgcat_handler->get( (int) ($imgcat_id));
 	if (!is_object($imagecategory)) {
 		redirect_header('admin.php?fct=images',1);
 	}
@@ -1018,7 +1018,7 @@ function adminNav($id = null, $separador = "/", $list = false, $style="style='fo
 	}else{
 		if ($id > 0) {
 			$imgcat_handler =& xoops_gethandler('imagecategory');
-			$imagecategory =& $imgcat_handler->get(intval($id));
+			$imagecategory =& $imgcat_handler->get( (int) ($id));
 			if ($imagecategory->getVar('imgcat_id') > 0) {
 				if ($list){
 					$ret = $imagecategory->getVar('imgcat_name');

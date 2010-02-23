@@ -66,7 +66,7 @@ class XoopsImagecategory extends XoopsObject
 	 */
 	function setImageCount($value)
 	{
-		$this->_imageCount = intval($value);
+		$this->_imageCount = (int) ($value);
 	}
 
 	/**
@@ -114,7 +114,7 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
 	 **/
 	function &get($id)
 	{
-		$id = intval($id);
+		$id = (int) ($id);
 		$imgcat = false;
 		if ($id > 0) {
 			$sql = "SELECT * FROM ".$this->db->prefix('imagecategory')." WHERE imgcat_id='".$id."'";
@@ -156,9 +156,9 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
 		}
 		if ($imgcat->isNew()) {
 			$imgcat_id = $this->db->genId('imgcat_imgcat_id_seq');
-			$sql = sprintf("INSERT INTO %s (imgcat_id, imgcat_pid, imgcat_name, imgcat_foldername, imgcat_display, imgcat_weight, imgcat_maxsize, imgcat_maxwidth, imgcat_maxheight, imgcat_type, imgcat_storetype) VALUES ('%u', '%u', %s, %s, '%u', '%u', '%u', '%u', '%u', %s, %s)", $this->db->prefix('imagecategory'), intval($imgcat_id), intval($imgcat_pid), $this->db->quoteString($imgcat_name), $this->db->quoteString($imgcat_foldername), intval($imgcat_display), intval($imgcat_weight), intval($imgcat_maxsize), intval($imgcat_maxwidth), intval($imgcat_maxheight), $this->db->quoteString($imgcat_type), $this->db->quoteString($imgcat_storetype));
+			$sql = sprintf("INSERT INTO %s (imgcat_id, imgcat_pid, imgcat_name, imgcat_foldername, imgcat_display, imgcat_weight, imgcat_maxsize, imgcat_maxwidth, imgcat_maxheight, imgcat_type, imgcat_storetype) VALUES ('%u', '%u', %s, %s, '%u', '%u', '%u', '%u', '%u', %s, %s)", $this->db->prefix('imagecategory'), (int) ($imgcat_id), (int) ($imgcat_pid), $this->db->quoteString($imgcat_name), $this->db->quoteString($imgcat_foldername), (int) ($imgcat_display), (int) ($imgcat_weight), (int) ($imgcat_maxsize), (int) ($imgcat_maxwidth), (int) ($imgcat_maxheight), $this->db->quoteString($imgcat_type), $this->db->quoteString($imgcat_storetype));
 		} else {
-			$sql = sprintf("UPDATE %s SET imgcat_pid = %u, imgcat_name = %s, imgcat_foldername = %s, imgcat_display = '%u', imgcat_weight = '%u', imgcat_maxsize = '%u', imgcat_maxwidth = '%u', imgcat_maxheight = '%u', imgcat_type = %s WHERE imgcat_id = '%u'", $this->db->prefix('imagecategory'), intval($imgcat_pid), $this->db->quoteString($imgcat_name), $this->db->quoteString($imgcat_foldername), intval($imgcat_display), intval($imgcat_weight), intval($imgcat_maxsize), intval($imgcat_maxwidth), intval($imgcat_maxheight), $this->db->quoteString($imgcat_type), intval($imgcat_id));
+			$sql = sprintf("UPDATE %s SET imgcat_pid = %u, imgcat_name = %s, imgcat_foldername = %s, imgcat_display = '%u', imgcat_weight = '%u', imgcat_maxsize = '%u', imgcat_maxwidth = '%u', imgcat_maxheight = '%u', imgcat_type = %s WHERE imgcat_id = '%u'", $this->db->prefix('imagecategory'), (int) ($imgcat_pid), $this->db->quoteString($imgcat_name), $this->db->quoteString($imgcat_foldername), (int) ($imgcat_display), (int) ($imgcat_weight), (int) ($imgcat_maxsize), (int) ($imgcat_maxwidth), (int) ($imgcat_maxheight), $this->db->quoteString($imgcat_type), (int) ($imgcat_id));
 		}
 		if (!$result = $this->db->query($sql)) {
 			return false;
@@ -185,7 +185,7 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
 			return false;
 		}
 
-		$sql = sprintf("DELETE FROM %s WHERE imgcat_id = '%u'", $this->db->prefix('imagecategory'), intval($imgcat->getVar('imgcat_id')));
+		$sql = sprintf("DELETE FROM %s WHERE imgcat_id = '%u'", $this->db->prefix('imagecategory'), (int) ($imgcat->getVar('imgcat_id')));
 		if (!$result = $this->db->query($sql)) {
 			return false;
 		}
@@ -267,7 +267,7 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
 			}
 		}
 		if (isset($display)) {
-			$criteria->add(new Criteria('imgcat_display', intval($display)));
+			$criteria->add(new Criteria('imgcat_display', (int) ($display)));
 		}
 		if (isset($storetype)) {
 			$criteria->add(new Criteria('imgcat_storetype', $storetype));
@@ -306,7 +306,7 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
 			}
 		}
 		if (isset($display)) {
-			$criteria->add(new Criteria('imgcat_display', intval($display)));
+			$criteria->add(new Criteria('imgcat_display', (int) ($display)));
 		}
 		if (isset($storetype)) {
 			$criteria->add(new Criteria('imgcat_storetype', $storetype));

@@ -16,7 +16,7 @@ include_once ICMS_ROOT_PATH.'/header.php';
 
 /** To come soon in imBuilding...
 
-$clean_post_uid = isset($_GET['uid']) ? intval($_GET['uid']) : false;
+$clean_post_uid = isset($_GET['uid']) ? (int) ($_GET['uid']) : false;
 
 include_once CONTENT_ROOT_PATH.'/class/icmsfeed.php';
 $content_feed = new IcmsFeed();

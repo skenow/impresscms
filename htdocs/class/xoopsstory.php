@@ -62,7 +62,7 @@ class XoopsStory
 		}
 		elseif($storyid != -1)
 		{
-			$this->getStory(intval($storyid));
+			$this->getStory( (int) ($storyid));
 		}
 	}
 
@@ -73,7 +73,7 @@ class XoopsStory
 	 **/
 	function setStoryId($value)
 	{
-		$this->storyid = intval($value);
+		$this->storyid = (int) ($value);
 	}
 
 	/**
@@ -83,7 +83,7 @@ class XoopsStory
 	 **/
 	function setTopicId($value)
 	{
-		$this->topicid = intval($value);
+		$this->topicid = (int) ($value);
 	}
 
 	/**
@@ -93,7 +93,7 @@ class XoopsStory
 	 **/
 	function setUid($value)
 	{
-		$this->uid = intval($value);
+		$this->uid = (int) ($value);
 	}
 
 	/**
@@ -133,7 +133,7 @@ class XoopsStory
 	 **/
 	function setPublished($value)
 	{
-		$this->published = intval($value);
+		$this->published = (int) ($value);
 	}
 
 	/**
@@ -143,7 +143,7 @@ class XoopsStory
 	 **/
 	function setExpired($value)
 	{
-		$this->expired = intval($value);
+		$this->expired = (int) ($value);
 	}
 
 	/**
@@ -213,7 +213,7 @@ class XoopsStory
 	 **/
 	function setApproved($value)
 	{
-		$this->approved = intval($value);
+		$this->approved = (int) ($value);
 	}
 
 	/**
@@ -243,7 +243,7 @@ class XoopsStory
 	 **/
 	function setComments($value)
 	{
-		$this->comments = intval($value);
+		$this->comments = (int) ($value);
 	}
 
 	/**
@@ -285,17 +285,17 @@ class XoopsStory
 			$created = time();
 			$published = ($this->approved) ? $this->published : 0;
 
-			$sql = sprintf("INSERT INTO %s (storyid, uid, title, created, published, expired, hostname, nohtml, nosmiley, hometext, bodytext, counter, topicid, ihome, notifypub, story_type, topicdisplay, topicalign, comments) VALUES ('%u', '%u', '%s', '%u', '%u', '%u', '%s', '%u', '%u', '%s', '%s', '%u', '%u', '%u', '%u', '%s', '%u', '%s', '%u')", $this->table, intval($newstoryid), intval($this->uid), $title, intval($created), intval($published), intval($expired), $this->hostname, intval($this->nohtml), intval($this->nosmiley), $hometext, $bodytext, 0, intval($this->topicid), intval($this->ihome), intval($this->notifypub), $this->type, intval($this->topicdisplay), $this->topicalign, intval($this->comments));
+			$sql = sprintf("INSERT INTO %s (storyid, uid, title, created, published, expired, hostname, nohtml, nosmiley, hometext, bodytext, counter, topicid, ihome, notifypub, story_type, topicdisplay, topicalign, comments) VALUES ('%u', '%u', '%s', '%u', '%u', '%u', '%s', '%u', '%u', '%s', '%s', '%u', '%u', '%u', '%u', '%s', '%u', '%s', '%u')", $this->table, (int) ($newstoryid), (int) ($this->uid), $title, (int) ($created), (int) ($published), (int) ($expired), $this->hostname, (int) ($this->nohtml), (int) ($this->nosmiley), $hometext, $bodytext, 0, (int) ($this->topicid), (int) ($this->ihome), (int) ($this->notifypub), $this->type, (int) ($this->topicdisplay), $this->topicalign, (int) ($this->comments));
 		}
 		else
 		{
 			if($this->approved)
 			{
-				$sql = sprintf("UPDATE %s SET title = '%s', published = '%u', expired = '%u', nohtml = '%u', nosmiley = '%u', hometext = '%s', bodytext = '%s', topicid = '%u', ihome = '%u', topicdisplay = '%u', topicalign = '%s', comments = '%u' WHERE storyid = '%u'", $this->table, $title, intval($this->published), intval($expired), intval($this->nohtml), intval($this->nosmiley), $hometext, $bodytext, intval($this->topicid), intval($this->ihome), intval($this->topicdisplay), $this->topicalign, intval($this->comments), intval($this->storyid));
+				$sql = sprintf("UPDATE %s SET title = '%s', published = '%u', expired = '%u', nohtml = '%u', nosmiley = '%u', hometext = '%s', bodytext = '%s', topicid = '%u', ihome = '%u', topicdisplay = '%u', topicalign = '%s', comments = '%u' WHERE storyid = '%u'", $this->table, $title, (int) ($this->published), (int) ($expired), (int) ($this->nohtml), (int) ($this->nosmiley), $hometext, $bodytext, (int) ($this->topicid), (int) ($this->ihome), (int) ($this->topicdisplay), $this->topicalign, (int) ($this->comments), (int) ($this->storyid));
 			}
 			else
 			{
-				$sql = sprintf("UPDATE %s SET title = '%s', expired = '%u', nohtml = '%u', nosmiley = '%u', hometext = '%s', bodytext = '%s', topicid = '%u', ihome = '%u', topicdisplay = '%u', topicalign = '%s', comments = '%u' WHERE storyid = '%u'", $this->table, $title, intval($expired), intval($this->nohtml), intval($this->nosmiley), $hometext, $bodytext, intval($this->topicid), intval($this->ihome), intval($this->topicdisplay), intval($this->topicalign), intval($this->comments), intval($this->storyid));
+				$sql = sprintf("UPDATE %s SET title = '%s', expired = '%u', nohtml = '%u', nosmiley = '%u', hometext = '%s', bodytext = '%s', topicid = '%u', ihome = '%u', topicdisplay = '%u', topicalign = '%s', comments = '%u' WHERE storyid = '%u'", $this->table, $title, (int) ($expired), (int) ($this->nohtml), (int) ($this->nosmiley), $hometext, $bodytext, (int) ($this->topicid), (int) ($this->ihome), (int) ($this->topicdisplay), (int) ($this->topicalign), (int) ($this->comments), (int) ($this->storyid));
 			}
 			$newstoryid = $this->storyid;
 		}
@@ -318,7 +318,7 @@ class XoopsStory
 	 **/
 	function getStory($storyid)
 	{
-		$storyid = intval($storyid);
+		$storyid = (int) ($storyid);
 		$sql = "SELECT * FROM ".$this->table." WHERE storyid='".$storyid."'";
 		$array = $this->db->fetchArray($this->db->query($sql));
 		$this->makeStory($array);
@@ -344,7 +344,7 @@ class XoopsStory
 	 **/
 	function delete()
 	{
-		$sql = sprintf("DELETE FROM %s WHERE storyid = '%u'", $this->table, intval($this->storyid));
+		$sql = sprintf("DELETE FROM %s WHERE storyid = '%u'", $this->table, (int) ($this->storyid));
 		if(!$result = $this->db->query($sql))
 		{
 			return false;
@@ -359,7 +359,7 @@ class XoopsStory
 	 **/
 	function updateCounter()
 	{
-		$sql = sprintf("UPDATE %s SET counter = counter+1 WHERE storyid = '%u'", $this->table, intval($this->storyid));
+		$sql = sprintf("UPDATE %s SET counter = counter+1 WHERE storyid = '%u'", $this->table, (int) ($this->storyid));
 		if(!$result = $this->db->queryF($sql))
 		{
 			return false;
@@ -374,7 +374,7 @@ class XoopsStory
 	 **/
 	function updateComments($total)
 	{
-		$sql = sprintf("UPDATE %s SET comments = '%u' WHERE storyid = '%u'", $this->table, intval($total), intval($this->storyid));
+		$sql = sprintf("UPDATE %s SET comments = '%u' WHERE storyid = '%u'", $this->table, (int) ($total), (int) ($this->storyid));
 		if(!$result = $this->db->queryF($sql))
 		{
 			return false;

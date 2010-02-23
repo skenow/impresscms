@@ -144,7 +144,7 @@ class IcmsCaptcha {
 		global $icmsConfig, $icmsConfigCaptcha;
 		$sessionName	= @$_SESSION['IcmsCaptcha_name'];
 		$skipMember		= ($skipMember === null) ? @$_SESSION['IcmsCaptcha_skipmember'] : $skipMember;
-		$maxAttempts	= intval( @$_SESSION['IcmsCaptcha_maxattempts'] );
+		$maxAttempts	= (int) ( @$_SESSION['IcmsCaptcha_maxattempts'] );
 
 		$is_valid = false;
 

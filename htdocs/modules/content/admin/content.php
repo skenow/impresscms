@@ -119,11 +119,11 @@ if (in_array ( $clean_op, $valid_op, true )) {
 				$changed = false;
 				$obj = $content_content_handler->get($v);
 				if ($obj->getVar('content_status','e') != $_POST['content_status'][$k]){
-					$obj->setVar('content_status',intval($_POST['content_status'][$k]));
+					$obj->setVar('content_status', (int) ($_POST['content_status'][$k]));
 					$changed = true;
 				}
 				if ($obj->getVar('content_visibility','e') != $_POST['content_visibility'][$k]){
-					$obj->setVar('content_visibility',intval($_POST['content_visibility'][$k]));
+					$obj->setVar('content_visibility', (int) ($_POST['content_visibility'][$k]));
 					$changed = true;
 				}
 				if ($changed){

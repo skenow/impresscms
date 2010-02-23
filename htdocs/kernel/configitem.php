@@ -80,7 +80,7 @@ class XoopsConfigItem extends XoopsObject
 	{
 		switch ($this->getVar('conf_valuetype')) {
 			case 'int':
-				return intval($this->getVar('conf_value', 'N'));
+				return (int) ($this->getVar('conf_value', 'N'));
 				break;
 			case 'array':
 				$value = @ unserialize($this->getVar('conf_value', 'N'));
@@ -204,7 +204,7 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
 	function &get($id)
 	{
 		$config = false;
-		$id = intval($id);
+		$id = (int) ($id);
 		if ($id > 0) {
 			$sql = "SELECT * FROM ".$this->db->prefix('config')." WHERE conf_id='".$id."'";
 			if (!$result = $this->db->query($sql)) {
@@ -245,9 +245,9 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
 		}
 		if ($config->isNew()) {
 			$conf_id = $this->db->genId('config_conf_id_seq');
-			$sql = sprintf("INSERT INTO %s (conf_id, conf_modid, conf_catid, conf_name, conf_title, conf_value, conf_desc, conf_formtype, conf_valuetype, conf_order) VALUES ('%u', '%u', '%u', %s, %s, %s, %s, %s, %s, '%u')", $this->db->prefix('config'), intval($conf_id), intval($conf_modid), intval($conf_catid), $this->db->quoteString($conf_name), $this->db->quoteString($conf_title), $this->db->quoteString($conf_value), $this->db->quoteString($conf_desc), $this->db->quoteString($conf_formtype), $this->db->quoteString($conf_valuetype), intval($conf_order));
+			$sql = sprintf("INSERT INTO %s (conf_id, conf_modid, conf_catid, conf_name, conf_title, conf_value, conf_desc, conf_formtype, conf_valuetype, conf_order) VALUES ('%u', '%u', '%u', %s, %s, %s, %s, %s, %s, '%u')", $this->db->prefix('config'), (int) ($conf_id), (int) ($conf_modid), (int) ($conf_catid), $this->db->quoteString($conf_name), $this->db->quoteString($conf_title), $this->db->quoteString($conf_value), $this->db->quoteString($conf_desc), $this->db->quoteString($conf_formtype), $this->db->quoteString($conf_valuetype), (int) ($conf_order));
 		} else {
-			$sql = sprintf("UPDATE %s SET conf_modid = '%u', conf_catid = '%u', conf_name = %s, conf_title = %s, conf_value = %s, conf_desc = %s, conf_formtype = %s, conf_valuetype = %s, conf_order = '%u' WHERE conf_id = '%u'", $this->db->prefix('config'), intval($conf_modid), intval($conf_catid), $this->db->quoteString($conf_name), $this->db->quoteString($conf_title), $this->db->quoteString($conf_value), $this->db->quoteString($conf_desc), $this->db->quoteString($conf_formtype), $this->db->quoteString($conf_valuetype), intval($conf_order), intval($conf_id));
+			$sql = sprintf("UPDATE %s SET conf_modid = '%u', conf_catid = '%u', conf_name = %s, conf_title = %s, conf_value = %s, conf_desc = %s, conf_formtype = %s, conf_valuetype = %s, conf_order = '%u' WHERE conf_id = '%u'", $this->db->prefix('config'), (int) ($conf_modid), (int) ($conf_catid), $this->db->quoteString($conf_name), $this->db->quoteString($conf_title), $this->db->quoteString($conf_value), $this->db->quoteString($conf_desc), $this->db->quoteString($conf_formtype), $this->db->quoteString($conf_valuetype), (int) ($conf_order), (int) ($conf_id));
 		}
 		if (!$result = $this->db->query($sql)) {
 			return false;
@@ -273,7 +273,7 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
 		if (!is_a($config, 'xoopsconfigitem')) {
 			return false;
 		}
-		$sql = sprintf("DELETE FROM %s WHERE conf_id = '%u'", $this->db->prefix('config'), intval($config->getVar('conf_id')));
+		$sql = sprintf("DELETE FROM %s WHERE conf_id = '%u'", $this->db->prefix('config'), (int) ($config->getVar('conf_id')));
 		if (!$result = $this->db->query($sql)) {
 			return false;
 		}

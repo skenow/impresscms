@@ -31,7 +31,7 @@ switch($op) {
 		$count = (!empty($_POST['smile_id']) && is_array($_POST['smile_id'])) ? count($_POST['smile_id']) : 0;
 		$db =& Database::getInstance();
 		for ($i = 0; $i < $count; $i++) {
-			$smile_id = intval($_POST['smile_id'][$i]);
+			$smile_id = (int) ($_POST['smile_id'][$i]);
 			if (empty($smile_id)) {
 				continue;
 			}
@@ -59,9 +59,9 @@ switch($op) {
 				$smile_url = $uploader->getSavedFileName();
 				$smile_code = $myts->stripSlashesGPC($_POST['smile_code']);
 				$smile_desc = $myts->stripSlashesGPC($_POST['smile_desc']);
-				$smile_display = intval($_POST['smile_display']) > 0 ? 1 : 0;
+				$smile_display = (int) ($_POST['smile_display']) > 0 ? 1 : 0;
 				$newid = $db->genId($db->prefix('smilies')."_id_seq");
-				$sql = sprintf("INSERT INTO %s (id, code, smile_url, emotion, display) VALUES ('%d', %s, %s, %s, '%d')", $db->prefix('smiles'), intval($newid), $db->quoteString($smile_code), $db->quoteString($smile_url), $db->quoteString($smile_desc), $smile_display);
+				$sql = sprintf("INSERT INTO %s (id, code, smile_url, emotion, display) VALUES ('%d', %s, %s, %s, '%d')", $db->prefix('smiles'), (int) ($newid), $db->quoteString($smile_code), $db->quoteString($smile_url), $db->quoteString($smile_desc), $smile_display);
 				if (!$db->query($sql)) {
 					$err = 'Failed storing smiley data into the database';
 				}
@@ -80,21 +80,21 @@ switch($op) {
 		break;
 
 	case "SmilesEdit":
-		$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+		$id = isset($_GET['id']) ? (int) ($_GET['id']) : 0;
 		if ($id > 0) {
 			SmilesEdit($id);
 		}
 		break;
 
 	case "SmilesSave":
-		$id = isset($_POST['id']) ? intval($_POST['id']) : 0;
+		$id = isset($_POST['id']) ? (int) ($_POST['id']) : 0;
 		if ($id <= 0 | !$GLOBALS['xoopsSecurity']->check()) {
 			redirect_header('admin.php?fct=smilies', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 		}
 		$myts =& MyTextSanitizer::getInstance();
 		$smile_code = $myts->stripSlashesGPC($_POST['smile_code']);
 		$smile_desc = $myts->stripSlashesGPC($_POST['smile_desc']);
-		$smile_display = intval($_POST['smile_display']) > 0 ? 1 : 0;
+		$smile_display = (int) ($_POST['smile_display']) > 0 ? 1 : 0;
 		$db =& Database::getInstance();
 		if ($_FILES['smile_url']['name'] != "") {
 			include_once XOOPS_ROOT_PATH.'/class/uploader.php';
@@ -135,7 +135,7 @@ switch($op) {
 		break;
 
 	case "SmilesDel":
-		$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+		$id = isset($_GET['id']) ? (int) ($_GET['id']) : 0;
 		if ($id > 0) {
 			xoops_cp_header();
 			xoops_confirm(array('fct' => 'smilies', 'op' => 'SmilesDelOk', 'id' => $id), 'admin.php', _AM_WAYSYWTDTS);
@@ -144,7 +144,7 @@ switch($op) {
 		break;
 
 	case "SmilesDelOk":
-		$id = isset($_POST['id']) ? intval($_POST['id']) : 0;
+		$id = isset($_POST['id']) ? (int) ($_POST['id']) : 0;
 		if ($id <= 0 | !$GLOBALS['xoopsSecurity']->check()) {
 			redirect_header('admin.php?fct=smilies', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 		}

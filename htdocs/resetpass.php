@@ -69,7 +69,7 @@ else
 		$xoopsMailer->setSubject(sprintf(_US_PWDRESET,ICMS_URL));
 		if(!$xoopsMailer->send()) {echo $xoopsMailer->getErrors();}
 
-		$sql = sprintf("UPDATE %s SET pass = '%s', salt = '%s', pass_expired = '%u', enc_type = '%u' WHERE uid = '%u'", $xoopsDB->prefix('users'), $pass, $salt, 0, intval($icmsConfigUser['enc_type']), intval($getuser[0]->getVar('uid')));
+		$sql = sprintf("UPDATE %s SET pass = '%s', salt = '%s', pass_expired = '%u', enc_type = '%u' WHERE uid = '%u'", $xoopsDB->prefix('users'), $pass, $salt, 0, (int) ($icmsConfigUser['enc_type']), (int) ($getuser[0]->getVar('uid')));
 		if(!$xoopsDB->queryF($sql))
 		{
 			include 'header.php';

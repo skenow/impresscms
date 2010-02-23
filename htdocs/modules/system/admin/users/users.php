@@ -22,7 +22,7 @@ include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 function displayUsers()
 {
 	global $xoopsDB, $xoopsConfig, $icmsModule, $icmsConfigUser;
-	$userstart = isset($_GET['userstart']) ? intval($_GET['userstart']) : 0;
+	$userstart = isset($_GET['userstart']) ? (int) ($_GET['userstart']) : 0;
 
 	xoops_cp_header();
 	echo '<div class="CPbigTitle" style="background-image: url('.ICMS_URL.'/modules/system/admin/users/images/users_big.png)">'._MD_AM_USER.'</div><br />';
@@ -229,12 +229,12 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 		if($icmsConfigUser['allow_htsig'] == 0)
 		{
 			$signature = strip_tags($myts->xoopsCodeDecode($user_sig, 1));
-			$edituser->setVar('user_sig', xoops_substr($signature, 0, intval($icmsConfigUser['sig_max_length'])));
+			$edituser->setVar('user_sig', xoops_substr($signature, 0, (int) ($icmsConfigUser['sig_max_length'])));
 		}
 		else
 		{
 			$signature = $myts->displayTarea($user_sig, 1, 1, 1, 1, 1, 'display');
-			$edituser->setVar('user_sig', xoops_substr($signature, 0, intval($icmsConfigUser['sig_max_length'])));
+			$edituser->setVar('user_sig', xoops_substr($signature, 0, (int) ($icmsConfigUser['sig_max_length'])));
 		}
 		$user_viewemail = (isset($user_viewemail) && $user_viewemail == 1) ? 1 : 0;
 		$edituser->setVar('user_viewemail', $user_viewemail);
@@ -326,7 +326,7 @@ function synchronize($id, $type)
 					if($row = $xoopsDB->fetchArray($result)) {$total_posts = $total_posts + $row['total'];}
 				}
 			}
-			$sql = "UPDATE ".$xoopsDB->prefix("users")." SET posts = '".intval($total_posts)."' WHERE uid = '".intval($id)."'";
+			$sql = "UPDATE ".$xoopsDB->prefix("users")." SET posts = '". (int) ($total_posts)."' WHERE uid = '". (int) ($id)."'";
 			if(!$result = $xoopsDB->query($sql)) {exit(sprintf(_AM_CNUUSER %s ,$id));}
 			break;
 

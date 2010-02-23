@@ -64,7 +64,7 @@ switch ($op) {
 	/*	case "mod":
 	 case "changedField";
 
-		$ratingid = isset($_GET['ratingid']) ? intval($_GET['ratingid']) : 0 ;
+		$ratingid = isset($_GET['ratingid']) ? (int) ($_GET['ratingid']) : 0 ;
 
 		editrating(true, $ratingid);
 
@@ -72,7 +72,7 @@ switch ($op) {
 
 		case "clone":
 
-		$ratingid = isset($_GET['ratingid']) ? intval($_GET['ratingid']) : 0 ;
+		$ratingid = isset($_GET['ratingid']) ? (int) ($_GET['ratingid']) : 0 ;
 
 		editrating(true, $ratingid, true);
 		break;

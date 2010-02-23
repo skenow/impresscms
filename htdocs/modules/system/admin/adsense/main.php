@@ -51,7 +51,7 @@ $op = (isset($_POST['op']))?trim(StopXSS($_POST['op'])):((isset($_GET['op']))?tr
 switch ($op) {
 	case "mod":
 
-		$adsenseid = isset($_GET['adsenseid']) ? intval($_GET['adsenseid']) : 0 ;
+		$adsenseid = isset($_GET['adsenseid']) ? (int) ($_GET['adsenseid']) : 0 ;
 
 		editadsense(true, $adsenseid);
 
@@ -59,7 +59,7 @@ switch ($op) {
 
 	case "clone":
 
-		$adsenseid = isset($_GET['adsenseid']) ? intval($_GET['adsenseid']) : 0 ;
+		$adsenseid = isset($_GET['adsenseid']) ? (int) ($_GET['adsenseid']) : 0 ;
 
 		editadsense(true, $adsenseid, true);
 		break;

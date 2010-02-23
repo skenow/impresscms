@@ -198,7 +198,7 @@ function xoFormField($name, $value, $label, $maxlength, $help = '') {
 	$label = htmlspecialchars ( $label );
 	$name = htmlspecialchars ( $name, ENT_QUOTES );
 	$value = htmlspecialchars ( $value, ENT_QUOTES );
-	$maxlength = intval ( $maxlength );
+	$maxlength = (int) ( $maxlength );
 
 	$field = "<div class='dbconn_line'><label for='$name'>$label</label>\n";
 	if ($help) {

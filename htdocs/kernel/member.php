@@ -529,7 +529,7 @@ LEFT JOIN " . $this->_mHandler->db->prefix ( "groups_users_link" ) . " AS m ON m
 	 */
 	function getUserBestGroup($uid) {
 		$ret = XOOPS_GROUP_ANONYMOUS;
-		$uid = intval ( $uid );
+		$uid = (int) ( $uid );
 		$gperms = array ( );
 		if ($uid <= 0) {
 			return $ret;

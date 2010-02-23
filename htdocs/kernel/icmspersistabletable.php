@@ -526,7 +526,7 @@ class IcmsPersistableTable {
 		 */
 		$this->_tempObject =& $this->_objectHandler->create();
 
-		$this->_criteria->setStart(isset($_GET['start' . $this->_objectHandler->keyName]) ? intval($_GET['start' . $this->_objectHandler->keyName]) : 0);
+		$this->_criteria->setStart(isset($_GET['start' . $this->_objectHandler->keyName]) ? (int) ($_GET['start' . $this->_objectHandler->keyName]) : 0);
 
 		$this->setSortOrder();
 

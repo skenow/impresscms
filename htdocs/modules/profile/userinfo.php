@@ -17,7 +17,7 @@ include '../../mainfile.php';
 
 include_once ICMS_ROOT_PATH . '/modules/system/constants.php';
 
-$uid = !empty($_GET['uid'])?intval($_GET['uid']):'';
+$uid = !empty($_GET['uid'])? (int) ($_GET['uid']):'';
 
 if ($uid <= 0) {
 	if(is_object($icmsUser)){

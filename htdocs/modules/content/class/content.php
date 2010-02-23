@@ -543,7 +543,7 @@ class ContentContentHandler extends IcmsPersistableObjectHandler {
 			$criteria->setStart ( $start );
 		}
 		if ($limit) {
-			$criteria->setLimit ( intval ( $limit ) );
+			$criteria->setLimit ( (int) ( $limit ) );
 		}
 		$criteria->setSort ( $order );
 		$criteria->setOrder ( $sort );
@@ -756,7 +756,7 @@ class ContentContentHandler extends IcmsPersistableObjectHandler {
 		$criteria = new CriteriaCompo ( );
 
 		if (isset ( $content_status )) {
-			$criteria->add ( new Criteria ( 'content_status', intval ( $content_status ) ) );
+			$criteria->add ( new Criteria ( 'content_status', (int) ( $content_status ) ) );
 		}
 		$contents = & $this->getObjects ( $criteria, true );
 		foreach ( array_keys ( $contents ) as $i ) {
@@ -780,7 +780,7 @@ class ContentContentHandler extends IcmsPersistableObjectHandler {
 			}
 		}
 		if (isset ( $status )) {
-			$criteria->add ( new Criteria ( 'content_status', intval ( $status ) ) );
+			$criteria->add ( new Criteria ( 'content_status', (int) ( $status ) ) );
 		}
 		if (is_null ( $content_id ))
 		$content_id = 0;

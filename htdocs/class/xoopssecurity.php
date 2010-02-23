@@ -63,7 +63,7 @@ class IcmsSecurity {
 		if (!isset($_SESSION[$name . '_SESSION'])) {
 			$_SESSION[$name . '_SESSION'] = array();
 		}
-		$token_data = array('id' => $token_id, 'expire' => time() + intval($timeout));
+		$token_data = array('id' => $token_id, 'expire' => time() + (int) ($timeout));
 		array_push($_SESSION[$name . '_SESSION'], $token_data);
 		return md5($token_id.$_SERVER['HTTP_USER_AGENT'].XOOPS_DB_PREFIX);
 	}

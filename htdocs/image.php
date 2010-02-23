@@ -17,7 +17,7 @@
 if (function_exists('mb_http_output')) {
 	mb_http_output('pass');
 }
-$image_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+$image_id = isset($_GET['id']) ? (int) ($_GET['id']) : 0;
 if (empty($image_id)) {
 	header('Content-type: image/gif');
 	readfile(ICMS_UPLOAD_PATH.'/blank.gif');

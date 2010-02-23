@@ -13,9 +13,9 @@ if (!defined('XOOPS_ROOT_PATH')) {
 	die("ImpressCMS root path not defined");
 }
 
-if (intval($_GET['mid'])) {
+if ( (int) ($_GET['mid'])) {
 	$module_handler =& xoops_gethandler('module');
-	$versioninfo =& $module_handler->get(intval($_GET['mid']));
+	$versioninfo =& $module_handler->get( (int) ($_GET['mid']));
 } else {
 	$mid = str_replace('..', '', trim($_GET['mid']));
 	if (file_exists(XOOPS_ROOT_PATH.'/modules/'.$mid.'/xoops_version.php') || file_exists(XOOPS_ROOT_PATH.'/modules/'.$mid.'/icms_version.php')) {

@@ -34,7 +34,7 @@ if ($op == 'save') {
 	}
 	$uid = 0;
 	if (!empty($_POST['uid'])) {
-		$uid = intval($_POST['uid']);
+		$uid = (int) ($_POST['uid']);
 	}
 	if (empty($uid) || ($icmsUser->getVar('uid') != $uid && !$icmsUser->isAdmin())) {
 		redirect_header(ICMS_URL."/",3,_PROFILE_MA_NOEDITRIGHT);
@@ -54,7 +54,7 @@ if ($op == 'save') {
 	}
 	if ($icmsConfigAuth['auth_openid'] == 1) {
 		$edituser->setVar('openid', $myts->stripSlashesGPC(trim($_POST['openid'])));
-		$edituser->setVar('user_viewoid', isset($_POST['user_viewoid']) ? intval($_POST['user_viewoid']) : 0);
+		$edituser->setVar('user_viewoid', isset($_POST['user_viewoid']) ? (int) ($_POST['user_viewoid']) : 0);
 	}
 
 	$stop = userCheck($edituser);
@@ -122,7 +122,7 @@ if ($op == 'delete') {
 			redirect_header(ICMS_URL.'/index.php', 5, _PROFILE_MA_ADMINNO);
 			exit();
 		}
-		$ok = !isset($_POST['ok']) ? 0 : intval($_POST['ok']);
+		$ok = !isset($_POST['ok']) ? 0 : (int) ($_POST['ok']);
 		if ($ok != 1) {
 			include ICMS_ROOT_PATH.'/header.php';
 			xoops_confirm(array('op' => 'delete', 'ok' => 1), ICMS_URL.'/modules/'.basename( dirname( __FILE__ ) ).'/edituser.php', _PROFILE_MA_SURETODEL.'<br/>'._PROFILE_MA_REMOVEINFO);
@@ -195,7 +195,7 @@ if ($op == 'avatarupload') {
 		$xoops_upload_file = $_POST['xoops_upload_file'];
 	}
 	if (!empty($_POST['uid'])) {
-		$uid = intval($_POST['uid']);
+		$uid = (int) ($_POST['uid']);
 	}
 	if (empty($uid) || $icmsUser->getVar('uid') != $uid ) {
 		redirect_header('index.php',3,_PROFILE_MA_NOEDITRIGHT);
@@ -245,7 +245,7 @@ if ($op == 'avatarchoose') {
 	}
 	$uid = 0;
 	if (!empty($_POST['uid'])) {
-		$uid = intval($_POST['uid']);
+		$uid = (int) ($_POST['uid']);
 	}
 	if (empty($uid) || $icmsUser->getVar('uid') != $uid ) {
 		redirect_header('index.php', 3, _PROFILE_MA_NOEDITRIGHT);

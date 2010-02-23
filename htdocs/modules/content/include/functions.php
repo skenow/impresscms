@@ -98,7 +98,7 @@ function content_getPreviousPage($default=false) {
 function content_getLinkedUnameFromId($userid, $name = false, $users = array (), $withContact = false)
 {
 	if(!is_numeric($userid)) {return $userid;}
-	$userid = intval($userid);
+	$userid = (int) ($userid);
 	if($userid > 0)
 	{
 		if($users == array())

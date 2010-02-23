@@ -51,9 +51,9 @@ if (isset($_POST['op'])) $clean_op = $_POST['op'];
 
 /** Again, use a naming convention that indicates the source of the content of the variable */
 global $icmsUser;
-$clean_audio_id = isset($_GET['audio_id']) ? intval($_GET['audio_id']) : 0 ;
-$real_uid = is_object($icmsUser)?intval($icmsUser->uid()):0;
-$clean_uid = isset($_GET['uid']) ? intval($_GET['uid']) : $real_uid ;
+$clean_audio_id = isset($_GET['audio_id']) ? (int) ($_GET['audio_id']) : 0 ;
+$real_uid = is_object($icmsUser)? (int) ($icmsUser->uid()):0;
+$clean_uid = isset($_GET['uid']) ? (int) ($_GET['uid']) : $real_uid ;
 $audioObj = $profile_audio_handler->get($clean_audio_id);
 /** Create a whitelist of valid values, be sure to use appropriate types for each value
  * Be sure to include a value for no parameter, if you have a default condition
@@ -116,7 +116,7 @@ if (in_array($clean_op,$valid_op,true)){
 			break;
 
 		default:
-			$clean_start = isset($_GET['start']) ? intval($_GET['start']) : 0;
+			$clean_start = isset($_GET['start']) ? (int) ($_GET['start']) : 0;
 
 			if($real_uid && $real_uid == $uid){
 				$audioObj = $profile_audio_handler->get($clean_audio_id);

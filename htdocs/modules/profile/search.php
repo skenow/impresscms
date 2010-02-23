@@ -213,7 +213,7 @@ switch ($op) {
 						switch ($fields[$i]->getVar('field_valuetype')) {
 							case XOBJ_DTYPE_OTHER:
 							case XOBJ_DTYPE_INT:
-								$value = array_map('intval', $_REQUEST[$fieldname]);
+								$value = array_map(' (int) ', $_REQUEST[$fieldname]);
 								$searchvars[] = $fieldname;
 								$criteria->add(new Criteria($fieldname, "(".implode(',', $value).")", "IN"));
 								break;
@@ -237,7 +237,7 @@ switch ($op) {
 								case "datetime":
 									$value = $_REQUEST[$fieldname."_larger"];
 									if (!($value = strtotime($_REQUEST[$fieldname."_larger"]))) {
-										$value = intval($_REQUEST[$fieldname."_larger"]);
+										$value = (int) ($_REQUEST[$fieldname."_larger"]);
 									}
 									if ($value > 0) {
 										$search_url[] = $fieldname."_larger=".$value;
@@ -247,7 +247,7 @@ switch ($op) {
 
 									$value = $_REQUEST[$fieldname."_smaller"];
 									if (!($value = strtotime($_REQUEST[$fieldname."_smaller"]))) {
-										$value = intval($_REQUEST[$fieldname."_smaller"]);
+										$value = (int) ($_REQUEST[$fieldname."_smaller"]);
 									}
 									if ($value > 0) {
 										$search_url[] = $fieldname."_smaller=".$value;
@@ -258,22 +258,22 @@ switch ($op) {
 
 									//                                case "datetime":
 									//                                    $value = $_REQUEST[$fieldname."_larger"]['date'];
-									//                                    if (intval($value) < 0) { //intval() of a date string is -1
+									//                                    if ( (int) ($value) < 0) { // (int) () of a date string is -1
 									//                                        $value = strtotime($_REQUEST[$fieldname."_larger"]['date']);
 									//                                    }
 									//                                    else {
-									//                                        $value = intval($_REQUEST[$fieldname."_larger"]['date']);
+									//                                        $value = (int) ($_REQUEST[$fieldname."_larger"]['date']);
 									//                                    }
 									//                                    $search_url[] = $fieldname."_larger=".$value;
 									//                                    $searchvars[] = $fieldname;
 									//                                    $criteria->add(new Criteria($fieldname, $value, ">="));
 									//
 									//                                    $value = $_REQUEST[$fieldname."_smaller"]['date'];
-									//                                    if (intval($value) < 0) { //intval() of a date string is -1
+									//                                    if ( (int) ($value) < 0) { // (int) () of a date string is -1
 									//                                        $value = strtotime($_REQUEST[$fieldname."_smaller"]['date']);
 									//                                    }
 									//                                    else {
-									//                                        $value = intval($_REQUEST[$fieldname."_smaller"]['date']);
+									//                                        $value = (int) ($_REQUEST[$fieldname."_smaller"]['date']);
 									//                                    }
 									//                                    $search_url[] = $fieldname."_smaller=".$value;
 									//                                    $searchvars[] = $fieldname;
@@ -281,15 +281,15 @@ switch ($op) {
 									//                                    break;
 
 								default:
-									if (isset($_REQUEST[$fieldname."_larger"]) && intval($_REQUEST[$fieldname."_larger"]) != 0) {
-										$value = intval($_REQUEST[$fieldname."_larger"]);
+									if (isset($_REQUEST[$fieldname."_larger"]) && (int) ($_REQUEST[$fieldname."_larger"]) != 0) {
+										$value = (int) ($_REQUEST[$fieldname."_larger"]);
 										$search_url[] = $fieldname."_larger=".$value;
 										$searchvars[] = $fieldname;
 										$criteria->add(new Criteria($fieldname, $value, ">="));
 									}
 
-									if (isset($_REQUEST[$fieldname."_smaller"]) && intval($_REQUEST[$fieldname."_smaller"]) != 0) {
-										$value = intval($_REQUEST[$fieldname."_smaller"]);
+									if (isset($_REQUEST[$fieldname."_smaller"]) && (int) ($_REQUEST[$fieldname."_smaller"]) != 0) {
+										$value = (int) ($_REQUEST[$fieldname."_smaller"]);
 										$search_url[] = $fieldname."_smaller=".$value;
 										$searchvars[] = $fieldname;
 										$criteria->add(new Criteria($fieldname, $value, "<="));
@@ -299,12 +299,12 @@ switch ($op) {
 							 
 							if (isset($_REQUEST[$fieldname]) && !isset($_REQUEST[$fieldname."_smaller"]) && !isset($_REQUEST[$fieldname."_larger"])) {
 								if (!is_array($_REQUEST[$fieldname])) {
-									$value = intval($_REQUEST[$fieldname]);
+									$value = (int) ($_REQUEST[$fieldname]);
 									$search_url[] = $fieldname."=".$value;
 									$criteria->add(new Criteria($fieldname, $value, "="));
 								}
 								else {
-									$value = array_map("intval", $_REQUEST[$fieldname]);
+									$value = array_map(" (int) ", $_REQUEST[$fieldname]);
 									foreach ($value as $thisvalue) {
 										$search_url[] = $fieldname."[]=".$thisvalue;
 									}
@@ -363,10 +363,10 @@ switch ($op) {
 		$order = $_REQUEST['order'] == 0 ? "ASC" : "DESC";
 		$criteria->setOrder($order);
 
-		$limit = isset($_REQUEST['limit']) && intval($_REQUEST['limit']) > 0 ? intval($_REQUEST['limit']) : 20;
+		$limit = isset($_REQUEST['limit']) && (int) ($_REQUEST['limit']) > 0 ? (int) ($_REQUEST['limit']) : 20;
 		$criteria->setLimit($limit);
 
-		$start = isset($_REQUEST['start']) ? intval($_REQUEST['start']) : 0;
+		$start = isset($_REQUEST['start']) ? (int) ($_REQUEST['start']) : 0;
 		$criteria->setStart($start);
 
 		//Get users based on criteria
@@ -381,7 +381,7 @@ switch ($op) {
 		}
 		$link_target = $icmsModuleConfig['profile_social'] ? 'index.php' : 'userinfo.php';
 		foreach (array_keys($users) as $k) {
-			$userarray["output"][] = "<a href='".$link_target."?uid=".intval($users[$k]->getVar('uid'))."'>".$users[$k]->getVar('uname')."</a>";
+			$userarray["output"][] = "<a href='".$link_target."?uid=". (int) ($users[$k]->getVar('uid'))."'>".$users[$k]->getVar('uname')."</a>";
 			if (is_object($icmsUser)) $userarray["output"][] = $users[$k]->getVar('user_viewemail') || $isAdmin ? $users[$k]->getVar('email') : "";
 
 			foreach (array_keys($fields) as $i) {

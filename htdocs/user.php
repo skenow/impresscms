@@ -90,7 +90,7 @@ if($op == 'main')
 	}
 	else
 	{
-		header('Location: '.ICMS_URL.'/userinfo.php?uid='.intval($icmsUser->getVar('uid')));
+		header('Location: '.ICMS_URL.'/userinfo.php?uid='. (int) ($icmsUser->getVar('uid')));
 		exit();
 	}
 	exit();
@@ -159,7 +159,7 @@ if($op == 'resetpass')
 	}
 	else
 	{
-		header('Location: '.ICMS_URL.'/userinfo.php?uid='.intval($icmsUser->getVar('uid')));
+		header('Location: '.ICMS_URL.'/userinfo.php?uid='. (int) ($icmsUser->getVar('uid')));
 		exit();
 	}
 	exit();
@@ -203,7 +203,7 @@ if($op == 'logout')
 
 if($op == 'actv')
 {
-	$id = intval($_GET['id']);
+	$id = (int) ($_GET['id']);
 	$actkey = trim($_GET['actkey']);
 	if(empty($id))
 	{
@@ -281,7 +281,7 @@ if($op == 'delete')
 		{
 			redirect_header('user.php', 5, _US_ADMINNO);
 		}
-		$ok = !isset($_POST['ok']) ? 0 : intval($_POST['ok']);
+		$ok = !isset($_POST['ok']) ? 0 : (int) ($_POST['ok']);
 		if($ok != 1)
 		{
 			include 'header.php';
@@ -290,7 +290,7 @@ if($op == 'delete')
 		}
 		else
 		{
-			$del_uid = intval($icmsUser->getVar('uid'));
+			$del_uid = (int) ($icmsUser->getVar('uid'));
 			$member_handler = xoops_gethandler('member');
 			if(false != $member_handler->deleteUser($icmsUser))
 			{

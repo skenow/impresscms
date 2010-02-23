@@ -46,7 +46,7 @@ if (isset($_POST['op'])) $op = $_POST['op'];
 switch ($op) {
 	case "mod":
 
-		$autotasksid = isset($_GET['sat_id']) ? intval($_GET['sat_id']) : 0 ;
+		$autotasksid = isset($_GET['sat_id']) ? (int) ($_GET['sat_id']) : 0 ;
 
 		editautotasks(true, $autotasksid);
 
@@ -54,7 +54,7 @@ switch ($op) {
 
 	case "clone":
 
-		$autotasksid = isset($_GET['sat_id']) ? intval($_GET['sat_id']) : 0 ;
+		$autotasksid = isset($_GET['sat_id']) ? (int) ($_GET['sat_id']) : 0 ;
 
 		editautotasks(true, $autotasksid, true);
 		break;

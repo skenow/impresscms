@@ -128,8 +128,8 @@ if ( $op == "form" ) {
 	$form->addElement($limit_text);
 	$form->addElement($op_hidden);
 	// if this is to find users for a specific group
-	if ( !empty($_GET['group']) && intval($_GET['group']) > 0 ) {
-		$group_hidden = new XoopsFormHidden("group", intval($_GET['group']));
+	if ( !empty($_GET['group']) && (int) ($_GET['group']) > 0 ) {
+		$group_hidden = new XoopsFormHidden("group", (int) ($_GET['group']));
 		$form->addElement($group_hidden);
 	}
 	$form->addElement($submit_button);
@@ -142,7 +142,7 @@ elseif ($op == "submit" & $GLOBALS['xoopsSecurity']->check()) {
 	$myts =& MyTextSanitizer::getInstance();
 	$criteria = new CriteriaCompo();
 	if ( !empty($_POST['user_uname']) ) {
-		$match = (!empty($_POST['user_uname_match'])) ? intval($_POST['user_uname_match']) : XOOPS_MATCH_START;
+		$match = (!empty($_POST['user_uname_match'])) ? (int) ($_POST['user_uname_match']) : XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
 				$criteria->add(new Criteria('uname', $myts->addSlashes(trim($_POST['user_uname'])).'%', 'LIKE'));
@@ -159,7 +159,7 @@ elseif ($op == "submit" & $GLOBALS['xoopsSecurity']->check()) {
 		}
 	}
 	if ( !empty($_POST['user_name']) ) {
-		$match = (!empty($_POST['user_name_match'])) ? intval($_POST['user_name_match']) : XOOPS_MATCH_START;
+		$match = (!empty($_POST['user_name_match'])) ? (int) ($_POST['user_name_match']) : XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
 				$criteria->add(new Criteria('name', $myts->addSlashes(trim($_POST['user_name'])).'%', 'LIKE'));
@@ -176,7 +176,7 @@ elseif ($op == "submit" & $GLOBALS['xoopsSecurity']->check()) {
 		}
 	}
 	if ( !empty($_POST['user_login_name']) ) {
-		$match = (!empty($_POST['user_login_name_match'])) ? intval($_POST['user_login_name_match']) : XOOPS_MATCH_START;
+		$match = (!empty($_POST['user_login_name_match'])) ? (int) ($_POST['user_login_name_match']) : XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
 				$criteria->add(new Criteria('login_name', $myts->addSlashes(trim($_POST['user_login_name'])).'%', 'LIKE'));
@@ -193,7 +193,7 @@ elseif ($op == "submit" & $GLOBALS['xoopsSecurity']->check()) {
 		}
 	}
 	if ( !empty($_POST['user_email']) ) {
-		$match = (!empty($_POST['user_email_match'])) ? intval($_POST['user_email_match']) : XOOPS_MATCH_START;
+		$match = (!empty($_POST['user_email_match'])) ? (int) ($_POST['user_email_match']) : XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
 				$criteria->add(new Criteria('email', $myts->addSlashes(trim($_POST['user_email'])).'%', 'LIKE'));
@@ -214,7 +214,7 @@ elseif ($op == "submit" & $GLOBALS['xoopsSecurity']->check()) {
 		$criteria->add(new Criteria('url', $url.'%', 'LIKE'));
 	}
 	if ( !empty($_POST['user_icq']) ) {
-		$match = (!empty($_POST['user_icq_match'])) ? intval($_POST['user_icq_match']) : XOOPS_MATCH_START;
+		$match = (!empty($_POST['user_icq_match'])) ? (int) ($_POST['user_icq_match']) : XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
 				$criteria->add(new Criteria('user_icq', $myts->addSlashes(trim($_POST['user_icq'])).'%', 'LIKE'));
@@ -231,7 +231,7 @@ elseif ($op == "submit" & $GLOBALS['xoopsSecurity']->check()) {
 		}
 	}
 	if ( !empty($_POST['user_aim']) ) {
-		$match = (!empty($_POST['user_aim_match'])) ? intval($_POST['user_aim_match']) : XOOPS_MATCH_START;
+		$match = (!empty($_POST['user_aim_match'])) ? (int) ($_POST['user_aim_match']) : XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
 				$criteria->add(new Criteria('user_aim', $myts->addSlashes(trim($_POST['user_aim'])).'%', 'LIKE'));
@@ -248,7 +248,7 @@ elseif ($op == "submit" & $GLOBALS['xoopsSecurity']->check()) {
 		}
 	}
 	if ( !empty($_POST['user_yim']) ) {
-		$match = (!empty($_POST['user_yim_match'])) ? intval($_POST['user_yim_match']) : XOOPS_MATCH_START;
+		$match = (!empty($_POST['user_yim_match'])) ? (int) ($_POST['user_yim_match']) : XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
 				$criteria->add(new Criteria('user_yim', $myts->addSlashes(trim($_POST['user_yim'])).'%', 'LIKE'));
@@ -265,7 +265,7 @@ elseif ($op == "submit" & $GLOBALS['xoopsSecurity']->check()) {
 		}
 	}
 	if ( !empty($_POST['user_msnm']) ) {
-		$match = (!empty($_POST['user_msnm_match'])) ? intval($_POST['user_msnm_match']) : XOOPS_MATCH_START;
+		$match = (!empty($_POST['user_msnm_match'])) ? (int) ($_POST['user_msnm_match']) : XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
 				$criteria->add(new Criteria('user_msnm', $myts->addSlashes(trim($_POST['user_msnm'])).'%', 'LIKE'));
@@ -292,38 +292,38 @@ elseif ($op == "submit" & $GLOBALS['xoopsSecurity']->check()) {
 	}
 
 	if ( !empty($_POST['user_lastlog_more']) && is_numeric($_POST['user_lastlog_more']) ) {
-		$f_user_lastlog_more = intval(trim($_POST['user_lastlog_more']));
+		$f_user_lastlog_more = (int) (trim($_POST['user_lastlog_more']));
 		$time = time() - (60 * 60 * 24 * $f_user_lastlog_more);
 		if ( $time > 0 ) {
 			$criteria->add(new Criteria('last_login', $time, '<'));
 		}
 	}
 	if ( !empty($_POST['user_lastlog_less']) && is_numeric($_POST['user_lastlog_less']) ) {
-		$f_user_lastlog_less = intval(trim($_POST['user_lastlog_less']));
+		$f_user_lastlog_less = (int) (trim($_POST['user_lastlog_less']));
 		$time = time() - (60 * 60 * 24 * $f_user_lastlog_less);
 		if ( $time > 0 ) {
 			$criteria->add(new Criteria('last_login', $time, '>'));
 		}
 	}
 	if ( !empty($_POST['user_reg_more']) && is_numeric($_POST['user_reg_more']) ) {
-		$f_user_reg_more = intval(trim($_POST['user_reg_more']));
+		$f_user_reg_more = (int) (trim($_POST['user_reg_more']));
 		$time = time() - (60 * 60 * 24 * $f_user_reg_more);
 		if ( $time > 0 ) {
 			$criteria->add(new Criteria('user_regdate', $time, '<'));
 		}
 	}
 	if ( !empty($_POST['user_reg_less']) && is_numeric($_POST['user_reg_less']) ) {
-		$f_user_reg_less = intval($_POST['user_reg_less']);
+		$f_user_reg_less = (int) ($_POST['user_reg_less']);
 		$time = time() - (60 * 60 * 24 * $f_user_reg_less);
 		if ( $time > 0 ) {
 			$criteria->add(new Criteria('user_regdate', $time, '>'));
 		}
 	}
 	if ( !empty($_POST['user_posts_more']) && is_numeric($_POST['user_posts_more']) ) {
-		$criteria->add(new Criteria('posts', intval($_POST['user_posts_more']), '>'));
+		$criteria->add(new Criteria('posts', (int) ($_POST['user_posts_more']), '>'));
 	}
 	if ( !empty($_POST['user_posts_less']) && is_numeric($_POST['user_posts_less']) ) {
-		$criteria->add(new Criteria('posts', intval($_POST['user_posts_less']), '<'));
+		$criteria->add(new Criteria('posts', (int) ($_POST['user_posts_less']), '<'));
 	}
 	if ( isset($_POST['user_mailok']) ) {
 		if ( $_POST['user_mailok'] == "mailng" ) {
@@ -343,18 +343,18 @@ elseif ($op == "submit" & $GLOBALS['xoopsSecurity']->check()) {
 			$criteria->add(new Criteria('level', 0, '>='));
 		}
 	}
-	$groups = empty($_POST['selgroups']) ? array() : array_map("intval", $_POST['selgroups']);
+	$groups = empty($_POST['selgroups']) ? array() : array_map(" (int) ", $_POST['selgroups']);
 	$validsort = array("uname", "login_name", "email", "last_login", "user_regdate", "posts");
 	$sort = (!in_array($_POST['user_sort'], $validsort)) ? "uname" : $_POST['user_sort'];
 	$order = "ASC";
 	if ( isset($_POST['user_order']) && $_POST['user_order'] == "DESC") {
 		$order = "DESC";
 	}
-	$limit = (!empty($_POST['limit'])) ? intval($_POST['limit']) : 50;
+	$limit = (!empty($_POST['limit'])) ? (int) ($_POST['limit']) : 50;
 	if ( $limit == 0 || $limit > 50 ) {
 		$limit = 50;
 	}
-	$start = (!empty($_POST['start'])) ? intval($_POST['start']) : 0;
+	$start = (!empty($_POST['start'])) ? (int) ($_POST['start']) : 0;
 	$member_handler =& xoops_gethandler('member');
 	$total = $member_handler->getUserCountByGroupLink($groups, $criteria);
 	echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/findusers/images/findusers_big.png)">'._AM_FINDUS.'</div><br />';
@@ -400,7 +400,7 @@ elseif ($op == "submit" & $GLOBALS['xoopsSecurity']->check()) {
 			echo "<td align='center'><a href='".XOOPS_URL."/modules/system/admin.php?fct=users&amp;uid=".$foundusers[$j]->getVar("uid")."&amp;op=modifyUser'>"._EDIT."</a></td></tr>\n";
 		}
 		echo "<tr class='foot'><td><select name='fct'><option value='users'>"._DELETE."</option><option value='mailusers'>"._AM_SENDMAIL."</option>";
-		$group = !empty($_POST['group']) ? intval($_POST['group']) : 0;
+		$group = !empty($_POST['group']) ? (int) ($_POST['group']) : 0;
 		if ( $group > 0 ) {
 			$member_handler =& xoops_gethandler('member');
 			$add2group =& $member_handler->getGroup($group);

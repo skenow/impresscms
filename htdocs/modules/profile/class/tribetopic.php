@@ -135,8 +135,8 @@ class ProfileTribetopicHandler extends IcmsPersistableObjectHandler {
 	 */
 	function getTopicCriteria($start = 0, $limit = 0, $topic_id = false, $tribes_id = false) {
 		$criteria = new CriteriaCompo();
-		if ($start) $criteria->setStart(intval($start));
-		if ($limit) $criteria->setLimit(intval($limit));
+		if ($start) $criteria->setStart( (int) ($start));
+		if ($limit) $criteria->setLimit( (int) ($limit));
 
 		$criteria->setSort('last_post_time');
 		$criteria->setOrder('DESC');

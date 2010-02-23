@@ -51,7 +51,7 @@ class XoopsAvatar extends XoopsObject
 	 */
 	function setUserCount($value)
 	{
-		$this->_userCount = intval($value);
+		$this->_userCount = (int) ($value);
 	}
 
 	/**
@@ -97,7 +97,7 @@ class XoopsAvatarHandler extends XoopsObjectHandler
 	function &get($id)
 	{
 		$avatar = false;
-		$id = intval($id);
+		$id = (int) ($id);
 		if ($id > 0) {
 			$sql = "SELECT * FROM ".$this->db->prefix('avatar')." WHERE avatar_id='".$id."'";
 			if (!$result = $this->db->query($sql)) {
@@ -137,9 +137,9 @@ class XoopsAvatarHandler extends XoopsObjectHandler
 		}
 		if ($avatar->isNew()) {
 			$avatar_id = $this->db->genId('avatar_avatar_id_seq');
-			$sql = sprintf("INSERT INTO %s (avatar_id, avatar_file, avatar_name, avatar_created, avatar_mimetype, avatar_display, avatar_weight, avatar_type) VALUES ('%u', %s, %s, '%u', %s, '%u', '%u', %s)", $this->db->prefix('avatar'), intval($avatar_id), $this->db->quoteString($avatar_file), $this->db->quoteString($avatar_name), time(), $this->db->quoteString($avatar_mimetype), intval($avatar_display), intval($avatar_weight), $this->db->quoteString($avatar_type));
+			$sql = sprintf("INSERT INTO %s (avatar_id, avatar_file, avatar_name, avatar_created, avatar_mimetype, avatar_display, avatar_weight, avatar_type) VALUES ('%u', %s, %s, '%u', %s, '%u', '%u', %s)", $this->db->prefix('avatar'), (int) ($avatar_id), $this->db->quoteString($avatar_file), $this->db->quoteString($avatar_name), time(), $this->db->quoteString($avatar_mimetype), (int) ($avatar_display), (int) ($avatar_weight), $this->db->quoteString($avatar_type));
 		} else {
-			$sql = sprintf("UPDATE %s SET avatar_file = %s, avatar_name = %s, avatar_created = '%u', avatar_mimetype= %s, avatar_display = '%u', avatar_weight = '%u', avatar_type = %s WHERE avatar_id = '%u'", $this->db->prefix('avatar'), $this->db->quoteString($avatar_file), $this->db->quoteString($avatar_name), intval($avatar_created), $this->db->quoteString($avatar_mimetype), intval($avatar_display), intval($avatar_weight), $this->db->quoteString($avatar_type), intval($avatar_id));
+			$sql = sprintf("UPDATE %s SET avatar_file = %s, avatar_name = %s, avatar_created = '%u', avatar_mimetype= %s, avatar_display = '%u', avatar_weight = '%u', avatar_type = %s WHERE avatar_id = '%u'", $this->db->prefix('avatar'), $this->db->quoteString($avatar_file), $this->db->quoteString($avatar_name), (int) ($avatar_created), $this->db->quoteString($avatar_mimetype), (int) ($avatar_display), (int) ($avatar_weight), $this->db->quoteString($avatar_type), (int) ($avatar_id));
 		}
 		if (!$result = $this->db->query($sql)) {
 			return false;
@@ -165,7 +165,7 @@ class XoopsAvatarHandler extends XoopsObjectHandler
 			return false;
 		}
 
-		$id = intval($avatar->getVar('avatar_id'));
+		$id = (int) ($avatar->getVar('avatar_id'));
 		$sql = sprintf("DELETE FROM %s WHERE avatar_id = '%u'", $this->db->prefix('avatar'), $id);
 		if (!$result = $this->db->query($sql)) {
 			return false;
@@ -235,8 +235,8 @@ class XoopsAvatarHandler extends XoopsObjectHandler
 	 * @return boolean
 	 */
 	function addUser($avatar_id, $user_id){
-		$avatar_id = intval($avatar_id);
-		$user_id = intval($user_id);
+		$avatar_id = (int) ($avatar_id);
+		$user_id = (int) ($user_id);
 		if ($avatar_id < 1 || $user_id < 1) {
 			return false;
 		}
@@ -264,7 +264,7 @@ class XoopsAvatarHandler extends XoopsObjectHandler
 			return false;
 		}
 
-		$sql = "SELECT user_id FROM ".$this->db->prefix('avatar_user_link')." WHERE avatar_id='".intval($avatar->getVar('avatar_id'))."'";
+		$sql = "SELECT user_id FROM ".$this->db->prefix('avatar_user_link')." WHERE avatar_id='". (int) ($avatar->getVar('avatar_id'))."'";
 		if (!$result = $this->db->query($sql)) {
 			return $ret;
 		}
@@ -288,7 +288,7 @@ class XoopsAvatarHandler extends XoopsObjectHandler
 			$criteria->add(new Criteria('avatar_type', $avatar_type));
 		}
 		if (isset($avatar_display)) {
-			$criteria->add(new Criteria('avatar_display', intval($avatar_display)));
+			$criteria->add(new Criteria('avatar_display', (int) ($avatar_display)));
 		}
 		$avatars =& $this->getObjects($criteria, true);
 		$ret = array('blank.gif' => _NONE);

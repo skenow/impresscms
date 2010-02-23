@@ -16,7 +16,7 @@
  */
 $xoopsOption['pagetype'] = 'user';
 include 'mainfile.php';
-$uid = intval($_GET['uid']);
+$uid = (int) ($_GET['uid']);
 
 if(icms_get_module_status('profile'))
 {
@@ -58,7 +58,7 @@ $isAdmin = $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_USER, $groups
 
 if(is_object($icmsUser))
 {
-	if($uid == intval($icmsUser->getVar('uid')))
+	if($uid == (int) ($icmsUser->getVar('uid')))
 	{
 		$xoopsOption['template_main'] = 'system_userinfo.html';
 		include ICMS_ROOT_PATH.'/header.php';
@@ -105,7 +105,7 @@ if(is_object($icmsUser) && $isAdmin)
 	icms_makeSmarty(array(
         'lang_editprofile' => _US_EDITPROFILE,
         'lang_deleteaccount' => _US_DELACCOUNT,
-        'user_uid' => intval($thisUser->getVar('uid'))
+        'user_uid' => (int) ($thisUser->getVar('uid'))
 	));
 }
 $userrank = & $thisUser->rank();
@@ -154,7 +154,7 @@ icms_makeSmarty(array(
     'lang_notregistered' => _US_NOTREGISTERED,
     'user_pmlink' => is_object($icmsUser) ?
         "<a href=\"javascript:openWithSelfMain('".ICMS_URL."/pmlite.php?send2=1&amp;to_userid="
-        .intval($thisUser->getVar('uid'))."', 'pmlite', 800,680);\">
+        . (int) ($thisUser->getVar('uid'))."', 'pmlite', 800,680);\">
         <img src=\"".ICMS_URL."/images/icons/".$icmsConfig['language']."/pm.gif\" alt=\""
         .sprintf(_SENDPMTO, $thisUser->getVar('uname'))."\" /></a>" : '',
     'user_rankimage' => $userrank['image'] ?
@@ -188,7 +188,7 @@ icms_makeSmarty(array(
         	if($gperm_handler->checkRight('module_read', $mid, $groups))
         	{
         		$module = & $module_handler->get($mid);
-        		$results = & $module->search('', '', 5, 0, intval($thisUser->getVar('uid')));
+        		$results = & $module->search('', '', 5, 0, (int) ($thisUser->getVar('uid')));
         		$count = count($results);
         		if(is_array($results) && $count > 0)
         		{
@@ -214,8 +214,8 @@ icms_makeSmarty(array(
         			}
         			if($count == 5)
         			{
-        				$showall_link = '<a href="search.php?action=showallbyuser&amp;mid='.intval($mid).'&amp;
-                    uid='.intval($thisUser->getVar('uid')).'">'._US_SHOWALL.'</a>';
+        				$showall_link = '<a href="search.php?action=showallbyuser&amp;mid='. (int) ($mid).'&amp;
+                    uid='. (int) ($thisUser->getVar('uid')).'">'._US_SHOWALL.'</a>';
         			}
         			else
         			{

@@ -49,11 +49,11 @@ else
 		redirect_header('viewpmsg.php', 1, _PM_DELETED);
 	}
 	include ICMS_ROOT_PATH.'/header.php';
-	$criteria = new Criteria('to_userid', intval($icmsUser->getVar('uid')));
+	$criteria = new Criteria('to_userid', (int) ($icmsUser->getVar('uid')));
 	$criteria->setOrder('DESC');
 	$pm_arr =& $pm_handler->getObjects($criteria);
 	echo "<h4 style='text-align:center;'>"._PM_PRIVATEMESSAGE."</h4><br />
-        <a href='userinfo.php?uid=".intval($icmsUser->getVar('uid'))."'>". _PM_PROFILE ."</a>&nbsp;
+        <a href='userinfo.php?uid=". (int) ($icmsUser->getVar('uid'))."'>". _PM_PROFILE ."</a>&nbsp;
         <span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;"._PM_INBOX."<br /><br />";
 	echo "<form id='prvmsg' method='post' action='viewpmsg.php'>";
 	echo "<table border='0' cellspacing='1' cellpadding='4' width='100%' class='outer'>\n";
@@ -94,7 +94,7 @@ else
 		// no need to show deleted users
 		if($postername)
 		{
-			echo "<a href='userinfo.php?uid=".intval($pm_arr[$i]->getVar('from_userid'))."'>".$postername."</a>";
+			echo "<a href='userinfo.php?uid=". (int) ($pm_arr[$i]->getVar('from_userid'))."'>".$postername."</a>";
 		}
 		else
 		{
@@ -102,8 +102,8 @@ else
 		}
 		echo "</td>\n";
 		echo "<td valign='middle'>
-            <a href='readpmsg.php?start=".intval(($total_messages-$i-1))."&amp;
-            total_messages=".intval($total_messages)."'>".$pm_arr[$i]->getVar('subject')."</a></td>";
+            <a href='readpmsg.php?start=". (int) (($total_messages-$i-1))."&amp;
+            total_messages=". (int) ($total_messages)."'>".$pm_arr[$i]->getVar('subject')."</a></td>";
 		echo "<td style='vertical-align: middle; width: 20%; text-align: center;'>"
 		.formatTimestamp($pm_arr[$i]->getVar('msg_time'))."</td></tr>";
 	}

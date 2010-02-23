@@ -47,7 +47,7 @@ extends IcmsAutoTasksSystem {
 			$crons = null; $return = null;
 			// checking if cron servise is active
 			exec( 'ps -ef | grep cron | grep -v grep', $crons, $return);
-			$canRun = is_array($crons) && (count($crons) > 0) && (intval($return) === 0);
+			$canRun = is_array($crons) && (count($crons) > 0) && ( (int) ($return) === 0);
 			if ($canRun) {
 				// checking if we have access to use cron
 				exec( 'crontab -l', $crons, $return);
@@ -135,7 +135,7 @@ extends IcmsAutoTasksSystem {
 
 	function getNormalValue($crontab_number) {
 		if ($crontab_number == '*') return 0;
-		return intval(substr($crontab_number,2));
+		return (int) (substr($crontab_number,2));
 	}
 
 	/**

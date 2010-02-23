@@ -172,7 +172,7 @@ class ProfileConfigsHandler extends IcmsPersistableObjectHandler {
 			$criteria->setStart($start);
 		}
 		if ($limit) {
-			$criteria->setLimit(intval($limit));
+			$criteria->setLimit( (int) ($limit));
 		}
 		if ($uid_owner) {
 			$criteria->add(new Criteria('config_uid', $uid_owner));
@@ -232,7 +232,7 @@ class ProfileConfigsHandler extends IcmsPersistableObjectHandler {
 	function userCanAccessSection(& $obj, $item, $uid=false) {
 		global $icmsUser, $profile_isAdmin;
 		$status = $obj->getVar($item, 'e');
-		$uid = isset($_REQUEST['uid'])?intval($_REQUEST['uid']):0;
+		$uid = isset($_REQUEST['uid'])? (int) ($_REQUEST['uid']):0;
 		if ($profile_isAdmin) return true;
 		if (is_object($icmsUser) && $icmsUser->getVar('uid') == $uid) return true;
 		if ($status == PROFILE_CONFIG_STATUS_EVERYBODY) return true;

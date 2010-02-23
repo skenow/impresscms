@@ -49,7 +49,7 @@ class XoopsComments extends XoopsObject
 			if ( is_array($id) ) {
 				$this->assignVars($id);
 			} else {
-				$this->load(intval($id));
+				$this->load( (int) ($id));
 			}
 		}
 	}
@@ -60,7 +60,7 @@ class XoopsComments extends XoopsObject
 	 */
 	function load($id)
 	{
-		$id = intval($id);
+		$id = (int) ($id);
 		$sql = "SELECT * FROM ".$this->ctable." WHERE comment_id='".$id."'";
 		$arr = $this->db->fetchArray($this->db->query($sql));
 		$this->assignVars($arr);
@@ -82,9 +82,9 @@ class XoopsComments extends XoopsObject
 		if ( empty($comment_id ) ) {
 			$isnew = true;
 			$comment_id = $this->db->genId($this->ctable."_comment_id_seq");
-			$sql = sprintf("INSERT INTO %s (comment_id, pid, item_id, date, user_id, ip, subject, comment, nohtml, nosmiley, noxcode, icon) VALUES ('%u', '%u', '%u', '%u', '%u', '%s', '%s', '%s', '%u', '%u', '%u', '%s')", $this->ctable, intval($comment_id), intval($pid), intval($item_id), time(), intval($user_id), $ip, $subject, $comment, intval($nohtml), intval($nosmiley), intval($noxcode), $icon);
+			$sql = sprintf("INSERT INTO %s (comment_id, pid, item_id, date, user_id, ip, subject, comment, nohtml, nosmiley, noxcode, icon) VALUES ('%u', '%u', '%u', '%u', '%u', '%s', '%s', '%s', '%u', '%u', '%u', '%s')", $this->ctable, (int) ($comment_id), (int) ($pid), (int) ($item_id), time(), (int) ($user_id), $ip, $subject, $comment, (int) ($nohtml), (int) ($nosmiley), (int) ($noxcode), $icon);
 		} else {
-			$sql = sprintf("UPDATE %s SET subject = '%s', comment = '%s', nohtml = '%u', nosmiley = '%u', noxcode = '%u', icon = '%s'  WHERE comment_id = '%u'", $this->ctable, $subject, $comment, intval($nohtml), intval($nosmiley), intval($noxcode), $icon, intval($comment_id));
+			$sql = sprintf("UPDATE %s SET subject = '%s', comment = '%s', nohtml = '%u', nosmiley = '%u', noxcode = '%u', icon = '%s'  WHERE comment_id = '%u'", $this->ctable, $subject, $comment, (int) ($nohtml), (int) ($nosmiley), (int) ($noxcode), $icon, (int) ($comment_id));
 		}
 		if ( !$result = $this->db->query($sql) ) {
 			//echo $sql;
@@ -94,7 +94,7 @@ class XoopsComments extends XoopsObject
 			$comment_id = $this->db->getInsertId();
 		}
 		if ( $isnew != false ) {
-			$sql = sprintf("UPDATE %s SET posts = posts+1 WHERE uid = '%u'", $this->db->prefix("users"), intval($user_id));
+			$sql = sprintf("UPDATE %s SET posts = posts+1 WHERE uid = '%u'", $this->db->prefix("users"), (int) ($user_id));
 			if (!$result = $this->db->query($sql)) {
 				echo _CM_COULDNOTUPDATEPOSTS;
 			}
@@ -108,11 +108,11 @@ class XoopsComments extends XoopsObject
 	 */
 	function delete()
 	{
-		$sql = sprintf("DELETE FROM %s WHERE comment_id = '%u'", $this->ctable, intval($this->getVar('comment_id')));
+		$sql = sprintf("DELETE FROM %s WHERE comment_id = '%u'", $this->ctable, (int) ($this->getVar('comment_id')));
 		if ( !$result = $this->db->query($sql) ) {
 			return false;
 		}
-		$sql = sprintf("UPDATE %s SET posts = posts-1 WHERE uid = '%u'", $this->db->prefix("users"), intval($this->getVar("user_id")));
+		$sql = sprintf("UPDATE %s SET posts = posts-1 WHERE uid = '%u'", $this->db->prefix("users"), (int) ($this->getVar("user_id")));
 		if ( !$result = $this->db->query($sql) ) {
 			echo _CM_COULDNOTUPDATEPOSTS;
 		}
@@ -215,12 +215,12 @@ class XoopsComments extends XoopsObject
 		if ( $order == 1 ) {
 			echo " selected='selected'";
 		}
-		echo ">". _NEWESTFIRST ."</option></select><input type='hidden' name='item_id' value='".intval($item_id)."' /><input type='submit' value='". _CM_REFRESH ."' />";
+		echo ">". _NEWESTFIRST ."</option></select><input type='hidden' name='item_id' value='". (int) ($item_id)."' /><input type='submit' value='". _CM_REFRESH ."' />";
 		if ( $icmsConfig['anonpost'] == 1 || $icmsUser ) {
 			if ($mode != "flat" || $mode != "nocomments" || $mode != "thread" ) {
 				$mode = "flat";
 			}
-			echo "&nbsp;<input type='button' onclick='location=\"newcomment.php?item_id=".intval($item_id)."&amp;order=".intval($order)."&amp;mode=".$mode."\"' value='"._CM_POSTCOMMENT."' />";
+			echo "&nbsp;<input type='button' onclick='location=\"newcomment.php?item_id=". (int) ($item_id)."&amp;order=". (int) ($order)."&amp;mode=".$mode."\"' value='"._CM_POSTCOMMENT."' />";
 		}
 		echo "</td></tr></table></form>";
 	}
@@ -266,13 +266,13 @@ class XoopsComments extends XoopsObject
 			$ip_image = "<img src='".ICMS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/ip.gif' alt='' />";
 		}
 		if ( $adminview || ($icmsUser && $this->getVar("user_id") == $icmsUser->getVar("uid")) ) {
-			$edit_image = "<a href='editcomment.php?comment_id=".$this->getVar("comment_id")."&amp;mode=".$mode."&amp;order=".intval($order)."'><img src='".ICMS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/edit.gif' alt='"._EDIT."' /></a>";
+			$edit_image = "<a href='editcomment.php?comment_id=".$this->getVar("comment_id")."&amp;mode=".$mode."&amp;order=". (int) ($order)."'><img src='".ICMS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/edit.gif' alt='"._EDIT."' /></a>";
 		}
 		if ( $icmsConfig['anonpost'] || $icmsUser ) {
-			$reply_image = "<a href='replycomment.php?comment_id=".$this->getVar("comment_id")."&amp;mode=".$mode."&amp;order=".intval($order)."'><img src='".ICMS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/reply.gif' alt='"._REPLY."' /></a>";
+			$reply_image = "<a href='replycomment.php?comment_id=".$this->getVar("comment_id")."&amp;mode=".$mode."&amp;order=". (int) ($order)."'><img src='".ICMS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/reply.gif' alt='"._REPLY."' /></a>";
 		}
 		if ( $adminview ) {
-			$delete_image = "<a href='deletecomment.php?comment_id=".$this->getVar("comment_id")."&amp;mode=".$mode."&amp;order=".intval($order)."'><img src='".ICMS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/delete.gif' alt='"._DELETE."' /></a>";
+			$delete_image = "<a href='deletecomment.php?comment_id=".$this->getVar("comment_id")."&amp;mode=".$mode."&amp;order=". (int) ($order)."'><img src='".ICMS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/delete.gif' alt='"._DELETE."' /></a>";
 		}
 
 		if ( $poster ) {

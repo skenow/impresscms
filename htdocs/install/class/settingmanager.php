@@ -82,7 +82,7 @@ class setting_manager {
 		if(isset($_POST['prefix']))
 		$this->prefix = $this->sanitizer->stripSlashesGPC($_POST['prefix']);
 		if(isset($_POST['db_pconnect']))
-		$this->db_pconnect = intval($_POST['db_pconnect']) > 0 ? 1 : 0;
+		$this->db_pconnect = (int) ($_POST['db_pconnect']) > 0 ? 1 : 0;
 		if(isset($_POST['root_path']))
 		$this->root_path = $this->sanitizer->stripSlashesGPC($_POST['root_path']);
 		if(isset($_POST['xoops_url']))
@@ -103,7 +103,7 @@ class setting_manager {
 		if(defined('XOOPS_DB_PREFIX'))
 		$this->prefix = XOOPS_DB_PREFIX;
 		if(defined('XOOPS_DB_PCONNECT'))
-		$this->db_pconnect = intval(XOOPS_DB_PCONNECT) > 0 ? 1 : 0;
+		$this->db_pconnect = (int) (XOOPS_DB_PCONNECT) > 0 ? 1 : 0;
 		if(defined('XOOPS_ROOT_PATH'))
 		$this->root_path = XOOPS_ROOT_PATH;
 		if(defined('XOOPS_URL'))
@@ -250,7 +250,7 @@ class setting_manager {
             <input type='hidden' name='dbpass' value='".$this->sanitizer->htmlSpecialChars($this->dbpass)."' />
             <input type='hidden' name='dbname' value='".$this->sanitizer->htmlSpecialChars($this->dbname)."' />
             <input type='hidden' name='prefix' value='".$this->sanitizer->htmlSpecialChars($this->prefix)."' />
-            <input type='hidden' name='db_pconnect' value='".intval($this->db_pconnect)."' />
+            <input type='hidden' name='db_pconnect' value='". (int) ($this->db_pconnect)."' />
             <input type='hidden' name='root_path' value='".$this->sanitizer->htmlSpecialChars($this->root_path)."' />
             <input type='hidden' name='xoops_url' value='".$this->sanitizer->htmlSpecialChars($this->xoops_url)."' />
             ";

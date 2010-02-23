@@ -54,7 +54,7 @@ class XoopsFormFile extends XoopsFormElement {
 	function XoopsFormFile($caption, $name, $maxfilesize='4096000') {
 		$this->setCaption($caption);
 		$this->setName($name);
-		$this->_maxFileSize = intval($maxfilesize);
+		$this->_maxFileSize = (int) ($maxfilesize);
 	}
 
 	/**

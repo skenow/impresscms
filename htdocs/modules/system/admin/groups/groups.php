@@ -68,14 +68,14 @@ function modifyGroup($g_id)
 {
 	$userstart = $memstart = 0;
 	if ( !empty($_POST['userstart']) ) {
-		$userstart = intval($_POST['userstart']);
+		$userstart = (int) ($_POST['userstart']);
 	} elseif (!empty($_GET['userstart'])) {
-		$userstart = intval($_GET['userstart']);
+		$userstart = (int) ($_GET['userstart']);
 	}
 	if ( !empty($_POST['memstart']) ) {
-		$memstart = intval($_POST['memstart']);
+		$memstart = (int) ($_POST['memstart']);
 	} elseif (!empty($_GET['memstart'])) {
-		$memstart = intval($_GET['memstart']);
+		$memstart = (int) ($_GET['memstart']);
 	}
 	xoops_cp_header();
 	echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/groups/images/groups_big.png)"><a href="admin.php?fct=groups">'. _AM_GROUPSMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'. _AM_MODIFYADG.'</div><br />';

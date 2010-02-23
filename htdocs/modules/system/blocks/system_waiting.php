@@ -25,7 +25,7 @@ function b_system_waiting_show($options)
 
 	$userlang = $xoopsConfig['language'] ;
 
-	$sql_cache_min = empty( $options[1] ) ? 0 : intval( $options[1] ) ;
+	$sql_cache_min = empty( $options[1] ) ? 0 : (int) ( $options[1] ) ;
 	$sql_cache_file = XOOPS_CACHE_PATH.'/waiting_touch' ;
 
 	// SQL cache check (you have to use this cache with block's cache by system)
@@ -117,7 +117,7 @@ function b_system_waiting_show($options)
  */
 function b_system_waiting_edit($options){
 
-	$sql_cache_min = empty( $options[1] ) ? 0 : intval( $options[1] ) ;
+	$sql_cache_min = empty( $options[1] ) ? 0 : (int) ( $options[1] ) ;
 
 	$form = _MB_SYSTEM_NOWAITING_DISPLAY.":&nbsp;<input type='radio' name='options[0]' value='1'";
 	if ( $options[0] == 1 ) {

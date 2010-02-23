@@ -45,9 +45,9 @@ $url = isset($_POST['url']) ? trim($myts->stripSlashesGPC($_POST['url'])) : '';
 $pass = isset($_POST['pass']) ? $myts->stripSlashesGPC($_POST['pass']) : '';
 $vpass = isset($_POST['vpass']) ? $myts->stripSlashesGPC($_POST['vpass']) : '';
 $timezone_offset = isset($_POST['timezone_offset']) ? floatval($_POST['timezone_offset']) : $icmsConfig['default_TZ'];
-$user_viewemail = (isset($_POST['user_viewemail']) && intval($_POST['user_viewemail'])) ? 1 : 0;
-$user_mailok = (isset($_POST['user_mailok']) && intval($_POST['user_mailok'])) ? 1 : 0;
-$agree_disc = (isset($_POST['agree_disc']) && intval($_POST['agree_disc'])) ? 1 : 0;
+$user_viewemail = (isset($_POST['user_viewemail']) && (int) ($_POST['user_viewemail'])) ? 1 : 0;
+$user_mailok = (isset($_POST['user_mailok']) && (int) ($_POST['user_mailok'])) ? 1 : 0;
+$agree_disc = (isset($_POST['agree_disc']) && (int) ($_POST['agree_disc'])) ? 1 : 0;
 $actkey = isset($_POST['actkey']) ? trim($myts->stripSlashesGPC($_POST['actkey'])) : '';
 $salt = isset($_POST['salt']) ? trim($myts->stripSlashesGPC($_POST['salt'])) : '';
 $enc_type = $icmsConfigUser['enc_type'];
@@ -99,7 +99,7 @@ switch ( $op ) {
 				<input type='hidden' name='user_mailok' value='".$user_mailok."' />
 				<input type='hidden' name='actkey' value='".$myts->htmlSpecialChars($actkey)."' />
 				<input type='hidden' name='salt' value='".$myts->htmlSpecialChars($salt)."' />
-				<input type='hidden' name='enc_type' value='".intval($enc_type)."' />
+				<input type='hidden' name='enc_type' value='". (int) ($enc_type)."' />
 		<input type='hidden' name='agree_disc' value='" . (int) $agree_disc . "' />
 				<br /><br /><input type='hidden' name='op' value='finish' />".$GLOBALS['xoopsSecurity']->getTokenHTML()."<input type='submit' value='". _US_FINISH ."' /></form>";
 		} else {
@@ -169,7 +169,7 @@ switch ( $op ) {
 				include 'footer.php';
 				exit();
 			}
-			$newid = intval($newuser->getVar('uid'));
+			$newid = (int) ($newuser->getVar('uid'));
 			if (!$member_handler->addUserToGroup(XOOPS_GROUP_USERS, $newid)) {
 				echo _US_REGISTERNG;
 				include 'footer.php';

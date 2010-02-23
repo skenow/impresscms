@@ -83,7 +83,7 @@ class XoopsTplsetHandler extends XoopsObjectHandler
 	function &get($id)
 	{
 		$tplset = false;
-		$id = intval($id);
+		$id = (int) ($id);
 		if ($id > 0) {
 			$sql = "SELECT * FROM ".$this->db->prefix('tplset')." WHERE tplset_id='".$id."'";
 			if (!$result = $this->db->query($sql)) {
@@ -149,9 +149,9 @@ class XoopsTplsetHandler extends XoopsObjectHandler
 		}
 		if ($tplset->isNew()) {
 			$tplset_id = $this->db->genId('tplset_tplset_id_seq');
-			$sql = sprintf("INSERT INTO %s (tplset_id, tplset_name, tplset_desc, tplset_credits, tplset_created) VALUES ('%u', %s, %s, %s, '%u')", $this->db->prefix('tplset'), intval($tplset_id), $this->db->quoteString($tplset_name), $this->db->quoteString($tplset_desc), $this->db->quoteString($tplset_credits), intval($tplset_created));
+			$sql = sprintf("INSERT INTO %s (tplset_id, tplset_name, tplset_desc, tplset_credits, tplset_created) VALUES ('%u', %s, %s, %s, '%u')", $this->db->prefix('tplset'), (int) ($tplset_id), $this->db->quoteString($tplset_name), $this->db->quoteString($tplset_desc), $this->db->quoteString($tplset_credits), (int) ($tplset_created));
 		} else {
-			$sql = sprintf("UPDATE %s SET tplset_name = %s, tplset_desc = %s, tplset_credits = %s, tplset_created = '%u' WHERE tplset_id = '%u'", $this->db->prefix('tplset'), $this->db->quoteString($tplset_name), $this->db->quoteString($tplset_desc), $this->db->quoteString($tplset_credits), intval($tplset_created), intval($tplset_id));
+			$sql = sprintf("UPDATE %s SET tplset_name = %s, tplset_desc = %s, tplset_credits = %s, tplset_created = '%u' WHERE tplset_id = '%u'", $this->db->prefix('tplset'), $this->db->quoteString($tplset_name), $this->db->quoteString($tplset_desc), $this->db->quoteString($tplset_credits), (int) ($tplset_created), (int) ($tplset_id));
 		}
 		if (!$result = $this->db->query($sql)) {
 			return false;
@@ -179,7 +179,7 @@ class XoopsTplsetHandler extends XoopsObjectHandler
 			return false;
 		}
 
-		$sql = sprintf("DELETE FROM %s WHERE tplset_id = '%u'", $this->db->prefix('tplset'), intval($tplset->getVar('tplset_id')));
+		$sql = sprintf("DELETE FROM %s WHERE tplset_id = '%u'", $this->db->prefix('tplset'), (int) ($tplset->getVar('tplset_id')));
 		if (!$result = $this->db->query($sql)) {
 			return false;
 		}

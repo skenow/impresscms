@@ -25,7 +25,7 @@ if(!empty($_GET)){ foreach($_GET as $k => $v){ if (!in_array($k,$allowedHTML)){$
 $op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'mod_users');
 if(isset($_GET['op']))
 {
-	if(isset($_GET['uid'])) {$uid = intval($_GET['uid']);}
+	if(isset($_GET['uid'])) {$uid = (int) ($_GET['uid']);}
 }
 switch ($op)
 {
@@ -266,9 +266,9 @@ switch ($op)
 		break;
 
 	case 'reactivate':
-		$result=$xoopsDB->query("UPDATE ".$xoopsDB->prefix('users')." SET level='1' WHERE uid='".intval($uid)."'");
+		$result=$xoopsDB->query("UPDATE ".$xoopsDB->prefix('users')." SET level='1' WHERE uid='". (int) ($uid)."'");
 		if(!$result) {exit();}
-		redirect_header('admin.php?fct=users&amp;op=modifyUser&amp;uid='.intval($uid),1,_AM_DBUPDATED);
+		redirect_header('admin.php?fct=users&amp;op=modifyUser&amp;uid='. (int) ($uid),1,_AM_DBUPDATED);
 		break;
 
 	case 'mod_users':

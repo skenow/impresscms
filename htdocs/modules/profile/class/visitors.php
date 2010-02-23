@@ -78,7 +78,7 @@ class ProfileVisitorsHandler extends IcmsPersistableObjectHandler {
 			$criteria->setStart($start);
 		}
 		if ($limit) {
-			$criteria->setLimit(intval($limit));
+			$criteria->setLimit( (int) ($limit));
 		}
 		$criteria->setSort('visit_time');
 		$criteria->setOrder('DESC');

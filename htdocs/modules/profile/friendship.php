@@ -21,11 +21,11 @@ if (isset($_GET['op'])) $clean_op = $_GET['op'];
 if (isset($_POST['op'])) $clean_op = $_POST['op'];
 
 /** Again, use a naming convention that indicates the source of the content of the variable */
-$real_uid = is_object($icmsUser) ? intval($icmsUser->uid()) : 0;
-$clean_uid = isset($_GET['uid']) ? intval($_GET['uid']) : $real_uid ;
+$real_uid = is_object($icmsUser) ? (int) ($icmsUser->uid()) : 0;
+$clean_uid = isset($_GET['uid']) ? (int) ($_GET['uid']) : $real_uid ;
 $clean_friendship_id = 0;
-if (isset($_GET['friendship_id'])) $clean_friendship_id = intval($_GET['friendship_id']);
-if (isset($_POST['friendship_id'])) $clean_friendship_id = intval($_POST['friendship_id']);
+if (isset($_GET['friendship_id'])) $clean_friendship_id = (int) ($_GET['friendship_id']);
+if (isset($_POST['friendship_id'])) $clean_friendship_id = (int) ($_POST['friendship_id']);
 
 /** Create a whitelist of valid values, be sure to use appropriate types for each value
  * Be sure to include a value for no parameter, if you have a default condition

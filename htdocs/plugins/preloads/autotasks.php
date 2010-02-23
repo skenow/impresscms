@@ -52,7 +52,7 @@ extends IcmsPreloadItem {
 		$handler->enableVirtualConfig($vconfig2);
 		$system = $handler->getCurrentSystemHandler(true);
 		if ($rez = $system->canRun()) {
-			$time = intval($handler->getRealTasksRunningTime());
+			$time = (int) ($handler->getRealTasksRunningTime());
 			$rez = $system->start($time);
 		} else {
 			icms_loadLanguageFile('system', 'autotasks', true);

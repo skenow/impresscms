@@ -105,7 +105,7 @@ if ( empty($mode) || $mode == 'blocks' ) {
 	$ret .= '<table id="xo-logger-blocks" class="outer"><tr><th colspan="2">'._BLOCKS.'</th></tr>';
 	foreach ($this->blocks as $b) {
 		if ($b['cached']) {
-			$ret .= '<tr><td class="'.$class.'"><b>'.htmlspecialchars($b['name']).':</b> '._CACHED.' : '.icms_conv_nr2local(sprintf(_REGENERATES, intval($b['cachetime']))).'</td></tr>';
+			$ret .= '<tr><td class="'.$class.'"><b>'.htmlspecialchars($b['name']).':</b> '._CACHED.' : '.icms_conv_nr2local(sprintf(_REGENERATES, (int) ($b['cachetime']))).'</td></tr>';
 		} else {
 			$ret .= '<tr><td class="'.$class.'"><b>'.htmlspecialchars($b['name']).':</b> '._NOCACHE.'</td></tr>';
 		}

@@ -262,7 +262,7 @@ switch ($op) {
 		if (!$GLOBALS['xoopsSecurity']->check()) {
 			redirect_header("admin.php?fct=groups&amp;op=adminMain", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 		}
-		if (intval($g_id) > 0 && !in_array($g_id, array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS))) {
+		if ( (int) ($g_id) > 0 && !in_array($g_id, array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS))) {
 			$member_handler =& xoops_gethandler('member');
 			$group =& $member_handler->getGroup($g_id);
 			$member_handler->deleteGroup($group);
@@ -288,9 +288,9 @@ switch ($op) {
 		if (!$GLOBALS['xoopsSecurity']->check()) {
 			redirect_header("admin.php?fct=groups&amp;op=adminMain", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 		}
-		if (intval($groupid) > 0) {
+		if ( (int) ($groupid) > 0) {
 			$member_handler =& xoops_gethandler('member');
-			$memstart = isset($memstart) ? intval($memstart) : 0;
+			$memstart = isset($memstart) ? (int) ($memstart) : 0;
 			if ($groupid == XOOPS_GROUP_ADMIN) {
 				if ($member_handler->getUserCountByGroup($groupid) > count($uids)){
 					$member_handler->removeUsersFromGroup($groupid, $uids);

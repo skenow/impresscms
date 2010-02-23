@@ -27,13 +27,13 @@ class IcmsAddTo {
 	 * @param int $method 0=directpage, 1=popup
 	 */
 	function IcmsAddTo($layout=0, $method=1) {
-		$layout = intval($layout);
+		$layout = (int) ($layout);
 		if ($layout < 0 || $layout > 3) {
 			$layout = 0;
 		}
 		$this->_layout = $layout;
 
-		$method = intval($method);
+		$method = (int) ($method);
 		if ($method < 0 || $method > 1) {
 			$method = 1;
 		}

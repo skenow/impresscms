@@ -56,7 +56,7 @@ if ($icmsConfigUser['reg_dispdsclmr'] != 0 && $icmsConfigUser['reg_disclaimer'] 
 }
 
 $reg_form->addElement(new XoopsFormHidden("salt", $myts->htmlSpecialChars($salt)));
-$reg_form->addElement(new XoopsFormHidden("enc_type", intval($enc_type)));
+$reg_form->addElement(new XoopsFormHidden("enc_type", (int) ($enc_type)));
 $reg_form->addElement(new XoopsFormHidden("actkey", $myts->htmlSpecialChars($actkey)));
 
 if ($icmsConfigUser['use_captcha'] == true) {
