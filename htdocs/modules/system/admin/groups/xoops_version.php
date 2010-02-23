@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
  * Administration of usergroups, versionfile
  *
@@ -14,16 +13,16 @@
  * @version	$Id$
  */
 
-$modversion['name'] = _MD_AM_ADGS;
-$modversion['version'] = "";
-$modversion['description'] = "User Groups Configuration";
-$modversion['author'] = "";
-$modversion['credits'] = "";
-$modversion['help'] = "groups.html";
-$modversion['license'] = "GPL see LICENSE";
-$modversion['official'] = 1;
-$modversion['image'] = "groups.gif";
-$modversion['hasAdmin'] = 1;
-$modversion['adminpath'] = "admin.php?fct=groups";
-$modversion['category'] = XOOPS_SYSTEM_GROUP;
+$modversion = array( 'name' => _MD_AM_ADGS,
+	'version' => "",
+	'description' => "User Groups Configuration",
+	'author' => "",
+	'credits' => "",
+	'help' => "groups.html",
+	'license' => "GPL see LICENSE",
+	'official' => 1,
+	'image' => "groups.gif",
+	'hasAdmin' => 1,
+	'adminpath' => "admin.php?fct=groups",
+	'category' => XOOPS_SYSTEM_GROUP );
 ?>

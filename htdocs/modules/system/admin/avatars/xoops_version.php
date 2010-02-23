@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
  * Administration of avatars, versionfile
  *
@@ -16,17 +15,16 @@
  * @version		$Id$
  */
 
-$modversion['name'] = _MD_AM_AVATARS;
-$modversion['version'] = "";
-$modversion['description'] = "ImpressCMS Site Avatar Manager";
-$modversion['author'] = "";
-$modversion['credits'] = "The ImpressCMS Project";
-$modversion['help'] = "images.html";
-$modversion['license'] = "GPL see LICENSE";
-$modversion['official'] = 1;
-$modversion['image'] = "avatars.gif";
-
-$modversion['hasAdmin'] = 1;
-$modversion['adminpath'] = "admin.php?fct=avatars";
-$modversion['category'] = XOOPS_SYSTEM_AVATAR;
+$modversion = array( 'name' => _MD_AM_AVATARS,
+	'version' => "",
+	'description' => "ImpressCMS Site Avatar Manager",
+	'author' => "",
+	'credits' => "The ImpressCMS Project",
+	'help' => "images.html",
+	'license' => "GPL see LICENSE",
+	'official' => 1,
+	'image' => "avatars.gif",
+	'hasAdmin' => 1,
+	'adminpath' => "admin.php?fct=avatars",
+	'category' => XOOPS_SYSTEM_AVATAR );
 ?>

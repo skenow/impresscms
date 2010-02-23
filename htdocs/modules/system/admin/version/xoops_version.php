@@ -13,18 +13,16 @@
  * @version	$Id$
  */
 
-$modversion['name'] = _MD_AM_VRSN;
-$modversion['version'] = "1.0";
-$modversion['description'] = "ImpressCMS Version";
-$modversion['author'] = "marcan (marcan@impresscms.org)";
-$modversion['credits'] = "The ImpressCMS Project";
-$modversion['help'] = "";
-$modversion['license'] = "GPL see LICENSE";
-$modversion['official'] = 1;
-$modversion['image'] = "version.gif";
-
-$modversion['hasAdmin'] = 1;
-$modversion['adminpath'] = "admin.php?fct=version";
-
-$modversion['category'] = XOOPS_SYSTEM_VERSION;
+$modversion = array( 'name' => _MD_AM_VRSN,
+	'version' => "1.0",
+	'description' => "ImpressCMS Version",
+	'author' => "marcan (marcan@impresscms.org)",
+	'credits' => "The ImpressCMS Project",
+	'help' => "",
+	'license' => "GPL see LICENSE",
+	'official' => 1,
+	'image' => "version.gif",
+	'hasAdmin' => 1,
+	'adminpath' => "admin.php?fct=version",
+	'category' => XOOPS_SYSTEM_VERSION );
 ?>

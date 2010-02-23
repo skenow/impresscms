@@ -10,17 +10,16 @@
  * @version		$Id$
  */
 
-$modversion['name'] = _MD_AM_MIMETYPES;
-$modversion['version'] = "1.0";
-$modversion['description'] = "Custom Tags Administration";
-$modversion['author'] = "Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>";
-$modversion['credits'] = "The ImpressCMS Projects";
-$modversion['help'] = "";
-$modversion['license'] = "GPL see LICENSE";
-$modversion['official'] = 1;
-$modversion['image'] = "mimetype.gif";
-$modversion['hasAdmin'] = 1;
-$modversion['adminpath'] = "admin.php?fct=mimetype";
-$modversion['category'] = XOOPS_SYSTEM_MIMETYPES;
-
+$modversion = array( 'name' => _MD_AM_MIMETYPES,
+	'version' => "1.0",
+	'description' => "Custom Tags Administration",
+	'author' => "Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>",
+	'credits' => "The ImpressCMS Project",
+	'help' => "",
+	'license' => "GPL see LICENSE",
+	'official' => 1,
+	'image' => "mimetype.gif",
+	'hasAdmin' => 1,
+	'adminpath' => "admin.php?fct=mimetype",
+	'category' => XOOPS_SYSTEM_MIMETYPES );
 ?>

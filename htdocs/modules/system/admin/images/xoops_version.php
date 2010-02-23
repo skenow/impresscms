@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
  * Administration of images, versionfile
  *
@@ -14,17 +13,16 @@
  * @version	$Id$
  */
 
-$modversion['name'] = _MD_AM_IMAGES;
-$modversion['version'] = "";
-$modversion['description'] = "ImpressCMS Image Manager";
-$modversion['author'] = "";
-$modversion['credits'] = "The ImpressCMS Project";
-$modversion['help'] = "images.html";
-$modversion['license'] = "GPL see LICENSE";
-$modversion['official'] = 1;
-$modversion['image'] = "images.gif";
-
-$modversion['hasAdmin'] = 1;
-$modversion['adminpath'] = "admin.php?fct=images";
-$modversion['category'] = XOOPS_SYSTEM_IMAGE;
+$modversion = array( 'name' => _MD_AM_IMAGES,
+	'version' => "",
+	'description' => "ImpressCMS Image Manager",
+	'author' => "",
+	'credits' => "The ImpressCMS Project",
+	'help' => "images.html",
+	'license' => "GPL see LICENSE",
+	'official' => 1,
+	'image' => "images.gif",
+	'hasAdmin' => 1,
+	'adminpath' => "admin.php?fct=images",
+	'category' => XOOPS_SYSTEM_IMAGE );
 ?>

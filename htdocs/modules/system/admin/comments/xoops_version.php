@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
  * Administration of comments, versionfile
  *
@@ -14,17 +13,16 @@
  * @version	$Id$
  */
 
-$modversion['name'] = _MD_AM_COMMENTS;
-$modversion['version'] = "";
-$modversion['description'] = "ImpressCMS Site Comment Manager";
-$modversion['author'] = "";
-$modversion['credits'] = "The ImpressCMS Project";
-$modversion['help'] = "comments.html";
-$modversion['license'] = "GPL see LICENSE";
-$modversion['official'] = 1;
-$modversion['image'] = "comments.gif";
-
-$modversion['hasAdmin'] = 1;
-$modversion['adminpath'] = "admin.php?fct=comments";
-$modversion['category'] = XOOPS_SYSTEM_COMMENT;
+$modversion = array( 'name' => _MD_AM_COMMENTS,
+	'version' => "",
+	'description' => "ImpressCMS Site Comment Manager",
+	'author' => "",
+	'credits' => "The ImpressCMS Project",
+	'help' => "comments.html",
+	'license' => "GPL see LICENSE",
+	'official' => 1,
+	'image' => "comments.gif",
+	'hasAdmin' => 1,
+	'adminpath' => "admin.php?fct=comments",
+	'category' => XOOPS_SYSTEM_COMMENT );
 ?>
