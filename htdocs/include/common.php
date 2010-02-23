@@ -37,7 +37,7 @@ if (!defined('ICMS_GROUP_ANONYMOUS')) {
 	define('ICMS_GROUP_ANONYMOUS', XOOPS_GROUP_ANONYMOUS);
 }
 
-/**
+/**#@+
  * Creating ICMS specific constants
  */
 define('ICMS_PLUGINS_PATH', ICMS_ROOT_PATH.'/plugins');
@@ -47,6 +47,7 @@ define('ICMS_PURIFIER_CACHE', ICMS_TRUST_PATH.'/cache/htmlpurifier');
 // ImpressCMS Modules path & url
 define( 'ICMS_MODULES_PATH', ICMS_ROOT_PATH . '/modules' );
 define( 'ICMS_MODULES_URL', ICMS_URL . '/modules' );
+/**#@-*/
 
 // ################# Creation of the IcmsPreloadHandler ##############
 include_once ICMS_ROOT_PATH . '/kernel/icmspreloadhandler.php';
@@ -92,6 +93,9 @@ $xoopsErrorHandler =& $xoopsLogger;
 $xoopsLogger->startTime('ICMS');
 $xoopsLogger->startTime( 'ICMS Boot' );
 
+/**#@+
+ * Constants
+ */
 define("XOOPS_SIDEBLOCK_LEFT",1);
 define("XOOPS_SIDEBLOCK_RIGHT",2);
 define("XOOPS_SIDEBLOCK_BOTH",-2);
@@ -124,6 +128,7 @@ define("ICMS_EDITOR_PATH", ICMS_ROOT_PATH."/editors");
 define("ICMS_EDITOR_URL", ICMS_URL."/editors");
 define('ICMS_IMANAGER_FOLDER_PATH',ICMS_UPLOAD_PATH.'/imagemanager');
 define('ICMS_IMANAGER_FOLDER_URL',ICMS_UPLOAD_URL.'/imagemanager');
+/**#@-*/
 
 /**
  * @todo make this $icms_images_setname as an option in preferences...
@@ -132,7 +137,7 @@ $icms_images_setname = 'crystal';
 define("ICMS_IMAGES_SET_URL", ICMS_IMAGES_URL."/" . $icms_images_setname);
 
 /**#@+
- * Deprectaed: for backward compatibility
+ * @deprecated - for backward compatibility
  */
 define("XOOPS_INCLUDE_PATH", ICMS_INCLUDE_PATH);
 define("XOOPS_INCLUDE_URL", ICMS_INCLUDE_URL);
@@ -144,7 +149,7 @@ define("XOOPS_COMPILE_PATH", ICMS_COMPILE_PATH);
 define("XOOPS_CACHE_PATH", ICMS_CACHE_PATH);
 define("XOOPS_EDITOR_PATH", ICMS_EDITOR_PATH);
 define("XOOPS_EDITOR_URL", ICMS_EDITOR_URL);
-
+/**#@-*/
 define("SMARTY_DIR", ICMS_LIBRARIES_PATH."/smarty/");
 
 if (!defined('XOOPS_XMLRPC')) {
