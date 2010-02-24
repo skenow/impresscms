@@ -361,7 +361,7 @@ function xoops_module_install($dirname) {
 			}
 			unset($blocks);
 			unset($groups);
-				
+
 			// add module specific tasks to system autotasks list
 			$atasks = $module->getInfo('autotasks');
 			$atasks_handler = &xoops_getModuleHandler('autotasks', 'system');
@@ -859,7 +859,7 @@ function icms_module_update($dirname) {
 				if (isset($taskData['interval'])) $task->setVar('sat_interval', $taskData['interval']);
 				if (isset($taskData['onfinish'])) $task->setVar('sat_onfinish', $taskData['onfinish']);
 				$task->setVar('sat_name', $taskData['name']);
-				$task->setVar('sat_code', sprintf("require XOOPS_ROOT_PATH . \"/modules/%s/%s\");", $module->getInfo('dirname') , addslashes($taskData['code'])) ;
+				$task->setVar('sat_code', sprintf("require XOOPS_ROOT_PATH . \"/modules/%s/%s\";", $module->getInfo('dirname') , addslashes($taskData['code']))) ;
 				$task->setVar('sat_type', 'addon/'.$module->getInfo('dirname'));
 				$task->setVar('sat_addon_id', (int) ($taskID));
 				if (!($atasks_handler->insert($task))) {
@@ -876,7 +876,7 @@ function icms_module_update($dirname) {
 		$ModName = ($module->getInfo('modname') != '') ? trim($module->getInfo('modname')) : $dirname;
 		if (false != $update_script && trim($update_script) != '') {
 			include_once XOOPS_ROOT_PATH.'/modules/'.$dirname.'/'.trim($update_script);
-				
+
 			$is_IPF = $module->getInfo('object_items');
 			if(!empty($is_IPF)){
 				$icmsDatabaseUpdater = XoopsDatabaseFactory::getDatabaseUpdater();
