@@ -182,7 +182,7 @@ case 'online':
 	for($i = 0; $i < $count; $i++)
 	{
 		if($onlines[$i]['online_uid'] == 0) {$onlineUsers[$i]['user'] = '';}
-		else {$onlineUsers[$i]['user'] =& new XoopsUser($onlines[$i]['online_uid']);}
+		else {$onlineUsers[$i]['user'] = new XoopsUser($onlines[$i]['online_uid']);}
 		$onlineUsers[$i]['ip'] = $onlines[$i]['online_ip'];
 		$onlineUsers[$i]['updated'] = $onlines[$i]['online_updated'];
 		$onlineUsers[$i]['module'] = ($onlines[$i]['online_module'] > 0) ? $modules[$onlines[$i]['online_module']] : '';

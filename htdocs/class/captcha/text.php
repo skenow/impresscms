@@ -33,7 +33,7 @@ class IcmsCaptchaText {
 	{
 		static $instance;
 		if(!isset($instance)) {
-			$instance =& new IcmsCaptchaText();
+			$instance = new IcmsCaptchaText();
 		}
 		return $instance;
 	}

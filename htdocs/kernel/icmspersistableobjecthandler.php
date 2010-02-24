@@ -204,7 +204,7 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
 	 * @return object {@link IcmsPersistableObject}
 	 */
 	function &create($isNew = true) {
-		$obj =& new $this->className($this);
+		$obj = new $this->className($this);
 		if (!$obj->handler) {
 			$obj->handler =& $this;
 		}

@@ -219,7 +219,7 @@ class xos_logos_PageBuilder {
 		$xoopsLogger = & XoopsLogger::instance ();
 
 		$bcachetime = (int) ( $xobject->getVar ( 'bcachetime' ) );
-		//$template =& new XoopsTpl();
+		//$template = new XoopsTpl();
 		if (empty ( $bcachetime )) {
 			$template->caching = 0;
 		} else {

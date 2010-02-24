@@ -263,7 +263,7 @@ if ( ini_get( 'magic_quotes_gpc' ) ) {
 $pageHasHelp = false;
 $pageHasForm = false;
 
-$wizard =& new XoopsInstallWizard();
+$wizard = new XoopsInstallWizard();
 if ( !$wizard->xoInit() ) {
 	exit();
 }

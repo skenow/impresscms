@@ -48,7 +48,7 @@ class IcmsCaptcha {
 	{
 		static $instance;
 		if(!isset($instance)) {
-			$instance =& new IcmsCaptcha();
+			$instance = new IcmsCaptcha();
 		}
 		return $instance;
 	}
@@ -212,7 +212,7 @@ class IcmsCaptcha {
 	{
 		require_once dirname(__FILE__)."/".$this->mode.".php";
 		$class = "IcmsCaptcha".ucfirst($this->mode);
-		$captcha_handler =& new $class();
+		$captcha_handler = new $class();
 		if(method_exists($captcha_handler, "destroyGarbage")) {
 			$captcha_handler->loadConfig($this->config);
 			$captcha_handler->destroyGarbage();
@@ -270,7 +270,7 @@ class IcmsCaptcha {
 	{
 		require_once dirname(__FILE__)."/".$this->mode.".php";
 		$class = "IcmsCaptcha".ucfirst($this->mode);
-		$captcha_handler =& new $class();
+		$captcha_handler = new $class();
 		$captcha_handler->loadConfig($this->config);
 
 		$form = $captcha_handler->render();
