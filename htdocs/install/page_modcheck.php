@@ -61,7 +61,6 @@ function xoDiagIfWritable( $path ) {
 	return xoDiag( $error ? -1 : 1, $error ? 'Not writable' : 'Writable' );
 }
 
-
 ob_start();
 ?>
 <fieldset>
@@ -70,10 +69,7 @@ ob_start();
 	src="img/yes.png" alt="Success" class="rootimg" /></h4>
 <div class="clear">&nbsp;</div>
 <h4><?php echo _PHP_VERSION; ?>:&nbsp; <?php
-if ( version_compare( phpversion(), '5.3', '>=') ) {
-	echo xoDiag( -1, phpversion() );
-	$php_version_error = true;
-} elseif ( version_compare( phpversion(), '5.2', '>=') ) {
+if ( version_compare( phpversion(), '5.2', '>=') ) {
 	echo xoDiag( 1, phpversion() );
 } elseif ( version_compare( phpversion(), '5.1', '>=') ) {
 	echo xoDiag( 0, phpversion() );
