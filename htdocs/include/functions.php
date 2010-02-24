@@ -1180,7 +1180,7 @@ function icms_loadLanguageFile($module, $file, $admin=false)
 	$extraPath = $admin ? 'admin/' : '';
 	$filename = $languagePath.$icmsConfig['language'].'/'.$extraPath.$file.'.php';
 	if(!file_exists($filename)) {$filename = $languagePath.'english/'.$extraPath.$file.'.php';}
-	if(file_exists($filename)) {include_once($filename);}
+	if(file_exists($filename)) {include_once $filename ;}
 }
 
 /**
@@ -2703,7 +2703,7 @@ function icms_buildCriteria($criterias) {
  * @return str HTML code of the breadcrumb to be inserted in another template
  */
 function icms_getBreadcrumb($items) {
-	include_once(ICMS_ROOT_PATH . '/class/icmsbreadcrumb.php');
+	include_once ICMS_ROOT_PATH . '/class/icmsbreadcrumb.php' ;
 	$icmsBreadcrumb = new IcmsBreadcrumb($items);
 	return $icmsBreadcrumb->render(true);
 }

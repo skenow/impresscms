@@ -113,7 +113,7 @@ class IcmsVersionChecker {
 	function check() {
 
 		// Create a new instance of the SimplePie object
-		include_once(ICMS_ROOT_PATH . '/class/icmssimplerss.php');
+		include_once ICMS_ROOT_PATH . '/class/icmssimplerss.php' ;
 		$feed = new IcmsSimpleRss();
 		$feed->set_feed_url($this->version_xml);
 		$feed->set_cache_duration(0);

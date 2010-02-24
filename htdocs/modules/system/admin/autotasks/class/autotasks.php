@@ -150,7 +150,7 @@ class SystemAutoTasks extends IcmsPersistableObject {
 			if($module == '') return false;
 			$module = ICMS_MODULES_PATH.'/'.$module;
 			$module = $module.'/'.$code;
-			$code = ' require ("'.$module.'");';;
+			$code = ' require "'.$module.'" ;';;
 			$is_bug = !(@highlight_string(file_get_contents($module), true));
 		} else {
 			$is_bug = !(@highlight_string('<?'.'php '. $code.' return true; ?'.'>', true));

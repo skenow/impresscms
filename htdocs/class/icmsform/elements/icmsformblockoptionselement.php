@@ -27,7 +27,7 @@ class IcmsFormBlockoptionsElement extends XoopsFormElementTray {
 		$this->XoopsFormElementTray(_CO_SYSTEM_BLOCKSADMIN_OPTIONS, ' ', 'options' . '_password_tray');
 		$func = $object->getVar('edit_func');
 
-		require_once (ICMS_ROOT_PATH . "/modules/" . $object->handler->getModuleDirname($object->getVar('mid', 'e')) . "/blocks/" . $object->getVar('func_file'));
+		require_once ICMS_ROOT_PATH . "/modules/" . $object->handler->getModuleDirname($object->getVar('mid', 'e')) . "/blocks/" . $object->getVar('func_file') ;
 		include_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
 		icms_loadLanguageFile($object->handler->getModuleDirname($object->getVar('mid', 'e')), 'blocks');
 

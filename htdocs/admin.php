@@ -67,7 +67,7 @@ function showRSS()
 	$rssurl = $icmsConfigPersona['rss_local'];
 	$rssfile = ICMS_CACHE_PATH.'/adminnews_'._LANGCODE.'.xml';
 
-	include_once(ICMS_ROOT_PATH . '/class/icmssimplerss.php');
+	include_once ICMS_ROOT_PATH . '/class/icmssimplerss.php' ;
 
 	// Create a new instance of the SimplePie object
 	$feed = new IcmsSimpleRss();

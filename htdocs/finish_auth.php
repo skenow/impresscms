@@ -42,7 +42,7 @@ switch ($xoopsAuth->step) {
 	case OPENID_STEP_NO_USER_FOUND :
 		$xoopsOption['template_main'] = 'system_openid.html';
 		/** Including header.php to start page rendering */
-		include_once (ICMS_ROOT_PATH . "/header.php");
+		include_once ICMS_ROOT_PATH . "/header.php" ;
 
 		$sreg = $_SESSION['openid_sreg'];
 
@@ -64,7 +64,7 @@ switch ($xoopsAuth->step) {
 
 		$sreg = $_SESSION['openid_sreg'];
 		/** Including header.php to start page rendering */
-		include_once (ICMS_ROOT_PATH . '/header.php');
+		include_once ICMS_ROOT_PATH . '/header.php' ;
 
 		/**
 		 * @todo this is only temporary and it needs to be included in the template as a javascript check
@@ -158,7 +158,7 @@ switch ($xoopsAuth->step) {
 	case OPENID_STEP_LINK :
 		// Linking an existing user with this openid
 		/** Including header.php to start page rendering */
-		include_once (ICMS_ROOT_PATH . '/header.php');
+		include_once ICMS_ROOT_PATH . '/header.php' ;
 
 		$uname4sql = addslashes($myts->stripSlashesGPC($_POST['uname']));
 		$pass4sql = addslashes($myts->stripSlashesGPC($_POST['pass']));

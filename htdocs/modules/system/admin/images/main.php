@@ -15,8 +15,8 @@
 if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
 	exit(_CT_ACCESS_DENIED);
 } else {
-	include(ICMS_ROOT_PATH."/kernel/image.php");
-	include(ICMS_ROOT_PATH."/kernel/imagecategory.php");
+	include ICMS_ROOT_PATH."/kernel/image.php" ;
+	include ICMS_ROOT_PATH."/kernel/imagecategory.php" ;
 	if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
 	if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
 	$op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'list');

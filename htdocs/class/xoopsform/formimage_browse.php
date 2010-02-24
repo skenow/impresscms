@@ -13,9 +13,9 @@
  */
 
 if ( file_exists("../../mainfile.php") ) {
-	include_once("../../mainfile.php");
+	include_once "../../mainfile.php" ;
 } elseif (file_exists("../../../mainfile.php")) {
-	include_once("../../../mainfile.php");
+	include_once "../../../mainfile.php" ;
 }
 if(!$GLOBALS["xoopsUser"]){
 	redirect_header(ICMS_URL.'/index.php', 6, _NOPERM);

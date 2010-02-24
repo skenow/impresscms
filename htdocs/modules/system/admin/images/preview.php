@@ -13,9 +13,9 @@
  * @version	$Id$
  */
 
-include('../../../../mainfile.php');
-include(ICMS_ROOT_PATH."/kernel/image.php");
-include(ICMS_ROOT_PATH."/kernel/imagecategory.php");
+include '../../../../mainfile.php' ;
+include ICMS_ROOT_PATH."/kernel/image.php" ;
+include ICMS_ROOT_PATH."/kernel/imagecategory.php" ;
 include ICMS_LIBRARIES_PATH.'/wideimage/lib/WideImage.php';
 
 $file = $_GET['file'];

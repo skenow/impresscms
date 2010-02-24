@@ -21,7 +21,7 @@ icms_loadLanguageFile('core', 'mail');
  * The new Multimailer class that will carry out the actual sending and will later replace this class.
  * If you're writing new code, please use that class instead.
  */
-include_once(ICMS_ROOT_PATH."/class/mail/xoopsmultimailer.php");
+include_once ICMS_ROOT_PATH."/class/mail/xoopsmultimailer.php" ;
 
 /**
  * Class for sending mail.

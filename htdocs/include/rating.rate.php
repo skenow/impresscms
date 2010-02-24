@@ -14,7 +14,7 @@ if (!defined("ICMS_ROOT_PATH")) {
 	die("ImpressCMS root path not defined");
 }
 
-include_once(ICMS_ROOT_PATH . "/modules/system/admin/rating/class/rating.php");
+include_once ICMS_ROOT_PATH . "/modules/system/admin/rating/class/rating.php" ;
 
 icms_loadLanguageFile('system', 'rating', true);
 

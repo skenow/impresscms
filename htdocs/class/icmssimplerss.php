@@ -14,8 +14,8 @@
  * @version		$Id$
  */
 
-include_once(ICMS_LIBRARIES_PATH . '/simplepie/simplepie.inc');
-include_once(ICMS_LIBRARIES_PATH . '/simplepie/idn/idna_convert.class.php');
+include_once ICMS_LIBRARIES_PATH . '/simplepie/simplepie.inc' ;
+include_once ICMS_LIBRARIES_PATH . '/simplepie/idn/idna_convert.class.php' ;
 
 class IcmsSimpleRss extends SimplePie {
 

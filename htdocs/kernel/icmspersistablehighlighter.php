@@ -50,7 +50,7 @@ class IcmsPersistableHighlighter {
 	 * @param callback $replace_callback a custom callback for keyword highlight.
 	 * <code>
 	 * <?php
-	 * require ('keyhighlighter.class.php');
+	 * require 'keyhighlighter.class.php' ;
 	 *
 	 * function my_highlighter ($matches) {
 	 * 	return '<span style="font-weight: bolder; color: #FF0000;">' . $matches[0] . '</span>';

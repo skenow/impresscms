@@ -12,7 +12,7 @@
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
-include_once (ICMS_ROOT_PATH . "/class/icmsform/elements/icmsformselectelement.php");
+include_once ICMS_ROOT_PATH . "/class/icmsform/elements/icmsformselectelement.php" ;
 
 class IcmsFormSelect_multiElement extends IcmsFormSelectElement  {
 

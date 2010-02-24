@@ -924,12 +924,12 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 				if (false != extension_loaded('zlib')) {
 					if (isset($_GET['method']) && $_GET['method'] == 'tar') {
 						if (@function_exists('gzencode')) {
-							require_once(XOOPS_ROOT_PATH.'/class/tardownloader.php');
+							require_once XOOPS_ROOT_PATH.'/class/tardownloader.php' ;
 							$downloader = new XoopsTarDownloader();
 						}
 					} else {
 						if (@function_exists('gzcompress')) {
-							require_once(XOOPS_ROOT_PATH.'/class/zipdownloader.php');
+							require_once XOOPS_ROOT_PATH.'/class/zipdownloader.php' ;
 							$downloader = new XoopsZipDownloader();
 						}
 					}

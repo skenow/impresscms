@@ -18,7 +18,7 @@ class IcmsPreloadCustomtag extends IcmsPreloadItem
 	 * @return	void
 	 */
 	function eventFinishCoreBoot() {
-		include_once(ICMS_ROOT_PATH . "/include/customtag.php");
+		include_once ICMS_ROOT_PATH . "/include/customtag.php" ;
 	}
 
 	/**

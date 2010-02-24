@@ -60,7 +60,7 @@ class IcmsPluginsHandler {
 	function getPlugin($path, $dirname) {
 		$pluginName = ICMS_ROOT_PATH . '/plugins/'.$path.'/' . $dirname . '.php';
 		if (file_exists($pluginName)) {
-			include_once($pluginName);
+			include_once $pluginName ;
 			$function = 'icms_plugin_' . $dirname;
 			if (function_exists($function)) {
 				$array = $function();
@@ -72,7 +72,7 @@ class IcmsPluginsHandler {
 	}
 
 	function getPluginsArray($path) {
-		include_once(XOOPS_ROOT_PATH . "/class/xoopslists.php");
+		include_once XOOPS_ROOT_PATH . "/class/xoopslists.php" ;
 
 		$module_handler = xoops_gethandler('module');
 		$criteria = new CriteriaCompo();

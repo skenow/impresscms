@@ -223,14 +223,14 @@ function xoops_module_install($dirname) {
 				$configs = $module->getInfo('config');
 				if ($configs != false) {
 					if ($module->getVar('hascomments') != 0) {
-						include_once(XOOPS_ROOT_PATH.'/include/comment_constants.php');
+						include_once XOOPS_ROOT_PATH.'/include/comment_constants.php' ;
 						array_push($configs, array('name' => 'com_rule', 'title' => '_CM_COMRULES', 'description' => '', 'formtype' => 'select', 'valuetype' => 'int', 'default' => 1, 'options' => array('_CM_COMNOCOM' => XOOPS_COMMENT_APPROVENONE, '_CM_COMAPPROVEALL' => XOOPS_COMMENT_APPROVEALL, '_CM_COMAPPROVEUSER' => XOOPS_COMMENT_APPROVEUSER, '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN)));
 						array_push($configs, array('name' => 'com_anonpost', 'title' => '_CM_COMANONPOST', 'description' => '', 'formtype' => 'yesno', 'valuetype' => 'int', 'default' => 0));
 					}
 				} else {
 					if ($module->getVar('hascomments') != 0) {
 						$configs = array();
-						include_once(XOOPS_ROOT_PATH.'/include/comment_constants.php');
+						include_once XOOPS_ROOT_PATH.'/include/comment_constants.php' ;
 						$configs[] = array('name' => 'com_rule', 'title' => '_CM_COMRULES', 'description' => '', 'formtype' => 'select', 'valuetype' => 'int', 'default' => 1, 'options' => array('_CM_COMNOCOM' => XOOPS_COMMENT_APPROVENONE, '_CM_COMAPPROVEALL' => XOOPS_COMMENT_APPROVEALL, '_CM_COMAPPROVEUSER' => XOOPS_COMMENT_APPROVEUSER, '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN));
 						$configs[] = array('name' => 'com_anonpost', 'title' => '_CM_COMANONPOST', 'description' => '', 'formtype' => 'yesno', 'valuetype' => 'int', 'default' => 0);
 					}
@@ -738,14 +738,14 @@ function icms_module_update($dirname) {
 		$configs = $module->getInfo('config');
 		if ($configs != false) {
 			if ($module->getVar('hascomments') != 0) {
-				include_once(XOOPS_ROOT_PATH.'/include/comment_constants.php');
+				include_once XOOPS_ROOT_PATH.'/include/comment_constants.php' ;
 				array_push($configs, array('name' => 'com_rule', 'title' => '_CM_COMRULES', 'description' => '', 'formtype' => 'select', 'valuetype' => 'int', 'default' => 1, 'options' => array('_CM_COMNOCOM' => XOOPS_COMMENT_APPROVENONE, '_CM_COMAPPROVEALL' => XOOPS_COMMENT_APPROVEALL, '_CM_COMAPPROVEUSER' => XOOPS_COMMENT_APPROVEUSER, '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN)));
 				array_push($configs, array('name' => 'com_anonpost', 'title' => '_CM_COMANONPOST', 'description' => '', 'formtype' => 'yesno', 'valuetype' => 'int', 'default' => 0));
 			}
 		} else {
 			if ($module->getVar('hascomments') != 0) {
 				$configs = array();
-				include_once(XOOPS_ROOT_PATH.'/include/comment_constants.php');
+				include_once XOOPS_ROOT_PATH.'/include/comment_constants.php' ;
 				$configs[] = array('name' => 'com_rule', 'title' => '_CM_COMRULES', 'description' => '', 'formtype' => 'select', 'valuetype' => 'int', 'default' => 1, 'options' => array('_CM_COMNOCOM' => XOOPS_COMMENT_APPROVENONE, '_CM_COMAPPROVEALL' => XOOPS_COMMENT_APPROVEALL, '_CM_COMAPPROVEUSER' => XOOPS_COMMENT_APPROVEUSER, '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN));
 				$configs[] = array('name' => 'com_anonpost', 'title' => '_CM_COMANONPOST', 'description' => '', 'formtype' => 'yesno', 'valuetype' => 'int', 'default' => 0);
 			}
@@ -859,7 +859,7 @@ function icms_module_update($dirname) {
 				if (isset($taskData['interval'])) $task->setVar('sat_interval', $taskData['interval']);
 				if (isset($taskData['onfinish'])) $task->setVar('sat_onfinish', $taskData['onfinish']);
 				$task->setVar('sat_name', $taskData['name']);
-				$task->setVar('sat_code', sprintf("require(XOOPS_ROOT_PATH . \"/modules/%s/%s\");", $module->getInfo('dirname') , addslashes($taskData['code'])));
+				$task->setVar('sat_code', sprintf("require XOOPS_ROOT_PATH . \"/modules/%s/%s\");", $module->getInfo('dirname') , addslashes($taskData['code'])) ;
 				$task->setVar('sat_type', 'addon/'.$module->getInfo('dirname'));
 				$task->setVar('sat_addon_id', (int) ($taskID));
 				if (!($atasks_handler->insert($task))) {

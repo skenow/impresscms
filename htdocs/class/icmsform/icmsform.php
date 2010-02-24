@@ -85,7 +85,7 @@ class IcmsForm extends XoopsThemeForm {
 	 */
 	/*
 	 function addCaptcha() {
-		include_once(SMARTOBJECT_ROOT_PATH . 'include/captcha/formcaptcha.php');
+		include_once SMARTOBJECT_ROOT_PATH . 'include/captcha/formcaptcha.php' ;
 		$this->addElement(new XoopsFormCaptcha(), true);
 		}
 		*/
@@ -379,7 +379,7 @@ class IcmsForm extends XoopsThemeForm {
 	function getControl($controlName, $key) {
 		switch ($controlName) {
 			case 'check':
-				include_once(ICMS_ROOT_PATH."/class/icmsform/elements/icmsformcheckelement.php");
+				include_once ICMS_ROOT_PATH."/class/icmsform/elements/icmsformcheckelement.php" ;
 				$control = $this->targetObject->getControl($key);
 				$controlObj = new IcmsFormCheckElement($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getVar($key));
 				$controlObj->addOptionArray($control['options']);
@@ -459,18 +459,18 @@ class IcmsForm extends XoopsThemeForm {
 				break;
 
 			case 'urllink':
-				include_once(ICMS_ROOT_PATH."/class/icmsform/elements/icmsformurllinkelement.php");
+				include_once ICMS_ROOT_PATH."/class/icmsform/elements/icmsformurllinkelement.php" ;
 				return new IcmsFormUrlLinkElement($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getUrlLinkObj($key));
 				break;
 
 			case 'richfile':
-				include_once(ICMS_ROOT_PATH."/class/icmsform/elements/icmsformrichfileelement.php");
+				include_once ICMS_ROOT_PATH."/class/icmsform/elements/icmsformrichfileelement.php" ;
 				return new IcmsFormRichFileElement($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getFileObj($key));
 				break;
 
 			case 'source':
 			case 'sourceeditor':
-				include_once(ICMS_ROOT_PATH."/class/icmsform/elements/icmsformsourceeditor.php");
+				include_once ICMS_ROOT_PATH."/class/icmsform/elements/icmsformsourceeditor.php" ;
 				return new IcmsFormSourceEditor($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getVar($key, 'e'));
 				break;
 
@@ -478,7 +478,7 @@ class IcmsForm extends XoopsThemeForm {
 				$classname = "IcmsForm".ucfirst($controlName)."Element";
 				if (!class_exists($classname)) {
 					if (file_exists(ICMS_ROOT_PATH."/class/icmsform/elements/".strtolower($classname).".php")) {
-						include_once(ICMS_ROOT_PATH."/class/icmsform/elements/".strtolower($classname).".php");
+						include_once ICMS_ROOT_PATH."/class/icmsform/elements/".strtolower($classname).".php" ;
 					} else {
 						// perhaps this is a control created by the module
 						$moduleName = $this->targetObject->handler->_moduleName;
@@ -490,7 +490,7 @@ class IcmsForm extends XoopsThemeForm {
 						$classFileName = strtolower($classname).".php";
 
 						if (file_exists($moduleFormElementsPath . $classFileName)) {
-							include_once($moduleFormElementsPath . $classFileName);
+							include_once $moduleFormElementsPath . $classFileName ;
 						} else {
 							trigger_error($classname." Not found", E_USER_WARNING);
 							return new XoopsFormLabel(); //Empty object

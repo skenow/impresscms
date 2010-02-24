@@ -70,7 +70,7 @@ define( 'ICMS_PDF_LIB_URL', ICMS_URL . '/libraries/tcpdf' );
 $icmsPreloadHandler->triggerEvent('startCoreBoot');
 
 // ################# Creation of the ImpressCMS Kernel object ##############
-include_once(ICMS_ROOT_PATH . '/kernel/icmskernel.php');
+include_once ICMS_ROOT_PATH . '/kernel/icmskernel.php' ;
 
 global $impresscms, $xoops;
 $impresscms =& new IcmsKernel();
@@ -196,7 +196,7 @@ unset($configs);
 // ################# Creation of the ImpressCMS Captcha object ##############
 
 // Instantiate Captcha object
-/*require_once (ICMS_ROOT_PATH ."/class/captcha/captcha.php");
+/*require_once ICMS_ROOT_PATH ."/class/captcha/captcha.php" ;
  global $icmsCaptcha;
  $icmsCaptcha = IcmsCaptcha::instance();*/
 

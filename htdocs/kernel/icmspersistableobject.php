@@ -393,7 +393,7 @@ class IcmsPersistableObject extends XoopsObject {
 		 */
 		/*
 		 // Hightlighting searched words
-		 include_once(SMARTOBJECT_ROOT_PATH . 'class/smarthighlighter.php');
+		 include_once SMARTOBJECT_ROOT_PATH . 'class/smarthighlighter.php' ;
 		 $highlight = icms_getConfig('module_search_highlighter', false, true);
 
 		 if($highlight && isset($_GET['keywords']))
