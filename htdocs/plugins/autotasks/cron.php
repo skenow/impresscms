@@ -233,7 +233,7 @@ extends IcmsAutoTasksSystem {
 				continue;
 			}
 			// Checking if this is an assignment
-			if ( ereg( "(.*)=(.*)", $line, $assign ) ) {
+			if ( preg_match( "/(.*)=(.*)/", $line, $assign ) ) {
 				$this->_lines[] = array(array( "name" => $assign[1], "value" => $assign[2] ),2);
 				continue;
 			}

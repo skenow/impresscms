@@ -139,7 +139,7 @@ else
 		if (!window.console || !console.firebug) {
 			var names = ["log", "debug", "info", "warn", "error", "assert", "dir", "dirxml", "group", "groupEnd", "time", "timeEnd", "count", "trace", "profile", "profileEnd"];
 			window.console = {};
-			
+
 			for (var i = 0; i < names.length; ++i) window.console[names[i]] = function() {};
 		}
 
@@ -158,7 +158,7 @@ else
 
 	$xoTheme->addStylesheet(ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox.css');
 	$xoTheme->addStylesheet(ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox-custom.css');
-	if(ereg('msie', strtolower($_SERVER['HTTP_USER_AGENT']))) {$xoTheme->addStylesheet(ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox-custom-ie.css');}
+	if( strpos( strtolower( $_SERVER['HTTP_USER_AGENT']), 'msie' ) ) { $xoTheme->addStylesheet( ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox-custom-ie.css' ) ; }
 	$xoTheme->addScript(ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox.js');
 	$xoTheme->addScript(ICMS_LIBRARIES_URL.'/jquery/colorbox/lightbox.js');
 

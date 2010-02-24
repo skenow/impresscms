@@ -30,7 +30,7 @@ $fg = $icmsConfigPersona['email_cor'];
 $red = 100;
 $green = 100;
 $blue = 100;
-if( eregi( "[#]?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})", $fg, $ret ) )
+if( preg_match( "/[#]?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})/i", $fg, $ret ) )
 {
 	$red = hexdec( $ret[1] );
 	$green = hexdec( $ret[2] );
@@ -41,7 +41,7 @@ if ($icmsConfigPersona['email_shadow']!=""){
 	$sred = 100;
 	$sgreen = 100;
 	$sblue = 100;
-	if( eregi( "[#]?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})", $fg, $ret ) )
+	if( preg_match( "/[#]?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})/i", $fg, $ret ) )
 	{
 		$sred = hexdec( $ret[1] );
 		$sgreen = hexdec( $ret[2] );
