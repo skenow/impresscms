@@ -343,7 +343,7 @@ elseif ($op == "submit" & $GLOBALS['xoopsSecurity']->check()) {
 			$criteria->add(new Criteria('level', 0, '>='));
 		}
 	}
-	$groups = empty($_POST['selgroups']) ? array() : array_map(" (int) ", $_POST['selgroups']);
+	$groups = empty($_POST['selgroups']) ? array() : array_map( 'intval', $_POST['selgroups']);
 	$validsort = array("uname", "login_name", "email", "last_login", "user_regdate", "posts");
 	$sort = (!in_array($_POST['user_sort'], $validsort)) ? "uname" : $_POST['user_sort'];
 	$order = "ASC";

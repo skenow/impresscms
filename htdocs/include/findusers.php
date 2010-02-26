@@ -225,7 +225,7 @@ class XoUserHandler extends XoopsObjectHandler
 		} else {
 			$sql = 	"	SELECT COUNT(DISTINCT u.uid) FROM ".$this->db->prefix('users'). " AS u".
 			"	LEFT JOIN ".$this->db->prefix('groups_users_link'). " AS g ON g.uid = u.uid".
-			"	WHERE g.groupid IN (".implode(', ', array_map(' (int) ', $groups)).")";
+			"	WHERE g.groupid IN (".implode(', ', array_map( 'intval', $groups) ) . ")";
 		}
 
 		if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
@@ -261,7 +261,7 @@ class XoUserHandler extends XoopsObjectHandler
 		} else {
 			$sql = 	"	SELECT u.* FROM ".$this->db->prefix('users'). " AS u".
 			"	LEFT JOIN ".$this->db->prefix('groups_users_link'). " AS g ON g.uid = u.uid".
-			"	WHERE g.groupid IN (".implode(', ', array_map(' (int) ', $groups)).")";
+			"	WHERE g.groupid IN (".implode(', ', array_map( 'intval', $groups) ) . ")";
 		}
 
 		if (isset($criteria) && is_subclass_of($criteria, "criteriaelement")) {
@@ -296,19 +296,19 @@ $rank_handler = new XoopsRankHandler($xoopsDB);
 $user_handler = new XoUserHandler($xoopsDB);
 
 $items_match = array(
-				"uname"		=> _MA_USER_UNAME, 
-				"name"		=> _MA_USER_REALNAME, 
-				"email"		=> _MA_USER_EMAIL, 
-				"user_icq"	=> _MA_USER_ICQ, 
-				"user_aim"	=> _MA_USER_AIM, 
+				"uname"		=> _MA_USER_UNAME,
+				"name"		=> _MA_USER_REALNAME,
+				"email"		=> _MA_USER_EMAIL,
+				"user_icq"	=> _MA_USER_ICQ,
+				"user_aim"	=> _MA_USER_AIM,
 				"user_yim"	=> _MA_USER_YIM,
 				"user_msnm"	=> _MA_USER_MSNM
 );
 
 $items_range = array(
-				"user_regdate"	=> _MA_USER_RANGE_USER_REGDATE, 
-				"last_login"	=> _MA_USER_RANGE_LAST_LOGIN, 
-				"posts"			=> _MA_USER_RANGE_POSTS, 
+				"user_regdate"	=> _MA_USER_RANGE_USER_REGDATE,
+				"last_login"	=> _MA_USER_RANGE_LAST_LOGIN,
+				"posts"			=> _MA_USER_RANGE_POSTS,
 );
 
 define("FINDUSERS_MODE_SIMPLE",		0);
@@ -361,23 +361,23 @@ if ( empty($_POST["user_submit"]) ) {
 			$mailok_radio->addOptionArray(array("mailok"=>_MA_USER_MAILOK, "mailng"=>_MA_USER_MAILNG, "both"=>_MA_USER_BOTH));
 			$avatar_radio = new XoopsFormRadio(_MA_USER_HASAVATAR, "user_avatar", empty($_POST["user_avatar"]) ? "both" : $_POST["user_avatar"]);
 			$avatar_radio->addOptionArray(array("y"=>_YES, "n"=>_NO, "both"=>_MA_USER_BOTH));
-				
+
 			$level_radio = new XoopsFormRadio(_MA_USER_LEVEL, "level", @$_POST["level"]);
 			$levels = array( 0 => _ALL, 1 => _MA_USER_LEVEL_ACTIVE, 2 => _MA_USER_LEVEL_INACTIVE , 3 => _MA_USER_LEVEL_DISABLED);
 			$level_radio->addOptionArray($levels);
-				
+
 			$member_handler =& xoops_gethandler('member');
 			$groups = $member_handler->getGroupList();
 			$groups[0] = _ALL;
 			$group_select = new XoopsFormSelect(_MA_USER_GROUP, 'groups', @$_POST['groups'], 3, true);
 			$group_select->addOptionArray($groups);
-				
+
 			$ranks = $rank_handler->getList();
 			$ranks[0] = _ALL;
 			$rank_select = new XoopsFormSelect(_MA_USER_RANK, 'rank', (int) ( @$_POST['rank'] ));
 			$rank_select->addOptionArray($ranks);
-				
-				
+
+
 			$form->addElement($url_text);
 			$form->addElement($location_text);
 			$form->addElement($occupation_text);
@@ -385,7 +385,7 @@ if ( empty($_POST["user_submit"]) ) {
 			$form->addElement($mailok_radio);
 			$form->addElement($avatar_radio);
 			$form->addElement($level_radio);
-				
+
 			$form->addElement($group_select);
 			$form->addElement($rank_select);
 		} else {
@@ -556,12 +556,12 @@ if ( empty($_POST["user_submit"]) ) {
 		if (preg_match("/select[\s]+.*[\s]+from[\s]+(".$xoopsDB->prefix("users")."[\s]+as[\s]+([^\s]+).*)/i", $query, $matches) ) {
 			$alias = $matches[2];
 			$subquery = $matches[1];
-				
+
 			// Query without alias
 		} elseif (preg_match("/select[\s]+.*[\s]+from[\s]+(".$xoopsDB->prefix("users")."\b.*)/i", $query, $matches) ) {
 			$alias = "";
 			$subquery = $matches[1];
-				
+
 			// Invalid query
 		} else {
 			$query = "SELECT * FROM ".$xoopsDB->prefix("users");
@@ -585,7 +585,7 @@ if ( empty($_POST["user_submit"]) ) {
 	echo $js_adduser='
 		<script type="text/javascript">
 			var multiple='. (int) ($_REQUEST['multiple']).';
-			function addusers() 
+			function addusers()
 			{
 				var sel_str = "";
 				var num = 0;
@@ -731,7 +731,7 @@ if ( empty($_POST["user_submit"]) ) {
 			}
 			$counter = 1;
 			$currentpage = ($start+$limit) / $limit;
-				
+
 			if (!isset($total)) {
 
 				while ( $counter <= $currentpage ) {
@@ -763,7 +763,7 @@ if ( empty($_POST["user_submit"]) ) {
 					$counter++;
 				}
 			}
-				
+
 			$next = $start + $limit;
 			if ( ( isset($total) && $total > $next) || ( !isset($total) && count($foundusers) >= $limit ) ) {
 				$hiddenform .= "&nbsp;<a href='#".$total."' onclick='javascript:document.findnext.start.value=".$next.";document.findnext.submit();'>"._MA_USER_NEXT."</a>\n";

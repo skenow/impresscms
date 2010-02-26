@@ -103,13 +103,13 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			$criteria_object->setStart( @$_POST['mail_start'] );
 			$criteria_object->setLimit( $limit );
 			foreach ($criteria as $c) {
-				list ($field, $op, $value) = split(' ', $c);
+				list ($field, $op, $value) = explode( ' ', $c );
 				$crit = new Criteria($field, $value, $op);
 				$crit->prefix = "u";
 				$criteria_object->add($crit, 'AND');
 			}
 			$member_handler =& xoops_gethandler('member');
-			$groups = empty($_POST['mail_to_group']) ? array() : array_map(" (int) ", $_POST['mail_to_group']);
+			$groups = empty($_POST['mail_to_group']) ? array() : array_map( 'intval', $_POST['mail_to_group'] );
 			$getusers = $member_handler->getUsersByGroupLink($groups, $criteria_object, true);
 			$count_criteria = $member_handler->getUserCountByGroupLink($groups, $criteria_object);
 			foreach ($getusers as $getuser) {
