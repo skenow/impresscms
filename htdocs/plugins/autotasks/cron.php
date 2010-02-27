@@ -239,11 +239,11 @@ extends IcmsAutoTasksSystem {
 			}
 			// Checking if this is a special -entry. check man 5 crontab for more info
 			if ( $line[0] == '@' ) {
-				$this->_lines[] = array(split( "[ \t]", $line, 2 ), 3);
+				$this->_lines[] = array( preg_split( "/[ \t]/", $line, 2 ), 3);
 				continue;
 			}
 			// It's a regular crontab-entry
-			$ct = split( "[ \t]", $line, 6 );
+			$ct = preg_split( "/[ \t]/", $line, 6 );
 			$this->_lines[] = array(array( "minute" => $ct[0], "hour" => $ct[1], "dayofmonth" => $ct[2], "month" => $ct[3], "dayofweek" => $ct[4], "command" => $ct[5] ), 4);
 		}
 
