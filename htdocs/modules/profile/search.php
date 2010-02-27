@@ -213,7 +213,7 @@ switch ($op) {
 						switch ($fields[$i]->getVar('field_valuetype')) {
 							case XOBJ_DTYPE_OTHER:
 							case XOBJ_DTYPE_INT:
-								$value = array_map(' (int) ', $_REQUEST[$fieldname]);
+								$value = array_map( 'intval', $_REQUEST[$fieldname] );
 								$searchvars[] = $fieldname;
 								$criteria->add(new Criteria($fieldname, "(".implode(',', $value).")", "IN"));
 								break;
@@ -296,7 +296,7 @@ switch ($op) {
 									}
 									break;
 							}
-							 
+
 							if (isset($_REQUEST[$fieldname]) && !isset($_REQUEST[$fieldname."_smaller"]) && !isset($_REQUEST[$fieldname."_larger"])) {
 								if (!is_array($_REQUEST[$fieldname])) {
 									$value = (int) ($_REQUEST[$fieldname]);
@@ -304,7 +304,7 @@ switch ($op) {
 									$criteria->add(new Criteria($fieldname, $value, "="));
 								}
 								else {
-									$value = array_map(" (int) ", $_REQUEST[$fieldname]);
+									$value = array_map( 'intval', $_REQUEST[$fieldname] );
 									foreach ($value as $thisvalue) {
 										$search_url[] = $fieldname."[]=".$thisvalue;
 									}
