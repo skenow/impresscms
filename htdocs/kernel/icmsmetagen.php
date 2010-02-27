@@ -221,9 +221,9 @@ class IcmsMetagen
 		$description = $this->html2text($description);
 		$description = $this->purifyText($description);
 
-		$description = ereg_replace("([^\r\n])\r\n([^\r\n])", "\\1 \\2", $description);
-		$description = ereg_replace("[\r\n]*\r\n[\r\n]*", "\r\n\r\n", $description);
-		$description = ereg_replace("[ ]* [ ]*", ' ', $description);
+		$description = preg_replace( "/([^\r\n])\r\n([^\r\n])/", "\\1 \\2", $description );
+		$description = preg_replace( "/[\r\n]*\r\n[\r\n]*/", "\r\n\r\n", $description );
+		$description = preg_replace( "/[ ]* [ ]*/", ' ', $description );
 		$description = StripSlashes($description);
 
 		$this->_description = $description;
@@ -288,9 +288,9 @@ class IcmsMetagen
 		$text = $this->purifyText($text);
 		$text = $this->html2text($text);
 
-		$text = ereg_replace("([^\r\n])\r\n([^\r\n])", "\\1 \\2", $text);
-		$text = ereg_replace("[\r\n]*\r\n[\r\n]*", "\r\n\r\n", $text);
-		$text = ereg_replace("[ ]* [ ]*", ' ', $text);
+		$text = preg_replace( "/([^\r\n])\r\n([^\r\n])/", "\\1 \\2", $text );
+		$text = preg_replace( "/[\r\n]*\r\n[\r\n]*/", "\r\n\r\n", $text );
+		$text = preg_replace( "/[ ]* [ ]*/", ' ', $text );
 		$text = StripSlashes($text);
 		$text =
 
