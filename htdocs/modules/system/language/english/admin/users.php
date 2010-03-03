@@ -1,7 +1,7 @@
 <?php
-// $Id: users.php 1029 2007-09-09 03:49:25Z phppp $
+// $Id$
 //%%%%%%	Admin Module Name  Users 	%%%%%
-define("_AM_DBUPDATED","Database Updated Successfully!");
+if(!defined('_AM_DBUPDATED')){define("_AM_DBUPDATED","Database Updated Successfully!");}
 
 define("_AM_AYSYWTDU","Are you sure you want to delete user %s?");
 define("_AM_BYTHIS","By doing this all the info for this user will be removed permanently.");
@@ -10,7 +10,7 @@ define("_AM_NO","No");
 define("_AM_YMCACF","You must complete all required fields");
 define("_AM_CNRNU","Could not register new user.");
 define("_AM_EDEUSER","Edit/Delete Users");
-define("_AM_NICKNAME","Nickname");
+define("_AM_NICKNAME","Displayname");
 define("_AM_MODIFYUSER","Modify User");
 define("_AM_DELUSER","Delete User");
 define("_AM_GO","Go!");
@@ -61,4 +61,13 @@ define("_AM_NOUSERS", "No users selected");
 define("_AM_CNRNU2","The new user could not be added to groups: %s.");
 
 define('_AM_BADPWD','Bad Password, Password can not contain username.');
+
+######################## Added in 1.2 ###################################
+define("_AM_LOGINNAME","Loginname");
+define("_AM_REMOVED_USERS","Removed Users");
+define("_AM_ADMIN_CAN_NOT_BE_DELETEED","Admin user cannot be deleted");
+define("_AM_USERS_DELETEED","deleted");
+define("_AM_COULD_NOT_DELETE","Could not delete");
+define("_AM_A_USER_WITH_THIS_EMAIL_ADDRESS","A user with ehis email address");
+define("_AM_ALREADY_EXISTS","already exists");
 ?>

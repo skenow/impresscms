@@ -1,33 +1,17 @@
 <?php
-// $Id: image.php 1102 2007-10-19 02:55:52Z dugris $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu)                                          //
-// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
-// Project: The XOOPS Project                                                //
-// ------------------------------------------------------------------------- //
+/**
+* Manage of images
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license	LICENSE.txt
+* @package	core
+* @since	XOOPS
+* @author	http://www.xoops.org The XOOPS Project
+* @author	modified by UnderDog <underdog@impresscms.org>
+* @version	$Id$
+*/
 
 if (!defined('XOOPS_ROOT_PATH')) {
 	exit();
@@ -75,10 +59,20 @@ class XoopsImage extends XoopsObject
 		$this->initVar('image_body', XOBJ_DTYPE_SOURCE, null, true);
 		$this->initVar('imgcat_id', XOBJ_DTYPE_INT, 0, false);
 	}
-	
+
+	/**
+	* Function short description
+	* 
+	* @param string  $path  the path to search through
+	* @param string  $type  the path type, url or other
+	* @param bool  $ret  return the information or keep it stored
+	* 
+	* @return array  the array of image information
+	*/
 	function getInfo($path,$type='url',$ret=false){
+		$path = (substr($path,-1) != '/')?$path.'/':$path;
         if ($type == 'url'){
-        	$img = $path.'/'.$this->getVar('image_name');
+        	$img = $path.$this->getVar('image_name');
         }else{
         	$img = $path;
         }
@@ -178,7 +172,7 @@ class XoopsImageHandler extends XoopsObjectHandler
         if ($image->isNew()) {
             $image_id = $this->db->genId('image_image_id_seq');
             $sql = sprintf("INSERT INTO %s (image_id, image_name, image_nicename, image_mimetype, image_created, image_display, image_weight, imgcat_id) VALUES ('%u', %s, %s, %s, '%u', '%u', '%u', '%u')", $this->db->prefix('image'), intval($image_id), $this->db->quoteString($image_name), $this->db->quoteString($image_nicename), $this->db->quoteString($image_mimetype), time(), intval($image_display), intval($image_weight), intval($imgcat_id));
-            if (!$result = $this->db->query($sql)) {
+            if (!$result = $this->db->queryF($sql)) {
                 return false;
             }
             if (empty($image_id)) {
@@ -186,7 +180,7 @@ class XoopsImageHandler extends XoopsObjectHandler
             }
             if (isset($image_body) && $image_body != '') {
                 $sql = sprintf("INSERT INTO %s (image_id, image_body) VALUES ('%u', %s)", $this->db->prefix('imagebody'), intval($image_id), $this->db->quoteString($image_body));
-                if (!$result = $this->db->query($sql)) {
+                if (!$result = $this->db->queryF($sql)) {
                     $sql = sprintf("DELETE FROM %s WHERE image_id = '%u'", $this->db->prefix('image'), intval($image_id));
                     $this->db->query($sql);
                     return false;
@@ -195,12 +189,12 @@ class XoopsImageHandler extends XoopsObjectHandler
             $image->assignVar('image_id', $image_id);
         } else {
             $sql = sprintf("UPDATE %s SET image_name = %s, image_nicename = %s, image_display = '%u', image_weight = '%u', imgcat_id = '%u' WHERE image_id = '%u'", $this->db->prefix('image'), $this->db->quoteString($image_name), $this->db->quoteString($image_nicename), intval($image_display), intval($image_weight), intval($imgcat_id), intval($image_id));
-            if (!$result = $this->db->query($sql)) {
+            if (!$result = $this->db->queryF($sql)) {
                 return false;
             }
             if (isset($image_body) && $image_body != '') {
                 $sql = sprintf("UPDATE %s SET image_body = %s WHERE image_id = '%u'", $this->db->prefix('imagebody'), $this->db->quoteString($image_body), intval($image_id));
-                if (!$result = $this->db->query($sql)) {
+                if (!$result = $this->db->queryF($sql)) {
                     $this->db->query(sprintf("DELETE FROM %s WHERE image_id = '%u'", $this->db->prefix('image'), intval($image_id)));
                     return false;
                 }

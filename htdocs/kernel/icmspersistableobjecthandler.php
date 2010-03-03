@@ -1,5 +1,4 @@
 <?php
-
 /**
 * IcmsPersistableObjectHandler
 *
@@ -18,7 +17,11 @@
 if (!defined("ICMS_ROOT_PATH")) {
 	die("ImpressCMS root path not defined");
 }
-
+/**
+ * Persistable Object Handlder
+ * @package IcmsPersistableobject
+ * @since   1.1
+ */
 class IcmsPersistableObjectHandler extends XoopsObjectHandler {
 
 	var $_itemname;
@@ -90,6 +93,8 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
 
 	var $_moduleName;
 
+	var $uploadEnabled=false;
+
     var $_uploadUrl;
 
     var $_uploadPath;
@@ -124,23 +129,29 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
     var $_disabledEvents=array();
 
     /**
-    * Constructor - called from child classes
-    *
-    * @param object $db {@link XoopsDatabase} object
-    * @param string $tablename Name of the table use to store this {@link IcmsPersistableObject}
-    * @param string Name of the class derived from {@link IcmsPersistableObject} and which this handler is handling
-    * @param string $keyname Name of the table key that uniquely identify each {@link IcmsPersistableObject}
-    * @param string $idenfierName Name of the field which properly identify the {@link IcmsPersistableObject}
-    * @param string $page Page name use to basically manage and display the {@link IcmsPersistableObject}
-    * @param string $moduleName name of the module
-    */
+     * Constructor - called from child classes
+     * 
+     * @param object $db Database object {@link XoopsDatabase}
+     * @param string $itemname Object to be managed
+     * @param string $keyname Name of the table key that uniquely identify each {@link IcmsPersistableObject}
+     * @param string $idenfierName Name of the field which properly identify the {@link IcmsPersistableObject}
+     * @param string $summaryName Name of the field which will be use as a summary for the object
+     * @param string $modulename Name of the module controlling this object
+     * @return object
+     */
     function IcmsPersistableObjectHandler(&$db, $itemname, $keyname, $idenfierName, $summaryName, $modulename) {
 
     	$this->XoopsObjectHandler($db);
 
         $this->_itemname = $itemname;
-        $this->_moduleName = $modulename;
-        $this->table = $db->prefix($modulename . "_" . $itemname);
+		// Todo: Autodect module        
+		if ($modulename == '') {
+			$this->_moduleName = 'system';
+	        $this->table = $db->prefix($itemname);
+		} else {
+			$this->_moduleName = $modulename;
+			$this->table = $db->prefix($modulename . "_" . $itemname);
+		}
         $this->keyName = $keyname;
         $this->className = ucfirst($modulename) . ucfirst($itemname);
         $this->identifierName = $idenfierName;
@@ -184,14 +195,6 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
 		}
     }
 
-    function setUploaderConfig($_uploadPath=false, $_allowedMimeTypes=false, $_maxFileSize=false, $_maxWidth=false, $_maxHeight=false) {
-    	$this->_uploadPath = $_uploadPath ? $_uploadPath : $this->_uploadPath;
-    	$this->_allowedMimeTypes = $_allowedMimeTypes ? $_allowedMimeTypes : $this->_allowedMimeTypes;
-    	$this->_maxFileSize = $_maxFileSize ? $_maxFileSize : $this->_maxFileSize;
-    	$this->_maxWidth = $_maxWidth ? $_maxWidth : $this->_maxWidth;
-    	$this->_maxHeight = $_maxHeight ? $_maxHeight : $this->_maxHeight;
-    }
-
     /**
      * create a new {@link IcmsPersistableObject}
      *
@@ -201,7 +204,6 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
      */
     function &create($isNew = true) {
     	$obj =& new $this->className($this);
-		$obj->setImageDir($this->getImageUrl(), $this->getImagePath());
 		if (!$obj->handler) {
 			$obj->handler =& $this;
 		}
@@ -209,6 +211,10 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
         if ($isNew === true) {
             $obj->setNew();
         }
+
+		if ($this->uploadEnabled)
+			$obj->setImageDir($this->getImageUrl(), $this->getImagePath());
+
         return $obj;
     }
 
@@ -324,6 +330,16 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
         return $this->convertResultSet($result, $id_as_key, $as_object);
     }
 
+    /**
+     * query the database with the constructed $criteria object
+     *
+     * @param string $sql The SQL Query
+     * @param object $criteria {@link CriteriaElement} conditions to be met
+     * @param bool $force Force the query?
+     * @param bool $debug Turn Debug on?
+     *
+     * @return array
+     */
     function query($sql, $criteria, $force=false, $debug=false)
     {
     	$ret = array();
@@ -425,7 +441,13 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
 
         return $ret;
     }
-
+    /**
+     * 
+     * @param object    $criteria
+     * @param int       $limit
+     * @param int       $start
+     * @return array
+     */
  	function getListD($criteria = null, $limit = 0, $start = 0) {
  		return $this->getList($criteria, $limit, $start, true);
  	}
@@ -618,7 +640,7 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
         * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
         */
             if (!is_a($obj, $this->className)) {
-            	$obj->setError(get_class($obj)." Differs from ".$this->className);
+            	$obj->setErrors(get_class($obj)." Differs from ".$this->className);
                 return false;
             }
             if (!$obj->isDirty()) {
@@ -881,6 +903,33 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
     		return $this->identifierName;
     	}
     }
-}
 
+    function enableUpload($allowedMimeTypes=false, $maxFileSize=false, $maxWidth=false, $maxHeight=false) {
+    	$this->uploadEnabled = true;
+    	$this->_allowedMimeTypes = $allowedMimeTypes ? $allowedMimeTypes : $this->_allowedMimeTypes;
+    	$this->_maxFileSize = $maxFileSize ? $maxFileSize : $this->_maxFileSize;
+    	$this->_maxWidth = $maxWidth ? $maxWidth : $this->_maxWidth;
+    	$this->_maxHeight = $maxHeight ? $maxHeight : $this->_maxHeight;
+    }
+
+/********** Deprecated ***************/
+    /**
+     * Set the uploader config options.
+     * @deprecated please use enableUpload() instead
+     * @param str $_uploadPath
+     * @param array $_allowedMimeTypes
+     * @param int $_maxFileSize
+     * @param int $_maxFileWidth
+     * @param int $_maxFileHeight
+     * @return VOID
+     */
+    function setUploaderConfig($_uploadPath=false, $_allowedMimeTypes=false, $_maxFileSize=false, $_maxWidth=false, $_maxHeight=false) {
+    	$this->uploadEnabled = true;
+    	$this->_uploadPath = $_uploadPath ? $_uploadPath : $this->_uploadPath;
+    	$this->_allowedMimeTypes = $_allowedMimeTypes ? $_allowedMimeTypes : $this->_allowedMimeTypes;
+    	$this->_maxFileSize = $_maxFileSize ? $_maxFileSize : $this->_maxFileSize;
+    	$this->_maxWidth = $_maxWidth ? $_maxWidth : $this->_maxWidth;
+    	$this->_maxHeight = $_maxHeight ? $_maxHeight : $this->_maxHeight;
+    }
+}
 ?>

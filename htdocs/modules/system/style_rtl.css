@@ -120,6 +120,10 @@ a:hover { background-color: transparent; color: #E18A00; font-weight: bold; text
 
 /* ===== Code and Quote Definition ===== */
 .xoopsCode { background-color: #FAFAFA; color: #006600; font-size: .9em; border: #c2cdd6 1px dashed;font-family: Tahoma; direction: rtl;}
+.xoopsCodePHP { background-color: #FAFAFA; color: #006600; font-size: .9em; border: #c2cdd6 1px dashed;}
+.xoopsCodeCSS { background-color: #FAFAFA; color: #006600; font-size: .9em; border: #c2cdd6 1px dashed;}
+.xoopsCodeJS { background-color: #FAFAFA; color: #006600; font-size: .9em; border: #c2cdd6 1px dashed;}
+.xoopsCodeHTML { background-color: #FAFAFA; color: #006600; font-size: .9em; border: #c2cdd6 1px dashed;}
 .xoopsQuote { background-color: #FAFAFA; color: #444; font-size: .9em; line-height: 1.2em; text-align: justify; border: #c2cdd6 1px dashed;font-family: Tahoma; direction: rtl;}
 
 /* ===== Links for Quotes ===== */
@@ -485,4 +489,18 @@ div#floats_r{
 }
 div#floats_l{
 	float:right;
+}
+
+/* Tooltip box */
+.caption-text img {float: left; padding-top: 2px;}
+span.helptext {position: absolute; left: 50px; z-index: 9000; background-color:#000; outline:1px solid #669; border:2px solid #fff; padding:10px 15px; width:200px; display:none; color:#fff; text-align:left; font-size:12px; font-weight:normal;
+/* outline radius for mozilla/firefox only */ 
+outline-radius:4px; 
+-moz-outline-radius:4px; 
+-webkit-outline-radius:4px;
+/* opacity for tooltip box */ 
+filter:alpha(opacity=70);
+-moz-opacity:0.75;
+-khtml-opacity: 0.75;
+opacity: 0.75;
 }

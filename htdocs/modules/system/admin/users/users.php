@@ -1,42 +1,27 @@
 <?php
-// $Id: users.php 1029 2007-09-09 03:49:25Z phppp $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu)                                          //
-// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
-// Project: The XOOPS Project                                                //
-// ------------------------------------------------------------------------- //
+// $Id$
+/**
+* Administration of users, main functions file
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license	LICENSE.txt
+* @package	Administration
+* @since	XOOPS
+* @author	http://www.xoops.org The XOOPS Project
+* @author	modified by UnderDog <underdog@impresscms.org>
+* @version	$Id$
+*/
 
-if(!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid())) {exit('Access Denied');}
+if(!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid())) {exit('Access Denied');}
 
 include_once ICMS_ROOT_PATH.'/class/xoopslists.php';
 include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 
 function displayUsers()
 {
-	global $xoopsDB, $xoopsConfig, $xoopsModule;
+	global $xoopsDB, $xoopsConfig, $icmsModule;
 	$userstart = isset($_GET['userstart']) ? intval($_GET['userstart']) : 0;
 	$config_handler =& xoops_gethandler('config');
 	$xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
@@ -44,11 +29,12 @@ function displayUsers()
 	xoops_cp_header();
 	echo '<div class="CPbigTitle" style="background-image: url('.ICMS_URL.'/modules/system/admin/users/images/users_big.png)">'._MD_AM_USER.'</div><br />';
 	$member_handler =& xoops_gethandler('member');
-	$usercount = $member_handler->getUserCount();
+	$usercount = $member_handler->getUserCount(new Criteria('level', '-1', '!='));
 	$nav = new XoopsPageNav($usercount, 200, $userstart, 'userstart', 'fct=users');
 	$editform = new XoopsThemeForm(_AM_EDEUSER, 'edituser', 'admin.php');
 	$user_select = new XoopsFormSelect('', 'uid');
 	$criteria = new CriteriaCompo();
+	$criteria->add(new Criteria('level', '-1', '!='));
 	$criteria->setSort('uname');
 	$criteria->setOrder('ASC');
 	$criteria->setLimit(200);
@@ -69,14 +55,41 @@ function displayUsers()
 	$editform->display();
 	
 	echo "<br />\n";
+	$usercount = $member_handler->getUserCount(new Criteria('level', '-1'));
+	$nav = new XoopsPageNav($usercount, 200, $userstart, 'userstart', 'fct=users');
+	$editform = new XoopsThemeForm(_AM_REMOVED_USERS, 'edituser', 'admin.php');
+	$user_select = new XoopsFormSelect('', 'uid');
+	$criteria = new CriteriaCompo();
+	$criteria->add(new Criteria('level', '-1'));
+	$criteria->setSort('uname');
+	$criteria->setOrder('ASC');
+	$criteria->setLimit(200);
+	$criteria->setStart($userstart);
+	$user_select->addOptionArray($member_handler->getUserList($criteria));
+	$user_select_tray = new XoopsFormElementTray(_AM_NICKNAME, '<br />');
+	$user_select_tray->addElement($user_select);
+	$user_select_nav = new XoopsFormLabel('', $nav->renderNav(4));
+	$user_select_tray->addElement($user_select_nav);
+	$op_select = new XoopsFormSelect('', 'op');
+	$op_select->addOptionArray(array('modifyUser'=>_AM_MODIFYUSER));
+	$submit_button = new XoopsFormButton('', 'submit', _AM_GO, 'submit');
+	$fct_hidden = new XoopsFormHidden('fct', 'users');
+	$editform->addElement($user_select_tray);
+	$editform->addElement($op_select);
+	$editform->addElement($submit_button);
+	$editform->addElement($fct_hidden);
+	$editform->display();
+	
+	echo "<br />\n";
 	$uid_value = '';
 	$uname_value = '';
+	$login_name_value = '';
 	$name_value = '';
 	$email_value = '';
 	$email_cbox_value = 0;
-    	$openid_value = '';
-    	$openid_cbox_value = 0;
-    	$url_value = '';
+	$openid_value = '';
+	$openid_cbox_value = 0;
+	$url_value = '';
 	//  $avatar_value = 'blank.gif';
 	//  $theme_value = $xoopsConfig['default_theme'];
 	$timezone_value = $xoopsConfig['default_TZ'];
@@ -111,7 +124,7 @@ function displayUsers()
 
 function modifyUser($user)
 {
-	global $xoopsDB, $xoopsConfig, $xoopsModule;
+	global $xoopsDB, $xoopsConfig, $icmsModule;
 	xoops_cp_header();
 	echo '<div class="CPbigTitle" style="background-image: url('.ICMS_URL.'/modules/system/admin/users/images/users_big.png)">'._MD_AM_USER.'</div><br />';
 	$member_handler =& xoops_gethandler('member');
@@ -124,16 +137,18 @@ function modifyUser($user)
 			xoops_cp_footer();
 			exit();
 		}
-        	$uid_value = $user->getVar('uid');
-        	$uname_value = $user->getVar('uname', 'E');
-        	$name_value = $user->getVar('name', 'E');
-        	$email_value = $user->getVar('email', 'E');
-        	$email_cbox_value = $user->getVar('user_viewemail') ? 1 : 0;
+
+		$uid_value = $user->getVar('uid');
+		$uname_value = $user->getVar('uname', 'E');
+		$login_name_value = $user->getVar('login_name', 'E');
+		$name_value = $user->getVar('name', 'E');
+		$email_value = $user->getVar('email', 'E');
+		$email_cbox_value = $user->getVar('user_viewemail') ? 1 : 0;
 		$openid_value = $user->getVar('openid', 'E');
 		$openid_cbox_value = $user->getVar('user_viewoid') ? 1 : 0;
-        	$url_value = $user->getVar('url', 'E');
-		//      $avatar_value = $user->getVar('user_avatar');
-        	$temp = $user->getVar('theme');
+		$url_value = $user->getVar('url', 'E');
+		//	  $avatar_value = $user->getVar('user_avatar');
+		$temp = $user->getVar('theme');
 		//$theme_value = empty($temp) ? $xoopsConfig['default_theme'] : $temp;
 		$timezone_value = $user->getVar('timezone_offset');
 		$icq_value = $user->getVar('user_icq', 'E');
@@ -163,7 +178,7 @@ function modifyUser($user)
 		include ICMS_ROOT_PATH.'/modules/system/admin/users/userform.php';
 		echo "<br /><b>"._AM_USERPOST."</b><br /><br />\n";
 		echo "<table>\n";
-		echo "<tr><td>"._AM_COMMENTS."</td><td>".$user->getVar('posts')."</td></tr>\n";
+		echo "<tr><td>"._AM_COMMENTS."</td><td>".icms_conv_nr2local($user->getVar('posts'))."</td></tr>\n";
 		echo "</table>\n";
 		echo "<br />"._AM_PTBBTSDIYT."<br />\n";
 		echo "<form action=\"admin.php\" method=\"post\">\n";
@@ -185,16 +200,14 @@ function modifyUser($user)
 }
 
 // RMV-NOTIFY
-function updateUser($uid, $uname, $name, $url, $email, $user_icq, $user_aim, $user_yim, $user_msnm, $user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar, $user_sig, $attachsig, $theme, $pass, $pass2, $rank, $bio, $uorder, $umode, $notify_method, $notify_mode, $timezone_offset, $user_mailok, $language, $openid, $salt, $user_viewoid, $pass_expired, $enc_type, $groups = array())
+function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $user_aim, $user_yim, $user_msnm, $user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar, $user_sig, $attachsig, $theme, $pass, $pass2, $rank, $bio, $uorder, $umode, $notify_method, $notify_mode, $timezone_offset, $user_mailok, $language, $openid, $salt, $user_viewoid, $pass_expired, $enc_type, $groups = array())
 {
-	global $xoopsConfig, $xoopsDB, $xoopsModule;
+	global $xoopsConfig, $xoopsDB, $icmsModule;
 	$member_handler =& xoops_gethandler('member');
 	$edituser =& $member_handler->getUser($uid);
-
 	$config_handler =& xoops_gethandler('config');
 	$xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
-
-	if($edituser->getVar('uname') != $uname && $member_handler->getUserCount(new Criteria('uname', $uname)) > 0)
+	if($edituser->getVar('uname') != $uname && $member_handler->getUserCount(new Criteria('uname', $uname)) > 0 || $edituser->getVar('login_name') != $login_name && $member_handler->getUserCount(new Criteria('login_name', $login_name)) > 0)
 	{
 		xoops_cp_header();
 		echo '<div class="CPbigTitle" style="background-image: url('.ICMS_URL.'/modules/system/admin/users/images/users_big.png)">'._MD_AM_USER.'</div><br />';
@@ -207,10 +220,11 @@ function updateUser($uid, $uname, $name, $url, $email, $user_icq, $user_aim, $us
 
 		$edituser->setVar('name', $name);
 		$edituser->setVar('uname', $uname);
+		$edituser->setVar('login_name', $login_name);
 		$edituser->setVar('email', $email);
 		$edituser->setVar('openid', $openid);
-        	$user_viewoid = (isset($user_viewoid) && $user_viewoid == 1) ? 1 : 0;
-        	$edituser->setVar('user_viewoid', $user_viewoid);
+		$user_viewoid = (isset($user_viewoid) && $user_viewoid == 1) ? 1 : 0;
+		$edituser->setVar('user_viewoid', $user_viewoid);
 		$url = isset( $url ) ? formatURL( $url ) : '';
 		$edituser->setVar('url', $url);
 		//$edituser->setVar('user_avatar', $user_avatar);
@@ -255,10 +269,12 @@ function updateUser($uid, $uname, $name, $url, $email, $user_icq, $user_aim, $us
 				xoops_cp_footer();
 				exit();
 			}
+			   include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
+			   $icmspass = new icms_Password();
 			$edituser->setVar('salt', $salt);
 			$edituser->setVar('enc_type', $enc_type);
 			$edituser->setVar('pass_expired', $pass_expired);
-			$pass = icms_encryptPass($pass, $salt);
+			$pass = $icmspass->icms_encryptPass($pass, $salt);
 			$edituser->setVar('pass', $pass);
 		}
 		if(!$member_handler->insertUser($edituser))
@@ -271,10 +287,10 @@ function updateUser($uid, $uname, $name, $url, $email, $user_icq, $user_aim, $us
 		{
 			if($groups != array())
 			{
-				global $xoopsUser;
+				global $icmsUser;
 				$oldgroups = $edituser->getGroups();
 				//If the edited user is the current user and the current user WAS in the webmaster's group and is NOT in the new groups array
-				if($edituser->getVar('uid') == $xoopsUser->getVar('uid') && (in_array(XOOPS_GROUP_ADMIN, $oldgroups)) && !(in_array(XOOPS_GROUP_ADMIN, $groups)))
+				if($edituser->getVar('uid') == $icmsUser->getVar('uid') && (in_array(XOOPS_GROUP_ADMIN, $oldgroups)) && !(in_array(XOOPS_GROUP_ADMIN, $groups)))
 				{
 					//Add the webmaster's group to the groups array to prevent accidentally removing oneself from the webmaster's group
 					$groups[] = XOOPS_GROUP_ADMIN;
@@ -317,6 +333,7 @@ function synchronize($id, $type)
 			$sql = "UPDATE ".$xoopsDB->prefix("users")." SET posts = '".intval($total_posts)."' WHERE uid = '".intval($id)."'";
 			if(!$result = $xoopsDB->query($sql)) {exit(sprintf(_AM_CNUUSER %s ,$id));}
 		break;
+
 		case 'all users':
 			$sql = "SELECT uid FROM ".$xoopsDB->prefix('users')."";
 			if(!$result = $xoopsDB->query($sql)) {exit(_AM_CNGUSERID);}
@@ -326,10 +343,12 @@ function synchronize($id, $type)
 				synchronize($id, "user");
 			}
 		break;
+
 		default:
 		break;
 	}
 	redirect_header('admin.php?fct=users&amp;op=modifyUser&amp;uid='.$id,1,_AM_DBUPDATED);
 	exit();
 }
+
 ?>

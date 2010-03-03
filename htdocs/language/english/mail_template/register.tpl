@@ -1,4 +1,4 @@
-Hello {X_UNAME},
+Hello {X_USERLOGINNAME},
 
 Thanks for subscribing to {X_SITENAME}. As a registered member your can:
 - Send private messages among members

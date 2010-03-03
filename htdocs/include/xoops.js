@@ -1,25 +1,28 @@
-
 if ( typeof window.$ != 'function' ) {
-function $() {
-  var elements = new Array();
+	function $() {
+		var elements = new Array();
 
-  for (var i = 0; i < arguments.length; i++) {
-    var element = arguments[i];
-    if (typeof element == 'string')
-      element = document.getElementById(element);
+		for (var i = 0; i < arguments.length; i++) {
+			var element = arguments[i];
+			if (typeof element == 'string')
+				element = document.getElementById(element);
 
-    if (arguments.length == 1)
-      return element;
+			if (arguments.length == 1)
+				return element;
 
-    elements.push(element);
-  }
+			elements.push(element);
+		}
 
-  return elements;
+		return elements;
+	}
 }
-}
 
-function xoopsGetElementById(id){
-	return $(id);
+function xoopsGetElementById(id) {
+	if (typeof jQuery == 'function') {
+		return $("[id='" + id + "']")[0];
+	} else {
+		return $(id);
+	}
 }
 
 function xoopsSetElementProp(name, prop, val) {
@@ -134,12 +137,12 @@ function disableElement(target){
 }
 
 function xoopsCheckAll( form, switchId ) {
-	var eltForm = $(form);
-	var eltSwitch = $(switchId);
+	var eltForm = xoopsGetElementById(form);
+	var eltSwitch = xoopsGetElementById(switchId);
 	// You MUST NOT specify names, it's just kept for BC with the old lame crappy code
 	if ( !eltForm && document.forms[form] )		eltForm = document.forms[form];
 	if ( !eltSwitch && eltForm.elements[switchId] )	eltSwitch=eltForm.elements[switchId];
-	
+
 	var i;
 	for (i=0;i!=eltForm.elements.length;i++) {
 		if ( eltForm.elements[i] != eltSwitch && eltForm.elements[i].type == 'checkbox' ) {
@@ -147,11 +150,10 @@ function xoopsCheckAll( form, switchId ) {
 		}
 	}
 }
-	
 
 function xoopsCheckGroup( form, switchId, groupName ) {
-	var eltForm = $(form);
-	var eltSwitch = $(switchId);
+	var eltForm = xoopsGetElementById(form);
+	var eltSwitch = xoopsGetElementById(switchId);
 	// You MUST NOT specify names, it's just kept for BC with the old lame crappy code
 	if ( !eltForm && document.forms[form] )		eltForm = document.forms[form];
 	if ( !eltSwitch && eltForm.elements[switchId] )	eltSwitch=eltForm.elements[switchId];
@@ -213,7 +215,11 @@ function showImgSelected(imgId, selectId, imgDir, extra, xoopsUrl) {
 	}
 	imgDom = xoopsGetElementById(imgId);
 	selectDom = xoopsGetElementById(selectId);
+if (selectDom.options[selectDom.selectedIndex].value != "") {
 	imgDom.src = xoopsUrl + "/"+ imgDir + "/" + selectDom.options[selectDom.selectedIndex].value + extra;
+} else {
+	imgDom.src = xoopsUrl + "/images/blank.gif";
+	}
 }
 
 function xoopsCodeUrl(id, enterUrlPhrase, enterWebsitePhrase){
@@ -307,82 +313,106 @@ function xoopsCodeQuote(id, enterQuotePhrase){
 	}
 	domobj.focus();
 }
-function xoopsCodeHidden(id,enterHiddenPhrase){
-    if (enterHiddenPhrase == null) {
-        enterHiddenPhrase = "Enter The Text To Be Hidden:";
-    }
-    var text = prompt(enterHiddenPhrase, "");
-    var domobj = xoopsGetElementById(id);
-    if ( text != null && text != "" ) {
-        var pos = text.indexOf(unescape('%00'));
-        if(0 < pos){
-            text = text.substr(0,pos);
-        }
-        var result = "[hide]" + text + "[/hide]";
-        xoopsInsertText(domobj, result);
-    }
-        
+/*function xoopsCodeHidden(id,enterHiddenPhrase){
+	if (enterHiddenPhrase == null) {
+		enterHiddenPhrase = "Enter The Text To Be Hidden:";
+	}
+	var text = prompt(enterHiddenPhrase, "");
+	var domobj = xoopsGetElementById(id);
+	if ( text != null && text != "" ) {
+		var pos = text.indexOf(unescape('%00'));
+		if(0 < pos){
+			text = text.substr(0,pos);
+		}
+		var result = "[hide]" + text + "[/hide]";
+		xoopsInsertText(domobj, result);
+	}
+		
 domobj.focus();
-}
+}*/
 function xoopsmakeleft(id,enterHiddenPhrase){
-    if (enterHiddenPhrase == null) {
-        enterHiddenPhrase = "Enter The Text To Be Aligned On The Left Side:";
-    }
-    var text = prompt(enterHiddenPhrase, "");
-    var domobj = xoopsGetElementById(id);
-    if ( text != null && text != "" ) {
-        var pos = text.indexOf(unescape('%00'));
-        if(0 < pos){
-            text = text.substr(0,pos);
-        }
-        var result = "[left]" + text + "[/left]";
-        xoopsInsertText(domobj, result);
-    }
-        
+	if (enterHiddenPhrase == null) {
+		enterHiddenPhrase = "Enter The Text To Be Aligned On The Left Side:";
+	}
+	var text = prompt(enterHiddenPhrase, "");
+	var domobj = xoopsGetElementById(id);
+	if ( text != null && text != "" ) {
+		var pos = text.indexOf(unescape('%00'));
+		if(0 < pos){
+			text = text.substr(0,pos);
+		}
+		var result = "[left]" + text + "[/left]";
+		xoopsInsertText(domobj, result);
+	}
+		
 domobj.focus();
 }
 function xoopsmakecenter(id,enterHiddenPhrase){
-    if (enterHiddenPhrase == null) {
-        enterHiddenPhrase = "Enter The Text To Be Aligned On The Center Side:";
-    }
-    var text = prompt(enterHiddenPhrase, "");
-    var domobj = xoopsGetElementById(id);
-    if ( text != null && text != "" ) {
-        var pos = text.indexOf(unescape('%00'));
-        if(0 < pos){
-            text = text.substr(0,pos);
-        }
-        var result = "[center]" + text + "[/center]";
-        xoopsInsertText(domobj, result);
-    }
-        
+	if (enterHiddenPhrase == null) {
+		enterHiddenPhrase = "Enter The Text To Be Aligned On The Center Side:";
+	}
+	var text = prompt(enterHiddenPhrase, "");
+	var domobj = xoopsGetElementById(id);
+	if ( text != null && text != "" ) {
+		var pos = text.indexOf(unescape('%00'));
+		if(0 < pos){
+			text = text.substr(0,pos);
+		}
+		var result = "[center]" + text + "[/center]";
+		xoopsInsertText(domobj, result);
+	}
+		
 domobj.focus();
 }
 function xoopsmakeright(id,enterHiddenPhrase){
-    if (enterHiddenPhrase == null) {
-        enterHiddenPhrase = "Enter The Text To Be Aligned On The Right Side:";
-    }
-    var text = prompt(enterHiddenPhrase, "");
-    var domobj = xoopsGetElementById(id);
-    if ( text != null && text != "" ) {
-        var pos = text.indexOf(unescape('%00'));
-        if(0 < pos){
-            text = text.substr(0,pos);
-        }
-        var result = "[right]" + text + "[/right]";
-        xoopsInsertText(domobj, result);
-    }
-        
+	if (enterHiddenPhrase == null) {
+		enterHiddenPhrase = "Enter The Text To Be Aligned On The Right Side:";
+	}
+	var text = prompt(enterHiddenPhrase, "");
+	var domobj = xoopsGetElementById(id);
+	if ( text != null && text != "" ) {
+		var pos = text.indexOf(unescape('%00'));
+		if(0 < pos){
+			text = text.substr(0,pos);
+		}
+		var result = "[right]" + text + "[/right]";
+		xoopsInsertText(domobj, result);
+	}
+		
 domobj.focus();
 }
-function xoopsCodeCode(id, enterCodePhrase){
+function xoopsCodeCode(id, enterCodePhrase, enterCodeLangPhrase, CodeLangTypePhrase, errorCodeLangPhrase){
 	if (enterCodePhrase == null) {
 		enterCodePhrase = "Enter the codes that you want to add.";
 	}
 	var text = prompt(enterCodePhrase, "");
 	var domobj = xoopsGetElementById(id);
 	if ( text != null && text != "" ) {
-		var result = "[code]" + text + "[/code]";
+		if (enterCodeLangPhrase == null) {
+			enterCodeLangPhrase = "Now, enter the language of your code.";
+		}
+		if (CodeLangTypePhrase == null) {
+			CodeLangTypePhrase = "'P' or 'p' for PHP, 'C' or 'c' for CSS, 'J' or 'j' for JAVASCRIPT, 'H' or 'h' for HTML, or leave it blank.";
+		}
+		if (errorCodeLangPhrase == null) {
+			errorCodeLangPhrase = "ERROR! Enter the language of your code:";
+		}
+		var text2 = prompt(enterCodeLangPhrase + "\n" + CodeLangTypePhrase, "");
+		while ( ( text2 != "" ) && ( text2 != "p" ) && ( text2 != "P" ) && ( text2 != "c" ) && ( text2 != "C" )  && ( text2 != "j" ) && ( text2 != "J" )  && ( text2 != "h" ) && ( text2 != "H" ) && ( text2 != null ) ) {
+			text2 = prompt(errorCodeLangPhrase + "\n" + CodeLangTypePhrase,"");
+		}
+		if ( text2 == "p" || text2 == "P" ) {
+			text2 = "php";
+		} else if ( text2 == "c" || text2 == "C" ) {
+			text2 = "css";
+		} else if ( text2 == "j" || text2 == "J" ) {
+			text2 = "js";
+		} else if ( text2 == "h" || text2 == "H" ) {
+			text2 = "html";
+		} else {
+			text2 = "";
+		}
+		var result = "[code" + text2 + "]" + text + "[/code" + text2 + "]";
 		xoopsInsertText(domobj, result);
 	}
 	domobj.focus();
@@ -491,3 +521,59 @@ function icms_showDiv(type,id,classname){
 	changeDisplay(type+id);
 	document.anchors.item(type+id+'_anchor').scrollIntoView();
 }
+function appendSelectOption(selectMenuId, optionName, optionValue){
+	var selectMenu = xoopsGetElementById(selectMenuId);
+	var newoption = new Option(optionName, optionValue);
+	newoption.selected = true;
+	selectMenu.options[selectMenu.options.length] = newoption;
+}
+
+function imageResize(img, maxWidth){
+	if(img.width > maxWidth && maxWidth > 0) img.width = maxWidth;
+}
+
+/* Who is the original author of the scripts? let's find out later on */
+function CaricaFoto(img){
+	foto1= new Image();
+	foto1.src=(img);
+	Controlla(img);
+}
+
+function Controlla(img){
+	if((foto1.width!=0)&&(foto1.height!=0)){
+ 		viewFoto(img);
+	}else{
+		funzione="Controlla('\"+img+\"')";
+		intervallo=setTimeout(funzione,20);
+	}
+}
+
+function viewFoto(img){
+	largh=foto1.width;
+	altez=foto1.height;
+	stringa="width="+largh+",height="+altez;
+	finestra=window.open('','',stringa);
+	finestra.document.write ("<html><body leftmargin=0 topmargin=0>");
+	finestra.document.write ("<a href='javascript:this.close()'><img border=0 src=");
+	finestra.document.write (img);
+	finestra.document.write ("></a></body></html>");
+	finestra.document.close();
+	return false;
+}
+function icmsCode_languages(id,enterLanguagePhrase,langcode){
+	if (enterLanguagePhrase == null) {
+			enterLanguagePhrase = "Enter The Text To Be Language:";
+	}
+	var text = prompt(enterLanguagePhrase, "");
+	var domobj = xoopsGetElementById(id);
+	if ( text != null && text != "" ) {
+		var pos = text.indexOf(unescape('%00'));
+		if(0 < pos){
+			text = text.substr(0,pos);
+		}
+		var result = "["+langcode+"]" + text + "[/"+langcode+"]";
+		xoopsInsertText(domobj, result);
+	}
+	
+	domobj.focus();
+	}

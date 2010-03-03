@@ -318,9 +318,9 @@ class IcmsPersistableTable {
 						 * If the column is the identifier, then put a link on it
 						 */
 						if ($column->getKeyName() == $this->_objectHandler->identifierName) {
-							$value = $object->getItemLink();
+							$value = $object->getViewItemLink( false, false, $this->_userSide );
 						} else {
-							$value = $object->getVar($column->getKeyName());
+							$value = $object->getVar( $column->getKeyName() );
 						}
 					}
 
@@ -350,14 +350,11 @@ class IcmsPersistableTable {
 					}
 				}
 
-				include_once ICMS_ROOT_PATH . "/kernel/icmspersistablecontroller.php";
-				$controller = new IcmsPersistableController($this->_objectHandler);
-
 				if ((!is_array($this->_actions)) || in_array('edit', $this->_actions)) {
-					$actions[] = $controller->getEditItemLink($object, false, true, $this->_userSide);
+					$actions[] = $object->getEditItemLink(false, true, $this->_userSide);
 				}
 				if ((!is_array($this->_actions)) || in_array('delete', $this->_actions)) {
-					$actions[] = $controller->getDeleteItemLink($object, false, true, $this->_userSide);
+					$actions[] = $object->getDeleteItemLink( false, true, $this->_userSide);
 				}
 				$aObject['actions'] = $actions;
 
@@ -457,28 +454,28 @@ class IcmsPersistableTable {
 		$ret['all']['caption'] = _CO_ICMS_LIMIT_ALL;
 		$ret['all']['selected'] = ('all' == $this->_limitsel) ? "selected='selected'" : "";
 
-		$ret['5']['caption'] = '5';
+		$ret['5']['caption'] = icms_conv_nr2local('5');
 		$ret['5']['selected'] = ('5' == $this->_limitsel) ? "selected='selected'" : "";
 
-		$ret['10']['caption'] = '10';
+		$ret['10']['caption'] = icms_conv_nr2local('10');
 		$ret['10']['selected'] = ('10' == $this->_limitsel) ? "selected='selected'" : "";
 
-		$ret['15']['caption'] = '15';
+		$ret['15']['caption'] = icms_conv_nr2local('15');
 		$ret['15']['selected'] = ('15' == $this->_limitsel) ? "selected='selected'" : "";
 
-		$ret['20']['caption'] = '20';
+		$ret['20']['caption'] = icms_conv_nr2local('20');
 		$ret['20']['selected'] = ('20' == $this->_limitsel) ? "selected='selected'" : "";
 
-		$ret['25']['caption'] = '25';
+		$ret['25']['caption'] = icms_conv_nr2local('25');
 		$ret['25']['selected'] = ('25' == $this->_limitsel) ? "selected='selected'" : "";
 
-		$ret['30']['caption'] = '30';
+		$ret['30']['caption'] = icms_conv_nr2local('30');
 		$ret['30']['selected'] = ('30' == $this->_limitsel) ? "selected='selected'" : "";
 
-		$ret['35']['caption'] = '35';
+		$ret['35']['caption'] = icms_conv_nr2local('35');
 		$ret['35']['selected'] = ('35' == $this->_limitsel) ? "selected='selected'" : "";
 
-		$ret['40']['caption'] = '40';
+		$ret['40']['caption'] = icms_conv_nr2local('40');
 		$ret['40']['selected'] = ('40' == $this->_limitsel) ? "selected='selected'" : "";
 		return $ret;
 	}
@@ -520,7 +517,7 @@ class IcmsPersistableTable {
 
 		include_once ICMS_ROOT_PATH . '/class/template.php';
 
-		$this->_tpl =& new XoopsTpl();
+		$this->_tpl = new XoopsTpl();
 
 		/**
 		 * We need access to the vars of the IcmsPersistableObject for a few things in the table creation.
@@ -673,16 +670,16 @@ class IcmsPersistableTable {
 			$order = isset($_GET[$this->_objectHandler->_itemname . '_' . 'ordersel']) ? $_GET[$this->_objectHandler->_itemname . '_' . 'ordersel'] : 'DESC';
 
 			if (isset($_REQUEST['quicksearch_' . $this->_id]) && $_REQUEST['quicksearch_' . $this->_id] != '') {
-				$qs_param = "&quicksearch_".$this->_id."=".$_REQUEST['quicksearch_' . $this->_id];
+				$qs_param = "&amp;quicksearch_".$this->_id."=".$_REQUEST['quicksearch_' . $this->_id];
 			} else {
 				$qs_param = '';
 			}
-			if (!$this->_enableColumnsSorting || $column->_keyname == 'checked') {
+			if (!$this->_enableColumnsSorting || $column->_keyname == 'checked' || !$column->_sortable) {
 				$aColumn['caption'] =  $aColumn['caption'];
 			} elseif ($getSort) {
-				$aColumn['caption'] =  '<a href="' . $current_url . '?' . $this->_objectHandler->_itemname . '_' . 'sortsel=' . $column->getKeyName() . '&' . $this->_objectHandler->_itemname . '_' . 'ordersel=' . $orderArray[$order]['neworder'].$qs_param . '&' . $new_query_string . '">' . $aColumn['caption'] . ' <img src="' . ICMS_IMAGES_SET_URL .'/actions/' . $orderArray[$order]['image'] . '" alt="ASC" /></a>';
+				$aColumn['caption'] =  '<a href="' . $current_url . '?' . $this->_objectHandler->_itemname . '_' . 'sortsel=' . $column->getKeyName() . '&amp;' . $this->_objectHandler->_itemname . '_' . 'ordersel=' . $orderArray[$order]['neworder'].$qs_param . '&amp;' . $new_query_string . '">' . $aColumn['caption'] . ' <img src="' . ICMS_IMAGES_SET_URL .'/actions/' . $orderArray[$order]['image'] . '" alt="ASC" /></a>';
 			} else {
-				$aColumn['caption'] =  '<a href="' . $current_url . '?' . $this->_objectHandler->_itemname . '_' . 'sortsel=' . $column->getKeyName() . '&' . $this->_objectHandler->_itemname . '_' . 'ordersel=ASC'.$qs_param.'&' . $new_query_string . '">' . $aColumn['caption'] . '</a>';
+				$aColumn['caption'] =  '<a href="' . $current_url . '?' . $this->_objectHandler->_itemname . '_' . 'sortsel=' . $column->getKeyName() . '&amp;' . $this->_objectHandler->_itemname . '_' . 'ordersel=ASC'.$qs_param.'&amp;' . $new_query_string . '">' . $aColumn['caption'] . '</a>';
 			}
 			$aColumns[] = $aColumn;
 		}
@@ -710,17 +707,18 @@ class IcmsPersistableTable {
 			$this->_tpl->assign('icms_withSelectedActions', $this->_withSelectedActions);
 		}
 
-		$smartobject_table_template = $this->_customTemplate ? $this->_customTemplate : 'system_persistabletable_display.html';
+		$icms_table_template = $this->_customTemplate ? $this->_customTemplate : 'system_persistabletable_display.html';
 		if ($fetchOnly) {
-			return $this->_tpl->fetch( 'db:' . $smartobject_table_template );
+			return $this->_tpl->fetch( 'db:' . $icms_table_template );
 		} else {
-			$this->_tpl->display( 'db:' . $smartobject_table_template );
+			$this->_tpl->display( 'db:' . $icms_table_template );
 		}
 	}
 
 	function disableColumnsSorting() {
 		$this->_enableColumnsSorting = false;
 	}
+
 	function fetch($debug=false) {
 		return $this->render(true, $debug);
 	}

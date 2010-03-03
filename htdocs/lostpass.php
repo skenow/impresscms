@@ -2,23 +2,23 @@
 /**
 * All functions for lost password generator are going through here.
 *
+* Form and process for sending a new password to a user
+* 
 * @copyright	http://www.xoops.org/ The XOOPS Project
 * @copyright	XOOPS_copyrights.txt
 * @copyright	http://www.impresscms.org/ The ImpressCMS Project
 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		core
 * @since		XOOPS
 * @author		http://www.xoops.org The XOOPS Project
 * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
 * @version		$Id$
-*/
-/**
-* Form and process for sending a new password to a user
+* 
 * @package	kernel 
 * @subpackage	users
 **/
 
 $xoopsOption['pagetype'] = 'user';
+/** Include mainfile.php - required */
 include 'mainfile.php';
 
 if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
@@ -29,7 +29,10 @@ if($email == '') {redirect_header('user.php',2,_US_SORRYNOTFOUND);}
 
 $myts =& MyTextSanitizer::getInstance();
 $member_handler =& xoops_gethandler('member');
-$getuser =& $member_handler->getUsers(new Criteria('email', $myts->addSlashes($email)));
+$criteria = new CriteriaCompo();
+$criteria->add(new Criteria('email', $myts->addSlashes($email)));
+$criteria->add(new Criteria('level', '-1', '!='));
+$getuser =& $member_handler->getUsers($criteria);
 
 if(empty($getuser))
 {
@@ -38,28 +41,28 @@ if(empty($getuser))
 }
 else
 {
-	$config_handler =& xoops_gethandler('config');
-	$xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
+	include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
+        $icmspass = new icms_Password();
 
 	$code = isset($_GET['code']) ? trim(StopXSS($_GET['code'])) : '';
 	$areyou = substr($getuser[0]->getVar('pass'), 0, 5);
-	$enc_type = intval($xoopsConfigUser['enc_type']);
+	$enc_type = intval($icmsConfigUser['enc_type']);
 	if($code != '' && $areyou == $code)
 	{
-		$newpass = xoops_makepass();
-		$salt = icms_createSalt();
-		$pass = icms_encryptPass($newpass, $salt);
+		$newpass = $icmspass->icms_createSalt(8);
+		$salt = $icmspass->icms_createSalt();
+		$pass = $icmspass->icms_encryptPass($newpass, $salt);
 		$xoopsMailer =& getMailer();
 		$xoopsMailer->useMail();
 		$xoopsMailer->setTemplate('lostpass2.tpl');
-		$xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
-		$xoopsMailer->assign('ADMINMAIL', $xoopsConfig['adminmail']);
+		$xoopsMailer->assign('SITENAME', $icmsConfig['sitename']);
+		$xoopsMailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
 		$xoopsMailer->assign('SITEURL', ICMS_URL.'/');
 		$xoopsMailer->assign('IP', $_SERVER['REMOTE_ADDR']);
 		$xoopsMailer->assign('NEWPWD', $newpass);
 		$xoopsMailer->setToUsers($getuser[0]);
-		$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
-		$xoopsMailer->setFromName($xoopsConfig['sitename']);
+		$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
+		$xoopsMailer->setFromName($icmsConfig['sitename']);
 		$xoopsMailer->setSubject(sprintf(_US_NEWPWDREQ,ICMS_URL));
 		if(!$xoopsMailer->send()) {echo $xoopsMailer->getErrors();}
 
@@ -67,8 +70,10 @@ else
 		$sql = sprintf("UPDATE %s SET pass = '%s', salt = '%s', enc_type = '%u', pass_expired = '%u' WHERE uid = '%u'", $xoopsDB->prefix('users'), $pass, $salt, $enc_type, 0, intval($getuser[0]->getVar('uid')));
 		if(!$xoopsDB->queryF($sql))
 		{
-			include 'header.php';
+			/** Include header.php to start page rendering */
+      include 'header.php';
 			echo _US_MAILPWDNG;
+			/** Include footer.php to complete page rendering */
 			include 'footer.php';
 			exit();
 		}
@@ -80,21 +85,24 @@ else
 		$xoopsMailer =& getMailer();
 		$xoopsMailer->useMail();
 		$xoopsMailer->setTemplate('lostpass1.tpl');
-		$xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
-		$xoopsMailer->assign('ADMINMAIL', $xoopsConfig['adminmail']);
+		$xoopsMailer->assign('SITENAME', $icmsConfig['sitename']);
+		$xoopsMailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
 		$xoopsMailer->assign('SITEURL', ICMS_URL.'/');
 		$xoopsMailer->assign('IP', $_SERVER['REMOTE_ADDR']);
 		$xoopsMailer->assign('NEWPWD_LINK', ICMS_URL.'/lostpass.php?email='.$email.'&code='.$areyou);
 		$xoopsMailer->setToUsers($getuser[0]);
-		$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
-		$xoopsMailer->setFromName($xoopsConfig['sitename']);
-		$xoopsMailer->setSubject(sprintf(_US_NEWPWDREQ,$xoopsConfig['sitename']));
-		include 'header.php';
+		$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
+		$xoopsMailer->setFromName($icmsConfig['sitename']);
+		$xoopsMailer->setSubject(sprintf(_US_NEWPWDREQ,$icmsConfig['sitename']));
+		/** Include header.php to start page rendering */
+    include 'header.php';
 		if(!$xoopsMailer->send()) {echo $xoopsMailer->getErrors();}
 		echo '<h4>';
 		printf(_US_CONFMAIL,$getuser[0]->getVar('uname'));
 		echo '</h4>';
+		/** Include footer.php to complete page rendering */
 		include 'footer.php';
 	}
 }
+
 ?>

@@ -8,7 +8,7 @@
 * @copyright    The XOOPS project http://www.xoops.org/
 * @license      http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
 * @package		installer
-* @since        2.3.0
+* @since        Xoops 2.3.0
 * @author		Haruki Setoyama  <haruki@planewave.org>
 * @author 		Kazumi Ono <webmaster@myweb.ne.jp>
 * @author		Skalpa Keo <skalpa@xoops.org>
@@ -58,7 +58,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
     $result = $dbm->queryFromFile('./sql/'.XOOPS_DB_TYPE.'.data.sql');
     $result = $dbm->queryFromFile('./language/'.$language.'/'.XOOPS_DB_TYPE.'.lang.data.sql');
     $group = make_groups( $dbm );
-    $result = make_data( $dbm, $cm, $adminname, $adminpass, $adminmail, $language, $adminsalt, $group );
+    $result = make_data( $dbm, $cm, $adminname, $adminlogin_name, $adminpass, $adminmail, $language, $adminsalt, $group );
     $content = $dbm->report();
 } else {
 	$msg = $process ? READY_INSERT_DATA : DATA_ALREADY_INSERTED;

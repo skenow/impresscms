@@ -1,5 +1,17 @@
 <?php
-
+/**
+* Short summary of the purpose of this file
+*
+* Longer description about this page
+*
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project 
+* @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @package     kernel
+* @subpackage  auth
+* @since	 1.1
+* @author malanciault <marcan@impresscms.org>
+* @version	$Id$
+*/
 /**
  * Set this to true to troubleshoot OpenID login
  */
@@ -7,14 +19,17 @@ $openid_debug = false;
 
 define('ICMS_INCLUDE_OPENID', true);
 $xoopsOption['pagetype'] = 'user';
-include_once ("mainfile.php");
+/** Including mainfile.php is required */
+include_once 'mainfile.php';
 
 $redirect_url = $_SESSION['frompage'];
 $myts = MyTextSanitizer :: getInstance();
 $member_handler = xoops_gethandler('member');
 
+/** Including the authentication class */
 include_once ICMS_ROOT_PATH . '/class/auth/authfactory.php';
-include_once ICMS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/auth.php';
+/** Including the language files for the authentication pages */
+icms_loadLanguageFile('core', 'auth');
 
 $xoopsAuth = & XoopsAuthFactory :: getAuthConnection();
 $user = $xoopsAuth->authenticate($openid_debug);
@@ -26,6 +41,7 @@ if ($xoopsAuth->errorOccured()) {
 switch ($xoopsAuth->step) {
 	case OPENID_STEP_NO_USER_FOUND :
 		$xoopsOption['template_main'] = 'system_openid.html';
+		/** Including header.php to start page rendering */
 		include_once (ICMS_ROOT_PATH . "/header.php");
 
 		$sreg = $_SESSION['openid_sreg'];
@@ -34,7 +50,7 @@ switch ($xoopsAuth->step) {
 		$xoopsTpl->assign('cid', $xoopsAuth->openid);
 		$xoopsTpl->assign('uname', isset ($sreg['nickname']) ? $sreg['nickname'] : '');
 		$xoopsTpl->assign('email', isset ($sreg['email']) ? $sreg['email'] : '');
-
+    /** Including footer.php to complete page rendering */
 		include_once ICMS_ROOT_PATH . '/footer.php';
 		break;
 
@@ -47,6 +63,7 @@ switch ($xoopsAuth->step) {
 		$_SESSION['openid_step'] = OPENID_STEP_NO_USER_FOUND;
 
 		$sreg = $_SESSION['openid_sreg'];
+		/** Including header.php to start page rendering */
 		include_once (ICMS_ROOT_PATH . '/header.php');
 
 		/**
@@ -83,132 +100,6 @@ switch ($xoopsAuth->step) {
 		 * @todo use proper core class, manage activation_type and send notifications
 		 */
 
-		/**
-
-		if ($xoopsConfigUser['activation_type'] == 1) {
-			$newuser->setVar('level', 1, true);
-		}
-		if (!$user_handler->insert($newuser, true)) {
-			$this->setErrors(106, 'The new user could not be created. ' . $newuser->getHtmlErrors());
-			return false;
-		}
-		$newid = $newuser->getVar('uid');
-		$mship_handler = new XoopsMembershipHandler($xoopsDB);
-		$mship = & $mship_handler->create();
-		$mship->setVar('groupid', XOOPS_GROUP_USERS);
-		$mship->setVar('uid', $newid);
-		if (!$mship_handler->insert($mship, true)) {
-			$this->setErrors(107, 'The new user was created but could not be added to the Registered Users group');
-			return false;
-		}
-		$this->setErrors(111, 'We have created an account for you on this site.');
-
-		if ($xoopsConfigUser['activation_type'] == 1) {
-
-			//Sending a confirmation email to the newly registered user
-
-			$myts = & MyTextSanitizer :: getInstance();
-			$xoopsMailer = & getMailer();
-			$xoopsMailer->useMail();
-			$xoopsMailer->setTemplate('welcome.tpl');
-			$xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
-			$xoopsMailer->assign('NAME', $sreg['fullname']);
-			$xoopsMailer->assign('UNAME', $sreg['nickname']);
-			$xoopsMailer->assign('X_UEMAIL', $sreg['email']);
-			$xoopsMailer->assign('SITEURL', ICMS_URL . "/");
-			$xoopsMailer->assign('ADMINMAIL', $xoopsConfig['adminmail']);
-			$xoopsMailer->setToEmails($sreg['email']);
-			$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
-			$xoopsMailer->setFromName($xoopsConfig['sitename']);
-			$xoopsMailer->setSubject(sprintf(_US_YOURINSCRIPTION, $myts->oopsStripSlashesGPC($xoopsConfig['sitename'])));
-			$xoopsMailer->send();
-
-			// Sending a notification email to a selected group when a new user registers
-
-						if ($xoopsConfigUser['new_user_notify'] == 1 && !empty ($xoopsConfigUser['new_user_notify_group'])) {
-				$xoopsMailer = & getMailer();
-				$xoopsMailer->useMail();
-				$xoopsMailer->setTemplate('newuser_notify.tpl');
-				$xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
-				$xoopsMailer->assign('NAME', $sreg['fullname']);
-				$xoopsMailer->assign('UNAME', $sreg['nickname']);
-				$xoopsMailer->assign('X_UEMAIL', $sreg['email']);
-				$xoopsMailer->assign('SITEURL', ICMS_URL . "/");
-				$xoopsMailer->setToGroups($member_handler->getGroup($xoopsConfigUser['new_user_notify_group']));
-				$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
-				$xoopsMailer->setFromName($xoopsConfig['sitename']);
-				$xoopsMailer->setSubject(sprintf(_US_NEWUSERREGAT, $xoopsConfig['sitename']));
-				$xoopsMailer->send();
-			}
-		}
-		if ($xoopsConfigUser['activation_type'] == 0) {
-			$this->setErrors(112, 'A confirmation email was sent to your email adress. Please follow the instructions to activate your account.');
-			$xoopsMailer = & getMailer();
-			$xoopsMailer->useMail();
-			$xoopsMailer->setTemplate('register.tpl');
-			$xoopsMailer->assign('NAME', $sreg['fullname']);
-			$xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
-			$xoopsMailer->assign('ADMINMAIL', $xoopsConfig['adminmail']);
-			$xoopsMailer->assign('SITEURL', ICMS_URL . "/");
-			$xoopsMailer->setToUsers(new XoopsUser($newid));
-			$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
-			$xoopsMailer->setFromName($xoopsConfig['sitename']);
-			$xoopsMailer->setSubject(sprintf(_US_USERKEYFOR, $sreg['nickname']));
-			$xoopsMailer->send();
-			if ($xoopsConfigUser['new_user_notify'] == 1 && !empty ($xoopsConfigUser['new_user_notify_group'])) {
-				$xoopsMailer = & getMailer();
-				$xoopsMailer->useMail();
-				$xoopsMailer->setTemplate('newuser_notify.tpl');
-				$xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
-				$xoopsMailer->assign('NAME', $sreg['fullname']);
-				$xoopsMailer->assign('UNAME', $sreg['nickname']);
-				$xoopsMailer->assign('X_UEMAIL', $sreg['email']);
-				$xoopsMailer->assign('SITEURL', ICMS_URL . "/");
-				$xoopsMailer->setToGroups($member_handler->getGroup($xoopsConfigUser['new_user_notify_group']));
-				$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
-				$xoopsMailer->setFromName($xoopsConfig['sitename']);
-				$xoopsMailer->setSubject(sprintf(_US_NEWUSERREGAT, $xoopsConfig['sitename']));
-				$xoopsMailer->send();
-			}
-		}
-		elseif ($xoopsConfigUser['activation_type'] == 2) {
-			$this->setErrors(113, 'Your account will need to be approved by an administrator. You will receive a notification when it\s done.');
-			$xoopsMailer = & getMailer();
-			$xoopsMailer->useMail();
-			$xoopsMailer->setTemplate('adminactivate.tpl');
-			$xoopsMailer->assign('NAME', $sreg['fullname']);
-			$xoopsMailer->assign('USERNAME', $sreg['nickname']);
-			$xoopsMailer->assign('USEREMAIL', $sreg['email']);
-			$xoopsMailer->assign('USERACTLINK', ICMS_URL . '/user.php?op=actv&id=' . $newid . '&actkey=' . $actkey);
-			$xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
-			$xoopsMailer->assign('ADMINMAIL', $xoopsConfig['adminmail']);
-			$xoopsMailer->assign('SITEURL', ICMS_URL . "/");
-			$member_handler = & xoops_gethandler('member');
-			$xoopsMailer->setToGroups($member_handler->getGroup($xoopsConfigUser['activation_group']));
-			$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
-			$xoopsMailer->setFromName($xoopsConfig['sitename']);
-			$xoopsMailer->setSubject(sprintf(_US_USERKEYFOR, $sreg['nickname']));
-			$xoopsMailer->send();
-		}
-		if ($xoopsConfigUser['new_user_notify'] == 1 && !empty ($xoopsConfigUser['new_user_notify_group'])) {
-			 // Sending a notification email to a selected group when a new user registers
-			if ($xoopsConfigUser['new_user_notify'] == 1 && !empty ($xoopsConfigUser['new_user_notify_group'])) {
-				$xoopsMailer = & getMailer();
-				$xoopsMailer->useMail();
-				$xoopsMailer->setTemplate('newuser_notify.tpl');
-				$xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
-				$xoopsMailer->assign('NAME', $sreg['fullname']);
-				$xoopsMailer->assign('UNAME', $sreg['nickname']);
-				$xoopsMailer->assign('X_UEMAIL', $sreg['email']);
-				$xoopsMailer->assign('SITEURL', ICMS_URL . "/");
-				$xoopsMailer->setToGroups($member_handler->getGroup($xoopsConfigUser['new_user_notify_group']));
-				$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
-				$xoopsMailer->setFromName($xoopsConfig['sitename']);
-				$xoopsMailer->setSubject(sprintf(_US_NEWUSERREGAT, $xoopsConfig['sitename']));
-				$xoopsMailer->send();
-			}
-		}
-		*/
 		$newUser = $member_handler->createUser();
 		$newUser->setVar('uname', $uname);
 		$newUser->setVar('email', $email);
@@ -217,7 +108,7 @@ switch ($xoopsAuth->step) {
 		$newUser->setVar('user_regdate', time());
 		$newUser->setVar('level', 1);
 		$newUser->setVar('country', $country);
-		$newUser->setVar('timesone_offset', $xoopsConfig['default_TZ']);
+		$newUser->setVar('timesone_offset', $icmsConfig['default_TZ']);
 		$newUser->setVar('openid', $xoopsAuth->openid);
 		if (!$member_handler->insertUser($newUser)) {
 			redirect_header(ICMS_URL . '/finish_auth.php', 3, _US_OPENID_NEW_USER_CANNOT_INSERT . ' ' . $newUser->getHtmlErrors());
@@ -246,7 +137,7 @@ switch ($xoopsAuth->step) {
 		$_SESSION['xoopsUserGroups'] = $newUser->getGroups();
 		$user_theme = $newUser->getVar('theme');
 
-		if (in_array($user_theme, $xoopsConfig['theme_set_allowed'])) {
+		if (in_array($user_theme, $icmsConfig['theme_set_allowed'])) {
 			$_SESSION['xoopsUserTheme'] = $user_theme;
 		}
 
@@ -259,14 +150,14 @@ switch ($xoopsAuth->step) {
 		break;
 
 	case OPENID_STEP_USER_FOUND :
-		include_once ("include/checklogin.php");
+		/** Including the login authentication page */
+    include_once 'include/checklogin.php';
 		exit;
 		break;
 
 	case OPENID_STEP_LINK :
-		/**
-		 * Linking an existing user with this openid
-		 */
+		// Linking an existing user with this openid
+		/** Including header.php to start page rendering */
 		include_once (ICMS_ROOT_PATH . '/header.php');
 
 		$uname4sql = addslashes($myts->stripSlashesGPC($_POST['uname']));
@@ -296,7 +187,7 @@ switch ($xoopsAuth->step) {
 		$_SESSION['xoopsUserGroups'] = $thisUser->getGroups();
 		$user_theme = $thisUser->getVar('theme');
 
-		if (in_array($user_theme, $xoopsConfig['theme_set_allowed'])) {
+		if (in_array($user_theme, $icmsConfig['theme_set_allowed'])) {
 			$_SESSION['xoopsUserTheme'] = $user_theme;
 		}
 
