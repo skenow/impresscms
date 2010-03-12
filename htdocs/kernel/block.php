@@ -34,7 +34,7 @@ class IcmsBlock extends IcmsPersistableObject {
 		$this->quickInitVar('bid', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('mid', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('func_num', XOBJ_DTYPE_INT);
-		$this->quickInitVar('title', XOBJ_DTYPE_TXTBOX, true);
+		$this->quickInitVar('title', XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar('content', XOBJ_DTYPE_TXTAREA);
 		$this->quickInitVar('side', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('weight', XOBJ_DTYPE_INT, true, false, false, 0);
