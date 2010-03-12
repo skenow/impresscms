@@ -1,6 +1,9 @@
 ImpressCMS ChangeLog
 
 === ImpressCMS 1.2.1 RC ===
+Release date: 1 Mars 2010
+DB Version: 39
+Build Version: 34
 
 http://trac.impresscms.org/core/query?status=closed&group=resolution&milestone=ImpressCMS+1.2.1
 
