@@ -1,7 +1,7 @@
-ImpressCMS 1.2.1 RC release notes
+ImpressCMS 1.2.1 Final release notes
 ==================================
 
-The ImpressCMS Project is very proud to announce a RC version of its 1.2.1 release! ImpressCMS 1.2.1 RC is a bugfix release and is not intended for production sites.
+The ImpressCMS Project is very proud to announce the final version of its 1.2.1 release! ImpressCMS 1.2.1 Final is a bugfix release and as final, can be used on production sites.
 
 Please see the full [[Change Log]] for details in docs/changelog.txt.
 
@@ -17,7 +17,7 @@ Please see the full [[Change Log]] for details in docs/changelog.txt.
 
 ==Downloading ImpressCMS==
 
-This release can be downloaded from the [ImpressCMS 1.2.1 RC Testing Packages ImpressCMS SourceForge project page].
+This release can be downloaded from the [ImpressCMS 1.2.1 Final Testing Packages ImpressCMS SourceForge project page].
 
 ==Checking out ImpressCMS from the SVN==
 
