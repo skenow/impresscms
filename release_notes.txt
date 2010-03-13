@@ -17,18 +17,18 @@ Please see the full [[Change Log]] for details in docs/changelog.txt.
 
 ==Downloading ImpressCMS==
 
-This release can be downloaded from the [ImpressCMS 1.2.1 Final Testing Packages ImpressCMS SourceForge project page].
+This release can be downloaded from the [https://sourceforge.net/projects/impresscms/files/ImpressCMS%20Official%20Releases/ImpressCMS%201.2%20Final/ ImpressCMS SourceForge project page].
 
 ==Checking out ImpressCMS from the SVN==
 
 You can easily get ImpressCMS using SVN. Instructions about this can be found here: [[Install_and_update_using_SVN]].
 
 The path for this release is the following:
-https://svn.impresscms.org/core/releases/impresscms_1.2.1_rc/
+https://impresscms.svn.sourceforge.net/svnroot/impresscms/core/releases/impresscms_1.2.1_final/
 
 If you feel like getting the latest "edge" version, you can checkout the core trunk at :
 
-https://svn.impresscms.org/core/trunk/
+https://impresscms.svn.sourceforge.net/svnroot/impresscms/core/trunk/
 
 The ImpressCMS trunk is always the latest as-stable-as-possible development code. It is, of course, not to be used on production sites.
 
