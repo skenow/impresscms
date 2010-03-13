@@ -10,7 +10,7 @@
  * @since		XOOPS
  * @author		http://www.xoops.org The XOOPS Project
  * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id: module.textsanitizer.php 8565 2009-04-11 12:44:10Z icmsunderdog $
+ * @version		$Id$
  */
 
 /**
