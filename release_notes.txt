@@ -47,6 +47,7 @@ If you are upgrading from a previous version of ImpressCMS or XOOPS, please foll
 * Download an upgrade package (tar.gz or zip formats are available) http://www.impresscms.org/modules/mastop_publish/?tac=Download
 * Extract the package to your local computer
 * Login to your site
+* If you are using a custom set of templates, please change back to the default template set
 * Upload the contents of the htdocs/ folder to your webserver, overwriting your existing files
 * Clear the contents of your cache/ and templates_c/ folders
 * If you are upgrading from XOOPS or ImpressCMS 1.0, access <your.site.url>/upgrade/ with your browser
