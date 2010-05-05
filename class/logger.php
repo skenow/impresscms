@@ -27,8 +27,6 @@ class XoopsLogger {
 	public $queries = array();
 	public $blocks = array();
 	public $extra = array();
-	public $logstart = array();
-	public $logend = array();
 	public $errors = array();
 
 	public $usePopup = false;
@@ -87,31 +85,6 @@ class XoopsLogger {
 	 */
 	public function disableLogger() {
 		$this->activated = false;
-	}
-
-	/**
-	 * Returns the current microtime in seconds.
-	 * @return float
-	 */
-	function microtime() {
-		$now = explode( ' ', microtime() );
-		return (float)$now[0] + (float)$now[1];
-	}
-
-	/**
-	 * Start a timer
-	 * @param   string  $name   name of the timer
-	 */
-	function startTime($name = 'ICMS') {
-		$this->logstart[$name] = $this->microtime();
-	}
-
-	/**
-	 * Stop a timer
-	 * @param   string  $name   name of the timer
-	 */
-	function stopTime($name = 'ICMS') {
-		$this->logend[$name] = $this->microtime();
 	}
 
 	/**
@@ -248,12 +221,17 @@ class XoopsLogger {
 	 * @param   string  $name   name of the counter
 	 * @return  float   current execution time of the counter
 	 */
-	public function dumpTime( $name = 'ICMS' ) {
+	public function dumpTime( $name = 'ImpressCMS' ) {
+		$icmsTimer = &$GLOBALS['IcmsTimer'];
+		return $icmsTimer->dumpTime($name);
+
+		/*
 		if ( !isset($this->logstart[$name]) ) {
 			return 0;
 		}
 		$stop = isset( $this->logend[$name] ) ? $this->logend[$name] : $this->microtime();
 		return $stop - $this->logstart[$name];
+		*/
 	}
 
 	/**

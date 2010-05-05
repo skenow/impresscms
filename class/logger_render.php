@@ -15,6 +15,8 @@
 
 defined( 'ICMS_ROOT_PATH' ) or die();
 
+$icmsTimer = $GLOBALS['icmsTimer'];
+
 $ret = '';
 
 if ( $mode == 'popup' ) {
@@ -48,6 +50,15 @@ if ( $mode == 'popup' ) {
 </script>';
 }
 
+
+$ret .= "
+<div align='center'>
+	Page generated
+	<span style='color:#FF0000;'>" . count($this->queries) . "</span> queries
+	- Generation time: <a href='javascript:xoSetLoggerView(\"timers\")'><span style='color:#FF0000;'>" . sprintf('%.3f', $icmsTimer->dumpTime('ImpressCMS')) . "</span></a> seconds
+</div>\n
+";
+
 if ( empty( $mode ) ) {
 	$ret .= "\n<div id=\"xo-logger-output\">\n<div id='xo-logger-tabs'>\n";
 	$ret .= "<hr /><a href='javascript:xoSetLoggerView(\"none\")'>"._NONE."</a> | \n";
@@ -60,7 +71,7 @@ if ( empty( $mode ) ) {
 	$ret .= "<a href='javascript:xoSetLoggerView(\"blocks\")'>"._BLOCKS." (".icms_conv_nr2local($count).")</a>\n";
 	$count = count( $this->extra );
 	$ret .= "<a href='javascript:xoSetLoggerView(\"extra\")'>"._EXTRA." (".icms_conv_nr2local($count).")</a>\n";
-	$count = count( $this->logstart );
+	$count = count( $icmsTimer->logstart );
 	$ret .= "<a href='javascript:xoSetLoggerView(\"timers\")'>"._TIMERS." (".icms_conv_nr2local($count).")</a>\n";
 	$ret .= "</div>\n";
 }
@@ -128,8 +139,8 @@ if ( empty($mode) || $mode == 'extra' ) {
 if ( empty($mode) || $mode == 'timers' ) {
 	$class = 'even';
 	$ret .= '<table id="xo-logger-timers" class="outer"><tr><th colspan="2">'._TIMERS.'</th></tr>';
-	foreach ( $this->logstart as $k => $v ) {
-		$ret .= '<tr><td class="'.$class.'"><b>'.htmlspecialchars($k).'</b> '.sprintf(_TOOKXLONG, '<span style="color:#ff0000;">' . icms_conv_nr2local(sprintf( "%.03f", $this->dumpTime($k) )) . '</span>').'</td></tr>';
+	foreach ( $icmsTimer->logstart as $k => $v ) {
+		$ret .= '<tr><td class="'.$class.'"><b>'.htmlspecialchars($k).'</b> '.sprintf(_TOOKXLONG, '<span style="color:#ff0000;">' . icms_conv_nr2local(sprintf( "%.03f", $icmsTimer->dumpTime($k) )) . '</span>').'</td></tr>';
 		$class = ($class == 'odd') ? 'even' : 'odd';
 	}
 	$ret .= '</table>';

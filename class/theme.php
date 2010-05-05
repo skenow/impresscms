@@ -351,12 +351,12 @@ class xos_opal_Theme {
 	 * @param array	 $vars			Template variables to send to the template engine
 	 */
 	function render( $canvasTpl = null, $pageTpl = null, $contentTpl = null, $vars = array() ) {
-		global $xoops, $xoopsLogger, $xoopsOption;
+		global $xoops, $xoopsLogger, $icmsTimer, $xoopsOption;
 
 		if ( $this->renderCount ) {
 			return false;
 		}
-		$xoopsLogger->startTime( 'Page rendering' );
+		$icmsTimer->startTime( 'Page rendering' );
 
 		// @internal: Lame fix to ensure the metas specified in the xoops config page don't appear twice
 		$old = array( 'robots', 'keywords', 'description', 'rating', 'author', 'copyright' );
@@ -398,7 +398,7 @@ class xos_opal_Theme {
 		$this->template->display( $this->path . '/' . $this->canvasTemplate );
 
 		$this->renderCount++;
-		$xoopsLogger->stopTime( 'Page rendering' );
+		$icmsTimer->stopTime( 'Page rendering' );
 	}
 
 	/**#@+ @tasktype 20 Manipulating page meta-information*/

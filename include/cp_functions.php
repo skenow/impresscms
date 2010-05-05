@@ -33,9 +33,9 @@ include_once ICMS_ROOT_PATH . '/class/template.php';
  * @author nekro (aka Gustavo Pilla)<nekro@impresscms.org>
  */
 function icms_cp_header(){
-	global $icmsConfig, $xoopsConfig, $icmsConfigPlugins, $icmsConfigPersona, $icmsModule, $xoopsModule, $icmsUser, $xoopsUser, $xoopsTpl, $xoopsOption, $xoTheme, $icmsConfigMultilang, $xoopsLogger, $icmsAdminTpl, $icmsPreloadHandler;
-	$xoopsLogger->stopTime( 'Module init' );
-	$xoopsLogger->startTime( 'ImpressCMS CP Output Init' );
+	global $icmsConfig, $xoopsConfig, $icmsConfigPlugins, $icmsConfigPersona, $icmsModule, $xoopsModule, $icmsUser, $xoopsUser, $xoopsTpl, $xoopsOption, $xoTheme, $icmsConfigMultilang, $xoopsLogger, $icmsTimer, $icmsAdminTpl, $icmsPreloadHandler;
+	$icmsTimer->stopTime( 'Module init' );
+	$icmsTimer->startTime( 'ImpressCMS CP Output Init' );
 
 	if (!headers_sent()) {
 		header('Content-Type:text/html; charset='._CHARSET);
@@ -337,8 +337,8 @@ function xoops_cp_header(){
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 function icms_cp_footer(){
-	global $icmsConfig, $xoopsConfig, $xoopsOption, $xoopsLogger, $icmsUser, $xoopsUser, $xoopsTpl, $xoTheme, $icmsTpl ,$icmsConfigMultilang, $icmsLibrariesHandler, $xoopsModule, $icmsModule;
-	$xoopsLogger->stopTime( 'Module display' );
+	global $icmsConfig, $xoopsConfig, $xoopsOption, $xoopsLogger, $icmsTimer, $icmsUser, $xoopsUser, $xoopsTpl, $xoTheme, $icmsTpl ,$icmsConfigMultilang, $icmsLibrariesHandler, $xoopsModule, $icmsModule;
+	$icmsTimer->stopTime( 'Module display' );
 
 	if (!headers_sent()) {
 		header('Content-Type:text/html; charset='._CHARSET);
@@ -355,12 +355,12 @@ function icms_cp_footer(){
 		}
 	}
 
-	$xoopsLogger->stopTime( 'XOOPS output init' );
-	$xoopsLogger->startTime( 'Module display' );
+	$icmsTimer->stopTime( 'ImpressCMS output init' );
+	$icmsTimer->startTime( 'Module display' );
 
 	$xoTheme->render();
 
-	$xoopsLogger->stopTime();
+	$icmsTimer->stopTime();
 	return;
 }
 
