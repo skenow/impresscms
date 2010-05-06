@@ -34,7 +34,7 @@ include_once ICMS_ROOT_PATH.'/class/logger.php';
 include_once ICMS_ROOT_PATH."/class/module.textsanitizer.php";
 $xoopsLogger =& XoopsLogger::instance();
 
-$icmsTimer =& IcmsTimer::instance();
+$icmsTimer = IcmsTimer::instance();
 $icmsTimer->startTime();
 /** Include the database class */
 include_once ICMS_ROOT_PATH.'/class/database/databasefactory.php';
