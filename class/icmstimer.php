@@ -59,7 +59,6 @@ class IcmsTimer
 	 * @return  float   current execution time of the counter
 	 */
 	public function dumpTime( $name = 'ImpressCMS' ) {
-		$icmsTimer = $GLOBALS['IcmsTimer'];
 		if ( !isset($this->logstart[$name]) ) {
 			return 0;
 		}

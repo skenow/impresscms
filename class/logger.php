@@ -222,7 +222,7 @@ class XoopsLogger {
 	 * @return  float   current execution time of the counter
 	 */
 	public function dumpTime( $name = 'ImpressCMS' ) {
-		$icmsTimer = &$GLOBALS['IcmsTimer'];
+		$icmsTimer = $GLOBALS['IcmsTimer'];
 		return $icmsTimer->dumpTime($name);
 
 		/*

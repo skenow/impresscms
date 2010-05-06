@@ -146,7 +146,7 @@ global $xoopsLogger, $xoopsErrorHandler;
 $xoopsLogger =& XoopsLogger::instance();
 $xoopsErrorHandler =& $xoopsLogger;
 
-$icmsTimer =& IcmsTimer::instance();
+$icmsTimer = IcmsTimer::instance();
 
 $icmsTimer->startTime('ImpressCMS');
 $icmsTimer->startTime( 'ImpressCMS Boot' );
