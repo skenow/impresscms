@@ -81,9 +81,8 @@ class IcmsLogger_render
 	}
 
 	/**
-	* icmsLogger_render::showError()
+	* Show all the errors that occurred while loading the page in an ordered fashion
 	*
-	* @param mixed $obj
 	* @return string $ret
 	*/
 	function showError()
@@ -115,9 +114,9 @@ class IcmsLogger_render
 	}
 
 	/**
-	* icmsLogger_render::showSql()
+	* Show all the SQL queries that were executed while loading the page
 	*
-	* @return
+	* @return string $ret
 	*/
 	function showSql()
 	{
@@ -156,6 +155,11 @@ class IcmsLogger_render
 		return $ret;
 	}
 
+	/**
+	* Show all the blocks that were executed while loading the page
+	*
+	* @return string $ret
+	*/
 	function showBlocks()
 	{
 		$oddeven = 'even';
@@ -177,6 +181,11 @@ class IcmsLogger_render
 		return $ret;
 	}
 
+	/**
+	* Show all the extra information while loading the page
+	*
+	* @return string $ret
+	*/
 	function showExtra()
 	{
 		$oddeven = 'even';
@@ -193,9 +202,9 @@ class IcmsLogger_render
 	}
 
 	/**
-	* icmsLogger_render::showTimers()
+	* Show all the timer information while loading the page
 	*
-	* @return
+	* @return string $ret
 	*/
 	function showTimers()
 	{
@@ -213,9 +222,9 @@ class IcmsLogger_render
 	}
 
 	/**
-	* icmsLogger_render::render()
+	* Render all the information while loading the page
 	*
-	* @return
+	* @return string The output
 	*/
 	function render()
 	{
@@ -289,10 +298,9 @@ class IcmsLogger_render
 	}
 
 	/**
-	* icmsLogger_render::ShowUserError()
+	* Display the user error in a nice template
 	* This will become one of the most important error Handler Functions
 	* It will show the error in a beautiful way
-	* @return
 	*/
 	function ShowUserError()
 	{
@@ -318,9 +326,7 @@ class IcmsLogger_render
 	}
 
 	/**
-	* icmsLogger_render::ShowPageNotFound()
-	*
-	* @return
+	* Display the page not found in a nice template
 	*/
 	function ShowPageNotFound()
 	{
@@ -340,9 +346,8 @@ class IcmsLogger_render
 	}
 
 	/**
-	* icmsLogger_render::trace()
-	*
-	* @return
+	* Display the fatal error in a nice template
+	* Whenever a catchable fatal error has occurred this will be called
 	*/
 	function trace()
 	{

@@ -130,18 +130,14 @@ class XoopsLogger {
 		$this->extra[] = array('name' => $name, 'msg' => $msg);
 	}
 
-
-
-
-
 	/**
-	* XoopsLogger::setSysError()
+	* Set an error that occurred within the system
 	*
 	* @param mixed $errno
 	* @param mixed $errstr
 	* @param mixed $errfile
 	* @param mixed $errline
-	* @return
+	* @param mixed $errreport
 	*/
 	function setSysError($errno, $errstr, $errfile = '', $errline = '', $errreport = '')
 	{
@@ -155,94 +151,84 @@ class XoopsLogger {
 		}
 		$this->sysErrors[] = compact('errno', 'errstr', 'errfile', 'errline', 'errreport');
 	}
-	/*
-	END Function
-	*/
-	 
+
 	/**
-	* Document this Function
+	* Get all the errors that occurred within the system
 	*
-	* @param
-	* @return
+	* @return array The errors that occurred
 	*/
 	function getSysError()
 	{
 		return (isset($this->sysErrors) && count($this->sysErrors)) ? $this->sysErrors : array();
 	}
-	 
-	/*These are User error handling*/
+
+
+	/**
+	 * Get the number of system errors that have occurred
+	 */
 	function getSysErrorCount()
 	{
 		return (isset($this->sysErrors) && count($this->sysErrors)) ? $this->sysErrors : 0;
 	}
-	/*
-	END Function
-	*/
-	 
+
 	/**
-	* Document this Function
+	* Set the title for the error page
 	*
-	* @param
-	* @return
+	* @param	string	The title to set
 	*/
 	function setSysErrorTitle($value = '')
 	{
 		$this->info['title'] = $value;
 	}
+
+	/**
+	* Set the heading for the error page
+	*
+	* @param	string	The heading to set
+	*/
 	function setSysErrorHeading($value = '')
 	{
 		$this->info['heading'] = $value;
 	}
+
+	/**
+	* Set the description for the error page
+	*
+	* @param	string	The error description to set
+	*/
 	function setSysErrorDescription($value = '')
 	{
 		$this->info['description'] = $value;
 	}
+
+	/**
+	* Set the image for the error page
+	*
+	* @param	string	The image for the error page to set
+	*/
 	function setSysErrorImage($value = '')
 	{
 		$this->info['image'] = $value;
 	}
-	/*
-	END Function
-	*/
-	 
+
 	/**
-	* Document this Function
+	* Set the Error Level
 	*
-	* @param
-	* @return
-	*/
-	function getSysInfo($value = '', $default = '')
-	{
-		if (isset($this->info[$value]))
-		{
-			return $this->info[$value];
-		}
-		else
-		{
-			return $default;
-		}
-	}
-	/**
-	* ZariliaErrorHandler::setErrorLevel()
-	*
-	* @param mixed $showErrors
-	* @return
+	* @param mixed $errorType
 	*/
 	function setErrorLevel($errorType = E_ALL)
 	{
 		$errorType = E_ALL;
 		error_reporting($errorType);
 	}
-	/*
-	END Function
-	*/
-	 
+
 	/**
-	* XoopsLogger::getbugLevel()
+	* get the Debug level that was set in the system
 	*
 	* @param string $debugType
 	* @return
 	*/
+	/*	To be implemented later
 	function getbugLevel($debugType = '')
 	{
 		switch ($debugType)
@@ -265,66 +251,58 @@ class XoopsLogger {
 			break;
 		} // switch
 	}
-	/*
-	END Function
 	*/
-	 
+
 	/**
-	* XoopsLogger::setDebugmode()
-	*
-	* @return
+	* set the Debug mode
 	*/
+	/*	To be implemented later
 	function setDebugmode()
 	{
-		global $zariliaConfig, $zariliaUser, $user;
-		global $icmsConfig, $_USER, $user;
+		global $icmsConfig, $icmsUser, $user;
+
 		/**
 		* set groups that have permission
-		*/
-		$this->_user_group = (is_object($zariliaUser)) ? $zariliaUser->getGroups() :
-		 array(0 => ZAR_GROUP_ANONYMOUS);
-		if (isset($zariliaConfig['debug_mode_okgrp']))
+		*	/
+		$this->_user_group = (is_object($icmsUser)) ? $icmsUser->getGroups() : array(0 => ICMS_GROUP_ANONYMOUS);
+		if (isset($icmsConfig['debug_mode_okgrp']))
 		{
-			//(array_intersect($this->_user_group, $zariliaConfig['debug_mode_okgrp'])) ? true : false
+			//(array_intersect($this->_user_group, $icmsConfig['debug_mode_okgrp'])) ? true : false
 			$this->hasPermission = true;
 		}
-		 
-		if (isset($zariliaConfig['debug_mode']))
+
+		if (isset($icmsConfig['debug_mode']))
 		{
 			/**
 			* Setup who can view these
-			*/
-			if (!in_array(0, $zariliaConfig['debug_mode']))
+			*	/
+			if (!in_array(0, $icmsConfig['debug_mode']))
 			{
 				// show errors
-				if (in_array(1, $zariliaConfig['debug_mode'])) $this->showErrors = true;
+				if (in_array(1, $icmsConfig['debug_mode'])) $this->showErrors = true;
 				// show sql
-				if (in_array(2, $zariliaConfig['debug_mode'])) $this->showSql = true;
+				if (in_array(2, $icmsConfig['debug_mode'])) $this->showSql = true;
 				// show blocks
-				if (in_array(3, $zariliaConfig['debug_mode'])) $this->showBlocks = true;
+				if (in_array(3, $icmsConfig['debug_mode'])) $this->showBlocks = true;
 				// show smarty
-				if (in_array(4, $zariliaConfig['debug_mode'])) $this->showSmarty = true;
+				if (in_array(4, $icmsConfig['debug_mode'])) $this->showSmarty = true;
 				// show extra
-				if (in_array(5, $zariliaConfig['debug_mode'])) $this->showExtra = true;
+				if (in_array(5, $icmsConfig['debug_mode'])) $this->showExtra = true;
 				// show page
-				if (in_array(6, $zariliaConfig['debug_mode'])) $this->showPageGen = true;
+				if (in_array(6, $icmsConfig['debug_mode'])) $this->showPageGen = true;
 			}
 			unset($this->_user_group);
 		}
 	}
-
-
-
-
+	*/
 
 	/**
-	* XoopsLogger::handleError()
+	* Handle the error that was sent by the error handler (trigger_error)
 	*
 	* @param mixed $errno
 	* @param mixed $errstr
 	* @param mixed $errfile
 	* @param mixed $errline
-	* @return
 	*/
 	public function handleError($errno, $errstr, $errfile, $errline)
 	{
@@ -355,10 +333,6 @@ class XoopsLogger {
 			$log_render->trace();
 		}
 	}
-
-
-
-
 
 	/**
 	 * Error handling callback (called by the zend engine)
