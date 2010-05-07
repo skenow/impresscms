@@ -15,8 +15,6 @@
 
 defined( 'ICMS_ROOT_PATH' ) or die();
 
-$icmsTimer = $GLOBALS['icmsTimer'];
-
 $ret = '';
 
 if ( $mode == 'popup' ) {
@@ -51,11 +49,12 @@ if ( $mode == 'popup' ) {
 }
 
 
-$ret .= "
-<div align='center'>
-	Page generated
+
+$icmsTimer = IcmsTimer::instance();
+
+$ret .= "<div align='center'>Page generated
 	<span style='color:#FF0000;'>" . count($this->queries) . "</span> queries
-	- Generation time: <a href='javascript:xoSetLoggerView(\"timers\")'><span style='color:#FF0000;'>" . sprintf('%.3f', $icmsTimer->dumpTime('ImpressCMS')) . "</span></a> seconds
+	- Generation time: <a href='javascript:xoSetLoggerView(\"timers\")'><span style='color:#FF0000;'>" . sprintf('%.3f',$icmsTimer->dumpTime('ImpressCMS')) . "</span></a> seconds
 </div>\n
 ";
 

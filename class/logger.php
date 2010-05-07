@@ -32,7 +32,16 @@ class XoopsLogger {
 	public $usePopup = false;
 	public $activated = true;
 
+	/**@access protected*/
 	private $renderingEnabled = false;
+	var $showErrors = true;
+	var $showSql = true;
+	var $showBlocks = true;
+	var $showSmarty = true;
+	var $showExtra = true;
+	var $showPageGen = true;
+	var $hasPermission = true;
+	var $date = null;
 
 	/**
 	 * Constructor
@@ -121,6 +130,236 @@ class XoopsLogger {
 		$this->extra[] = array('name' => $name, 'msg' => $msg);
 	}
 
+
+
+
+
+	/**
+	* XoopsLogger::setSysError()
+	*
+	* @param mixed $errno
+	* @param mixed $errstr
+	* @param mixed $errfile
+	* @param mixed $errline
+	* @return
+	*/
+	function setSysError($errno, $errstr, $errfile = '', $errline = '', $errreport = '')
+	{
+		if (is_array($errstr))
+		{
+			foreach ($errstr as $err)
+			{
+				$this->setSysError($errno, $err, $errfile = '', $errline = '', $errreport = '');
+			}
+			return;
+		}
+		$this->sysErrors[] = compact('errno', 'errstr', 'errfile', 'errline', 'errreport');
+	}
+	/*
+	END Function
+	*/
+	 
+	/**
+	* Document this Function
+	*
+	* @param
+	* @return
+	*/
+	function getSysError()
+	{
+		return (isset($this->sysErrors) && count($this->sysErrors)) ? $this->sysErrors : array();
+	}
+	 
+	/*These are User error handling*/
+	function getSysErrorCount()
+	{
+		return (isset($this->sysErrors) && count($this->sysErrors)) ? $this->sysErrors : 0;
+	}
+	/*
+	END Function
+	*/
+	 
+	/**
+	* Document this Function
+	*
+	* @param
+	* @return
+	*/
+	function setSysErrorTitle($value = '')
+	{
+		$this->info['title'] = $value;
+	}
+	function setSysErrorHeading($value = '')
+	{
+		$this->info['heading'] = $value;
+	}
+	function setSysErrorDescription($value = '')
+	{
+		$this->info['description'] = $value;
+	}
+	function setSysErrorImage($value = '')
+	{
+		$this->info['image'] = $value;
+	}
+	/*
+	END Function
+	*/
+	 
+	/**
+	* Document this Function
+	*
+	* @param
+	* @return
+	*/
+	function getSysInfo($value = '', $default = '')
+	{
+		if (isset($this->info[$value]))
+		{
+			return $this->info[$value];
+		}
+		else
+		{
+			return $default;
+		}
+	}
+	/**
+	* ZariliaErrorHandler::setErrorLevel()
+	*
+	* @param mixed $showErrors
+	* @return
+	*/
+	function setErrorLevel($errorType = E_ALL)
+	{
+		$errorType = E_ALL;
+		error_reporting($errorType);
+	}
+	/*
+	END Function
+	*/
+	 
+	/**
+	* XoopsLogger::getbugLevel()
+	*
+	* @param string $debugType
+	* @return
+	*/
+	function getbugLevel($debugType = '')
+	{
+		switch ($debugType)
+		{
+			case 'error':
+			return $this->showErrors;
+			break;
+			case 'sql':
+			return $this->showSql;
+			break;
+			case 'blocks':
+			return $this->showBlocks;
+			break;
+			case 'smarty':
+			return $this->showSmarty;
+			break;
+			case 'default':
+			default:
+			return false;
+			break;
+		} // switch
+	}
+	/*
+	END Function
+	*/
+	 
+	/**
+	* XoopsLogger::setDebugmode()
+	*
+	* @return
+	*/
+	function setDebugmode()
+	{
+		global $zariliaConfig, $zariliaUser, $user;
+		global $icmsConfig, $_USER, $user;
+		/**
+		* set groups that have permission
+		*/
+		$this->_user_group = (is_object($zariliaUser)) ? $zariliaUser->getGroups() :
+		 array(0 => ZAR_GROUP_ANONYMOUS);
+		if (isset($zariliaConfig['debug_mode_okgrp']))
+		{
+			//(array_intersect($this->_user_group, $zariliaConfig['debug_mode_okgrp'])) ? true : false
+			$this->hasPermission = true;
+		}
+		 
+		if (isset($zariliaConfig['debug_mode']))
+		{
+			/**
+			* Setup who can view these
+			*/
+			if (!in_array(0, $zariliaConfig['debug_mode']))
+			{
+				// show errors
+				if (in_array(1, $zariliaConfig['debug_mode'])) $this->showErrors = true;
+				// show sql
+				if (in_array(2, $zariliaConfig['debug_mode'])) $this->showSql = true;
+				// show blocks
+				if (in_array(3, $zariliaConfig['debug_mode'])) $this->showBlocks = true;
+				// show smarty
+				if (in_array(4, $zariliaConfig['debug_mode'])) $this->showSmarty = true;
+				// show extra
+				if (in_array(5, $zariliaConfig['debug_mode'])) $this->showExtra = true;
+				// show page
+				if (in_array(6, $zariliaConfig['debug_mode'])) $this->showPageGen = true;
+			}
+			unset($this->_user_group);
+		}
+	}
+
+
+
+
+
+	/**
+	* XoopsLogger::handleError()
+	*
+	* @param mixed $errno
+	* @param mixed $errstr
+	* @param mixed $errfile
+	* @param mixed $errline
+	* @return
+	*/
+	public function handleError($errno, $errstr, $errfile, $errline)
+	{
+		$errstr = $this->sanitizePath( $errstr );
+		$errfile = $this->sanitizePath( $errfile );
+
+		if ($errno == 0 || $errno == 8) return;
+		/**
+		*/
+		//$errno = $errno &error_reporting();
+		// NOTE: we only store relative pathnames
+		if ( $this->activated && ( $errno & error_reporting() ) ) {
+			$this->errors[] = compact('errno', 'errstr', 'errfile', 'errline');
+		}
+		/**
+		*/
+		if ($errno == E_USER_ERROR)
+		{
+
+			$trace = true;
+			if ( substr( $errstr, 0, '8' ) == 'notrace:' ) {
+				$trace = false;
+				$errstr = substr( $errstr, 8 );
+			}
+
+			require_once ICMS_ROOT_PATH . '/class/icms_loggerrender.php';
+			$log_render = new IcmsLogger_render($this);
+			$log_render->trace();
+		}
+	}
+
+
+
+
+
 	/**
 	 * Error handling callback (called by the zend engine)
 	 * @param  string  $errno
@@ -128,7 +367,7 @@ class XoopsLogger {
 	 * @param  string  $errfile
 	 * @param  string  $errline
 	 */
-	public function handleError( $errno, $errstr, $errfile, $errline ) {
+	public function OLDhandleError( $errno, $errstr, $errfile, $errline ) {
 		$errstr = $this->sanitizePath( $errstr );
 		$errfile = $this->sanitizePath( $errfile );
 		if ( $this->activated && ( $errno & error_reporting() ) ) {
@@ -194,8 +433,17 @@ class XoopsLogger {
 		if ( !$this->renderingEnabled || !$this->activated || !$gperm_handler->checkRight('enable_debug', $moduleid, $groups) )
 		return $output;
 		$this->renderingEnabled = $this->activated = false;
+
 		$log = $this->dump( $this->usePopup ? 'popup' : '' );
 		$pattern = '<!--{xo-logger-output}-->';
+		$icmsTimer = IcmsTimer::instance();
+		$output .= "<div align='center'>Page generated
+			<a href='javascript:xoSetLoggerView(\"queries\")'>" . sprintf(_ERR_PG_ERRORTOTALQUERIES, count($this->queries)) . "</a>
+			-
+			<a href='javascript:xoSetLoggerView(\"timers\")'>" . sprintf(_ERR_PG_ERRORLOAD, sprintf("%.3f", $icmsTimer->dumpTime('ImpressCMS'))) . "</a>
+		</div>\n
+		";
+
 		$pos = strpos( $output, $pattern );
 		if ( $pos !== false )
 		return substr( $output, 0, $pos ) . $log . substr( $output, $pos + strlen( $pattern ) );
@@ -211,12 +459,16 @@ class XoopsLogger {
 	 * @access protected
 	 */
 	public function dump( $mode = '' ) {
-		include ICMS_ROOT_PATH . '/class/logger_render.php';
-		return $ret;
+		require_once ICMS_ROOT_PATH . '/class/icms_loggerrender.php';
+		$renderedlog = '';
+		$log_render = new IcmsLogger_render($this);
+		$renderedlog = $log_render->render();
+
+		return $renderedlog;
 	}
 
 	/**
-	 * get the current execution time of a timer
+	 * Will be deleted once it's clear it's not used elsewhere in ImpressCMS
 	 *
 	 * @param   string  $name   name of the counter
 	 * @return  float   current execution time of the counter
@@ -224,47 +476,7 @@ class XoopsLogger {
 	public function dumpTime( $name = 'ImpressCMS' ) {
 		$icmsTimer = $GLOBALS['IcmsTimer'];
 		return $icmsTimer->dumpTime($name);
-
-		/*
-		if ( !isset($this->logstart[$name]) ) {
-			return 0;
-		}
-		$stop = isset( $this->logend[$name] ) ? $this->logend[$name] : $this->microtime();
-		return $stop - $this->logstart[$name];
-		*/
 	}
-
-	/**
-	 * dumpAll
-	 *
-	 * @return string
-	 * @deprecated
-	 */
-	public function dumpAll(){ return $this->dump( '' ); }
-
-	/**
-	 * dumpBlocks
-	 *
-	 * @return unknown
-	 * @deprecated
-	 */
-	public function dumpBlocks(){ return $this->dump( 'blocks' ); }
-
-	/**
-	 * dumpExtra
-	 *
-	 * @return unknown
-	 * @deprecated
-	 */
-	public function dumpExtra(){ return $this->dump( 'extra' ); }
-
-	/**
-	 * dumpQueries
-	 *
-	 * @return unknown
-	 * @deprecated
-	 */
-	public function dumpQueries(){ return $this->dump( 'queries' ); }
 }
 
 /**
@@ -277,8 +489,12 @@ class XoopsLogger {
  * set_error_handler() have problems with the array( obj,methodname ) syntax
  */
 function XoopsErrorHandler_HandleError( $errNo, $errStr, $errFile, $errLine, $errContext = null ) {
-	$logger =& XoopsLogger::instance();
-	$logger->handleError( $errNo, $errStr, $errFile, $errLine, $errContext );
+
+	if ($errNo != 2048)
+	{
+		$logger =& XoopsLogger::instance();
+		$logger->handleError($errNo, $errStr, $errFile, $errLine, $errContext);
+	}
 }
 
 ?>

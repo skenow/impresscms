@@ -189,8 +189,12 @@ global $xoopsLogger, $xoopsErrorHandler;
 include_once XOOPS_ROOT_PATH . '/class/logger.php';
 $xoopsLogger =& XoopsLogger::instance();
 $xoopsErrorHandler =& $xoopsLogger;
-$xoopsLogger->startTime();
-$xoopsLogger->startTime( 'ICMS Boot' );
+
+$xoopsLogger =& XoopsLogger::instance();
+
+$icmsTimer = IcmsTimer::instance();
+$icmsTimer->startTime('ImpressCMS');
+$icmsTimer->startTime( 'ImpressCMS Boot' );
 
 define("XOOPS_SIDEBLOCK_LEFT",1);
 define("XOOPS_SIDEBLOCK_RIGHT",2);
@@ -446,7 +450,9 @@ if (file_exists('./xoops_version.php')) {
 } elseif($xoopsUser) {
 	$xoopsUserIsAdmin = $xoopsUser->isAdmin(1);
 }
-$xoopsLogger->stopTime( 'ICMS Boot' );
-$xoopsLogger->startTime( 'Module init' );
+
+
+$icmsTimer->stopTime( 'ImpressCMS Boot' );
+$icmsTimer->startTime( 'Module init' );
 
 ?>
