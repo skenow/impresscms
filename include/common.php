@@ -25,6 +25,9 @@ function icms_autoload( $class ) {
 	if (file_exists( $path = ICMS_ROOT_PATH . "/kernel/$file.php" ) ) {
 		if ($debug) echo "<li>inc - $path</li>";
 		include_once $path;
+	} elseif(file_exists($path = ICMS_ROOT_PATH . "/kernel/" . str_replace('xoops', '', $file) . ".php")) {
+		if ($debug) echo "<li>inc - $path </li>";
+		include_once $path;
 	} elseif(file_exists( $path = ICMS_ROOT_PATH . "/class/$file.php" )) {
 		if ($debug) echo "<li>inc - $path</li>";
 		include_once $path;
@@ -145,11 +148,8 @@ global $xoopsLogger, $xoopsErrorHandler;
 //include_once ICMS_ROOT_PATH . '/class/logger.php';
 $xoopsLogger =& XoopsLogger::instance();
 $xoopsErrorHandler =& $xoopsLogger;
-
-$icmsTimer = IcmsTimer::instance();
-
-$icmsTimer->startTime('ImpressCMS');
-$icmsTimer->startTime( 'ImpressCMS Boot' );
+$xoopsLogger->startTime('ICMS');
+$xoopsLogger->startTime( 'ICMS Boot' );
 
 /**#@+
  * Constants
@@ -570,6 +570,6 @@ if ($icmsConfigPersona['multi_login']){
 // ################# Preload Trigger finishCoreBoot ##############
 $icmsPreloadHandler->triggerEvent('finishCoreBoot');
 
-$icmsTimer->stopTime( 'ImpressCMS Boot' );
-$icmsTimer->startTime( 'Module init' );
+$xoopsLogger->stopTime( 'ICMS Boot' );
+$xoopsLogger->startTime( 'Module init' );
 ?>
