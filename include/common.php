@@ -143,13 +143,15 @@ $xoopsSecurity = $icmsSecurity = new IcmsSecurity();
 $xoopsSecurity->checkSuperglobals();
 
 // ############## Activate error handler / logger class ##############
-global $xoopsLogger, $xoopsErrorHandler;
+global $xoopsLogger, $xoopsErrorHandler, $icmsTimer;
 
 //include_once ICMS_ROOT_PATH . '/class/logger.php';
 $xoopsLogger =& XoopsLogger::instance();
 $xoopsErrorHandler =& $xoopsLogger;
-$xoopsLogger->startTime('ICMS');
-$xoopsLogger->startTime( 'ICMS Boot' );
+$icmsTimer = IcmsTimer::instance(); 
+
+$icmsTimer->startTime('ImpressCMS'); 
+$icmsTimer->startTime( 'ImpressCMS Boot' ); 
 
 /**#@+
  * Constants
@@ -570,6 +572,6 @@ if ($icmsConfigPersona['multi_login']){
 // ################# Preload Trigger finishCoreBoot ##############
 $icmsPreloadHandler->triggerEvent('finishCoreBoot');
 
-$xoopsLogger->stopTime( 'ICMS Boot' );
-$xoopsLogger->startTime( 'Module init' );
+$icmsTimer->stopTime( 'ICMS Boot' );
+$icmsTimer->startTime( 'Module init' );
 ?>
