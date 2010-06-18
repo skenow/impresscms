@@ -14,7 +14,7 @@
 $xoopsOption['pagetype'] = 'user';
 
 include 'mainfile.php';
-$myts =& MyTextSanitizer::getInstance();
+$myts =& core_Textsanitizer::getInstance();
 
 // If not a user and invite needs one, redirect
 if ($icmsConfigUser['activation_type'] == 3 && $icmsConfigUser['allow_register'] == 0 && !is_object($icmsUser)) {
@@ -44,7 +44,7 @@ switch ( $op ) {
 		if ( empty($stop) ) {
 			$invite_code = substr(md5(uniqid(mt_rand(), 1)), 0, 8);
 			$xoopsDB =& Database::getInstance();
-			$myts =& MyTextSanitizer::getInstance();
+			$myts =& core_Textsanitizer::getInstance();
 			$sql = sprintf('INSERT INTO '.$xoopsDB->prefix('invites').' (invite_code, from_id, invite_to, invite_date, extra_info) VALUES (%s, %d, %s, %d, %s)',
 			$xoopsDB->quoteString(addslashes($invite_code)),
 			is_object($icmsUser)?$icmsUser->getVar('uid'):0,

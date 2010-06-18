@@ -305,14 +305,14 @@ class core_Object
 					case 'show':
 					case 'e':
 					case 'edit':
-						$ts =& MyTextSanitizer::getInstance();
+						$ts =& core_Textsanitizer::getInstance();
 						return $ts->htmlSpecialChars($ret);
 						break 1;
 					case 'p':
 					case 'preview':
 					case 'f':
 					case 'formpreview':
-						$ts =& MyTextSanitizer::getInstance();
+						$ts =& core_Textsanitizer::getInstance();
 						return $ts->htmlSpecialChars($ts->stripSlashesGPC($ret));
 						break 1;
 					case 'n':
@@ -325,7 +325,7 @@ class core_Object
 				switch (strtolower($format)) {
 					case 's':
 					case 'show':
-						$ts =& MyTextSanitizer::getInstance();
+						$ts =& core_Textsanitizer::getInstance();
 						$html = !empty($this->vars['dohtml']['value']) ? 1 : 0;
 						$xcode = (!isset($this->vars['doxcode']['value']) || $this->vars['doxcode']['value'] == 1) ? 1 : 0;
 						$smiley = (!isset($this->vars['dosmiley']['value']) || $this->vars['dosmiley']['value'] == 1) ? 1 : 0;
@@ -339,7 +339,7 @@ class core_Object
 						break 1;
 					case 'p':
 					case 'preview':
-						$ts =& MyTextSanitizer::getInstance();
+						$ts =& core_Textsanitizer::getInstance();
 						$html = !empty($this->vars['dohtml']['value']) ? 1 : 0;
 						$xcode = (!isset($this->vars['doxcode']['value']) || $this->vars['doxcode']['value'] == 1) ? 1 : 0;
 						$smiley = (!isset($this->vars['dosmiley']['value']) || $this->vars['dosmiley']['value'] == 1) ? 1 : 0;
@@ -349,7 +349,7 @@ class core_Object
 						break 1;
 					case 'f':
 					case 'formpreview':
-						$ts =& MyTextSanitizer::getInstance();
+						$ts =& core_Textsanitizer::getInstance();
 						return htmlspecialchars($ts->stripSlashesGPC($ret), ENT_QUOTES);
 						break 1;
 					case 'n':
@@ -372,12 +372,12 @@ class core_Object
 						break 1;
 					case 'p':
 					case 'preview':
-						$ts =& MyTextSanitizer::getInstance();
+						$ts =& core_Textsanitizer::getInstance();
 						return $ts->stripSlashesGPC($ret);
 						break 1;
 					case 'f':
 					case 'formpreview':
-						$ts =& MyTextSanitizer::getInstance();
+						$ts =& core_Textsanitizer::getInstance();
 						return htmlspecialchars($ts->stripSlashesGPC($ret), ENT_QUOTES);
 						break 1;
 					case 'n':
@@ -428,7 +428,7 @@ class core_Object
 	 * @access public
 	 */
 	function cleanVars() {
-		$ts =& MyTextSanitizer::getInstance();
+		$ts =& core_Textsanitizer::getInstance();
 		$existing_errors = $this->getErrors();
 		$this->_errors = array();
 		foreach ($this->vars as $k => $v) {

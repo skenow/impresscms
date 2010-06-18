@@ -31,8 +31,8 @@ function icms_debug($msg, $exit=false)
  */
 function icms_debug_vardump($var)
 {
-	if (class_exists('MyTextSanitizer')) {
-		$myts = MyTextSanitizer::getInstance();
+	if (class_exists('core_Textsanitizer')) {
+		$myts = core_Textsanitizer::getInstance();
 		icms_debug($myts->displayTarea(var_export($var, true)));
 	} else {
 		$var = var_export($var, true);

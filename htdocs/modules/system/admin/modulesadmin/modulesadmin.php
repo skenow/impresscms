@@ -817,7 +817,7 @@ function xoops_module_change($mid, $weight, $name) {
 	$module =& $module_handler->get($mid);
 	$module->setVar('weight', $weight);
 	$module->setVar('name', $name);
-	$myts =& MyTextSanitizer::getInstance();
+	$myts =& core_Textsanitizer::getInstance();
 	if (!$module_handler->insert($module)) {
 		$ret = "<p>".sprintf(_MD_AM_FAILORDER, "<b>".$myts->stripSlashesGPC($name)."</b>")."&nbsp;"._MD_AM_ERRORSC."<br />";
 		$ret .= $module->getHtmlErrors()."</p>";

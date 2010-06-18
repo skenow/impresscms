@@ -14,8 +14,8 @@
 
 $xoopsOption['pagetype'] = "pmsg";
 include_once "mainfile.php";
-include_once ICMS_ROOT_PATH.'/class/module.textsanitizer.php';
-$myts =& MyTextSanitizer::getInstance();
+//include_once ICMS_ROOT_PATH.'/class/module.textsanitizer.php';
+$myts =& core_Textsanitizer::getInstance();
 
 if ( !is_object($icmsUser) ) {
 	redirect_header("user.php",0);

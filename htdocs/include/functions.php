@@ -27,7 +27,7 @@ include_once 'jalali.php';
 function xoops_header($closehead=true)
 {
 	global $icmsConfig, $xoopsTheme, $icmsConfigPlugins, $icmsConfigMetaFooter;
-	$myts =& MyTextSanitizer::getInstance();
+	$myts =& core_Textsanitizer::getInstance();
 
 	if(!headers_sent())
 	{
@@ -709,7 +709,7 @@ function &xoops_gethandler($name, $optional = false )
 function xoops_getrank($rank_id =0, $posts = 0)
 {
 	$db =& Database::getInstance();
-	$myts =& MyTextSanitizer::getInstance();
+	$myts =& core_Textsanitizer::getInstance();
 	$rank_id = (int) ($rank_id);
 	$posts = (int) ($posts);
 	if($rank_id != 0)
@@ -1523,7 +1523,7 @@ function icms_getLinkedUnameFromId($userid, $name = false, $users = array (), $w
 		}
 		if(is_object($user))
 		{
-			$ts = & MyTextSanitizer::getInstance();
+			$ts = & core_Textsanitizer::getInstance();
 			$username = $user->getVar('uname');
 			$fullname = '';
 			$fullname2 = $user->getVar('name');

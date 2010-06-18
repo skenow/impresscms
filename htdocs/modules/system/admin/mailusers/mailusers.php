@@ -134,7 +134,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 		echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/mailusers/images/mailusers_big.png)">'._MD_AM_MLUS.'</div><br />';
 		//OpenTable();
 		if ( $added_count > 0 ) {
-			$myts =& MyTextSanitizer::getInstance();
+			$myts =& core_Textsanitizer::getInstance();
 			$xoopsMailer =& getMailer();
 			for ( $i = 0; $i < $added_count; $i++) {
 				$xoopsMailer->setToUsers($added[$i]);

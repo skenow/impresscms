@@ -30,7 +30,7 @@ function textsanitizer_syntaxhighlighthtml(&$ts, $text) {
  */
 function textsanitizer_geshi_html_highlight($source) {
 	if ( !@include_once ICMS_LIBRARIES_PATH . '/geshi/geshi.php' ) return false;
-	$source = MyTextSanitizer::undoHtmlSpecialChars($source);
+	$source = core_Textsanitizer::undoHtmlSpecialChars($source);
 
 	// Create the new GeSHi object, passing relevant stuff
 	$geshi = new GeSHi($source, 'html4strict');

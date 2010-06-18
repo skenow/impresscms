@@ -27,7 +27,7 @@ $email = (isset($_GET['email']))?trim(StopXSS($_GET['email'])):((isset($_POST['e
 
 if($email == '') {redirect_header('user.php',2,_US_SORRYNOTFOUND);}
 
-$myts =& MyTextSanitizer::getInstance();
+$myts =& core_Textsanitizer::getInstance();
 $member_handler =& xoops_gethandler('member');
 $criteria = new core_CriteriaCompo();
 $criteria->add(new core_Criteria('email', $myts->addSlashes($email)));

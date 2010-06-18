@@ -231,7 +231,7 @@ if($op == 'actv')
 			{
 				if($icmsConfigUser['activation_type'] == 2)
 				{
-					$myts = MyTextSanitizer::getInstance();
+					$myts = core_Textsanitizer::getInstance();
 					$xoopsMailer = getMailer();
 					$xoopsMailer->useMail();
 					$xoopsMailer->setTemplate('activated.tpl');

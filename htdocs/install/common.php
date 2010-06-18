@@ -264,8 +264,8 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST' || !$xoopsSecurity->checkReferer(XOOPS_
 $xoopsDB =& XoopsDatabaseFactory::getDatabaseConnection();
 
 // ################# Include required files ##############
-require_once XOOPS_ROOT_PATH.'/kernel/object.php';
-require_once XOOPS_ROOT_PATH.'/class/criteria.php';
+//require_once XOOPS_ROOT_PATH.'/kernel/object.php';
+//require_once XOOPS_ROOT_PATH.'/class/criteria.php';
 
 // #################### Include text sanitizer ##################
 include_once XOOPS_ROOT_PATH."/class/module.textsanitizer.php";

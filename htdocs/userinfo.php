@@ -49,7 +49,7 @@ if($uid <= 0)
 	redirect_header('index.php', 3, _US_SELECTNG);
 }
 
-include_once ICMS_ROOT_PATH.'/class/module.textsanitizer.php';
+//include_once ICMS_ROOT_PATH.'/class/module.textsanitizer.php';
 
 $gperm_handler = xoops_gethandler('groupperm');
 $groups = is_object($icmsUser) ? $icmsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
@@ -99,7 +99,7 @@ else
 	$xoopsTpl->assign('user_ownpage', false);
 }
 
-$myts = MyTextSanitizer::getInstance();
+$myts = core_Textsanitizer::getInstance();
 if(is_object($icmsUser) && $isAdmin)
 {
 	icms_makeSmarty(array(

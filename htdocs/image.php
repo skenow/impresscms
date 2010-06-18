@@ -29,9 +29,9 @@ include './mainfile.php';
 /** Include the core functions */
 include ICMS_ROOT_PATH.'/include/functions.php';
 /** Include the logging functions */
-include_once ICMS_ROOT_PATH.'/class/logger.php';
+//include_once ICMS_ROOT_PATH.'/class/logger.php';
 /** Include the textsanitizer class */
-include_once ICMS_ROOT_PATH."/class/module.textsanitizer.php";
+//include_once ICMS_ROOT_PATH."/class/module.textsanitizer.php";
 $xoopsLogger =& core_Logger::instance();
 $xoopsLogger->startTime();
 /** Include the database class */
@@ -41,9 +41,9 @@ define('XOOPS_DB_PROXY', 1);
 $xoopsDB =& XoopsDatabaseFactory::getDatabaseConnection();
 // ################# Include class manager file ##############
 /** Require the object class */
-require_once ICMS_ROOT_PATH.'/kernel/object.php';
+//require_once ICMS_ROOT_PATH.'/kernel/object.php';
 /** Require the criteria class, for building queries */
-require_once ICMS_ROOT_PATH.'/class/criteria.php';
+//require_once ICMS_ROOT_PATH.'/class/criteria.php';
 $imagehandler =& xoops_gethandler('image');
 $criteria = new core_CriteriaCompo(new core_Criteria('i.image_display', 1));
 $criteria->add(new core_Criteria('i.image_id', $image_id));

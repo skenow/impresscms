@@ -202,7 +202,7 @@ function b_system_info_show($options)
 {
 	global $icmsConfig, $icmsUser;
 	$xoopsDB =& Database::getInstance();
-	$myts =& MyTextSanitizer::getInstance();
+	$myts =& core_Textsanitizer::getInstance();
 	$block = array();
 	if (!empty($options[3])) {
 		$block['showgroups'] = true;

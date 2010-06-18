@@ -27,7 +27,7 @@ class IcmsPreloadAdsense extends core_Preloaditem {
 	}
 
 	/**
-	 * Function to be triggered when entering in MyTextSanitizer::displayTarea() function
+	 * Function to be triggered when entering in core_Textsanitizer::displayTarea() function
 	 *
 	 * The $array var is structured like this:
 	 * $array[0] = $text
@@ -37,7 +37,7 @@ class IcmsPreloadAdsense extends core_Preloaditem {
 	 * $array[4] = $image
 	 * $array[5] = $br
 	 *
-	 * @param array array containing parameters passed by MyTextSanitizer::displayTarea()
+	 * @param array array containing parameters passed by core_Textsanitizer::displayTarea()
 	 *
 	 * @return	void
 	 */
@@ -46,7 +46,7 @@ class IcmsPreloadAdsense extends core_Preloaditem {
 	}
 
 	/**
-	 * Function to be triggered when entering in MyTextSanitizer::displayTarea() function
+	 * Function to be triggered when entering in core_Textsanitizer::displayTarea() function
 	 *
 	 * The $array var is structured like this:
 	 * $array[0] = $text
@@ -56,7 +56,7 @@ class IcmsPreloadAdsense extends core_Preloaditem {
 	 * $array[4] = $image
 	 * $array[5] = $br
 	 *
-	 * @param array array containing parameters passed by MyTextSanitizer::displayTarea()
+	 * @param array array containing parameters passed by core_Textsanitizer::displayTarea()
 	 *
 	 * @return	void
 	 */

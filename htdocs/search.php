@@ -88,7 +88,7 @@ if ($andor == 'exact') $label_andor = _SR_EXACT;
 $xoopsTpl->assign("label_search_type", _SR_TYPE . ':');
 $xoopsTpl->assign("search_type", $label_andor);
 
-$myts =& MyTextSanitizer::getInstance();
+$myts =& core_Textsanitizer::getInstance();
 if ($action != 'showallbyuser') {
 	if ( $andor != "exact" ) {
 		$ignored_queries = array(); // holds kewords that are shorter than allowed minmum length

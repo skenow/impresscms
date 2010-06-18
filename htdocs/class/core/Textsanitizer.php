@@ -10,7 +10,7 @@
  * @since		XOOPS
  * @author		http://www.xoops.org The XOOPS Project
  * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id$
+ * @version		$Id: module.textsanitizer.php 19450 2010-06-18 14:15:29Z malanciault $
  */
 
 /**
@@ -25,7 +25,7 @@
  * @author	  Goghs Cheng
  * @copyright	(c) 2000-2003 The Xoops Project - www.xoops.org
  */
-class MyTextSanitizer
+class core_Textsanitizer
 {
 	/**
 	 * @public	array
@@ -49,7 +49,7 @@ class MyTextSanitizer
 	 *
 	 * @todo Sofar, this does nuttin' ;-)
 	 **/
-	function MyTextSanitizer()
+	function core_Textsanitizer()
 	{
 	}
 
@@ -82,7 +82,7 @@ class MyTextSanitizer
 		static $instance;
 		if(!isset($instance))
 		{
-			$instance = new MyTextSanitizer();
+			$instance = new core_Textsanitizer();
 		}
 		return $instance;
 	}
@@ -565,11 +565,11 @@ class MyTextSanitizer
 			$patterns = "/\[code](.*)\[\/code\]/esU";
 			if($image != 0)
 			{
-				$replacements = "'<div class=\"xoopsCode\">'.MyTextSanitizer::textsanitizer_syntaxhighlight(MyTextSanitizer::codeSanitizer('$1')).'</div>'";
+				$replacements = "'<div class=\"xoopsCode\">'.core_Textsanitizer::textsanitizer_syntaxhighlight(core_Textsanitizer::codeSanitizer('$1')).'</div>'";
 			}
 			else
 			{
-				$replacements = "'<div class=\"xoopsCode\">'.MyTextSanitizer::textsanitizer_syntaxhighlight(MyTextSanitizer::codeSanitizer('$1',0)).'</div>'";
+				$replacements = "'<div class=\"xoopsCode\">'.core_Textsanitizer::textsanitizer_syntaxhighlight(core_Textsanitizer::codeSanitizer('$1',0)).'</div>'";
 			}
 			$text = preg_replace($patterns, $replacements, $text);
 		}
@@ -879,5 +879,12 @@ class MyTextSanitizer
 
 		return $code;
 	}
+}
+
+/**
+ * For backward compat
+ */
+class MyTextsanitizer extends core_Textsanitizer {
+
 }
 ?>

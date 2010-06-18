@@ -144,7 +144,7 @@ class XoopsUser extends core_Object
 			$user =& $member_handler->getUser($userid);
 			if(is_object($user))
 			{
-				$ts =& MyTextSanitizer::getInstance();
+				$ts =& core_Textsanitizer::getInstance();
 				if($usereal)
 				{
 					$name = $user->getVar('name');
@@ -199,7 +199,7 @@ class XoopsUser extends core_Object
 	{
 		global $icmsConfig, $icmsConfigUser;
 
-		$myts =& MyTextSanitizer::getInstance();
+		$myts =& core_Textsanitizer::getInstance();
 
 		if(!$icmsConfigUser['welcome_msg']) {return true;}
 
@@ -791,7 +791,7 @@ class XoopsUserHandler extends core_ObjectHandler
 	function userCheck($login_name, $uname, $email, $pass, $vpass)
 	{
 		global $icmsConfigUser, $xoopsDB;
-		$myts =& MyTextSanitizer::getInstance();
+		$myts =& core_Textsanitizer::getInstance();
 		include_once ICMS_ROOT_PATH . '/kernel/icmsstopspammer.php';
 		$stop = '';
 		if (!checkEmail($email)) {

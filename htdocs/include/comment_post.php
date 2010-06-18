@@ -94,7 +94,7 @@ switch ( $op ) {
 		include ICMS_ROOT_PATH . '/include/comment_delete.php';
 		break;
 	case "preview":
-		$myts =& MyTextSanitizer::getInstance();
+		$myts =& core_Textsanitizer::getInstance();
 		$doimage = 1;
 		$com_title = $myts->htmlSpecialChars($myts->stripSlashesGPC($_POST['com_title']));
 		if ($dohtml != 0) {

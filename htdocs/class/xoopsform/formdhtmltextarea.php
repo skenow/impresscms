@@ -123,7 +123,7 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 	function render()
 	{
 		global $icmsConfigPlugins, $icmsConfigMultilang;
-		$myts =& MyTextSanitizer::getInstance();
+		$myts =& core_Textsanitizer::getInstance();
 		$editor = false;
 		if ( $this->htmlEditor && is_object( $this->htmlEditor ) ) {
 			if ( !isset( $this->htmlEditor->isEnabled ) || $this->htmlEditor->isEnabled ) {
@@ -218,7 +218,7 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 	 */
 	function _renderSmileys()
 	{
-		$myts =& MyTextSanitizer::getInstance();
+		$myts =& core_Textsanitizer::getInstance();
 		$smiles =& $myts->getSmileys();
 		$ret = '';
 		$count = count($smiles);

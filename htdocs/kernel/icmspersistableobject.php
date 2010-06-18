@@ -398,7 +398,7 @@ class IcmsPersistableObject extends core_Object {
 
 		 if($highlight && isset($_GET['keywords']))
 		 {
-			$myts =& MyTextSanitizer::getInstance();
+			$myts =& core_Textsanitizer::getInstance();
 			$keywords=$myts->htmlSpecialChars(trim(urldecode($_GET['keywords'])));
 			$h= new SmartHighlighter ($keywords, true , 'smart_highlighter');
 			foreach($this->handler->highlightFields as $field) {
@@ -628,7 +628,7 @@ class IcmsPersistableObject extends core_Object {
 		global $icmsModuleConfig;
 
 		$ret = $this->getVar($key, 'n');
-		$myts = MyTextSanitizer::getInstance();
+		$myts = core_Textsanitizer::getInstance();
 
 		$control = isset($this->controls[$key]) ? $this->controls[$key] : false;
 		$form_editor = isset($control['form_editor']) ? $control['form_editor'] : 'textarea';
@@ -686,7 +686,7 @@ class IcmsPersistableObject extends core_Object {
 					case 's':
 					case 'show':
 						// ML Hack by marcan
-						$ts =& MyTextSanitizer::getInstance();
+						$ts =& core_Textsanitizer::getInstance();
 						$ret = $ts->htmlSpecialChars($ret);
 
 						if (method_exists($myts, 'formatForML')) {
@@ -698,7 +698,7 @@ class IcmsPersistableObject extends core_Object {
 						// End of ML Hack by marcan
 
 					case 'clean':
-						$ts =& MyTextSanitizer::getInstance();
+						$ts =& core_Textsanitizer::getInstance();
 
 						$ret = icms_html2text($ret);
 						$ret = icms_purifyText($ret);
@@ -709,14 +709,14 @@ class IcmsPersistableObject extends core_Object {
 
 					case 'e':
 					case 'edit':
-						$ts =& MyTextSanitizer::getInstance();
+						$ts =& core_Textsanitizer::getInstance();
 						return $ts->htmlSpecialChars($ret);
 						break 1;
 					case 'p':
 					case 'preview':
 					case 'f':
 					case 'formpreview':
-						$ts =& MyTextSanitizer::getInstance();
+						$ts =& core_Textsanitizer::getInstance();
 						return $ts->htmlSpecialChars($ts->stripSlashesGPC($ret));
 						break 1;
 					case 'n':
@@ -805,7 +805,7 @@ class IcmsPersistableObject extends core_Object {
 				switch (strtolower($format)) {
 					case 's':
 					case 'show':
-						$ts = MyTextSanitizer::getInstance();
+						$ts = core_Textsanitizer::getInstance();
 						$html = !empty($this->vars['dohtml']['value']) ? 1 : 0;
 
 						$xcode = (!isset($this->vars['doxcode']['value']) || $this->vars['doxcode']['value'] == 1) ? 1 : 0;
@@ -834,7 +834,7 @@ class IcmsPersistableObject extends core_Object {
 						break 1;
 					case 'p':
 					case 'preview':
-						$ts = MyTextSanitizer::getInstance();
+						$ts = core_Textsanitizer::getInstance();
 						$html = !empty($this->vars['dohtml']['value']) ? 1 : 0;
 						$xcode = (!isset($this->vars['doxcode']['value']) || $this->vars['doxcode']['value'] == 1) ? 1 : 0;
 						$smiley = (!isset($this->vars['dosmiley']['value']) || $this->vars['dosmiley']['value'] == 1) ? 1 : 0;
@@ -844,7 +844,7 @@ class IcmsPersistableObject extends core_Object {
 						break 1;
 					case 'f':
 					case 'formpreview':
-						$ts = MyTextSanitizer::getInstance();
+						$ts = core_Textsanitizer::getInstance();
 						return htmlspecialchars($ts->stripSlashesGPC($ret), ENT_QUOTES);
 						break 1;
 					case 'n':
@@ -870,12 +870,12 @@ class IcmsPersistableObject extends core_Object {
 						break 1;
 					case 'p':
 					case 'preview':
-						$ts = MyTextSanitizer::getInstance();
+						$ts = core_Textsanitizer::getInstance();
 						return $ts->stripSlashesGPC($ret);
 						break 1;
 					case 'f':
 					case 'formpreview':
-						$ts = MyTextSanitizer::getInstance();
+						$ts = core_Textsanitizer::getInstance();
 						return htmlspecialchars($ts->stripSlashesGPC($ret), ENT_QUOTES);
 						break 1;
 					case 'n':

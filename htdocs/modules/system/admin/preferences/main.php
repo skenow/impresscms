@@ -86,7 +86,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 			$title = (! defined ( $config [$i]->getVar ( 'conf_desc' ) ) || constant ( $config [$i]->getVar ( 'conf_desc' ) ) == '') ? constant ( $config [$i]->getVar ( 'conf_title' ) ) : constant ( $config [$i]->getVar ( 'conf_title' ) ) . '<img class="helptip" src="./images/view_off.png" alt="Vew help text" /><span class="helptext">' . constant ( $config [$i]->getVar ( 'conf_desc' ) ) . '</span>';
 			switch ( $config [$i]->getVar ( 'conf_formtype' )) {
 				case 'textsarea' :
-					$myts = & MyTextSanitizer::getInstance ();
+					$myts = & core_Textsanitizer::getInstance ();
 					if ($config [$i]->getVar ( 'conf_valuetype' ) == 'array') {
 						// this is exceptional.. only when value type is array, need a smarter way for this
 						$ele = ($config [$i]->getVar ( 'conf_value' ) != '') ? new XoopsFormTextArea ( $title, $config [$i]->getVar ( 'conf_name' ), $myts->htmlSpecialChars ( implode ( '|', $config [$i]->getConfValueForOutput () ) ), 5, 50 ) : new XoopsFormTextArea ( $title, $config [$i]->getVar ( 'conf_name' ), '', 5, 50 );
@@ -95,7 +95,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 					}
 				break;
 				case 'textarea' :
-					$myts = & MyTextSanitizer::getInstance ();
+					$myts = & core_Textsanitizer::getInstance ();
 					if ($config [$i]->getVar ( 'conf_valuetype' ) == 'array') {
 						// this is exceptional.. only when value type is array, need a smarter way for this
 						$ele = ($config [$i]->getVar ( 'conf_value' ) != '') ? new XoopsFormTextArea ( $title, $config [$i]->getVar ( 'conf_name' ), $myts->htmlSpecialChars ( implode ( '|', $config [$i]->getConfValueForOutput () ) ), 5, 50 ) : new XoopsFormTextArea ( $title, $config [$i]->getVar ( 'conf_name' ), '', 5, 50 );
@@ -288,19 +288,19 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 					$ele->addOptionArray ( array ('0' => _NOCACHE, '30' => sprintf ( _SECONDS, 30 ), '60' => _MINUTE, '300' => sprintf ( _MINUTES, 5 ), '1800' => sprintf ( _MINUTES, 30 ), '3600' => _HOUR, '18000' => sprintf ( _HOURS, 5 ), '86400' => _DAY, '259200' => sprintf ( _DAYS, 3 ), '604800' => _WEEK ) );
 				break;
 				case 'password' :
-					$myts = & MyTextSanitizer::getInstance ();
+					$myts = & core_Textsanitizer::getInstance ();
 					$ele = new XoopsFormPassword ( $title, $config [$i]->getVar ( 'conf_name' ), 50, 255, $myts->htmlSpecialChars ( $config [$i]->getConfValueForOutput () ), false, ($icmsConfigUser['pass_level']?'password_adv':'') );
 				break;
 				case 'color' :
-					$myts = & MyTextSanitizer::getInstance ();
+					$myts = & core_Textsanitizer::getInstance ();
 					$ele = new XoopsFormColorPicker ( $title, $config [$i]->getVar ( 'conf_name' ), $myts->htmlSpecialChars ( $config [$i]->getConfValueForOutput () ) );
 				break;
 				case 'hidden' :
-					$myts = & MyTextSanitizer::getInstance ();
+					$myts = & core_Textsanitizer::getInstance ();
 					$ele = new XoopsFormHidden ( $config [$i]->getVar ( 'conf_name' ), $myts->htmlSpecialChars ( $config [$i]->getConfValueForOutput () ) );
 				break;
 				case 'select_pages' :
-					$myts = & MyTextSanitizer::getInstance ();
+					$myts = & core_Textsanitizer::getInstance ();
 					if (!file_exists(ICMS_ROOT_PATH.'/kernel/content.php')){
 						$content_handler = & icms_getModuleHandler ( 'content', 'content' );
 					}else{
@@ -314,7 +314,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 				##############################################################################################
 				case 'select_image' :
 					include_once ICMS_ROOT_PATH . '/class/xoopsform/formimage.php';
-					$myts = & MyTextSanitizer::getInstance ();
+					$myts = & core_Textsanitizer::getInstance ();
 					$ele = new MastopFormSelectImage ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
 				break;
 				case 'select_paginati' :
@@ -340,7 +340,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 				break;
 				case 'textbox' :
 				default :
-					$myts = & MyTextSanitizer::getInstance ();
+					$myts = & core_Textsanitizer::getInstance ();
 					$ele = new XoopsFormText ( $title, $config [$i]->getVar ( 'conf_name' ), 50, 255, $myts->htmlspecialchars ( $config [$i]->getConfValueForOutput () ) );
 				break;
 			}
@@ -393,7 +393,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 			$title = (! defined ( $config [$i]->getVar ( 'conf_desc' ) ) || constant ( $config [$i]->getVar ( 'conf_desc' ) ) == '') ? constant ( $config [$i]->getVar ( 'conf_title' ) ) : constant ( $config [$i]->getVar ( 'conf_title' ) ) . '<img class="helptip" src="./images/view_off.png" alt="Vew help text" /><span class="helptext">' . constant ( $config [$i]->getVar ( 'conf_desc' ) ) . '</span>';
 			switch ( $config [$i]->getVar ( 'conf_formtype' )) {
 				case 'textsarea' :
-					$myts = & MyTextSanitizer::getInstance ();
+					$myts = & core_Textsanitizer::getInstance ();
 					if ($config [$i]->getVar ( 'conf_valuetype' ) == 'array') {
 						// this is exceptional.. only when value type is arrayneed a smarter way for this
 						$ele = ($config [$i]->getVar ( 'conf_value' ) != '') ? new XoopsFormTextArea ( $title, $config [$i]->getVar ( 'conf_name' ), $myts->htmlSpecialChars ( implode ( '|', $config [$i]->getConfValueForOutput () ) ), 5, 50 ) : new XoopsFormTextArea ( $title, $config [$i]->getVar ( 'conf_name' ), '', 5, 50 );
@@ -402,7 +402,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 					}
 				break;
 				case 'textarea' :
-					$myts = & MyTextSanitizer::getInstance ();
+					$myts = & core_Textsanitizer::getInstance ();
 					if ($config [$i]->getVar ( 'conf_valuetype' ) == 'array') {
 						// this is exceptional.. only when value type is arrayneed a smarter way for this
 						$ele = ($config [$i]->getVar ( 'conf_value' ) != '') ? new XoopsFormTextArea ( $title, $config [$i]->getVar ( 'conf_name' ), $myts->htmlSpecialChars ( implode ( '|', $config [$i]->getConfValueForOutput () ) ), 5, 50 ) : new XoopsFormTextArea ( $title, $config [$i]->getVar ( 'conf_name' ), '', 5, 50 );
@@ -452,19 +452,19 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 					$ele = new XoopsFormSelectUser ( $title, $config [$i]->getVar ( 'conf_name' ), false, $config [$i]->getConfValueForOutput (), 5, true );
 				break;
 				case 'password' :
-					$myts = & MyTextSanitizer::getInstance ();
+					$myts = & core_Textsanitizer::getInstance ();
 					$ele = new XoopsFormPassword ( $title, $config [$i]->getVar ( 'conf_name' ), 50, 255, $myts->htmlSpecialChars ( $config [$i]->getConfValueForOutput () ) );
 				break;
 				case 'color' :
-					$myts = & MyTextSanitizer::getInstance ();
+					$myts = & core_Textsanitizer::getInstance ();
 					$ele = new XoopsFormColorPicker ( $title, $config [$i]->getVar ( 'conf_name' ), $myts->htmlSpecialChars ( $config [$i]->getConfValueForOutput () ) );
 				break;
 				case 'hidden' :
-					$myts = & MyTextSanitizer::getInstance ();
+					$myts = & core_Textsanitizer::getInstance ();
 					$ele = new XoopsFormHidden ( $config [$i]->getVar ( 'conf_name' ), $myts->htmlSpecialChars ( $config [$i]->getConfValueForOutput () ) );
 				break;
 				case 'select_pages' :
-					$myts = & MyTextSanitizer::getInstance ();
+					$myts = & core_Textsanitizer::getInstance ();
 					if (!file_exists(ICMS_ROOT_PATH.'/kernel/content.php')){
 						$content_handler = & icms_getModuleHandler ( 'content', 'content' );
 					}else{
@@ -475,7 +475,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 				break;
 				case 'textbox' :
 				default :
-					$myts = & MyTextSanitizer::getInstance ();
+					$myts = & core_Textsanitizer::getInstance ();
 					$ele = new XoopsFormText ( $title, $config [$i]->getVar ( 'conf_name' ), 50, 255, $myts->htmlSpecialChars ( $config [$i]->getConfValueForOutput () ) );
 				break;
 			}

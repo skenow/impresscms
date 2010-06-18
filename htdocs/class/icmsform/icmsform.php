@@ -625,7 +625,7 @@ class IcmsForm extends XoopsThemeForm {
 		if ( $withtags ) {
 			$js .= "\n<!-- Start Form Validation JavaScript //-->\n<script type='text/javascript'>\n<!--//\n";
 		}
-		$myts =& MyTextSanitizer::getInstance();
+		$myts =& core_Textsanitizer::getInstance();
 		$formname = $this->getName();
 		$js .= "function xoopsFormValidate_{$formname}(myform) {";
 		// First, output code to check required elements

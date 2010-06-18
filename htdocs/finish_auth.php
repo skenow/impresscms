@@ -23,7 +23,7 @@ $xoopsOption['pagetype'] = 'user';
 include_once 'mainfile.php';
 
 $redirect_url = $_SESSION['frompage'];
-$myts = MyTextSanitizer :: getInstance();
+$myts = core_Textsanitizer :: getInstance();
 $member_handler = xoops_gethandler('member');
 
 /** Including the authentication class */
