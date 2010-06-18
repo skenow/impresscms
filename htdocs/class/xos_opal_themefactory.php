@@ -1,8 +1,8 @@
 <?php
 /**
- * xos_opal_ThemeFactory
+ * core_ThemeFactory
  *
- * Gateway file to include class/theme.php when xos_opal_ThemeFactory class is needed
+ * Gateway file to include class/theme.php when core_ThemeFactory class is needed
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
