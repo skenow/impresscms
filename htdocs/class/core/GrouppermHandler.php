@@ -14,37 +14,10 @@
  *
  * @package	core
  * @subpackage	groupperm
- * @version		$Id$
+ * @version		$Id: groupperm.php 19450 2010-06-18 14:15:29Z malanciault $
  */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
-
-/**
- * A group permission
- *
- * These permissions are managed through a {@link XoopsGroupPermHandler} object
- *
- * @package     kernel
- * @subpackage	member
- * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
- */
-class XoopsGroupPerm extends core_Object
-{
-	/**
-	 * Constructor
-	 *
-	 */
-	function XoopsGroupPerm()
-	{
-		$this->core_Object();
-		$this->initVar('gperm_id', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('gperm_groupid', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('gperm_itemid', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('gperm_modid', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('gperm_name', XOBJ_DTYPE_OTHER, null, false);
-	}
-}
 
 /**
  * XOOPS group permission handler class.
@@ -53,23 +26,23 @@ class XoopsGroupPerm extends core_Object
  * of XOOPS group permission class objects.
  * This class is an abstract class to be implemented by child group permission classes.
  *
- * @see          XoopsGroupPerm
+ * @see          core_Groupperm
  * @author       Kazumi Ono  <onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class XoopsGroupPermHandler extends core_ObjectHandler
+class core_GrouppermHandler extends core_ObjectHandler
 {
 	public static $_cachedRights;
-	
+
 	/**
-	 * Create a new {@link XoopsGroupPerm}
+	 * Create a new {@link core_Groupperm}
 	 *
 	 * @return	bool    $isNew  Flag the object as "new"?
 	 * @see htdocs/kernel/core_ObjectHandler#create()
 	 */
 	function &create($isNew = true)
 	{
-		$perm = new XoopsGroupPerm();
+		$perm = new core_Groupperm();
 		if ($isNew) {
 			$perm->setNew();
 		}
@@ -81,7 +54,7 @@ class XoopsGroupPermHandler extends core_ObjectHandler
 	 *
 	 * @param	int $id ID
 	 *
-	 * @return	object  {@link XoopsGroupPerm}, FALSE on fail
+	 * @return	object  {@link core_Groupperm}, FALSE on fail
 	 * @see htdocs/kernel/core_ObjectHandler#get($int_id)
 	 */
 	function &get($id)
@@ -95,7 +68,7 @@ class XoopsGroupPermHandler extends core_ObjectHandler
 			}
 			$numrows = $this->db->getRowsNum($result);
 			if ( $numrows == 1 ) {
-				$perm = new XoopsGroupPerm();
+				$perm = new core_Groupperm();
 				$perm->assignVars($this->db->fetchArray($result));
 			}
 		}
@@ -103,9 +76,9 @@ class XoopsGroupPermHandler extends core_ObjectHandler
 	}
 
 	/**
-	 * Store a {@link XoopsGroupPerm}
+	 * Store a {@link core_Groupperm}
 	 *
-	 * @param	object  &$perm  {@link XoopsGroupPerm} object
+	 * @param	object  &$perm  {@link core_Groupperm} object
 	 *
 	 * @return	bool    TRUE on success
 	 * @see htdocs/kernel/core_ObjectHandler#insert($object)
@@ -144,7 +117,7 @@ class XoopsGroupPermHandler extends core_ObjectHandler
 	}
 
 	/**
-	 * Delete a {@link XoopsGroupPerm}
+	 * Delete a {@link core_Groupperm}
 	 *
 	 * @param	object  &$perm
 	 *
@@ -167,12 +140,12 @@ class XoopsGroupPermHandler extends core_ObjectHandler
 	}
 
 	/**
-	 * Retrieve multiple {@link XoopsGroupPerm}s
+	 * Retrieve multiple {@link core_Groupperm}s
 	 *
 	 * @param	object  $criteria   {@link core_CriteriaElement}
 	 * @param	bool    $id_as_key  Use IDs as array keys?
 	 *
-	 * @return	array   Array of {@link XoopsGroupPerm}s
+	 * @return	array   Array of {@link core_Groupperm}s
 	 */
 	function getObjects($criteria = null, $id_as_key = false)
 	{
@@ -189,7 +162,7 @@ class XoopsGroupPermHandler extends core_ObjectHandler
 			return $ret;
 		}
 		while ($myrow = $this->db->fetchArray($result)) {
-			$perm = new XoopsGroupPerm();
+			$perm = new core_Groupperm();
 			$perm->assignVars($myrow);
 			if (!$id_as_key) {
 				$ret[] =& $perm;
@@ -202,7 +175,7 @@ class XoopsGroupPermHandler extends core_ObjectHandler
 	}
 
 	/**
-	 * Count some {@link XoopsGroupPerm}s
+	 * Count some {@link core_Groupperm}s
 	 *
 	 * @param	object  $criteria   {@link core_CriteriaElement}
 	 *
