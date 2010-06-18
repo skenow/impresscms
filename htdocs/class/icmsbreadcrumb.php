@@ -2,7 +2,7 @@
 /**
 * icmsbreadcrumb
 *
-* 
+*
 *
 * @copyright      http://www.impresscms.org/ The ImpressCMS Project
 * @license         LICENSE.txt
@@ -40,7 +40,7 @@ class IcmsBreadcrumb {
 
 	function render($fetchOnly=false)
 	{
-		include_once ICMS_ROOT_PATH . '/class/template.php';
+		//include_once ICMS_ROOT_PATH . '/class/template.php';
 
 		$this->_tpl = new core_Tpl();
 		$this->_tpl->assign('icms_breadcrumb_items', $this->items);

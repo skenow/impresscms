@@ -52,7 +52,7 @@ class IcmsPrinterFriendly
 		 * @todo make the output XHTML compliant
 		 */
 
-		include_once ICMS_ROOT_PATH . '/class/template.php';
+		//include_once ICMS_ROOT_PATH . '/class/template.php';
 
 		$this->_tpl = new core_Tpl();
 

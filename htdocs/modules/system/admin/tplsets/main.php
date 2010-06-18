@@ -279,7 +279,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 					if (!$tpltpl_handler->insert($tplfile)) {
 						$err[] = 'Could not insert template file to the database.';
 					} else {
-						include_once ICMS_ROOT_PATH.'/class/template.php';
+						//include_once ICMS_ROOT_PATH.'/class/template.php';
 						$xoopsTpl = new core_Tpl();
 						if ($xoopsTpl->is_cached('db:'.$tplfile->getVar('tpl_file'))) {
 							if (!$xoopsTpl->clear_cache('db:'.$tplfile->getVar('tpl_file'))) {

@@ -515,7 +515,7 @@ class IcmsPersistableTable {
 	{
 		global $impresscms;
 
-		include_once ICMS_ROOT_PATH . '/class/template.php';
+		//include_once ICMS_ROOT_PATH . '/class/template.php';
 
 		$this->_tpl = new core_Tpl();
 

@@ -78,7 +78,7 @@ class IcmsPersistableSingleView {
 
 	function render($fetchOnly=false, $debug=false)
 	{
-		include_once ICMS_ROOT_PATH . '/class/template.php';
+		//include_once ICMS_ROOT_PATH . '/class/template.php';
 
 		$this->_tpl = new core_Tpl();
 		$vars = $this->_object->vars;

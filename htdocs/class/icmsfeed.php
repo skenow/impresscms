@@ -15,7 +15,7 @@ if (!defined('ICMS_ROOT_PATH')) {
 	exit();
 }
 
-include_once ICMS_ROOT_PATH . '/class/template.php';
+//include_once ICMS_ROOT_PATH . '/class/template.php';
 
 class IcmsFeed {
 

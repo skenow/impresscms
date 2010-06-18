@@ -275,7 +275,6 @@ class core_Module extends core_Object
 	function displayAdminMenu($currentoption = 0, $breadcrumb = '', $submenus = false, $currentsub = -1)
 	{
 		global $icmsModule, $icmsConfig;
-		include_once ICMS_ROOT_PATH.'/class/template.php';
 		icms_loadLanguageFile($icmsModule->getVar('dirname'), 'modinfo');
 		icms_loadLanguageFile($icmsModule->getVar('dirname'), 'admin');
 		$tpl = new core_Tpl();

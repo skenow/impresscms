@@ -210,7 +210,7 @@ function xoops_module_install($dirname) {
 							$msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_INSTEMPFILE, $tpl['file'], $newtplid);
 
 							// generate compiled file
-							include_once ICMS_ROOT_PATH.'/class/template.php';
+							//include_once ICMS_ROOT_PATH.'/class/template.php';
 							if (!xoops_template_touch($newtplid)) {
 								$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'._MD_AM_FAILCOMPTEMPFILE.'</span>', $tpl['file']);
 							} else {

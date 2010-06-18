@@ -116,7 +116,7 @@ class IcmsModuleAbout
 
 		$icmsModule->displayAdminMenu(-1, $this->_aboutTitle . " " . $versioninfo->getInfo('name'));
 
-		include_once ICMS_ROOT_PATH . '/class/template.php';
+		//include_once ICMS_ROOT_PATH . '/class/template.php';
 
 		$this->_tpl = new core_Tpl();
 
