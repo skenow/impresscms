@@ -53,7 +53,7 @@ class core_Theme {
 	 * @public array
 	 * @access public
 	 */
-	public $plugins = array( 'xos_logos_PageBuilder' );
+	public $plugins = array( 'core_PageBuilder' );
 
 	public $renderCount = 0;
 	/**

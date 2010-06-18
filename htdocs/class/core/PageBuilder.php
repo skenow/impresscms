@@ -1,6 +1,6 @@
 <?php
 /**
- * xos_logos_PageBuilder component class file
+ * core_PageBuilder component class file
  *
  * @copyright	The XOOPS Project <http://www.xoops.org/>
  * @copyright	The ImpressCMS Project <http://www.impresscms.org/>
@@ -23,13 +23,13 @@ if ( !defined ( 'ICMS_ROOT_PATH' )) exit ();
 //include_once ICMS_ROOT_PATH . '/class/template.php';
 
 /**
- * xos_logos_PageBuilder main class
+ * core_PageBuilder main class
  *
  * @package     core
  * @subpackage  template
  * @author      Skalpa Keo <skalpa@xoops.org>
  */
-class xos_logos_PageBuilder {
+class core_PageBuilder {
 
 	public $theme = false;
 
