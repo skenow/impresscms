@@ -27,13 +27,13 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @copyright copyright &copy; 2000 XOOPS.org
  * @package kernel
  **/
-class XoopsTplset extends core_Object
+class core_Tplset extends core_Object
 {
 
 	/**
 	 * constructor
 	 */
-	function XoopsTplset()
+	function core_Tplset()
 	{
 		$this->core_Object();
 		$this->initVar('tplset_id', XOBJ_DTYPE_INT, null, false);
@@ -52,19 +52,19 @@ class XoopsTplset extends core_Object
  *
  * @author  Kazumi Ono <onokazu@xoops.org>
  */
-class XoopsTplsetHandler extends core_ObjectHandler
+class core_TplsetHandler extends core_ObjectHandler
 {
 
 	/**
 	 * create a new templateset instance
 	 *
-	 * @see XoopsTplset
+	 * @see core_Tplset
 	 * @param bool $isNew is the new tempateset new??
-	 * @return object XoopsTplset {@link XoopsTplset} reference to the new template
+	 * @return object core_Tplset {@link core_Tplset} reference to the new template
 	 **/
 	function &create($isNew = true)
 	{
-		$tplset = new XoopsTplset();
+		$tplset = new core_Tplset();
 		if ($isNew) {
 			$tplset->setNew();
 		}
@@ -74,9 +74,9 @@ class XoopsTplsetHandler extends core_ObjectHandler
 	/**
 	 * Gets templateset from database by ID
 	 *
-	 * @see XoopsTplset
+	 * @see core_Tplset
 	 * @param int $id of the tempateset to get
-	 * @return object XoopsTplset {@link XoopsTplset} reference to the new template
+	 * @return object core_Tplset {@link core_Tplset} reference to the new template
 	 **/
 	function &get($id)
 	{
@@ -89,7 +89,7 @@ class XoopsTplsetHandler extends core_ObjectHandler
 			}
 			$numrows = $this->db->getRowsNum($result);
 			if ($numrows == 1) {
-				$tplset = new XoopsTplset();
+				$tplset = new core_Tplset();
 				$tplset->assignVars($this->db->fetchArray($result));
 			}
 		}
@@ -99,9 +99,9 @@ class XoopsTplsetHandler extends core_ObjectHandler
 	/**
 	 * Gets templateset from database by Name
 	 *
-	 * @see XoopsTplset
+	 * @see core_Tplset
 	 * @param string $tplset_name of the tempateset to get
-	 * @return object XoopsTplset {@link XoopsTplset} reference to the new template
+	 * @return object core_Tplset {@link core_Tplset} reference to the new template
 	 **/
 	function &getByName($tplset_name)
 	{
@@ -114,7 +114,7 @@ class XoopsTplsetHandler extends core_ObjectHandler
 			}
 			$numrows = $this->db->getRowsNum($result);
 			if ($numrows == 1) {
-				$tplset = new XoopsTplset();
+				$tplset = new core_Tplset();
 				$tplset->assignVars($this->db->fetchArray($result));
 			}
 		}
@@ -124,9 +124,9 @@ class XoopsTplsetHandler extends core_ObjectHandler
 	/**
 	 * Inserts templateset into the database
 	 *
-	 * @see XoopsTplset
+	 * @see core_Tplset
 	 * @param string $tplset_name of the tempateset to get
-	 * @return object XoopsTplset {@link XoopsTplset} reference to the new template
+	 * @return object core_Tplset {@link core_Tplset} reference to the new template
 	 **/
 	function insert(&$tplset)
 	{
@@ -164,9 +164,9 @@ class XoopsTplsetHandler extends core_ObjectHandler
 	/**
 	 * Deletes templateset from the database
 	 *
-	 * @see XoopsTplset
-	 * @param object $tplset {@link XoopsTplset} reference to the object of the tempateset to delete
-	 * @return object XoopsTplset {@link XoopsTplset} reference to the new template
+	 * @see core_Tplset
+	 * @param object $tplset {@link core_Tplset} reference to the object of the tempateset to delete
+	 * @return object core_Tplset {@link core_Tplset} reference to the new template
 	 **/
 	function delete(&$tplset)
 	{
@@ -187,10 +187,10 @@ class XoopsTplsetHandler extends core_ObjectHandler
 	}
 
 	/**
-	 * retrieve array of {@link XoopsTplset}s meeting certain conditions
+	 * retrieve array of {@link core_Tplset}s meeting certain conditions
 	 * @param object $criteria {@link core_CriteriaElement} with conditions for the blocks
 	 * @param bool $id_as_key should the tplfile's tpl_id be the key for the returned array?
-	 * @return array {@link XoopsTplset}s matching the conditions
+	 * @return array {@link core_Tplset}s matching the conditions
 	 **/
 	function getObjects($criteria = null, $id_as_key = false)
 	{
@@ -207,7 +207,7 @@ class XoopsTplsetHandler extends core_ObjectHandler
 			return $ret;
 		}
 		while ($myrow = $this->db->fetchArray($result)) {
-			$tplset = new XoopsTplset();
+			$tplset = new core_Tplset();
 			$tplset->assignVars($myrow);
 			if (!$id_as_key) {
 				$ret[] =& $tplset;

@@ -1,6 +1,6 @@
 <?php
 /**
- * XoopsTpl
+ * core_Tpl
  *
  * Gateway file to include class/theme_blocks.php when xos_logos_PageBuilder class is needed
  *

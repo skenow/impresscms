@@ -11,7 +11,7 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id$
+ * @version	$Id: template.php 19118 2010-03-27 17:46:23Z skenow $
  */
 
 if (!defined('SMARTY_DIR')) {
@@ -31,7 +31,7 @@ require_once SMARTY_DIR.'Smarty.class.php';
  * @author		Kazumi Ono 	<onokazu@xoops.org>
  * @copyright	(c) 2000-2003 The Xoops Project - www.xoops.org
  */
-class XoopsTpl extends Smarty {
+class core_Tpl extends Smarty {
 
 	public $left_delimiter = '<{';
 	public $right_delimiter = '}>';
@@ -40,7 +40,7 @@ class XoopsTpl extends Smarty {
 	public $cache_dir = XOOPS_CACHE_PATH;
 	public $compile_dir = XOOPS_COMPILE_PATH;
 
-	function XoopsTpl() {
+	function core_Tpl() {
 		global $icmsConfig;
 
 		$this->compile_id = $icmsConfig['template_set'] . '-' . $icmsConfig['theme_set'];
@@ -159,7 +159,7 @@ function xoops_template_touch($tpl_id, $clear_old = true) {
 
 	if ( is_object($tplfile) ) {
 		$file = $tplfile->getVar( 'tpl_file', 'n' );
-		$tpl = new XoopsTpl();
+		$tpl = new core_Tpl();
 		return $tpl->touch( "db:$file" );
 	}
 	return false;
@@ -177,7 +177,7 @@ function xoops_template_clear_module_cache($mid)
 	$block_arr = $icms_block_handler->getByModule($mid);
 	$count = count($block_arr);
 	if ($count > 0) {
-		$xoopsTpl = new XoopsTpl();
+		$xoopsTpl = new core_Tpl();
 		$xoopsTpl->xoops_setCaching(2);
 		for ($i = 0; $i < $count; $i++) {
 			if ($block_arr[$i]->getVar('template') != '') {
@@ -185,5 +185,12 @@ function xoops_template_clear_module_cache($mid)
 			}
 		}
 	}
+}
+
+/**
+ * For backward compat
+ */
+class XoopsTpl extends core_Tpl {
+
 }
 ?>

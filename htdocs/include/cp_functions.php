@@ -56,7 +56,7 @@ function icms_cp_header(){
 	if( !isset($icmsPreloadHandler) )
 	$icmsPreloadHandler =& $GLOBALS['icmsPreloadHandler'];
 
-	$icmsAdminTpl = new XoopsTpl();
+	$icmsAdminTpl = new core_Tpl();
 
 	$icmsAdminTpl->assign('xoops_url', ICMS_URL);
 	$icmsAdminTpl->assign('xoops_sitename', $icmsConfig['sitename']);

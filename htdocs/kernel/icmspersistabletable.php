@@ -517,7 +517,7 @@ class IcmsPersistableTable {
 
 		include_once ICMS_ROOT_PATH . '/class/template.php';
 
-		$this->_tpl = new XoopsTpl();
+		$this->_tpl = new core_Tpl();
 
 		/**
 		 * We need access to the vars of the IcmsPersistableObject for a few things in the table creation.

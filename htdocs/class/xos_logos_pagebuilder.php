@@ -1,8 +1,8 @@
 <?php
 /**
- * XoopsTpl
+ * core_Tpl
  *
- * Gateway file to include class/template.php when XoopsTpl class is needed
+ * Gateway file to include class/template.php when core_Tpl class is needed
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)

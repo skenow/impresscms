@@ -71,7 +71,7 @@ class IcmsFeed {
 
 		//header ('Content-Type:text/xml; charset='._CHARSET);
 		$xoopsOption['template_main'] = "db:system_rss.html";
-		$tpl = new XoopsTpl();
+		$tpl = new core_Tpl();
 
 		$tpl->assign('channel_title', $this->title);
 		$tpl->assign('channel_link', $this->url);

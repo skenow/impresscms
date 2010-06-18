@@ -149,7 +149,7 @@ class xos_logos_PageBuilder {
 			$template = & $this->theme->template;
 			$backup = array ($template->caching, $template->cache_lifetime );
 		} else {
-			$template = new XoopsTpl();
+			$template = new core_Tpl();
 		}
 
 		/** moved here from buildBlocks to reduce redundant calls */
@@ -233,7 +233,7 @@ class xos_logos_PageBuilder {
 		$xoopsLogger = & core_Logger::instance ();
 
 		$bcachetime = (int) ( $xobject->getVar ( 'bcachetime' ) );
-		//$template = new XoopsTpl();
+		//$template = new core_Tpl();
 		if (empty ( $bcachetime )) {
 			$template->caching = 0;
 		} else {

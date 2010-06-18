@@ -278,7 +278,7 @@ class core_Module extends core_Object
 		include_once ICMS_ROOT_PATH.'/class/template.php';
 		icms_loadLanguageFile($icmsModule->getVar('dirname'), 'modinfo');
 		icms_loadLanguageFile($icmsModule->getVar('dirname'), 'admin');
-		$tpl = new XoopsTpl();
+		$tpl = new core_Tpl();
 		$tpl->assign(array('headermenu' => $this->getAdminHeaderMenu(), 'adminmenu' => $this->getAdminMenu(), 'current' => $currentoption, 'breadcrumb' => $breadcrumb, 'headermenucount' => count($this->getAdminHeaderMenu()), 'submenus' => $submenus, 'currentsub' => $currentsub, 'submenuscount' => count($submenus)));
 		$tpl->display(ICMS_ROOT_PATH.'/modules/system/templates/admin/system_adm_modulemenu.html');
 	}

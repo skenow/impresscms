@@ -27,13 +27,13 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @copyright copyright &copy; 2000 XOOPS.org
  * @package kernel
  **/
-class XoopsTplfile extends core_Object
+class core_Tplfile extends core_Object
 {
 
 	/**
 	 * constructor
 	 */
-	function XoopsTplfile()
+	function core_Tplfile()
 	{
 		$this->core_Object();
 		$this->initVar('tpl_id', XOBJ_DTYPE_INT, null, false);
@@ -73,19 +73,19 @@ class XoopsTplfile extends core_Object
  *
  * @author  Kazumi Ono <onokazu@xoops.org>
  */
-class XoopsTplfileHandler extends core_ObjectHandler
+class core_TplfileHandler extends core_ObjectHandler
 {
 
 	/**
 	 * create a new template instance
 	 *
-	 * @see XoopsTplfile
+	 * @see core_Tplfile
 	 * @param bool $isNew is the new tempate new??
-	 * @return object XoopsTplfile {@link XoopsTplfile} reference to the new template
+	 * @return object core_Tplfile {@link core_Tplfile} reference to the new template
 	 **/
 	function &create($isNew = true)
 	{
-		$tplfile = new XoopsTplfile();
+		$tplfile = new core_Tplfile();
 		if ($isNew) {
 			$tplfile->setNew();
 		}
@@ -95,10 +95,10 @@ class XoopsTplfileHandler extends core_ObjectHandler
 	/**
 	 * gets a new template instance
 	 *
-	 * @see XoopsTplfile
+	 * @see core_Tplfile
 	 * @param int $id ID of the template to get
 	 * @param bool $getsource would you like to get the source?
-	 * @return object XoopsTplfile {@link XoopsTplfile} reference to the new template
+	 * @return object core_Tplfile {@link core_Tplfile} reference to the new template
 	 **/
 	function &get($id, $getsource = false)
 	{
@@ -115,7 +115,7 @@ class XoopsTplfileHandler extends core_ObjectHandler
 			}
 			$numrows = $this->db->getRowsNum($result);
 			if ($numrows == 1) {
-				$tplfile = new XoopsTplfile();
+				$tplfile = new core_Tplfile();
 				$tplfile->assignVars($this->db->fetchArray($result));
 			}
 		}
@@ -125,8 +125,8 @@ class XoopsTplfileHandler extends core_ObjectHandler
 	/**
 	 * Loads Template source from DataBase
 	 *
-	 * @see XoopsTplfile
-	 * @param object $tplfile {@link XoopsTplfile} object of the template file to load
+	 * @see core_Tplfile
+	 * @param object $tplfile {@link core_Tplfile} object of the template file to load
 	 * @return bool TRUE on success, FALSE if fail
 	 **/
 	function loadSource(&$tplfile)
@@ -152,8 +152,8 @@ class XoopsTplfileHandler extends core_ObjectHandler
 	/**
 	 * Inserts Template into the DataBase
 	 *
-	 * @see XoopsTplfile
-	 * @param object $tplfile {@link XoopsTplfile} object of the template file to load
+	 * @see core_Tplfile
+	 * @param object $tplfile {@link core_Tplfile} object of the template file to load
 	 * @return bool TRUE on success, FALSE if fail
 	 **/
 	function insert(&$tplfile)
@@ -207,7 +207,7 @@ class XoopsTplfileHandler extends core_ObjectHandler
 
 	/**
 	 * forces Template source into the DataBase
-	 * @param object $tplfile {@link XoopsTplfile} object of the template file to load
+	 * @param object $tplfile {@link core_Tplfile} object of the template file to load
 	 * @return bool TRUE on success, FALSE if fail
 	 **/
 	function forceUpdate(&$tplfile)
@@ -246,7 +246,7 @@ class XoopsTplfileHandler extends core_ObjectHandler
 
 	/**
 	 * Deletes Template from the DataBase
-	 * @param object $tplfile {@link XoopsTplfile} object of the template file to load
+	 * @param object $tplfile {@link core_Tplfile} object of the template file to load
 	 * @return bool TRUE on success, FALSE if fail
 	 **/
 	function delete(&$tplfile)
@@ -268,10 +268,10 @@ class XoopsTplfileHandler extends core_ObjectHandler
 	}
 
 	/**
-	 * retrieve array of {@link XoopsTplfile}s meeting certain conditions
+	 * retrieve array of {@link core_Tplfile}s meeting certain conditions
 	 * @param object $criteria {@link core_CriteriaElement} with conditions for the blocks
 	 * @param bool $id_as_key should the tplfile's tpl_id be the key for the returned array?
-	 * @return array {@link XoopsTplfile}s matching the conditions
+	 * @return array {@link core_Tplfile}s matching the conditions
 	 **/
 	function getObjects($criteria = null, $getsource = false, $id_as_key = false)
 	{
@@ -292,7 +292,7 @@ class XoopsTplfileHandler extends core_ObjectHandler
 			return $ret;
 		}
 		while ($myrow = $this->db->fetchArray($result)) {
-			$tplfile = new XoopsTplfile();
+			$tplfile = new core_Tplfile();
 			$tplfile->assignVars($myrow);
 			if (!$id_as_key) {
 				$ret[] =& $tplfile;

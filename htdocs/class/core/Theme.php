@@ -58,7 +58,7 @@ class core_Theme {
 	public $renderCount = 0;
 	/**
 	 * Pointer to the theme template engine
-	 * @public XoopsTpl
+	 * @public core_Tpl
 	 */
 	public $template = false;
 
@@ -114,7 +114,7 @@ class core_Theme {
 		$this->path = (is_dir(ICMS_MODULES_PATH.'/system/themes/'.$this->folderName))?ICMS_MODULES_PATH.'/system/themes/' . $this->folderName:XOOPS_THEME_PATH . '/' . $this->folderName;
 		$this->url = (is_dir(ICMS_MODULES_PATH.'/system/themes/'.$this->folderName))?ICMS_MODULES_URL.'/system/themes/' . $this->folderName:XOOPS_THEME_URL . '/' . $this->folderName;
 
-		$this->template = new XoopsTpl();
+		$this->template = new core_Tpl();
 		$this->template->currentTheme =& $this;
 		$this->template->assign_by_ref( 'xoTheme', $this );
 
