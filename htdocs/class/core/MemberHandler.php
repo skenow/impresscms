@@ -10,7 +10,7 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id$
+ * @version	$Id: member.php 19450 2010-06-18 14:15:29Z malanciault $
  */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
@@ -27,7 +27,7 @@ require_once ICMS_ROOT_PATH . '/kernel/group.php';
  * @copyright copyright (c) 2000-2003 XOOPS.org
  * @package kernel
  */
-class XoopsMemberHandler {
+class core_MemberHandler {
 
 	/**#@+
 	 * holds reference to group handler(DAO) class
@@ -55,7 +55,7 @@ class XoopsMemberHandler {
 	 * constructor
 	 *
 	 */
-	function XoopsMemberHandler(&$db) {
+	function core_MemberHandler(&$db) {
 		$this->_gHandler = new XoopsGroupHandler ( $db );
 		$this->_uHandler = new XoopsUserHandler ( $db );
 		$this->_mHandler = new XoopsMembershipHandler ( $db );

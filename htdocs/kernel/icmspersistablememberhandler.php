@@ -32,7 +32,7 @@ require_once ICMS_ROOT_PATH.'/kernel/icmspersistableuserhandler.php';
  * @package kernel
  */
 
-class IcmsPersistableMemberHandler extends XoopsMemberHandler{
+class IcmsPersistableMemberHandler extends core_MemberHandler{
 
 	/**
 	 * constructor
@@ -40,7 +40,7 @@ class IcmsPersistableMemberHandler extends XoopsMemberHandler{
 	 */
 	function IcmsPersistableMemberHandler(&$db)
 	{
-		$this->XoopsMemberHandler($db);
+		$this->core_MemberHandler($db);
 		$this->_uHandler = new IcmsPersistableUserHandler($db);
 	}
 
