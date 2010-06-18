@@ -9,7 +9,7 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id$
+ * @version	$Id: session.php 19118 2010-03-27 17:46:23Z skenow $
  */
 /*
  Based on SecureSession class
@@ -22,7 +22,7 @@
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class XoopsSessionHandler
+class core_SessionHandler
 {
 	/**
 	 * Database connection
@@ -56,7 +56,7 @@ class XoopsSessionHandler
 	 * @param object $db reference to the {@link XoopsDatabase} object
 	 *
 	 */
-	function XoopsSessionHandler(&$db)
+	function core_SessionHandler(&$db)
 	{
 		$this->db =& $db;
 	}
