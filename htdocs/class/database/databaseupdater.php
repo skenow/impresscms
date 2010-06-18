@@ -1013,7 +1013,7 @@ class IcmsDatabaseupdater {
 		if (!$dirname) {
 			$dirname = icms_getCurrentModuleName();
 		}
-		$module = XoopsModuleHandler::getByDirname($dirname);
+		$module = core_ModuleHandler::getByDirname($dirname);
 		$module->setVar('dbversion', $newDBVersion);
 		$module_handler = xoops_getHandler('module');
 
