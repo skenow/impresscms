@@ -23,13 +23,13 @@ class IcmsFormParentcategoryElement extends XoopsFormSelect {
 		$category_title_field = $object->handler->identifierName;
 
 		$addNoParent = isset($object->controls[$key]['addNoParent']) ? $object->controls[$key]['addNoParent'] : true;
-		$criteria = new CriteriaCompo();
+		$criteria = new core_CriteriaCompo();
 		$criteria->setSort("weight, " . $category_title_field);
 		$category_handler = icms_getModuleHandler('category', $object->handler->_moduleName);
 		$categories = $category_handler->getObjects($criteria);
 
 		include_once ICMS_ROOT_PATH . "/class/tree.php" ;
-		$mytree = new XoopsObjectTree($categories, "category_id", "category_pid");
+		$mytree = new core_ObjectTree($categories, "category_id", "category_pid");
 		$this->XoopsFormSelect( $object->vars[$key]['form_caption'], $key, $object->getVar($key, 'e') );
 
 		$ret = array();
@@ -47,7 +47,7 @@ class IcmsFormParentcategoryElement extends XoopsFormSelect {
 	/**
 	 * Get options for a category select with hierarchy (recursive)
 	 *
-	 * @param object  $tree         XoopsObjectTree $tree (@link XoopsObjectTree)
+	 * @param object  $tree         core_ObjectTree $tree (@link core_ObjectTree)
 	 * @param string  $fieldName    The fieldname to get the option array for
 	 * @param int     $key          the key to get the optionarray for
 	 * @param string  $prefix_curr  the prefix

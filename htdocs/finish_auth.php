@@ -84,7 +84,7 @@ switch ($xoopsAuth->step) {
 		}
 
 		// checking if this uname is available
-		$criteria = new CriteriaCompo(new Criteria('uname', $uname));
+		$criteria = new core_CriteriaCompo(new core_Criteria('uname', $uname));
 		$user_handler = & xoops_gethandler('user');
 		$users = & $user_handler->getObjects($criteria, false);
 

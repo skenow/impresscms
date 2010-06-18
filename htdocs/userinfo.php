@@ -179,8 +179,8 @@ icms_makeSmarty(array(
         }
 
         $module_handler = xoops_gethandler('module');
-        $criteria = new CriteriaCompo(new Criteria('hassearch', 1));
-        $criteria->add(new Criteria('isactive', 1));
+        $criteria = new core_CriteriaCompo(new core_Criteria('hassearch', 1));
+        $criteria->add(new core_Criteria('isactive', 1));
         $mids = & array_keys($module_handler->getList($criteria));
 
         foreach($mids as $mid)

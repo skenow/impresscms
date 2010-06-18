@@ -31,7 +31,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @author		Kazumi Ono 	<onokazu@xoops.org>
  * @copyright	(c) 2000-2003 The Xoops Project - www.xoops.org
  */
-class XoopsImage extends XoopsObject
+class XoopsImage extends core_Object
 {
 	/**
 	 * Info of Image file (width, height, bits, mimetype)
@@ -45,7 +45,7 @@ class XoopsImage extends XoopsObject
 	 **/
 	function XoopsImage()
 	{
-		$this->XoopsObject();
+		$this->core_Object();
 		$this->initVar('image_id', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('image_name', XOBJ_DTYPE_OTHER, null, false, 30);
 		$this->initVar('image_nicename', XOBJ_DTYPE_TXTBOX, null, true, 100);
@@ -97,7 +97,7 @@ class XoopsImage extends XoopsObject
  * @author		Kazumi Ono 	<onokazu@xoops.org>
  * @copyright	(c) 2000-2003 The Xoops Project - www.xoops.org
  */
-class XoopsImageHandler extends XoopsObjectHandler
+class XoopsImageHandler extends core_ObjectHandler
 {
 
 	/**
@@ -226,7 +226,7 @@ class XoopsImageHandler extends XoopsObjectHandler
 	/**
 	 * Load {@link XoopsImage}s from the database
 	 *
-	 * @param   object  $criteria   {@link CriteriaElement}
+	 * @param   object  $criteria   {@link core_CriteriaElement}
 	 * @param   boolean $id_as_key  Use the ID as key into the array
 	 * @param   boolean $getbinary
 	 * @return  array   Array of {@link XoopsImage} objects
@@ -267,7 +267,7 @@ class XoopsImageHandler extends XoopsObjectHandler
 	/**
 	 * Count some images
 	 *
-	 * @param   object  $criteria   {@link CriteriaElement}
+	 * @param   object  $criteria   {@link core_CriteriaElement}
 	 * @return  int
 	 **/
 	function getCount($criteria = null)
@@ -292,9 +292,9 @@ class XoopsImageHandler extends XoopsObjectHandler
 	 **/
 	function getList($imgcat_id, $image_display = null)
 	{
-		$criteria = new CriteriaCompo(new Criteria('imgcat_id', (int) ($imgcat_id)));
+		$criteria = new core_CriteriaCompo(new core_Criteria('imgcat_id', (int) ($imgcat_id)));
 		if (isset($image_display)) {
-			$criteria->add(new Criteria('image_display', (int) ($image_display)));
+			$criteria->add(new core_Criteria('image_display', (int) ($image_display)));
 		}
 		$images =& $this->getObjects($criteria, false, true);
 		$ret = array();

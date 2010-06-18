@@ -295,7 +295,7 @@ class IcmsDatabasetable {
 	 *
 	 * @param   string  $fieldname  Name of the field
 	 * @param   string  $fieldvalue Value to write
-	 * @param   object  $criteria   {@link CriteriaElement}
+	 * @param   object  $criteria   {@link core_CriteriaElement}
 	 * @param 	bool	$fieldvalueIsOperation TRUE if fieldvalue is an operation, for example, conf_order+1
 	 *
 	 * @return  bool
@@ -313,7 +313,7 @@ class IcmsDatabasetable {
 	 *
 	 * @param   string  $fieldname  Name of the field
 	 * @param   string  $fieldvalue Value to write
-	 * @param   object  $criteria   {@link CriteriaElement}
+	 * @param   object  $criteria   {@link core_CriteriaElement}
 	 *
 	 * @return  bool
 	 */
@@ -491,7 +491,7 @@ class IcmsDatabasetable {
 	 *
 	 * @param   string  $fieldname  Name of the field
 	 * @param   string  $fieldvalue Value to write
-	 * @param   object  $criteria   {@link CriteriaElement}
+	 * @param   object  $criteria   {@link core_CriteriaElement}
 	 *
 	 * @return  bool
 	 **/
@@ -532,7 +532,7 @@ class IcmsDatabasetable {
 	/**
 	 * delete all objects meeting the conditions
 	 *
-	 * @param object $criteria {@link CriteriaElement} with conditions to meet
+	 * @param object $criteria {@link core_CriteriaElement} with conditions to meet
 	 * @return bool
 	 */
 

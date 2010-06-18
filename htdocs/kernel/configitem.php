@@ -42,7 +42,7 @@ define('ICMS_CONF_PURIFIER', 14);
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class XoopsConfigItem extends XoopsObject
+class XoopsConfigItem extends core_Object
 {
 	/**
 	 * Config options
@@ -174,7 +174,7 @@ class XoopsConfigItem extends XoopsObject
  * @package     kernel
  * @subpackage  config
  */
-class XoopsConfigItemHandler extends XoopsObjectHandler
+class XoopsConfigItemHandler extends core_ObjectHandler
 {
 
 	/**
@@ -281,7 +281,7 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
 	/**
 	 * Get configs from the database
 	 *
-	 * @param	object  $criteria   {@link CriteriaElement}
+	 * @param	object  $criteria   {@link core_CriteriaElement}
 	 * @param	bool    $id_as_key  return the config's id as key?
 	 * @return	array   Array of {@link XoopsConfigItem} objects
 	 */
@@ -316,7 +316,7 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
 	/**
 	 * Count configs
 	 *
-	 * @param	object  $criteria   {@link CriteriaElement}
+	 * @param	object  $criteria   {@link core_CriteriaElement}
 	 * @return	int     Count of configs matching $criteria
 	 */
 	function getCount($criteria = null)

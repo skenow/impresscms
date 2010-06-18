@@ -21,7 +21,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @package avatar
  *
  */
-class XoopsAvatar extends XoopsObject
+class XoopsAvatar extends core_Object
 {
 	/** @var integer */
 	var $_userCount;
@@ -32,7 +32,7 @@ class XoopsAvatar extends XoopsObject
 	 */
 	function XoopsAvatar()
 	{
-		$this->XoopsObject();
+		$this->core_Object();
 		$this->initVar('avatar_id', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('avatar_file', XOBJ_DTYPE_OTHER, null, false, 30);
 		$this->initVar('avatar_name', XOBJ_DTYPE_TXTBOX, null, true, 100);
@@ -72,12 +72,12 @@ class XoopsAvatar extends XoopsObject
  * @author  Kazumi Ono <onokazu@xoops.org>
  */
 
-class XoopsAvatarHandler extends XoopsObjectHandler
+class XoopsAvatarHandler extends core_ObjectHandler
 {
 
 	/**
 	 * Creates a new avatar object
-	 * @see htdocs/kernel/XoopsObjectHandler#create()
+	 * @see htdocs/kernel/core_ObjectHandler#create()
 	 */
 	function &create($isNew = true)
 	{
@@ -90,7 +90,7 @@ class XoopsAvatarHandler extends XoopsObjectHandler
 
 	/**
 	 * Gets an avatar object
-	 * @see htdocs/kernel/XoopsObjectHandler#get($int_id)
+	 * @see htdocs/kernel/core_ObjectHandler#get($int_id)
 	 * @return mixed
 	 */
 	function &get($id)
@@ -114,7 +114,7 @@ class XoopsAvatarHandler extends XoopsObjectHandler
 
 	/**
 	 * Inserts an avatar or updates an existing avatar
-	 * @see htdocs/kernel/XoopsObjectHandler#insert($object)
+	 * @see htdocs/kernel/core_ObjectHandler#insert($object)
 	 * @return boolean
 	 */
 	function insert(&$avatar)
@@ -152,7 +152,7 @@ class XoopsAvatarHandler extends XoopsObjectHandler
 
 	/**
 	 * Deletes an avatar
-	 * @see htdocs/kernel/XoopsObjectHandler#delete($object)
+	 * @see htdocs/kernel/core_ObjectHandler#delete($object)
 	 * @return boolean
 	 */
 	function delete(&$avatar)
@@ -281,13 +281,13 @@ class XoopsAvatarHandler extends XoopsObjectHandler
 	 */
 	function getList($avatar_type = null, $avatar_display = null)
 	{
-		$criteria = new CriteriaCompo();
+		$criteria = new core_CriteriaCompo();
 		if (isset($avatar_type)) {
 			$avatar_type = ($avatar_type == 'C') ? 'C' : 'S';
-			$criteria->add(new Criteria('avatar_type', $avatar_type));
+			$criteria->add(new core_Criteria('avatar_type', $avatar_type));
 		}
 		if (isset($avatar_display)) {
-			$criteria->add(new Criteria('avatar_display', (int) ($avatar_display)));
+			$criteria->add(new core_Criteria('avatar_display', (int) ($avatar_display)));
 		}
 		$avatars =& $this->getObjects($criteria, true);
 		$ret = array('blank.gif' => _NONE);

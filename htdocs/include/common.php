@@ -17,91 +17,6 @@
 /** make sure mainfile is included, for security and functionality */
 defined("XOOPS_MAINFILE_INCLUDED") or die();
 
-/**
- *
- * Register classes and their declarations, so they will only be loaded when used
- * @param string $class name of a class to load
- *
- * @since 1.3
- */
-function icms_autoload($class) {
-	/** temp var to debug spl_autoload feature */
-	$debug = FALSE;
-
-	$file = strtolower($class);
-	if ($debug) echo "<ul><b>$class</b>";
-	if (file_exists($path = ICMS_ROOT_PATH . "/kernel/$file.php")) {
-		if ($debug) echo "<li>inc - $path</li>";
-		include_once $path;
-// *** checking for icms classes, first
-	} elseif (file_exists($path = ICMS_ROOT_PATH . "/kernel/" . str_replace('icms', '', $file) . ".php")) {
-		if ($debug) echo "<li>inc - $path </li>";
-		include_once $path;
-	} elseif (file_exists($path = ICMS_ROOT_PATH . "/class/" . str_replace('icms', '', $file) . ".php")) {
-		if ($debug) echo "<li>inc - $path </li>";
-		include_once $path;
-	} elseif (strpos($file, 'icms') !== false && strpos($file, 'handler') !== false) {
-		if ($debug) echo "<li>loading handler</li>";
-		$handlerFile = str_replace('icms', '', $file);
-		$handlerFile = str_replace('handler', '', $handlerFile);
-		if ($debug) echo "<li>$path</li>";
-		if (file_exists($path = ICMS_ROOT_PATH . "/kernel/$handlerFile.php")) {
-			if ($debug) echo "<li>inc - $path</li>";
-			include_once $path;
-		} elseif (file_exists($path = ICMS_ROOT_PATH . "/class/$handlerFile.php")) {
-			if ($debug) echo "<li>inc - $path</li>";
-			include_once $path;
-		}
-// *** then check for xoops versions
-	} elseif (file_exists($path = ICMS_ROOT_PATH . "/kernel/" . str_replace('xoops', '', $file) . ".php")) {
-		if ($debug) echo "<li>inc - $path </li>";
-		include_once $path;
-	} elseif (file_exists($path = ICMS_ROOT_PATH . "/class/$file.php")) {
-		if ($debug) echo "<li>inc - $path</li>";
-		include_once $path;
-	} elseif (file_exists($path = ICMS_ROOT_PATH . "/class/" . str_replace('xoops', '', $file) . ".php")) {
-		if ($debug) echo "<li>inc - $path </li>";
-		include_once $path;
-	} elseif (strpos($file, 'xoops') !== false && strpos($file, 'handler') !== false) {
-		if ($debug) echo "<li>loading handler</li>";
-		$handlerFile = str_replace('xoops', '', $file);
-		$handlerFile = str_replace('handler', '', $handlerFile);
-		if ($debug) echo "<li>$path</li>";
-		if (file_exists($path = ICMS_ROOT_PATH . "/kernel/$handlerFile.php")) {
-			if ($debug) echo "<li>inc - $path</li>";
-			include_once $path;
-		} elseif (file_exists($path = ICMS_ROOT_PATH . "/class/$handlerFile.php")) {
-			if ($debug) echo "<li>inc - $path</li>";
-			include_once $path;
-		}
-	} elseif (strpos($file, 'icmsform') !== false) {
-		if ($debug) echo "<li>loading icmsform element</li>";
-		if (file_exists($path = ICMS_ROOT_PATH . "/class/icmsform/elements/$file.php")) {
-			if ($debug) echo "<li>inc - $path</li>";
-			include_once $path;
-		}
-	} elseif (strpos($file, 'auth') !== false) {
-		if ($debug) echo "<li>loading auth</li>";
-		$classFile = str_replace('xoops', '', $file);
-		echo $path = ICMS_ROOT_PATH . "/class/auth/$classFile.php";
-		if (file_exists($path = ICMS_ROOT_PATH . "/class/auth/$classFile.php")) {
-			if ($debug) echo "<li>inc - $path</li>";
-			include_once $path;
-		}
-	}
-	if ($debug) echo "</ul>";
-}
-
-function icms_autoload_register() {
-	static $reg = false;
-	if (!$reg) {
-		spl_autoload_register("icms_autoload");
-		$reg = true;
-	}
-}
-
-icms_autoload_register();
-
 @set_magic_quotes_runtime(0);
 
 if (!defined('ICMS_ROOT_PATH')) {
@@ -135,11 +50,13 @@ define('ICMS_MODULES_PATH', ICMS_ROOT_PATH . '/modules');
 define('ICMS_MODULES_URL', ICMS_URL . '/modules');
 /**#@-*/
 
-// ################# Creation of the IcmsPreloadHandler ##############
+require_once( ICMS_ROOT_PATH . "/include/autoloader.php" );
+
+// ################# Creation of the core_Preloadhandler ##############
 //include_once ICMS_ROOT_PATH . '/kernel/icmspreloadhandler.php';
 
 global $icmsPreloadHandler;
-$icmsPreloadHandler = IcmsPreloadHandler::getInstance();
+$icmsPreloadHandler = core_Preloadhandler::getInstance();
 
 // ################# Creation of the ImpressCMS Libraries ##############
 /**
@@ -159,7 +76,7 @@ $icmsPreloadHandler->triggerEvent('startCoreBoot');
 //include_once ICMS_ROOT_PATH . '/kernel/icmskernel.php' ;
 
 global $impresscms, $xoops;
-$impresscms = new IcmsKernel();
+$impresscms = new core_Kernel();
 $xoops =& $impresscms;
 // ################# Creation of the ImpressCMS Kernel object ##############
 
@@ -174,7 +91,7 @@ $xoopsSecurity->checkSuperglobals();
 global $xoopsLogger, $xoopsErrorHandler;
 
 //include_once ICMS_ROOT_PATH . '/class/logger.php';
-$xoopsLogger =& XoopsLogger::instance();
+$xoopsLogger =& core_Logger::instance();
 $xoopsErrorHandler =& $xoopsLogger;
 $xoopsLogger->startTime('ICMS');
 $xoopsLogger->startTime('ICMS Boot');
@@ -318,6 +235,7 @@ if (!isset($xoopsOption['nodebug']) || !$xoopsOption['nodebug']) {
 		$xoopsLogger->activated = false;
 	}
 }
+
 $xoopsSecurity->checkBadips();
 
 // ################# Include version info file ##############
@@ -433,7 +351,7 @@ if (empty($_SESSION['xoopsUserId'])
 	} else {
 		// V3
 		$uname4sql = addslashes($uname);
-		$criteria = new CriteriaCompo(new Criteria('uname', $uname4sql ));
+		$criteria = new core_CriteriaCompo(new core_Criteria('uname', $uname4sql ));
 		$user_handler =& xoops_gethandler('user');
 		$users =& $user_handler->getObjects($criteria, false);
 		if ( empty($users) || count($users) != 1) {

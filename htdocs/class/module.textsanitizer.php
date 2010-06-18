@@ -390,7 +390,7 @@ class MyTextSanitizer
 		// Maybe the preload handler should be in the install kernel.
 		if(!is_object($icmsPreloadHandler)){
 			include_once ICMS_ROOT_PATH . '/kernel/icmspreloadhandler.php';
-			$icmsPreloadHandler = IcmsPreloadHandler::getInstance();
+			$icmsPreloadHandler = core_Preloadhandler::getInstance();
 		}
 		$icmsPreloadHandler->triggerEvent('beforeDisplayTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
 
@@ -453,7 +453,7 @@ class MyTextSanitizer
 		if(!is_object($icmsPreloadHandler))
 		{
 			include_once ICMS_ROOT_PATH . '/kernel/icmspreloadhandler.php';
-			$icmsPreloadHandler = IcmsPreloadHandler::getInstance();
+			$icmsPreloadHandler = core_Preloadhandler::getInstance();
 		}
 		$icmsPreloadHandler->triggerEvent('beforePreviewTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
 

@@ -23,7 +23,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class XoopsComment extends XoopsObject
+class XoopsComment extends core_Object
 {
 
 	/**
@@ -31,7 +31,7 @@ class XoopsComment extends XoopsObject
 	 **/
 	function XoopsComment()
 	{
-		$this->XoopsObject();
+		$this->core_Object();
 		$this->initVar('com_id', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('com_pid', XOBJ_DTYPE_INT, 0, false);
 		$this->initVar('com_modid', XOBJ_DTYPE_INT, null, false);
@@ -78,7 +78,7 @@ class XoopsComment extends XoopsObject
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class XoopsCommentHandler extends XoopsObjectHandler
+class XoopsCommentHandler extends core_ObjectHandler
 {
 
 	/**
@@ -87,7 +87,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
 	 * @param	bool    $isNew  Flag the object as "new"?
 	 *
 	 * @return	object
-	 * @see htdocs/kernel/XoopsObjectHandler#create()
+	 * @see htdocs/kernel/core_ObjectHandler#create()
 	 */
 	function &create($isNew = true)
 	{
@@ -104,7 +104,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
 	 * @param   int $id ID
 	 *
 	 * @return  object  {@link XoopsComment}, FALSE on fail
-	 * @see htdocs/kernel/XoopsObjectHandler#get($int_id)
+	 * @see htdocs/kernel/core_ObjectHandler#get($int_id)
 	 **/
 	function &get($id)
 	{
@@ -130,7 +130,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
 	 * @param   object  &$comment
 	 *
 	 * @return  bool
-	 * @see htdocs/kernel/XoopsObjectHandler#insert($object)
+	 * @see htdocs/kernel/core_ObjectHandler#insert($object)
 	 **/
 	function insert(&$comment)
 	{
@@ -171,7 +171,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
 	 * @param   object  &$comment
 	 *
 	 * @return  bool
-	 *  @see htdocs/kernel/XoopsObjectHandler#delete($object)
+	 *  @see htdocs/kernel/core_ObjectHandler#delete($object)
 	 **/
 	function delete(&$comment)
 	{
@@ -228,7 +228,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
 	/**
 	 * Count Comments
 	 *
-	 * @param   object  $criteria   {@link CriteriaElement}
+	 * @param   object  $criteria   {@link core_CriteriaElement}
 	 *
 	 * @return  int     Count
 	 **/
@@ -248,7 +248,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
 	/**
 	 * Delete multiple comments
 	 *
-	 * @param   object  $criteria   {@link CriteriaElement}
+	 * @param   object  $criteria   {@link core_CriteriaElement}
 	 *
 	 * @return  bool
 	 **/
@@ -267,7 +267,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
 	/**
 	 * Get a list of comments
 	 *
-	 * @param   object  $criteria   {@link CriteriaElement}
+	 * @param   object  $criteria   {@link core_CriteriaElement}
 	 *
 	 * @return  array   Array of raw database records
 	 **/
@@ -295,10 +295,10 @@ class XoopsCommentHandler extends XoopsObjectHandler
 	 **/
 	function getByItemId($module_id, $item_id, $order = null, $status = null, $limit = null, $start = 0)
 	{
-		$criteria = new CriteriaCompo(new Criteria('com_modid', (int) ($module_id)));
-		$criteria->add(new Criteria('com_itemid', (int) ($item_id)));
+		$criteria = new core_CriteriaCompo(new core_Criteria('com_modid', (int) ($module_id)));
+		$criteria->add(new core_Criteria('com_itemid', (int) ($item_id)));
 		if (isset($status)) {
-			$criteria->add(new Criteria('com_status', (int) ($status)));
+			$criteria->add(new core_Criteria('com_status', (int) ($status)));
 		}
 		if (isset($order)) {
 			$criteria->setOrder($order);
@@ -321,10 +321,10 @@ class XoopsCommentHandler extends XoopsObjectHandler
 	 **/
 	function getCountByItemId($module_id, $item_id, $status = null)
 	{
-		$criteria = new CriteriaCompo(new Criteria('com_modid', (int) ($module_id)));
-		$criteria->add(new Criteria('com_itemid', (int) ($item_id)));
+		$criteria = new core_CriteriaCompo(new core_Criteria('com_modid', (int) ($module_id)));
+		$criteria->add(new core_Criteria('com_itemid', (int) ($item_id)));
 		if (isset($status)) {
-			$criteria->add(new Criteria('com_status', (int) ($status)));
+			$criteria->add(new core_Criteria('com_status', (int) ($status)));
 		}
 		return $this->getCount($criteria);
 	}
@@ -341,11 +341,11 @@ class XoopsCommentHandler extends XoopsObjectHandler
 	 **/
 	function getTopComments($module_id, $item_id, $order, $status = null)
 	{
-		$criteria = new CriteriaCompo(new Criteria('com_modid', (int) ($module_id)));
-		$criteria->add(new Criteria('com_itemid', (int) ($item_id)));
-		$criteria->add(new Criteria('com_pid', 0));
+		$criteria = new core_CriteriaCompo(new core_Criteria('com_modid', (int) ($module_id)));
+		$criteria->add(new core_Criteria('com_itemid', (int) ($item_id)));
+		$criteria->add(new core_Criteria('com_pid', 0));
 		if (isset($status)) {
-			$criteria->add(new Criteria('com_status', (int) ($status)));
+			$criteria->add(new core_Criteria('com_status', (int) ($status)));
 		}
 		$criteria->setOrder($order);
 		return $this->getObjects($criteria);
@@ -362,10 +362,10 @@ class XoopsCommentHandler extends XoopsObjectHandler
 	 **/
 	function getThread($comment_rootid, $comment_id, $status = null)
 	{
-		$criteria = new CriteriaCompo(new Criteria('com_rootid', (int) ($comment_rootid)));
-		$criteria->add(new Criteria('com_id', (int) ($comment_id), '>='));
+		$criteria = new core_CriteriaCompo(new core_Criteria('com_rootid', (int) ($comment_rootid)));
+		$criteria->add(new core_Criteria('com_id', (int) ($comment_id), '>='));
 		if (isset($status)) {
-			$criteria->add(new Criteria('com_status', (int) ($status)));
+			$criteria->add(new core_Criteria('com_status', (int) ($status)));
 		}
 		return $this->getObjects($criteria);
 	}
@@ -394,7 +394,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
 	 **/
 	function deleteByModule($module_id)
 	{
-		return $this->deleteAll(new Criteria('com_modid', (int) ($module_id)));
+		return $this->deleteAll(new core_Criteria('com_modid', (int) ($module_id)));
 	}
 
 	/**
@@ -402,7 +402,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
 	 *
 	 * @param   string  $fieldname  Name of the field
 	 * @param   string  $fieldvalue Value to write
-	 * @param   object  $criteria   {@link CriteriaElement}
+	 * @param   object  $criteria   {@link core_CriteriaElement}
 	 *
 	 * @return  bool
 	 **/

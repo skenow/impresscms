@@ -10,7 +10,7 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id$
+ * @version	$Id: object.php 19419 2010-06-13 22:52:12Z skenow $
  */
 
 /**
@@ -54,7 +54,7 @@ define('XOBJ_DTYPE_FORM_SECTION_CLOSE', 211);
  * @copyright copyright &copy; 2000 XOOPS.org
  * @package kernel
  **/
-class XoopsObject
+class core_Object
 {
 
 	/**
@@ -110,7 +110,7 @@ class XoopsObject
 	 * normally, this is called from child classes only
 	 * @access public
 	 */
-	function XoopsObject()
+	function core_Object()
 	{
 	}
 
@@ -274,7 +274,7 @@ class XoopsObject
 		$vars = array();
 		foreach ( $keys as $key ) {
 			if ( isset( $this->vars[$key] ) ) {
-				if ( is_object( $this->vars[$key] ) && is_a( $this->vars[$key], 'XoopsObject' ) ) {
+				if ( is_object( $this->vars[$key] ) && is_a( $this->vars[$key], 'core_Object' ) ) {
 					if ( $maxDepth ) {
 						$vars[$key] = $this->vars[$key]->getValues( null, $format, $maxDepth - 1 );
 					}
@@ -640,7 +640,7 @@ class XoopsObject
  * @author  Kazumi Ono <onokazu@xoops.org>
  * @copyright copyright &copy; 2000 The XOOPS Project
  */
-class XoopsObjectHandler
+class core_ObjectHandler
 {
 
 	/**
@@ -659,7 +659,7 @@ class XoopsObjectHandler
 	* @param object $db reference to the {@link XoopsDatabase} object
 	* @access protected
 	*/
-	function XoopsObjectHandler(&$db)
+	function core_ObjectHandler(&$db)
 	{
 		$this->db =& $db;
 	}

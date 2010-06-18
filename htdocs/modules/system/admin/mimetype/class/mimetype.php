@@ -103,8 +103,8 @@ class SystemMimetypeHandler extends IcmsPersistableObjectHandler {
 	function AllowedModules($mimetype, $module) {
 		$mimetypeid_allowed = $dirname_allowed = false;
 		$GrantedItems =  $this->UserCanUpload();
-		$criteria = new CriteriaCompo();
-		$criteria->add(new Criteria('types', '%'.$mimetype.'%', 'LIKE'));
+		$criteria = new core_CriteriaCompo();
+		$criteria->add(new core_Criteria('types', '%'.$mimetype.'%', 'LIKE'));
 
 		$sql = 'SELECT mimetypeid, dirname, types FROM ' . $this->table;
 		$rows = $this->query($sql, $criteria);

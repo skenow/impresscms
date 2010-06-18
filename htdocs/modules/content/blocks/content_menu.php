@@ -104,15 +104,15 @@ function getPages($showsubs = true, $sort='content_weight', $order='ASC', $conte
 	$module_handler = xoops_gethandler('module');
 	$module = $module_handler->getByDirname('content');
 	$mid = $module->mid();
-	$criteria = new CriteriaCompo(new Criteria('content_status', 1));
+	$criteria = new core_CriteriaCompo(new core_Criteria('content_status', 1));
 	if (!$relateds){
-		$criteria->add(new Criteria('content_pid', $content_id));
+		$criteria->add(new core_Criteria('content_pid', $content_id));
 	}else{
-		$criteria->add(new Criteria('short_url', $content_id,'LIKE'));
-		$criteria->add(new Criteria('content_id', $content_id),'OR');
+		$criteria->add(new core_Criteria('short_url', $content_id,'LIKE'));
+		$criteria->add(new core_Criteria('content_id', $content_id),'OR');
 	}
-	$crit = new CriteriaCompo(new Criteria('content_visibility', 1));
-	$crit->add(new Criteria('content_visibility', 3),'OR');
+	$crit = new core_CriteriaCompo(new core_Criteria('content_visibility', 1));
+	$crit->add(new core_Criteria('content_visibility', 3),'OR');
 	$criteria->add($crit);
 	$criteria->setSort($sort);
 	$criteria->setOrder($order);

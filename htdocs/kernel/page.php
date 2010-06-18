@@ -64,14 +64,14 @@ class IcmsPageHandler extends IcmsPersistableObjectHandler {
 			$value = array($value);
 		}
 		$module_handler =& xoops_gethandler('module');
-		$criteria = new CriteriaCompo(new Criteria('hasmain', 1));
-		$criteria->add(new Criteria('isactive', 1));
+		$criteria = new core_CriteriaCompo(new core_Criteria('hasmain', 1));
+		$criteria->add(new core_Criteria('isactive', 1));
 		$module_list =& $module_handler->getObjects($criteria);
 		$mods = '';
 		foreach ($module_list as $module){
 			$mods .= '<optgroup label="'.$module->getVar('name').'">';
-			$criteria = new CriteriaCompo(new Criteria('page_moduleid', $module->getVar('mid')));
-			$criteria->add(new Criteria('page_status', 1));
+			$criteria = new core_CriteriaCompo(new core_Criteria('page_moduleid', $module->getVar('mid')));
+			$criteria->add(new core_Criteria('page_status', 1));
 			$pages =& $this->getObjects($criteria);
 			$sel = '';
 			if (in_array($module->getVar('mid').'-0',$value)){
@@ -89,8 +89,8 @@ class IcmsPageHandler extends IcmsPersistableObjectHandler {
 		}
 
 		$module = $module_handler->get(1);
-		$criteria = new CriteriaCompo(new Criteria('page_moduleid', 1));
-		$criteria->add(new Criteria('page_status', 1));
+		$criteria = new core_CriteriaCompo(new core_Criteria('page_moduleid', 1));
+		$criteria->add(new core_Criteria('page_status', 1));
 		$pages =& $this->getObjects($criteria);
 		$cont = '';
 		if (count($pages) > 0){

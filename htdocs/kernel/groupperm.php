@@ -29,7 +29,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class XoopsGroupPerm extends XoopsObject
+class XoopsGroupPerm extends core_Object
 {
 	/**
 	 * Constructor
@@ -37,7 +37,7 @@ class XoopsGroupPerm extends XoopsObject
 	 */
 	function XoopsGroupPerm()
 	{
-		$this->XoopsObject();
+		$this->core_Object();
 		$this->initVar('gperm_id', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('gperm_groupid', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('gperm_itemid', XOBJ_DTYPE_INT, null, false);
@@ -57,7 +57,7 @@ class XoopsGroupPerm extends XoopsObject
  * @author       Kazumi Ono  <onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class XoopsGroupPermHandler extends XoopsObjectHandler
+class XoopsGroupPermHandler extends core_ObjectHandler
 {
 	public static $_cachedRights;
 	
@@ -65,7 +65,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
 	 * Create a new {@link XoopsGroupPerm}
 	 *
 	 * @return	bool    $isNew  Flag the object as "new"?
-	 * @see htdocs/kernel/XoopsObjectHandler#create()
+	 * @see htdocs/kernel/core_ObjectHandler#create()
 	 */
 	function &create($isNew = true)
 	{
@@ -82,7 +82,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
 	 * @param	int $id ID
 	 *
 	 * @return	object  {@link XoopsGroupPerm}, FALSE on fail
-	 * @see htdocs/kernel/XoopsObjectHandler#get($int_id)
+	 * @see htdocs/kernel/core_ObjectHandler#get($int_id)
 	 */
 	function &get($id)
 	{
@@ -108,7 +108,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
 	 * @param	object  &$perm  {@link XoopsGroupPerm} object
 	 *
 	 * @return	bool    TRUE on success
-	 * @see htdocs/kernel/XoopsObjectHandler#insert($object)
+	 * @see htdocs/kernel/core_ObjectHandler#insert($object)
 	 */
 	function insert(&$perm)
 	{
@@ -149,7 +149,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
 	 * @param	object  &$perm
 	 *
 	 * @return	bool    TRUE on success
-	 * @see htdocs/kernel/XoopsObjectHandler#delete($object)
+	 * @see htdocs/kernel/core_ObjectHandler#delete($object)
 	 */
 	function delete(&$perm)
 	{
@@ -169,7 +169,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
 	/**
 	 * Retrieve multiple {@link XoopsGroupPerm}s
 	 *
-	 * @param	object  $criteria   {@link CriteriaElement}
+	 * @param	object  $criteria   {@link core_CriteriaElement}
 	 * @param	bool    $id_as_key  Use IDs as array keys?
 	 *
 	 * @return	array   Array of {@link XoopsGroupPerm}s
@@ -204,7 +204,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
 	/**
 	 * Count some {@link XoopsGroupPerm}s
 	 *
-	 * @param	object  $criteria   {@link CriteriaElement}
+	 * @param	object  $criteria   {@link core_CriteriaElement}
 	 *
 	 * @return	int
 	 */
@@ -225,7 +225,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
 	/**
 	 * Delete all permissions by a certain criteria
 	 *
-	 * @param	object  $criteria   {@link CriteriaElement}
+	 * @param	object  $criteria   {@link core_CriteriaElement}
 	 *
 	 * @return	bool    TRUE on success
 	 */
@@ -250,9 +250,9 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
 	 */
 	function deleteByGroup($gperm_groupid, $gperm_modid = null)
 	{
-		$criteria = new CriteriaCompo(new Criteria('gperm_groupid', (int) ($gperm_groupid)));
+		$criteria = new core_CriteriaCompo(new core_Criteria('gperm_groupid', (int) ($gperm_groupid)));
 		if (isset($gperm_modid)) {
-			$criteria->add(new Criteria('gperm_modid', (int) ($gperm_modid)));
+			$criteria->add(new core_Criteria('gperm_modid', (int) ($gperm_modid)));
 		}
 		return $this->deleteAll($criteria);
 	}
@@ -268,11 +268,11 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
 	 */
 	function deleteByModule($gperm_modid, $gperm_name = null, $gperm_itemid = null)
 	{
-		$criteria = new CriteriaCompo(new Criteria('gperm_modid', (int) ($gperm_modid)));
+		$criteria = new core_CriteriaCompo(new core_Criteria('gperm_modid', (int) ($gperm_modid)));
 		if (isset($gperm_name)) {
-			$criteria->add(new Criteria('gperm_name', $gperm_name));
+			$criteria->add(new core_Criteria('gperm_name', $gperm_name));
 			if (isset($gperm_itemid)) {
-				$criteria->add(new Criteria('gperm_itemid', (int) ($gperm_itemid)));
+				$criteria->add(new core_Criteria('gperm_itemid', (int) ($gperm_itemid)));
 			}
 		}
 		return $this->deleteAll($criteria);
@@ -292,26 +292,26 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
 	 */
 	function checkRight($gperm_name, $gperm_itemid, $gperm_groupid, $gperm_modid = 1, $webmasterAlwaysTrue=true)
 	{
-		$criteria = new CriteriaCompo(new Criteria('gperm_modid', $gperm_modid));
-		$criteria->add(new Criteria('gperm_name', $gperm_name));
+		$criteria = new core_CriteriaCompo(new core_Criteria('gperm_modid', $gperm_modid));
+		$criteria->add(new core_Criteria('gperm_name', $gperm_name));
 		$gperm_itemid = (int) ($gperm_itemid);
 		if ($gperm_itemid > 0) {
-			$criteria->add(new Criteria('gperm_itemid', $gperm_itemid));
+			$criteria->add(new core_Criteria('gperm_itemid', $gperm_itemid));
 		}
 		if (is_array($gperm_groupid)) {
 			if ($webmasterAlwaysTrue && in_array(XOOPS_GROUP_ADMIN, $gperm_groupid)) {
 				return true;
 			}
-			$criteria2 = new CriteriaCompo();
+			$criteria2 = new core_CriteriaCompo();
 			foreach ($gperm_groupid as $gid) {
-				$criteria2->add(new Criteria('gperm_groupid', $gid), 'OR');
+				$criteria2->add(new core_Criteria('gperm_groupid', $gid), 'OR');
 			}
 			$criteria->add($criteria2);
 		} else {
 			if ($webmasterAlwaysTrue && XOOPS_GROUP_ADMIN == $gperm_groupid) {
 				return true;
 			}
-			$criteria->add(new Criteria('gperm_groupid', $gperm_groupid));
+			$criteria->add(new core_Criteria('gperm_groupid', $gperm_groupid));
 		}
 		if ($this->getCount($criteria) > 0) {
 			return true;
@@ -351,16 +351,16 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
 	function getItemIds($gperm_name, $gperm_groupid, $gperm_modid = 1)
 	{
 		$ret = array();
-		$criteria = new CriteriaCompo(new Criteria('gperm_name', $gperm_name));
-		$criteria->add(new Criteria('gperm_modid', (int) ($gperm_modid)));
+		$criteria = new core_CriteriaCompo(new core_Criteria('gperm_name', $gperm_name));
+		$criteria->add(new core_Criteria('gperm_modid', (int) ($gperm_modid)));
 		if (is_array($gperm_groupid)) {
-			$criteria2 = new CriteriaCompo();
+			$criteria2 = new core_CriteriaCompo();
 			foreach ($gperm_groupid as $gid) {
-				$criteria2->add(new Criteria('gperm_groupid', $gid), 'OR');
+				$criteria2->add(new core_Criteria('gperm_groupid', $gid), 'OR');
 			}
 			$criteria->add($criteria2);
 		} else {
-			$criteria->add(new Criteria('gperm_groupid', (int) ($gperm_groupid)));
+			$criteria->add(new core_Criteria('gperm_groupid', (int) ($gperm_groupid)));
 		}
 		$perms = $this->getObjects($criteria, true);
 		foreach (array_keys($perms) as $i) {
@@ -385,9 +385,9 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
 		if(isset( $this->_cachedRights[$gperm_name][$gperm_itemid][$gperm_modid] ))
   			$perms = array($this->_cachedRights[$gperm_name][$gperm_itemid][$gperm_modid]);
   		else{
-			$criteria = new CriteriaCompo(new Criteria('gperm_name', $gperm_name));
-			$criteria->add(new Criteria('gperm_itemid', (int) ($gperm_itemid)));
-			$criteria->add(new Criteria('gperm_modid', (int) ($gperm_modid)));
+			$criteria = new core_CriteriaCompo(new core_Criteria('gperm_name', $gperm_name));
+			$criteria->add(new core_Criteria('gperm_itemid', (int) ($gperm_itemid)));
+			$criteria->add(new core_Criteria('gperm_modid', (int) ($gperm_modid)));
 			$perms = $this->getObjects($criteria, true);
 			foreach($perms as $perm)
 		  		$this->_cachedRights[$gperm_name][$gperm_itemid][$gperm_modid] = $perm;

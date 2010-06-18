@@ -171,7 +171,7 @@ class IcmsPersistableCategoryHandler extends IcmsPersistableObjectHandler {
 	function getAllCategoriesArray($parentid=0, $perm_name=false, $sort = 'parentid', $order='ASC') {
 
 		if (!$this->allCategoriesObj) {
-			$criteria = new CriteriaCompo();
+			$criteria = new core_CriteriaCompo();
 			$criteria->setSort($sort);
 			$criteria->setOrder($order);
 			global $icmsUser;

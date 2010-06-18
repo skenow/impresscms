@@ -35,7 +35,7 @@ if (isset($_GET['arg3'])){
 $image_handler = xoops_gethandler('image');
 $imgcat_handler = xoops_gethandler('imagecategory');
 
-$image =& $image_handler->getObjects(new Criteria('image_name', $file),false,true);
+$image =& $image_handler->getObjects(new core_Criteria('image_name', $file),false,true);
 $imagecategory =& $imgcat_handler->get($image[0]->getVar('imgcat_id'));
 
 $categ_path = $imgcat_handler->getCategFolder($imagecategory);

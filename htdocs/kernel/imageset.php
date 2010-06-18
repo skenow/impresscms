@@ -34,7 +34,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class XoopsImageset extends XoopsObject
+class XoopsImageset extends core_Object
 {
 	/**
 	 * Constructor
@@ -42,7 +42,7 @@ class XoopsImageset extends XoopsObject
 	 */
 	function XoopsImageset()
 	{
-		$this->XoopsObject();
+		$this->core_Object();
 		$this->initVar('imgset_id', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('imgset_name', XOBJ_DTYPE_TXTBOX, null, true, 50);
 		$this->initVar('imgset_refid', XOBJ_DTYPE_INT, 0, false);
@@ -57,7 +57,7 @@ class XoopsImageset extends XoopsObject
  *
  * @author  Kazumi Ono <onokazu@xoops.org>
  */
-class XoopsImagesetHandler extends XoopsObjectHandler
+class XoopsImagesetHandler extends core_ObjectHandler
 {
 
 	/**
@@ -166,7 +166,7 @@ class XoopsImagesetHandler extends XoopsObjectHandler
 
 	/**
 	 * retrieve array of {@link XoopsImageset}s meeting certain conditions
-	 * @param object $criteria {@link CriteriaElement} with conditions for the imagesets
+	 * @param object $criteria {@link core_CriteriaElement} with conditions for the imagesets
 	 * @param bool $id_as_key should the imageset's imgset_id be the key for the returned array?
 	 * @return array {@link XoopsImageset}s matching the conditions
 	 **/
@@ -252,12 +252,12 @@ class XoopsImagesetHandler extends XoopsObjectHandler
 	 **/
 	function getList($refid = null, $tplset = null)
 	{
-		$criteria = new CriteriaCompo();
+		$criteria = new core_CriteriaCompo();
 		if (isset($refid)) {
-			$criteria->add(new Criteria('imgset_refid', (int) ($refid)));
+			$criteria->add(new core_Criteria('imgset_refid', (int) ($refid)));
 		}
 		if (isset($tplset)) {
-			$criteria->add(new Criteria('tplset_name', $tplset));
+			$criteria->add(new core_Criteria('tplset_name', $tplset));
 		}
 		$imgsets =& $this->getObjects($criteria, true);
 		$ret = array();

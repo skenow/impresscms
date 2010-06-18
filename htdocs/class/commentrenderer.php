@@ -123,7 +123,7 @@ class XoopsCommentRenderer {
 	{
 		include_once ICMS_ROOT_PATH.'/class/tree.php';
 		// construct comment tree
-		$xot = new XoopsObjectTree($this->_comments, 'com_id', 'com_pid', 'com_rootid');
+		$xot = new core_ObjectTree($this->_comments, 'com_id', 'com_pid', 'com_rootid');
 		$tree =& $xot->getTree();
 
 		if (false != $this->_useIcons) {
@@ -215,7 +215,7 @@ class XoopsCommentRenderer {
 	function renderNestView($comment_id = 0, $admin_view = false)
 	{
 		include_once ICMS_ROOT_PATH.'/class/tree.php';
-		$xot = new XoopsObjectTree($this->_comments, 'com_id', 'com_pid', 'com_rootid');
+		$xot = new core_ObjectTree($this->_comments, 'com_id', 'com_pid', 'com_rootid');
 		$tree =& $xot->getTree();
 		if (false != $this->_useIcons) {
 			$title = $this->_getTitleIcon($tree[$comment_id]['obj']->getVar('com_icon')).'&nbsp;'.$tree[$comment_id]['obj']->getVar('com_title');

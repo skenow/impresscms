@@ -32,7 +32,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  *
  * @version		$Revision: 1102 $ - $Date: 2007-10-18 22:55:52 -0400 (jeu., 18 oct. 2007) $
  */
-class XoopsPrivmessage extends XoopsObject
+class XoopsPrivmessage extends core_Object
 {
 
 	/**
@@ -40,7 +40,7 @@ class XoopsPrivmessage extends XoopsObject
 	 **/
 	function XoopsPrivmessage()
 	{
-		$this->XoopsObject();
+		$this->core_Object();
 		$this->initVar('msg_id', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('msg_image', XOBJ_DTYPE_OTHER, 'icon1.gif', false, 100);
 		$this->initVar('subject', XOBJ_DTYPE_TXTBOX, null, true, 255);
@@ -65,7 +65,7 @@ class XoopsPrivmessage extends XoopsObject
  *
  * @version		$Revision: 1102 $ - $Date: 2007-10-18 22:55:52 -0400 (jeu., 18 oct. 2007) $
  */
-class XoopsPrivmessageHandler extends XoopsObjectHandler
+class XoopsPrivmessageHandler extends core_ObjectHandler
 {
 
 	/**
@@ -169,7 +169,7 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
 
 	/**
 	 * Load messages from the database
-	 * @param 	object 	$criteria 	{@link CriteriaElement} object
+	 * @param 	object 	$criteria 	{@link core_CriteriaElement} object
 	 * @param 	bool 	$id_as_key 	use ID as key into the array?
 	 * @return 	array	Array of {@link XoopsPrivmessage} objects
 	 **/
@@ -204,7 +204,7 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
 
 	/**
 	 * Count message
-	 * @param 	object 	$criteria = null 	{@link CriteriaElement} object
+	 * @param 	object 	$criteria = null 	{@link core_CriteriaElement} object
 	 * @return 	int
 	 **/
 	function getCount($criteria = null)

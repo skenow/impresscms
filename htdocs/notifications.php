@@ -60,7 +60,7 @@ switch ($op) {
 
 		// Get an array of all notifications for the selected user
 
-		$criteria = new Criteria ('not_uid', $uid);
+		$criteria = new core_Criteria ('not_uid', $uid);
 		$criteria->setSort ('not_modid,not_category,not_itemid');
 		$notification_handler =& xoops_gethandler('notification');
 		$notifications =& $notification_handler->getObjects($criteria);

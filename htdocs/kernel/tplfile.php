@@ -27,7 +27,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @copyright copyright &copy; 2000 XOOPS.org
  * @package kernel
  **/
-class XoopsTplfile extends XoopsObject
+class XoopsTplfile extends core_Object
 {
 
 	/**
@@ -35,7 +35,7 @@ class XoopsTplfile extends XoopsObject
 	 */
 	function XoopsTplfile()
 	{
-		$this->XoopsObject();
+		$this->core_Object();
 		$this->initVar('tpl_id', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('tpl_refid', XOBJ_DTYPE_INT, 0, false);
 		$this->initVar('tpl_tplset', XOBJ_DTYPE_OTHER, null, false);
@@ -73,7 +73,7 @@ class XoopsTplfile extends XoopsObject
  *
  * @author  Kazumi Ono <onokazu@xoops.org>
  */
-class XoopsTplfileHandler extends XoopsObjectHandler
+class XoopsTplfileHandler extends core_ObjectHandler
 {
 
 	/**
@@ -269,7 +269,7 @@ class XoopsTplfileHandler extends XoopsObjectHandler
 
 	/**
 	 * retrieve array of {@link XoopsTplfile}s meeting certain conditions
-	 * @param object $criteria {@link CriteriaElement} with conditions for the blocks
+	 * @param object $criteria {@link core_CriteriaElement} with conditions for the blocks
 	 * @param bool $id_as_key should the tplfile's tpl_id be the key for the returned array?
 	 * @return array {@link XoopsTplfile}s matching the conditions
 	 **/
@@ -307,7 +307,7 @@ class XoopsTplfileHandler extends XoopsObjectHandler
 	/**
 	 * Count some tplfiles
 	 *
-	 * @param   object  $criteria   {@link CriteriaElement}
+	 * @param   object  $criteria   {@link core_CriteriaElement}
 	 * @return  int
 	 **/
 	function getCount($criteria = null)
@@ -358,28 +358,28 @@ class XoopsTplfileHandler extends XoopsObjectHandler
 	 **/
 	function find($tplset = null, $type = null, $refid = null, $module = null, $file = null, $getsource = false)
 	{
-		$criteria = new CriteriaCompo();
+		$criteria = new core_CriteriaCompo();
 		if (isset($tplset)) {
-			$criteria->add(new Criteria('tpl_tplset', $tplset));
+			$criteria->add(new core_Criteria('tpl_tplset', $tplset));
 		}
 		if (isset($module)) {
-			$criteria->add(new Criteria('tpl_module', $module));
+			$criteria->add(new core_Criteria('tpl_module', $module));
 		}
 		if (isset($refid)) {
-			$criteria->add(new Criteria('tpl_refid', $refid));
+			$criteria->add(new core_Criteria('tpl_refid', $refid));
 		}
 		if (isset($file)) {
-			$criteria->add(new Criteria('tpl_file', $file));
+			$criteria->add(new core_Criteria('tpl_file', $file));
 		}
 		if (isset($type)) {
 			if (is_array($type)) {
-				$criteria2 = new CriteriaCompo();
+				$criteria2 = new core_CriteriaCompo();
 				foreach ($type as $t) {
-					$criteria2->add(new Criteria('tpl_type', $t), 'OR');
+					$criteria2->add(new core_Criteria('tpl_type', $t), 'OR');
 				}
 				$criteria->add($criteria2);
 			} else {
-				$criteria->add(new Criteria('tpl_type', $type));
+				$criteria->add(new core_Criteria('tpl_type', $type));
 			}
 		}
 		return $this->getObjects($criteria, $getsource, false);
@@ -394,8 +394,8 @@ class XoopsTplfileHandler extends XoopsObjectHandler
 	 **/
 	function templateExists($tplname, $tplset_name)
 	{
-		$criteria = new CriteriaCompo(new Criteria('tpl_file', trim($tplname)));
-		$criteria->add(new Criteria('tpl_tplset', trim($tplset_name)));
+		$criteria = new core_CriteriaCompo(new core_Criteria('tpl_file', trim($tplname)));
+		$criteria->add(new core_Criteria('tpl_tplset', trim($tplset_name)));
 		if ($this->getCount($criteria) > 0) {
 			return true;
 		}

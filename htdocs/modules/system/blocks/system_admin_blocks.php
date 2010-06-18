@@ -149,9 +149,9 @@ function b_system_admin_modules_show(){
 	$block['mods'] = array();
 	$module_handler = & xoops_gethandler ( 'module' );
 	$moduleperm_handler = & xoops_gethandler ( 'groupperm' );
-	$criteria = new CriteriaCompo ( );
-	$criteria->add ( new Criteria ( 'hasadmin', 1 ) );
-	$criteria->add ( new Criteria ( 'isactive', 1 ) );
+	$criteria = new core_CriteriaCompo ( );
+	$criteria->add ( new core_Criteria ( 'hasadmin', 1 ) );
+	$criteria->add ( new core_Criteria ( 'isactive', 1 ) );
 	$criteria->setSort ( 'mid' );
 	$modules = $module_handler->getObjects ( $criteria );
 	foreach ( $modules as $module ) {

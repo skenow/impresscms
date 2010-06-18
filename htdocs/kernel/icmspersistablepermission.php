@@ -15,7 +15,7 @@ if (!defined("ICMS_ROOT_PATH")) {
 	die("ImpressCMS root path not defined");
 }
 
-class IcmsPersistablePermissionHandler extends XoopsObjectHandler
+class IcmsPersistablePermissionHandler extends core_ObjectHandler
 {
 	var $handler;
 	function IcmsPersistablePermissionHandler($handler) {
@@ -61,11 +61,11 @@ class IcmsPersistablePermissionHandler extends XoopsObjectHandler
 
 		$icmsModule =& $this->handler->getModuleInfo();
 
-		$criteria = new CriteriaCompo();
-		$criteria->add(new Criteria('gperm_modid', $icmsModule->getVar('mid')));
+		$criteria = new core_CriteriaCompo();
+		$criteria->add(new core_Criteria('gperm_modid', $icmsModule->getVar('mid')));
 
 		if ($gperm_name) {
-			$criteria->add(new Criteria('gperm_name', $gperm_name));
+			$criteria->add(new core_Criteria('gperm_name', $gperm_name));
 		}
 
 		//Get group permissions handler

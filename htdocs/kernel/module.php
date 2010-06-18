@@ -27,7 +27,7 @@ if(!defined('ICMS_ROOT_PATH')){exit();}
  * @author	Kazumi Ono 	<onokazu@xoops.org>
  * @copyright	(c) 2000-2003 The Xoops Project - www.xoops.org
  **/
-class XoopsModule extends XoopsObject
+class XoopsModule extends core_Object
 {
 	/**
 	 * @var string
@@ -57,7 +57,7 @@ class XoopsModule extends XoopsObject
 	 */
 	function XoopsModule()
 	{
-		$this->XoopsObject();
+		$this->core_Object();
 		$this->initVar('mid', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('name', XOBJ_DTYPE_TXTBOX, null, true, 150);
 		$this->initVar('version', XOBJ_DTYPE_INT, 100, false);
@@ -336,7 +336,7 @@ class XoopsModule extends XoopsObject
  * @author	Kazumi Ono 	<onokazu@xoops.org>
  * @copyright	(c) 2000-2003 The Xoops Project - www.xoops.org
  **/
-class XoopsModuleHandler extends XoopsObjectHandler
+class XoopsModuleHandler extends core_ObjectHandler
 {
 	/**
 	 * holds an array of cached module references, indexed by module id
@@ -554,7 +554,7 @@ class XoopsModuleHandler extends XoopsObjectHandler
 	/**
 	 * Load some modules
 	 *
-	 * @param   object  $criteria   {@link CriteriaElement}
+	 * @param   object  $criteria   {@link core_CriteriaElement}
 	 * @param   boolean $id_as_key  Use the ID as key into the array
 	 * @return  array
 	 **/
@@ -592,7 +592,7 @@ class XoopsModuleHandler extends XoopsObjectHandler
 	/**
 	 * Count some modules
 	 *
-	 * @param   object  $criteria   {@link CriteriaElement}
+	 * @param   object  $criteria   {@link core_CriteriaElement}
 	 * @return  int
 	 **/
 	function getCount($criteria = null)

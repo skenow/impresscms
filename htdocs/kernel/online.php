@@ -114,7 +114,7 @@ class XoopsOnlineHandler
 	/**
 	 * Get an array of online information
 	 *
-	 * @param	object  $criteria   {@link CriteriaElement}
+	 * @param	object  $criteria   {@link core_CriteriaElement}
 	 * @return	array   Array of associative arrays of online information
 	 */
 	function getAll($criteria = null)
@@ -141,7 +141,7 @@ class XoopsOnlineHandler
 	/**
 	 * Count the number of online users
 	 *
-	 * @param	object  $criteria   {@link CriteriaElement}
+	 * @param	object  $criteria   {@link core_CriteriaElement}
 	 */
 	function getCount($criteria = null)
 	{

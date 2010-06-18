@@ -37,11 +37,11 @@ if (!empty($mids)) {
 }
 
 if (empty($modules)) {
-	$criteria = new CriteriaCompo();
-	$criteria->add(new Criteria('hassearch', 1));
-	$criteria->add(new Criteria('isactive', 1));
+	$criteria = new core_CriteriaCompo();
+	$criteria->add(new core_Criteria('hassearch', 1));
+	$criteria->add(new core_Criteria('isactive', 1));
 	if (!empty($available_modules)) {
-		$criteria->add(new Criteria('mid', "(".implode(',', $available_modules).")", 'IN'));
+		$criteria->add(new core_Criteria('mid', "(".implode(',', $available_modules).")", 'IN'));
 	}
 	$module_handler =& xoops_gethandler('module');
 	$mods_checkbox->addOptionArray($module_handler->getList($criteria));

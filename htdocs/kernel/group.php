@@ -23,14 +23,14 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @author Kazumi Ono <onokazu@xoops.org>
  * @package kernel
  */
-class XoopsGroup extends XoopsObject
+class XoopsGroup extends core_Object
 {
 	/**
 	 * constructor
 	 */
 	function XoopsGroup()
 	{
-		$this->XoopsObject();
+		$this->core_Object();
 		$this->initVar('groupid', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('name', XOBJ_DTYPE_TXTBOX, null, true, 100);
 		$this->initVar('description', XOBJ_DTYPE_TXTAREA, null, false);
@@ -48,7 +48,7 @@ class XoopsGroup extends XoopsObject
  * @package kernel
  * @subpackage member
  */
-class XoopsGroupHandler extends XoopsObjectHandler
+class XoopsGroupHandler extends core_ObjectHandler
 {
 
 	/**
@@ -56,7 +56,7 @@ class XoopsGroupHandler extends XoopsObjectHandler
 	 *
 	 * @param bool $isNew mark the new object as "new"?
 	 * @return object XoopsGroup {@link XoopsGroup} reference to the new object
-	 * @see htdocs/kernel/XoopsObjectHandler#create()
+	 * @see htdocs/kernel/core_ObjectHandler#create()
 	 */
 	function &create($isNew = true)
 	{
@@ -72,7 +72,7 @@ class XoopsGroupHandler extends XoopsObjectHandler
 	 *
 	 * @param int $id ID of the group to get
 	 * @return object XoopsGroup {@link XoopsGroup} reference to the group object, FALSE if failed
-	 * @see htdocs/kernel/XoopsObjectHandler#get($int_id)
+	 * @see htdocs/kernel/core_ObjectHandler#get($int_id)
 	 */
 	function &get($id)
 	{
@@ -97,7 +97,7 @@ class XoopsGroupHandler extends XoopsObjectHandler
 	 *
 	 * @param object reference to the group object
 	 * @return mixed ID of the group if inserted, FALSE if failed, TRUE if already present and unchanged.
-	 * @see htdocs/kernel/XoopsObjectHandler#insert($object)
+	 * @see htdocs/kernel/core_ObjectHandler#insert($object)
 	 */
 	function insert(&$group)
 	{
@@ -137,7 +137,7 @@ class XoopsGroupHandler extends XoopsObjectHandler
 	 *
 	 * @param object $group reference to the group to be removed
 	 * @return bool FALSE if failed
-	 * @see htdocs/kernel/XoopsObjectHandler#delete($object)
+	 * @see htdocs/kernel/core_ObjectHandler#delete($object)
 	 */
 	function delete(&$group)
 	{
@@ -157,7 +157,7 @@ class XoopsGroupHandler extends XoopsObjectHandler
 	/**
 	 * retrieve groups from the database
 	 *
-	 * @param object $criteria {@link CriteriaElement} with conditions for the groups
+	 * @param object $criteria {@link core_CriteriaElement} with conditions for the groups
 	 * @param bool $id_as_key should the groups' IDs be used as keys for the associative array?
 	 * @return mixed Array of groups
 	 */
@@ -197,14 +197,14 @@ class XoopsGroupHandler extends XoopsObjectHandler
  * @package kernel
  * @subpackage	member
  */
-class XoopsMembership extends XoopsObject
+class XoopsMembership extends core_Object
 {
 	/**
 	 * constructor
 	 */
 	function XoopsMembership()
 	{
-		$this->XoopsObject();
+		$this->core_Object();
 		$this->initVar('linkid', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('groupid', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('uid', XOBJ_DTYPE_INT, null, false);
@@ -222,14 +222,14 @@ class XoopsMembership extends XoopsObject
  * @package kernel
  * @subpackage	member
  */
-class XoopsMembershipHandler extends XoopsObjectHandler
+class XoopsMembershipHandler extends core_ObjectHandler
 {
 	/**
 	 * create a new membership
 	 *
 	 * @param bool $isNew should the new object be set to "new"?
 	 * @return object XoopsMembership {@link XoopsMembership}
-	 * @see htdocs/kernel/XoopsObjectHandler#create()
+	 * @see htdocs/kernel/core_ObjectHandler#create()
 	 */
 	function &create($isNew = true)
 	{
@@ -245,7 +245,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
 	 *
 	 * @param int $id ID of the membership to get
 	 * @return mixed reference to the object if successful, else FALSE
-	 * @see htdocs/kernel/XoopsObjectHandler#get($int_id)
+	 * @see htdocs/kernel/core_ObjectHandler#get($int_id)
 	 */
 	function &get($id)
 	{
@@ -270,7 +270,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
 	 *
 	 * @param object $mship reference to the membership object
 	 * @return bool TRUE if already in DB or successful, FALSE if failed
-	 * @see htdocs/kernel/XoopsObjectHandler#insert($object)
+	 * @see htdocs/kernel/core_ObjectHandler#insert($object)
 	 */
 	function insert(&$mship)
 	{
@@ -310,7 +310,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
 	 *
 	 * @param object $mship reference to the membership object
 	 * @return bool FALSE if failed
-	 * @see htdocs/kernel/XoopsObjectHandler#delete($object)
+	 * @see htdocs/kernel/core_ObjectHandler#delete($object)
 	 */
 	function delete(&$mship)
 	{
@@ -331,7 +331,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
 	/**
 	 * retrieve memberships from the database
 	 *
-	 * @param object $criteria {@link CriteriaElement} conditions to meet
+	 * @param object $criteria {@link core_CriteriaElement} conditions to meet
 	 * @param bool $id_as_key should the ID be used as the array's key?
 	 * @return array array of references
 	 */
@@ -365,7 +365,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
 	/**
 	 * count how many memberships meet the conditions
 	 *
-	 * @param object $criteria {@link CriteriaElement} conditions to meet
+	 * @param object $criteria {@link core_CriteriaElement} conditions to meet
 	 * @return int
 	 */
 	function getCount($criteria = null)
@@ -385,7 +385,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
 	/**
 	 * delete all memberships meeting the conditions
 	 *
-	 * @param object $criteria {@link CriteriaElement} with conditions to meet
+	 * @param object $criteria {@link core_CriteriaElement} with conditions to meet
 	 * @return bool
 	 */
 	function deleteAll($criteria = null)

@@ -25,7 +25,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @package     kernel
  * @subpackage	config
  */
-class XoopsConfigCategory extends XoopsObject
+class XoopsConfigCategory extends core_Object
 {
 	/**
 	 * Constructor
@@ -33,7 +33,7 @@ class XoopsConfigCategory extends XoopsObject
 	 */
 	function XoopsConfigCategory()
 	{
-		$this->XoopsObject();
+		$this->core_Object();
 		$this->initVar('confcat_id', XOBJ_DTYPE_INT, null);
 		$this->initVar('confcat_name', XOBJ_DTYPE_OTHER, null);
 		$this->initVar('confcat_order', XOBJ_DTYPE_INT, 0);
@@ -52,7 +52,7 @@ class XoopsConfigCategory extends XoopsObject
  * @package     kernel
  * @subpackage  config
  */
-class XoopsConfigCategoryHandler extends XoopsObjectHandler
+class XoopsConfigCategoryHandler extends core_ObjectHandler
 {
 
 	/**
@@ -61,7 +61,7 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
 	 * @param	bool    $isNew  Flag the new object as "new"?
 	 *
 	 * @return	object  New {@link XoopsConfigCategory}
-	 * @see htdocs/kernel/XoopsObjectHandler#create()
+	 * @see htdocs/kernel/core_ObjectHandler#create()
 	 */
 	function &create($isNew = true)
 	{
@@ -78,7 +78,7 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
 	 * @param	int $id ConfigCategoryID to get
 	 *
 	 * @return	object|false  {@link XoopsConfigCategory}, FALSE on fail
-	 * @see htdocs/kernel/XoopsObjectHandler#get($int_id)
+	 * @see htdocs/kernel/core_ObjectHandler#get($int_id)
 	 */
 	function &get($id) {
 		$confcat = false;
@@ -103,7 +103,7 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
 	 * @param	object   &$confcat  {@link XoopsConfigCategory}
 	 *
 	 * @return	bool    TRUE on success
-	 * @see htdocs/kernel/XoopsObjectHandler#insert($object)
+	 * @see htdocs/kernel/core_ObjectHandler#insert($object)
 	 */
 	function insert(&$confcat)
 	{
@@ -144,7 +144,7 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
 	 * @param	object  &$confcat   {@link XoopsConfigCategory}
 	 *
 	 * @return	bool    TRUE on success
-	 * @see htdocs/kernel/XoopsObjectHandler#delete($object)
+	 * @see htdocs/kernel/core_ObjectHandler#delete($object)
 	 */
 	function delete(&$confcat)
 	{
@@ -165,7 +165,7 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
 	/**
 	 * Get some {@link XoopsConfigCategory}s
 	 *
-	 * @param	object  $criteria   {@link CriteriaElement}
+	 * @param	object  $criteria   {@link core_CriteriaElement}
 	 * @param	bool    $id_as_key  Use the IDs as keys to the array?
 	 *
 	 * @return	array   Array of {@link XoopsConfigCategory}s

@@ -27,7 +27,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @copyright copyright &copy; 2000 XOOPS.org
  * @package kernel
  **/
-class XoopsTplset extends XoopsObject
+class XoopsTplset extends core_Object
 {
 
 	/**
@@ -35,7 +35,7 @@ class XoopsTplset extends XoopsObject
 	 */
 	function XoopsTplset()
 	{
-		$this->XoopsObject();
+		$this->core_Object();
 		$this->initVar('tplset_id', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('tplset_name', XOBJ_DTYPE_OTHER, null, false);
 		$this->initVar('tplset_desc', XOBJ_DTYPE_TXTBOX, null, false, 255);
@@ -52,7 +52,7 @@ class XoopsTplset extends XoopsObject
  *
  * @author  Kazumi Ono <onokazu@xoops.org>
  */
-class XoopsTplsetHandler extends XoopsObjectHandler
+class XoopsTplsetHandler extends core_ObjectHandler
 {
 
 	/**
@@ -188,7 +188,7 @@ class XoopsTplsetHandler extends XoopsObjectHandler
 
 	/**
 	 * retrieve array of {@link XoopsTplset}s meeting certain conditions
-	 * @param object $criteria {@link CriteriaElement} with conditions for the blocks
+	 * @param object $criteria {@link core_CriteriaElement} with conditions for the blocks
 	 * @param bool $id_as_key should the tplfile's tpl_id be the key for the returned array?
 	 * @return array {@link XoopsTplset}s matching the conditions
 	 **/
@@ -222,7 +222,7 @@ class XoopsTplsetHandler extends XoopsObjectHandler
 	/**
 	 * Count some tplfilesets
 	 *
-	 * @param   object  $criteria   {@link CriteriaElement}
+	 * @param   object  $criteria   {@link core_CriteriaElement}
 	 * @return  int $count number of template filesets that match the criteria
 	 **/
 	function getCount($criteria = null)

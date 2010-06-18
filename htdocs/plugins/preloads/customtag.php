@@ -15,7 +15,7 @@
  * @since	1.2
  *
  */
-class IcmsPreloadCustomtag extends IcmsPreloadItem {
+class IcmsPreloadCustomtag extends core_Preloaditem {
 	/**
 	 * Function to be triggered at the end of the core boot process
 	 *

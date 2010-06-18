@@ -32,7 +32,7 @@ include ICMS_ROOT_PATH.'/include/functions.php';
 include_once ICMS_ROOT_PATH.'/class/logger.php';
 /** Include the textsanitizer class */
 include_once ICMS_ROOT_PATH."/class/module.textsanitizer.php";
-$xoopsLogger =& XoopsLogger::instance();
+$xoopsLogger =& core_Logger::instance();
 $xoopsLogger->startTime();
 /** Include the database class */
 include_once ICMS_ROOT_PATH.'/class/database/databasefactory.php';
@@ -45,8 +45,8 @@ require_once ICMS_ROOT_PATH.'/kernel/object.php';
 /** Require the criteria class, for building queries */
 require_once ICMS_ROOT_PATH.'/class/criteria.php';
 $imagehandler =& xoops_gethandler('image');
-$criteria = new CriteriaCompo(new Criteria('i.image_display', 1));
-$criteria->add(new Criteria('i.image_id', $image_id));
+$criteria = new core_CriteriaCompo(new core_Criteria('i.image_display', 1));
+$criteria->add(new core_Criteria('i.image_id', $image_id));
 $image =& $imagehandler->getObjects($criteria, false, true);
 if (count($image) > 0) {
 	header('Content-type: '.$image[0]->getVar('image_mimetype'));

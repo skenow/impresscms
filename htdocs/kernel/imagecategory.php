@@ -34,7 +34,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class XoopsImagecategory extends XoopsObject
+class XoopsImagecategory extends core_Object
 {
 	var $_imageCount;
 
@@ -44,7 +44,7 @@ class XoopsImagecategory extends XoopsObject
 	 */
 	function XoopsImagecategory()
 	{
-		$this->XoopsObject();
+		$this->core_Object();
 		$this->initVar('imgcat_id', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('imgcat_pid', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('imgcat_name', XOBJ_DTYPE_TXTBOX, null, true, 100);
@@ -85,7 +85,7 @@ class XoopsImagecategory extends XoopsObject
  *
  * @author  Kazumi Ono <onokazu@xoops.org>
  */
-class XoopsImagecategoryHandler extends XoopsObjectHandler
+class XoopsImagecategoryHandler extends core_ObjectHandler
 {
 
 	/**
@@ -192,7 +192,7 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
 
 	/**
 	 * retrieve array of {@link XoopsImagecategory}s meeting certain conditions
-	 * @param object $criteria {@link CriteriaElement} with conditions for the image categories
+	 * @param object $criteria {@link core_CriteriaElement} with conditions for the image categories
 	 * @param bool $id_as_key should the image category's imgcat_id be the key for the returned array?
 	 * @return array {@link XoopsImagecategory}s matching the conditions
 	 **/
@@ -252,23 +252,23 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
 	 **/
 	function getList($groups = array(), $perm = 'imgcat_read', $display = null, $storetype = null)
 	{
-		$criteria = new CriteriaCompo();
+		$criteria = new core_CriteriaCompo();
 		if (is_array($groups) && !empty($groups)) {
-			$criteriaTray = new CriteriaCompo();
+			$criteriaTray = new core_CriteriaCompo();
 			foreach ($groups as $gid) {
-				$criteriaTray->add(new Criteria('gperm_groupid', $gid), 'OR');
+				$criteriaTray->add(new core_Criteria('gperm_groupid', $gid), 'OR');
 			}
 			$criteria->add($criteriaTray);
 			if ($perm == 'imgcat_read' || $perm == 'imgcat_write') {
-				$criteria->add(new Criteria('gperm_name', $perm));
-				$criteria->add(new Criteria('gperm_modid', 1));
+				$criteria->add(new core_Criteria('gperm_name', $perm));
+				$criteria->add(new core_Criteria('gperm_modid', 1));
 			}
 		}
 		if (isset($display)) {
-			$criteria->add(new Criteria('imgcat_display', (int) ($display)));
+			$criteria->add(new core_Criteria('imgcat_display', (int) ($display)));
 		}
 		if (isset($storetype)) {
-			$criteria->add(new Criteria('imgcat_storetype', $storetype));
+			$criteria->add(new core_Criteria('imgcat_storetype', $storetype));
 		}
 		$categories =& $this->getObjects($criteria, true);
 		$ret = array();
@@ -291,26 +291,26 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
 		*/
 	function getCategList($groups = array(), $perm = 'imgcat_read', $display = null, $storetype = null, $imgcat_id=null)
 	{
-		$criteria = new CriteriaCompo();
+		$criteria = new core_CriteriaCompo();
 		if (is_array($groups) && !empty($groups)) {
-			$criteriaTray = new CriteriaCompo();
+			$criteriaTray = new core_CriteriaCompo();
 			foreach ($groups as $gid) {
-				$criteriaTray->add(new Criteria('gperm_groupid', $gid), 'OR');
+				$criteriaTray->add(new core_Criteria('gperm_groupid', $gid), 'OR');
 			}
 			$criteria->add($criteriaTray);
 			if ($perm == 'imgcat_read' || $perm == 'imgcat_write') {
-				$criteria->add(new Criteria('gperm_name', $perm));
-				$criteria->add(new Criteria('gperm_modid', 1));
+				$criteria->add(new core_Criteria('gperm_name', $perm));
+				$criteria->add(new core_Criteria('gperm_modid', 1));
 			}
 		}
 		if (isset($display)) {
-			$criteria->add(new Criteria('imgcat_display', (int) ($display)));
+			$criteria->add(new core_Criteria('imgcat_display', (int) ($display)));
 		}
 		if (isset($storetype)) {
-			$criteria->add(new Criteria('imgcat_storetype', $storetype));
+			$criteria->add(new core_Criteria('imgcat_storetype', $storetype));
 		}
 		if (is_null($imgcat_id))$imgcat_id = 0;
-		$criteria->add(new Criteria('imgcat_pid', $imgcat_id));
+		$criteria->add(new core_Criteria('imgcat_pid', $imgcat_id));
 		$categories =& $this->getObjects($criteria, true);
 		$ret = array();
 		foreach (array_keys($categories) as $i) {

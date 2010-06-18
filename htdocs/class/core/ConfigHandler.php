@@ -11,7 +11,7 @@
  * @since		XOOPS
  * @author		Kazumi Ono (aka onokazo)
  * @author		http://www.xoops.org The XOOPS Project
- * @version		$Id$
+ * @version		$Id: config.php 19431 2010-06-16 20:46:34Z david-sf $
  */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
@@ -31,7 +31,7 @@ require_once XOOPS_ROOT_PATH.'/kernel/configitem.php';
  *          - error handling
  * @access  public
  */
-class XoopsConfigHandler
+class core_ConfigHandler
 {
 
 	/**
@@ -64,7 +64,7 @@ class XoopsConfigHandler
 	 *
 	 * @param	object  &$db    reference to database object
 	 */
-	function XoopsConfigHandler(&$db)
+	function core_ConfigHandler(&$db)
 	{
 		$this->_cHandler = new XoopsConfigItemHandler($db);
 		$this->_oHandler = new XoopsConfigOptionHandler($db);
@@ -93,7 +93,7 @@ class XoopsConfigHandler
 	{
 		$config =& $this->_cHandler->get($id);
 		if ($withoptions == true) {
-			$config->setConfOptions($this->getConfigOptions(new Criteria('conf_id', $id)));
+			$config->setConfOptions($this->getConfigOptions(new core_Criteria('conf_id', $id)));
 		}
 		return $config;
 	}
@@ -141,7 +141,7 @@ class XoopsConfigHandler
 		$options =& $config->getConfOptions();
 		$count = count($options);
 		if ($count == 0) {
-			$options = $this->getConfigOptions(new Criteria('conf_id', $config->getVar('conf_id')));
+			$options = $this->getConfigOptions(new core_Criteria('conf_id', $config->getVar('conf_id')));
 			$count = count($options);
 		}
 		if (is_array($options) && $count > 0) {
@@ -158,7 +158,7 @@ class XoopsConfigHandler
 	/**
 	 * get one or more Configs
 	 *
-	 * @param	object  $criteria       {@link CriteriaElement}
+	 * @param	object  $criteria       {@link core_CriteriaElement}
 	 * @param	bool    $id_as_key      Use the configs' ID as keys?
 	 * @param	bool    $with_options   get the options now?
 	 *
@@ -172,7 +172,7 @@ class XoopsConfigHandler
 	/**
 	 * Count some configs
 	 *
-	 * @param	object  $criteria   {@link CriteriaElement}
+	 * @param	object  $criteria   {@link core_CriteriaElement}
 	 * @return	int count result
 	 */
 	function getConfigCount($criteria = null)
@@ -193,8 +193,8 @@ class XoopsConfigHandler
 		static $_cachedConfigs;
 
 		if (is_array($category)) {
-			$criteria = new CriteriaCompo(new Criteria('conf_modid', (int) ($module)));
-			$criteria->add(new Criteria('conf_catid', '('.implode(',', $category).')', 'IN'));
+			$criteria = new core_CriteriaCompo(new core_Criteria('conf_modid', (int) ($module)));
+			$criteria->add(new core_Criteria('conf_catid', '('.implode(',', $category).')', 'IN'));
 			$configs = $this->getConfigs($criteria, true);
 			if (is_array($configs)) {
 				foreach (array_keys($configs) as $i) {
@@ -208,9 +208,9 @@ class XoopsConfigHandler
 		} else {
 			if (!empty($_cachedConfigs[$module][$category])) return $_cachedConfigs[$module][$category];
 
-			$criteria = new CriteriaCompo(new Criteria('conf_modid', (int) ($module)));
+			$criteria = new core_CriteriaCompo(new core_Criteria('conf_modid', (int) ($module)));
 			if (!empty($category)) {
-				$criteria->add(new Criteria('conf_catid', (int) ($category)));
+				$criteria->add(new core_Criteria('conf_catid', (int) ($category)));
 			}
 			$configs = $this->getConfigs($criteria, true);
 			if (is_array($configs)) {
@@ -248,7 +248,7 @@ class XoopsConfigHandler
 	/**
 	 * Get one or more {@link XoopsConfigOption}s
 	 *
-	 * @param	object  $criteria   {@link CriteriaElement}
+	 * @param	object  $criteria   {@link core_CriteriaElement}
 	 * @param	bool    $id_as_key  Use IDs as keys in the array?
 	 *
 	 * @return	array   Array of {@link XoopsConfigOption}s
@@ -261,7 +261,7 @@ class XoopsConfigHandler
 	/**
 	 * Count some {@link XoopsConfigOption}s
 	 *
-	 * @param	object  $criteria   {@link CriteriaElement}
+	 * @param	object  $criteria   {@link core_CriteriaElement}
 	 *
 	 * @return	int     Count of {@link XoopsConfigOption}s matching $criteria
 	 */
@@ -283,9 +283,9 @@ class XoopsConfigHandler
 		if (!empty($this->_cachedConfigs[$conf_modid][$conf_catid])) {
 			return $this->_cachedConfigs[$conf_modid][$conf_catid];
 		} else {
-			$criteria = new CriteriaCompo(new Criteria('conf_modid', $conf_modid));
+			$criteria = new core_CriteriaCompo(new core_Criteria('conf_modid', $conf_modid));
 			if (empty($conf_catid)) {
-				$criteria->add(new Criteria('conf_catid', $conf_catid));
+				$criteria->add(new core_Criteria('conf_catid', $conf_catid));
 			}
 			$configs =& $this->_cHandler->getObjects($criteria);
 			$confcount = count($configs);

@@ -25,7 +25,7 @@ if(!defined('ICMS_ROOT_PATH')) {exit();}
  * @package kernel
  * @subpackage users
  */
-class XoopsUser extends XoopsObject
+class XoopsUser extends core_Object
 {
 	/**
 	 * Array of groups that user belongs to
@@ -336,17 +336,17 @@ class XoopsUser extends XoopsObject
 		if(!isset($this->_isOnline))
 		{
 			$onlinehandler =& xoops_gethandler('online');
-			$this->_isOnline = ($onlinehandler->getCount(new Criteria('online_uid', $this->getVar('uid'))) > 0) ? true : false;
+			$this->_isOnline = ($onlinehandler->getCount(new core_Criteria('online_uid', $this->getVar('uid'))) > 0) ? true : false;
 		}
 		return $this->_isOnline;
 	}
 
 	/**#@+
-	 * specialized wrapper for {@link XoopsObject::getVar()}
+	 * specialized wrapper for {@link core_Object::getVar()}
 	 *
 	 * kept for compatibility reasons.
 	 *
-	 * @see XoopsObject::getVar()
+	 * @see core_Object::getVar()
 	 * @deprecated
 	 */
 	/**
@@ -360,7 +360,7 @@ class XoopsUser extends XoopsObject
 
 	/**
 	 * get the users name
-	 * @param string $format format for the output, see {@link XoopsObject::getVar()}
+	 * @param string $format format for the output, see {@link core_Object::getVar()}
 	 * @return string
 	 */
 	function name($format='S')
@@ -370,7 +370,7 @@ class XoopsUser extends XoopsObject
 
 	/**
 	 * get the user's uname
-	 * @param string $format format for the output, see {@link XoopsObject::getVar()}
+	 * @param string $format format for the output, see {@link core_Object::getVar()}
 	 * @return string
 	 */
 	function uname($format='S')
@@ -380,7 +380,7 @@ class XoopsUser extends XoopsObject
 
 	/**
 	 * get the user's login_name
-	 * @param string $format format for the output, see {@link XoopsObject::getVar()}
+	 * @param string $format format for the output, see {@link core_Object::getVar()}
 	 * @return string
 	 */
 	function login_name($format='S')
@@ -391,7 +391,7 @@ class XoopsUser extends XoopsObject
 	/**
 	 * get the user's email
 	 *
-	 * @param string $format format for the output, see {@link XoopsObject::getVar()}
+	 * @param string $format format for the output, see {@link core_Object::getVar()}
 	 * @return string
 	 */
 	function email($format='S')
@@ -580,7 +580,7 @@ class XoopsGuestUser extends XoopsUser
  * @copyright copyright (c) 2000-2003 XOOPS.org
  * @package kernel
  */
-class XoopsUserHandler extends XoopsObjectHandler
+class XoopsUserHandler extends core_ObjectHandler
 {
 	/**
 	 * create a new user
@@ -694,7 +694,7 @@ class XoopsUserHandler extends XoopsObjectHandler
 	/**
 	 * retrieve users from the database
 	 *
-	 * @param object $criteria {@link CriteriaElement} conditions to be met
+	 * @param object $criteria {@link core_CriteriaElement} conditions to be met
 	 * @param bool $id_as_key use the UID as key for the array?
 	 * @return array array of {@link XoopsUser} objects
 	 */
@@ -729,7 +729,7 @@ class XoopsUserHandler extends XoopsObjectHandler
 	/**
 	 * count users matching a condition
 	 *
-	 * @param object $criteria {@link CriteriaElement} to match
+	 * @param object $criteria {@link core_CriteriaElement} to match
 	 * @return int count of users
 	 */
 	function getCount($criteria = null)
@@ -745,7 +745,7 @@ class XoopsUserHandler extends XoopsObjectHandler
 	/**
 	 * delete users matching a set of conditions
 	 *
-	 * @param object $criteria {@link CriteriaElement}
+	 * @param object $criteria {@link core_CriteriaElement}
 	 * @return bool FALSE if deletion failed
 	 */
 	function deleteAll($criteria = null)
@@ -763,7 +763,7 @@ class XoopsUserHandler extends XoopsObjectHandler
 	 *
 	 * @param   string  $fieldname  Name of the field
 	 * @param   string  $fieldvalue Value to write
-	 * @param   object  $criteria   {@link CriteriaElement}
+	 * @param   object  $criteria   {@link core_CriteriaElement}
 	 *
 	 * @return  bool
 	 **/

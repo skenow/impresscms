@@ -8,7 +8,7 @@
  * @since	1.1
  * @author		marcan <marcan@impresscms.org>
  * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version	$Id$
+ * @version	$Id: icmspreloadhandler.php 19421 2010-06-14 07:28:37Z david-sf $
  */
 
 if (!defined('ICMS_ROOT_PATH')) {
@@ -18,7 +18,7 @@ if (!defined('ICMS_ROOT_PATH')) {
 include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
 
 /**
- * IcmsPreloadHandler
+ * core_Preloadhandler
  *
  * Class handling preload events automatically detect from the files in ICMS_PRELOAD_PATH
  *
@@ -27,9 +27,9 @@ include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
  * @package		core
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id$
+ * @version		$Id: icmspreloadhandler.php 19421 2010-06-14 07:28:37Z david-sf $
  */
-class IcmsPreloadHandler {
+class core_PreloadHandler {
 
 	/**
 	 * @var array $_preloadFilesArray array containing a list of all preload files in ICMS_PRELOAD_PATH
@@ -46,7 +46,7 @@ class IcmsPreloadHandler {
 	 *
 	 * @return	void
 	 */
-	function IcmsPreloadHandler() {
+	function core_Preloadhandler() {
 		$preloadFilesArray = XoopsLists::getFileListAsArray(ICMS_PRELOAD_PATH);
 		foreach ($preloadFilesArray as $filename) {
 			// exclude index.html
@@ -119,7 +119,7 @@ class IcmsPreloadHandler {
 	{
 		static $instance;
 		if (!isset($instance)) {
-			$instance = new IcmsPreloadHandler();
+			$instance = new core_Preloadhandler();
 		}
 		return $instance;
 	}
@@ -164,7 +164,7 @@ class IcmsPreloadHandler {
 }
 
 /**
- * IcmsPreloadItem
+ * core_Preloaditem
  *
  * Class which is extended by any preload item. This class is empty for now but is there for
  * extended future purposes
@@ -174,12 +174,12 @@ class IcmsPreloadHandler {
  * @package		libraries
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id$
+ * @version		$Id: icmspreloadhandler.php 19421 2010-06-14 07:28:37Z david-sf $
  */
 
-class IcmsPreloadItem {
+class core_Preloaditem {
 
-	function IcmsPreloadItem() {
+	function core_Preloaditem() {
 	}
 }
 ?>

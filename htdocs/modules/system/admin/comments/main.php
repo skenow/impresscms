@@ -35,14 +35,14 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			$status = (!isset($_GET['status']) || !in_array( (int) ($_GET['status']), array_keys($status_array))) ? 0 : (int) ($_GET['status']);
 			$module = !isset($_GET['module']) ? 0 : (int) ($_GET['module']);
 			$module_handler =& xoops_gethandler('module');
-			$module_array =& $module_handler->getList(new Criteria('hascomments', 1));
+			$module_array =& $module_handler->getList(new core_Criteria('hascomments', 1));
 			$comment_handler =& xoops_gethandler('comment');
-			$criteria = new CriteriaCompo();
+			$criteria = new core_CriteriaCompo();
 			if ($status > 0) {
-				$criteria->add(new Criteria('com_status', $status));
+				$criteria->add(new core_Criteria('com_status', $status));
 			}
 			if ($module > 0) {
-				$criteria->add(new Criteria('com_modid', $module));
+				$criteria->add(new core_Criteria('com_modid', $module));
 			}
 			$total = $comment_handler->getCount($criteria);
 			if ($total > 0) {

@@ -34,7 +34,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class XoopsImagesetimg extends XoopsObject
+class XoopsImagesetimg extends core_Object
 {
 	/**
 	 * Constructor
@@ -42,7 +42,7 @@ class XoopsImagesetimg extends XoopsObject
 	 */
 	function XoopsImagesetimg()
 	{
-		$this->XoopsObject();
+		$this->core_Object();
 		$this->initVar('imgsetimg_id', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('imgsetimg_file', XOBJ_DTYPE_OTHER, null, false);
 		$this->initVar('imgsetimg_body', XOBJ_DTYPE_SOURCE, null, false);
@@ -58,7 +58,7 @@ class XoopsImagesetimg extends XoopsObject
  *
  * @author  Kazumi Ono <onokazu@xoops.org>
  */
-class XoopsImagesetimgHandler extends XoopsObjectHandler
+class XoopsImagesetimgHandler extends core_ObjectHandler
 {
 
 	/**
@@ -165,7 +165,7 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
 
 	/**
 	 * retrieve array of {@link XoopsImagesetimg}s meeting certain conditions
-	 * @param object $criteria {@link CriteriaElement} with conditions for the imageset images
+	 * @param object $criteria {@link core_CriteriaElement} with conditions for the imageset images
 	 * @param bool $id_as_key should the imagesetimg's imgsetimg_id be the key for the returned array?
 	 * @return array {@link XoopsImagesetimg}s matching the conditions
 	 **/
@@ -200,7 +200,7 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
 	/**
 	 * Count some imageset images
 	 *
-	 * @param   object  $criteria   {@link CriteriaElement}
+	 * @param   object  $criteria   {@link core_CriteriaElement}
 	 * @return  int number of imageset images
 	 **/
 	function getCount($criteria = null)
@@ -225,7 +225,7 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
 	 **/
 	function getByImageset($imgset_id, $id_as_key = false)
 	{
-		return $this->getObjects(new Criteria('imgsetimg_imgset', (int) ($imgset_id)), $id_as_key);
+		return $this->getObjects(new core_Criteria('imgsetimg_imgset', (int) ($imgset_id)), $id_as_key);
 	}
 
 	/**
@@ -237,8 +237,8 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
 	 **/
 	function imageExists($filename, $imgset_id)
 	{
-		$criteria = new CriteriaCompo(new Criteria('imgsetimg_file', $filename));
-		$criteria->add(new Criteria('imgsetimg_imgset', (int) ($imgset_id)));
+		$criteria = new core_CriteriaCompo(new core_Criteria('imgsetimg_file', $filename));
+		$criteria->add(new core_Criteria('imgsetimg_imgset', (int) ($imgset_id)));
 		if ($this->getCount($criteria) > 0) {
 			return true;
 		}

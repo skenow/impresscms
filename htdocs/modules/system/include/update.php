@@ -38,7 +38,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 		if (count ( $tplids ) > 0) {
 			$tplfile_handler = & xoops_gethandler ( 'tplfile' );
-			$duplicate_files = $tplfile_handler->getObjects ( new Criteria ( 'tpl_id', "(" . implode ( ',', $tplids ) . ")", "IN" ) );
+			$duplicate_files = $tplfile_handler->getObjects ( new core_Criteria ( 'tpl_id', "(" . implode ( ',', $tplids ) . ")", "IN" ) );
 
 			if (count ( $duplicate_files ) > 0) {
 				foreach ( array_keys ( $duplicate_files ) as $i ) {

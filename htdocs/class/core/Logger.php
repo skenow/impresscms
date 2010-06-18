@@ -1,6 +1,6 @@
 <?php
 /**
- * XoopsLogger component main class file
+ * core_Logger component main class file
  *
  * See the enclosed file LICENSE for licensing information.
  * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
@@ -11,8 +11,8 @@
  * @author		Skalpa Keo <skalpa@xoops.org>
  * @since		XOOPS
  * @package		core
- * @subpackage	XoopsLogger
- * @version		$Id$
+ * @subpackage	core_Logger
+ * @version		$Id: logger.php 19163 2010-04-28 14:37:42Z mekdrop $
  */
 
 /**
@@ -22,7 +22,7 @@
  * and can display it as HTML. It also catches php runtime errors.
  * @package kernel
  */
-class XoopsLogger {
+class core_Logger {
 
 	public $queries = array();
 	public $blocks = array();
@@ -44,13 +44,13 @@ class XoopsLogger {
 	/**
 	 * Get a reference to the only instance of this class
 	 *
-	 * @return  object XoopsLogger  (@link XoopsLogger) reference to the only instance
+	 * @return  object core_Logger  (@link core_Logger) reference to the only instance
 	 * @static
 	 */
 	static public function &instance() {
 		static $instance;
 		if ( !isset( $instance ) ) {
-			$instance = new XoopsLogger();
+			$instance = new core_Logger();
 			// Always catch errors, for security reasons
 			set_error_handler( 'XoopsErrorHandler_HandleError' );
 		}
@@ -65,7 +65,7 @@ class XoopsLogger {
 	 */
 	public function enableRendering() {
 		if ( !$this->renderingEnabled ) {
-			ob_start( array( &$this, 'render' ) );
+			//ob_start( array( &$this, 'render' ) );
 			$this->renderingEnabled = true;
 		}
 	}
@@ -238,7 +238,7 @@ class XoopsLogger {
 	 * @access protected
 	 */
 	public function dump( $mode = '' ) {
-		include ICMS_ROOT_PATH . '/class/logger_render.php';
+		include ICMS_ROOT_PATH . '/class/core/Logger_render.php';
 		return $ret;
 	}
 
@@ -299,7 +299,7 @@ class XoopsLogger {
  * set_error_handler() have problems with the array( obj,methodname ) syntax
  */
 function XoopsErrorHandler_HandleError( $errNo, $errStr, $errFile, $errLine, $errContext = null ) {
-	$logger =& XoopsLogger::instance();
+	$logger =& core_Logger::instance();
 	$logger->handleError( $errNo, $errStr, $errFile, $errLine, $errContext );
 }
 

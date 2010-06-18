@@ -663,18 +663,36 @@ function &xoops_gethandler($name, $optional = false )
 {
 	static $handlers;
 	$name = strtolower(trim($name));
+
 	if(!isset($handlers[$name])) {
+
 		//if(file_exists($hnd_file = ICMS_ROOT_PATH.'/kernel/'.$name.'.php')) {require_once $hnd_file;}
 		//else {
 		//	if(file_exists($hnd_file = ICMS_ROOT_PATH.'/class/'.$name.'.php')) {require_once $hnd_file;}
 		//}
+
+		$class = 'core_' . ucfirst($name) . 'Handler';
+		$handlers[$name] = new $class($GLOBALS['xoopsDB']);
+		/*
 		$class = 'Icms'.ucfirst($name).'Handler';
 		if(class_exists($class)) {$handlers[$name] = new $class($GLOBALS['xoopsDB']);}
 		else {
 			$class = 'Xoops'.ucfirst($name).'Handler';
 			if(class_exists($class)) {$handlers[$name] = new $class($GLOBALS['xoopsDB']);}
 		}
+		*/
+
+		/**
+		 * @todo improve this
+		 * temporary hack while we are relocating for autoload
+		 */
+		if ($name == 'config') $name = 'core_ConfigHandler';
+		if ($name == 'core_ConfigHandler') {
+			$handlers[$name] = new $name($GLOBALS['xoopsDB']);
+		}
 	}
+
+
 	if(!isset($handlers[$name]) && !$optional) {trigger_error(sprintf(_CORE_COREHANDLER_NOTAVAILABLE, $class, $name), E_USER_ERROR);}
 	if(isset($handlers[$name])) {return $handlers[$name];}
 	$inst = false;
@@ -841,8 +859,8 @@ function xoops_notification_deletebyitem ($module_id, $category, $item_id)
 function xoops_comment_count($module_id, $item_id = null)
 {
 	$comment_handler =& xoops_gethandler('comment');
-	$criteria = new CriteriaCompo(new Criteria('com_modid', (int) ($module_id)));
-	if(isset($item_id)) {$criteria->add(new Criteria('com_itemid', (int) ($item_id)));}
+	$criteria = new core_CriteriaCompo(new core_Criteria('com_modid', (int) ($module_id)));
+	if(isset($item_id)) {$criteria->add(new core_Criteria('com_itemid', (int) ($item_id)));}
 	return $comment_handler->getCount($criteria);
 }
 
@@ -2705,12 +2723,12 @@ function icms_PasswordMeter(){
  * Build criteria automatically from an array of key=>value
  *
  * @param array $criterias array of fieldname=>value criteria
- * @return object (@link CriteriaCompo) the CriteriaCompo object
+ * @return object (@link core_CriteriaCompo) the core_CriteriaCompo object
  */
 function icms_buildCriteria($criterias) {
-	$criteria = new CriteriaCompo();
+	$criteria = new core_CriteriaCompo();
 	foreach($criterias as $k=>$v) {
-		$criteria->add(new Criteria($k, $v));
+		$criteria->add(new core_Criteria($k, $v));
 	}
 	return $criteria;
 }

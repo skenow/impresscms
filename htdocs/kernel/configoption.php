@@ -25,14 +25,14 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @package     kernel
  * @subpackage	config
  */
-class XoopsConfigOption extends XoopsObject
+class XoopsConfigOption extends core_Object
 {
 	/**
 	 * Constructor
 	 */
 	function XoopsConfigOption()
 	{
-		$this->XoopsObject();
+		$this->core_Object();
 		$this->initVar('confop_id', XOBJ_DTYPE_INT, null);
 		$this->initVar('confop_name', XOBJ_DTYPE_TXTBOX, null, true, 255);
 		$this->initVar('confop_value', XOBJ_DTYPE_TXTBOX, null, true, 255);
@@ -51,7 +51,7 @@ class XoopsConfigOption extends XoopsObject
  * @package     kernel
  * @subpackage  config
  */
-class XoopsConfigOptionHandler extends XoopsObjectHandler
+class XoopsConfigOptionHandler extends core_ObjectHandler
 {
 
 	/**
@@ -158,7 +158,7 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
 	/**
 	 * Get some {@link XoopsConfigOption}s
 	 *
-	 * @param	object  $criteria   {@link CriteriaElement}
+	 * @param	object  $criteria   {@link core_CriteriaElement}
 	 * @param	bool    $id_as_key  Use the IDs as array-keys?
 	 *
 	 * @return	array   Array of {@link XoopsConfigOption}s

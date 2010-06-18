@@ -112,7 +112,7 @@ class XoopsMemberHandler {
 	 */
 	function deleteGroup(&$group) {
 		$this->_gHandler->delete ( $group );
-		$this->_mHandler->deleteAll ( new Criteria ( 'groupid', $group->getVar ( 'groupid' ) ) );
+		$this->_mHandler->deleteAll ( new core_Criteria ( 'groupid', $group->getVar ( 'groupid' ) ) );
 		return true;
 	}
 
@@ -124,7 +124,7 @@ class XoopsMemberHandler {
 	 */
 	function deleteUser(&$user) {
 		$this->_uHandler->delete ( $user );
-		$this->_mHandler->deleteAll ( new Criteria ( 'uid', $user->getVar ( 'uid' ) ) );
+		$this->_mHandler->deleteAll ( new core_Criteria ( 'uid', $user->getVar ( 'uid' ) ) );
 		return true;
 	}
 
@@ -153,7 +153,7 @@ class XoopsMemberHandler {
 	/**
 	 * retrieve groups from the database
 	 *
-	 * @param object $criteria {@link CriteriaElement}
+	 * @param object $criteria {@link core_CriteriaElement}
 	 * @param bool $id_as_key use the group's ID as key for the array?
 	 * @return array array of {@link XoopsGroup} objects
 	 */
@@ -164,7 +164,7 @@ class XoopsMemberHandler {
 	/**
 	 * retrieve users from the database
 	 *
-	 * @param object $criteria {@link CriteriaElement}
+	 * @param object $criteria {@link core_CriteriaElement}
 	 * @param bool $id_as_key use the group's ID as key for the array?
 	 * @return array array of {@link XoopsUser} objects
 	 */
@@ -175,7 +175,7 @@ class XoopsMemberHandler {
 	/**
 	 * get a list of groupnames and their IDs
 	 *
-	 * @param object $criteria {@link CriteriaElement} object
+	 * @param object $criteria {@link core_CriteriaElement} object
 	 * @return array associative array of group-IDs and names
 	 */
 	function getGroupList($criteria = null) {
@@ -190,7 +190,7 @@ class XoopsMemberHandler {
 	/**
 	 * get a list of usernames and their IDs
 	 *
-	 * @param object $criteria {@link CriteriaElement} object
+	 * @param object $criteria {@link core_CriteriaElement} object
 	 * @return array associative array of user-IDs and names
 	 */
 	function getUserList($criteria = null) {
@@ -224,11 +224,11 @@ class XoopsMemberHandler {
 	 * @return bool success?
 	 */
 	function removeUsersFromGroup($group_id, $user_ids = array()) {
-		$criteria = new CriteriaCompo ( );
-		$criteria->add ( new Criteria ( 'groupid', $group_id ) );
-		$criteria2 = new CriteriaCompo ( );
+		$criteria = new core_CriteriaCompo ( );
+		$criteria->add ( new core_Criteria ( 'groupid', $group_id ) );
+		$criteria2 = new core_CriteriaCompo ( );
 		foreach ( $user_ids as $uid ) {
-			$criteria2->add ( new Criteria ( 'uid', $uid ), 'OR' );
+			$criteria2->add ( new core_Criteria ( 'uid', $uid ), 'OR' );
 		}
 		$criteria->add ( $criteria2 );
 		return $this->_mHandler->deleteAll ( $criteria );
@@ -334,17 +334,17 @@ class XoopsMemberHandler {
 		$table = new IcmsDatabasetable('users');
 		if($table->fieldExists('loginname'))
 		{
-			$criteria = new CriteriaCompo(new Criteria('loginname', $uname));
+			$criteria = new core_CriteriaCompo(new core_Criteria('loginname', $uname));
 		}
 		elseif($table->fieldExists('login_name'))
 		{
-			$criteria = new CriteriaCompo(new Criteria('login_name', $uname));
+			$criteria = new core_CriteriaCompo(new core_Criteria('login_name', $uname));
 		}
 		else
 		{
-			$criteria = new CriteriaCompo(new Criteria('uname', $uname));
+			$criteria = new core_CriteriaCompo(new core_Criteria('uname', $uname));
 		}
-		$criteria->add(new Criteria('pass', $pwd));
+		$criteria->add(new core_Criteria('pass', $pwd));
 		$user = $this->_uHandler->getObjects($criteria, false);
 		if(!$user || count($user) != 1)
 		{
@@ -365,13 +365,13 @@ class XoopsMemberHandler {
 	 include_once ICMS_ROOT_PATH . '/class/database/databaseupdater.php';
 	 $table = new IcmsDatabasetable('users');
 	 if ($table->fieldExists('loginname')) {
-	 $criteria = new CriteriaCompo ( new Criteria ( 'loginname', $uname ) );
+	 $criteria = new core_CriteriaCompo ( new core_Criteria ( 'loginname', $uname ) );
 	 }elseif ($table->fieldExists('login_name')) {
-	 $criteria = new CriteriaCompo ( new Criteria ( 'login_name', $uname ) );
+	 $criteria = new core_CriteriaCompo ( new core_Criteria ( 'login_name', $uname ) );
 	 }else{
-	 $criteria = new CriteriaCompo ( new Criteria ( 'uname', $uname ) );
+	 $criteria = new core_CriteriaCompo ( new core_Criteria ( 'uname', $uname ) );
 	 }
-	 $criteria->add ( new Criteria ( 'pass', $md5pwd ) );
+	 $criteria->add ( new core_Criteria ( 'pass', $md5pwd ) );
 	 $user = $this->_uHandler->getObjects ( $criteria, false );
 	 if (! $user || count ( $user ) != 1) {
 	 $user = false;
@@ -383,7 +383,7 @@ class XoopsMemberHandler {
 	/**
 	 * count users matching certain conditions
 	 *
-	 * @param object $criteria {@link CriteriaElement} object
+	 * @param object $criteria {@link core_CriteriaElement} object
 	 * @return int
 	 */
 	function getUserCount($criteria = null) {
@@ -397,7 +397,7 @@ class XoopsMemberHandler {
 	 * @return int
 	 */
 	function getUserCountByGroup($group_id) {
-		return $this->_mHandler->getCount ( new Criteria ( 'groupid', $group_id ) );
+		return $this->_mHandler->getCount ( new core_Criteria ( 'groupid', $group_id ) );
 	}
 
 	/**
@@ -418,7 +418,7 @@ class XoopsMemberHandler {
 	 *
 	 * @param string $fieldName name of the field to update
 	 * @param string $fieldValue updated value for the field
-	 * @param object $criteria {@link CriteriaElement} object
+	 * @param object $criteria {@link core_CriteriaElement} object
 	 * @return bool TRUE if success or unchanged, FALSE on failure
 	 */
 	function updateUsersByField($fieldName, $fieldValue, $criteria = null) {
@@ -444,7 +444,7 @@ class XoopsMemberHandler {
 	 * Temporary solution
 	 *
 	 * @param int $groups IDs of groups
-	 * @param object $criteria {@link CriteriaElement} object
+	 * @param object $criteria {@link core_CriteriaElement} object
 	 * @param bool $asobject return the users as objects?
 	 * @param bool $id_as_key use the UID as key for the array if $asobject is TRUE
 	 * @return array Array of {@link XoopsUser} objects (if $asobject is TRUE)

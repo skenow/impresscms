@@ -36,7 +36,7 @@ $name_username = 'uname' . ( @$_REQUEST['multiple'] ? "[]" : "" );
 
 icms_loadLanguageFile('core', 'findusers');
 
-class XoopsRank extends XoopsObject
+class XoopsRank extends core_Object
 {
 	function __construct() {
 		$this->XoopsRank();
@@ -47,7 +47,7 @@ class XoopsRank extends XoopsObject
 	 **/
 	function XoopsRank()
 	{
-		$this->XoopsObject();
+		$this->core_Object();
 		$this->initVar('rank_id', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('rank_title', XOBJ_DTYPE_TXTBOX, null, false);
 		$this->initVar('rank_min', XOBJ_DTYPE_INT, 0);
@@ -57,7 +57,7 @@ class XoopsRank extends XoopsObject
 	}
 }
 
-class XoopsRankHandler extends XoopsObjectHandler
+class XoopsRankHandler extends core_ObjectHandler
 {
 
 	/**
@@ -73,7 +73,7 @@ class XoopsRankHandler extends XoopsObjectHandler
 	 * @param   object  $db reference to the DB class object
 	 **/
 	function XoopsRankHandler(&$db) {
-		$this->XoopsObjectHandler($db);
+		$this->core_ObjectHandler($db);
 	}
 
 	/**
@@ -114,7 +114,7 @@ class XoopsRankHandler extends XoopsObjectHandler
 	/**
 	 * Gets list of ranks
 	 *
-	 * @param   object  $criteria Criteria (@link CriteriaCompo) to match when getting the ranks
+	 * @param   object  $criteria Criteria (@link core_CriteriaCompo) to match when getting the ranks
 	 * @param   string  $limit How many ranks to get
 	 * @param   string  $start Where to start with getting the ranks (for pagination)
 	 * @return  array
@@ -123,7 +123,7 @@ class XoopsRankHandler extends XoopsObjectHandler
 	{
 		$ret = array();
 		if ($criteria == null) {
-			$criteria = new CriteriaCompo();
+			$criteria = new core_CriteriaCompo();
 		}
 
 		$sql = 'SELECT rank_id, rank_title FROM '.$this->db->prefix('ranks');
@@ -172,7 +172,7 @@ class XoUser extends XoopsUser
 	}
 }
 
-class XoUserHandler extends XoopsObjectHandler
+class XoUserHandler extends core_ObjectHandler
 {
 	/**
 	 * Constructor for PHP5
@@ -189,7 +189,7 @@ class XoUserHandler extends XoopsObjectHandler
 	 * @param   object  $db reference to the DB Class object
 	 **/
 	function XoUserHandler(&$db) {
-		$this->XoopsObjectHandler($db);
+		$this->core_ObjectHandler($db);
 	}
 
 	/**
@@ -417,8 +417,8 @@ if ( empty($_POST["user_submit"]) ) {
 	$form->addElement( new XoopsFormHidden("token", $token) );
 	$form->addElement( new XoopsFormButton("", "user_submit", _SUBMIT, "submit") );
 
-	$acttotal = $user_handler->getCount(new Criteria('level', 0, '>'));
-	$inacttotal = $user_handler->getCount(new Criteria('level', 0, '<='));
+	$acttotal = $user_handler->getCount(new core_Criteria('level', 0, '>'));
+	$inacttotal = $user_handler->getCount(new core_Criteria('level', 0, '<='));
 	echo "</html><body>";
 	echo "<h2 style='text-align:"._GLOBAL_LEFT.";'>"._MA_USER_FINDUS." - ".$modes[$mode]."</h2>";
 	$modes_switch = array();
@@ -440,23 +440,23 @@ if ( empty($_POST["user_submit"]) ) {
 	$start = (int) ( @$_POST['start'] );
 
 	if (!isset($_POST["query"])) {
-		$criteria = new CriteriaCompo();
+		$criteria = new core_CriteriaCompo();
 		foreach (array_keys($items_match) as $var) {
 			if ( !empty($_POST[$var]) ) {
 				$match = (!empty($_POST["{$var}_match"])) ? (int) ($_POST["{$var}_match"]) : XOOPS_MATCH_START;
 				$value = str_replace("_", "\\\_", $myts->addSlashes(trim($_POST[$var])));
 				switch ($match) {
 					case XOOPS_MATCH_START:
-						$criteria->add(new Criteria($var, $value.'%', 'LIKE'));
+						$criteria->add(new core_Criteria($var, $value.'%', 'LIKE'));
 						break;
 					case XOOPS_MATCH_END:
-						$criteria->add(new Criteria($var, '%'.$value, 'LIKE'));
+						$criteria->add(new core_Criteria($var, '%'.$value, 'LIKE'));
 						break;
 					case XOOPS_MATCH_EQUAL:
-						$criteria->add(new Criteria($var, $value));
+						$criteria->add(new core_Criteria($var, $value));
 						break;
 					case XOOPS_MATCH_CONTAIN:
-						$criteria->add(new Criteria($var, '%'.$value.'%', 'LIKE'));
+						$criteria->add(new core_Criteria($var, '%'.$value.'%', 'LIKE'));
 						break;
 				}
 			}
@@ -464,73 +464,73 @@ if ( empty($_POST["user_submit"]) ) {
 
 		if ( !empty($_POST['url']) ) {
 			$url = formatURL(trim($_POST['url']));
-			$criteria->add(new Criteria('url', $url.'%', 'LIKE'));
+			$criteria->add(new core_Criteria('url', $url.'%', 'LIKE'));
 		}
 
 		if ( !empty($_POST['user_from']) ) {
-			$criteria->add(new Criteria('user_from', '%'.$myts->addSlashes(trim($_POST['user_from'])).'%', 'LIKE'));
+			$criteria->add(new core_Criteria('user_from', '%'.$myts->addSlashes(trim($_POST['user_from'])).'%', 'LIKE'));
 		}
 
 		if ( !empty($_POST['user_intrest']) ) {
-			$criteria->add(new Criteria('user_intrest', '%'.$myts->addSlashes(trim($_POST['user_intrest'])).'%', 'LIKE'));
+			$criteria->add(new core_Criteria('user_intrest', '%'.$myts->addSlashes(trim($_POST['user_intrest'])).'%', 'LIKE'));
 		}
 		if ( !empty($_POST['user_occ']) ) {
-			$criteria->add(new Criteria('user_occ', '%'.$myts->addSlashes(trim($_POST['user_occ'])).'%', 'LIKE'));
+			$criteria->add(new core_Criteria('user_occ', '%'.$myts->addSlashes(trim($_POST['user_occ'])).'%', 'LIKE'));
 		}
 
 		foreach (array("last_login", "user_regdate") as $var) {
 			if ( !empty($_POST["{$var}_more"]) && is_numeric($_POST["{$var}_more"]) ) {
 				$time = time() - (60 * 60 * 24 * (int) (trim($_POST["{$var}_more"])));
 				if ( $time > 0 ) {
-					$criteria->add(new Criteria($var, $time, '<='));
+					$criteria->add(new core_Criteria($var, $time, '<='));
 				}
 			}
 			if ( !empty($_POST["{$var}_less"]) && is_numeric($_POST["{$var}_less"]) ) {
 				$time = time() - (60 * 60 * 24 * (int) (trim($_POST["{$var}_less"])));
 				if ( $time > 0 ) {
-					$criteria->add(new Criteria($var, $time, '>='));
+					$criteria->add(new core_Criteria($var, $time, '>='));
 				}
 			}
 		}
 
 		if ( !empty($_POST['posts_more']) && is_numeric($_POST['posts_more']) ) {
-			$criteria->add(new Criteria('posts', (int) ($_POST['posts_more']), '<='));
+			$criteria->add(new core_Criteria('posts', (int) ($_POST['posts_more']), '<='));
 		}
 		if ( !empty($_POST['posts_less']) && is_numeric($_POST['posts_less']) ) {
-			$criteria->add(new Criteria('posts', (int) ($_POST['posts_less']), '>='));
+			$criteria->add(new core_Criteria('posts', (int) ($_POST['posts_less']), '>='));
 		}
 		if ( !empty($_POST['user_mailok']) ) {
 			if ( $_POST['user_mailok'] == "mailng" ) {
-				$criteria->add(new Criteria('user_mailok', 0));
+				$criteria->add(new core_Criteria('user_mailok', 0));
 			} elseif ( $_POST['user_mailok'] == "mailok" ) {
-				$criteria->add(new Criteria('user_mailok', 1));
+				$criteria->add(new core_Criteria('user_mailok', 1));
 			}
 		}
 		if ( !empty($_POST['user_avatar']) ) {
 			if ( $_POST['user_avatar'] == "y" ) {
-				$criteria->add(new Criteria('user_avatar', "('', 'blank.gif')", 'NOT IN'));
+				$criteria->add(new core_Criteria('user_avatar', "('', 'blank.gif')", 'NOT IN'));
 			} elseif ( $_POST['user_avatar'] == "n" ) {
-				$criteria->add(new Criteria('user_avatar', "('', 'blank.gif')", 'IN'));
+				$criteria->add(new core_Criteria('user_avatar', "('', 'blank.gif')", 'IN'));
 			}
 		}
 
 		if ( !empty($_POST['level']) ) {
 			$level_value = array(1 => 1, 2 => 0, 3 => -1);
 			$level = isset($level_value[ (int) ($_POST["level"])]) ? $level_value[ (int) ($_POST["level"])] : 1;
-			$criteria->add(new Criteria("level", $level));
+			$criteria->add(new core_Criteria("level", $level));
 		}
 
 		if ( !empty($_POST['rank']) ) {
 			$rank_obj = $rank_handler->get( $_POST['rank'] );
 			if ($rank_obj->getVar("rank_special")) {
-				$criteria->add(new Criteria("rank", (int) ($_POST['rank'])));
+				$criteria->add(new core_Criteria("rank", (int) ($_POST['rank'])));
 			} else {
 				if ($rank_obj->getVar("rank_min")) {
-					$criteria->add(new Criteria('posts', $rank_obj->getVar("rank_min"), '>='));
+					$criteria->add(new core_Criteria('posts', $rank_obj->getVar("rank_min"), '>='));
 				}
 
 				if ($rank_obj->getVar("rank_max")) {
-					$criteria->add(new Criteria('posts', $rank_obj->getVar("rank_max"), '<='));
+					$criteria->add(new core_Criteria('posts', $rank_obj->getVar("rank_max"), '<='));
 				}
 			}
 		}

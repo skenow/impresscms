@@ -15,7 +15,7 @@
  * @since	1.2
  *
  */
-class IcmsPreloadUserInfo extends IcmsPreloadItem {
+class IcmsPreloadUserInfo extends core_Preloaditem {
 	/**
 	 * Function to be triggered at the end of the core boot process
 	 *
@@ -38,8 +38,8 @@ class IcmsPreloadUserInfo extends IcmsPreloadItem {
 				}
 			}
 			$pm_handler = & xoops_gethandler ( 'privmessage' );
-			$criteria = new CriteriaCompo ( new Criteria ( 'read_msg', 0 ) );
-			$criteria->add ( new Criteria ( 'to_userid', $xoopsUser->getVar ( 'uid' ) ) );
+			$criteria = new core_CriteriaCompo ( new core_Criteria ( 'read_msg', 0 ) );
+			$criteria->add ( new core_Criteria ( 'to_userid', $xoopsUser->getVar ( 'uid' ) ) );
 			$user ['new_messages'] = $pm_handler->getCount ( $criteria );
 
 			$xoopsTpl->assign ( 'user', $user );

@@ -89,9 +89,9 @@ class xos_logos_PageBuilder {
 		$url = urldecode(substr(str_replace(ICMS_URL, '', $fullurl), 1));
 
 		$icms_page_handler =& xoops_gethandler ( 'page' );
-		$criteria = new CriteriaCompo( new Criteria( 'page_url', $fullurl ) );
+		$criteria = new core_CriteriaCompo( new core_Criteria( 'page_url', $fullurl ) );
 		if (! empty ( $url ))
-		$criteria->add( new Criteria( 'page_url', $url ), 'OR' );
+		$criteria->add( new core_Criteria( 'page_url', $url ), 'OR' );
 		$pages = $icms_page_handler->getCount ( $criteria );
 
 		if ($pages > 0) { //We have a sym-link defined for this page
@@ -118,7 +118,7 @@ class xos_logos_PageBuilder {
 		if ($isStart) {
 			$modid = '0-1';
 		} else {
-			$criteria = new CriteriaCompo ( new Criteria ( 'page_status', 1 ) );
+			$criteria = new core_CriteriaCompo ( new core_Criteria ( 'page_status', 1 ) );
 			$pages = $icms_page_handler->getObjects ( $criteria );
 			$pid = 0;
 			foreach ( $pages as $page ) {
@@ -230,7 +230,7 @@ class xos_logos_PageBuilder {
 		    'lastmod' => $xobject->getVar ( 'last_modified' )
 		);
 
-		$xoopsLogger = & XoopsLogger::instance ();
+		$xoopsLogger = & core_Logger::instance ();
 
 		$bcachetime = (int) ( $xobject->getVar ( 'bcachetime' ) );
 		//$template = new XoopsTpl();

@@ -10,7 +10,7 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id$
+ * @version	$Id: logger_render.php 19425 2010-06-14 23:03:14Z skenow $
  */
 
 defined( 'ICMS_ROOT_PATH' ) or die();

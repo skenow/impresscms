@@ -23,7 +23,7 @@ if (!defined("ICMS_ROOT_PATH")) {
  * @package IcmsPersistableobject
  * @since   1.1
  */
-class IcmsPersistableObjectHandler extends XoopsObjectHandler {
+class IcmsPersistableObjectHandler extends core_ObjectHandler {
 
 	var $_itemname;
 
@@ -142,7 +142,7 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
 	 */
 	function IcmsPersistableObjectHandler(&$db, $itemname, $keyname, $idenfierName, $summaryName, $modulename) {
 
-		$this->XoopsObjectHandler($db);
+		$this->core_ObjectHandler($db);
 
 		$this->_itemname = $itemname;
 		// Todo: Autodect module
@@ -189,7 +189,7 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
 		$icmspermissions_handler = new IcmsPersistablePermissionHandler($this);
 		$grantedItems = $icmspermissions_handler->getGrantedItems($perm_name);
 		if (count($grantedItems) > 0) {
-			$criteria->add(new Criteria($this->keyName, '(' . implode(', ', $grantedItems) . ')', 'IN'));
+			$criteria->add(new core_Criteria($this->keyName, '(' . implode(', ', $grantedItems) . ')', 'IN'));
 			return true;
 		} else {
 			return false;
@@ -240,7 +240,7 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
 	 */
 	function &get($id, $as_object = true, $debug = false, $criteria = false) {
 		if (!$criteria) {
-			$criteria = new CriteriaCompo();
+			$criteria = new core_CriteriaCompo();
 		}
 		if (is_array($this->keyName)) {
 			for ($i = 0; $i < count($this->keyName); $i++) {
@@ -248,17 +248,17 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
 				 * In some situations, the $id is not an INTEGER. IcmsPersistableObjectTag is an example.
 				 * Is the fact that we removed the intval() represents a security risk ?
 				 */
-				//$criteria->add(new Criteria($this->keyName[$i], ($id[$i]), '=', $this->_itemname));
-				$criteria->add(new Criteria($this->keyName[$i], $id[$i], '=', $this->_itemname));
+				//$criteria->add(new core_Criteria($this->keyName[$i], ($id[$i]), '=', $this->_itemname));
+				$criteria->add(new core_Criteria($this->keyName[$i], $id[$i], '=', $this->_itemname));
 			}
 		}
 		else {
-			//$criteria = new Criteria($this->keyName, intval($id), '=', $this->_itemname);
+			//$criteria = new core_Criteria($this->keyName, intval($id), '=', $this->_itemname);
 			/**
 			 * In some situations, the $id is not an INTEGER. IcmsPersistableObjectTag is an example.
 			 * Is the fact that we removed the intval() represents a security risk ?
 			 */
-			$criteria->add(new Criteria($this->keyName, $id, '=', $this->_itemname));
+			$criteria->add(new core_Criteria($this->keyName, $id, '=', $this->_itemname));
 		}
 		$criteria->setLimit(1);
 		if ($debug) {
@@ -295,7 +295,7 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
 	/**
 	 * retrieve objects from the database
 	 *
-	 * @param object $criteria {@link CriteriaElement} conditions to be met
+	 * @param object $criteria {@link core_CriteriaElement} conditions to be met
 	 * @param bool $id_as_key use the ID as key for the array?
 	 * @param bool $as_object return an array of objects?
 	 *
@@ -335,7 +335,7 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
 	 * query the database with the constructed $criteria object
 	 *
 	 * @param string $sql The SQL Query
-	 * @param object $criteria {@link CriteriaElement} conditions to be met
+	 * @param object $criteria {@link core_CriteriaElement} conditions to be met
 	 * @param bool $force Force the query?
 	 * @param bool $debug Turn Debug on?
 	 *
@@ -379,7 +379,7 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
 	/**
 	 * retrieve objects with debug mode - so will show the query
 	 *
-	 * @param object $criteria {@link CriteriaElement} conditions to be met
+	 * @param object $criteria {@link core_CriteriaElement} conditions to be met
 	 * @param bool $id_as_key use the ID as key for the array?
 	 * @param bool $as_object return an array of objects?
 	 *
@@ -456,7 +456,7 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
 	/**
 	 * Retrieve a list of objects as arrays - DON'T USE WITH JOINT KEYS
 	 *
-	 * @param object $criteria {@link CriteriaElement} conditions to be met
+	 * @param object $criteria {@link core_CriteriaElement} conditions to be met
 	 * @param int   $limit      Max number of objects to fetch
 	 * @param int   $start      Which record to start at
 	 *
@@ -465,7 +465,7 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
 	function getList($criteria = null, $limit = 0, $start = 0, $debug=false) {
 		$ret = array();
 		if ($criteria == null) {
-			$criteria = new CriteriaCompo();
+			$criteria = new core_CriteriaCompo();
 		}
 
 		if ($criteria->getSort() == '') {
@@ -506,7 +506,7 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
 	/**
 	 * count objects matching a condition
 	 *
-	 * @param object $criteria {@link CriteriaElement} to match
+	 * @param object $criteria {@link core_CriteriaElement} to match
 	 * @return int count of objects
 	 */
 	function getCount($criteria = null)
@@ -797,7 +797,7 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
 	 *
 	 * @param   string  $fieldname  Name of the field
 	 * @param   string  $fieldvalue Value to write
-	 * @param   object  $criteria   {@link CriteriaElement}
+	 * @param   object  $criteria   {@link core_CriteriaElement}
 	 *
 	 * @return  bool
 	 **/
@@ -829,7 +829,7 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
 	/**
 	 * delete all objects meeting the conditions
 	 *
-	 * @param object $criteria {@link CriteriaElement} with conditions to meet
+	 * @param object $criteria {@link core_CriteriaElement} with conditions to meet
 	 * @return bool
 	 */
 

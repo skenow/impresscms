@@ -23,7 +23,7 @@
  */
 
 /**
- * A registry for holding references to {@link XoopsObjectHandler} classes
+ * A registry for holding references to {@link core_ObjectHandler} classes
  *
  * @package     kernel
  *
@@ -63,7 +63,7 @@ class XoopsHandlerRegistry
 	 * Register a handler class object
 	 *
 	 * @param	string  $name     Short name of a handler class
-	 * @param	object  &$handler {@link XoopsObjectHandler} class object
+	 * @param	object  &$handler {@link core_ObjectHandler} class object
 	 */
 	function setHandler($name, &$handler)
 	{
@@ -75,7 +75,7 @@ class XoopsHandlerRegistry
 	 *
 	 * @param	string  $name     Short name of a handler class
 	 *
-	 * @return	object {@link XoopsObjectHandler}, FALSE if not registered
+	 * @return	object {@link core_ObjectHandler}, FALSE if not registered
 	 */
 	function &getHandler($name)
 	{
@@ -100,7 +100,7 @@ class XoopsHandlerRegistry
 	 *
 	 * @param	string  $module   Directory name of a module
 	 * @param	string  $name     Short name of a handler class
-	 * @param	object  &$handler {@link XoopsObjectHandler} class object
+	 * @param	object  &$handler {@link core_ObjectHandler} class object
 	 */
 	function setModuleHandler($module, $name, &$handler)
 	{
@@ -113,7 +113,7 @@ class XoopsHandlerRegistry
 	 * @param	string  $module   Directory name of a module
 	 * @param	string  $name     Short name of a handler class
 	 *
-	 * @return	object {@link XoopsObjectHandler}, FALSE if not registered
+	 * @return	object {@link core_ObjectHandler}, FALSE if not registered
 	 */
 	function &getModuleHandler($module, $name)
 	{

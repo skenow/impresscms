@@ -69,7 +69,7 @@ class IcmsPersistableMemberHandler extends XoopsMemberHandler{
 		$newuser = false;
 		$i = 0;
 		while ($newuser == false) {
-		$crit = new Criteria('uname', $usernames[$i]);
+		$crit = new core_Criteria('uname', $usernames[$i]);
 		$count = $this->getUserCount($crit);
 		if ($count == 0) {
 		$newuser = true;

@@ -6,7 +6,7 @@
  * @license         LICENSE.txt
  * @package	kernel
  * @since            1.1
- * @version		$Id$
+ * @version		$Id: icmskernel.php 19118 2010-03-27 17:46:23Z skenow $
  */
 
 /**
@@ -17,7 +17,7 @@
  * @package		kernel
  * @since 		1.1
  */
-class IcmsKernel {
+class core_Kernel {
 	/** @var array */
 	var $paths = array(
 		'www' => array(), 'modules' => array(), 'themes' => array(),
@@ -26,9 +26,9 @@ class IcmsKernel {
 	var $urls=false;
 
 	/**
-	 * Constructor for IcmsKernel, initiating all properties of the class
+	 * Constructor for core_Kernel, initiating all properties of the class
 	 */
-	function IcmsKernel() {
+	function core_Kernel() {
 		$this->paths['www'] = array( ICMS_ROOT_PATH, ICMS_URL );
 		$this->paths['modules'] = array( ICMS_ROOT_PATH . '/modules', ICMS_URL . '/modules' );
 		$this->paths['themes'] = array( ICMS_ROOT_PATH . '/themes', ICMS_URL . '/themes' );
