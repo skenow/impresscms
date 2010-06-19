@@ -8,7 +8,7 @@
  * @since	ImpressCMS 1.1
  * @author	modified by UnderDog <underdog@impresscms.org>
  * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
- * @version	$Id$
+ * @version	$Id: page.php 19450 2010-06-18 14:15:29Z malanciault $
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -16,38 +16,17 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 include_once ICMS_ROOT_PATH . '/kernel/icmspersistableobject.php';
 
 /**
- * ImpressCMS page class.
- *
- * @since	ImpressCMS 1.2
- * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
- */
-class IcmsPage extends IcmsPersistableObject {
-
-	public function __construct( & $handler ){
-
-		$this->IcmsPersistableObject( $handler );
-
-		$this->quickInitVar('page_id', XOBJ_DTYPE_INT);
-        $this->quickInitVar('page_moduleid', XOBJ_DTYPE_INT, true);
-       	$this->quickInitVar('page_title', XOBJ_DTYPE_TXTBOX, true);
-        $this->quickInitVar('page_url', XOBJ_DTYPE_TXTBOX, true);
-        $this->quickInitVar('page_status', XOBJ_DTYPE_INT, true);
-
-	}
-
-}
-
-/**
  * ImpressCMS page handler class.
  *
  * @since	ImpressCMS 1.2
  * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
  */
-class IcmsPageHandler extends IcmsPersistableObjectHandler {
+class core_PageHandler extends IcmsPersistableObjectHandler {
 
 	public function __construct( & $db ){
-		$this->IcmsPersistableObjectHandler($db, 'page' ,'page_id' ,'page_title', '' , 'icms');
+		$this->IcmsPersistableObjectHandler($db, 'page' ,'page_id' ,'page_title', '' , 'core_');
 		$this->table = $db->prefix('icmspage');
+		$this->className = 'core_Page';
 	}
 
 	public function getList( $criteria = null, $limit = 0, $start = 0, $debug=false){
@@ -118,26 +97,8 @@ class IcmsPageHandler extends IcmsPersistableObjectHandler {
 		}
 		$ret = '<option value="0-1"'.$sel.'>'._AM_TOPPAGE.'</option><option value="0-0"'.$sel1.'>'._AM_ALLPAGES.'</option>';
 		$ret .= $cont.$mods;
-		 
+
 		return $ret;
 	}
-	 
 }
-
-/**
- * XOOPS page handler class.
- *
- * @todo 	Remove this class after ImpressCMS 1.5
- * @deprecated 
- */
-class XoopsPage extends IcmsPage { /* For backwards compatibility */ }
-
-/**
- * XOOPS page handler class.
- * 
- * @todo 	Remove this class after ImpressCMS 1.5
- * @deprecated 
- */
-class XoopsPageHandler extends IcmsPageHandler { /* For backwards compatibility */ }
-
 ?>

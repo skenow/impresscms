@@ -15,7 +15,7 @@
 
 require_once ICMS_ROOT_PATH."/kernel/page.php" ;
 
-class SystemPages extends IcmsPage {
+class SystemPages extends core_Page {
 
 	public function __construct( & $handler ){
 		parent::__construct( $handler );
@@ -60,7 +60,7 @@ class SystemPages extends IcmsPage {
 }
 
 
-class SystemPagesHandler extends IcmsPageHandler {
+class SystemPagesHandler extends core_PageHandler {
 
 	private $modules_name;
 
