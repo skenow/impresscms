@@ -460,7 +460,7 @@ LEFT JOIN " . $this->_mHandler->db->prefix ( "groups_users_link" ) . " AS m ON m
 			$sql [] = "m.groupid IN (" . implode ( ", ", $groups ) . ")";
 		}
 		$limit = $start = 0;
-		if (isset ( $criteria ) && is_subclass_of ( $criteria, 'criteriaelement' )) {
+		if (isset ( $criteria ) && is_subclass_of ( $criteria, 'core_CriteriaElement' )) {
 			$sql_criteria = $criteria->render ();
 			if ($criteria->getSort () != '') {
 				$sql_criteria .= ' ORDER BY ' . $criteria->getSort () . ' ' . $criteria->getOrder ();
@@ -507,7 +507,7 @@ LEFT JOIN " . $this->_mHandler->db->prefix ( "groups_users_link" ) . " AS m ON m
 		if (! empty ( $groups )) {
 			$sql [] = "m.groupid IN (" . implode ( ", ", $groups ) . ")";
 		}
-		if (isset ( $criteria ) && is_subclass_of ( $criteria, 'criteriaelement' )) {
+		if (isset ( $criteria ) && is_subclass_of ( $criteria, 'core_CriteriaElement' )) {
 			$sql [] = $criteria->render ();
 		}
 		$sql_string = implode ( " AND ", array_filter ( $sql ) );

@@ -197,7 +197,7 @@ class core_TplsetHandler extends core_ObjectHandler
 		$ret = array();
 		$limit = $start = 0;
 		$sql = 'SELECT * FROM '.$this->db->prefix('tplset');
-		if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'core_CriteriaElement')) {
 			$sql .= ' '.$criteria->renderWhere().' ORDER BY tplset_id';
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
@@ -228,7 +228,7 @@ class core_TplsetHandler extends core_ObjectHandler
 	function getCount($criteria = null)
 	{
 		$sql = 'SELECT COUNT(*) FROM '.$this->db->prefix('tplset');
-		if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'core_CriteriaElement')) {
 			$sql .= ' '.$criteria->renderWhere();
 		}
 		if (!$result =& $this->db->query($sql)) {

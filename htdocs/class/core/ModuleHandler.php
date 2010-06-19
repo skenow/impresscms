@@ -252,7 +252,7 @@ class core_ModuleHandler extends core_ObjectHandler
 		$ret = array();
 		$limit = $start = 0;
 		$sql = "SELECT * FROM ".$this->db->prefix('modules');
-		if(isset($criteria) && is_subclass_of($criteria, 'criteriaelement'))
+		if(isset($criteria) && is_subclass_of($criteria, 'core_CriteriaElement'))
 		{
 			$sql .= " ".$criteria->renderWhere();
 			$sql .= " ORDER BY weight ".$criteria->getOrder().", mid ASC";
@@ -287,7 +287,7 @@ class core_ModuleHandler extends core_ObjectHandler
 	function getCount($criteria = null)
 	{
 		$sql = "SELECT COUNT(*) FROM ".$this->db->prefix('modules');
-		if(isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {$sql .= " ".$criteria->renderWhere();}
+		if(isset($criteria) && is_subclass_of($criteria, 'core_CriteriaElement')) {$sql .= " ".$criteria->renderWhere();}
 		if(!$result = $this->db->query($sql)) {return 0;}
 		list($count) = $this->db->fetchRow($result);
 		return $count;

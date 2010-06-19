@@ -151,7 +151,7 @@ class core_CommentHandler extends core_ObjectHandler
 		$ret = array();
 		$limit = $start = 0;
 		$sql = 'SELECT * FROM '.$this->db->prefix('xoopscomments');
-		if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'core_CriteriaElement')) {
 			$sql .= ' '.$criteria->renderWhere();
 			$sort = ($criteria->getSort() != '') ? $criteria->getSort() : 'com_id';
 			$sql .= ' ORDER BY '.$sort.' '.$criteria->getOrder();
@@ -185,7 +185,7 @@ class core_CommentHandler extends core_ObjectHandler
 	function getCount($criteria = null)
 	{
 		$sql = 'SELECT COUNT(*) FROM '.$this->db->prefix('xoopscomments');
-		if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'core_CriteriaElement')) {
 			$sql .= ' '.$criteria->renderWhere();
 		}
 		if (!$result =& $this->db->query($sql)) {
@@ -205,7 +205,7 @@ class core_CommentHandler extends core_ObjectHandler
 	function deleteAll($criteria = null)
 	{
 		$sql = 'DELETE FROM '.$this->db->prefix('xoopscomments');
-		if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'core_CriteriaElement')) {
 			$sql .= ' '.$criteria->renderWhere();
 		}
 		if (!$result = $this->db->query($sql)) {
@@ -361,7 +361,7 @@ class core_CommentHandler extends core_ObjectHandler
 	 {
 	 $set_clause = is_numeric($fieldvalue) ? $filedname.' = '.$fieldvalue : $filedname.' = '.$this->db->quoteString($fieldvalue);
 	 $sql = 'UPDATE '.$this->db->prefix('xoopscomments').' SET '.$set_clause;
-	 if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+	 if (isset($criteria) && is_subclass_of($criteria, 'core_CriteriaElement')) {
 	 $sql .= ' '.$criteria->renderWhere();
 	 }
 	 if (!$result = $this->db->query($sql)) {

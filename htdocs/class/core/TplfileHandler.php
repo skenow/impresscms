@@ -237,7 +237,7 @@ class core_TplfileHandler extends core_ObjectHandler
 		} else {
 			$sql = "SELECT * FROM ".$this->db->prefix('tplfile');
 		}
-		if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'core_CriteriaElement')) {
 			$sql .= " ".$criteria->renderWhere()." ORDER BY tpl_refid";
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
@@ -268,7 +268,7 @@ class core_TplfileHandler extends core_ObjectHandler
 	function getCount($criteria = null)
 	{
 		$sql = 'SELECT COUNT(*) FROM '.$this->db->prefix('tplfile');
-		if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'core_CriteriaElement')) {
 			$sql .= ' '.$criteria->renderWhere();
 		}
 		if (!$result =& $this->db->query($sql)) {

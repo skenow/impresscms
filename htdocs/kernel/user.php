@@ -703,7 +703,7 @@ class XoopsUserHandler extends core_ObjectHandler
 		$ret = array();
 		$limit = $start = 0;
 		$sql = "SELECT * FROM ".$this->db->prefix('users');
-		if(isset($criteria) && is_subclass_of($criteria, 'criteriaelement'))
+		if(isset($criteria) && is_subclass_of($criteria, 'core_CriteriaElement'))
 		{
 			$sql .= " ".$criteria->renderWhere();
 			if($criteria->getSort() != '') {$sql .= " ORDER BY ".$criteria->getSort()." ".$criteria->getOrder();}
@@ -735,7 +735,7 @@ class XoopsUserHandler extends core_ObjectHandler
 	function getCount($criteria = null)
 	{
 		$sql = 'SELECT COUNT(*) FROM '.$this->db->prefix('users');
-		if(isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {$sql .= ' '.$criteria->renderWhere();}
+		if(isset($criteria) && is_subclass_of($criteria, 'core_CriteriaElement')) {$sql .= ' '.$criteria->renderWhere();}
 		$result = $this->db->query($sql);
 		if(!$result) {return 0;}
 		list($count) = $this->db->fetchRow($result);
@@ -753,7 +753,7 @@ class XoopsUserHandler extends core_ObjectHandler
 		$pass = substr ( md5 ( time () ), 0, 8 );
 		$salt = substr ( md5 ( time () * 2 ), 0, 12 );
 		$sql = sprintf("UPDATE %s SET level= '-1', pass = %s, salt = %s", $this->db->prefix('users'), $pass, $salt);
-		if(isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {$sql .= " ".$criteria->renderWhere();}
+		if(isset($criteria) && is_subclass_of($criteria, 'core_CriteriaElement')) {$sql .= " ".$criteria->renderWhere();}
 		if(!$result = $this->db->query($sql)) {return false;}
 		return true;
 	}
@@ -771,7 +771,7 @@ class XoopsUserHandler extends core_ObjectHandler
 	{
 		$set_clause = is_numeric($fieldvalue) ? $fieldname.' = '.$fieldvalue : $fieldname.' = '.$this->db->quoteString($fieldvalue);
 		$sql = 'UPDATE '.$this->db->prefix('users').' SET '.$set_clause;
-		if(isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {$sql .= ' '.$criteria->renderWhere();}
+		if(isset($criteria) && is_subclass_of($criteria, 'core_CriteriaElement')) {$sql .= ' '.$criteria->renderWhere();}
 		if(!$result = $this->db->query($sql)) {return false;}
 		return true;
 	}

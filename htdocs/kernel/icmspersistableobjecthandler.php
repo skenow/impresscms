@@ -312,7 +312,7 @@ class IcmsPersistableObjectHandler extends core_ObjectHandler {
 			$sql = 'SELECT * FROM '.$this->table . " AS " . $this->_itemname;
 		}
 
-		if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'core_CriteriaElement')) {
 			$sql .= ' '.$criteria->renderWhere();
 			if ($criteria->getSort() != '') {
 				$sql .= ' ORDER BY '.$criteria->getSort().' '.$criteria->getOrder();
@@ -345,7 +345,7 @@ class IcmsPersistableObjectHandler extends core_ObjectHandler {
 	{
 		$ret = array();
 
-		if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'core_CriteriaElement')) {
 			$sql .= ' '.$criteria->renderWhere();
 			if ($criteria->groupby) {
 				$sql .= $criteria->getGroupby();
@@ -477,7 +477,7 @@ class IcmsPersistableObjectHandler extends core_ObjectHandler {
 			$sql .= ', '.$this->getIdentifierName();
 		}
 		$sql .= ' FROM '.$this->table . " AS " . $this->_itemname;
-		if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'core_CriteriaElement')) {
 			$sql .= ' '.$criteria->renderWhere();
 			if ($criteria->getSort() != '') {
 				$sql .= ' ORDER BY '.$criteria->getSort().' '.$criteria->getOrder();
@@ -513,7 +513,7 @@ class IcmsPersistableObjectHandler extends core_ObjectHandler {
 	{
 		$field = "";
 		$groupby = false;
-		if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'core_CriteriaElement')) {
 			if ($criteria->groupby != "") {
 				$groupby = true;
 				$field = $criteria->groupby.", "; //Not entirely secure unless you KNOW that no criteria's groupby clause is going to be mis-used
@@ -529,7 +529,7 @@ class IcmsPersistableObjectHandler extends core_ObjectHandler {
 		} else {
 			$sql = 'SELECT '.$field.'COUNT(*) FROM '.$this->table . ' AS ' . $this->_itemname;
 		}
-		if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'core_CriteriaElement')) {
 			$sql .= ' '.$criteria->renderWhere();
 			if ($criteria->groupby != "") {
 				$sql .= $criteria->getGroupby();
@@ -812,7 +812,7 @@ class IcmsPersistableObjectHandler extends core_ObjectHandler {
 			$set_clause .= $this->db->quoteString( $fieldvalue );
 		}
 		$sql = 'UPDATE '.$this->table.' SET '.$set_clause;
-		if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'core_CriteriaElement')) {
 			$sql .= ' '.$criteria->renderWhere();
 		}
 		if (false != $force) {
@@ -835,7 +835,7 @@ class IcmsPersistableObjectHandler extends core_ObjectHandler {
 
 	function deleteAll($criteria = null)
 	{
-		if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'core_CriteriaElement')) {
 			$sql = 'DELETE FROM '.$this->table;
 			$sql .= ' '.$criteria->renderWhere();
 			if (!$this->db->query($sql)) {

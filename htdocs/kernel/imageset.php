@@ -175,7 +175,7 @@ class XoopsImagesetHandler extends core_ObjectHandler
 		$ret = array();
 		$limit = $start = 0;
 		$sql = 'SELECT DISTINCT i.* FROM '.$this->db->prefix('imgset'). ' i LEFT JOIN '.$this->db->prefix('imgset_tplset_link'). ' l ON l.imgset_id=i.imgset_id';
-		if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'core_CriteriaElement')) {
 			$sql .= ' '.$criteria->renderWhere();
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();

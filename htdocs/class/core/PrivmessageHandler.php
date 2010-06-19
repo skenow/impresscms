@@ -148,7 +148,7 @@ class core_PrivmessageHandler extends core_ObjectHandler
 		$ret = array();
 		$limit = $start = 0;
 		$sql = 'SELECT * FROM '.$this->db->prefix('priv_msgs');
-		if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'core_CriteriaElement')) {
 			$sql .= ' '.$criteria->renderWhere();
 			$sort = !in_array($criteria->getSort(), array('msg_id', 'msg_time', 'from_userid')) ? 'msg_id' : $criteria->getSort();
 			$sql .= ' ORDER BY '.$sort.' '.$criteria->getOrder();
@@ -180,7 +180,7 @@ class core_PrivmessageHandler extends core_ObjectHandler
 	function getCount($criteria = null)
 	{
 		$sql = 'SELECT COUNT(*) FROM '.$this->db->prefix('priv_msgs');
-		if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'core_CriteriaElement')) {
 			$sql .= ' '.$criteria->renderWhere();
 		}
 		if (!$result = $this->db->query($sql)) {

@@ -127,7 +127,7 @@ class XoopsRankHandler extends core_ObjectHandler
 		}
 
 		$sql = 'SELECT rank_id, rank_title FROM '.$this->db->prefix('ranks');
-		if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'core_CriteriaElement')) {
 			$sql .= ' '.$criteria->renderWhere();
 			if ($criteria->getSort() != '') {
 				$sql .= ' ORDER BY '.$criteria->getSort().' '.$criteria->getOrder();
@@ -228,7 +228,7 @@ class XoUserHandler extends core_ObjectHandler
 			"	WHERE g.groupid IN (".implode(', ', array_map( 'intval', $groups) ) . ")";
 		}
 
-		if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'core_CriteriaElement')) {
 			// Use the direct renderer, assuming no `uid` in criteria
 			if ($render = $criteria->render()) {
 				$sql .= " AND ".$render;
@@ -264,7 +264,7 @@ class XoUserHandler extends core_ObjectHandler
 			"	WHERE g.groupid IN (".implode(', ', array_map( 'intval', $groups) ) . ")";
 		}
 
-		if (isset($criteria) && is_subclass_of($criteria, "criteriaelement")) {
+		if (isset($criteria) && is_subclass_of($criteria, "core_CriteriaElement")) {
 
 			if ($render = $criteria->render()) {
 				$sql .= " AND ".$render;
