@@ -10,7 +10,15 @@
  * @author		Marc-André Lanciault (aka marcan) <mal@inboxintl.com>
  * @version		$Id: common.php 19427 2010-06-16 03:31:22Z skenow $
  */
+
+/**
+ * Debug feature of autoloader
+ * to be removed before release
+ */
+define('ICMS_AUTOLOADER', false);
+
 function icms_autoload( $class ) {
+	if (ICMS_AUTOLOADER) echo 'class = ' . $class;
 	$file = str_replace( '_', DIRECTORY_SEPARATOR, $class );
 	if ( file_exists( $path = ICMS_ROOT_PATH . "/class/$file.php" ) ) {
 		include_once $path;
