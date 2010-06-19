@@ -13,8 +13,6 @@
 * @version	$Id$
 */
 
-require_once ICMS_ROOT_PATH."/kernel/page.php" ;
-
 class SystemPages extends core_Page {
 
 	public function __construct( & $handler ){
