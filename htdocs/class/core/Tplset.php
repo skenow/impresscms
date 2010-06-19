@@ -10,7 +10,7 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id$
+ * @version	$Id: tplset.php 19459 2010-06-18 14:58:18Z malanciault $
  */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
