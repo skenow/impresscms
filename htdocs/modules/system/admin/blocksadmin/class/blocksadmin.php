@@ -22,7 +22,7 @@ include_once ICMS_ROOT_PATH . '/kernel/block.php';
  * @since ImpressCMS 1.2
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
-class SystemBlocksadmin extends IcmsBlock {
+class SystemBlocksadmin extends core_Block {
 
 	/**
 	 * Constructor
@@ -211,7 +211,7 @@ class SystemBlocksadmin extends IcmsBlock {
  * @since ImpressCMS 1.2
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
-class SystemBlocksadminHandler extends IcmsBlockHandler {
+class SystemBlocksadminHandler extends core_BlockHandler {
 
 	private $block_positions;
 	private $modules_name;

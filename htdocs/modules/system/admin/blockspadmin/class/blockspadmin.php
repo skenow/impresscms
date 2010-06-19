@@ -22,12 +22,12 @@ require_once ICMS_ROOT_PATH.'/kernel/blockposition.php' ;
  * @since 			ImpressCMS 1.2
  * @author			Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
-class SystemBlockspadmin extends IcmsBlockposition {
+class SystemBlockspadmin extends core_Blockposition {
 
 	/**
 	 * Constructor
 	 *
-	 * @param IcmsBlockpositionHandler $handler
+	 * @param core_BlockpositionHandler $handler
 	 */
 	public function __construct(& $handler) {
 		parent::__construct( $handler );
@@ -89,7 +89,7 @@ class SystemBlockspadmin extends IcmsBlockposition {
  * @since 			ImpressCMS 1.2
  * @author			Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
-class SystemBlockspadminHandler extends IcmsBlockpositionHandler {
+class SystemBlockspadminHandler extends core_BlockpositionHandler {
 
 	/**
 	 * Constructor
