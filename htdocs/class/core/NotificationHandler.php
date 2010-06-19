@@ -10,7 +10,7 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id$
+ * @version	$Id: notification.php 19450 2010-06-18 14:15:29Z malanciault $
  */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
@@ -18,124 +18,6 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 // RMV-NOTIFY
 include_once XOOPS_ROOT_PATH . '/include/notification_constants.php';
 include_once XOOPS_ROOT_PATH . '/include/notification_functions.php';
-
-/**
- *
- *
- * @package     kernel
- * @subpackage  notification
- *
- * @author	    Michael van Dam	<mvandam@caltech.edu>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
- */
-
-/**
- * A Notification
- *
- * @package     kernel
- * @subpackage  notification
- *
- * @author	    Michael van Dam	<mvandam@caltech.edu>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
- */
-class XoopsNotification extends core_Object
-{
-
-	/**
-	 * Constructor
-	 **/
-	function XoopsNotification()
-	{
-		$this->core_Object();
-		$this->initVar('not_id', XOBJ_DTYPE_INT, NULL, false);
-		$this->initVar('not_modid', XOBJ_DTYPE_INT, NULL, false);
-		$this->initVar('not_category', XOBJ_DTYPE_TXTBOX, null, false, 30);
-		$this->initVar('not_itemid', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('not_event', XOBJ_DTYPE_TXTBOX, null, false, 30);
-		$this->initVar('not_uid', XOBJ_DTYPE_INT, 0, true);
-		$this->initVar('not_mode', XOBJ_DTYPE_INT, 0, false);
-	}
-
-	// FIXME:???
-	// To send email to multiple users simultaneously, we would need to move
-	// the notify functionality to the handler class.  BUT, some of the tags
-	// are user-dependent, so every email msg will be unique.  (Unless maybe use
-	// smarty for email templates in the future.)  Also we would have to keep
-	// track if each user wanted email or PM.
-
-	/**
-	 * Send a notification message to the user
-	 *
-	 * @param  string  $template_dir  Template directory
-	 * @param  string  $template      Template name
-	 * @param  string  $subject       Subject line for notification message
-	 * @param  array   $tags Array of substitutions for template variables
-	 *
-	 * @return  bool	true if success, false if error
-	 **/
-	function notifyUser($template_dir, $template, $subject, $tags)
-	{
-		global $icmsConfigMailer;
-		// Check the user's notification preference.
-
-		$member_handler =& xoops_gethandler('member');
-		$user =& $member_handler->getUser($this->getVar('not_uid'));
-		if (!is_object($user)) {
-			return true;
-		}
-		$method = $user->getVar('notify_method');
-
-		$xoopsMailer =& getMailer();
-		include_once XOOPS_ROOT_PATH . '/include/notification_constants.php';
-		switch($method) {
-			case XOOPS_NOTIFICATION_METHOD_PM:
-				$xoopsMailer->usePM();
-				$xoopsMailer->setFromUser($member_handler->getUser($icmsConfigMailer['fromuid']));
-				foreach ($tags as $k=>$v) {
-					$xoopsMailer->assign($k, $v);
-				}
-				break;
-			case XOOPS_NOTIFICATION_METHOD_EMAIL:
-				$xoopsMailer->useMail();
-				foreach ($tags as $k=>$v) {
-					$xoopsMailer->assign($k, preg_replace("/&amp;/i", '&', $v));
-				}
-				break;
-			default:
-				return true; // report error in user's profile??
-				break;
-		}
-
-		// Set up the mailer
-		$xoopsMailer->setTemplateDir($template_dir);
-		$xoopsMailer->setTemplate($template);
-		$xoopsMailer->setToUsers($user);
-		//global $icmsConfig;
-		//$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
-		//$xoopsMailer->setFromName($icmsConfig['sitename']);
-		$xoopsMailer->setSubject($subject);
-		$success = $xoopsMailer->send();
-
-		// If send-once-then-delete, delete notification
-		// If send-once-then-wait, disable notification
-
-		include_once XOOPS_ROOT_PATH . '/include/notification_constants.php';
-		$notification_handler =& xoops_gethandler('notification');
-
-		if ($this->getVar('not_mode') == XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE) {
-			$notification_handler->delete($this);
-			return $success;
-		}
-
-		if ($this->getVar('not_mode') == XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT) {
-			$this->setVar('not_mode', XOOPS_NOTIFICATION_MODE_WAITFORLOGIN);
-			$notification_handler->insert($this);
-		}
-		return $success;
-
-	}
-
-}
 
 /**
  * XOOPS notification handler class.
@@ -150,11 +32,11 @@ class XoopsNotification extends core_Object
  * @author	    Michael van Dam <mvandam@caltech.edu>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class XoopsNotificationHandler extends core_ObjectHandler
+class core_NotificationHandler extends core_ObjectHandler
 {
 
 	/**
-	 * Create a {@link XoopsNotification}
+	 * Create a {@link core_Notification}
 	 *
 	 * @param	bool    $isNew  Flag the object as "new"?
 	 *
@@ -162,7 +44,7 @@ class XoopsNotificationHandler extends core_ObjectHandler
 	 */
 	function &create($isNew = true)
 	{
-		$notification = new XoopsNotification();
+		$notification = new core_Notification();
 		if ($isNew) {
 			$notification->setNew();
 		}
@@ -170,11 +52,11 @@ class XoopsNotificationHandler extends core_ObjectHandler
 	}
 
 	/**
-	 * Retrieve a {@link XoopsNotification}
+	 * Retrieve a {@link core_Notification}
 	 *
 	 * @param   int $id ID
 	 *
-	 * @return  object  {@link XoopsNotification}, FALSE on fail
+	 * @return  object  {@link core_Notification}, FALSE on fail
 	 **/
 	function &get($id)
 	{
@@ -187,7 +69,7 @@ class XoopsNotificationHandler extends core_ObjectHandler
 			}
 			$numrows = $this->db->getRowsNum($result);
 			if ($numrows == 1) {
-				$notification = new XoopsNotification();
+				$notification = new core_Notification();
 				$notification->assignVars($this->db->fetchArray($result));
 			}
 		}
@@ -235,9 +117,9 @@ class XoopsNotificationHandler extends core_ObjectHandler
 	}
 
 	/**
-	 * Delete a {@link XoopsNotification} from the database
+	 * Delete a {@link core_Notification} from the database
 	 *
-	 * @param   object  &$notification {@link XoopsNotification}
+	 * @param   object  &$notification {@link core_Notification}
 	 *
 	 * @return  bool
 	 **/
@@ -258,12 +140,12 @@ class XoopsNotificationHandler extends core_ObjectHandler
 	}
 
 	/**
-	 * Get some {@link XoopsNotification}s
+	 * Get some {@link core_Notification}s
 	 *
 	 * @param   object  $criteria
 	 * @param   bool    $id_as_key  Use IDs as keys into the array?
 	 *
-	 * @return  array   Array of {@link XoopsNotification} objects
+	 * @return  array   Array of {@link core_Notification} objects
 	 **/
 	function getObjects($criteria = null, $id_as_key = false)
 	{
@@ -282,7 +164,7 @@ class XoopsNotificationHandler extends core_ObjectHandler
 			return $ret;
 		}
 		while ($myrow = $this->db->fetchArray($result)) {
-			$notification = new XoopsNotification();
+			$notification = new core_Notification();
 			$notification->assignVars($myrow);
 			if (!$id_as_key) {
 				$ret[] =& $notification;
@@ -473,7 +355,7 @@ class XoopsNotificationHandler extends core_ObjectHandler
 	 *
 	 * @param  int  $user_id  ID of the user
 	 *
-	 * @return array  Array of {@link XoopsNotification} objects
+	 * @return array  Array of {@link core_Notification} objects
 	 **/
 	function getByUser ($user_id)
 	{
@@ -488,7 +370,7 @@ class XoopsNotificationHandler extends core_ObjectHandler
 	* @param  int      $item_id  ID of the subscribed items
 	* @param  int      $module_id  ID of the module of the subscribed items
 	* @param  int      $user_id  ID of the user of the subscribed items
-	* @return array    Array of {@link XoopsNotification} objects
+	* @return array    Array of {@link core_Notification} objects
 	**/
 	function getSubscribedEvents($category, $item_id, $module_id, $user_id)
 	{
@@ -516,7 +398,7 @@ class XoopsNotificationHandler extends core_ObjectHandler
 	 * @param   string  $order      Sort order
 	 * @param   string  $status     status
 	 *
-	 * @return  array   Array of {@link XoopsNotification} objects
+	 * @return  array   Array of {@link core_Notification} objects
 	 **/
 	function getByItemId($module_id, $item_id, $order = null, $status = null)
 	{
@@ -793,7 +675,7 @@ class XoopsNotificationHandler extends core_ObjectHandler
 	/**
 	 * Update
 	 *
-	 * @param   object  &$notification  {@link XoopsNotification} object
+	 * @param   object  &$notification  {@link core_Notification} object
 	 * @param   string  $field_name     Name of the field
 	 * @param   mixed   $field_value    Value to write
 	 *
