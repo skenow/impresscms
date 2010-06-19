@@ -10,7 +10,7 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id$
+ * @version	$Id: privmessage.php 19450 2010-06-18 14:15:29Z malanciault $
  */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
@@ -21,36 +21,6 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-
-/**
- * A handler for Private Messages
- *
- * @package		kernel
- *
- * @author		Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 The XOOPS Project (http://www.xoops.org)
- *
- * @version		$Revision: 1102 $ - $Date: 2007-10-18 22:55:52 -0400 (jeu., 18 oct. 2007) $
- */
-class XoopsPrivmessage extends core_Object
-{
-
-	/**
-	 * constructor
-	 **/
-	function XoopsPrivmessage()
-	{
-		$this->core_Object();
-		$this->initVar('msg_id', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('msg_image', XOBJ_DTYPE_OTHER, 'icon1.gif', false, 100);
-		$this->initVar('subject', XOBJ_DTYPE_TXTBOX, null, true, 255);
-		$this->initVar('from_userid', XOBJ_DTYPE_INT, null, true);
-		$this->initVar('to_userid', XOBJ_DTYPE_INT, null, true);
-		$this->initVar('msg_time', XOBJ_DTYPE_OTHER, null, false);
-		$this->initVar('msg_text', XOBJ_DTYPE_TXTAREA, null, true);
-		$this->initVar('read_msg', XOBJ_DTYPE_INT, 0, false);
-	}
-}
 
 /**
  * XOOPS private message handler class.
@@ -65,17 +35,17 @@ class XoopsPrivmessage extends core_Object
  *
  * @version		$Revision: 1102 $ - $Date: 2007-10-18 22:55:52 -0400 (jeu., 18 oct. 2007) $
  */
-class XoopsPrivmessageHandler extends core_ObjectHandler
+class core_PrivmessageHandler extends core_ObjectHandler
 {
 
 	/**
-	 * Create a new {@link XoopsPrivmessage} object
+	 * Create a new {@link core_Privmessage} object
 	 * @param 	bool 	$isNew 	Flag as "new"?
-	 * @return 	object {@link XoopsPrivmessage}
+	 * @return 	object {@link core_Privmessage}
 	 **/
 	function &create($isNew = true)
 	{
-		$pm = new XoopsPrivmessage();
+		$pm = new core_Privmessage();
 		if ($isNew) {
 			$pm->setNew();
 		}
@@ -83,9 +53,9 @@ class XoopsPrivmessageHandler extends core_ObjectHandler
 	}
 
 	/**
-	 * Load a {@link XoopsPrivmessage} object
+	 * Load a {@link core_Privmessage} object
 	 * @param 	int 	$id ID of the message
-	 * @return 	object {@link XoopsPrivmessage}
+	 * @return 	object {@link core_Privmessage}
 	 **/
 	function &get($id)
 	{
@@ -98,7 +68,7 @@ class XoopsPrivmessageHandler extends core_ObjectHandler
 			}
 			$numrows = $this->db->getRowsNum($result);
 			if ($numrows == 1) {
-				$pm = new XoopsPrivmessage();
+				$pm = new core_Privmessage();
 				$pm->assignVars($this->db->fetchArray($result));
 			}
 		}
@@ -108,7 +78,7 @@ class XoopsPrivmessageHandler extends core_ObjectHandler
 	/**
 	 * Insert a message in the database
 	 *
-	 * @param 	object 	$pm	{@link XoopsPrivmessage} object
+	 * @param 	object 	$pm	{@link core_Privmessage} object
 	 * @param 	bool 	$force 	flag to force the query execution skip request method check, which might be required in some situations
 	 * @return 	bool
 	 **/
@@ -149,7 +119,7 @@ class XoopsPrivmessageHandler extends core_ObjectHandler
 
 	/**
 	 * Delete from the database
-	 * @param 	object 	$pm 	{@link XoopsPrivmessage} object
+	 * @param 	object 	$pm 	{@link core_Privmessage} object
 	 * @return 	bool
 	 **/
 	function delete(&$pm)
@@ -171,7 +141,7 @@ class XoopsPrivmessageHandler extends core_ObjectHandler
 	 * Load messages from the database
 	 * @param 	object 	$criteria 	{@link core_CriteriaElement} object
 	 * @param 	bool 	$id_as_key 	use ID as key into the array?
-	 * @return 	array	Array of {@link XoopsPrivmessage} objects
+	 * @return 	array	Array of {@link core_Privmessage} objects
 	 **/
 	function getObjects($criteria = null, $id_as_key = false)
 	{
@@ -190,7 +160,7 @@ class XoopsPrivmessageHandler extends core_ObjectHandler
 			return $ret;
 		}
 		while ($myrow = $this->db->fetchArray($result)) {
-			$pm = new XoopsPrivmessage();
+			$pm = new core_Privmessage();
 			$pm->assignVars($myrow);
 			if (!$id_as_key) {
 				$ret[] =& $pm;
@@ -222,7 +192,7 @@ class XoopsPrivmessageHandler extends core_ObjectHandler
 
 	/**
 	 * Mark a message as read
-	 * @param 	object 	$pm 	{@link XoopsPrivmessage} object
+	 * @param 	object 	$pm 	{@link core_Privmessage} object
 	 * @return 	bool
 	 **/
 	function setRead(&$pm)
@@ -241,5 +211,4 @@ class XoopsPrivmessageHandler extends core_ObjectHandler
 		return true;
 	}
 }
-
 ?>
