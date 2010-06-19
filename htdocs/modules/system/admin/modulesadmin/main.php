@@ -59,7 +59,7 @@ if ( $op == "confirm" ) {
 	<table width='100%' border='0' cellspacing='1' class='outer'>
 	<tr align='center'><th>"._MD_AM_MODULE."</th><th>"._MD_AM_ACTION."</th><th>"._MD_AM_ORDER."</th></tr>";
 	$mcount = 0;
-	$myts =& MyTextsanitizer::getInstance();
+	$myts =& core_Textsanitizer::getInstance();
 	foreach ($module as $mid) {
 		if ($mcount % 2 != 0) {
 			$class = 'odd';
