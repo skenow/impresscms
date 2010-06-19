@@ -22,7 +22,7 @@
  * @author		Kazumi Ono 	<onokazu@xoops.org>
  * @copyright	(c) 2000-2003 The Xoops Project - www.xoops.org
  */
-class XoopsCommentRenderer {
+class core_CommentRenderer {
 
 	/**#@+
 	 * @access	private
@@ -42,7 +42,7 @@ class XoopsCommentRenderer {
 	 * @param   boolean $use_icons
 	 * @param   boolean $do_iconcheck
 	 **/
-	function XoopsCommentRenderer(&$tpl, $use_icons = true, $do_iconcheck = false)
+	function core_CommentRenderer(&$tpl, $use_icons = true, $do_iconcheck = false)
 	{
 		$this->_tpl =& $tpl;
 		$this->_useIcons = $use_icons;
@@ -63,7 +63,7 @@ class XoopsCommentRenderer {
 	{
 		static $instance;
 		if (!isset($instance)) {
-			$instance = new XoopsCommentRenderer($tpl, $use_icons, $do_iconcheck);
+			$instance = new core_CommentRenderer($tpl, $use_icons, $do_iconcheck);
 		}
 		return $instance;
 	}
@@ -71,7 +71,7 @@ class XoopsCommentRenderer {
 	/**
 	 * Accessor
 	 *
-	 * @param   object  &$comments_arr  array of {@link XoopsComment} objects
+	 * @param   object  &$comments_arr  array of {@link core_Comment} objects
 	 **/
 	function setComments(&$comments_arr)
 	{

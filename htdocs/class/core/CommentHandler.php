@@ -10,60 +10,10 @@
  * @copyright 	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
  * @since		XOOPS
- * @version		$Id$
+ * @version		$Id: comment.php 19450 2010-06-18 14:15:29Z malanciault $
  */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
-
-/**
- * A Comment
- *
- * @package     kernel
- *
- * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
- */
-class XoopsComment extends core_Object
-{
-
-	/**
-	 * Constructor
-	 **/
-	function XoopsComment()
-	{
-		$this->core_Object();
-		$this->initVar('com_id', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('com_pid', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('com_modid', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('com_icon', XOBJ_DTYPE_OTHER, null, false);
-		$this->initVar('com_title', XOBJ_DTYPE_TXTBOX, null, true, 255, true);
-		$this->initVar('com_text', XOBJ_DTYPE_TXTAREA, null, true, null, true);
-		$this->initVar('com_created', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('com_modified', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('com_uid', XOBJ_DTYPE_INT, 0, true);
-		$this->initVar('com_ip', XOBJ_DTYPE_OTHER, null, false);
-		$this->initVar('com_sig', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('com_itemid', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('com_rootid', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('com_status', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('com_exparams', XOBJ_DTYPE_OTHER, null, false, 255);
-		$this->initVar('dohtml', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('dosmiley', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('doxcode', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('doimage', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('dobr', XOBJ_DTYPE_INT, 0, false);
-	}
-
-	/**
-	 * Is this comment on the root level?
-	 *
-	 * @return  bool
-	 **/
-	function isRoot()
-	{
-		return ($this->getVar('com_id') == $this->getVar('com_rootid'));
-	}
-}
 
 /**
  * XOOPS comment handler class.
@@ -78,11 +28,11 @@ class XoopsComment extends core_Object
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class XoopsCommentHandler extends core_ObjectHandler
+class core_CommentHandler extends core_ObjectHandler
 {
 
 	/**
-	 * Create a {@link XoopsComment}
+	 * Create a {@link core_Comment}
 	 *
 	 * @param	bool    $isNew  Flag the object as "new"?
 	 *
@@ -91,7 +41,7 @@ class XoopsCommentHandler extends core_ObjectHandler
 	 */
 	function &create($isNew = true)
 	{
-		$comment = new XoopsComment();
+		$comment = new core_Comment();
 		if ($isNew) {
 			$comment->setNew();
 		}
@@ -99,11 +49,11 @@ class XoopsCommentHandler extends core_ObjectHandler
 	}
 
 	/**
-	 * Retrieve a {@link XoopsComment}
+	 * Retrieve a {@link core_Comment}
 	 *
 	 * @param   int $id ID
 	 *
-	 * @return  object  {@link XoopsComment}, FALSE on fail
+	 * @return  object  {@link core_Comment}, FALSE on fail
 	 * @see htdocs/kernel/core_ObjectHandler#get($int_id)
 	 **/
 	function &get($id)
@@ -117,7 +67,7 @@ class XoopsCommentHandler extends core_ObjectHandler
 			}
 			$numrows = $this->db->getRowsNum($result);
 			if ($numrows == 1) {
-				$comment = new XoopsComment();
+				$comment = new core_Comment();
 				$comment->assignVars($this->db->fetchArray($result));
 			}
 		}
@@ -166,7 +116,7 @@ class XoopsCommentHandler extends core_ObjectHandler
 	}
 
 	/**
-	 * Delete a {@link XoopsComment} from the database
+	 * Delete a {@link core_Comment} from the database
 	 *
 	 * @param   object  &$comment
 	 *
@@ -189,12 +139,12 @@ class XoopsCommentHandler extends core_ObjectHandler
 	}
 
 	/**
-	 * Get some {@link XoopsComment}s
+	 * Get some {@link core_Comment}s
 	 *
 	 * @param   object  $criteria
 	 * @param   bool    $id_as_key  Use IDs as keys into the array?
 	 *
-	 * @return  array   Array of {@link XoopsComment} objects
+	 * @return  array   Array of {@link core_Comment} objects
 	 **/
 	function getObjects($criteria = null, $id_as_key = false)
 	{
@@ -213,7 +163,7 @@ class XoopsCommentHandler extends core_ObjectHandler
 			return $ret;
 		}
 		while ($myrow = $this->db->fetchArray($result)) {
-			$comment = new XoopsComment();
+			$comment = new core_Comment();
 			$comment->assignVars($myrow);
 			if (!$id_as_key) {
 				$ret[] =& $comment;
@@ -291,7 +241,7 @@ class XoopsCommentHandler extends core_ObjectHandler
 	 * @param   int     $limit      Max num of comments to retrieve
 	 * @param   int     $start      Start offset
 	 *
-	 * @return  array   Array of {@link XoopsComment} objects
+	 * @return  array   Array of {@link core_Comment} objects
 	 **/
 	function getByItemId($module_id, $item_id, $order = null, $status = null, $limit = null, $start = 0)
 	{
@@ -317,7 +267,7 @@ class XoopsCommentHandler extends core_ObjectHandler
 	 * @param   int     $item_id    Item ID
 	 * @param   int     $status     Status of the comment
 	 *
-	 * @return  array   Array of {@link XoopsComment} objects
+	 * @return  array   Array of {@link core_Comment} objects
 	 **/
 	function getCountByItemId($module_id, $item_id, $status = null)
 	{
@@ -330,14 +280,14 @@ class XoopsCommentHandler extends core_ObjectHandler
 	}
 
 	/**
-	 * Get the top {@link XoopsComment}s
+	 * Get the top {@link core_Comment}s
 	 *
 	 * @param   int     $module_id
 	 * @param   int     $item_id
 	 * @param   strint  $order
 	 * @param   int     $status
 	 *
-	 * @return  array   Array of {@link XoopsComment} objects
+	 * @return  array   Array of {@link core_Comment} objects
 	 **/
 	function getTopComments($module_id, $item_id, $order, $status = null)
 	{
@@ -358,7 +308,7 @@ class XoopsCommentHandler extends core_ObjectHandler
 	 * @param   int     $comment_id
 	 * @param   int     $status
 	 *
-	 * @return  array   Array of {@link XoopsComment} objects
+	 * @return  array   Array of {@link core_Comment} objects
 	 **/
 	function getThread($comment_rootid, $comment_id, $status = null)
 	{
@@ -373,7 +323,7 @@ class XoopsCommentHandler extends core_ObjectHandler
 	/**
 	 * Update
 	 *
-	 * @param   object  &$comment       {@link XoopsComment} object
+	 * @param   object  &$comment       {@link core_Comment} object
 	 * @param   string  $field_name     Name of the field
 	 * @param   mixed   $field_value    Value to write
 	 *
