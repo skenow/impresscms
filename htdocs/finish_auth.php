@@ -31,7 +31,7 @@ include_once ICMS_ROOT_PATH . '/class/auth/authfactory.php';
 /** Including the language files for the authentication pages */
 icms_loadLanguageFile('core', 'auth');
 
-$xoopsAuth = & XoopsAuthFactory :: getAuthConnection();
+$xoopsAuth = & auth_Factory :: getAuthConnection();
 $user = $xoopsAuth->authenticate($openid_debug);
 
 if ($xoopsAuth->errorOccured()) {

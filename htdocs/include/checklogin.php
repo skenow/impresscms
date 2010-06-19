@@ -31,7 +31,7 @@ $myts =& core_Textsanitizer::getInstance();
 
 //include_once ICMS_ROOT_PATH.'/class/auth/authfactory.php';
 icms_loadLanguageFile('core', 'auth');
-$xoopsAuth =& XoopsAuthFactory::getAuthConnection($myts->addSlashes($uname));
+$xoopsAuth =& auth_Factory::getAuthConnection($myts->addSlashes($uname));
 //$user = $xoopsAuth->authenticate($myts->addSlashes($uname), $myts->addSlashes($pass));
 // uname&email hack GIJ
 $uname4sql = addslashes($myts->stripSlashesGPC($uname));

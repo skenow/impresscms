@@ -1,5 +1,5 @@
 <?php
-// $Id$
+// $Id: authfactory.php 19118 2010-03-27 17:46:23Z skenow $
 // authfactory.php - Authentification class factory
 /**
  * Authorization classes, factory class file
@@ -12,7 +12,7 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id$
+ * @version	$Id: authfactory.php 19118 2010-03-27 17:46:23Z skenow $
  */
 
 /**
@@ -23,7 +23,7 @@
  * @author	    Pierre-Eric MENUET	<pemphp@free.fr>
  * @copyright	copyright (c) 2000-2005 XOOPS.org
  */
-class XoopsAuthFactory
+class auth_Factory
 {
 
 	/**
