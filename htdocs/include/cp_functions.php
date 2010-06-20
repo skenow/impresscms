@@ -712,6 +712,7 @@ function xoops_module_write_admin_menu($content) {
  * @param string  $path  path to the file to write
  * @return bool
  * @todo use language constants for error messages
+ * @todo Move to static class Filesystem
  */
 function xoops_write_index_file($path = '') {
 	if (empty($path)) {

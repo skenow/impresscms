@@ -138,6 +138,7 @@ function xoops_footer()
  * @param bool $render	Whether to echo (render) or return the HTML string
  * @return string $ret The entire error message in a HTML string
  * @todo Make this work with templates ;)
+ * @todo Move to static class Message
  */
 function icms_error_msg($msg, $title='', $render = true){
 	$ret = '<div class="errorMsg">';
@@ -186,6 +187,7 @@ function xoops_error($msg, $title=''){
  * @param	bool	$render	Whether to echo (render) or return the HTML string
  *
  * @todo Make this work with templates ;)
+ * @todo Move to static class Message
  */
 function icms_warning_msg($msg, $title='', $render = false){
 	$ret = '<div class="warningMsg">';
@@ -225,6 +227,7 @@ function xoops_warning($msg, $title=''){
  * Render result message (echo, so no return string)
  * @param string $msg
  * @param string $title
+ * @todo Move to static class Message
  */
 function xoops_result($msg, $title='')
 {
@@ -248,6 +251,7 @@ function xoops_result($msg, $title='')
  * @param string  $msg  The message in the confirm form
  * @param string  $submit  The text on the submit button
  * @param bool  $addtoken  Whether or not to add a security token
+ * @todo Move to static class Message
  */
 function xoops_confirm($hiddens, $action, $msg, $submit='', $addtoken = true)
 {
@@ -983,13 +987,14 @@ function xoops_trim($text)
  * @param	string	$source	The source
  * @param	string  $dest	  The destination
  * @return   bool	Returns true on success, false on failure
+ * @todo Move to static class Filesystem
  */
 function icms_copyr($source, $dest)
 {
 	// Simple copy for a file
 	if(is_file($source)) {return copy($source, $dest);}
 	// Make destination directory
-	if(!is_dir($dest)) {icms_mkdir($dest);}
+	if(!is_dir($dest)) {icms_mkdir($dest, 0777, '');}
 	// Loop through the folder
 	$dir = dir($source);
 	while(false !== $entry = $dir->read())
@@ -1014,19 +1019,25 @@ function icms_copyr($source, $dest)
  * @param string $target path to the folder to be created
  * @param integer $mode permissions to set on the folder. This is affected by umask in effect
  * @param string $base root location for the folder, ICMS_ROOT_PATH or ICMS_TRUST_PATH, for example
+ * @param array $metachars Characters to exclude from a valid path name
  * @return boolean True if folder is created, False if it is not
+ * @todo Move to static class Filesystem
  */
-function icms_mkdir($target, $mode = 0777, $base = ICMS_ROOT_PATH ) {
+function icms_mkdir($target, $mode = 0777, $base = ICMS_ROOT_PATH, $metachars = array() ) {
 
 	if( is_dir( $target )) return TRUE;
-
-	$metachars = array('[', '?', '"', '.', '<', '>', '|', ' ', ':' );
+	if ( !isset($metachars) ) {
+		$metachars = array('[', '?', '"', '.', '<', '>', '|', ' ', ':' );
+	}
 
 	$base = preg_replace ( '/[\\|\/]/', DIRECTORY_SEPARATOR, $base);
 	$target = preg_replace ( '/[\\|\/]/', DIRECTORY_SEPARATOR, $target);
-	$target = str_ireplace( $base . DIRECTORY_SEPARATOR, '', $target );
-	$target = $base . DIRECTORY_SEPARATOR . str_replace( $metachars , '_', $target );
-
+	if ($base !== '') {
+		$target = str_ireplace( $base . DIRECTORY_SEPARATOR, '', $target );
+		$target = $base . DIRECTORY_SEPARATOR . str_replace( $metachars , '_', $target );
+	} else {
+		$target = str_replace( $metachars , '_', $target );
+	}
 	if( mkdir($target, $mode, TRUE) ) {
 		// create an index.html file in this directory
 		if ($fh = @fopen($target.'/index.html', 'w')) {
@@ -1048,6 +1059,7 @@ function icms_mkdir($target, $mode = 0777, $base = ICMS_ROOT_PATH ) {
  * @param	string	$target  target file or folder
  * @param	int		$mode	permission
  * @return   bool	Returns true on success, false on failure
+ * @todo Move to static class Filesystem
  */
 function icms_chmod($target, $mode = 0777) {return @chmod($target, $mode);}
 
@@ -2392,6 +2404,7 @@ function icms_getCurrentUrls() {
  *
  * @param string $dirname path of the file
  * @return	The unlinked dirname
+ * @todo Move to static class Filesystem
  */
 function icms_deleteFile($dirname) {
 	// Simple delete for a file
@@ -2626,6 +2639,7 @@ function one_wordwrap($string,$width=false){
  * @author	modified by Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @param	string	$path	The folder path to cleaned. Must be an array like: array('templates_c' => ICMS_ROOT_PATH."/templates_c/");
  * @param	bool  $remove_admin_cache	  True to remove admin cache, if required.
+ * @todo Move to static class Filesystem
  */
 function icms_clean_folders($dir, $remove_admin_cache=false) {
 	global $icmsConfig;
@@ -2648,6 +2662,7 @@ function icms_clean_folders($dir, $remove_admin_cache=false) {
 /**
  * Clean up all the writeable folders
  * @param bool
+ * @todo Move to static class Filesystem
  */
 function icms_cleaning_write_folders() {
 	return icms_clean_folders(array('templates_c' => ICMS_ROOT_PATH."/templates_c/", 'cache' => ICMS_ROOT_PATH."/cache/"));
@@ -2658,6 +2673,7 @@ function icms_cleaning_write_folders() {
  *
  * @param string $dir Directory name
  * @param bool $deleteRootToo Delete specified top-level directory as well
+ * @todo Move to static class Filesystem
  */
 function icms_unlinkRecursive($dir, $deleteRootToo=true)
 {

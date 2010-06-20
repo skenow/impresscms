@@ -225,4 +225,33 @@ class core_Filesystem {
 		return;
 	}
 
+	/**
+	 * Writes index file
+	 * Replaces xoops_write_index_file() from cp_functions.php
+	 *
+	 * @param string  $path  path to the file to write
+	 * @return bool
+	 * @todo use language constants for error messages
+	 */
+	function writeIndexFile($path = '') {
+		if (empty($path)) {
+			return false;
+		}
+		$path = substr($path, -1) == "/" ? substr($path, 0, -1) : $path;
+		$filename = $path . '/index.html';
+		if (file_exists($filename)) {
+			return true;
+		}
+		if (! $file = fopen($filename, "w")) {
+			echo 'failed open file';
+			return false;
+		}
+		if (fwrite($file, "<script>history.go(-1);</script>") == FALSE) {
+			echo 'failed write file';
+			return false;
+		}
+		fclose($file);
+		return true;
+	}
+
 }
