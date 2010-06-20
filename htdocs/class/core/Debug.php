@@ -1,11 +1,11 @@
 <?php
 /**
- * A static class for debug and logging
+ * A static class for debugging
  *
  * Using a static class instead of a include file with global functions, along with
  * autoloading of classes, reduces the memory usage and only includes files when needed.
  *
- * @category	Development
+ * @category	Core
  * @package		Debug
  * @author		Steve Kenow <skenow@impresscms.org>
  * @copyright	(c) 2007-2008 The ImpressCMS Project - www.impresscms.org
@@ -15,7 +15,7 @@
  */
 
 /**
- *
+ * This class and its methods handle all the debug messages
  */
 class core_Debug {
 
