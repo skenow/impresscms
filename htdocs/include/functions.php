@@ -288,6 +288,7 @@ function xoops_refcheck($docheck=1) {
  * @param string  $time  String with time
  * @param string  $timeoffset  The time offset string
  * @return string  $usertimestamp  The generated user timestamp
+ * @todo Move to a static class method - user
  */
 function xoops_getUserTimestamp($time, $timeoffset="")
 {
@@ -306,6 +307,7 @@ function xoops_getUserTimestamp($time, $timeoffset="")
  *
  * @param string  $timestamp  String with time
  * @return string  $timestamp  The generated timestamp
+ * @todo Move to a static class method - date and time
  */
 function userTimeToServerTime($timestamp, $userTZ=null)
 {
@@ -319,6 +321,7 @@ function userTimeToServerTime($timestamp, $userTZ=null)
  * Function to generate password
  *
  * @return string  $makepass  The generated password
+ * d@todo Move to a static class method - password/user
  */
 function xoops_makepass() {
 	$makepass = '';
@@ -400,6 +403,7 @@ function CloseWaitBox()
  * @param string     $email      The email address
  * @param string     $antispam   Generate an email address that is protected from spammers
  * @return string    $email      The generated email address
+ * @todo Move to a static class method - text validation/formatting
  */
 function checkEmail($email, $antispam = false)
 {
@@ -417,6 +421,7 @@ function checkEmail($email, $antispam = false)
  *
  * @param string  $url  The URL to format
  * @return string  $url The generated URL
+ * @todo Move to a static class method - string formatting
  */
 function formatURL($url)
 {
@@ -441,6 +446,7 @@ function showbanner() {
  * Gets banner HTML for use in templates
  *
  * @return object  $bannerobject  The generated banner HTML string
+ * @todo Move to a static class method - Banner
  */
 function xoops_getbanner() {
 	global $icmsConfig;
@@ -644,6 +650,7 @@ function xoops_getcss($theme = '')
  * Gets Mailer object
  *
  * @return		object  $inst  Reference to the (@link XoopsMailerLocal) or (@link XoopsMailer) object
+ * @todo This should be part of the mailer class
  */
 function &getMailer()
 {
@@ -662,6 +669,7 @@ function &getMailer()
  * @param string  $name  The name of the handler to get
  * @param bool  $optional	Is the handler optional?
  * @return		object		$inst		The instance of the object that was created
+ * @todo This will not be needed when the autoload is complete
  */
 function &xoops_gethandler($name, $optional = false )
 {
@@ -709,6 +717,7 @@ function &xoops_gethandler($name, $optional = false )
  * @param	int  $rank_id  The Rank ID to get
  * @param 	int	 $posts		The number of posts to match for the rank
  * @return	array	$rank		The fetched rank array
+ * @todo Move to a static class method - Rank
  */
 function xoops_getrank($rank_id =0, $posts = 0)
 {
@@ -753,6 +762,7 @@ function xoops_substr($str, $start, $length, $trimmarker = '...')
  * @param	string	$trimmarker
  *
  * @return   string
+ * @todo Move to a static class method - String
  */
 function icms_substr($str, $start, $length, $trimmarker = '...')
 {
@@ -819,6 +829,7 @@ function icms_substr($str, $start, $length, $trimmarker = '...')
  *
  * @param	int  $module_id	The ID of the module to unsubscribe from
  * @return	bool	Did the unsubscribing succeed?
+ * @todo Move to a static class method - Notification
  */
 function xoops_notification_deletebymodule ($module_id)
 {
@@ -831,6 +842,7 @@ function xoops_notification_deletebymodule ($module_id)
  *
  * @param	int  $user_id	The User ID to unsubscribe
  * @return	bool	Did the unsubscribing succeed?
+ * @todo Move to a static class method - Notification
  */
 function xoops_notification_deletebyuser ($user_id)
 {
@@ -845,6 +857,7 @@ function xoops_notification_deletebyuser ($user_id)
  * @param	int  $category	The Item ID to unsubscribe
  * @param	int  $item_id	The Item ID to unsubscribe
  * @return	bool	Did the unsubscribing succeed?
+ * @todo Move to a static class method - Notification
  */
 function xoops_notification_deletebyitem ($module_id, $category, $item_id)
 {
@@ -859,6 +872,7 @@ function xoops_notification_deletebyitem ($module_id, $category, $item_id)
  * @param	int  $module_id	The Module ID to count the comments for
  * @param	int  $item_id	The Item ID to count the comments for
  * @return	int	The number of comments
+ * @todo Move to a static class method - Comment
  */
 function xoops_comment_count($module_id, $item_id = null)
 {
@@ -874,6 +888,7 @@ function xoops_comment_count($module_id, $item_id = null)
  * @param	int  $module_id	The Module ID to delete the comments for
  * @param	int  $item_id	The Item ID to delete the comments for
  * @return	bool	Did the deleting of the comments succeed?
+ * @todo Move to a static class method - Comment
  */
 function xoops_comment_delete($module_id, $item_id)
 {
@@ -915,6 +930,7 @@ function xoops_comment_delete($module_id, $item_id)
  * @param	string  $perm_name	The permission name (for the module_id and item_id to delete
  * @param	int  $item_id	The Item ID to delete the permissions for
  * @return	int	Did the deleting of the group permissions succeed?
+ * @todo Move to a static class method - Groupperm
  */
 function xoops_groupperm_deletebymoditem($module_id, $perm_name, $item_id = null)
 {
@@ -929,6 +945,7 @@ function xoops_groupperm_deletebymoditem($module_id, $perm_name, $item_id = null
  *
  * @param	string	$text	The Text to convert
  * @return	string	$text	The converted text
+ * @todo Move to a static class method - String
  */
 function xoops_utf8_encode(&$text)
 {
@@ -943,6 +960,7 @@ function xoops_utf8_encode(&$text)
 /**
  * Converts text to UTF-8 encoded text
  * @see xoops_utf8_encode
+ * @todo Move to a static class method - String
  */
 function xoops_convert_encoding(&$text) {return xoops_utf8_encode($text);}
 
@@ -951,6 +969,7 @@ function xoops_convert_encoding(&$text) {return xoops_utf8_encode($text);}
  *
  * @param	int	$userid	The User ID
  * @return	string	The linked username (from userID or "Anonymous")
+ * @todo Move to a static class method - User
  */
 function xoops_getLinkedUnameFromId($userid)
 {
@@ -973,6 +992,7 @@ function xoops_getLinkedUnameFromId($userid)
  *
  * @param	string	$text	The Text to trim
  * @return	string	$text	The trimmed text
+ * @todo Move to a static class method - String
  */
 function xoops_trim($text)
 {
@@ -1068,6 +1088,7 @@ function icms_chmod($target, $mode = 0777) {return @chmod($target, $mode);}
  *
  * @param string $moduleName dirname of the module
  * @return object icmsModule object of the specified module
+ * @todo Move to a static class method - Module
  */
 function &icms_getModuleInfo($moduleName = false)
 {
@@ -1104,6 +1125,7 @@ function &icms_getModuleInfo($moduleName = false)
  *
  * @param string $moduleName dirname of the module
  * @return array of configs
+ * @todo Move to a static class method - Module
  */
 function &icms_getModuleConfig($moduleName = false)
 {
@@ -1150,6 +1172,7 @@ function &icms_getModuleConfig($moduleName = false)
  * @param string $moduleName
  * @param mixed $default
  * @return mixed
+ * @todo Move to a static class method - Config
  */
 function icms_getConfig($key, $moduleName = false, $default = 'default_is_undefined')
 {
@@ -1167,6 +1190,7 @@ function icms_getConfig($key, $moduleName = false, $default = 'default_is_undefi
  * Get the dirname of the current module
  *
  * @return mixed dirname of the current module or false if no module loaded
+ * @todo Move to a static class method - Module
  */
 function icms_getCurrentModuleName()
 {
@@ -1180,6 +1204,7 @@ function icms_getCurrentModuleName()
  *
  * @param mixed	Module to check or false if no module is passed
  * @return bool : true if user is admin
+ * @todo Move to a static class method - User
  */
 function icms_userIsAdmin($module = false)
 {
@@ -1212,6 +1237,7 @@ function icms_userIsAdmin($module = false)
  * @param string $module dirname of the module
  * @param string $file name of the file without ".php"
  * @param bool $admin is this for a core admin side feature ?
+ *
  */
 function icms_loadLanguageFile($module, $file, $admin=false)
 {
@@ -1233,6 +1259,7 @@ function icms_loadLanguageFile($module, $file, $admin=false)
  * @param string $str	String to get float value from
  * @param mixed	$set	Array of settings of False if no settings were passed
  * @param mixed	Float value or 0 if no match was found in the string
+ * @todo Move to a static class method - String/Data
  */
 function icms_getfloat($str, $set=FALSE)
 {
@@ -1267,6 +1294,7 @@ function icms_getfloat($str, $set=FALSE)
  * @param string $var	String to get currency value from
  * @param mixed	$currencyObj	Currency object or false if no object was passed
  * @return string	$ret The returned value
+ * @todo Move to a static class method - Currency
  */
 function icms_currency($var, $currencyObj=false)
 {
@@ -1290,6 +1318,8 @@ function icms_currency($var, $currencyObj=false)
  * Use this snippet to extract any currency out of a string
  *
  * @see icms_currency
+ * @deprecated Use icms_currency
+ * @todo remove in version 1.4
  */
 function icms_float($var) {return icms_currency($var);}
 
@@ -1299,6 +1329,7 @@ function icms_float($var) {return icms_currency($var);}
  * @param string $text	String to purify
  * @param mixed	$keyword	The keyword string or false if none was passed
  * @return string	$text The purified text
+ * @todo Remove this and use HTML Purifier
  */
 function icms_purifyText($text, $keyword = false)
 {
@@ -1339,6 +1370,7 @@ function icms_purifyText($text, $keyword = false)
  *
  * @param string $document	The document string to convert
  * @return string	$text The converted text
+ * @todo Remove this and use the proper data filter and HTML Purifier
  */
 function icms_html2text($document)
 {
@@ -1392,6 +1424,7 @@ function icms_html2text($document)
  * @var $aDisabledAttributes - array - attributes not allowed, will be removed from the text
  *
  * @return string
+ * @todo Remove this and replace with the proper data filter and HTML Purifier
  */
 function icms_cleanTags($sSource, $aAllowedTags = array('<h1>','<b>','<u>','<a>','<ul>','<li>'), $aDisabledAttributes = array('onabort', 'onblur', 'onchange', 'onclick', 'ondblclick', 'onerror', 'onfocus', 'onkeydown', 'onkeyup', 'onload', 'onmousedown', 'onmousemove', 'onmouseover', 'onmouseup', 'onreset', 'onresize', 'onselect', 'onsubmit', 'onunload'))
 {
@@ -1443,6 +1476,7 @@ function icms_get_page_before_form()
  *
  * @param	array	$matches	Array of matches to sanitize
  * @return mixed The sanitized tag or empty string
+ * @todo Move to a static class method - Customtag
  */
 function icms_sanitizeCustomtags_callback($matches)
 {
@@ -1461,6 +1495,7 @@ function icms_sanitizeCustomtags_callback($matches)
  *
  * @param string $text	Purifies passed text
  * @return string	$text The purified text
+ * @todo Move to a static class method - Customtag
  */
 function icms_sanitizeCustomtags($text)
 {
@@ -1479,6 +1514,7 @@ function icms_sanitizeCustomtags($text)
  *
  * @param	array	$matches	Array of matches to sanitize
  * @return mixed The sanitized tag or empty string
+ * @todo Move to a static class method - Adsense
  */
 function icms_sanitizeAdsenses_callback($matches) {
 	global $icms_adsense_handler;
@@ -1496,6 +1532,7 @@ function icms_sanitizeAdsenses_callback($matches) {
  *
  * @param string $text	Purifies passed text
  * @return string	$text The purified text
+ * @todo Move to a static class method - Adsense
  */
 function icms_sanitizeAdsenses($text) {
 
@@ -1515,6 +1552,7 @@ function icms_sanitizeAdsenses($text) {
  * @param array $users array already containing XoopsUser objects in which case we will save a query
  * @param bool $withContact true if we want contact details to be added in the value returned (PM and email links)
  * @return string name of user with a link on his profile
+ * @todo Move to a static class method - User
  */
 function icms_getLinkedUnameFromId($userid, $name = false, $users = array (), $withContact = false)
 {
@@ -1561,6 +1599,7 @@ function icms_getLinkedUnameFromId($userid, $name = false, $users = array (), $w
  * @param string $moduleName name of the module
  * @param $items array of items managed by the module
  * @return array of tables used in the module
+ * @todo Move to a static class method - Module
  */
 function icms_getTablesArray($moduleName, $items)
 {
@@ -1607,6 +1646,7 @@ function showNav($id = null, $separador = '/', $style="style='font-weight:bold'"
  *
  * @param string $text	String to purify
  * @return string	$text The purified text
+ * @todo Remove and replace with the proper data filter and HTML Purifier
  */
 function StopXSS($text)
 {
@@ -1638,6 +1678,7 @@ function StopXSS($text)
  *
  * @param string $text	String to purify
  * @return string	$text The purified text
+ * @todo Remove and replace with the proper data filter and HTML Purifier
  */
 function icms_sanitizeContentCss($text)
 {
@@ -1661,6 +1702,7 @@ function icms_sanitizeContentCss($text)
  *
  * @param string $url the URL to be stripped.
  * @return string
+ * @todo Move to a static class method - HTTP or URI
  */
 function icms_get_base_domain($url)
 {
@@ -1732,6 +1774,7 @@ function icms_get_base_domain($url)
  *
  * @param string $url the URL to be stripped.
  * @return string
+ * @todo Move to a static class method - HTTP or URI
  */
 function icms_get_url_domain($url)
 {
@@ -1752,6 +1795,7 @@ function icms_get_url_domain($url)
  * @param string $cut 	If cut is set to TRUE, the string is always wrapped at the specified width.
  *			So if you have a word that is larger than the given width, it is broken apart..
  * @return string
+ * @todo Move to a static class method - String
  */
 function icms_wordwrap($str, $width, $break = '/n', $cut = false)
 {
@@ -1808,6 +1852,7 @@ function icms_wordwrap($str, $width, $break = '/n', $cut = false)
  * @param string $reverse	true will reverse everything including numbers, false will reverse text only but numbers will be left intact.
  *				example: when true: impresscms 2008 > 8002 smcsserpmi, false: impresscms 2008 > 2008 smcsserpmi
  * @return string
+ * @todo Move to a static class method - String
  */
 function icms_utf8_strrev($str, $reverse = false)
 {
@@ -1842,6 +1887,7 @@ function icms_utf8_strrev($str, $reverse = false)
  * @param string	$field	The table to get the value from
  * @param string	$condition	The where condition (where clause) to use
  * @return	mixed
+ * @todo Move to a static class method - database
  */
 function getDbValue(&$db, $table, $field, $condition = '')
 {
@@ -1863,6 +1909,7 @@ function getDbValue(&$db, $table, $field, $condition = '')
  * @param string $quotes - true/false - determines whether to add quotes to the value or not.
  * @param string $value - $variable that is being escaped for query.
  * @return string
+ * @todo Move to a static class method - Database or Filter
  */
 function icms_escapeValue($value, $quotes = true)
 {
@@ -1895,6 +1942,7 @@ function icms_escapeValue($value, $quotes = true)
  * To developers, please use this function when you are having a numeric output, as this is counted as a string in php so you should use %s.
  * Like:
  * $views = sprintf ( 'Viewed: %s Times.', icms_conv_nr2local($string) );
+ * @todo Move to a static class method - String or Localization
  */
 function icms_conv_nr2local($string)
 {
@@ -1912,6 +1960,7 @@ function icms_conv_nr2local($string)
  *
  * This function is exactly the opposite of icms_conv_nr2local();
  * Please view the notes there for more information.
+ * @todo Move to a static class method - String or Localization
  */
 function icms_conv_local2nr($string)
 {
@@ -1930,6 +1979,7 @@ function icms_conv_local2nr($string)
  *
  * @param int $month_id ID of the month
  * @return string month name
+ * @todo Move to a static class method - Date or Calendar
  */
 function Icms_getMonthNameById($month_id) {
 	global $icmsConfig;
@@ -2025,6 +2075,7 @@ function Icms_getMonthNameById($month_id) {
  * @param int $type	The type of date string?
  * @param string $maket	The date string type
  * @return mixed The converted date string
+ * @todo Move to a static class method - Date or Calendar
  */
 function ext_date($time)
 {
@@ -2088,6 +2139,7 @@ function ext_date($time)
  * @param string  $format  The time format based on PHP function format parameters
  * @param string  $timeoffset  The time offset string
  * @return string  $usertimestamp  The generated user timestamp
+ * @todo Move to a static class method - Date or Calendar
  */
 function formatTimestamp($time, $format = "l", $timeoffset = null)
 {
@@ -2311,6 +2363,7 @@ function &xoops_getmodulehandler($name = null, $module_dir = null, $optional = f
  *
  * @param string $default default page if previous page is not found
  * @return string previous page URL
+ * @todo Move to a static class method - HTTP or URI
  */
 function icms_getPreviousPage($default=false) {
 	global $impresscms;
@@ -2328,6 +2381,7 @@ function icms_getPreviousPage($default=false) {
  *
  * @param string $moduleName dirname of the moodule
  * @return string URL of the admin side of the module
+ * @todo Move to a static class method - HTTP or URI
  */
 function icms_getModuleAdminLink($moduleName=false) {
 	global $icmsModule;
@@ -2350,6 +2404,7 @@ function icms_getModuleAdminLink($moduleName=false) {
  * @var string $width reference to the width
  * @var string $height reference to the height
  * @return bool false if impossible to find dimension
+ * @todo Move to a static class method - Image
  */
 function icms_getImageSize($url, & $width, & $height) {
 	if (empty ($width) || empty ($height)) {
@@ -2377,6 +2432,7 @@ function icms_getImageSize($url, & $width, & $height) {
  * Gets all types of urls in one array
  *
  * @return array The array of urls
+ * @todo Move to a static class method - HTTP or URI
  */
 function icms_getCurrentUrls() {
 	$urls = array();
@@ -2420,6 +2476,7 @@ function icms_deleteFile($dirname) {
  * @param string $maxWidth	The maximum width to resize the image to
  * @param string $maxHeight	The maximum height to resize the image to
  * @return array The resized image array
+ * @todo Move to a static class method - Image
  */
 function icms_imageResize($src, $maxWidth, $maxHeight) {
 	$width = '';
@@ -2454,7 +2511,8 @@ function icms_imageResize($src, $maxWidth, $maxHeight) {
  * @param bool $withLink	Generate the modulename with in an anchor link?
  * @param bool $forBreadCrumb	Is the module name for the breadcrumbs?
  * @param mixed $moduleName	The passed modulename or false if no modulename was passed
- * @return array The resized image array
+ * @return array
+ * @todo Move to a static class method - Module
  */
 function icms_getModuleName($withLink = true, $forBreadCrumb = false, $moduleName = false) {
 	if (!$moduleName) {
@@ -2488,6 +2546,7 @@ function icms_getModuleName($withLink = true, $forBreadCrumb = false, $moduleNam
  *
  * @param int $size	The size to convert
  * @return string The converted size
+ * @todo Move to a static class method - String
  */
 function icms_convert_size($size){
 	if ($size >= 1073741824){
@@ -2507,6 +2566,7 @@ function icms_convert_size($size){
  *
  * @param int $numchar	How many characters should the string consist of?
  * @return string The generated random string
+ * @todo Move to a static class method -
  */
 function icms_random_str($numchar){
 	$letras = "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,x,w,y,z,1,2,3,4,5,6,7,8,9,0";
@@ -2521,6 +2581,7 @@ function icms_random_str($numchar){
  *
  * @param int $currentoption	What current admin option are we in?
  * @param string $breadcrumb	The breadcrumb if it is passed, otherwise empty string
+ * @todo Move to a static class method - module
  */
 function icms_adminMenu($currentoption = 0, $breadcrumb = '') {
 	global $icmsModule;
@@ -2538,6 +2599,7 @@ function icms_loadCommonLanguageFile() {
  * Gets current page
  *
  * @return string The URL of the current page
+ * @todo Move to a static class method - HTTP or URI
  */
 function icms_getCurrentPage() {
 	$urls = icms_getCurrentUrls();
@@ -2549,6 +2611,7 @@ function icms_getCurrentPage() {
  *
  * @param mixed $moduleName	Modulename if it is passed, otherwise false
  * @return string The modulename in SEO format
+ * @todo Move to a static class method - Module
  */
 function icms_getModuleNameForSEO($moduleName = false) {
 	$icmsModule = & icms_getModuleInfo($moduleName);
@@ -2565,6 +2628,7 @@ function icms_getModuleNameForSEO($moduleName = false) {
  *
  * @param mixed $moduleName	Modulename if it is passed, otherwise false
  * @return bool Is the module in SEO format?
+ * @todo Move to a static class method - Module
  */
 function icms_getModuleModeSEO($moduleName = false) {
 	$icmsModule = & icms_getModuleInfo($moduleName);
@@ -2577,6 +2641,7 @@ function icms_getModuleModeSEO($moduleName = false) {
  *
  * @param mixed $moduleName	Modulename if it is passed, otherwise false
  * @return mixed The module include ID otherwise nothing
+ * @todo Move to a static class method - Module
  */
 function icms_getModuleIncludeIdSEO($moduleName = false) {
 	$icmsModule = & icms_getModuleInfo($moduleName);
@@ -2589,6 +2654,7 @@ function icms_getModuleIncludeIdSEO($moduleName = false) {
  *
  * @param string  $key  The key to get
  * @return string  $ret  The retrieved key
+ * @todo Move to a static class method - HTTP
  */
 function icms_getenv($key) {
 	$ret = '';
@@ -2601,6 +2667,7 @@ function icms_getenv($key) {
  *
  * @param string $module_name  The module's name to get
  * @param bool True if module exists and is active, otherwise false
+ * @todo Move to a static class method - Module
  */
 function icms_get_module_status($module_name){
 	$module_handler = xoops_gethandler('module');
@@ -2618,6 +2685,7 @@ function icms_get_module_status($module_name){
  * @param	string	$string	The string
  * @param	string  $width	  The length
  * @return   bool	Returns a long term, in several small parts with the length of $width
+ * @todo Move to a static class method - String
  */
 function one_wordwrap($string,$width=false){
 	$width = $width ? $width : '15';
@@ -2706,7 +2774,7 @@ function icms_unlinkRecursive($dir, $deleteRootToo=true)
 
 /**
  * Adds required jQuery files to header for Password meter.
- *
+ * @todo Move to a static class method - Password
  */
 function icms_PasswordMeter(){
 	global $xoTheme, $icmsConfigUser;
@@ -2740,6 +2808,7 @@ function icms_PasswordMeter(){
  *
  * @param array $criterias array of fieldname=>value criteria
  * @return object (@link core_CriteriaCompo) the core_CriteriaCompo object
+ * @todo Move to a static class method - Criteria
  */
 function icms_buildCriteria($criterias) {
 	$criteria = new core_CriteriaCompo();
@@ -2754,6 +2823,7 @@ function icms_buildCriteria($criterias) {
  *
  * @param array $items of the breadcrumb to be displayed
  * @return str HTML code of the breadcrumb to be inserted in another template
+ * @todo Move to a static class method - Breadcrumb
  */
 function icms_getBreadcrumb($items) {
 	include_once ICMS_ROOT_PATH . '/class/icmsbreadcrumb.php' ;
@@ -2765,6 +2835,7 @@ function icms_getBreadcrumb($items) {
  *
  * @param array $items to build the smarty to be used in templates
  * @return smarty value for each item
+ * @todo Move to a static class method - Template
  */
 function icms_makeSmarty($items) {
 	global $icmsTpl;
@@ -2783,6 +2854,7 @@ function icms_makeSmarty($items) {
  * @param	string	$src	The source
  * @param	string  $dest	  The destination
  * @return   bool	Returns stream_copy_to_stream($src, $dest) on success, false on failure
+ * @todo Move to a static class method - Filesystem
  */
 function icms_stream_copy($src, $dest)
 {
@@ -2819,6 +2891,7 @@ function icms_stream_copy($src, $dest)
  *
  * @param	string	$dirname	dirname of current module
  * @return	bool
+ * @todo Move to a static class method - Module
  */
 function icms_moduleAction($dirname = 'system')
 {
@@ -2859,7 +2932,14 @@ if (!function_exists("mod_constant")) {
 		}
 	}
 }
-
+/**
+ *
+ * Enter description here ...
+ * @param unknown_type $id
+ * @param unknown_type $title
+ * @param unknown_type $dsc
+ * @todo Move to a static class method
+ */
 function icms_collapsableBar($id = '', $title = '', $dsc = '') {
 	global $icmsModule;
 	echo "<h3 style=\"color: #2F5376; font-weight: bold; font-size: 14px; margin: 6px 0 0 0; \"><a href='javascript:;' onclick=\"togglecollapse('" . $id . "'); toggleIcon('" . $id . "_icon')\";>";
@@ -2869,6 +2949,15 @@ function icms_collapsableBar($id = '', $title = '', $dsc = '') {
 		echo "<span style=\"color: #567; margin: 3px 0 12px 0; font-size: small; display: block; \">" . $dsc . "</span>";
 	}
 }
+
+/**
+ *
+ * Enter description here ...
+ * @param $id
+ * @param $title
+ * @param $dsc
+ * @todo Move to a static class method
+ */
 function icms_ajaxCollapsableBar($id = '', $title = '', $dsc = '') {
 	global $icmsModule;
 	$onClick = "ajaxtogglecollapse('$id')";
@@ -2901,6 +2990,12 @@ function icms_ajaxCollapsableBar($id = '', $title = '', $dsc = '') {
  }
  }
  */
+/**
+ *
+ * Enter description here ...
+ * @param unknown_type $name
+ * @todo Move to a static class method
+ */
 function icms_openclose_collapsable($name) {
 	$urls = icms_getCurrentUrls();
 	$path = $urls['phpself'];
@@ -2925,11 +3020,25 @@ function icms_openclose_collapsable($name) {
 		}
 		*/
 }
+/**
+ * @todo Move to a static class method
+ * Enter description here ...
+ * @param unknown_type $name
+ */
 function icms_close_collapsable($name) {
 	echo "</div>";
 	icms_openclose_collapsable($name);
 	echo "<br />";
 }
+/**
+ * @todo Move to a static class method
+ * Enter description here ...
+ * @param $content
+ * @param $title
+ * @param $description
+ * @param $pagetitle
+ * @param $width
+ */
 function icms_MakePrinterFriendly($content, $title=false, $description=false, $pagetitle=false, $width=680) {
 	require_once ICMS_ROOT_PATH . '/class/icmsprinterfriendly.php';
 	$PrintDataBuilder = new IcmsPrinterFriendly;
@@ -2938,7 +3047,11 @@ function icms_MakePrinterFriendly($content, $title=false, $description=false, $p
 	$PrintDataBuilder->setWidth($width);
 	$PrintDataBuilder->render();
 }
-
+/**
+ * @todo Move to a static class method - user
+ * Enter description here ...
+ * @param $email
+ */
 function icms_getUnameFromUserEmail($email = '')
 {
 	$db = Database::getInstance();
@@ -2959,6 +3072,7 @@ function icms_getUnameFromUserEmail($email = '')
  * Check if the module currently uses WYSIWYG and decied wether to do_br or not
  *
  * @return bool true | false
+ * @todo Move to a static class method - text area?
  */
 function icms_need_do_br($moduleName=false) {
 	global $icmsConfig, $icmsUser, $icmsModule;
