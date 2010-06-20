@@ -385,3 +385,28 @@ class XoopsBlock extends core_Block {
 	}
 
 }
+
+/**
+ * IcmsBlock - for backwards compatibility
+ *
+ * ImpressCMS Block Persistable Class
+ *
+ * @copyright 	The ImpressCMS Project <http://www.impresscms.org>
+ * @copyright 	The XOOPS Project <http://www.xoops.org>
+ * @license		GNU General Public License (GPL) <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>
+ *
+ * @since 		XOOPS
+ *
+ * @author		The XOOPS Project Community <http://www.xoops.org>
+ * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * @deprecated use core_Block instead
+ * @todo Remove in version 1.4 - all instances have been removed from the core
+ */
+
+class IcmsBlock extends core_Block {
+	public function __construct(&$db) {
+		parent::__construct(&$db);
+		$this->setErrors = icms_deprecated('core_Block');
+	}
+
+}

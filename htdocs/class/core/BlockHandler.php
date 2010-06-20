@@ -465,7 +465,25 @@ class core_BlockHandler extends IcmsPersistableObjectHandler {
  * @todo Remove in version 1.4 - all instances have been removed from the core
  */
 class XoopsBlockHandler extends core_BlockHandler {
+	public function __construct(&$db) {
+		parent::__construct(&$db);
+		$this->setVar('_errors', icms_deprecated('core_BlockHandler'));
+	}
 
+}
+
+/**
+ * ImpressCMS Core Block Object Handler Class
+ *
+ * @copyright The ImpressCMS Project <http://www.impresscms.org>
+ * @license GNU GPL v2
+ *
+ * @since ImpressCMS 1.2
+ * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * @deprecated  use core_BlockHandler instead
+ * @todo Remove in version 1.4 - all instances have been removed from the core
+ */
+class IcmsBlockHandler extends core_BlockHandler {
 	public function __construct(&$db) {
 		parent::__construct(&$db);
 		$this->setVar('_errors', icms_deprecated('core_BlockHandler'));
