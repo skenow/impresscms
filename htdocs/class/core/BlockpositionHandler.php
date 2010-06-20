@@ -50,4 +50,14 @@ class core_BlockpositionHandler extends IcmsPersistableObjectHandler {
 
 }
 
-?>
+/**
+ * IcmsBlockpositionHandler
+ * @deprecated Use core_BlockpositionHandler, instead
+ * @todo Remove in version 1.4 - all instances have been removed from the core
+ */
+class IcmsBlockpositionHandler extends core_BlockpositionHandler {
+	public function __construct() {
+		parent::__construct(&$db);
+		$this->setVar('_errors', icms_deprecated('core_BlockpositionHandler'));
+	}
+}

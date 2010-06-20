@@ -38,4 +38,16 @@ class core_Blockposition extends IcmsPersistableObject {
 	}
 
 }
-?>
+
+/**
+ * IcmsBlockposition
+ * @deprecated Use core_Blockposition, instead
+ * @todo Remove in version 1.4 - all instances have been removed from the core
+ */
+class IcmsBlockposition extends core_Blockposition {
+	public function __construct() {
+		parent::__construct(&$handler);
+		$this->setErrors(icms_deprecated('core_Blockposition'));
+	}
+
+}
