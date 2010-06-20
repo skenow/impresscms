@@ -60,14 +60,14 @@ extends IcmsAutoTasksSystem {
 	 * @return string
 	 */
 	function getCommandLine() {
-		$atasks_handler = &xoops_getmodulehandler('autotasks', 'system');
+		$atasks_handler = &icms_getModuleHandler('autotasks', 'system');
 		$config_atasks = &$atasks_handler->getConfig();
 		if ( ($config_atasks['autotasks_helper_path'] = trim($config_atasks['autotasks_helper_path'])) != '') {
 			if (substr($config_atasks['autotasks_helper_path'], -1) != '\\') {
 				$config_atasks['autotasks_helper_path'] .= '\\';
 			}
 		}
-		return (isset($_SERVER['COMSPEC'])?$_SERVER['COMSPEC']:$_SERVER['ComSpec']) . ' /C ' . str_replace( array('\\/','/\\','/'), array('/','\\','\\') , '"'.$config_atasks['autotasks_helper_path'].str_replace(array('%path%','%url%'), array(str_replace('/','\\',XOOPS_ROOT_PATH.'/include/autotasks.php'),XOOPS_URL.'/include/autotasks.php'),$config_atasks['autotasks_helper']).' > NUL"');
+		return (isset($_SERVER['COMSPEC'])?$_SERVER['COMSPEC']:$_SERVER['ComSpec']) . ' /C ' . str_replace( array('\\/','/\\','/'), array('/','\\','\\') , '"'.$config_atasks['autotasks_helper_path'].str_replace(array('%path%','%url%'), array(str_replace('/','\\',ICMS_ROOT_PATH.'/include/autotasks.php'),ICMS_URL.'/include/autotasks.php'),$config_atasks['autotasks_helper']).' > NUL"');
 	}
 
 	/*

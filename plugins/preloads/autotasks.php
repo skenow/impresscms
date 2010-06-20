@@ -7,17 +7,21 @@
  * @package		libraries
  * @since		1.1
  * @author		mekdrop <mekdrop@gmail.com>
- * @version		$Id: autotasks.php 2008.07.18 17:10 $
+ * @version		$Id$
  */
-
-class IcmsPreloadAutotasks
-extends IcmsPreloadItem {
+/**
+ *
+ * Preload class and event for Autotasks
+ * @since	1.2
+ *
+ */
+class IcmsPreloadAutotasks extends IcmsPreloadItem {
 
 	/**
 	 * Function to be triggered at the end of the core boot process
 	 */
 	function eventFinishCoreBoot() {
-		$handler = &xoops_getmodulehandler('autotasks', 'system');
+		$handler = &icms_getModuleHandler('autotasks', 'system');
 		if ($handler->needExecution()) {
 			$rez = $handler->execTasks();
 			$handler->startIfNeeded();
@@ -35,7 +39,7 @@ extends IcmsPreloadItem {
 	 */
 	function eventAfterSaveSystemAdminPreferencesItems($array) {
 		if (!isset($array[ICMS_CONF_AUTOTASKS])) return;
-		$handler = xoops_getmodulehandler('autotasks', 'system');
+		$handler = icms_getModuleHandler('autotasks', 'system');
 		$handler->virtual_config = array();
 		$array = &$array[ICMS_CONF_AUTOTASKS];
 		$vconfig1 = array();
@@ -63,4 +67,3 @@ extends IcmsPreloadItem {
 	}
 
 }
-?>
