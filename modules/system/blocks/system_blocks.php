@@ -47,7 +47,7 @@ function b_system_online_show()
 		$members = '';
 		for ($i = 0; $i < $total; $i++) {
 			if ($onlines[$i]['online_uid'] > 0) {
-				$members .= ' <a href="'.XOOPS_URL.'/userinfo.php?uid='.$onlines[$i]['online_uid'].'" title="'.$onlines[$i]['online_uname'].'\'s '._PROFILE.'">'.$onlines[$i]['online_uname'].'</a>,';
+				$members .= ' <a href="'.ICMS_URL.'/userinfo.php?uid='.$onlines[$i]['online_uid'].'" title="'.$onlines[$i]['online_uname'].'\'s '._PROFILE.'">'.$onlines[$i]['online_uname'].'</a>,';
 			} else {
 				$guests++;
 			}
@@ -143,7 +143,7 @@ function b_system_main_show()
 			$sublinks = $modules[$i]->subLink();
 			if ((count($sublinks) > 0) && (!empty($icmsModule)) && ($i == $icmsModule->getVar('mid'))) {
 				foreach($sublinks as $sublink){
-					$block['modules'][$i]['sublinks'][] = array('name' => $sublink['name'], 'url' => XOOPS_URL.'/modules/'.$modules[$i]->getVar('dirname').'/'.$sublink['url']);
+					$block['modules'][$i]['sublinks'][] = array('name' => $sublink['name'], 'url' => ICMS_URL.'/modules/'.$modules[$i]->getVar('dirname').'/'.$sublink['url']);
 				}
 			} else {
 				$block['modules'][$i]['sublinks'] = array();
@@ -216,12 +216,12 @@ function b_system_info_show($options)
 					$block['groups'][$i]['name'] = $myts->htmlSpecialChars($userinfo['groupname']);
 				}
 				if (isset($icmsUser) && is_object($icmsUser)) {
-					$block['groups'][$i]['users'][] = array('id' => $userinfo['uid'], 'name' => $myts->htmlspecialchars($userinfo['uname']), 'msglink' => "<a href=\"javascript:openWithSelfMain('".XOOPS_URL."/pmlite.php?send2=1&amp;to_userid=".$userinfo['uid']."','pmlite',800,680);\"><img src=\"".XOOPS_URL."/images/icons/".$GLOBALS["icmsConfig"]["language"]."/pm_small.gif\" width=\"27px\" height=\"17px\" alt=\"\" /></a>", 'avatar' => XOOPS_UPLOAD_URL.'/'.$userinfo['user_avatar']);
+					$block['groups'][$i]['users'][] = array('id' => $userinfo['uid'], 'name' => $myts->htmlspecialchars($userinfo['uname']), 'msglink' => "<a href=\"javascript:openWithSelfMain('".ICMS_URL."/pmlite.php?send2=1&amp;to_userid=".$userinfo['uid']."','pmlite',800,680);\"><img src=\"".ICMS_URL."/images/icons/".$GLOBALS["icmsConfig"]["language"]."/pm_small.gif\" width=\"27px\" height=\"17px\" alt=\"\" /></a>", 'avatar' => ICMS_UPLOAD_URL.'/'.$userinfo['user_avatar']);
 				} else {
 					if ($userinfo['user_viewemail']) {
-						$block['groups'][$i]['users'][] = array('id' => $userinfo['uid'], 'name' => $myts->htmlspecialchars($userinfo['uname']), 'msglink' => '<a href="mailto:'.$userinfo['email'].'"><img src="'.XOOPS_URL.'/images/icons/'.$GLOBALS["icmsConfig"]["language"].'/em_small.gif" width="16px" height="14px" alt="" /></a>', 'avatar' => XOOPS_UPLOAD_URL.'/'.$userinfo['user_avatar']);
+						$block['groups'][$i]['users'][] = array('id' => $userinfo['uid'], 'name' => $myts->htmlspecialchars($userinfo['uname']), 'msglink' => '<a href="mailto:'.$userinfo['email'].'"><img src="'.ICMS_URL.'/images/icons/'.$GLOBALS["icmsConfig"]["language"].'/em_small.gif" width="16px" height="14px" alt="" /></a>', 'avatar' => ICMS_UPLOAD_URL.'/'.$userinfo['user_avatar']);
 					} else {
-						$block['groups'][$i]['users'][] = array('id' => $userinfo['uid'], 'name' => $myts->htmlspecialchars($userinfo['uname']), 'msglink' => '&nbsp;', 'avatar' => XOOPS_UPLOAD_URL.'/'.$userinfo['user_avatar']);
+						$block['groups'][$i]['users'][] = array('id' => $userinfo['uid'], 'name' => $myts->htmlspecialchars($userinfo['uname']), 'msglink' => '&nbsp;', 'avatar' => ICMS_UPLOAD_URL.'/'.$userinfo['user_avatar']);
 					}
 				}
 				$i++;
@@ -230,8 +230,8 @@ function b_system_info_show($options)
 	} else {
 		$block['showgroups'] = false;
 	}
-	$block['logourl'] = XOOPS_URL.'/images/'.$options[2];
-	$block['recommendlink'] = "<a href=\"javascript:openWithSelfMain('".XOOPS_URL."/misc.php?action=showpopups&amp;type=friend&amp;op=sendform&amp;t=".time()."','friend',".$options[0].",".$options[1].")\">"._MB_SYSTEM_RECO."</a>";
+	$block['logourl'] = ICMS_URL.'/images/'.$options[2];
+	$block['recommendlink'] = "<a href=\"javascript:openWithSelfMain('".ICMS_URL."/misc.php?action=showpopups&amp;type=friend&amp;op=sendform&amp;t=".time()."','friend',".$options[0].",".$options[1].")\">"._MB_SYSTEM_RECO."</a>";
 	return $block;
 }
 
@@ -334,7 +334,7 @@ function b_system_topposters_show($options)
 function b_system_comments_show($options)
 {
 	$block = array();
-	include_once XOOPS_ROOT_PATH.'/include/comment_constants.php';
+	include_once ICMS_ROOT_PATH.'/include/comment_constants.php';
 	$comment_handler =& xoops_gethandler('comment');
 	$criteria = new CriteriaCompo(new Criteria('com_status', XOOPS_COMMENT_ACTIVE));
 	$criteria->setLimit( (int) ($options[0]));
@@ -365,19 +365,19 @@ function b_system_comments_show($options)
 	$comment_config = array();
 	foreach (array_keys($comments) as $i) {
 		$mid = $comments[$i]->getVar('com_modid');
-		$com['module'] = '<a href="'.XOOPS_URL.'/modules/'.$modules[$mid]->getVar('dirname').'/">'.$modules[$mid]->getVar('name').'</a>';
+		$com['module'] = '<a href="'.ICMS_URL.'/modules/'.$modules[$mid]->getVar('dirname').'/">'.$modules[$mid]->getVar('name').'</a>';
 		if (!isset($comment_config[$mid])) {
 			$comment_config[$mid] = $modules[$mid]->getInfo('comments');
 		}
 		$com['id'] = $i;
-		$com['title'] = '<a href="'.XOOPS_URL.'/modules/'.$modules[$mid]->getVar('dirname').'/'.$comment_config[$mid]['pageName'].'?'.$comment_config[$mid]['itemName'].'='.$comments[$i]->getVar('com_itemid').'&amp;com_id='.$i.'&amp;com_rootid='.$comments[$i]->getVar('com_rootid').'&amp;'.htmlspecialchars($comments[$i]->getVar('com_exparams')).'#comment'.$i.'">'.$comments[$i]->getVar('com_title').'</a>';
+		$com['title'] = '<a href="'.ICMS_URL.'/modules/'.$modules[$mid]->getVar('dirname').'/'.$comment_config[$mid]['pageName'].'?'.$comment_config[$mid]['itemName'].'='.$comments[$i]->getVar('com_itemid').'&amp;com_id='.$i.'&amp;com_rootid='.$comments[$i]->getVar('com_rootid').'&amp;'.htmlspecialchars($comments[$i]->getVar('com_exparams')).'#comment'.$i.'">'.$comments[$i]->getVar('com_title').'</a>';
 		$com['icon'] = htmlspecialchars( $comments[$i]->getVar('com_icon'), ENT_QUOTES );
 		$com['icon'] = ($com['icon'] != '') ? $com['icon'] : 'icon1.gif';
 		$com['time'] = formatTimestamp($comments[$i]->getVar('com_created'),'m');
 		if ($comments[$i]->getVar('com_uid') > 0) {
 			$poster =& $member_handler->getUser($comments[$i]->getVar('com_uid'));
 			if (is_object($poster)) {
-				$com['poster'] = '<a href="'.XOOPS_URL.'/userinfo.php?uid='.$comments[$i]->getVar('com_uid').'">'.$poster->getVar('uname').'</a>';
+				$com['poster'] = '<a href="'.ICMS_URL.'/userinfo.php?uid='.$comments[$i]->getVar('com_uid').'">'.$poster->getVar('uname').'</a>';
 			} else {
 				$com['poster'] = $GLOBALS['icmsConfig']['anonymous'];
 			}
@@ -400,7 +400,7 @@ function b_system_comments_show($options)
 function b_system_notification_show()
 {
 	global $icmsConfig, $icmsUser, $icmsModule;
-	include_once XOOPS_ROOT_PATH . '/include/notification_functions.php';
+	include_once ICMS_ROOT_PATH . '/include/notification_functions.php';
 	icms_loadLanguageFile('core', 'notification');
 	// Notification must be enabled, and user must be logged in
 	if (empty($icmsUser) || !notificationEnabled('block')) {
@@ -475,7 +475,7 @@ function b_system_comments_edit($options)
  */
 function b_system_topposters_edit($options)
 {
-	include_once XOOPS_ROOT_PATH.'/class/xoopslists.php';
+	include_once ICMS_ROOT_PATH.'/class/xoopslists.php';
 	$inputtag = "<input type='text' name='options[]' value='". (int) ($options[0])."' />";
 	$form = sprintf(_MB_SYSTEM_DISPLAY,$inputtag);
 	$form .= "<br />"._MB_SYSTEM_DISPLAYA."&nbsp;<input type='radio' id='options[]' name='options[]' value='1'";
@@ -546,7 +546,7 @@ function b_system_info_edit($options)
 	$form .= "<input type='text' name='options[]' value='".$options[0]."' />";
 	$form .= "<br />"._MB_SYSTEM_PWHEIGHT."&nbsp;";
 	$form .= "<input type='text' name='options[]' value='".$options[1]."' />";
-	$form .= "<br />".sprintf(_MB_SYSTEM_LOGO,XOOPS_URL."/images/")."&nbsp;";
+	$form .= "<br />".sprintf(_MB_SYSTEM_LOGO,ICMS_URL."/images/")."&nbsp;";
 	$form .= "<input type='text' name='options[]' value='".$options[2]."' />";
 	$chk = "";
 	$form .= "<br />"._MB_SYSTEM_SADMIN."&nbsp;";
@@ -581,7 +581,7 @@ function b_system_themes_show($options)
 	}
 	$block = array();
 	if ($options[0] == 1) {
-		$block['theme_select'] = "<img vspace=\"2\" id=\"xoops_theme_img\" src=\"".XOOPS_THEME_URL."/".$icmsConfig['theme_set']."/shot.gif\" alt=\"screenshot\" width=\"". (int) ($options[1])."\" /><br /><select id=\"theme_select\" name=\"theme_select\" onchange=\"showImgSelected('xoops_theme_img', 'theme_select', 'themes', '/shot.gif', '".XOOPS_URL."');\">".$theme_options."</select><input type=\"submit\" value=\""._GO."\" />";
+		$block['theme_select'] = "<img vspace=\"2\" id=\"xoops_theme_img\" src=\"".ICMS_THEME_URL."/".$icmsConfig['theme_set']."/shot.gif\" alt=\"screenshot\" width=\"". (int) ($options[1])."\" /><br /><select id=\"theme_select\" name=\"theme_select\" onchange=\"showImgSelected('xoops_theme_img', 'theme_select', 'themes', '/shot.gif', '".ICMS_URL."');\">".$theme_options."</select><input type=\"submit\" value=\""._GO."\" />";
 	} else {
 		$block['theme_select'] = '<select name="theme_select" onchange="submit();" size="3">'.$theme_options.'</select>';
 	}

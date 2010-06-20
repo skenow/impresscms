@@ -32,7 +32,7 @@ if (isset($_GET['mid'])) {
  * Now here is the version checker :-)
  */
 global $icmsAdminTpl, $xoTheme;
-require_once XOOPS_ROOT_PATH.'/class/icmsversionchecker.php';
+require_once ICMS_ROOT_PATH.'/class/icmsversionchecker.php';
 $icmsVersionChecker = IcmsVersionChecker::getInstance();
 icms_cp_header();
 if ($icmsVersionChecker->check()) {
@@ -71,7 +71,7 @@ $icmsAdminTpl->assign('memory_limit', icms_conv_nr2local(ini_get( 'memory_limit'
 $icmsAdminTpl->assign('file_uploads', ini_get( 'file_uploads' ) ? _CO_ICMS_ON : _CO_ICMS_OFF);
 $icmsAdminTpl->assign('upload_max_filesize', icms_conv_nr2local(ini_get( 'upload_max_filesize' )));
 
-$icmsAdminTpl->display(XOOPS_ROOT_PATH.'/modules/system/templates/admin/system_adm_version.html');
+$icmsAdminTpl->display(ICMS_ROOT_PATH.'/modules/system/templates/admin/system_adm_version.html');
 icms_cp_footer();
 
 ?>
