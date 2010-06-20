@@ -96,7 +96,7 @@ class IcmsBlock extends IcmsPersistableObject {
 				return false;
 			}
 			icms_loadLanguageFile($this->getVar('dirname'), 'blocks');
-			include_once XOOPS_ROOT_PATH.'/modules/'.$this->getVar('dirname').'/blocks/'.$this->getVar('func_file');
+			include_once ICMS_ROOT_PATH.'/modules/'.$this->getVar('dirname').'/blocks/'.$this->getVar('func_file');
 			$options = explode('|', $this->getVar('options'));
 			$edit_form = $edit_func($options);
 			if (!$edit_form) {
@@ -517,7 +517,7 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 	}
 
 	/**
-	 * getAllByGroupModule
+	 * getAllByGroupModule gets all blocks visible on a page, based on group permissions
 	 *
 	 * @param unknown_type $groupid
 	 * @param unknown_type $module_id
@@ -802,7 +802,7 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 }
 
 /**
- * XoopsBlock
+ * XoopsBlock - for backwards compatibility
  *
  * @since XOOPS
  * @copyright The XOOPS Project <http://www.xoops.org>
@@ -810,12 +810,20 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
  *
  * @see IcmsBlock
  *
- * @deprecated
+ * @deprecated use IcmsBlock instead
+ * @todo Remove in version 1.4 - all instances have been removed from the core
  */
-class XoopsBlock extends IcmsBlock { /* For backwards compatibility */ }
+class XoopsBlock extends IcmsBlock {
+
+	public function __construct(&$db) {
+		parent::__construct(&$db);
+		$this->setErrors = icms_deprecated('IcmsBlock');
+	}
+
+}
 
 /**
- * XoopsBlockHandler
+ * XoopsBlockHandler - For backwards compatibility
  *
  * @since XOOPS
  * @copyright The XOOPS Project <http://www.xoops.org>
@@ -823,7 +831,14 @@ class XoopsBlock extends IcmsBlock { /* For backwards compatibility */ }
  *
  * @see IcmsBlockHandler
  *
- * @deprecated
+ * @deprecated  use IcmsBlockHandler instead
+ * @todo Remove in version 1.4 - all instances have been removed from the core
  */
-class XoopsBlockHandler extends IcmsBlockHandler { /* For backwards compatibility */ }
-?>
+class XoopsBlockHandler extends IcmsBlockHandler {
+
+	public function __construct(&$db) {
+		parent::__construct(&$db);
+		$this->setVar('_errors', icms_deprecated('IcmsBlockHandler'));
+	}
+
+}

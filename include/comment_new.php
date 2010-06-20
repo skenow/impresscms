@@ -25,7 +25,7 @@ icms_loadLanguageFile('core', 'comment');
 $com_itemid = isset($_GET['com_itemid']) ? (int) ($_GET['com_itemid']) : 0;
 
 if ($com_itemid > 0) {
-	include ICMS_ROOT_PATH.'/header.php';
+	include ICMS_ROOT_PATH . '/header.php';
 	if (isset($com_replytitle)) {
 		if (isset($com_replytext)) {
 			themecenterposts($com_replytitle, $com_replytext);
@@ -33,7 +33,7 @@ if ($com_itemid > 0) {
 		$myts =& MyTextSanitizer::getInstance();
 		$com_title = $myts->htmlSpecialChars($com_replytitle);
 		if (!preg_match("/^(Re|"._CM_RE."):/i", $com_title)) {
-			$com_title = _CM_RE.": ".xoops_substr($com_title, 0, 56);
+			$com_title = _CM_RE.": ".icms_substr($com_title, 0, 56);
 		}
 	} else {
 		$com_title = '';
@@ -61,7 +61,8 @@ if ($com_itemid > 0) {
 	$dosmiley = 1;
 	$groups   = (is_object($icmsUser)) ? $icmsUser->getGroups() : ICMS_GROUP_ANONYMOUS;
 	$gperm_handler =& xoops_gethandler('groupperm');
-	if ($icmsConfig ['editor_default'] != 'dhtmltextarea' && $gperm_handler->checkRight('use_wysiwygeditor', 1, $groups, 1, false)) {
+	if ($icmsConfig ['editor_default'] != 'dhtmltextarea'
+		&& $gperm_handler->checkRight('use_wysiwygeditor', 1, $groups, 1, false)) {
 		$dohtml = 1;
 		$dobr = 0;
 	} else {
@@ -74,7 +75,6 @@ if ($com_itemid > 0) {
 	$com_rootid = 0;
 	$com_text = '';
 
-	include ICMS_ROOT_PATH.'/include/comment_form.php';
-	include ICMS_ROOT_PATH.'/footer.php';
+	include ICMS_ROOT_PATH . '/include/comment_form.php';
+	include ICMS_ROOT_PATH . '/footer.php';
 }
-?>

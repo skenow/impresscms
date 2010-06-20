@@ -662,128 +662,6 @@ class IcmsPersistableObject extends XoopsObject {
 	}
 
 	/**
-	 * clean values of all variables of the object for storage.
-	 * also add slashes whereever needed
-	 *
-	 * We had to put this method in the IcmsPersistableObject because the XOBJ_DTYPE_ARRAY does not work properly
-	 * at least on PHP 5.1. So we have created a new type XOBJ_DTYPE_SIMPLE_ARRAY to handle 1 level array
-	 * as a string separated by |
-	 *
-	 * @return bool true if successful
-	 * @access public
-	 */
-	function cleanVars()
-	{
-		$ts =& MyTextSanitizer::getInstance();
-		$existing_errors = $this->getErrors();
-		$this->_errors = array();
-		foreach ($this->vars as $k => $v) {
-			$cleanv = $v['value'];
-			if (!$v['changed']) {
-			} else {
-				$cleanv = is_string($cleanv) ? trim($cleanv) : $cleanv;
-				switch ($v['data_type']) {
-					case XOBJ_DTYPE_TXTBOX:
-						if ($v['required'] && $cleanv != '0' && $cleanv == '') {
-							$this->setErrors( sprintf( _XOBJ_ERR_REQUIRED, $k ) );
-							continue;
-						}
-						if (isset($v['maxlength']) && strlen($cleanv) > (int) ($v['maxlength'])) {
-							$this->setErrors( sprintf( _XOBJ_ERR_SHORTERTHAN, $k, (int) ( $v['maxlength'] ) ) );
-							continue;
-						}
-						if (!$v['not_gpc']) {
-							$cleanv = $ts->stripSlashesGPC($ts->censorString($cleanv));
-						} else {
-							$cleanv = $ts->censorString($cleanv);
-						}
-						break;
-					case XOBJ_DTYPE_TXTAREA:
-						if ($v['required'] && $cleanv != '0' && $cleanv == '') {
-							$this->setErrors( sprintf( _XOBJ_ERR_REQUIRED, $k ) );
-							continue;
-						}
-						if (!$v['not_gpc']) {
-							$cleanv = $ts->stripSlashesGPC($ts->censorString($cleanv));
-						} else {
-							$cleanv = $ts->censorString($cleanv);
-						}
-						break;
-					case XOBJ_DTYPE_SOURCE:
-						if (!$v['not_gpc']) {
-							$cleanv = $ts->stripSlashesGPC($cleanv);
-						} else {
-							$cleanv = $cleanv;
-						}
-						break;
-					case XOBJ_DTYPE_INT:
-					case XOBJ_DTYPE_TIME_ONLY:
-						$cleanv = (int) ($cleanv);
-						break;
-
-					case XOBJ_DTYPE_CURRENCY:
-						$cleanv = icms_currency($cleanv);
-						break;
-					case XOBJ_DTYPE_FLOAT:
-						$cleanv = icms_float($cleanv);
-						break;
-
-					case XOBJ_DTYPE_EMAIL:
-						if ($v['required'] && $cleanv == '') {
-							$this->setErrors( sprintf( _XOBJ_ERR_REQUIRED, $k ) );
-							continue;
-						}
-						if ($cleanv != '' && !preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i",$cleanv)) {
-							$this->setErrors("Invalid Email");
-							continue;
-						}
-						if (!$v['not_gpc']) {
-							$cleanv = $ts->stripSlashesGPC($cleanv);
-						}
-						break;
-					case XOBJ_DTYPE_URL:
-						if ($v['required'] && $cleanv == '') {
-							$this->setErrors( sprintf( _XOBJ_ERR_REQUIRED, $k ) );
-							continue;
-						}
-						if ($cleanv != '' && !preg_match("/^http[s]*:\/\//i", $cleanv)) {
-							$cleanv = 'http://' . $cleanv;
-						}
-						if (!$v['not_gpc']) {
-							$cleanv =& $ts->stripSlashesGPC($cleanv);
-						}
-						break;
-					case XOBJ_DTYPE_SIMPLE_ARRAY:
-						$cleanv = implode('|', $cleanv);
-						break;
-					case XOBJ_DTYPE_ARRAY:
-						$cleanv = serialize($cleanv);
-						break;
-					case XOBJ_DTYPE_STIME:
-					case XOBJ_DTYPE_MTIME:
-					case XOBJ_DTYPE_LTIME:
-						$cleanv = !is_string($cleanv) ? (int) ($cleanv) : strtotime($cleanv);
-						if (!($cleanv > 0)) {
-							$cleanv = strtotime($cleanv);
-						}
-						break;
-					default:
-						break;
-				}
-			}
-			$this->cleanVars[$k] =& $cleanv;
-			unset($cleanv);
-		}
-		if (count($this->_errors) > 0) {
-			$this->_errors = array_merge($existing_errors, $this->_errors);
-			return false;
-		}
-		$this->_errors = array_merge($existing_errors, $this->_errors);
-		$this->unsetDirty();
-		return true;
-	}
-
-	/**
 	 * returns a specific variable for the object in a proper format
 	 *
 	 * We had to put this method in the IcmsPersistableObject because the XOBJ_DTYPE_ARRAY does not work properly
@@ -801,6 +679,16 @@ class IcmsPersistableObject extends XoopsObject {
 
 		$ret = $this->vars[$key]['value'];
 
+
+if($key=="module_description")
+{
+icms_debug_info( 'key', $key );
+icms_debug_info( 'datatype', $this->vars[$key]['data_type'] );
+icms_debug_info( 'format', $format );
+icms_debug_info( 'value', $this->vars[$key]['value'] );
+}
+
+
 		switch ($this->vars[$key]['data_type']) {
 
 			case XOBJ_DTYPE_TXTBOX:
@@ -810,7 +698,6 @@ class IcmsPersistableObject extends XoopsObject {
 						// ML Hack by marcan
 						$ts =& MyTextSanitizer::getInstance();
 						$ret = $ts->htmlSpecialChars($ret);
-
 						if (method_exists($myts, 'formatForML')) {
 							return $ts->formatForML($ret);
 						} else {
@@ -948,7 +835,27 @@ class IcmsPersistableObject extends XoopsObject {
 						 * Setting mastop as the main editor
 						 */
 
-						return $ts->displayTarea($ret, $html, $smiley, $xcode, $image, $br);
+						/*
+						if($key=="module_description")
+						{
+							icms_debug_info( 'html', $html );
+							$html = 1;
+							icms_debug_info( 'smiley', $smiley );
+							icms_debug_info( 'xcode', $xcode );
+							icms_debug_info( 'br', $br );
+						}
+						*/
+
+						$whattoreturn = $ts->displayTarea($ret, $html, $smiley, $xcode, $image, $br);
+
+						/*
+						if($key=="module_description")
+						{
+							icms_debug_info( 'specialchars', $whattoreturn );
+						}
+						*/
+
+						return $whattoreturn;
 						break 1;
 					case 'e':
 					case 'edit':
@@ -1182,7 +1089,7 @@ class IcmsPersistableObject extends XoopsObject {
 	 */
 	/*
 	 function getUrlLinkObj($key){
-		$smartobject_linkurl_handler = xoops_getModuleHandler('urllink', 'smartobject');
+		$smartobject_linkurl_handler = icms_getModuleHandler('urllink', 'smartobject');
 		$urllinkid = $this->getVar($key) != null ? $this->getVar($key) : 0;
 		if($urllinkid != 0){
 		return  $smartobject_linkurl_handler->get($urllinkid);
@@ -1192,12 +1099,12 @@ class IcmsPersistableObject extends XoopsObject {
 		}
 
 		function &storeUrlLinkObj($urlLinkObj){
-		$smartobject_linkurl_handler = xoops_getModuleHandler('urllink', 'smartobject');
+		$smartobject_linkurl_handler = icms_getModuleHandler('urllink', 'smartobject');
 		return $smartobject_linkurl_handler->insert($urlLinkObj);
 		}
 
 		function getFileObj($key){
-		$smartobject_file_handler = xoops_getModuleHandler('file', 'smartobject');
+		$smartobject_file_handler = icms_getModuleHandler('file', 'smartobject');
 		$fileid = $this->getVar($key) != null ? $this->getVar($key) : 0;
 		if($fileid != 0){
 		return  $smartobject_file_handler->get($fileid);
@@ -1207,7 +1114,7 @@ class IcmsPersistableObject extends XoopsObject {
 		}
 
 		function &storeFileObj($fileObj){
-		$smartobject_file_handler = xoops_getModuleHandler('file', 'smartobject');
+		$smartobject_file_handler = icms_getModuleHandler('file', 'smartobject');
 		return $smartobject_file_handler->insert($fileObj);
 		}
 		*/

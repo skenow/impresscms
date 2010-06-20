@@ -399,7 +399,7 @@ function imanager_listimg($imgcat_id,$start=0) {
 		$arrimg[$i]['weight'] = $images[$i]->getVar('image_weight');
 		$arrimg[$i]['display'] = $images[$i]->getVar('image_display');
 		$arrimg[$i]['categ_id'] = $images[$i]->getVar('imgcat_id');
-		$arrimg[$i]['display_nicename'] = xoops_substr($images[$i]->getVar('image_nicename'),0,20);
+		$arrimg[$i]['display_nicename'] = icms_substr($images[$i]->getVar('image_nicename'),0,20);
 
 		$uniq = icms_random_str(5);
 
@@ -509,7 +509,7 @@ function imanager_addcat() {
 	$imagecategory->setVar('imgcat_type', 'C');
 
 	if (!file_exists($categ_path)){
-		if (!mkdir($categ_path)){
+		if (!icms_mkdir($categ_path)){
 			redirect_header($_SERVER['PHP_SELF'].'?op=list&target='.$target.'&type='.$type,1,_MD_FAILADDCAT);
 		}
 	}
@@ -811,7 +811,7 @@ function icmsPopupHeader(){
 		echo '<link rel="stylesheet" type="text/css" media="all" href="' . ICMS_URL . '/xoops_rtl.css" />';
 		echo '<link rel="stylesheet" type="text/css" media="all" href="' . ICMS_URL . '/modules/system/style_rtl.css" />';
 	} else {
-		echo '<link rel="stylesheet" type="text/css" media="all" href="' . ICMS_URL . '/xoops.css" />';
+		echo '<link rel="stylesheet" type="text/css" media="all" href="' . ICMS_URL . '/icms.css" />';
 		echo '<link rel="stylesheet" type="text/css" media="all" href="' . ICMS_URL . '/modules/system/style.css" />';
 	}
 

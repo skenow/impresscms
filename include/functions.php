@@ -103,7 +103,7 @@ function xoops_header($closehead=true)
 		}
 	}
 
-	$themecss = getcss($icmsConfig['theme_set']);
+	$themecss = xoops_getcss($icmsConfig['theme_set']);
 	if ($themecss) {
 		echo '<link rel="stylesheet" type="text/css" media="all" href="'.$themecss.'" />';
 		//echo '<style type="text/css" media="all"><!-- @import url('.$themecss.'); --></style>';
@@ -155,7 +155,7 @@ function icms_error_msg($msg, $title='', $render = true){
 }
 
 /**
- * Backwards Compatibility Function
+ * Backwards Compatibility Function - all occurrences have been removed from the core
  *
  * @since XOOPS
  * @version $Id: functions.php 8806 2009-05-31 22:28:54Z pesianstranger $
@@ -203,12 +203,13 @@ function icms_warning_msg($msg, $title='', $render = false){
 }
 
 /**
- * Backwards Compatibility Function
+ * Backwards Compatibility Function - all occurrences have been removed from the core
  *
  * @since XOOPS
  *
  * @deprecated use icms_warning_msg instead
  * @see icms_warning_msg
+ * @todo Remove in version 1.4
  *
  * @author The XOOPS Project <http://www.xoops.org>
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
@@ -269,9 +270,13 @@ function xoops_confirm($hiddens, $action, $msg, $submit='', $addtoken = true)
 }
 
 /**
- * Deprecated, use {@link XoopsSecurity} class instead
+ * @deprecated, use {@link XoopsSecurity} class instead
+ * @todo Remove this in 1.4
  **/
-function xoops_refcheck($docheck=1) {return $GLOBALS['xoopsSecurity']->checkReferer($docheck);}
+function xoops_refcheck($docheck=1) {
+	icms_deprecated('IcmsSecurity->checkReferer','- this function will be removed in version 1.4');
+	return $GLOBALS['xoopsSecurity']->checkReferer($docheck);
+}
 
 /**
  * Get the timestamp based on the user settings
@@ -292,7 +297,7 @@ function xoops_getUserTimestamp($time, $timeoffset="")
 	return $usertimestamp;
 }
 
-/*
+/**
  * Function to calculate server timestamp from user entered time (timestamp)
  *
  * @param string  $timestamp  String with time
@@ -306,7 +311,7 @@ function userTimeToServerTime($timestamp, $userTZ=null)
 	return $timestamp;
 }
 
-/*
+/**
  * Function to generate password
  *
  * @return string  $makepass  The generated password
@@ -323,11 +328,14 @@ function xoops_makepass() {
 	return $makepass;
 }
 
-/*
+/**
  * Function to display dhtml loading image box
+ * @deprecated Not found in the core
+ * @todo Remove in version 1.4
  */
 function OpenWaitBox()
 {
+	icms_deprecated('','This is very old and will be removed in version 1.4');
 	echo "<div id='waitDiv' style='position:absolute;left:40%;top:50%;visibility:hidden;text-align: center;'>
 	<table cellpadding='6' border='2' class='bg2'>
 		<tr>
@@ -365,12 +373,15 @@ function OpenWaitBox()
 	</script>";
 }
 
-/*
+/**
  * Function to display the finish of the dhtml wait box
  *
+ * @deprecated Not used anywhere in the core
+ * @todo Remove in version 1.4
  */
 function CloseWaitBox()
 {
+	icms_deprecated('', 'This is very old and will be removed in version 1.4');
 	echo "<script type='text/javascript'>
 	<!--//
 	ap_showWaitMessage('waitDiv', 0);
@@ -379,7 +390,7 @@ function CloseWaitBox()
 	";
 }
 
-/*
+/**
  * Checks if email is of correct formatting
  *
  * @param string     $email      The email address
@@ -397,7 +408,7 @@ function checkEmail($email, $antispam = false)
 	return $email;
 }
 
-/*
+/**
  * Format an URL
  *
  * @param string  $url  The URL to format
@@ -413,12 +424,16 @@ function formatURL($url)
 	return $url;
 }
 
-/*
+/**
  * Function to display banners in all pages
+ * @deprecated Use xoops_getbanner instead
+ * @todo Remove in version 1.4 - all occurrences have been removed from the core
  */
-function showbanner() {echo xoops_getbanner();}
+function showbanner() {
+	icms_deprecated('xoops_getbanner','This will be removed in version 1.4');
+	echo xoops_getbanner();}
 
-/*
+/**
  * Gets banner HTML for use in templates
  *
  * @return object  $bannerobject  The generated banner HTML string
@@ -458,7 +473,7 @@ function xoops_getbanner() {
 	}
 }
 
-/*
+/**
  * Function to redirect a user to certain pages
  *
  * @param string  $url  The URL to redirect to
@@ -556,7 +571,7 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 	// GIJ end
 }
 
-/*
+/**
  * Gets environment key from the $_SERVER or $_ENV superglobal
  *
  * @param string  $key  The key to get
@@ -578,22 +593,24 @@ function xoops_getenv($key)
 	return $ret;
 }
 
-/*
+/**
  * @deprecated get the theme from the global $xoopsConfig instead
+ * @todo Remove in version 1.4 - all occurrences have been removed from the core
  */
 function getTheme() {
 	icms_deprecated( 'get the theme from the global $xoopsConfig' );
 	return $GLOBALS['xoopsConfig']['theme_set'];}
 
-/*
+/**
  * Function to get css file for a certain theme
  * @deprecated use xoops_getcss() instead
+ * @todo Remove in version 1.4 - all instances have been removed from the core
  */
 function getcss($theme = '') {
 	icms_deprecated( 'xoops_getcss' );
 	return xoops_getcss($theme);}
 
-/*
+/**
  * Function to get css file for a certain themeset
  *
  * @param string  $theme  The theme set from the config
@@ -619,7 +636,7 @@ function xoops_getcss($theme = '')
 	return '';
 }
 
-/*
+/**
  * Gets Mailer object
  *
  * @return		object  $inst  Reference to the (@link XoopsMailerLocal) or (@link XoopsMailer) object
@@ -635,7 +652,7 @@ function &getMailer()
 	return $inst;
 }
 
-/*
+/**
  * Gets the handler for a class
  *
  * @param string  $name  The name of the handler to get
@@ -651,10 +668,10 @@ function &xoops_gethandler($name, $optional = false )
 		//else {
 		//	if(file_exists($hnd_file = ICMS_ROOT_PATH.'/class/'.$name.'.php')) {require_once $hnd_file;}
 		//}
-		$class = 'Xoops'.ucfirst($name).'Handler';
+		$class = 'Icms'.ucfirst($name).'Handler';
 		if(class_exists($class)) {$handlers[$name] = new $class($GLOBALS['xoopsDB']);}
 		else {
-			$class = 'Icms'.ucfirst($name).'Handler';
+			$class = 'Xoops'.ucfirst($name).'Handler';
 			if(class_exists($class)) {$handlers[$name] = new $class($GLOBALS['xoopsDB']);}
 		}
 	}
@@ -664,7 +681,7 @@ function &xoops_gethandler($name, $optional = false )
 	return $inst;
 }
 
-/*
+/**
  * Gets rank
  *
  * @param	int  $rank_id  The Rank ID to get
@@ -693,14 +710,13 @@ function xoops_getrank($rank_id =0, $posts = 0)
 
 /**
  * Function maintained only for compatibility
- *
- * @todo Search all places that this function is called
- *	   and rename it to icms_substr.
- *	   After this function can be removed.
+ * @deprecated Use icms_substr
+ * @todo Remove in version 1.4 - all instances have been removed from the core
  *
  */
 function xoops_substr($str, $start, $length, $trimmarker = '...')
 {
+	icms_deprecated('icms_substr', 'This function will be removed in version 1.4');
 	return icms_substr($str, $start, $length, $trimmarker);
 }
 
@@ -775,7 +791,7 @@ function icms_substr($str, $start, $length, $trimmarker = '...')
 
 // RMV-NOTIFY
 // ################ Notification Helper Functions ##################
-/*
+/**
  * We want to be able to delete by module, by user, or by item.
  * How do we specify this??
  *
@@ -955,7 +971,7 @@ function icms_copyr($source, $dest)
 	// Simple copy for a file
 	if(is_file($source)) {return copy($source, $dest);}
 	// Make destination directory
-	if(!is_dir($dest)) {mkdir($dest);}
+	if(!is_dir($dest)) {icms_mkdir($dest);}
 	// Loop through the folder
 	$dir = dir($source);
 	while(false !== $entry = $dir->read())
@@ -2035,7 +2051,7 @@ function ext_date($time)
 	return $timestamp;
 }
 
-/*
+/**
  * Function to display formatted times in user timezone
  *
  * @param string  $time  String with time
@@ -2209,47 +2225,55 @@ function formatTimestamp($time, $format = "l", $timeoffset = null)
  * @param bool $optional	Is the module optional? Is it bad when the module cannot be loaded?
  * @return object The module handler instance
  */
-function &icms_getmodulehandler($name = null, $module_dir = null, $module_basename = null, $optional = false)
-{
+function &icms_getModuleHandler($name = null, $module_dir = null, $module_basename = null, $optional = false) {
 	static $handlers;
 	// if $module_dir is not specified
-	if(!isset($module_dir))
-	{
+	if (!isset($module_dir)) {
 		//if a module is loaded
-		if(isset($GLOBALS['icmsModule']) && is_object($GLOBALS['icmsModule'])) {$module_dir = $GLOBALS['icmsModule']->getVar('dirname');}
-		else {trigger_error(_CORE_NOMODULE, E_USER_ERROR);}
+		if (isset($GLOBALS['icmsModule']) && is_object($GLOBALS['icmsModule'])) {
+			$module_dir = $GLOBALS['icmsModule']->getVar('dirname');
+		} else {
+			trigger_error(_CORE_NOMODULE, E_USER_ERROR);
+		}
+	} else {
+		$module_dir = trim($module_dir);
 	}
-	else {$module_dir = trim($module_dir);}
-	$module_basename = isset($module_basename)?trim($module_basename):$module_dir;
+	$module_basename = isset($module_basename) ? trim($module_basename) : $module_dir;
 	$name = (!isset($name)) ? $module_dir : trim($name);
-	if(!isset($handlers[$module_dir][$name]))
-	{
-		if($module_dir != 'system') {$hnd_file = ICMS_ROOT_PATH."/modules/{$module_dir}/class/{$name}.php";}
-		else {$hnd_file = ICMS_ROOT_PATH."/modules/{$module_dir}/admin/{$name}/class/{$name}.php";}
-		if(file_exists($hnd_file)) {include_once $hnd_file;}
-		$class = ucfirst(strtolower($module_basename)).ucfirst($name).'Handler';
-		if(class_exists($class)) {$handlers[$module_dir][$name] = new $class($GLOBALS['xoopsDB']);}
+	if (!isset($handlers[$module_dir][$name])) {
+		if($module_dir != 'system') {
+			$hnd_file = ICMS_ROOT_PATH . "/modules/{$module_dir}/class/{$name}.php";
+		} else {
+			$hnd_file = ICMS_ROOT_PATH . "/modules/{$module_dir}/admin/{$name}/class/{$name}.php";
+		}
+		if (file_exists($hnd_file)) {include_once $hnd_file;}
+		$class = ucfirst(strtolower($module_basename)) . ucfirst($name) . 'Handler';
+		if (class_exists($class)) {
+			$handlers[$module_dir][$name] = new $class($GLOBALS['xoopsDB']);
+		}
 	}
-	if(!isset($handlers[$module_dir][$name]) && !$optional)
-	{
+	if (!isset($handlers[$module_dir][$name]) && !$optional) {
 		trigger_error(sprintf(_CORE_MODULEHANDLER_NOTAVAILABLE, $module_dir, $name), E_USER_ERROR);
 	}
-	if(isset($handlers[$module_dir][$name])) {return $handlers[$module_dir][$name];}
+	if (isset($handlers[$module_dir][$name])) {return $handlers[$module_dir][$name];}
 	$inst = false;
 	return $inst;
 }
 
-/*
+/**
  * Gets module handler
  * For Backward Compatibility.
  *
  * @param	string  $name  The name of the module
  * @param	string	$module_dir		The module directory where to get the module class
  * @return	object  $inst	The reference to the generated object
+ * @deprecated Use icms_getmodulehandler instead
+ * @todo Remove this function in version 1.4
  */
 function &xoops_getmodulehandler($name = null, $module_dir = null, $optional = false)
 {
-	return icms_getmodulehandler($name, $module_dir, $module_dir, $optional);
+	icms_deprecated('icms_getModuleHandler','This function will be removed in version 1.4');
+	return icms_getModuleHandler($name, $module_dir, $module_dir, $optional);
 }
 
 /**
@@ -2270,7 +2294,7 @@ function icms_getPreviousPage($default=false) {
 }
 
 /**
- * Get module admion link
+ * Get module admin link
  *
  * @param string $moduleName dirname of the moodule
  * @return string URL of the admin side of the module
@@ -2529,7 +2553,7 @@ function icms_getModuleIncludeIdSEO($moduleName = false) {
 	return !empty ($icmsModuleConfig['seo_inc_id']);
 }
 
-/*
+/**
  * Gets environment key from the $_SERVER or $_ENV superglobal
  *
  * @param string  $key  The key to get
@@ -2541,7 +2565,7 @@ function icms_getenv($key) {
 	return $ret;
 }
 
-/*
+/**
  * Gets the status of a module to see if it's active or not.
  *
  * @param string $module_name  The module's name to get
