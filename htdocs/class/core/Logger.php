@@ -65,7 +65,7 @@ class core_Logger {
 	 */
 	public function enableRendering() {
 		if ( !$this->renderingEnabled ) {
-			//ob_start( array( &$this, 'render' ) );
+			ob_start( array( &$this, 'render' ) );
 			$this->renderingEnabled = true;
 		}
 	}
