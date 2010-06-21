@@ -6,7 +6,7 @@
  * @copyright 	The XOOPS Project <http://www.xoops.org>
  * @license		GNU General Public License (GPL) <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>
  *
- * @version		$Id: block.php 19455 2010-06-18 14:43:44Z malanciault $
+ * @version		$Id$
  * @since 		XOOPS
  *
  * @author		The XOOPS Project Community <http://www.xoops.org>
