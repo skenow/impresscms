@@ -33,7 +33,7 @@ class core_BlockHandler extends IcmsPersistableObjectHandler {
 	private $modules_name;
 
 	public function __construct(& $db) {
-		$this->IcmsPersistableObjectHandler($db, 'block', 'bid', 'title', 'content', 'icms');
+		parent::__construct($db, 'block', 'bid', 'title', 'content', 'icms');
 		$this->className = 'core_Block';
 		$this->table = $this->db->prefix('newblocks');
 	}
@@ -180,7 +180,7 @@ class core_BlockHandler extends IcmsPersistableObjectHandler {
 	 *
 	 * @todo rewrite
 	 */
-	function getAllByGroupModule($groupid, $module_id='0-0', $toponlyblock=false, $visible=null, $orderby='b.weight,b.bid', $isactive=1) {
+	public function getAllByGroupModule($groupid, $module_id='0-0', $toponlyblock=false, $visible=null, $orderby='b.weight,b.bid', $isactive=1) {
 		// TODO: use $this->getObjects($criteria);
 
 		$isactive = (int)$isactive;
@@ -259,7 +259,7 @@ class core_BlockHandler extends IcmsPersistableObjectHandler {
 	 *
 	 * @todo remove - this is the only instance in the core
 	 */
-	function getNonGroupedBlocks($module_id=0, $toponlyblock=false, $visible=null, $orderby='b.weight,b.bid', $isactive=1) {
+	public function getNonGroupedBlocks($module_id=0, $toponlyblock=false, $visible=null, $orderby='b.weight,b.bid', $isactive=1) {
 		$ret = array();
 		$bids = array();
 		$sql = "SELECT DISTINCT(bid) from ".$this->db->prefix('newblocks');
@@ -453,14 +453,6 @@ class core_BlockHandler extends IcmsPersistableObjectHandler {
 }
 
 /**
- * XoopsBlockHandler - For backwards compatibility
- *
- * @since XOOPS
- * @copyright The XOOPS Project <http://www.xoops.org>
- * @author The XOOPS Project Community <http://www.xoops.org>
- *
- * @see core_BlockHandler
- *
  * @deprecated  use core_BlockHandler instead
  * @todo Remove in version 1.4 - all instances have been removed from the core
  */
@@ -473,13 +465,6 @@ class XoopsBlockHandler extends core_BlockHandler {
 }
 
 /**
- * ImpressCMS Core Block Object Handler Class
- *
- * @copyright The ImpressCMS Project <http://www.impresscms.org>
- * @license GNU GPL v2
- *
- * @since ImpressCMS 1.2
- * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  * @deprecated  use core_BlockHandler instead
  * @todo Remove in version 1.4 - all instances have been removed from the core
  */

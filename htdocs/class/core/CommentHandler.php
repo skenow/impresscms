@@ -38,7 +38,7 @@ class core_CommentHandler extends core_ObjectHandler {
 	 * @return	object
 	 * @see htdocs/kernel/core_ObjectHandler#create()
 	 */
-	function &create($isNew = true) {
+	public function &create($isNew = true) {
 		$comment = new core_Comment();
 		if ($isNew) {
 			$comment->setNew();
@@ -54,7 +54,7 @@ class core_CommentHandler extends core_ObjectHandler {
 	 * @return  object  {@link core_Comment}, FALSE on fail
 	 * @see htdocs/kernel/core_ObjectHandler#get($int_id)
 	 **/
-	function &get($id) {
+	public function &get($id) {
 		$comment = false;
 		$id = (int) ($id);
 		if ($id > 0) {
@@ -79,7 +79,7 @@ class core_CommentHandler extends core_ObjectHandler {
 	 * @return  bool
 	 * @see htdocs/kernel/core_ObjectHandler#insert($object)
 	 **/
-	function insert(&$comment) {
+	public function insert(&$comment) {
 		/**
 		 * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
 		 */
@@ -119,7 +119,7 @@ class core_CommentHandler extends core_ObjectHandler {
 	 * @return  bool
 	 *  @see htdocs/kernel/core_ObjectHandler#delete($object)
 	 **/
-	function delete(&$comment) {
+	public function delete(&$comment) {
 		/**
 		 * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
 		 */
@@ -141,7 +141,7 @@ class core_CommentHandler extends core_ObjectHandler {
 	 *
 	 * @return  array   Array of {@link core_Comment} objects
 	 **/
-	function getObjects($criteria = null, $id_as_key = false) {
+	public function getObjects($criteria = null, $id_as_key = false) {
 		$ret = array();
 		$limit = $start = 0;
 		$sql = 'SELECT * FROM '.$this->db->prefix('xoopscomments');
@@ -176,7 +176,7 @@ class core_CommentHandler extends core_ObjectHandler {
 	 *
 	 * @return  int     Count
 	 **/
-	function getCount($criteria = null) {
+	public function getCount($criteria = null) {
 		$sql = 'SELECT COUNT(*) FROM '.$this->db->prefix('xoopscomments');
 		if (isset($criteria) && is_subclass_of($criteria, 'core_CriteriaElement')) {
 			$sql .= ' '.$criteria->renderWhere();
@@ -195,7 +195,7 @@ class core_CommentHandler extends core_ObjectHandler {
 	 *
 	 * @return  bool
 	 **/
-	function deleteAll($criteria = null) {
+	public function deleteAll($criteria = null) {
 		$sql = 'DELETE FROM '.$this->db->prefix('xoopscomments');
 		if (isset($criteria) && is_subclass_of($criteria, 'core_CriteriaElement')) {
 			$sql .= ' '.$criteria->renderWhere();
@@ -213,7 +213,7 @@ class core_CommentHandler extends core_ObjectHandler {
 	 *
 	 * @return  array   Array of raw database records
 	 **/
-	function getList($criteria = null) {
+	public function getList($criteria = null) {
 		$comments = $this->getObjects($criteria, true);
 		$ret = array();
 		foreach (array_keys($comments) as $i) {
@@ -234,7 +234,7 @@ class core_CommentHandler extends core_ObjectHandler {
 	 *
 	 * @return  array   Array of {@link core_Comment} objects
 	 **/
-	function getByItemId($module_id, $item_id, $order = null, $status = null, $limit = null, $start = 0) {
+	public function getByItemId($module_id, $item_id, $order = null, $status = null, $limit = null, $start = 0) {
 		$criteria = new core_CriteriaCompo(new core_Criteria('com_modid', (int) ($module_id)));
 		$criteria->add(new core_Criteria('com_itemid', (int) ($item_id)));
 		if (isset($status)) {
@@ -259,7 +259,7 @@ class core_CommentHandler extends core_ObjectHandler {
 	 *
 	 * @return  array   Array of {@link core_Comment} objects
 	 **/
-	function getCountByItemId($module_id, $item_id, $status = null) {
+	public function getCountByItemId($module_id, $item_id, $status = null) {
 		$criteria = new core_CriteriaCompo(new core_Criteria('com_modid', (int) ($module_id)));
 		$criteria->add(new core_Criteria('com_itemid', (int) ($item_id)));
 		if (isset($status)) {
@@ -278,7 +278,7 @@ class core_CommentHandler extends core_ObjectHandler {
 	 *
 	 * @return  array   Array of {@link core_Comment} objects
 	 **/
-	function getTopComments($module_id, $item_id, $order, $status = null) {
+	public function getTopComments($module_id, $item_id, $order, $status = null) {
 		$criteria = new core_CriteriaCompo(new core_Criteria('com_modid', (int) ($module_id)));
 		$criteria->add(new core_Criteria('com_itemid', (int) ($item_id)));
 		$criteria->add(new core_Criteria('com_pid', 0));
@@ -298,7 +298,7 @@ class core_CommentHandler extends core_ObjectHandler {
 	 *
 	 * @return  array   Array of {@link core_Comment} objects
 	 **/
-	function getThread($comment_rootid, $comment_id, $status = null) {
+	public function getThread($comment_rootid, $comment_id, $status = null) {
 		$criteria = new core_CriteriaCompo(new core_Criteria('com_rootid', (int) ($comment_rootid)));
 		$criteria->add(new core_Criteria('com_id', (int) ($comment_id), '>='));
 		if (isset($status)) {
@@ -316,7 +316,7 @@ class core_CommentHandler extends core_ObjectHandler {
 	 *
 	 * @return  bool
 	 **/
-	function updateByField(&$comment, $field_name, $field_value) {
+	public function updateByField(&$comment, $field_name, $field_value) {
 		$comment->unsetNew();
 		$comment->setVar($field_name, $field_value);
 		return $this->insert($comment);
@@ -328,7 +328,7 @@ class core_CommentHandler extends core_ObjectHandler {
 	 * @param   int $module_id  ID of the module
 	 * @return  bool
 	 **/
-	function deleteByModule($module_id) {
+	public function deleteByModule($module_id) {
 		return $this->deleteAll(new core_Criteria('com_modid', (int) ($module_id)));
 	}
 
@@ -358,19 +358,11 @@ class core_CommentHandler extends core_ObjectHandler {
 }
 
 /**
- * XOOPS comment handler class.
- *
- * This class is responsible for providing data access mechanisms to the data source
- * of XOOPS comment class objects.
- *
- *
- * @package     kernel
- * @subpackage  comment
- *
- * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
  * @deprecated	Use core_CommentHandler instead
  * @todo		Remove in version 1.4 - all instances have been removed from the core
  */
 class XoopsCommentHandler extends core_CommentHandler {
+	public function __construct() {
+		parent::__construct($db);
+	}
 }

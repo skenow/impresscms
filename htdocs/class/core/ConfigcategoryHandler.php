@@ -11,7 +11,7 @@
  * @since		XOOPS
  * @author		Kazumi Ono (aka onokazo)
  * @author		http://www.xoops.org The XOOPS Project
- * @version		$Id: configcategory.php 19450 2010-06-18 14:15:29Z malanciault $
+ * @version		$Id$
  */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
@@ -28,8 +28,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @package     kernel
  * @subpackage  config
  */
-class core_ConfigcategoryHandler extends core_ObjectHandler
-{
+class core_ConfigcategoryHandler extends core_ObjectHandler {
 
 	/**
 	 * Create a new category
@@ -39,8 +38,7 @@ class core_ConfigcategoryHandler extends core_ObjectHandler
 	 * @return	object  New {@link core_Configcategory}
 	 * @see htdocs/kernel/core_ObjectHandler#create()
 	 */
-	function &create($isNew = true)
-	{
+	function &create($isNew = true) 	{
 		$confcat = new core_Configcategory();
 		if ($isNew) {
 			$confcat->setNew();
@@ -81,8 +79,7 @@ class core_ConfigcategoryHandler extends core_ObjectHandler
 	 * @return	bool    TRUE on success
 	 * @see htdocs/kernel/core_ObjectHandler#insert($object)
 	 */
-	function insert(&$confcat)
-	{
+	function insert(&$confcat) {
 		/**
 		 * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
 		 */
@@ -122,8 +119,7 @@ class core_ConfigcategoryHandler extends core_ObjectHandler
 	 * @return	bool    TRUE on success
 	 * @see htdocs/kernel/core_ObjectHandler#delete($object)
 	 */
-	function delete(&$confcat)
-	{
+	function delete(&$confcat) {
 		/**
 		 * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
 		 */
@@ -146,8 +142,7 @@ class core_ConfigcategoryHandler extends core_ObjectHandler
 	 *
 	 * @return	array   Array of {@link core_Configcategory}s
 	 */
-	function getObjects($criteria = null, $id_as_key = false)
-	{
+	function getObjects($criteria = null, $id_as_key = false) {
 		$ret = array();
 		$limit = $start = 0;
 		$sql = 'SELECT * FROM '.$this->db->prefix('configcategory');
@@ -175,4 +170,15 @@ class core_ConfigcategoryHandler extends core_ObjectHandler
 		return $ret;
 	}
 }
-?>
+
+/**
+ * @deprecated	Use core_ConfigcategoryHandler
+ * @todo		Remove in version 1.4
+ *
+ */
+class XoopsConfigCategoryHandler extends core_ConfigcategoryHandler {
+	public function __construct() {
+		parent::__construct();
+		$this->setVar('error', icms_deprecated('core_ConfigcategoryHandler', 'This will be removed in version 1.4'));
+	}
+}

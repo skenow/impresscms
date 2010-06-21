@@ -26,7 +26,7 @@ class core_Blockposition extends IcmsPersistableObject {
 	 */
 	public function __construct(& $handler) {
 
-		$this->IcmsPersistableObject($handler);
+		parent::__construct($handler);
 
 		$this->quickInitVar('id', XOBJ_DTYPE_INT);
 		$this->quickInitVar('pname', XOBJ_DTYPE_TXTBOX, true);

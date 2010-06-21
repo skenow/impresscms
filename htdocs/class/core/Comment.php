@@ -28,8 +28,8 @@ class core_Comment extends core_Object {
 	/**
 	 * Constructor
 	 **/
-	function __construct() {
-		$this->core_Object();
+	public function __construct() {
+		parent::__construct();
 		$this->initVar('com_id', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('com_pid', XOBJ_DTYPE_INT, 0, false);
 		$this->initVar('com_modid', XOBJ_DTYPE_INT, null, false);
@@ -57,18 +57,12 @@ class core_Comment extends core_Object {
 	 *
 	 * @return  bool
 	 **/
-	function isRoot() {
+	public function isRoot() {
 		return ($this->getVar('com_id') == $this->getVar('com_rootid'));
 	}
 }
 
 /**
- * A Comment
- *
- * @package     kernel
- *
- * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
  * @deprecated 	Use core_Comment instead
  * @todo		Remove in version 1.4 - all instances have been removed from the core
  */

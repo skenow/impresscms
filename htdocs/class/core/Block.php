@@ -25,7 +25,8 @@ class core_Block extends IcmsPersistableObject {
 
 	public function __construct(& $handler) {
 
-		$this->IcmsPersistableObject($handler);
+		parent::__construct($handler);
+//		$this->IcmsPersistableObject($handler);
 
 		$this->quickInitVar('name', XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar('bid', XOBJ_DTYPE_INT, true);
@@ -366,14 +367,6 @@ class core_Block extends IcmsPersistableObject {
 }
 
 /**
- * XoopsBlock - for backwards compatibility
- *
- * @since XOOPS
- * @copyright The XOOPS Project <http://www.xoops.org>
- * @author The XOOPS Project Community <http://www.xoops.org>
- *
- * @see core_Block
- *
  * @deprecated use core_Block instead
  * @todo Remove in version 1.4 - all instances have been removed from the core
  */
@@ -387,18 +380,6 @@ class XoopsBlock extends core_Block {
 }
 
 /**
- * IcmsBlock - for backwards compatibility
- *
- * ImpressCMS Block Persistable Class
- *
- * @copyright 	The ImpressCMS Project <http://www.impresscms.org>
- * @copyright 	The XOOPS Project <http://www.xoops.org>
- * @license		GNU General Public License (GPL) <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>
- *
- * @since 		XOOPS
- *
- * @author		The XOOPS Project Community <http://www.xoops.org>
- * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  * @deprecated use core_Block instead
  * @todo Remove in version 1.4 - all instances have been removed from the core
  */

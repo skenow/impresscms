@@ -8,7 +8,7 @@
  * @license         LICENSE.txt
  * @package	core
  * @since            1.0
- * @version		$Id: blockposition.php 19118 2010-03-27 17:46:23Z skenow $
+ * @version		$Id$
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -27,7 +27,7 @@ class core_BlockpositionHandler extends IcmsPersistableObjectHandler {
 	 * @param IcmsDatabase $db
 	 */
 	public function __construct(& $db) {
-		$this->IcmsPersistableObjectHandler($db, 'blockposition', 'id', 'title', 'description', 'icms');
+		parent::__construct($db, 'blockposition', 'id', 'title', 'description', 'icms');
 		$this->className = 'core_Blockposition';
 		$this->table = $this->db->prefix('block_positions');
 	}

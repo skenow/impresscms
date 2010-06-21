@@ -1,6 +1,6 @@
 <?php
 /**
- * Manage of original Xoops Objects
+ * Manage Objects
  *
  * @copyright	http://www.xoops.org/ The XOOPS Project
  * @copyright	XOOPS_copyrights.txt
@@ -10,16 +10,12 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: object.php 19419 2010-06-13 22:52:12Z skenow $
- */
-
-/**
- * @package kernel
- * @copyright copyright &copy; 2000 XOOPS.org
+ * @todo	Properly declare the visibility of all properties and methods
+ * @version	$Id$
  */
 
 /**#@+
- * Xoops object datatype
+ * Object datatype
  *
  **/
 define('XOBJ_DTYPE_TXTBOX', 1);
@@ -48,14 +44,13 @@ define('XOBJ_DTYPE_FORM_SECTION_CLOSE', 211);
 //include_once "xoopspluginloader.php";
 
 /**
- * Base class for all objects in the Xoops kernel (and beyond)
+ * Base class for all objects in the kernel (and beyond)
  *
  * @author Kazumi Ono (AKA onokazu)
  * @copyright copyright &copy; 2000 XOOPS.org
  * @package kernel
  **/
-class core_Object
-{
+class core_Object {
 
 	/**
 	 * holds all variables(properties) of an object
@@ -79,7 +74,7 @@ class core_Object
 	 * @var bool
 	 * @access private
 	 */
-	var $_isNew = false;
+	private $_isNew = false;
 
 	/**
 	 * has any of the values been modified?
@@ -87,7 +82,7 @@ class core_Object
 	 * @var bool
 	 * @access private
 	 */
-	var $_isDirty = false;
+	private $_isDirty = false;
 
 	/**
 	 * errors
@@ -95,14 +90,14 @@ class core_Object
 	 * @var array
 	 * @access private
 	 */
-	var $_errors = array();
+	private $_errors = array();
 
 	/**
 	 * additional filters registered dynamically by a child class object
 	 *
 	 * @access private
 	 */
-	var $_filters = array();
+	private $_filters = array();
 
 	/**
 	 * constructor
@@ -110,8 +105,7 @@ class core_Object
 	 * normally, this is called from child classes only
 	 * @access public
 	 */
-	function core_Object()
-	{
+	public function core_Object() {
 	}
 
 	/**#@+
@@ -119,16 +113,13 @@ class core_Object
 	 *
 	 * @access public
 	 */
-	function setNew()
-	{
+	public function setNew() {
 		$this->_isNew = true;
 	}
-	function unsetNew()
-	{
+	public function unsetNew() {
 		$this->_isNew = false;
 	}
-	function isNew()
-	{
+	public function isNew() {
 		return $this->_isNew;
 	}
 	/**#@-*/
@@ -139,16 +130,13 @@ class core_Object
 	 * used for modified objects only
 	 * @access public
 	 */
-	function setDirty()
-	{
+	public function setDirty() {
 		$this->_isDirty = true;
 	}
-	function unsetDirty()
-	{
+	public function unsetDirty() {
 		$this->_isDirty = false;
 	}
-	function isDirty()
-	{
+	public function isDirty() {
 		return $this->_isDirty;
 	}
 	/**#@-*/
@@ -164,8 +152,7 @@ class core_Object
 	 * @param int $maxlength  for XOBJ_DTYPE_TXTBOX type only
 	 * @param string $option  does this data have any select options?
 	 */
-	function initVar($key, $data_type, $value = null, $required = false, $maxlength = null, $options = '')
-	{
+	public function initVar($key, $data_type, $value = null, $required = false, $maxlength = null, $options = '') {
 		$this->vars[$key] = array('value' => $value, 'required' => $required, 'data_type' => $data_type, 'maxlength' => $maxlength, 'changed' => false, 'options' => $options);
 	}
 
@@ -176,8 +163,7 @@ class core_Object
 	 * @param string $key name of the variable to assign
 	 * @param mixed $value value to assign
 	 */
-	function assignVar($key, $value)
-	{
+	public function assignVar($key, $value) {
 		if (isset($value) && isset($this->vars[$key])) {
 			$this->vars[$key]['value'] =& $value;
 		}
@@ -189,8 +175,7 @@ class core_Object
 	 * @access private
 	 * @param array $var_array associative array of values to assign
 	 */
-	function assignVars($var_arr)
-	{
+	function assignVars($var_arr) {
 		foreach ($var_arr as $key => $value) {
 			$this->assignVar($key, $value);
 		}
@@ -204,8 +189,7 @@ class core_Object
 	 * @param mixed $value value to assign
 	 * @param bool $not_gpc
 	 */
-	function setVar($key, $value, $not_gpc = false)
-	{
+	public function setVar($key, $value, $not_gpc = false) {
 		if (!empty($key) && isset($value) && isset($this->vars[$key])) {
 			$this->vars[$key]['value'] =& $value;
 			$this->vars[$key]['not_gpc'] = $not_gpc;
@@ -231,8 +215,8 @@ class core_Object
 	/**
 	 * Assign values to multiple variables in a batch
 	 *
-	 * Meant for a CGI contenxt:
-	 * - prefixed CGI args are considered save
+	 * Meant for a CGI context:
+	 * - prefixed CGI args are considered safe
 	 * - avoids polluting of namespace with CGI args
 	 *
 	 * @access private
@@ -242,8 +226,8 @@ class core_Object
 	function setFormVars($var_arr=null, $pref='xo_', $not_gpc=false) {
 		$len = strlen($pref);
 		foreach ($var_arr as $key => $value) {
-			if ($pref == substr($key,0,$len)) {
-				$this->setVar(substr($key,$len), $value, $not_gpc);
+			if ($pref == substr($key, 0, $len)) {
+				$this->setVar(substr($key, $len), $value, $not_gpc);
 			}
 		}
 	}
@@ -254,8 +238,7 @@ class core_Object
 	 * @access public
 	 * @return array associative array of key->value pairs
 	 */
-	function &getVars()
-	{
+	public function &getVars() {
 		return $this->vars;
 	}
 
@@ -267,7 +250,7 @@ class core_Object
 	 * @param int $maxDepth Maximum level of recursion to use if some vars are objects themselves
 	 * @return array associative array of key->value pairs
 	 */
-	function getValues( $keys = null, $format = 's', $maxDepth = 1 ) {
+	public function getValues( $keys = null, $format = 's', $maxDepth = 1 ) {
 		if ( !isset( $keys ) ) {
 			$keys = array_keys( $this->vars );
 		}
@@ -294,8 +277,7 @@ class core_Object
 	 * @param string $format format to use for the output
 	 * @return mixed formatted value of the variable
 	 */
-	function getVar($key, $format = 's')
-	{
+	public function getVar($key, $format = 's') {
 		$ret = $this->vars[$key]['value'];
 		switch ($this->vars[$key]['data_type']) {
 
@@ -321,6 +303,7 @@ class core_Object
 						break 1;
 				}
 				break;
+
 			case XOBJ_DTYPE_TXTAREA:
 				switch (strtolower($format)) {
 					case 's':
@@ -333,10 +316,12 @@ class core_Object
 						$br = (!isset($this->vars['dobr']['value']) || $this->vars['dobr']['value'] == 1) ? 1 : 0;
 						return $ts->displayTarea($ret, $html, $smiley, $xcode, $image, $br);
 						break 1;
+
 					case 'e':
 					case 'edit':
 						return htmlspecialchars($ret, ENT_QUOTES);
 						break 1;
+
 					case 'p':
 					case 'preview':
 						$ts =& core_Textsanitizer::getInstance();
@@ -347,45 +332,54 @@ class core_Object
 						$br = (!isset($this->vars['dobr']['value']) || $this->vars['dobr']['value'] == 1) ? 1 : 0;
 						return $ts->previewTarea($ret, $html, $smiley, $xcode, $image, $br);
 						break 1;
+
 					case 'f':
 					case 'formpreview':
 						$ts =& core_Textsanitizer::getInstance();
 						return htmlspecialchars($ts->stripSlashesGPC($ret), ENT_QUOTES);
 						break 1;
+
 					case 'n':
 					case 'none':
 					default:
 						break 1;
 				}
 				break;
+
 			case XOBJ_DTYPE_ARRAY:
 				$ret =& unserialize($ret);
 				break;
+
 			case XOBJ_DTYPE_SOURCE:
 				switch (strtolower($format)) {
 					case 's':
 					case 'show':
 						break 1;
+
 					case 'e':
 					case 'edit':
 						return htmlspecialchars($ret, ENT_QUOTES);
 						break 1;
+
 					case 'p':
 					case 'preview':
 						$ts =& core_Textsanitizer::getInstance();
 						return $ts->stripSlashesGPC($ret);
 						break 1;
+
 					case 'f':
 					case 'formpreview':
 						$ts =& core_Textsanitizer::getInstance();
 						return htmlspecialchars($ts->stripSlashesGPC($ret), ENT_QUOTES);
 						break 1;
+
 					case 'n':
 					case 'none':
 					default:
 						break 1;
 				}
 				break;
+
 			default:
 				if ($this->vars[$key]['options'] != '' && $ret != '') {
 					switch (strtolower($format)) {
@@ -406,6 +400,7 @@ class core_Object
 						case 'edit':
 							$ret = explode('|', $ret);
 							break 1;
+
 						default:
 							break 1;
 					}
@@ -427,7 +422,7 @@ class core_Object
 	 * @return bool true if successful
 	 * @access public
 	 */
-	function cleanVars() {
+	public function cleanVars() {
 		$ts =& core_Textsanitizer::getInstance();
 		$existing_errors = $this->getErrors();
 		$this->_errors = array();
@@ -552,8 +547,7 @@ class core_Object
 	 * @param string $filtername name of the filter
 	 * @access public
 	 */
-	function registerFilter($filtername)
-	{
+	public function registerFilter($filtername) {
 		$this->_filters[] = $filtername;
 	}
 
@@ -576,8 +570,7 @@ class core_Object
 	 * @access public
 	 * @return object clone
 	 */
-	function &xoopsClone()
-	{
+	public function &xoopsClone() {
 		$class = get_class($this);
 		$clone = new $class();
 		foreach ($this->vars as $k => $v) {
@@ -594,8 +587,7 @@ class core_Object
 	 * @param string $value error to add
 	 * @access public
 	 */
-	function setErrors($err_str)
-	{
+	public function setErrors($err_str) {
 		$this->_errors[] = trim($err_str);
 	}
 
@@ -605,8 +597,7 @@ class core_Object
 	 * @return array an array of errors
 	 * @access public
 	 */
-	function getErrors()
-	{
+	public function getErrors() {
 		return $this->_errors;
 	}
 
@@ -616,8 +607,7 @@ class core_Object
 	 * @return string html listing the errors
 	 * @access public
 	 */
-	function getHtmlErrors()
-	{
+	public function getHtmlErrors() {
 		$ret = '<h4>'._ERROR.'</h4>';
 		if (!empty($this->_errors)) {
 			foreach ($this->_errors as $error) {
@@ -631,78 +621,13 @@ class core_Object
 }
 
 /**
- * XOOPS object handler class.
- * This class is an abstract class of handler classes that are responsible for providing
- * data access mechanisms to the data source of its corresponsing data objects
- * @package kernel
- * @abstract
+ * @deprecated	Use core_Object instead
+ * @todo		Remove this in version 1.4
  *
- * @author  Kazumi Ono <onokazu@xoops.org>
- * @copyright copyright &copy; 2000 The XOOPS Project
  */
-class core_ObjectHandler
-{
-
-	/**
-	 * holds referenced to {@link XoopsDatabase} class object
-	 *
-	 * @var object
-	 * @see XoopsDatabase
-	 * @access protected
-	 */
-	var $db;
-
-	//
-	/**
-	* called from child classes only
-	*
-	* @param object $db reference to the {@link XoopsDatabase} object
-	* @access protected
-	*/
-	function core_ObjectHandler(&$db)
-	{
-		$this->db =& $db;
+class XoopsObject extends core_Object {
+	public function __construct() {
+		parent::__construct();
+		$this->setErrors(icms_deprecated('core_Object','This will be removed in version 1.4'));
 	}
-
-	/**
-	 * creates a new object
-	 *
-	 * @abstract
-	 */
-	function &create()
-	{
-	}
-
-	/**
-	 * gets a value object
-	 *
-	 * @param int $int_id
-	 * @abstract
-	 */
-	function &get($int_id)
-	{
-	}
-
-	/**
-	 * insert/update object
-	 *
-	 * @param object $object
-	 * @abstract
-	 */
-	function insert(&$object)
-	{
-	}
-
-	/**
-	 * delete object from database
-	 *
-	 * @param object $object
-	 * @abstract
-	 */
-	function delete(&$object)
-	{
-	}
-
 }
-
-?>
