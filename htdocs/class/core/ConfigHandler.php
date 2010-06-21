@@ -20,7 +20,7 @@ require_once XOOPS_ROOT_PATH.'/kernel/configoption.php';
 require_once XOOPS_ROOT_PATH.'/kernel/configitem.php';
 
 /**
- * XOOPS configuration handling class.
+ * Configuration handling class.
  * This class acts as an interface for handling general configurations of XOOPS
  * and its modules.
  *
@@ -31,8 +31,7 @@ require_once XOOPS_ROOT_PATH.'/kernel/configitem.php';
  *          - error handling
  * @access  public
  */
-class core_ConfigHandler
-{
+class core_ConfigHandler {
 
 	/**
 	 * holds reference to config item handler(DAO) class
@@ -40,7 +39,7 @@ class core_ConfigHandler
 	 * @var     object
 	 * @access	private
 	 */
-	var $_cHandler;
+	private $_cHandler;
 
 	/**
 	 * holds reference to config option handler(DAO) class
@@ -48,7 +47,7 @@ class core_ConfigHandler
 	 * @var	    object
 	 * @access	private
 	 */
-	var $_oHandler;
+	private $_oHandler;
 
 	/**
 	 * holds an array of cached references to config value arrays,
@@ -57,15 +56,14 @@ class core_ConfigHandler
 	 * @var     array
 	 * @access  private
 	 */
-	var $_cachedConfigs = array();
+	private $_cachedConfigs = array();
 
 	/**
 	 * Constructor
 	 *
 	 * @param	object  &$db    reference to database object
 	 */
-	function core_ConfigHandler(&$db)
-	{
+	public function core_ConfigHandler(&$db) {
 		$this->_cHandler = new XoopsConfigItemHandler($db);
 		$this->_oHandler = new XoopsConfigOptionHandler($db);
 	}
@@ -76,8 +74,7 @@ class core_ConfigHandler
 	 * @see     XoopsConfigItem
 	 * @return	object  reference to the new {@link XoopsConfigItem}
 	 */
-	function &createConfig()
-	{
+	public function &createConfig() {
 		$instance =& $this->_cHandler->create();
 		return $instance;
 	}
@@ -89,8 +86,7 @@ class core_ConfigHandler
 	 * @param	bool    $withoptions    load the config's options now?
 	 * @return	object  reference to the {@link XoopsConfig}
 	 */
-	function &getConfig($id, $withoptions = false)
-	{
+	public function &getConfig($id, $withoptions = false) {
 		$config =& $this->_cHandler->get($id);
 		if ($withoptions == true) {
 			$config->setConfOptions($this->getConfigOptions(new core_Criteria('conf_id', $id)));
@@ -104,8 +100,7 @@ class core_ConfigHandler
 	 * @param	object  &$config    reference to the {@link XoopsConfigItem}
 	 * @return	true|false if inserting config succeeded or not
 	 */
-	function insertConfig(&$config)
-	{
+	public function insertConfig(&$config) {
 		if (!$this->_cHandler->insert($config)) {
 			return false;
 		}
@@ -133,8 +128,7 @@ class core_ConfigHandler
 	 * @param	object  &$config    reference to a {@link XoopsConfigItem}
 	 * @return	true|false if deleting config item succeeded or not
 	 */
-	function deleteConfig(&$config)
-	{
+	public function deleteConfig(&$config) {
 		if (!$this->_cHandler->delete($config)) {
 			return false;
 		}
@@ -164,8 +158,7 @@ class core_ConfigHandler
 	 *
 	 * @return	array   Array of {@link XoopsConfigItem} objects
 	 */
-	function getConfigs($criteria = null, $id_as_key = false, $with_options = false)
-	{
+	public function getConfigs($criteria = null, $id_as_key = false, $with_options = false) {
 		return $this->_cHandler->getObjects($criteria, $id_as_key);
 	}
 
@@ -175,8 +168,7 @@ class core_ConfigHandler
 	 * @param	object  $criteria   {@link core_CriteriaElement}
 	 * @return	int count result
 	 */
-	function getConfigCount($criteria = null)
-	{
+	public function getConfigCount($criteria = null) {
 		return $this->_cHandler->getCount($criteria);
 	}
 
@@ -188,13 +180,12 @@ class core_ConfigHandler
 	 *
 	 * @return	array   array of {@link XoopsConfig}s
 	 */
-	function &getConfigsByCat($category, $module = 0)
-	{
+	public function &getConfigsByCat($category, $module = 0) {
 		static $_cachedConfigs;
 
 		if (is_array($category)) {
 			$criteria = new core_CriteriaCompo(new core_Criteria('conf_modid', (int) ($module)));
-			$criteria->add(new core_Criteria('conf_catid', '('.implode(',', $category).')', 'IN'));
+			$criteria->add(new core_Criteria('conf_catid', '(' . implode(',', $category) . ')', 'IN'));
 			$configs = $this->getConfigs($criteria, true);
 			if (is_array($configs)) {
 				foreach (array_keys($configs) as $i) {
@@ -228,7 +219,7 @@ class core_ConfigHandler
 	 *
 	 * @return	object  {@link XoopsConfigOption}
 	 */
-	function &createConfigOption() {
+	public function &createConfigOption() {
 		$inst =& $this->_oHandler->create();
 		return $inst;
 	}
@@ -240,7 +231,7 @@ class core_ConfigHandler
 	 *
 	 * @return	object  {@link XoopsConfigOption}
 	 */
-	function &getConfigOption($id) {
+	public function &getConfigOption($id) {
 		$inst =& $this->_oHandler->get($id);
 		return $inst;
 	}
@@ -253,8 +244,7 @@ class core_ConfigHandler
 	 *
 	 * @return	array   Array of {@link XoopsConfigOption}s
 	 */
-	function getConfigOptions($criteria = null, $id_as_key = false)
-	{
+	public function getConfigOptions($criteria = null, $id_as_key = false) {
 		return $this->_oHandler->getObjects($criteria, $id_as_key);
 	}
 
@@ -265,8 +255,7 @@ class core_ConfigHandler
 	 *
 	 * @return	int     Count of {@link XoopsConfigOption}s matching $criteria
 	 */
-	function getConfigOptionsCount($criteria = null)
-	{
+	public function getConfigOptionsCount($criteria = null) {
 		return $this->_oHandler->getCount($criteria);
 	}
 
@@ -278,8 +267,7 @@ class core_ConfigHandler
 	 *
 	 * @return	array   Associative array of name=>value pairs.
 	 */
-	function getConfigList($conf_modid, $conf_catid = 0)
-	{
+	public function getConfigList($conf_modid, $conf_catid = 0) {
 		if (!empty($this->_cachedConfigs[$conf_modid][$conf_catid])) {
 			return $this->_cachedConfigs[$conf_modid][$conf_catid];
 		} else {
@@ -298,4 +286,14 @@ class core_ConfigHandler
 		}
 	}
 }
-?>
+
+/**
+ * @deprecated	Use core_ConfigHandler instead
+ * @todo		Remove this in version 1.4
+ */
+class XoopsConfigHandler extends core_ConfigHandler {
+	public function __construct() {
+		parent::__construct();
+	}
+}
+
