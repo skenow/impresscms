@@ -14,7 +14,7 @@
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
-include_once ICMS_ROOT_PATH . '/kernel/block.php';
+//include_once ICMS_ROOT_PATH . '/kernel/block.php';
 
 /**
  * System Block Configuration Object Class
