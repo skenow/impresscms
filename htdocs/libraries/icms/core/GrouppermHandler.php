@@ -26,21 +26,21 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * of group permission class objects.
  * This class is an abstract class to be implemented by child group permission classes.
  *
- * @see          core_Groupperm
+ * @see          icms_core_Groupperm
  * @author       Kazumi Ono  <onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class core_GrouppermHandler extends core_ObjectHandler {
+class icms_core_GrouppermHandler extends core_ObjectHandler {
 	public static $_cachedRights;
 
 	/**
-	 * Create a new {@link core_Groupperm}
+	 * Create a new {@link icms_core_Groupperm}
 	 *
 	 * @return	bool    $isNew  Flag the object as "new"?
 	 * @see htdocs/kernel/core_ObjectHandler#create()
 	 */
 	public function &create($isNew = true) {
-		$perm = new core_Groupperm();
+		$perm = new icms_core_Groupperm();
 		if ($isNew) {
 			$perm->setNew();
 		}
@@ -52,7 +52,7 @@ class core_GrouppermHandler extends core_ObjectHandler {
 	 *
 	 * @param	int $id ID
 	 *
-	 * @return	object  {@link core_Groupperm}, FALSE on fail
+	 * @return	object  {@link icms_core_Groupperm}, FALSE on fail
 	 * @see htdocs/kernel/core_ObjectHandler#get($int_id)
 	 */
 	public function &get($id) {
@@ -65,7 +65,7 @@ class core_GrouppermHandler extends core_ObjectHandler {
 			}
 			$numrows = $this->db->getRowsNum($result);
 			if ( $numrows == 1 ) {
-				$perm = new core_Groupperm();
+				$perm = new icms_core_Groupperm();
 				$perm->assignVars($this->db->fetchArray($result));
 			}
 		}
@@ -73,9 +73,9 @@ class core_GrouppermHandler extends core_ObjectHandler {
 	}
 
 	/**
-	 * Store a {@link core_Groupperm}
+	 * Store a {@link icms_core_Groupperm}
 	 *
-	 * @param	object  &$perm  {@link core_Groupperm} object
+	 * @param	object  &$perm  {@link icms_core_Groupperm} object
 	 *
 	 * @return	bool    TRUE on success
 	 * @see htdocs/kernel/core_ObjectHandler#insert($object)
@@ -84,7 +84,7 @@ class core_GrouppermHandler extends core_ObjectHandler {
 		/**
 		 * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
 		 */
-		if (!is_a($perm, 'core_Groupperm')) {
+		if (!is_a($perm, 'icms_core_Groupperm')) {
 			return false;
 		}
 		if ( !$perm->isDirty() ) {
@@ -113,7 +113,7 @@ class core_GrouppermHandler extends core_ObjectHandler {
 	}
 
 	/**
-	 * Delete a {@link core_Groupperm}
+	 * Delete a {@link icms_core_Groupperm}
 	 *
 	 * @param	object  &$perm
 	 *
@@ -124,7 +124,7 @@ class core_GrouppermHandler extends core_ObjectHandler {
 		/**
 		 * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
 		 */
-		if (!is_a($perm, 'core_Groupperm')) {
+		if (!is_a($perm, 'icms_core_Groupperm')) {
 			return false;
 		}
 		$sql = sprintf("DELETE FROM %s WHERE gperm_id = '%u'", $this->db->prefix('group_permission'), (int) ($perm->getVar('gperm_id')));
@@ -135,12 +135,12 @@ class core_GrouppermHandler extends core_ObjectHandler {
 	}
 
 	/**
-	 * Retrieve multiple {@link core_Groupperm}s
+	 * Retrieve multiple {@link icms_core_Groupperm}s
 	 *
 	 * @param	object  $criteria   {@link core_CriteriaElement}
 	 * @param	bool    $id_as_key  Use IDs as array keys?
 	 *
-	 * @return	array   Array of {@link core_Groupperm}s
+	 * @return	array   Array of {@link icms_core_Groupperm}s
 	 */
 	public function getObjects($criteria = null, $id_as_key = false) {
 		$ret = array();
@@ -156,7 +156,7 @@ class core_GrouppermHandler extends core_ObjectHandler {
 			return $ret;
 		}
 		while ($myrow = $this->db->fetchArray($result)) {
-			$perm = new core_Groupperm();
+			$perm = new icms_core_Groupperm();
 			$perm->assignVars($myrow);
 			if (!$id_as_key) {
 				$ret[] =& $perm;
@@ -169,7 +169,7 @@ class core_GrouppermHandler extends core_ObjectHandler {
 	}
 
 	/**
-	 * Count some {@link core_Groupperm}s
+	 * Count some {@link icms_core_Groupperm}s
 	 *
 	 * @param	object  $criteria   {@link core_CriteriaElement}
 	 *
@@ -358,10 +358,10 @@ class core_GrouppermHandler extends core_ObjectHandler {
 }
 
 /**
- * @deprecated	Use core_GrouppermHandler, instead
+ * @deprecated	Use icms_core_GrouppermHandler, instead
  * @todo		Remove in version 1.4
  *
  */
-class XoopsGrouppermHandler extends core_GrouppermHandler {
+class XoopsGrouppermHandler extends icms_core_GrouppermHandler {
 
 }
