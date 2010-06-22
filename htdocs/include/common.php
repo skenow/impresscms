@@ -50,8 +50,8 @@ define('ICMS_MODULES_PATH', ICMS_ROOT_PATH . '/modules');
 define('ICMS_MODULES_URL', ICMS_URL . '/modules');
 /**#@-*/
 
-require_once( ICMS_ROOT_PATH . '/libraries/core/Autoloader.php' );
-core_Autoloader::register();
+require_once( ICMS_ROOT_PATH . '/libraries/icms/core/Autoloader.php' );
+icms_core_Autoloader::register();
 
 // ################# Creation of the icms_core_Preloadhandler ##############
 //include_once ICMS_ROOT_PATH . '/kernel/icmspreloadhandler.php';

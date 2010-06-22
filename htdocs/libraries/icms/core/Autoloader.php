@@ -11,7 +11,7 @@
  * @version		$Id: common.php 19427 2010-06-16 03:31:22Z skenow $
  */
 
-class core_Autoloader {
+class icms_core_Autoloader {
 
 	/**
 	 * Debug feature of autoloader
@@ -48,7 +48,7 @@ class core_Autoloader {
 	function register() {
 		static $reg = false;
 		if ( !$reg ) {
-			spl_autoload_register( array( 'core_Autoloader', 'autoload' ) );
+			spl_autoload_register( array( 'icms_core_Autoloader', 'autoload' ) );
 			$reg = true;
 		}
 	}
