@@ -164,7 +164,7 @@ class icms_core_PreloadHandler {
 }
 
 /**
- * core_Preloaditem
+ * icms_core_Preloaditem
  *
  * Class which is extended by any preload item. This class is empty for now but is there for
  * extended future purposes
@@ -177,9 +177,9 @@ class icms_core_PreloadHandler {
  * @version		$Id: icmspreloadhandler.php 19421 2010-06-14 07:28:37Z david-sf $
  */
 
-class core_Preloaditem {
+class icms_core_Preloaditem {
 
-	function core_Preloaditem() {
+	function icms_core_Preloaditem() {
 	}
 }
 ?>

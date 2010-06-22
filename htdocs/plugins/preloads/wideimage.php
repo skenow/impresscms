@@ -17,7 +17,7 @@
  * @since	1.2
  *
  */
-class IcmsPreloadWideimage extends core_Preloaditem {
+class IcmsPreloadWideimage extends icms_core_Preloaditem {
 	/**
 	 * Function to be triggered at the end of the output init process
 	 *
