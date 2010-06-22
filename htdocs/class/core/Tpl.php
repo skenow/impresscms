@@ -152,6 +152,7 @@ class core_Tpl extends Smarty {
  * @param   string  $tpl_id
  * @param   boolean $clear_old
  * @return  boolean
+ * @todo	Make this a static method of the Tpl class, this occurs in several places
  **/
 function xoops_template_touch($tpl_id, $clear_old = true) {
 	$tplfile_handler =& xoops_gethandler('tplfile');
@@ -170,6 +171,7 @@ function xoops_template_touch($tpl_id, $clear_old = true) {
  *
  * @param   int $mid    Module ID
  * @return
+ * @todo	Make this a static method of the Tpl class, this is used in system/admin/modulesadmin/modulesadmin.php
  **/
 function xoops_template_clear_module_cache($mid)
 {
@@ -189,6 +191,8 @@ function xoops_template_clear_module_cache($mid)
 
 /**
  * For backward compat
+ * @deprecated	Use core_Tpl, instead
+ * @todo		Remove this in version 1.4
  */
 class XoopsTpl extends core_Tpl {
 
