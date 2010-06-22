@@ -32,13 +32,13 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  *
  * @version		$Revision: 1102 $ - $Date: 2007-10-18 22:55:52 -0400 (jeu., 18 oct. 2007) $
  */
-class core_Privmessage extends core_Object
+class icms_core_Privmessage extends core_Object
 {
 
 	/**
 	 * constructor
 	 **/
-	function core_Privmessage()
+	function icms_core_Privmessage()
 	{
 		$this->core_Object();
 		$this->initVar('msg_id', XOBJ_DTYPE_INT, null, false);
