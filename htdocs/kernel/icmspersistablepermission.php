@@ -61,11 +61,11 @@ class IcmsPersistablePermissionHandler extends core_ObjectHandler
 
 		$icmsModule =& $this->handler->getModuleInfo();
 
-		$criteria = new core_CriteriaCompo();
-		$criteria->add(new core_Criteria('gperm_modid', $icmsModule->getVar('mid')));
+		$criteria = new icms_core_CriteriaCompo();
+		$criteria->add(new icms_core_Criteria('gperm_modid', $icmsModule->getVar('mid')));
 
 		if ($gperm_name) {
-			$criteria->add(new core_Criteria('gperm_name', $gperm_name));
+			$criteria->add(new icms_core_Criteria('gperm_name', $gperm_name));
 		}
 
 		//Get group permissions handler

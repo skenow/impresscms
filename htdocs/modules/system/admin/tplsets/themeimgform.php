@@ -16,9 +16,9 @@
  */
 
 $image_handler =& xoops_gethandler('imageset', 'imagesetimg');
-$criteria = new core_CriteriaCompo(new core_Criteria('tplset_name', $tplset));
+$criteria = new icms_core_CriteriaCompo(new icms_core_Criteria('tplset_name', $tplset));
 // skin image sets have reference ID 0
-$criteria->add(new core_Criteria('imgset_refid', 0));
+$criteria->add(new icms_core_Criteria('imgset_refid', 0));
 $imgs =& $image_handler->getObjects($criteria);
 $icount = count($imgs);
 if ($tplset != 'default') {

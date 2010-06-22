@@ -91,7 +91,7 @@ function xoops_module_install($dirname) {
 	$db =& Database::getInstance();
 	$reservedTables = array('avatar', 'avatar_users_link', 'block_module_link', 'xoopscomments', 'config', 'configcategory', 'configoption', 'image', 'imagebody', 'imagecategory', 'imgset', 'imgset_tplset_link', 'imgsetimg', 'groups','groups_users_link','group_permission', 'online', 'bannerclient', 'banner', 'bannerfinish', 'priv_msgs', 'ranks', 'session', 'smiles', 'users', 'newblocks', 'modules', 'tplfile', 'tplset', 'tplsource', 'xoopsnotifications', 'banner', 'bannerclient', 'bannerfinish');
 	$module_handler =& xoops_gethandler('module');
-	if ($module_handler->getCount(new core_Criteria('dirname', $dirname)) == 0) {
+	if ($module_handler->getCount(new icms_core_Criteria('dirname', $dirname)) == 0) {
 		$module =& $module_handler->create();
 		$module->loadInfoAsVar($dirname);
 		$module->setVar('weight', 1);
@@ -570,7 +570,7 @@ function xoops_module_uninstall($dirname) {
 		}
 
 		$page_handler = xoops_gethandler('page');
-		$criteria = new core_CriteriaCompo(new core_Criteria('page_moduleid', $module->getVar('mid')));
+		$criteria = new icms_core_CriteriaCompo(new icms_core_Criteria('page_moduleid', $module->getVar('mid')));
 		$pages = $page_handler->getCount($criteria);
 
 		if ($pages > 0){
@@ -686,7 +686,7 @@ function xoops_module_uninstall($dirname) {
 			// delete module config options if any
 			if ($module->getVar('hasconfig') != 0 || $module->getVar('hascomments') != 0) {
 				$config_handler =& xoops_gethandler('config');
-				$configs =& $config_handler->getConfigs(new core_Criteria('conf_modid', $module->getVar('mid')));
+				$configs =& $config_handler->getConfigs(new icms_core_Criteria('conf_modid', $module->getVar('mid')));
 				$confcount = count($configs);
 				if ($confcount > 0) {
 					$msgs[] = 'Deleting module config options...';
@@ -704,8 +704,8 @@ function xoops_module_uninstall($dirname) {
 			if (isset($atasks) && is_array($atasks) && (count($atasks) > 0)) {
 				$msgs[] = 'Deleting autotasks...';
 				$atasks_handler = &icms_getModuleHandler('autotasks', 'system');
-				$criteria = new core_CriteriaCompo();
-				$criteria->add( new core_Criteria( 'sat_type', 'addon/'.$module->getInfo('dirname') ) );
+				$criteria = new icms_core_CriteriaCompo();
+				$criteria->add( new icms_core_Criteria( 'sat_type', 'addon/'.$module->getInfo('dirname') ) );
 				$atasks_handler->deleteAll($criteria);
 				unset($atasks_handler,$criteria,$taskData);
 			}
@@ -1061,7 +1061,7 @@ function icms_module_update($dirname) {
 
 		// first delete all config entries
 		$config_handler =& xoops_gethandler('config');
-		$configs =& $config_handler->getConfigs(new core_Criteria('conf_modid', $module->getVar('mid')));
+		$configs =& $config_handler->getConfigs(new icms_core_Criteria('conf_modid', $module->getVar('mid')));
 		$confcount = count($configs);
 		$config_delng = array();
 		if ($confcount > 0) {
@@ -1186,8 +1186,8 @@ function icms_module_update($dirname) {
 		$atasks_handler = &icms_getModuleHandler('autotasks', 'system');
 		if (isset($atasks) && is_array($atasks) && (count($atasks) > 0)) {
 			$msgs[] = 'Updating autotasks...';
-			$criteria = new core_CriteriaCompo();
-			$criteria->add( new core_Criteria( 'sat_type', 'addon/'.$module->getInfo('dirname')));
+			$criteria = new icms_core_CriteriaCompo();
+			$criteria->add( new icms_core_Criteria( 'sat_type', 'addon/'.$module->getInfo('dirname')));
 			$items_atasks = $atasks_handler->getObjects( $criteria , false );
 			foreach ($items_atasks as $task) {
 				$taskID = (int) ($task->getVar('sat_addon_id'));

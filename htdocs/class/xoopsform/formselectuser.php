@@ -65,16 +65,16 @@ class XoopsFormSelectUser extends XoopsFormElementTray
 		$user_count = $member_handler->getUserCount();
 		$value = is_array($value) ? $value : ( empty($value) ? array() : array($value) );
 		if ($user_count > $limit && count($value) > 0) {
-			$criteria = new core_CriteriaCompo(new core_Criteria("uid", "(".implode(",", $value).")", "IN"));
+			$criteria = new icms_core_CriteriaCompo(new icms_core_Criteria("uid", "(".implode(",", $value).")", "IN"));
 		} else {
-			$criteria = new core_CriteriaCompo();
+			$criteria = new icms_core_CriteriaCompo();
 			$criteria->setLimit($limit);
 		}
 		$criteria->setSort('uname');
 		if(!$showremovedusers){
-			$criteria->add(new core_Criteria('level', '-1', '!='));
+			$criteria->add(new icms_core_Criteria('level', '-1', '!='));
 		}elseif($showremovedusers && $justremovedusers){
-			$criteria->add(new core_Criteria('level', '-1'));
+			$criteria->add(new icms_core_Criteria('level', '-1'));
 		}
 		$criteria->setOrder('ASC');
 		$users = $member_handler->getUserList($criteria);

@@ -295,7 +295,7 @@ class IcmsDatabasetable {
 	 *
 	 * @param   string  $fieldname  Name of the field
 	 * @param   string  $fieldvalue Value to write
-	 * @param   object  $criteria   {@link core_CriteriaElement}
+	 * @param   object  $criteria   {@link icms_core_CriteriaElement}
 	 * @param 	bool	$fieldvalueIsOperation TRUE if fieldvalue is an operation, for example, conf_order+1
 	 *
 	 * @return  bool
@@ -313,7 +313,7 @@ class IcmsDatabasetable {
 	 *
 	 * @param   string  $fieldname  Name of the field
 	 * @param   string  $fieldvalue Value to write
-	 * @param   object  $criteria   {@link core_CriteriaElement}
+	 * @param   object  $criteria   {@link icms_core_CriteriaElement}
 	 *
 	 * @return  bool
 	 */
@@ -491,7 +491,7 @@ class IcmsDatabasetable {
 	 *
 	 * @param   string  $fieldname  Name of the field
 	 * @param   string  $fieldvalue Value to write
-	 * @param   object  $criteria   {@link core_CriteriaElement}
+	 * @param   object  $criteria   {@link icms_core_CriteriaElement}
 	 *
 	 * @return  bool
 	 **/
@@ -512,7 +512,7 @@ class IcmsDatabasetable {
 				$set_clause .= $this->_db->quoteString( $fieldvalue );
 			}
 			$sql = 'UPDATE '.$this->name().' SET '.$set_clause;
-			if (isset($criteria) && is_subclass_of($criteria, 'core_CriteriaElement')) {
+			if (isset($criteria) && is_subclass_of($criteria, 'icms_core_CriteriaElement')) {
 				$sql .= ' '.$criteria->renderWhere();
 			}
 			if ($this->force) {
@@ -532,7 +532,7 @@ class IcmsDatabasetable {
 	/**
 	 * delete all objects meeting the conditions
 	 *
-	 * @param object $criteria {@link core_CriteriaElement} with conditions to meet
+	 * @param object $criteria {@link icms_core_CriteriaElement} with conditions to meet
 	 * @return bool
 	 */
 
@@ -541,7 +541,7 @@ class IcmsDatabasetable {
 		$ret = true;
 		foreach ($this->getDeleteAll() as $item) {
 			$criteria = isset($item['criteria']) ? $item['criteria'] : null;
-			if (isset($criteria) && is_subclass_of($criteria, 'core_CriteriaElement')) {
+			if (isset($criteria) && is_subclass_of($criteria, 'icms_core_CriteriaElement')) {
 				$sql = 'DELETE FROM '.$this->table;
 				$sql .= ' '.$criteria->renderWhere();
 				if ($this->force) {

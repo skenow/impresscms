@@ -169,9 +169,9 @@ switch ($action) {
 	case "results":
 		$max_results_per_page = (int) ($icmsConfigSearch['num_shallow_search']);
 		$module_handler =& xoops_gethandler('module');
-		$criteria = new core_CriteriaCompo(new core_Criteria('hassearch', 1));
-		$criteria->add(new core_Criteria('isactive', 1));
-		$criteria->add(new core_Criteria('mid', "(".implode(',', $available_modules).")", 'IN'));
+		$criteria = new icms_core_CriteriaCompo(new icms_core_Criteria('hassearch', 1));
+		$criteria->add(new icms_core_Criteria('isactive', 1));
+		$criteria->add(new icms_core_Criteria('mid', "(".implode(',', $available_modules).")", 'IN'));
 		$modules =& $module_handler->getObjects($criteria, true);
 		$mids = isset($_REQUEST['mids']) ? $_REQUEST['mids'] : array();
 		if (empty($mids) || !is_array($mids)) {

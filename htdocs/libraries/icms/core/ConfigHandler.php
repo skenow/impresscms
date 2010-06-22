@@ -89,7 +89,7 @@ class icms_core_ConfigHandler {
 	public function &getConfig($id, $withoptions = false) {
 		$config =& $this->_cHandler->get($id);
 		if ($withoptions == true) {
-			$config->setConfOptions($this->getConfigOptions(new core_Criteria('conf_id', $id)));
+			$config->setConfOptions($this->getConfigOptions(new icms_core_Criteria('conf_id', $id)));
 		}
 		return $config;
 	}
@@ -135,7 +135,7 @@ class icms_core_ConfigHandler {
 		$options =& $config->getConfOptions();
 		$count = count($options);
 		if ($count == 0) {
-			$options = $this->getConfigOptions(new core_Criteria('conf_id', $config->getVar('conf_id')));
+			$options = $this->getConfigOptions(new icms_core_Criteria('conf_id', $config->getVar('conf_id')));
 			$count = count($options);
 		}
 		if (is_array($options) && $count > 0) {
@@ -152,7 +152,7 @@ class icms_core_ConfigHandler {
 	/**
 	 * get one or more Configs
 	 *
-	 * @param	object  $criteria       {@link core_CriteriaElement}
+	 * @param	object  $criteria       {@link icms_core_CriteriaElement}
 	 * @param	bool    $id_as_key      Use the configs' ID as keys?
 	 * @param	bool    $with_options   get the options now?
 	 *
@@ -165,7 +165,7 @@ class icms_core_ConfigHandler {
 	/**
 	 * Count some configs
 	 *
-	 * @param	object  $criteria   {@link core_CriteriaElement}
+	 * @param	object  $criteria   {@link icms_core_CriteriaElement}
 	 * @return	int count result
 	 */
 	public function getConfigCount($criteria = null) {
@@ -184,8 +184,8 @@ class icms_core_ConfigHandler {
 		static $_cachedConfigs;
 
 		if (is_array($category)) {
-			$criteria = new core_CriteriaCompo(new core_Criteria('conf_modid', (int) ($module)));
-			$criteria->add(new core_Criteria('conf_catid', '(' . implode(',', $category) . ')', 'IN'));
+			$criteria = new icms_core_CriteriaCompo(new icms_core_Criteria('conf_modid', (int) ($module)));
+			$criteria->add(new icms_core_Criteria('conf_catid', '(' . implode(',', $category) . ')', 'IN'));
 			$configs = $this->getConfigs($criteria, true);
 			if (is_array($configs)) {
 				foreach (array_keys($configs) as $i) {
@@ -199,9 +199,9 @@ class icms_core_ConfigHandler {
 		} else {
 			if (!empty($_cachedConfigs[$module][$category])) return $_cachedConfigs[$module][$category];
 
-			$criteria = new core_CriteriaCompo(new core_Criteria('conf_modid', (int) ($module)));
+			$criteria = new icms_core_CriteriaCompo(new icms_core_Criteria('conf_modid', (int) ($module)));
 			if (!empty($category)) {
-				$criteria->add(new core_Criteria('conf_catid', (int) ($category)));
+				$criteria->add(new icms_core_Criteria('conf_catid', (int) ($category)));
 			}
 			$configs = $this->getConfigs($criteria, true);
 			if (is_array($configs)) {
@@ -239,7 +239,7 @@ class icms_core_ConfigHandler {
 	/**
 	 * Get one or more {@link XoopsConfigOption}s
 	 *
-	 * @param	object  $criteria   {@link core_CriteriaElement}
+	 * @param	object  $criteria   {@link icms_core_CriteriaElement}
 	 * @param	bool    $id_as_key  Use IDs as keys in the array?
 	 *
 	 * @return	array   Array of {@link XoopsConfigOption}s
@@ -251,7 +251,7 @@ class icms_core_ConfigHandler {
 	/**
 	 * Count some {@link XoopsConfigOption}s
 	 *
-	 * @param	object  $criteria   {@link core_CriteriaElement}
+	 * @param	object  $criteria   {@link icms_core_CriteriaElement}
 	 *
 	 * @return	int     Count of {@link XoopsConfigOption}s matching $criteria
 	 */
@@ -271,9 +271,9 @@ class icms_core_ConfigHandler {
 		if (!empty($this->_cachedConfigs[$conf_modid][$conf_catid])) {
 			return $this->_cachedConfigs[$conf_modid][$conf_catid];
 		} else {
-			$criteria = new core_CriteriaCompo(new core_Criteria('conf_modid', $conf_modid));
+			$criteria = new icms_core_CriteriaCompo(new icms_core_Criteria('conf_modid', $conf_modid));
 			if (empty($conf_catid)) {
-				$criteria->add(new core_Criteria('conf_catid', $conf_catid));
+				$criteria->add(new icms_core_Criteria('conf_catid', $conf_catid));
 			}
 			$configs =& $this->_cHandler->getObjects($criteria);
 			$confcount = count($configs);

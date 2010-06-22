@@ -64,7 +64,7 @@ class XoopsAuthProvisionning {
 	 */
 	function getXoopsUser($uname) {
 		$member_handler =& xoops_gethandler('member');
-		$criteria = new core_Criteria('uname', $uname);
+		$criteria = new icms_core_Criteria('uname', $uname);
 		$getuser = $member_handler->getUsers($criteria);
 		if (count($getuser) == 1)
 		return $getuser[0];

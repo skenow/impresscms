@@ -24,14 +24,14 @@ class IcmsFormPageElement extends XoopsFormElementTray {
 			$value = array($value);
 		}
 		$module_handler =& xoops_gethandler('module');
-		$criteria = new core_CriteriaCompo(new core_Criteria('hasmain', 1));
-		$criteria->add(new core_Criteria('isactive', 1));
+		$criteria = new icms_core_CriteriaCompo(new icms_core_Criteria('hasmain', 1));
+		$criteria->add(new icms_core_Criteria('isactive', 1));
 		$module_list =& $module_handler->getObjects($criteria);
 		$mods = '';
 		foreach ($module_list as $module){
 			$mods .= '<optgroup label="'.$module->getVar('name').'">';
-			$criteria = new core_CriteriaCompo(new core_Criteria('page_moduleid', $module->getVar('mid')));
-			$criteria->add(new core_Criteria('page_status', 1));
+			$criteria = new icms_core_CriteriaCompo(new icms_core_Criteria('page_moduleid', $module->getVar('mid')));
+			$criteria->add(new icms_core_Criteria('page_status', 1));
 			$pages = $icmsObj->getObjects($criteria);
 			$sel = '';
 			if (in_array($module->getVar('mid').'-0',$value)){
@@ -49,8 +49,8 @@ class IcmsFormPageElement extends XoopsFormElementTray {
 		}
 
 		$module = $module_handler->get(1);
-		$criteria = new core_CriteriaCompo(new core_Criteria('page_moduleid', 1));
-		$criteria->add(new core_Criteria('page_status', 1));
+		$criteria = new icms_core_CriteriaCompo(new icms_core_Criteria('page_moduleid', 1));
+		$criteria->add(new icms_core_Criteria('page_status', 1));
 		$pages = $icmsObj->getObjects($criteria);
 		$cont = '';
 		if (count($pages) > 0){

@@ -42,7 +42,7 @@ class IcmsPersistableObjectsRegistry {
 	 * Adding objects to the registry
 	 *
 	 * @param SmartPersistableObjectHandler $handler of the objects to add
-	 * @param core_CriteriaCompo $criteria to pass to the getObjects method of the handler (with id_as_key)
+	 * @param icms_core_CriteriaCompo $criteria to pass to the getObjects method of the handler (with id_as_key)
 	 *
 	 * @return FALSE if an error occured
 	 */
@@ -62,7 +62,7 @@ class IcmsPersistableObjectsRegistry {
 	 *
 	 * @param string $item name of the item
 	 * @param string $modulename name of the module
-	 * @param core_CriteriaCompo $criteria to pass to the getObjects method of the handler (with id_as_key)
+	 * @param icms_core_CriteriaCompo $criteria to pass to the getObjects method of the handler (with id_as_key)
 	 *
 	 * @return FALSE if an error occured
 	 */

@@ -71,17 +71,17 @@ switch ($op) {
 		} else {
 			$groupid = $group->getVar('groupid');
 			$gperm_handler =& xoops_gethandler('groupperm');
-			$criteria = new core_CriteriaCompo(new core_Criteria('gperm_groupid', $groupid));
-			$criteria->add(new core_Criteria('gperm_modid', 1));
-			$criteria2 = new core_CriteriaCompo(new core_Criteria('gperm_name', 'system_admin'));
-			$criteria2->add(new core_Criteria('gperm_name', 'module_admin'), 'OR');
-			$criteria2->add(new core_Criteria('gperm_name', 'module_read'), 'OR');
+			$criteria = new icms_core_CriteriaCompo(new icms_core_Criteria('gperm_groupid', $groupid));
+			$criteria->add(new icms_core_Criteria('gperm_modid', 1));
+			$criteria2 = new icms_core_CriteriaCompo(new icms_core_Criteria('gperm_name', 'system_admin'));
+			$criteria2->add(new icms_core_Criteria('gperm_name', 'module_admin'), 'OR');
+			$criteria2->add(new icms_core_Criteria('gperm_name', 'module_read'), 'OR');
 			if ($g_id != 3){
-				$criteria2->add(new core_Criteria('gperm_name', 'use_wysiwygeditor'), 'OR');
+				$criteria2->add(new icms_core_Criteria('gperm_name', 'use_wysiwygeditor'), 'OR');
 			}
-			$criteria2->add(new core_Criteria('gperm_name', 'enable_debug'), 'OR');
-			$criteria2->add(new core_Criteria('gperm_name', 'block_read'), 'OR');
-			$criteria2->add(new core_Criteria('gperm_name', 'group_manager'), 'OR');
+			$criteria2->add(new icms_core_Criteria('gperm_name', 'enable_debug'), 'OR');
+			$criteria2->add(new icms_core_Criteria('gperm_name', 'block_read'), 'OR');
+			$criteria2->add(new icms_core_Criteria('gperm_name', 'group_manager'), 'OR');
 			$criteria->add($criteria2);
 			$gperm_handler->deleteAll($criteria);
 			if (count($system_catids) > 0) {

@@ -27,12 +27,12 @@ function displayUsers()
 	icms_cp_header();
 	echo '<div class="CPbigTitle" style="background-image: url('.ICMS_URL.'/modules/system/admin/users/images/users_big.png)">'._MD_AM_USER.'</div><br />';
 	$member_handler =& xoops_gethandler('member');
-	$usercount = $member_handler->getUserCount(new core_Criteria('level', '-1', '!='));
+	$usercount = $member_handler->getUserCount(new icms_core_Criteria('level', '-1', '!='));
 	$nav = new XoopsPageNav($usercount, 200, $userstart, 'userstart', 'fct=users');
 	$editform = new XoopsThemeForm(_AM_EDEUSER, 'edituser', 'admin.php');
 	$user_select = new XoopsFormSelect('', 'uid');
-	$criteria = new core_CriteriaCompo();
-	$criteria->add(new core_Criteria('level', '-1', '!='));
+	$criteria = new icms_core_CriteriaCompo();
+	$criteria->add(new icms_core_Criteria('level', '-1', '!='));
 	$criteria->setSort('uname');
 	$criteria->setOrder('ASC');
 	$criteria->setLimit(200);
@@ -53,12 +53,12 @@ function displayUsers()
 	$editform->display();
 
 	echo "<br />\n";
-	$usercount = $member_handler->getUserCount(new core_Criteria('level', '-1'));
+	$usercount = $member_handler->getUserCount(new icms_core_Criteria('level', '-1'));
 	$nav = new XoopsPageNav($usercount, 200, $userstart, 'userstart', 'fct=users');
 	$editform = new XoopsThemeForm(_AM_REMOVED_USERS, 'edituser', 'admin.php');
 	$user_select = new XoopsFormSelect('', 'uid');
-	$criteria = new core_CriteriaCompo();
-	$criteria->add(new core_Criteria('level', '-1'));
+	$criteria = new icms_core_CriteriaCompo();
+	$criteria->add(new icms_core_Criteria('level', '-1'));
 	$criteria->setSort('uname');
 	$criteria->setOrder('ASC');
 	$criteria->setLimit(200);
@@ -203,7 +203,7 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 	global $xoopsConfig, $xoopsDB, $icmsModule, $icmsConfigUser;
 	$member_handler =& xoops_gethandler('member');
 	$edituser =& $member_handler->getUser($uid);
-	if($edituser->getVar('uname') != $uname && $member_handler->getUserCount(new core_Criteria('uname', $uname)) > 0 || $edituser->getVar('login_name') != $login_name && $member_handler->getUserCount(new core_Criteria('login_name', $login_name)) > 0)
+	if($edituser->getVar('uname') != $uname && $member_handler->getUserCount(new icms_core_Criteria('uname', $uname)) > 0 || $edituser->getVar('login_name') != $login_name && $member_handler->getUserCount(new icms_core_Criteria('login_name', $login_name)) > 0)
 	{
 		icms_cp_header();
 		echo '<div class="CPbigTitle" style="background-image: url('.ICMS_URL.'/modules/system/admin/users/images/users_big.png)">'._MD_AM_USER.'</div><br />';
@@ -311,14 +311,14 @@ function synchronize($id, $type)
 			$tables = array();
 			// Count comments (approved only: com_status == XOOPS_COMMENT_ACTIVE)
 			include_once ICMS_ROOT_PATH.'/include/comment_constants.php';
-			$tables[] = array ('table_name' => 'xoopscomments', 'uid_column' => 'com_uid', 'criteria' => new core_Criteria('com_status', XOOPS_COMMENT_ACTIVE));
+			$tables[] = array ('table_name' => 'xoopscomments', 'uid_column' => 'com_uid', 'criteria' => new icms_core_Criteria('com_status', XOOPS_COMMENT_ACTIVE));
 			// Count forum posts
 			$tables[] = array ('table_name' => 'bb_posts', 'uid_column' => 'uid');
 			$total_posts = 0;
 			foreach($tables as $table)
 			{
-				$criteria = new core_CriteriaCompo();
-				$criteria->add (new core_Criteria($table['uid_column'], $id));
+				$criteria = new icms_core_CriteriaCompo();
+				$criteria->add (new icms_core_Criteria($table['uid_column'], $id));
 				if(!empty($table['criteria'])) {$criteria->add ($table['criteria']);}
 				$sql = "SELECT COUNT(*) AS total FROM ".$xoopsDB->prefix($table['table_name']).' '.$criteria->renderWhere();
 				if($result = $xoopsDB->query($sql))

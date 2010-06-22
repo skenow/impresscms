@@ -172,13 +172,13 @@ case 'online':
 	$online_handler =& xoops_gethandler('online');
 	$online_total =& $online_handler->getCount();
 	$limit = ($online_total > 20) ? 20 : $online_total;
-	$criteria = new core_CriteriaCompo();
+	$criteria = new icms_core_CriteriaCompo();
 	$criteria->setLimit($limit);
 	$criteria->setStart($start);
 	$onlines =& $online_handler->getAll($criteria);
 	$count = count($onlines);
 	$module_handler =& xoops_gethandler('module');
-	$modules =& $module_handler->getList(new core_Criteria('isactive', 1));
+	$modules =& $module_handler->getList(new icms_core_Criteria('isactive', 1));
 	for($i = 0; $i < $count; $i++)
 	{
 		if($onlines[$i]['online_uid'] == 0) {$onlineUsers[$i]['user'] = '';}

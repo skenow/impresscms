@@ -877,8 +877,8 @@ function xoops_notification_deletebyitem ($module_id, $category, $item_id)
 function xoops_comment_count($module_id, $item_id = null)
 {
 	$comment_handler =& xoops_gethandler('comment');
-	$criteria = new core_CriteriaCompo(new core_Criteria('com_modid', (int) ($module_id)));
-	if(isset($item_id)) {$criteria->add(new core_Criteria('com_itemid', (int) ($item_id)));}
+	$criteria = new icms_core_CriteriaCompo(new icms_core_Criteria('com_modid', (int) ($module_id)));
+	if(isset($item_id)) {$criteria->add(new icms_core_Criteria('com_itemid', (int) ($item_id)));}
 	return $comment_handler->getCount($criteria);
 }
 
@@ -2812,13 +2812,13 @@ function icms_PasswordMeter(){
  * Build criteria automatically from an array of key=>value
  *
  * @param array $criterias array of fieldname=>value criteria
- * @return object (@link core_CriteriaCompo) the core_CriteriaCompo object
+ * @return object (@link icms_core_CriteriaCompo) the icms_core_CriteriaCompo object
  * @todo Move to a static class method - Criteria
  */
 function icms_buildCriteria($criterias) {
-	$criteria = new core_CriteriaCompo();
+	$criteria = new icms_core_CriteriaCompo();
 	foreach($criterias as $k=>$v) {
-		$criteria->add(new core_Criteria($k, $v));
+		$criteria->add(new icms_core_Criteria($k, $v));
 	}
 	return $criteria;
 }

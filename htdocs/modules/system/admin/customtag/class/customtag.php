@@ -149,18 +149,18 @@ class SystemCustomtagHandler extends IcmsPersistableObjectHandler {
 
 			$ret = array ( );
 
-			$criteria = new core_CriteriaCompo ( );
+			$criteria = new icms_core_CriteriaCompo ( );
 
-			$criteria_language = new core_CriteriaCompo ( );
-			$criteria_language->add ( new core_Criteria ( 'language', $xoopsConfig ['language'] ) );
-			$criteria_language->add ( new core_Criteria ( 'language', 'all' ), 'OR' );
+			$criteria_language = new icms_core_CriteriaCompo ( );
+			$criteria_language->add ( new icms_core_Criteria ( 'language', $xoopsConfig ['language'] ) );
+			$criteria_language->add ( new icms_core_Criteria ( 'language', 'all' ), 'OR' );
 			$criteria->add ( $criteria_language );
 
 			$icms_permissions_handler = new IcmsPersistablePermissionHandler ( $this );
 			$granted_ids = $icms_permissions_handler->getGrantedItems ( 'view' );
 
 			if ($granted_ids && count ( $granted_ids ) > 0) {
-				$criteria->add ( new core_Criteria ( 'customtagid', '(' . implode ( ', ', $granted_ids ) . ')', 'IN' ) );
+				$criteria->add ( new icms_core_Criteria ( 'customtagid', '(' . implode ( ', ', $granted_ids ) . ')', 'IN' ) );
 				$customtagsObj = $this->getObjects ( $criteria, true );
 				foreach ( $customtagsObj as $customtagObj ) {
 					$ret [$customtagObj->getVar ( 'name' )] = $customtagObj;

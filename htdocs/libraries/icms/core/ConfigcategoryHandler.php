@@ -137,7 +137,7 @@ class icms_core_ConfigcategoryHandler extends core_ObjectHandler {
 	/**
 	 * Get some {@link icms_core_Configcategory}s
 	 *
-	 * @param	object  $criteria   {@link core_CriteriaElement}
+	 * @param	object  $criteria   {@link icms_core_CriteriaElement}
 	 * @param	bool    $id_as_key  Use the IDs as keys to the array?
 	 *
 	 * @return	array   Array of {@link icms_core_Configcategory}s
@@ -146,7 +146,7 @@ class icms_core_ConfigcategoryHandler extends core_ObjectHandler {
 		$ret = array();
 		$limit = $start = 0;
 		$sql = 'SELECT * FROM '.$this->db->prefix('configcategory');
-		if (isset($criteria) && is_subclass_of($criteria, 'core_CriteriaElement')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_core_CriteriaElement')) {
 			$sql .= ' '.$criteria->renderWhere();
 			$sort = !in_array($criteria->getSort(), array('confcat_id', 'confcat_name', 'confcat_order')) ? 'confcat_order' : $criteria->getSort();
 			$sql .= ' ORDER BY '.$sort.' '.$criteria->getOrder();

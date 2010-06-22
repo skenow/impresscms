@@ -82,8 +82,8 @@ class icms_core_BlockHandler extends IcmsPersistableObjectHandler {
 	 */
 	public function getByModule($mid, $asObject = true){
 		$mid = (int) ($mid);
-		$criteria = new core_CriteriaCompo();
-		$criteria->add(new core_Criteria('mid', $mid));
+		$criteria = new icms_core_CriteriaCompo();
+		$criteria->add(new icms_core_Criteria('mid', $mid));
 		$ret = $this->getObjects($criteria, false, $asObject);
 		return $ret;
 	}
@@ -112,8 +112,8 @@ class icms_core_BlockHandler extends IcmsPersistableObjectHandler {
 			if ( $tp != '') {
 			 	$q_side = "";
 				$icms_blockposition_handler = xoops_gethandler('blockposition');
-				$criteria = new core_CriteriaCompo();
-				$criteria->add( new core_Criteria('block_type', $tp) );
+				$criteria = new icms_core_CriteriaCompo();
+				$criteria->add( new icms_core_Criteria('block_type', $tp) );
 				$blockpositions = $icms_blockposition_handler->getObjects($criteria);
 				foreach( $blockpositions as $bp ){
 					$q_side .= "side='". (int) $bp->getVar('id') . "' OR ";
@@ -147,8 +147,8 @@ class icms_core_BlockHandler extends IcmsPersistableObjectHandler {
 					while ( $myrow = $this->db->fetchArray($result) ) {
 						$blockids[] = $myrow['bid'];
 					}
-					$criteria = new core_CriteriaCompo();
-					$criteria->add(new core_Criteria('bid', '('.implode(',', $blockids).')', 'IN'));
+					$criteria = new icms_core_CriteriaCompo();
+					$criteria->add(new icms_core_Criteria('bid', '('.implode(',', $blockids).')', 'IN'));
 					$blocks = $this->getObjects($criteria, true, true);
 					foreach ($blocks as $block) {
 						$ret[$block->getVar("bid")] = $block->getVar("title");
@@ -413,8 +413,8 @@ class icms_core_BlockHandler extends IcmsPersistableObjectHandler {
 	 * @todo can be removed together with getAllByGroupModule and getNonGroupedBlocks. (used in theme_blocks)
 	 */
 	private function &getMultiple($blockids) {
-		$criteria = new core_CriteriaCompo();
-		$criteria->add(new core_Criteria('bid', '('.implode(',', $blockids).')', 'IN'));
+		$criteria = new icms_core_CriteriaCompo();
+		$criteria->add(new icms_core_Criteria('bid', '('.implode(',', $blockids).')', 'IN'));
 		$ret = $this->getObjects($criteria, true, true);
 		$sql = "SELECT block_id, module_id, page_id FROM ".$this->db->prefix('block_module_link')." WHERE block_id IN (".implode(',', array_keys($ret)).") ORDER BY block_id";
 		$result = $this->db->query($sql);
@@ -435,15 +435,15 @@ class icms_core_BlockHandler extends IcmsPersistableObjectHandler {
 		if ($funcNum < 1 || $moduleId < 1) {
 			return 0;
 		}
-		$criteria = new core_CriteriaCompo();
+		$criteria = new icms_core_CriteriaCompo();
 		if (isset($showFunc)) {
 			// showFunc is set for more strict comparison
-			$criteria->add( new core_Criteria( 'mid', $moduleId ) );
-			$criteria->add( new core_Criteria( 'func_num', $funcNum ) );
-			$criteria->add( new core_Criteria( 'show_func', $showFunc ) );
+			$criteria->add( new icms_core_Criteria( 'mid', $moduleId ) );
+			$criteria->add( new icms_core_Criteria( 'func_num', $funcNum ) );
+			$criteria->add( new icms_core_Criteria( 'show_func', $showFunc ) );
 		} else {
-			$criteria->add( new core_Criteria( 'mid', $moduleId ) );
-			$criteria->add( new core_Criteria( 'func_num', $funcNum ) );
+			$criteria->add( new icms_core_Criteria( 'mid', $moduleId ) );
+			$criteria->add( new icms_core_Criteria( 'func_num', $funcNum ) );
 		}
 		$count = $this->handler->getCount($criteria);
 		return $count;

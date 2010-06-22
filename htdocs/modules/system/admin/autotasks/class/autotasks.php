@@ -263,12 +263,12 @@ class SystemAutotasksHandler extends IcmsPersistableObjectHandler
 	 */
 	function getTasks()
 	{
-		$criteria = new core_CriteriaCompo();
+		$criteria = new icms_core_CriteriaCompo();
 		$criteria->setSort('sat_lastruntime');
 		$criteria->setOrder('ASC');
-		$criteria->add( new core_Criteria('(sat_lastruntime + sat_interval)', time(), '<=', null, "%s" ));
-		$criteria->add( new core_Criteria('sat_repeat', 0, '>=', null, "'%s'"));
-		$criteria->add( new core_Criteria('sat_enabled', 1));
+		$criteria->add( new icms_core_Criteria('(sat_lastruntime + sat_interval)', time(), '<=', null, "%s" ));
+		$criteria->add( new icms_core_Criteria('sat_repeat', 0, '>=', null, "'%s'"));
+		$criteria->add( new icms_core_Criteria('sat_enabled', 1));
 		$rez = $this->getObjects($criteria, false);
 		return $rez;
 	}

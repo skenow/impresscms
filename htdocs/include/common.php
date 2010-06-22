@@ -352,7 +352,7 @@ if (empty($_SESSION['xoopsUserId'])
 	} else {
 		// V3
 		$uname4sql = addslashes($uname);
-		$criteria = new core_CriteriaCompo(new core_Criteria('uname', $uname4sql ));
+		$criteria = new icms_core_CriteriaCompo(new icms_core_Criteria('uname', $uname4sql ));
 		$user_handler =& xoops_gethandler('user');
 		$users =& $user_handler->getObjects($criteria, false);
 		if ( empty($users) || count($users) != 1) {

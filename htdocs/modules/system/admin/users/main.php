@@ -145,10 +145,10 @@ switch ($op)
 		{
 			$member_handler =& xoops_gethandler('member');
 			// make sure the username doesnt exist yet
-			if($member_handler->getUserCount(new core_Criteria('uname', $username)) > 0 || $member_handler->getUserCount(new core_Criteria('login_name', $login_name)) > 0 )
+			if($member_handler->getUserCount(new icms_core_Criteria('uname', $username)) > 0 || $member_handler->getUserCount(new icms_core_Criteria('login_name', $login_name)) > 0 )
 			{
 				$adduser_errormsg = _AM_NICKNAME.' '.$username.' '._AM_ALREADY_EXISTS;
-			}elseif($member_handler->getUserCount(new core_Criteria('email', $email)) > 0){
+			}elseif($member_handler->getUserCount(new icms_core_Criteria('email', $email)) > 0){
 				$adduser_errormsg = _AM_A_USER_WITH_THIS_EMAIL_ADDRESS.' "'.$email.'" '._AM_ALREADY_EXISTS;
 			}
 			else
@@ -222,7 +222,7 @@ switch ($op)
 						}
 						if(!empty($groups_failed))
 						{
-							$group_names = $member_handler->getGroupList(new core_Criteria('groupid', "(".implode(", ", $groups_failed).")", 'IN'));
+							$group_names = $member_handler->getGroupList(new icms_core_Criteria('groupid', "(".implode(", ", $groups_failed).")", 'IN'));
 							$adduser_errormsg = sprintf(_AM_CNRNU2, implode(", ", $group_names));
 						}
 						else

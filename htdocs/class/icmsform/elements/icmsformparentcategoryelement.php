@@ -23,7 +23,7 @@ class IcmsFormParentcategoryElement extends XoopsFormSelect {
 		$category_title_field = $object->handler->identifierName;
 
 		$addNoParent = isset($object->controls[$key]['addNoParent']) ? $object->controls[$key]['addNoParent'] : true;
-		$criteria = new core_CriteriaCompo();
+		$criteria = new icms_core_CriteriaCompo();
 		$criteria->setSort("weight, " . $category_title_field);
 		$category_handler = icms_getModuleHandler('category', $object->handler->_moduleName);
 		$categories = $category_handler->getObjects($criteria);

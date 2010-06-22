@@ -142,8 +142,8 @@ if (in_array ( $clean_op, $valid_op, true )) {
 				
 			include_once ICMS_ROOT_PATH . "/kernel/icmspersistabletable.php";
 				
-			$criteria = new core_CriteriaCompo ( );
-			$criteria->add ( new core_Criteria ( 'content_pid', $clean_content_pid ) );
+			$criteria = new icms_core_CriteriaCompo ( );
+			$criteria->add ( new icms_core_Criteria ( 'content_pid', $clean_content_pid ) );
 
 			$objectTable = new IcmsPersistableTable ( $content_content_handler, $criteria );
 			$objectTable->addColumn ( new IcmsPersistableColumn ( 'content_title',false,false,'getPreviewItemLink' ) );

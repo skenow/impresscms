@@ -139,7 +139,7 @@ class icms_core_PrivmessageHandler extends core_ObjectHandler
 
 	/**
 	 * Load messages from the database
-	 * @param 	object 	$criteria 	{@link core_CriteriaElement} object
+	 * @param 	object 	$criteria 	{@link icms_core_CriteriaElement} object
 	 * @param 	bool 	$id_as_key 	use ID as key into the array?
 	 * @return 	array	Array of {@link icms_core_Privmessage} objects
 	 **/
@@ -148,7 +148,7 @@ class icms_core_PrivmessageHandler extends core_ObjectHandler
 		$ret = array();
 		$limit = $start = 0;
 		$sql = 'SELECT * FROM '.$this->db->prefix('priv_msgs');
-		if (isset($criteria) && is_subclass_of($criteria, 'core_CriteriaElement')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_core_CriteriaElement')) {
 			$sql .= ' '.$criteria->renderWhere();
 			$sort = !in_array($criteria->getSort(), array('msg_id', 'msg_time', 'from_userid')) ? 'msg_id' : $criteria->getSort();
 			$sql .= ' ORDER BY '.$sort.' '.$criteria->getOrder();
@@ -174,13 +174,13 @@ class icms_core_PrivmessageHandler extends core_ObjectHandler
 
 	/**
 	 * Count message
-	 * @param 	object 	$criteria = null 	{@link core_CriteriaElement} object
+	 * @param 	object 	$criteria = null 	{@link icms_core_CriteriaElement} object
 	 * @return 	int
 	 **/
 	function getCount($criteria = null)
 	{
 		$sql = 'SELECT COUNT(*) FROM '.$this->db->prefix('priv_msgs');
-		if (isset($criteria) && is_subclass_of($criteria, 'core_CriteriaElement')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_core_CriteriaElement')) {
 			$sql .= ' '.$criteria->renderWhere();
 		}
 		if (!$result = $this->db->query($sql)) {

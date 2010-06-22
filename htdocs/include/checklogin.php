@@ -38,8 +38,8 @@ $uname4sql = addslashes($myts->stripSlashesGPC($uname));
 $pass4sql = addslashes($myts->stripSlashesGPC($pass));
 /*if( strstr( $uname , '@' ) ) {
  // check by email if uname includes '@'
- $criteria = new core_CriteriaCompo(new core_Criteria('email', $uname4sql ));
- $criteria->add(new core_Criteria('pass', $pass4sql));
+ $criteria = new icms_core_CriteriaCompo(new icms_core_Criteria('email', $uname4sql ));
+ $criteria->add(new icms_core_Criteria('pass', $pass4sql));
  $user_handler =& xoops_gethandler('user');
  $users =& $user_handler->getObjects($criteria, false);
  if( empty( $users ) || count( $users ) != 1 ) $user = false ;

@@ -155,8 +155,8 @@ class XoopsAuthOpenid extends XoopsAuth {
 				if ($debug) icms_debug(_CORE_OID_CHECKINGID);
 				// Do we already have a user with this openid
 				$member_handler = & xoops_gethandler('member');
-				$criteria = new core_CriteriaCompo();
-				$criteria->add(new core_Criteria('openid', $this->openid));
+				$criteria = new icms_core_CriteriaCompo();
+				$criteria->add(new icms_core_Criteria('openid', $this->openid));
 				$users =& $member_handler->getUsers($criteria);
 				if ($users && count($users) > 0) {
 					$this->step = OPENID_STEP_USER_FOUND;
