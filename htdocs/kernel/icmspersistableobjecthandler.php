@@ -154,7 +154,20 @@ class IcmsPersistableObjectHandler extends core_ObjectHandler {
 			$this->table = $db->prefix($modulename . "_" . $itemname);
 		}
 		$this->keyName = $keyname;
-		$this->className = ucfirst($modulename) . ucfirst($itemname);
+
+		if ($modulename == 'core')
+			$classname = $modulename . '_' . ucfirst($itemname);
+		else
+			$classname = 'mod_' . $modulename . '_' . ucfirst($itemname);
+
+		/**
+		 * @todo this could probably be removed after refactpring is completed
+		 * to be evaluated...
+		 */
+		if (!class_exists($classname))
+			$classname = ucfirst($modulename) . ucfirst($itemname);
+
+		$this->className = $classname;
 		$this->identifierName = $idenfierName;
 		$this->summaryName = $summaryName;
 		$this->_page = $itemname . ".php";
