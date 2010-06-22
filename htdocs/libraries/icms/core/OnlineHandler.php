@@ -27,7 +27,7 @@
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class core_OnlineHandler
+class icms_core_OnlineHandler
 {
 
 	/**
@@ -43,7 +43,7 @@ class core_OnlineHandler
 	 *
 	 * @param	object  &$db    {@link XoopsHandlerFactory}
 	 */
-	function core_OnlineHandler(&$db)
+	function icms_core_OnlineHandler(&$db)
 	{
 		$this->db =& $db;
 	}
