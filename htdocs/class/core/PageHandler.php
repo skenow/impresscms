@@ -24,9 +24,8 @@ include_once ICMS_ROOT_PATH . '/kernel/icmspersistableobject.php';
 class core_PageHandler extends IcmsPersistableObjectHandler {
 
 	public function __construct( & $db ){
-		$this->IcmsPersistableObjectHandler($db, 'page' ,'page_id' ,'page_title', '' , 'core_');
+		$this->IcmsPersistableObjectHandler($db, 'page' ,'page_id' ,'page_title', '' , 'core');
 		$this->table = $db->prefix('icmspage');
-		$this->className = 'core_Page';
 	}
 
 	public function getList( $criteria = null, $limit = 0, $start = 0, $debug=false){
