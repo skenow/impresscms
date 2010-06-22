@@ -22,7 +22,7 @@
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class core_SessionHandler
+class icms_core_SessionHandler
 {
 	/**
 	 * Database connection
@@ -56,7 +56,7 @@ class core_SessionHandler
 	 * @param object $db reference to the {@link XoopsDatabase} object
 	 *
 	 */
-	function core_SessionHandler(&$db)
+	function icms_core_SessionHandler(&$db)
 	{
 		$this->db =& $db;
 	}

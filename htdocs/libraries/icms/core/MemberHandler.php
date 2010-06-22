@@ -27,7 +27,7 @@ require_once ICMS_ROOT_PATH . '/kernel/group.php';
  * @copyright copyright (c) 2000-2003 XOOPS.org
  * @package kernel
  */
-class core_MemberHandler {
+class icms_core_MemberHandler {
 
 	/**#@+
 	 * holds reference to group handler(DAO) class
@@ -55,7 +55,7 @@ class core_MemberHandler {
 	 * constructor
 	 *
 	 */
-	function core_MemberHandler(&$db) {
+	function icms_core_MemberHandler(&$db) {
 		$this->_gHandler = new XoopsGroupHandler ( $db );
 		$this->_uHandler = new XoopsUserHandler ( $db );
 		$this->_mHandler = new XoopsMembershipHandler ( $db );
