@@ -23,7 +23,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class core_Comment extends core_Object {
+class icms_core_Comment extends core_Object {
 
 	/**
 	 * Constructor
@@ -63,12 +63,12 @@ class core_Comment extends core_Object {
 }
 
 /**
- * @deprecated 	Use core_Comment instead
+ * @deprecated 	Use icms_core_Comment instead
  * @todo		Remove in version 1.4 - all instances have been removed from the core
  */
-class XoopsComment extends core_Comment {
+class XoopsComment extends icms_core_Comment {
 	public function __construct() {
 		parent::__construct();
-		$this->setErrors = icms_deprecated('core_Comment');
+		$this->setErrors = icms_deprecated('icms_core_Comment');
 	}
 }

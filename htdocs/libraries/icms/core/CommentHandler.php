@@ -28,10 +28,10 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class core_CommentHandler extends core_ObjectHandler {
+class icms_core_CommentHandler extends core_ObjectHandler {
 
 	/**
-	 * Create a {@link core_Comment}
+	 * Create a {@link icms_core_Comment}
 	 *
 	 * @param	bool    $isNew  Flag the object as "new"?
 	 *
@@ -39,7 +39,7 @@ class core_CommentHandler extends core_ObjectHandler {
 	 * @see htdocs/kernel/core_ObjectHandler#create()
 	 */
 	public function &create($isNew = true) {
-		$comment = new core_Comment();
+		$comment = new icms_core_Comment();
 		if ($isNew) {
 			$comment->setNew();
 		}
@@ -47,11 +47,11 @@ class core_CommentHandler extends core_ObjectHandler {
 	}
 
 	/**
-	 * Retrieve a {@link core_Comment}
+	 * Retrieve a {@link icms_core_Comment}
 	 *
 	 * @param   int $id ID
 	 *
-	 * @return  object  {@link core_Comment}, FALSE on fail
+	 * @return  object  {@link icms_core_Comment}, FALSE on fail
 	 * @see htdocs/kernel/core_ObjectHandler#get($int_id)
 	 **/
 	public function &get($id) {
@@ -64,7 +64,7 @@ class core_CommentHandler extends core_ObjectHandler {
 			}
 			$numrows = $this->db->getRowsNum($result);
 			if ($numrows == 1) {
-				$comment = new core_Comment();
+				$comment = new icms_core_Comment();
 				$comment->assignVars($this->db->fetchArray($result));
 			}
 		}
@@ -112,7 +112,7 @@ class core_CommentHandler extends core_ObjectHandler {
 	}
 
 	/**
-	 * Delete a {@link core_Comment} from the database
+	 * Delete a {@link icms_core_Comment} from the database
 	 *
 	 * @param   object  &$comment
 	 *
@@ -134,12 +134,12 @@ class core_CommentHandler extends core_ObjectHandler {
 	}
 
 	/**
-	 * Get some {@link core_Comment}s
+	 * Get some {@link icms_core_Comment}s
 	 *
 	 * @param   object  $criteria
 	 * @param   bool    $id_as_key  Use IDs as keys into the array?
 	 *
-	 * @return  array   Array of {@link core_Comment} objects
+	 * @return  array   Array of {@link icms_core_Comment} objects
 	 **/
 	public function getObjects($criteria = null, $id_as_key = false) {
 		$ret = array();
@@ -157,7 +157,7 @@ class core_CommentHandler extends core_ObjectHandler {
 			return $ret;
 		}
 		while ($myrow = $this->db->fetchArray($result)) {
-			$comment = new core_Comment();
+			$comment = new icms_core_Comment();
 			$comment->assignVars($myrow);
 			if (!$id_as_key) {
 				$ret[] =& $comment;
@@ -232,7 +232,7 @@ class core_CommentHandler extends core_ObjectHandler {
 	 * @param   int     $limit      Max num of comments to retrieve
 	 * @param   int     $start      Start offset
 	 *
-	 * @return  array   Array of {@link core_Comment} objects
+	 * @return  array   Array of {@link icms_core_Comment} objects
 	 **/
 	public function getByItemId($module_id, $item_id, $order = null, $status = null, $limit = null, $start = 0) {
 		$criteria = new core_CriteriaCompo(new core_Criteria('com_modid', (int) ($module_id)));
@@ -257,7 +257,7 @@ class core_CommentHandler extends core_ObjectHandler {
 	 * @param   int     $item_id    Item ID
 	 * @param   int     $status     Status of the comment
 	 *
-	 * @return  array   Array of {@link core_Comment} objects
+	 * @return  array   Array of {@link icms_core_Comment} objects
 	 **/
 	public function getCountByItemId($module_id, $item_id, $status = null) {
 		$criteria = new core_CriteriaCompo(new core_Criteria('com_modid', (int) ($module_id)));
@@ -269,14 +269,14 @@ class core_CommentHandler extends core_ObjectHandler {
 	}
 
 	/**
-	 * Get the top {@link core_Comment}s
+	 * Get the top {@link icms_core_Comment}s
 	 *
 	 * @param   int     $module_id
 	 * @param   int     $item_id
 	 * @param   strint  $order
 	 * @param   int     $status
 	 *
-	 * @return  array   Array of {@link core_Comment} objects
+	 * @return  array   Array of {@link icms_core_Comment} objects
 	 **/
 	public function getTopComments($module_id, $item_id, $order, $status = null) {
 		$criteria = new core_CriteriaCompo(new core_Criteria('com_modid', (int) ($module_id)));
@@ -296,7 +296,7 @@ class core_CommentHandler extends core_ObjectHandler {
 	 * @param   int     $comment_id
 	 * @param   int     $status
 	 *
-	 * @return  array   Array of {@link core_Comment} objects
+	 * @return  array   Array of {@link icms_core_Comment} objects
 	 **/
 	public function getThread($comment_rootid, $comment_id, $status = null) {
 		$criteria = new core_CriteriaCompo(new core_Criteria('com_rootid', (int) ($comment_rootid)));
@@ -310,7 +310,7 @@ class core_CommentHandler extends core_ObjectHandler {
 	/**
 	 * Update
 	 *
-	 * @param   object  &$comment       {@link core_Comment} object
+	 * @param   object  &$comment       {@link icms_core_Comment} object
 	 * @param   string  $field_name     Name of the field
 	 * @param   mixed   $field_value    Value to write
 	 *
@@ -358,10 +358,10 @@ class core_CommentHandler extends core_ObjectHandler {
 }
 
 /**
- * @deprecated	Use core_CommentHandler instead
+ * @deprecated	Use icms_core_CommentHandler instead
  * @todo		Remove in version 1.4 - all instances have been removed from the core
  */
-class XoopsCommentHandler extends core_CommentHandler {
+class XoopsCommentHandler extends icms_core_CommentHandler {
 	public function __construct() {
 		parent::__construct($db);
 	}
