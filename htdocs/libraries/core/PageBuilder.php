@@ -230,7 +230,7 @@ class core_PageBuilder {
 		    'lastmod' => $xobject->getVar ( 'last_modified' )
 		);
 
-		$xoopsLogger = & core_Logger::instance ();
+		$xoopsLogger = & icms_core_Logger::instance ();
 
 		$bcachetime = (int) ( $xobject->getVar ( 'bcachetime' ) );
 		//$template = new core_Tpl();

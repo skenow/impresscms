@@ -187,7 +187,7 @@ $xoopsSecurity->checkSuperglobals();
 global $xoopsLogger, $xoopsErrorHandler;
 
 include_once XOOPS_ROOT_PATH . '/class/logger.php';
-$xoopsLogger =& core_Logger::instance();
+$xoopsLogger =& icms_core_Logger::instance();
 $xoopsErrorHandler =& $xoopsLogger;
 $xoopsLogger->startTime();
 $xoopsLogger->startTime( 'ICMS Boot' );

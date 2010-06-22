@@ -1,6 +1,6 @@
 <?php
 /**
- * core_Logger component main class file
+ * icms_core_Logger component main class file
  *
  * See the enclosed file LICENSE for licensing information.
  * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
@@ -11,7 +11,7 @@
  * @author		Skalpa Keo <skalpa@xoops.org>
  * @since		XOOPS
  * @package		core
- * @subpackage	core_Logger
+ * @subpackage	icms_core_Logger
  * @version		$Id: logger.php 19163 2010-04-28 14:37:42Z mekdrop $
  */
 
@@ -22,7 +22,7 @@
  * and can display it as HTML. It also catches php runtime errors.
  * @package kernel
  */
-class core_Logger {
+class icms_core_Logger {
 
 	public $queries = array();
 	public $blocks = array();
@@ -44,13 +44,13 @@ class core_Logger {
 	/**
 	 * Get a reference to the only instance of this class
 	 *
-	 * @return  object core_Logger  (@link core_Logger) reference to the only instance
+	 * @return  object icms_core_Logger  (@link icms_core_Logger) reference to the only instance
 	 * @static
 	 */
 	static public function &instance() {
 		static $instance;
 		if ( !isset( $instance ) ) {
-			$instance = new core_Logger();
+			$instance = new icms_core_Logger();
 			// Always catch errors, for security reasons
 			set_error_handler( 'XoopsErrorHandler_HandleError' );
 		}
@@ -299,7 +299,7 @@ class core_Logger {
  * set_error_handler() have problems with the array( obj,methodname ) syntax
  */
 function XoopsErrorHandler_HandleError( $errNo, $errStr, $errFile, $errLine, $errContext = null ) {
-	$logger =& core_Logger::instance();
+	$logger =& icms_core_Logger::instance();
 	$logger->handleError( $errNo, $errStr, $errFile, $errLine, $errContext );
 }
 

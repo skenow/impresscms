@@ -92,7 +92,7 @@ $xoopsSecurity->checkSuperglobals();
 global $xoopsLogger, $xoopsErrorHandler;
 
 //include_once ICMS_ROOT_PATH . '/class/logger.php';
-$xoopsLogger =& core_Logger::instance();
+$xoopsLogger =& icms_core_Logger::instance();
 $xoopsErrorHandler =& $xoopsLogger;
 $xoopsLogger->startTime('ICMS');
 $xoopsLogger->startTime('ICMS Boot');

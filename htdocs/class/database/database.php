@@ -44,9 +44,9 @@ if ( !defined("XOOPS_C_DATABASE_INCLUDED") ) {
 		public $prefix = '';
 
 		/**
-		 * reference to a {@link core_Logger} object
-		 * @see core_Logger
-		 * @var object core_Logger
+		 * reference to a {@link icms_core_Logger} object
+		 * @see icms_core_Logger
+		 * @var object icms_core_Logger
 		 */
 		public $logger;
 
@@ -64,10 +64,10 @@ if ( !defined("XOOPS_C_DATABASE_INCLUDED") ) {
 		public function __construct() { /* exit("Cannot instantiate this class directly"); */ }
 
 		/**
-		 * assign a {@link core_Logger} object to the database
+		 * assign a {@link icms_core_Logger} object to the database
 		 *
-		 * @see core_Logger
-		 * @param object $logger reference to a {@link core_Logger} object
+		 * @see icms_core_Logger
+		 * @param object $logger reference to a {@link icms_core_Logger} object
 		 */
 		public function setLogger(&$logger) {
 			$this->logger =& $logger;

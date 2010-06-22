@@ -55,7 +55,7 @@ class IcmsDatabaseFactory{
 				$class = 'Xoops'.ucfirst(XOOPS_DB_TYPE).'DatabaseProxy';
 			}
 			$instance = new $class();
-			$instance->setLogger(core_Logger::instance());
+			$instance->setLogger(icms_core_Logger::instance());
 			$instance->setPrefix(XOOPS_DB_PREFIX);
 			if (!$instance->connect()) {
 				icms_loadLanguageFile('core', 'core');
