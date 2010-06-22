@@ -28,18 +28,18 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @package     kernel
  * @subpackage  config
  */
-class core_ConfigcategoryHandler extends core_ObjectHandler {
+class icms_core_ConfigcategoryHandler extends core_ObjectHandler {
 
 	/**
 	 * Create a new category
 	 *
 	 * @param	bool    $isNew  Flag the new object as "new"?
 	 *
-	 * @return	object  New {@link core_Configcategory}
+	 * @return	object  New {@link icms_core_Configcategory}
 	 * @see htdocs/kernel/core_ObjectHandler#create()
 	 */
 	function &create($isNew = true) 	{
-		$confcat = new core_Configcategory();
+		$confcat = new icms_core_Configcategory();
 		if ($isNew) {
 			$confcat->setNew();
 		}
@@ -47,11 +47,11 @@ class core_ConfigcategoryHandler extends core_ObjectHandler {
 	}
 
 	/**
-	 * Retrieve a {@link core_Configcategory}
+	 * Retrieve a {@link icms_core_Configcategory}
 	 *
 	 * @param	int $id ConfigCategoryID to get
 	 *
-	 * @return	object|false  {@link core_Configcategory}, FALSE on fail
+	 * @return	object|false  {@link icms_core_Configcategory}, FALSE on fail
 	 * @see htdocs/kernel/core_ObjectHandler#get($int_id)
 	 */
 	function &get($id) {
@@ -64,7 +64,7 @@ class core_ConfigcategoryHandler extends core_ObjectHandler {
 			}
 			$numrows = $this->db->getRowsNum($result);
 			if ($numrows == 1) {
-				$confcat = new core_Configcategory();
+				$confcat = new icms_core_Configcategory();
 				$confcat->assignVars($this->db->fetchArray($result), false);
 			}
 		}
@@ -72,9 +72,9 @@ class core_ConfigcategoryHandler extends core_ObjectHandler {
 	}
 
 	/**
-	 * Insert a {@link core_Configcategory} into the DataBase
+	 * Insert a {@link icms_core_Configcategory} into the DataBase
 	 *
-	 * @param	object   &$confcat  {@link core_Configcategory}
+	 * @param	object   &$confcat  {@link icms_core_Configcategory}
 	 *
 	 * @return	bool    TRUE on success
 	 * @see htdocs/kernel/core_ObjectHandler#insert($object)
@@ -112,9 +112,9 @@ class core_ConfigcategoryHandler extends core_ObjectHandler {
 	}
 
 	/**
-	 * Delelete a {@link core_Configcategory}
+	 * Delelete a {@link icms_core_Configcategory}
 	 *
-	 * @param	object  &$confcat   {@link core_Configcategory}
+	 * @param	object  &$confcat   {@link icms_core_Configcategory}
 	 *
 	 * @return	bool    TRUE on success
 	 * @see htdocs/kernel/core_ObjectHandler#delete($object)
@@ -135,12 +135,12 @@ class core_ConfigcategoryHandler extends core_ObjectHandler {
 	}
 
 	/**
-	 * Get some {@link core_Configcategory}s
+	 * Get some {@link icms_core_Configcategory}s
 	 *
 	 * @param	object  $criteria   {@link core_CriteriaElement}
 	 * @param	bool    $id_as_key  Use the IDs as keys to the array?
 	 *
-	 * @return	array   Array of {@link core_Configcategory}s
+	 * @return	array   Array of {@link icms_core_Configcategory}s
 	 */
 	function getObjects($criteria = null, $id_as_key = false) {
 		$ret = array();
@@ -158,7 +158,7 @@ class core_ConfigcategoryHandler extends core_ObjectHandler {
 			return $ret;
 		}
 		while ($myrow = $this->db->fetchArray($result)) {
-			$confcat = new core_Configcategory();
+			$confcat = new icms_core_Configcategory();
 			$confcat->assignVars($myrow, false);
 			if (!$id_as_key) {
 				$ret[] =& $confcat;
@@ -172,13 +172,13 @@ class core_ConfigcategoryHandler extends core_ObjectHandler {
 }
 
 /**
- * @deprecated	Use core_ConfigcategoryHandler
+ * @deprecated	Use icms_core_ConfigcategoryHandler
  * @todo		Remove in version 1.4
  *
  */
-class XoopsConfigCategoryHandler extends core_ConfigcategoryHandler {
+class XoopsConfigCategoryHandler extends icms_core_ConfigcategoryHandler {
 	public function __construct() {
 		parent::__construct();
-		$this->setVar('error', icms_deprecated('core_ConfigcategoryHandler', 'This will be removed in version 1.4'));
+		$this->setVar('error', icms_deprecated('icms_core_ConfigcategoryHandler', 'This will be removed in version 1.4'));
 	}
 }

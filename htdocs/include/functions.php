@@ -698,8 +698,8 @@ function &xoops_gethandler($name, $optional = false )
 		 * @todo improve this
 		 * temporary hack while we are relocating for autoload
 		 */
-		if ($name == 'config') $name = 'core_ConfigHandler';
-		if ($name == 'core_ConfigHandler') {
+		if ($name == 'config') $name = 'icms_core_ConfigHandler';
+		if ($name == 'icms_core_ConfigHandler') {
 			$handlers[$name] = new $name($GLOBALS['xoopsDB']);
 		}
 	}
