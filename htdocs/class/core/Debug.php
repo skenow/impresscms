@@ -62,7 +62,7 @@ class core_Debug {
 		$trace = debug_backtrace();
 		array_shift($trace);
 		$level = $msg = $message = '';
-		$pre = ' <strong><em>(Deprecated)</em></strong> - ';
+		$pre = _CORE_DEPRECATED;
 		if ( $trace[0]['function'] != 'include' && $trace[0]['function'] != 'include_once' && $trace[0]['function'] != 'require' && $trace[0]['function'] != 'require_once') {
 			$pre .= $trace[0]['function'] . ': ';
 		}
@@ -73,16 +73,15 @@ class core_Debug {
 			    	$message .= $level . $msg
 						. (isset( $step['class'] ) ? $step['class'] : '')
 						. (isset( $step['type'] ) ? $step['type'] : '' )
-						. $step['function'] . ' in ' . $step['file'] . ', line ' . $step['line']
-						. '<br />';
+						. sprintf(_CORE_DEPRECATED_MSG, $step['function'], $step['file'], $step['line']);
 			}
-			$msg = 'Called by ';
+			$msg = _CORE_DEPRECATED_CALLEDBY;
 		}
 
 		trigger_error(
-			$pre . ( $replacement ? ' <strong><em>use ' . $replacement . ' instead</em></strong>' : '' )
-			. ( $extra ? ' <strong><em> ' . $extra . ' </em></strong>' : '' )
-			. '<br />Call Stack: <br />' . $message
+			$pre . ( $replacement ? sprintf(_CORE_DEPRECATED_REPLACEMENT, $replacement) : '' )
+			. ( $extra ? sprintf(_CORE_DEPRECATED_EXTRA, $extra) : '' )
+			. _CORE_DEPRECATED_CALLSTACK . $message
 		, E_USER_NOTICE
 		);
  	}

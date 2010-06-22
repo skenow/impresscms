@@ -260,11 +260,6 @@ class core_Filesystem {
 	 *
 	 */
 	public static function generateChecksum() {
-		/*
-		define('_CO_CHECKSUM_ADDING',' Adding');
-		define('_CO_CHECKSUM_CHECKSUM',' Checksum');
-		define('_CO_CHECKSUM_PERMISSIONS',' Permissions');
-		*/
 		$rootdir = preg_replace('#[\|/]#', DIRECTORY_SEPARATOR, ICMS_ROOT_PATH);
 		$dir = new RecursiveDirectoryIterator($rootdir);
 		$checkfile = preg_replace('#[\|/]#', DIRECTORY_SEPARATOR, ICMS_TRUST_PATH) . DIRECTORY_SEPARATOR . 'checkfile.sha1';
@@ -280,7 +275,7 @@ class core_Filesystem {
 			/* exclude cache and templates_c directories */
 			if ($itemPath != $cache_dir && $itemPath != $templates_dir) {
 				$fileHash = sha1_file($name);
-				echo _CO_CHECKSUM_ADDING . ': ' . $name . _CO_CHECKSUM_CHECKSUM . ' : <em>'. $fileHash .'</em>, ' ._CO_CHECKSUM_PERMISSIONS .' : '. $itemPerms . '<br />';
+				echo _CORE_CHECKSUM_ADDING . ': ' . $name . _CORE_CHECKSUM_CHECKSUM . ' : <em>'. $fileHash .'</em>, ' ._CORE_CHECKSUM_PERMISSIONS .' : '. $itemPerms . '<br />';
 				$file->fwrite($newline . $name . ';' .$fileHash . ';' . $itemPerms);
 			}
 			$newline = "\n";
@@ -299,14 +294,6 @@ class core_Filesystem {
 	 *
 	 */
 	public static function validateChecksum() {
-		/*
-		define('_CO_CHECKSUM_FILES_ADDED',' files have been added');
-		define('_CO_CHECKSUM_FILES_REMOVED',' files have been removed');
-		define('_CO_CHECKSUM_ALTERED_REMOVED',' files have been altered or removed');
-		define('_CO_CHECKSUM_CHECKFILE','Checking against the file ');
-		define('_CO_CHECKSUM_PERMISSIONS_ALTERED',' files have had their permissions altered');
-		define('_CO_CHECKSUM_CHECKFILE_UNREADABLE', 'The file containing the checksums is unavailable or unreadable. Validation cannot be completed');
-		*/
 		$validationFile = new SplFileObject($checkfile);
 		if ($validationFile->isReadable()) {
 			$currentHash = $currentPerms = array();
@@ -323,7 +310,7 @@ class core_Filesystem {
 					$currentPerms[$name] = $itemPerms;
 				}
 			}
-			echo _CO_CHECKSUM_CHECKFILE . $checkfile . '<br />';
+			echo _CORE_CHECKSUM_CHECKFILE . $checkfile . '<br />';
 			$validHash = $validPerms = array();
 			while (! $validationFile->eof() ) {
 				list($filename, $checksum, $filePermissions) = $validationFile->fgetcsv(';');
@@ -334,24 +321,24 @@ class core_Filesystem {
 			$addedFiles = array_diff_key($currentHash, $validHash);
 			$missingFiles = array_diff_key($validHash, $currentHash);
 			$permVariations = array_diff_assoc($validPerms, $currentPerms); // changed permissions or removed files
-			echo '<br /><strong>'. count($hashVariations) .  _CO_CHECKSUM_ALTERED_REMOVED . '</strong><br />';
+			echo '<br /><strong>'. count($hashVariations) .  _CORE_CHECKSUM_ALTERED_REMOVED . '</strong><br />';
 			foreach ($hashVariations as $file=>$check) {
 				echo $file . '<br />';
 			}
-			echo '<br /><strong>' . count($addedFiles) . _CO_CHECKSUM_FILES_ADDED . '</strong><br />';
+			echo '<br /><strong>' . count($addedFiles) . _CORE_CHECKSUM_FILES_ADDED . '</strong><br />';
 			foreach ($addedFiles as $file=>$hash) {
 				echo $file . '<br />';
 			}
-			echo '<br /><strong>' . count($missingFiles) . _CO_CHECKSUM_FILES_REMOVED . '</strong><br />';
+			echo '<br /><strong>' . count($missingFiles) . _CORE_CHECKSUM_FILES_REMOVED . '</strong><br />';
 			foreach($missingFiles as $file=>$hash){
 				echo $file . '<br />';
 			}
-			echo '<br /><strong>' . count($permVariations) . _CO_CHECKSUM_PERMISSIONS_ALTERED . '</strong><br />';
+			echo '<br /><strong>' . count($permVariations) . _CORE_CHECKSUM_PERMISSIONS_ALTERED . '</strong><br />';
 			foreach ($permVariations as $file=>$perms) {
 				echo $file .'<br />';
 			}
 		} else {
-			echo _CO_CHECKSUM_CHECKFILE_UNREADABLE;
+			echo _CORE_CHECKSUM_CHECKFILE_UNREADABLE;
 		}
 		unset($validationFile);
 		unset($item);
