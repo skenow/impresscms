@@ -115,7 +115,7 @@ if (in_array ( $clean_op, $valid_op, true )) {
 			break;
 
 		case "changedField" :
-			foreach ($_POST['ContentContent_objects'] as $k=>$v){
+			foreach ($_POST['mod_content_Content_objects'] as $k=>$v){
 				$changed = false;
 				$obj = $content_content_handler->get($v);
 				if ($obj->getVar('content_status','e') != $_POST['content_status'][$k]){
