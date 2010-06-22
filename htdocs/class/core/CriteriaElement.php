@@ -36,51 +36,44 @@
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class core_CriteriaElement
-{
+abstract class core_CriteriaElement {
 	/**
 	 * Sort order
 	 * @var	string
 	 */
-	var $order = 'ASC';
+	public $order = 'ASC';
 
 	/**
 	 * @var	string
 	 */
-	var $sort = '';
+	public $sort = '';
 
 	/**
 	 * Number of records to retrieve
 	 * @var	int
 	 */
-	var $limit = 0;
+	public $limit = 0;
 
 	/**
 	 * Offset of first record
 	 * @var	int
 	 */
-	var $start = 0;
+	public $start = 0;
 
 	/**
 	 * @var	string
 	 */
-	var $groupby = '';
+	public $groupby = '';
 
 	/**
 	 * Constructor
 	 **/
-	function core_CriteriaElement()
-	{
-
-	}
+	abstract public function __construct();
 
 	/**
 	 * Render the criteria element
 	 */
-	function render()
-	{
-
-	}
+	abstract public function render();
 
 	/**#@+
 	 * Accessor
@@ -88,24 +81,21 @@ class core_CriteriaElement
 	/**
 	 * @param	string  $sort
 	 */
-	function setSort($sort)
-	{
+	public function setSort($sort) {
 		$this->sort = $sort;
 	}
 
 	/**
 	 * @return	string
 	 */
-	function getSort()
-	{
+	public function getSort() {
 		return $this->sort;
 	}
 
 	/**
 	 * @param	string  $order
 	 */
-	function setOrder($order)
-	{
+	public function setOrder($order) {
 		if ('DESC' == strtoupper($order)) {
 			$this->order = 'DESC';
 		}
@@ -114,56 +104,51 @@ class core_CriteriaElement
 	/**
 	 * @return	string
 	 */
-	function getOrder()
-	{
+	public function getOrder() {
 		return $this->order;
 	}
 
 	/**
 	 * @param	int $limit
 	 */
-	function setLimit($limit=0)
-	{
+	public function setLimit($limit=0) {
 		$this->limit = (int) ($limit);
 	}
 
 	/**
 	 * @return	int
 	 */
-	function getLimit()
-	{
+	public function getLimit() {
 		return $this->limit;
 	}
 
 	/**
 	 * @param	int $start
 	 */
-	function setStart($start=0)
-	{
+	public function setStart($start=0) {
 		$this->start = (int) ($start);
 	}
 
 	/**
 	 * @return	int
 	 */
-	function getStart()
-	{
+	public function getStart() {
 		return $this->start;
 	}
 
 	/**
 	 * @param	string  $group
 	 */
-	function setGroupby($group){
+	public function setGroupby($group) {
 		$this->groupby = $group;
 	}
 
 	/**
 	 * @return	string
 	 */
-	function getGroupby(){
+	public function getGroupby() {
 		return ' GROUP BY '.$this->groupby;
 	}
 	/**#@-*/
 }
-?>
+

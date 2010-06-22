@@ -20,20 +20,19 @@ if( !defined( "ICMS_ROOT_PATH" ) ) die( "ImpressCMS root path not defined" );
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class core_CriteriaCompo extends core_CriteriaElement
-{
+class core_CriteriaCompo extends core_CriteriaElement {
 
 	/**
 	 * The elements of the collection
 	 * @var	array   Array of {@link core_CriteriaElement} objects
 	 */
-	var $criteriaElements = array();
+	public $criteriaElements = array();
 
 	/**
 	 * Conditions
 	 * @var	array
 	 */
-	var $conditions = array();
+	public $conditions = array();
 
 	/**
 	 * Constructor
@@ -41,8 +40,7 @@ class core_CriteriaCompo extends core_CriteriaElement
 	 * @param   object  $ele
 	 * @param   string  $condition
 	 **/
-	function core_CriteriaCompo($ele=null, $condition='AND')
-	{
+	public function __construct($ele=null, $condition='AND') {
 		if (isset($ele) && is_object($ele)) {
 			$this->add($ele, $condition);
 		}
@@ -56,8 +54,7 @@ class core_CriteriaCompo extends core_CriteriaElement
 	 *
 	 * @return  object  reference to this collection
 	 **/
-	function &add(&$criteriaElement, $condition='AND')
-	{
+	public function &add(&$criteriaElement, $condition='AND') {
 		$this->criteriaElements[] =& $criteriaElement;
 		$this->conditions[] = $condition;
 		return $this;
@@ -68,8 +65,7 @@ class core_CriteriaCompo extends core_CriteriaElement
 	 *
 	 * @return	string
 	 */
-	function render()
-	{
+	public function render() {
 		$ret = '';
 		$count = count($this->criteriaElements);
 		if ($count > 0) {
@@ -87,8 +83,7 @@ class core_CriteriaCompo extends core_CriteriaElement
 	 *
 	 * @return	string
 	 */
-	function renderWhere()
-	{
+	public function renderWhere() {
 		$ret = $this->render();
 		$ret = ($ret != '') ? 'WHERE ' . $ret : $ret;
 		return $ret;
@@ -100,7 +95,7 @@ class core_CriteriaCompo extends core_CriteriaElement
 	 * @return string
 	 * @author Nathan Dial ndial@trillion21.com
 	 */
-	function renderLdap(){
+	public function renderLdap() {
 		$retval = '';
 		$count = count($this->criteriaElements);
 		if ($count > 0) {
@@ -118,4 +113,4 @@ class core_CriteriaCompo extends core_CriteriaElement
 		return $retval;
 	}
 }
-?>
+

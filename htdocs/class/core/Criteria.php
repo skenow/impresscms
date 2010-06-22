@@ -9,17 +9,16 @@
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class core_Criteria extends core_CriteriaElement
-{
+class core_Criteria extends core_CriteriaElement {
 
 	/**
 	 * @var	string
 	 */
-	var $prefix;
-	var $function;
-	var $column;
-	var $operator;
-	var $value;
+	public $prefix;
+	public $function;
+	public $column;
+	public $operator;
+	public $value;
 
 	/**
 	 * Constructor
@@ -28,7 +27,7 @@ class core_Criteria extends core_CriteriaElement
 	 * @param   string  $value
 	 * @param   string  $operator
 	 **/
-	function core_Criteria($column, $value='', $operator='=', $prefix = '', $function = '') {
+	public function __construct($column, $value='', $operator='=', $prefix = '', $function = '') {
 		$this->prefix = $prefix;
 		$this->function = $function;
 		$this->column = $column;
@@ -41,7 +40,7 @@ class core_Criteria extends core_CriteriaElement
 	 *
 	 * @return  string
 	 **/
-	function render() {
+	public function render() {
 		$clause = (!empty($this->prefix) ? "{$this->prefix}." : "") . $this->column;
 		if ( !empty($this->function) ) {
 			$clause = sprintf($this->function, $clause);
@@ -70,7 +69,7 @@ class core_Criteria extends core_CriteriaElement
 	 * @return string
 	 * @author Nathan Dial ndial@trillion21.com, improved by Pierre-Eric MENUET pemen@sourceforge.net
 	 */
-	function renderLdap(){
+	public function renderLdap(){
 		if ($this->operator == '>') {
 			$this->operator = '>=';
 		}
@@ -106,10 +105,9 @@ class core_Criteria extends core_CriteriaElement
 	 *
 	 * @return	string
 	 */
-	function renderWhere() {
+	public function renderWhere() {
 		$cond = $this->render();
 		return empty($cond) ? '' : "WHERE $cond";
 	}
 }
 
-?>
