@@ -29,14 +29,12 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class core_Groupperm extends core_Object
-{
+class core_Groupperm extends core_Object {
 	/**
 	 * Constructor
 	 *
 	 */
-	function core_Groupperm()
-	{
+	function __construct() {
 		$this->core_Object();
 		$this->initVar('gperm_id', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('gperm_groupid', XOBJ_DTYPE_INT, null, false);
@@ -45,4 +43,14 @@ class core_Groupperm extends core_Object
 		$this->initVar('gperm_name', XOBJ_DTYPE_OTHER, null, false);
 	}
 }
-?>
+
+/**
+ * @deprecated	Use core_Groupperm, instead
+ * @todo		Remove in version 1.4
+ */
+class XoopsGroupPerm extends core_Groupperm {
+	public function __construct() {
+		parent::__construct();
+		$this->setErrors = icms_deprecated('core_Groupperm', 'This will be removed in version 1.4');
+	}
+}

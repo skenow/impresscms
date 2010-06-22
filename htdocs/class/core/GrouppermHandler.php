@@ -20,18 +20,17 @@
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
 /**
- * XOOPS group permission handler class.
+ * Group permission handler class.
  *
  * This class is responsible for providing data access mechanisms to the data source
- * of XOOPS group permission class objects.
+ * of group permission class objects.
  * This class is an abstract class to be implemented by child group permission classes.
  *
  * @see          core_Groupperm
  * @author       Kazumi Ono  <onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class core_GrouppermHandler extends core_ObjectHandler
-{
+class core_GrouppermHandler extends core_ObjectHandler {
 	public static $_cachedRights;
 
 	/**
@@ -40,8 +39,7 @@ class core_GrouppermHandler extends core_ObjectHandler
 	 * @return	bool    $isNew  Flag the object as "new"?
 	 * @see htdocs/kernel/core_ObjectHandler#create()
 	 */
-	function &create($isNew = true)
-	{
+	public function &create($isNew = true) {
 		$perm = new core_Groupperm();
 		if ($isNew) {
 			$perm->setNew();
@@ -57,8 +55,7 @@ class core_GrouppermHandler extends core_ObjectHandler
 	 * @return	object  {@link core_Groupperm}, FALSE on fail
 	 * @see htdocs/kernel/core_ObjectHandler#get($int_id)
 	 */
-	function &get($id)
-	{
+	public function &get($id) {
 		$id = (int) ($id);
 		$perm = false;
 		if ($id > 0) {
@@ -83,12 +80,11 @@ class core_GrouppermHandler extends core_ObjectHandler
 	 * @return	bool    TRUE on success
 	 * @see htdocs/kernel/core_ObjectHandler#insert($object)
 	 */
-	function insert(&$perm)
-	{
+	public function insert(&$perm) {
 		/**
 		 * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
 		 */
-		if (!is_a($perm, 'xoopsgroupperm')) {
+		if (!is_a($perm, 'core_Groupperm')) {
 			return false;
 		}
 		if ( !$perm->isDirty() ) {
@@ -124,12 +120,11 @@ class core_GrouppermHandler extends core_ObjectHandler
 	 * @return	bool    TRUE on success
 	 * @see htdocs/kernel/core_ObjectHandler#delete($object)
 	 */
-	function delete(&$perm)
-	{
+	public function delete(&$perm) {
 		/**
 		 * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
 		 */
-		if (!is_a($perm, 'xoopsgroupperm')) {
+		if (!is_a($perm, 'core_Groupperm')) {
 			return false;
 		}
 		$sql = sprintf("DELETE FROM %s WHERE gperm_id = '%u'", $this->db->prefix('group_permission'), (int) ($perm->getVar('gperm_id')));
@@ -147,8 +142,7 @@ class core_GrouppermHandler extends core_ObjectHandler
 	 *
 	 * @return	array   Array of {@link core_Groupperm}s
 	 */
-	function getObjects($criteria = null, $id_as_key = false)
-	{
+	public function getObjects($criteria = null, $id_as_key = false) {
 		$ret = array();
 		$limit = $start = 0;
 		$sql = 'SELECT * FROM '.$this->db->prefix('group_permission');
@@ -181,8 +175,7 @@ class core_GrouppermHandler extends core_ObjectHandler
 	 *
 	 * @return	int
 	 */
-	function getCount($criteria = null)
-	{
+	public function getCount($criteria = null) {
 		$sql = 'SELECT COUNT(*) FROM '.$this->db->prefix('group_permission');
 		if (isset($criteria) && is_subclass_of($criteria, 'core_CriteriaElement')) {
 			$sql .= ' '.$criteria->renderWhere();
@@ -202,8 +195,7 @@ class core_GrouppermHandler extends core_ObjectHandler
 	 *
 	 * @return	bool    TRUE on success
 	 */
-	function deleteAll($criteria = null)
-	{
+	public function deleteAll($criteria = null) {
 		$sql = sprintf("DELETE FROM %s", $this->db->prefix('group_permission'));		if (isset($criteria) && is_subclass_of($criteria, 'core_CriteriaElement')) {
 			$sql .= ' '.$criteria->renderWhere();
 		}
@@ -221,8 +213,7 @@ class core_GrouppermHandler extends core_ObjectHandler
 	 *
 	 * @return	bool TRUE on success
 	 */
-	function deleteByGroup($gperm_groupid, $gperm_modid = null)
-	{
+	public function deleteByGroup($gperm_groupid, $gperm_modid = null) {
 		$criteria = new core_CriteriaCompo(new core_Criteria('gperm_groupid', (int) ($gperm_groupid)));
 		if (isset($gperm_modid)) {
 			$criteria->add(new core_Criteria('gperm_modid', (int) ($gperm_modid)));
@@ -239,8 +230,7 @@ class core_GrouppermHandler extends core_ObjectHandler
 	 *
 	 * @return	bool TRUE on success
 	 */
-	function deleteByModule($gperm_modid, $gperm_name = null, $gperm_itemid = null)
-	{
+	public function deleteByModule($gperm_modid, $gperm_name = null, $gperm_itemid = null) {
 		$criteria = new core_CriteriaCompo(new core_Criteria('gperm_modid', (int) ($gperm_modid)));
 		if (isset($gperm_name)) {
 			$criteria->add(new core_Criteria('gperm_name', $gperm_name));
@@ -263,8 +253,7 @@ class core_GrouppermHandler extends core_ObjectHandler
 	 *
 	 * @return	bool    TRUE if permission is enabled
 	 */
-	function checkRight($gperm_name, $gperm_itemid, $gperm_groupid, $gperm_modid = 1, $webmasterAlwaysTrue=true)
-	{
+	public function checkRight($gperm_name, $gperm_itemid, $gperm_groupid, $gperm_modid = 1, $webmasterAlwaysTrue=true) {
 		$criteria = new core_CriteriaCompo(new core_Criteria('gperm_modid', $gperm_modid));
 		$criteria->add(new core_Criteria('gperm_name', $gperm_name));
 		$gperm_itemid = (int) ($gperm_itemid);
@@ -302,8 +291,7 @@ class core_GrouppermHandler extends core_ObjectHandler
 	 *
 	 * @return	bool    TRUE if success
 	 */
-	function addRight($gperm_name, $gperm_itemid, $gperm_groupid, $gperm_modid = 1)
-	{
+	public function addRight($gperm_name, $gperm_itemid, $gperm_groupid, $gperm_modid = 1) {
 		$perm =& $this->create();
 		$perm->setVar('gperm_name', $gperm_name);
 		$perm->setVar('gperm_groupid', $gperm_groupid);
@@ -321,8 +309,7 @@ class core_GrouppermHandler extends core_ObjectHandler
 	 *
 	 * @return  array   array of item IDs
 	 */
-	function getItemIds($gperm_name, $gperm_groupid, $gperm_modid = 1)
-	{
+	public function getItemIds($gperm_name, $gperm_groupid, $gperm_modid = 1) {
 		$ret = array();
 		$criteria = new core_CriteriaCompo(new core_Criteria('gperm_name', $gperm_name));
 		$criteria->add(new core_Criteria('gperm_modid', (int) ($gperm_modid)));
@@ -351,8 +338,7 @@ class core_GrouppermHandler extends core_ObjectHandler
 	 *
 	 * @return  array   array of group IDs
 	 */
-	function getGroupIds($gperm_name, $gperm_itemid, $gperm_modid = 1)
-	{
+	public function getGroupIds($gperm_name, $gperm_itemid, $gperm_modid = 1) {
 		$ret = array();
 		$perms = array();
 		if(isset( $this->_cachedRights[$gperm_name][$gperm_itemid][$gperm_modid] ))
@@ -370,4 +356,12 @@ class core_GrouppermHandler extends core_ObjectHandler
 		return $ret;
 	}
 }
-?>
+
+/**
+ * @deprecated	Use core_GrouppermHandler, instead
+ * @todo		Remove in version 1.4
+ *
+ */
+class XoopsGrouppermHandler extends core_GrouppermHandler {
+
+}
