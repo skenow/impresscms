@@ -10,7 +10,7 @@
  * @author		Steve Kenow <skenow@impresscms.org>
  * @copyright	(c) 2007-2008 The ImpressCMS Project - www.impresscms.org
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @version		SVN: $Id$
+ * @version		SVN: $Id: Filesystem.php 19523 2010-06-22 15:49:19Z skenow $
  * @since		1.3
  */
 

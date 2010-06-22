@@ -6,7 +6,7 @@
  * @copyright 	The XOOPS Project <http://www.xoops.org>
  * @license		GNU General Public License (GPL) <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>
  *
- * @version		$Id$
+ * @version		$Id: BlockHandler.php 19514 2010-06-21 22:50:14Z skenow $
  * @since 		XOOPS
  *
  * @author		The XOOPS Project Community <http://www.xoops.org>

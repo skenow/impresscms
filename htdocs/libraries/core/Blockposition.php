@@ -8,7 +8,7 @@
  * @license         LICENSE.txt
  * @package	core
  * @since            1.0
- * @version		$Id$
+ * @version		$Id: Blockposition.php 19514 2010-06-21 22:50:14Z skenow $
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');

@@ -11,7 +11,7 @@
  * @since		XOOPS
  * @author		Kazumi Ono (aka onokazo)
  * @author		http://www.xoops.org The XOOPS Project
- * @version		$Id$
+ * @version		$Id: ConfigcategoryHandler.php 19514 2010-06-21 22:50:14Z skenow $
  */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");

@@ -17,7 +17,7 @@ class core_Autoloader {
 	 * Debug feature of autoloader
 	 * @var bool debug enabling debug
 	 */
-	static protected $debug=true;
+	static protected $debug=false;
 
 	static public function autoload( $class ) {
 		if (self::$debug) echo '== class: ' . $class . '<br />';
@@ -33,7 +33,7 @@ class core_Autoloader {
 			}
 		} else {
 			$file = str_replace( '_', DIRECTORY_SEPARATOR, $class );
-			$path = ICMS_ROOT_PATH . '/class/' . $file . '.php';
+			$path = ICMS_ROOT_PATH . '/libraries/' . $file . '.php';
 			if (file_exists($path))
 				include_once $path;
 			else {

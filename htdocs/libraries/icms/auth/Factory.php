@@ -23,7 +23,7 @@
  * @author	    Pierre-Eric MENUET	<pemphp@free.fr>
  * @copyright	copyright (c) 2000-2005 XOOPS.org
  */
-class auth_Factory
+class icms_auth_Factory
 {
 
 	/**

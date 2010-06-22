@@ -238,7 +238,7 @@ class core_Logger {
 	 * @access protected
 	 */
 	public function dump( $mode = '' ) {
-		include ICMS_ROOT_PATH . '/class/core/Logger_render.php';
+		include ICMS_ROOT_PATH . '/libraries/icms/core/Logger_render.php';
 		return $ret;
 	}
 

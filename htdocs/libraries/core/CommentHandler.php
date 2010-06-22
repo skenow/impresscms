@@ -10,7 +10,7 @@
  * @copyright 	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
  * @since		XOOPS
- * @version		$Id$
+ * @version		$Id: CommentHandler.php 19514 2010-06-21 22:50:14Z skenow $
  */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");

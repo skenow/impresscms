@@ -11,7 +11,7 @@
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
  * @todo	Properly declare the visibility of all properties and methods
- * @version	$Id$
+ * @version	$Id: Object.php 19514 2010-06-21 22:50:14Z skenow $
  */
 
 /**#@+
