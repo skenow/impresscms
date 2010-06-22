@@ -27,13 +27,13 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @copyright copyright &copy; 2000 XOOPS.org
  * @package kernel
  **/
-class core_Tplfile extends core_Object
+class icms_core_Tplfile extends core_Object
 {
 
 	/**
 	 * constructor
 	 */
-	function core_Tplfile()
+	function icms_core_Tplfile()
 	{
 		$this->core_Object();
 		$this->initVar('tpl_id', XOBJ_DTYPE_INT, null, false);

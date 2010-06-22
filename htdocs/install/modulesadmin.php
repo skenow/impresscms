@@ -507,7 +507,7 @@ function icms_module_update($dirname) {
 		$deltpl =& $tplfile_handler->find('default', 'module', $module->getVar('mid'));
 		$delng = array();
 		if (is_array($deltpl)) {
-			$xoopsDelTpl = new core_Tpl();
+			$xoopsDelTpl = new icms_core_Tpl();
 			// clear cache files
 			$xoopsDelTpl->clear_cache(null, 'mod_'.$dirname);
 			// delete template file entry in db

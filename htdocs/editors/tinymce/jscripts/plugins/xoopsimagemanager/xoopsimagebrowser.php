@@ -23,7 +23,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 //include_once ICMS_ROOT_PATH.'/class/template.php';
 
-$icmsTpl = new core_Tpl ( );
+$icmsTpl = new icms_core_Tpl ( );
 
 $op = (isset($_GET['op']))?$_GET['op']:((isset($_POST['op']))?$_POST['op']:'list');
 $imgcat_id = (isset($_GET['imgcat_id']))? (int) ($_GET['imgcat_id']):((isset($_POST['imgcat_id']))? (int) ($_POST['imgcat_id']):null);

@@ -149,7 +149,7 @@ class icms_core_PageBuilder {
 			$template = & $this->theme->template;
 			$backup = array ($template->caching, $template->cache_lifetime );
 		} else {
-			$template = new core_Tpl();
+			$template = new icms_core_Tpl();
 		}
 
 		/** moved here from buildBlocks to reduce redundant calls */
@@ -233,7 +233,7 @@ class icms_core_PageBuilder {
 		$xoopsLogger = & icms_core_Logger::instance ();
 
 		$bcachetime = (int) ( $xobject->getVar ( 'bcachetime' ) );
-		//$template = new core_Tpl();
+		//$template = new icms_core_Tpl();
 		if (empty ( $bcachetime )) {
 			$template->caching = 0;
 		} else {

@@ -280,7 +280,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 						$err[] = 'Could not insert template file to the database.';
 					} else {
 						//include_once ICMS_ROOT_PATH.'/class/template.php';
-						$xoopsTpl = new core_Tpl();
+						$xoopsTpl = new icms_core_Tpl();
 						if ($xoopsTpl->is_cached('db:'.$tplfile->getVar('tpl_file'))) {
 							if (!$xoopsTpl->clear_cache('db:'.$tplfile->getVar('tpl_file'))) {
 							}
@@ -1218,7 +1218,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			$html = $myts->stripSlashesGPC($html);
 			$tpltpl_handler =& xoops_gethandler('tplfile');
 			$tplfile =& $tpltpl_handler->get($id, true);
-			$xoopsTpl = new core_Tpl();
+			$xoopsTpl = new icms_core_Tpl();
 
 			if (is_object($tplfile)) {
 				$dummylayout = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

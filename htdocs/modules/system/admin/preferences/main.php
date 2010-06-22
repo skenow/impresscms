@@ -510,7 +510,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 			redirect_header ( 'admin.php?fct=preferences', 3, implode ( '<br />', $GLOBALS ['xoopsSecurity']->getErrors () ) );
 		}
 		//require_once ICMS_ROOT_PATH . '/class/template.php';
-		$xoopsTpl = new core_Tpl ( );
+		$xoopsTpl = new icms_core_Tpl ( );
 		$count = count ( $conf_ids );
 		$tpl_updated = false;
 		$theme_updated = false;

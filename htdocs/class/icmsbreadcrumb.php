@@ -42,7 +42,7 @@ class IcmsBreadcrumb {
 	{
 		//include_once ICMS_ROOT_PATH . '/class/template.php';
 
-		$this->_tpl = new core_Tpl();
+		$this->_tpl = new icms_core_Tpl();
 		$this->_tpl->assign('icms_breadcrumb_items', $this->items);
 
 		if ($fetchOnly) {
