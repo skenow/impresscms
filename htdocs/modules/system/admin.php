@@ -35,7 +35,7 @@ $admintest = 0;
 
 if(is_object($icmsUser))
 {
-	$icmsModule =& core_Module::getByDirname('system');
+	$icmsModule =& icms_core_Module::getByDirname('system');
 	if(!$icmsUser->isAdmin($icmsModule->mid())) {redirect_header(ICMS_URL.'/',3,_NOPERM);}
 	$admintest=1;
 }
