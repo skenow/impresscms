@@ -155,8 +155,8 @@ if( strpos( strtolower( $_SERVER['HTTP_USER_AGENT']), 'msie' ) ) { $xoTheme->add
 $xoTheme->addScript(ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox.js');
 $xoTheme->addScript(ICMS_LIBRARIES_URL.'/jquery/colorbox/lightbox.js');
 
-if(@is_object($xoTheme->plugins['core_PageBuilder'])) {
-	$aggreg =& $xoTheme->plugins['core_PageBuilder'];
+if(@is_object($xoTheme->plugins['icms_core_PageBuilder'])) {
+	$aggreg =& $xoTheme->plugins['icms_core_PageBuilder'];
 	$xoopsTpl->assign_by_ref('xoBlocks', $aggreg->blocks);
 
 	// Backward compatibility code for pre 2.0.14 themes

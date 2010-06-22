@@ -17,7 +17,7 @@ class icms_core_Autoloader {
 	 * Debug feature of autoloader
 	 * @var bool debug enabling debug
 	 */
-	static protected $debug=false;
+	static protected $debug=true;
 
 	static public function autoload( $class ) {
 		if (self::$debug) echo '== class: ' . $class . '<br />';

@@ -155,7 +155,7 @@ class IcmsPersistableObjectHandler extends core_ObjectHandler {
 		}
 		$this->keyName = $keyname;
 
-		if ($modulename == 'core')
+		if ($modulename == 'icms_core')
 			$classname = $modulename . '_' . ucfirst($itemname);
 		else
 			$classname = 'mod_' . $modulename . '_' . ucfirst($itemname);

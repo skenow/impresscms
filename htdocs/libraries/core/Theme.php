@@ -53,7 +53,7 @@ class core_Theme {
 	 * @public array
 	 * @access public
 	 */
-	public $plugins = array( 'core_PageBuilder' );
+	public $plugins = array( 'icms_core_PageBuilder' );
 
 	public $renderCount = 0;
 	/**

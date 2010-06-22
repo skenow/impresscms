@@ -21,7 +21,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @since ImpressCMS 1.2
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
-class core_Block extends IcmsPersistableObject {
+class icms_core_Block extends IcmsPersistableObject {
 
 	public function __construct(& $handler) {
 
@@ -208,7 +208,7 @@ class core_Block extends IcmsPersistableObject {
 	 * @deprecated use the handler method, instead
 	 */
 	public function getBlockPositions($full=false){
-		icms_deprecated('core_BlockHandler->getBlockPositions');
+		icms_deprecated('icms_core_BlockHandler->getBlockPositions');
 		return $this->handler->getBlockPositions($full);
 	}
 
@@ -220,7 +220,7 @@ class core_Block extends IcmsPersistableObject {
 	 * @deprecated use the handler method, instead
 	 */
 	public function load($id){
-		icms_deprecated('core_BlockHandler->getObject');
+		icms_deprecated('icms_core_BlockHandler->getObject');
 		$this->$this->handler->getObject($id);
 	}
 
@@ -232,7 +232,7 @@ class core_Block extends IcmsPersistableObject {
 	 * @deprecated use the handler method 'insert', instead
 	 */
 	public function store(){
-		icms_deprecated('core_BlockHandler->insert');
+		icms_deprecated('icms_core_BlockHandler->insert');
 		$this->handler->insert( $this );
 		return $this->getVar('bid');
 	}
@@ -245,7 +245,7 @@ class core_Block extends IcmsPersistableObject {
 	 * @deprecated use the handler method, instead
 	 */
 	public function delete(){
-		icms_deprecated('core_BlockHandler->delete');
+		icms_deprecated('icms_core_BlockHandler->delete');
 		return $this->handler->delete( $this );
 	}
 
@@ -267,7 +267,7 @@ class core_Block extends IcmsPersistableObject {
 	 * @deprecated use the handler method, instead
 	 */
 	public function getAllBlocksByGroup($groupid, $asobject=true, $side=null, $visible=null, $orderby="b.weight,b.bid", $isactive=1){
-		icms_deprecated('core_BlockHandler->getAllBlocksByGroup');
+		icms_deprecated('icms_core_BlockHandler->getAllBlocksByGroup');
 		return $this->handler->getAllBlocksByGroup( $groupid, $asobject, $side, $visible, $orderby, $isactive );
 	}
 
@@ -286,7 +286,7 @@ class core_Block extends IcmsPersistableObject {
 	 * @deprecated use the handler method, instead
 	 */
 	public function getAllBlocks( $rettype = "object", $side = null, $visible = null, $orderby = "side,weight,bid", $isactive = 1 ){
-		icms_deprecated('core_BlockHandler->getAllBlocks');
+		icms_deprecated('icms_core_BlockHandler->getAllBlocks');
 		return $this->handler->getAllBlocks( $rettype, $side, $visible, $orderby, $isactive );
 	}
 
@@ -302,7 +302,7 @@ class core_Block extends IcmsPersistableObject {
 	 * @deprecated use the handler method, instead
 	 */
 	public function getByModule($moduleid, $asobject=true){
-		icms_deprecated('core_BlockHandler->getByModule');
+		icms_deprecated('icms_core_BlockHandler->getByModule');
 		return $this->handler->getByModule( $moduleid, $asobject );
 	}
 
@@ -323,7 +323,7 @@ class core_Block extends IcmsPersistableObject {
 	 *
 	 */
 	public function getAllByGroupModule($groupid, $module_id='0-0', $toponlyblock=false, $visible=null, $orderby='b.weight,b.bid', $isactive=1){
-		icms_deprecated( 'core_BlockHandler->getAllByGroupModule');
+		icms_deprecated( 'icms_core_BlockHandler->getAllByGroupModule');
 		return $this->handler->getAllByGroupModule( $groupid, $module_id, $toponlyblock, $visible, $orderby, $isactive );
 	}
 
@@ -340,7 +340,7 @@ class core_Block extends IcmsPersistableObject {
 	 * @deprecated use the handler method, instead
 	 */
 	public function getNonGroupedBlocks($module_id=0, $toponlyblock=false, $visible=null, $orderby='b.weight,b.bid', $isactive=1){
-		icms_deprecated( 'core_BlockHandler->getNonGroupedBlocks' );
+		icms_deprecated( 'icms_core_BlockHandler->getNonGroupedBlocks' );
 		return $this->handler->getNonGroupedBlocks( $module_id, $toponlyblock, $visible, $orderby, $isactive );
 	}
 
@@ -360,34 +360,34 @@ class core_Block extends IcmsPersistableObject {
 	 * @deprecated use the handler method, instead
 	 */
 	public function countSimilarBlocks($moduleId, $funcNum, $showFunc = null) {
-		icms_deprecated( 'core_BlockHandler->getCountSimilarBlocks' );
+		icms_deprecated( 'icms_core_BlockHandler->getCountSimilarBlocks' );
 		return $this->handler->getCountSimilarBlocks( $moduleId, $funcNum, $showFunc );
 	}
 
 }
 
 /**
- * @deprecated use core_Block instead
+ * @deprecated use icms_core_Block instead
  * @todo Remove in version 1.4 - all instances have been removed from the core
  */
-class XoopsBlock extends core_Block {
+class XoopsBlock extends icms_core_Block {
 
 	public function __construct(&$db) {
 		parent::__construct(&$db);
-		$this->setErrors = icms_deprecated('core_Block');
+		$this->setErrors = icms_deprecated('icms_core_Block');
 	}
 
 }
 
 /**
- * @deprecated use core_Block instead
+ * @deprecated use icms_core_Block instead
  * @todo Remove in version 1.4 - all instances have been removed from the core
  */
 
-class IcmsBlock extends core_Block {
+class IcmsBlock extends icms_core_Block {
 	public function __construct(&$db) {
 		parent::__construct(&$db);
-		$this->setErrors = icms_deprecated('core_Block');
+		$this->setErrors = icms_deprecated('icms_core_Block');
 	}
 
 }

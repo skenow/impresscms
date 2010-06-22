@@ -2,7 +2,7 @@
 /**
  * core_Tpl
  *
- * Gateway file to include class/theme_blocks.php when core_PageBuilder class is needed
+ * Gateway file to include class/theme_blocks.php when icms_core_PageBuilder class is needed
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)

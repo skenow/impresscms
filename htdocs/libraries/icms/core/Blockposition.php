@@ -14,15 +14,15 @@
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 /**
- * core_Blockposition
+ * icms_core_Blockposition
  *
  */
-class core_Blockposition extends IcmsPersistableObject {
+class icms_core_Blockposition extends IcmsPersistableObject {
 
 	/**
 	 * Constructor
 	 *
-	 * @param core_BlockpositionHandler $handler
+	 * @param icms_core_BlockpositionHandler $handler
 	 */
 	public function __construct(& $handler) {
 
@@ -41,13 +41,13 @@ class core_Blockposition extends IcmsPersistableObject {
 
 /**
  * IcmsBlockposition
- * @deprecated Use core_Blockposition, instead
+ * @deprecated Use icms_core_Blockposition, instead
  * @todo Remove in version 1.4 - all instances have been removed from the core
  */
-class IcmsBlockposition extends core_Blockposition {
+class IcmsBlockposition extends icms_core_Blockposition {
 	public function __construct() {
 		parent::__construct(&$handler);
-		$this->setErrors(icms_deprecated('core_Blockposition'));
+		$this->setErrors(icms_deprecated('icms_core_Blockposition'));
 	}
 
 }

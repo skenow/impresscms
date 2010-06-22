@@ -21,7 +21,7 @@ include_once ICMS_ROOT_PATH . '/kernel/icmspersistableobject.php';
  * @since	ImpressCMS 1.2
  * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
  */
-class core_Page extends IcmsPersistableObject {
+class icms_core_Page extends IcmsPersistableObject {
 
 	public function __construct( & $handler ){
 

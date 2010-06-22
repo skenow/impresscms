@@ -78,7 +78,7 @@ function icms_cp_header(){
 		'contentTemplate'	=> @$xoopsOption['template_main'],
 		'canvasTemplate'	=> 'theme' . (( file_exists(ICMS_THEME_PATH . '/' . $icmsConfig['theme_admin_set'] . '/theme_admin.html')
 			|| file_exists(ICMS_MODULES_PATH . '/system/themes/' . $icmsConfig['theme_admin_set'] . '/theme_admin.html') ) ?'_admin':'') . '.html',
-		'plugins' 			=> array('core_PageBuilder'),
+		'plugins' 			=> array('icms_core_PageBuilder'),
 		'folderName'		=> $icmsConfig['theme_admin_set']
 	) );
 	$icmsAdminTpl = $xoTheme->template;
@@ -302,8 +302,8 @@ function icms_cp_header(){
 		$icmsAdminTpl->assign('lang_prefs', _PREFERENCES);
 	}
 
-	if ( @is_object($xoTheme->plugins['core_PageBuilder']) ) {
-		$aggreg =& $xoTheme->plugins['core_PageBuilder'];
+	if ( @is_object($xoTheme->plugins['icms_core_PageBuilder']) ) {
+		$aggreg =& $xoTheme->plugins['icms_core_PageBuilder'];
 
 		$icmsAdminTpl->assign_by_ref('xoAdminBlocks', $aggreg->blocks);
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * core_PageBuilder component class file
+ * icms_core_PageBuilder component class file
  *
  * @copyright	The XOOPS Project <http://www.xoops.org/>
  * @copyright	The ImpressCMS Project <http://www.impresscms.org/>
@@ -23,13 +23,13 @@ if ( !defined ( 'ICMS_ROOT_PATH' )) exit ();
 //include_once ICMS_ROOT_PATH . '/class/template.php';
 
 /**
- * core_PageBuilder main class
+ * icms_core_PageBuilder main class
  *
  * @package     core
  * @subpackage  template
  * @author      Skalpa Keo <skalpa@xoops.org>
  */
-class core_PageBuilder {
+class icms_core_PageBuilder {
 
 	public $theme = false;
 

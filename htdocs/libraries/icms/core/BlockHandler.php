@@ -27,14 +27,14 @@ include_once ICMS_ROOT_PATH . '/class/xoopsformloader.php';
  * @since ImpressCMS 1.2
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
-class core_BlockHandler extends IcmsPersistableObjectHandler {
+class icms_core_BlockHandler extends IcmsPersistableObjectHandler {
 
 	private $block_positions;
 	private $modules_name;
 
 	public function __construct(& $db) {
-		parent::__construct($db, 'block', 'bid', 'title', 'content', 'icms');
-		$this->className = 'core_Block';
+		parent::__construct($db, 'block', 'bid', 'title', 'content', 'icms_core');
+		//$this->className = 'icms_core_Block';
 		$this->table = $this->db->prefix('newblocks');
 	}
 
@@ -319,7 +319,7 @@ class core_BlockHandler extends IcmsPersistableObjectHandler {
 	}
 
 	/**
-	 * Save a core_Block Object
+	 * Save a icms_core_Block Object
 	 *
 	 * Overwrited Method
 	 *
@@ -453,25 +453,25 @@ class core_BlockHandler extends IcmsPersistableObjectHandler {
 }
 
 /**
- * @deprecated  use core_BlockHandler instead
+ * @deprecated  use icms_core_BlockHandler instead
  * @todo Remove in version 1.4 - all instances have been removed from the core
  */
-class XoopsBlockHandler extends core_BlockHandler {
+class XoopsBlockHandler extends icms_core_BlockHandler {
 	public function __construct(&$db) {
 		parent::__construct(&$db);
-		$this->setVar('_errors', icms_deprecated('core_BlockHandler'));
+		$this->setVar('_errors', icms_deprecated('icms_core_BlockHandler'));
 	}
 
 }
 
 /**
- * @deprecated  use core_BlockHandler instead
+ * @deprecated  use icms_core_BlockHandler instead
  * @todo Remove in version 1.4 - all instances have been removed from the core
  */
-class IcmsBlockHandler extends core_BlockHandler {
+class IcmsBlockHandler extends icms_core_BlockHandler {
 	public function __construct(&$db) {
 		parent::__construct(&$db);
-		$this->setVar('_errors', icms_deprecated('core_BlockHandler'));
+		$this->setVar('_errors', icms_deprecated('icms_core_BlockHandler'));
 	}
 
 }
