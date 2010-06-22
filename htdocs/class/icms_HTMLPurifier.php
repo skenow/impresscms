@@ -211,7 +211,7 @@ class icms_HTMLPurifier
 		if(!is_object($icmsPreloadHandler))
 		{
 			include_once ICMS_ROOT_PATH . '/kernel/icmspreloadhandler.php';
-			$icmsPreloadHandler = core_Preloadhandler::getInstance();
+			$icmsPreloadHandler = icms_core_Preloadhandler::getInstance();
 		}
 		$icmsPreloadHandler->triggerEvent('beforedisplayHTMLarea', array(&$html));
 
@@ -236,7 +236,7 @@ class icms_HTMLPurifier
 		if(!is_object($icmsPreloadHandler))
 		{
 			include_once ICMS_ROOT_PATH . '/kernel/icmspreloadhandler.php';
-			$icmsPreloadHandler = core_Preloadhandler::getInstance();
+			$icmsPreloadHandler = icms_core_Preloadhandler::getInstance();
 		}
 		$icmsPreloadHandler->triggerEvent('beforepreviewHTMLarea', array(&$html));
 
