@@ -106,7 +106,7 @@ class icms_core_Criteria extends icms_core_CriteriaElement {
 	 * @return	string
 	 */
 	public function renderWhere() {
-		$cond = $this->_render();
+		$cond = $this->render();
 		return empty($cond) ? '' : "WHERE $cond";
 	}
 }
