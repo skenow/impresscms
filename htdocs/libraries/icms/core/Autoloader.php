@@ -8,7 +8,7 @@
  * @package		core
  * @since		1.3
  * @author		Marc-André Lanciault (aka marcan) <mal@inboxintl.com>
- * @version		$Id: common.php 19427 2010-06-16 03:31:22Z skenow $
+ * @version		$Id$
  */
 
 class icms_core_Autoloader {
@@ -19,6 +19,10 @@ class icms_core_Autoloader {
 	 */
 	static protected $debug=false;
 
+	/**
+	 * Locates and loads the appropriate file, based on a class name
+	 * @param $class
+	 */
 	static public function autoload( $class ) {
 		if (self::$debug) echo '== class: ' . $class . '<br />';
 
@@ -45,7 +49,10 @@ class icms_core_Autoloader {
 		}
 	}
 
-	function register() {
+	/**
+	 * Adds the icms_core_Autoloader to the spl autoload stack
+	 */
+	static public function register() {
 		static $reg = false;
 		if ( !$reg ) {
 			spl_autoload_register( array( 'icms_core_Autoloader', 'autoload' ) );
