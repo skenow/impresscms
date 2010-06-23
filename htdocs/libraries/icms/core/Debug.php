@@ -17,7 +17,7 @@
 /**
  * This class and its methods handle all the debug messages
  */
-class core_Debug {
+class icms_core_Debug {
 
 	/* Since all the methods are static, there is no __construct necessary	 */
 
