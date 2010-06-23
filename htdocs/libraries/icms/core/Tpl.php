@@ -61,8 +61,12 @@ class icms_core_Tpl extends Smarty {
 		}
 
 		if ( $icmsConfig['debug_mode'] ) {
+			global $icmsUser;
 			$this->debugging_ctrl = 'URL';
-			if ( $icmsConfig['debug_mode'] == 3 ) {
+			$groups   = (is_object($icmsUser)) ? $icmsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
+			$moduleid = (isset($icmsModule) && is_object($icmsModule)) ? $icmsModule->mid() : 1;
+			$gperm_handler =& xoops_gethandler('groupperm');
+			if ( $icmsConfig['debug_mode'] == 3 && $gperm_handler->checkRight('enable_debug', $moduleid, $groups)) {
 				$this->debugging = true;
 			}
 		}

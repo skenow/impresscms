@@ -10,26 +10,26 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: logger_render.php 19425 2010-06-14 23:03:14Z skenow $
+ * @version	$Id$
  */
 
-defined( 'ICMS_ROOT_PATH' ) or die();
+defined('ICMS_ROOT_PATH') or die();
 
 $ret = '';
 
 if ( $mode == 'popup' ) {
-	$dump = $this->dump( '' );
+	$dump = $this->dump('');
 	$content = '
 <html>
 <head>
-	<meta http-equiv="content-type" content="text/html; charset='._CHARSET.'" />
-	<meta http-equiv="content-language" content="'._LANGCODE.'" />
-	<title>'.$icmsConfig['sitename'].'</title>
-	<link rel="stylesheet" type="text/css" media="all" href="'.xoops_getcss($icmsConfig['theme_set']).'" />
+	<meta http-equiv="content-type" content="text/html; charset=' . _CHARSET . '" />
+	<meta http-equiv="content-language" content="' . _LANGCODE . '" />
+	<title>' . $icmsConfig['sitename'] . '</title>
+	<link rel="stylesheet" type="text/css" media="all" href="' . xoops_getcss($icmsConfig['theme_set']) . '" />
 </head>
 <body>' . $dump . '
 	<div style="text-align:center;">
-		<input class="formButton" value="'._CLOSE.'" type="button" onclick="javascript:window.close();" />
+		<input class="formButton" value="' . _CLOSE . '" type="button" onclick="javascript:window.close();" />
 	</div>
 </body>
 </html>';
@@ -40,7 +40,7 @@ if ( $mode == 'popup' ) {
 ';
 	$lines = preg_split("/(\r\n|\r|\n)( *)/", $content);
 	foreach ($lines as $line) {
-		$ret .= "\n" . 'debug_window.document.writeln("'.str_replace( array( '"', '</' ), array( '\"', '<\/' ), $line).'");';
+		$ret .= "\n" . 'debug_window.document.writeln("' . str_replace(array('"', '</'), array('\"', '<\/'), $line) . '");';
 	}
 	$ret .= '
 	debug_window.focus();
@@ -50,18 +50,18 @@ if ( $mode == 'popup' ) {
 
 if ( empty( $mode ) ) {
 	$ret .= "\n<div id=\"xo-logger-output\">\n<div id='xo-logger-tabs'>\n";
-	$ret .= "<hr /><a href='javascript:xoSetLoggerView(\"none\")'>"._NONE."</a> | \n";
-	$ret .= "<a href='javascript:xoSetLoggerView(\"\")'>"._ALL."</a> | \n";
+	$ret .= "<hr /><a href='javascript:xoSetLoggerView(\"none\")'>" . _NONE . "</a> | \n";
+	$ret .= "<a href='javascript:xoSetLoggerView(\"\")'>" . _ALL . "</a> | \n";
 	$count = count( $this->errors );
-	$ret .= "<a href='javascript:xoSetLoggerView(\"errors\")'>"._ERRORS." (".icms_conv_nr2local($count).")</a>\n";
+	$ret .= "<a href='javascript:xoSetLoggerView(\"errors\")'>" . _ERRORS . " (" . icms_conv_nr2local($count) . ")</a>\n";
 	$count = count( $this->queries );
-	$ret .= "<a href='javascript:xoSetLoggerView(\"queries\")'>"._QUERIES." (".icms_conv_nr2local($count).")</a>\n";
+	$ret .= "<a href='javascript:xoSetLoggerView(\"queries\")'>" . _QUERIES . " (" . icms_conv_nr2local($count) . ")</a>\n";
 	$count = count( $this->blocks );
-	$ret .= "<a href='javascript:xoSetLoggerView(\"blocks\")'>"._BLOCKS." (".icms_conv_nr2local($count).")</a>\n";
+	$ret .= "<a href='javascript:xoSetLoggerView(\"blocks\")'>" . _BLOCKS . " (" . icms_conv_nr2local($count) . ")</a>\n";
 	$count = count( $this->extra );
-	$ret .= "<a href='javascript:xoSetLoggerView(\"extra\")'>"._EXTRA." (".icms_conv_nr2local($count).")</a>\n";
+	$ret .= "<a href='javascript:xoSetLoggerView(\"extra\")'>" . _EXTRA . " (" . icms_conv_nr2local($count) . ")</a>\n";
 	$count = count( $this->logstart );
-	$ret .= "<a href='javascript:xoSetLoggerView(\"timers\")'>"._TIMERS." (".icms_conv_nr2local($count).")</a>\n";
+	$ret .= "<a href='javascript:xoSetLoggerView(\"timers\")'>" . _TIMERS . " (" . icms_conv_nr2local($count) . ")</a>\n";
 	$ret .= "</div>\n";
 }
 
@@ -75,7 +75,7 @@ if ( empty($mode) || $mode == 'errors' ) {
 	E_STRICT => _STRICT,
 	);
 	$class = 'even';
-	$ret .= '<table id="xo-logger-errors" class="outer"><tr><th>'._ERRORS.'</th></tr>';
+	$ret .= '<table id="xo-logger-errors" class="outer"><tr><th>' . _ERRORS . '</th></tr>';
 	foreach ( $this->errors as $error ) {
 		$ret .= "\n<tr><td class='$class'>";
 		$ret .= isset( $types[ $error['errno'] ] ) ? $types[ $error['errno'] ] : 'Unknown';
@@ -88,38 +88,38 @@ if ( empty($mode) || $mode == 'errors' ) {
 
 if ( empty($mode) || $mode == 'queries' ) {
 	$class = 'even';
-	$ret .= '<table id="xo-logger-queries" class="outer"><tr><th>'._QUERIES.'</th></tr>';
+	$ret .= '<table id="xo-logger-queries" class="outer"><tr><th>' . _QUERIES . '</th></tr>';
 	foreach ($this->queries as $q) {
 		if (isset($q['error'])) {
-			$ret .= '<tr class="'.$class.'"><td><span style="color:#ff0000;">'.htmlentities($q['sql']).'<br /><b>'._ERR_NR.'</b> '.$q['errno'].'<br /><b>'._ERR_MSG.'</b> '.$q['error'].'</span></td></tr>';
+			$ret .= '<tr class="' . $class . '"><td><span style="color:#ff0000;">' . htmlentities($q['sql']) . '<br /><strong>' . _ERR_NR . '</strong> ' . $q['errno'] . '<br /><strong>' . _ERR_MSG . '</strong> ' . $q['error'] . '</span></td></tr>';
 		} else {
-			$ret .= '<tr class="'.$class.'"><td>'.htmlentities($q['sql']).'</td></tr>';
+			$ret .= '<tr class="' . $class . '"><td>' . htmlentities($q['sql']) . '</td></tr>';
 		}
 		$class = ($class == 'odd') ? 'even' : 'odd';
 	}
-	$ret .= '<tr class="foot"><td>'._TOTAL.' <span style="color:#ff0000;">'.icms_conv_nr2local(count($this->queries)).'</span> '._QUERIES.'</td></tr></table>';
+	$ret .= '<tr class="foot"><td>' . _TOTAL . ' <span style="color:#ff0000;">' . icms_conv_nr2local(count($this->queries)) . '</span> ' . _QUERIES . '</td></tr></table>';
 	$ret = str_replace(XOOPS_DB_PREFIX . '_', '', $ret);
 }
 
 if ( empty($mode) || $mode == 'blocks' ) {
 	$class = 'even';
-	$ret .= '<table id="xo-logger-blocks" class="outer"><tr><th colspan="2">'._BLOCKS.'</th></tr>';
+	$ret .= '<table id="xo-logger-blocks" class="outer"><tr><th colspan="2">' . _BLOCKS . '</th></tr>';
 	foreach ($this->blocks as $b) {
 		if ($b['cached']) {
-			$ret .= '<tr><td class="'.$class.'"><b>'.htmlspecialchars($b['name']).':</b> '._CACHED.' : '.icms_conv_nr2local(sprintf(_REGENERATES, (int) ($b['cachetime']))).'</td></tr>';
+			$ret .= '<tr><td class="' . $class . '"><strong>' . htmlspecialchars($b['name']) . ':</strong> ' . _CACHED . ' : ' . icms_conv_nr2local(sprintf(_REGENERATES, (int) ($b['cachetime']))) . '</td></tr>';
 		} else {
-			$ret .= '<tr><td class="'.$class.'"><b>'.htmlspecialchars($b['name']).':</b> '._NOCACHE.'</td></tr>';
+			$ret .= '<tr><td class="' . $class . '"><strong>' . htmlspecialchars($b['name']) . ':</strong> ' . _NOCACHE . '</td></tr>';
 		}
 		$class = ($class == 'odd') ? 'even' : 'odd';
 	}
-	$ret .= '<tr class="foot"><td>'._TOTAL.' <span style="color:#ff0000;">'.icms_conv_nr2local(count($this->blocks)).'</span> '._BLOCK.'</td></tr></table>';
+	$ret .= '<tr class="foot"><td>' . _TOTAL . ' <span style="color:#ff0000;">' . icms_conv_nr2local(count($this->blocks)) . '</span> ' . _BLOCK . '</td></tr></table>';
 }
 
 if ( empty($mode) || $mode == 'extra' ) {
 	$class = 'even';
-	$ret .= '<table id="xo-logger-extra" class="outer"><tr><th colspan="2">'._EXTRA.'</th></tr>';
+	$ret .= '<table id="xo-logger-extra" class="outer"><tr><th colspan="2">' . _EXTRA . '</th></tr>';
 	foreach ($this->extra as $ex) {
-		$ret .= '<tr><td class="'.$class.'"><b>'.htmlspecialchars($ex['name']).':</b> '.htmlspecialchars($ex['msg']).'</td></tr>';
+		$ret .= '<tr><td class="' . $class . '"><strong>' . htmlspecialchars($ex['name']) . ':</strong> ' . htmlspecialchars($ex['msg']) . '</td></tr>';
 		$class = ($class == 'odd') ? 'even' : 'odd';
 	}
 	$ret .= '</table>';
@@ -127,9 +127,9 @@ if ( empty($mode) || $mode == 'extra' ) {
 
 if ( empty($mode) || $mode == 'timers' ) {
 	$class = 'even';
-	$ret .= '<table id="xo-logger-timers" class="outer"><tr><th colspan="2">'._TIMERS.'</th></tr>';
+	$ret .= '<table id="xo-logger-timers" class="outer"><tr><th colspan="2">' . _TIMERS . '</th></tr>';
 	foreach ( $this->logstart as $k => $v ) {
-		$ret .= '<tr><td class="'.$class.'"><b>'.htmlspecialchars($k).'</b> '.sprintf(_TOOKXLONG, '<span style="color:#ff0000;">' . icms_conv_nr2local(sprintf( "%.03f", $this->dumpTime($k) )) . '</span>').'</td></tr>';
+		$ret .= '<tr><td class="' . $class.'"><strong>' . htmlspecialchars($k) . '</strong> ' . sprintf(_TOOKXLONG, '<span style="color:#ff0000;">' . icms_conv_nr2local(sprintf( "%.03f", $this->dumpTime($k) )) . '</span>') . '</td></tr>';
 		$class = ($class == 'odd') ? 'even' : 'odd';
 	}
 	$ret .= '</table>';
@@ -179,4 +179,3 @@ if ( empty( $mode ) ) {
 EOT;
 }
 
-?>

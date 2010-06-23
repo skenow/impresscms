@@ -93,7 +93,7 @@ class icms_core_Logger {
 	 * Returns the current microtime in seconds.
 	 * @return float
 	 */
-	function microtime() {
+	private function microtime() {
 		$now = explode( ' ', microtime() );
 		return (float)$now[0] + (float)$now[1];
 	}
@@ -102,7 +102,7 @@ class icms_core_Logger {
 	 * Start a timer
 	 * @param   string  $name   name of the timer
 	 */
-	function startTime($name = 'ICMS') {
+	public function startTime($name = 'ICMS') {
 		$this->logstart[$name] = $this->microtime();
 	}
 
@@ -110,7 +110,7 @@ class icms_core_Logger {
 	 * Stop a timer
 	 * @param   string  $name   name of the timer
 	 */
-	function stopTime($name = 'ICMS') {
+	public function stopTime($name = 'ICMS') {
 		$this->logend[$name] = $this->microtime();
 	}
 
@@ -120,7 +120,7 @@ class icms_core_Logger {
 	 * @param   string  $error  error message (if any)
 	 * @param   int     $errno  error number (if any)
 	 */
-	function addQuery($sql, $error=null, $errno=null) {
+	public function addQuery($sql, $error=null, $errno=null) {
 		if ( $this->activated )		$this->queries[] = array('sql' => $sql, 'error' => $error, 'errno' => $errno);
 		if (defined('ICMS_LOGGING_HOOK') and ICMS_LOGGING_HOOK != '') {
 			include ICMS_LOGGING_HOOK;
@@ -133,7 +133,7 @@ class icms_core_Logger {
 	 * @param   bool    $cached     was the block cached?
 	 * @param   int     $cachetime  cachetime of the block
 	 */
-	function addBlock($name, $cached = false, $cachetime = 0) {
+	public function addBlock($name, $cached = false, $cachetime = 0) {
 		if ( $this->activated )
 		$this->blocks[] = array('name' => $name, 'cached' => $cached, 'cachetime' => $cachetime);
 	}
@@ -211,23 +211,25 @@ class icms_core_Logger {
 	 * @param  string  $output
 	 * @return string  $output
 	 */
-	function render( $output ) {
+	public function render( $output ) {
 		global $icmsUser,$icmsModule;
 		$this->addExtra( 'Included files', count ( get_included_files() ) . ' files' );
 		$this->addExtra( _CORE_MEMORYUSAGE, icms_conv_nr2local(icms_convert_size(memory_get_usage())) );
 		$groups   = (is_object($icmsUser)) ? $icmsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
 		$moduleid = (isset($icmsModule) && is_object($icmsModule)) ? $icmsModule->mid() : 1;
 		$gperm_handler =& xoops_gethandler('groupperm');
-		if ( !$this->renderingEnabled || !$this->activated || !$gperm_handler->checkRight('enable_debug', $moduleid, $groups) )
-		return $output;
+		if ( !$this->renderingEnabled || !$this->activated || !$gperm_handler->checkRight('enable_debug', $moduleid, $groups) ) {
+			return $output;
+		}
 		$this->renderingEnabled = $this->activated = false;
 		$log = $this->dump( $this->usePopup ? 'popup' : '' );
 		$pattern = '<!--{xo-logger-output}-->';
 		$pos = strpos( $output, $pattern );
-		if ( $pos !== false )
-		return substr( $output, 0, $pos ) . $log . substr( $output, $pos + strlen( $pattern ) );
-		else
-		return $output . $log;
+		if ( $pos !== false ) {
+			return substr($output, 0, $pos) . $log . substr($output, $pos + strlen($pattern));
+		} else {
+			return $output . $log;
+		}
 	}
 
 	/**
@@ -260,7 +262,7 @@ class icms_core_Logger {
 	 * dumpAll
 	 *
 	 * @return string
-	 * @deprecated
+	 * @deprecated	Use dump('') instead
 	 */
 	public function dumpAll(){ return $this->dump( '' ); }
 
@@ -268,7 +270,7 @@ class icms_core_Logger {
 	 * dumpBlocks
 	 *
 	 * @return unknown
-	 * @deprecated
+	 * @deprecated	Use dump('blocks'), instead
 	 */
 	public function dumpBlocks(){ return $this->dump( 'blocks' ); }
 
@@ -276,7 +278,7 @@ class icms_core_Logger {
 	 * dumpExtra
 	 *
 	 * @return unknown
-	 * @deprecated
+	 * @deprecated	Use dump('extra'), instead
 	 */
 	public function dumpExtra(){ return $this->dump( 'extra' ); }
 
@@ -284,7 +286,7 @@ class icms_core_Logger {
 	 * dumpQueries
 	 *
 	 * @return unknown
-	 * @deprecated
+	 * @deprecated	Use dump('queries'), instead
 	 */
 	public function dumpQueries(){ return $this->dump( 'queries' ); }
 }
@@ -303,4 +305,13 @@ function XoopsErrorHandler_HandleError( $errNo, $errStr, $errFile, $errLine, $er
 	$logger->handleError( $errNo, $errStr, $errFile, $errLine, $errContext );
 }
 
-?>
+/**
+ * @deprecated	use icms_core_Logger, instead
+ * @todo 		Remove this in version 1.4
+ *
+ */
+class XoopsLogger extends icms_core_Logger {
+	public function __construct() {
+		parent::__construct();
+	}
+}
