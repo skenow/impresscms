@@ -32,11 +32,11 @@ include_once XOOPS_ROOT_PATH . '/include/notification_functions.php';
  * @author	    Michael van Dam <mvandam@caltech.edu>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class core_NotificationHandler extends core_ObjectHandler
+class icms_core_NotificationHandler extends core_ObjectHandler
 {
 
 	/**
-	 * Create a {@link core_Notification}
+	 * Create a {@link icms_core_Notification}
 	 *
 	 * @param	bool    $isNew  Flag the object as "new"?
 	 *
@@ -44,7 +44,7 @@ class core_NotificationHandler extends core_ObjectHandler
 	 */
 	function &create($isNew = true)
 	{
-		$notification = new core_Notification();
+		$notification = new icms_core_Notification();
 		if ($isNew) {
 			$notification->setNew();
 		}
@@ -52,11 +52,11 @@ class core_NotificationHandler extends core_ObjectHandler
 	}
 
 	/**
-	 * Retrieve a {@link core_Notification}
+	 * Retrieve a {@link icms_core_Notification}
 	 *
 	 * @param   int $id ID
 	 *
-	 * @return  object  {@link core_Notification}, FALSE on fail
+	 * @return  object  {@link icms_core_Notification}, FALSE on fail
 	 **/
 	function &get($id)
 	{
@@ -69,7 +69,7 @@ class core_NotificationHandler extends core_ObjectHandler
 			}
 			$numrows = $this->db->getRowsNum($result);
 			if ($numrows == 1) {
-				$notification = new core_Notification();
+				$notification = new icms_core_Notification();
 				$notification->assignVars($this->db->fetchArray($result));
 			}
 		}
@@ -117,9 +117,9 @@ class core_NotificationHandler extends core_ObjectHandler
 	}
 
 	/**
-	 * Delete a {@link core_Notification} from the database
+	 * Delete a {@link icms_core_Notification} from the database
 	 *
-	 * @param   object  &$notification {@link core_Notification}
+	 * @param   object  &$notification {@link icms_core_Notification}
 	 *
 	 * @return  bool
 	 **/
@@ -140,12 +140,12 @@ class core_NotificationHandler extends core_ObjectHandler
 	}
 
 	/**
-	 * Get some {@link core_Notification}s
+	 * Get some {@link icms_core_Notification}s
 	 *
 	 * @param   object  $criteria
 	 * @param   bool    $id_as_key  Use IDs as keys into the array?
 	 *
-	 * @return  array   Array of {@link core_Notification} objects
+	 * @return  array   Array of {@link icms_core_Notification} objects
 	 **/
 	function getObjects($criteria = null, $id_as_key = false)
 	{
@@ -164,7 +164,7 @@ class core_NotificationHandler extends core_ObjectHandler
 			return $ret;
 		}
 		while ($myrow = $this->db->fetchArray($result)) {
-			$notification = new core_Notification();
+			$notification = new icms_core_Notification();
 			$notification->assignVars($myrow);
 			if (!$id_as_key) {
 				$ret[] =& $notification;
@@ -355,7 +355,7 @@ class core_NotificationHandler extends core_ObjectHandler
 	 *
 	 * @param  int  $user_id  ID of the user
 	 *
-	 * @return array  Array of {@link core_Notification} objects
+	 * @return array  Array of {@link icms_core_Notification} objects
 	 **/
 	function getByUser ($user_id)
 	{
@@ -370,7 +370,7 @@ class core_NotificationHandler extends core_ObjectHandler
 	* @param  int      $item_id  ID of the subscribed items
 	* @param  int      $module_id  ID of the module of the subscribed items
 	* @param  int      $user_id  ID of the user of the subscribed items
-	* @return array    Array of {@link core_Notification} objects
+	* @return array    Array of {@link icms_core_Notification} objects
 	**/
 	function getSubscribedEvents($category, $item_id, $module_id, $user_id)
 	{
@@ -398,7 +398,7 @@ class core_NotificationHandler extends core_ObjectHandler
 	 * @param   string  $order      Sort order
 	 * @param   string  $status     status
 	 *
-	 * @return  array   Array of {@link core_Notification} objects
+	 * @return  array   Array of {@link icms_core_Notification} objects
 	 **/
 	function getByItemId($module_id, $item_id, $order = null, $status = null)
 	{
@@ -675,7 +675,7 @@ class core_NotificationHandler extends core_ObjectHandler
 	/**
 	 * Update
 	 *
-	 * @param   object  &$notification  {@link core_Notification} object
+	 * @param   object  &$notification  {@link icms_core_Notification} object
 	 * @param   string  $field_name     Name of the field
 	 * @param   mixed   $field_value    Value to write
 	 *
