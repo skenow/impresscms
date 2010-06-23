@@ -17,7 +17,7 @@
 /**
  * Perform filesystem actions
  */
-class core_Filesystem {
+class icms_core_Filesystem {
 
 	/* Since all the methods are static, there is no __construct necessary	 */
 
