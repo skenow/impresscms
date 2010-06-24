@@ -5,14 +5,14 @@
  * See the enclosed file LICENSE for licensing information.
  * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
  *
- * @copyright	The XOOPS project http://www.xoops.org/
  * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author		Kazumi Ono  <onokazu@xoops.org>
  * @author		Skalpa Keo <skalpa@xoops.org>
  * @since		XOOPS
- * @package		core
+ * @category	ICMS
+ * @package		Core
  * @subpackage	icms_core_Logger
- * @version		$Id: logger.php 19163 2010-04-28 14:37:42Z mekdrop $
+ * @version		$Id$
  */
 
 /**
@@ -52,7 +52,7 @@ class icms_core_Logger {
 		if ( !isset( $instance ) ) {
 			$instance = new icms_core_Logger();
 			// Always catch errors, for security reasons
-			set_error_handler( 'XoopsErrorHandler_HandleError' );
+			set_error_handler( 'icmsErrorHandler_HandleError' );
 		}
 		return $instance;
 	}
@@ -65,7 +65,7 @@ class icms_core_Logger {
 	 */
 	public function enableRendering() {
 		if ( !$this->renderingEnabled ) {
-			ob_start( array( &$this, 'render' ) );
+			ob_start(array(&$this, 'render'));
 			$this->renderingEnabled = true;
 		}
 	}
@@ -94,8 +94,8 @@ class icms_core_Logger {
 	 * @return float
 	 */
 	private function microtime() {
-		$now = explode( ' ', microtime() );
-		return (float)$now[0] + (float)$now[1];
+		$now = explode(' ', microtime());
+		return (float) $now[0] + (float) $now[1];
 	}
 
 	/**
@@ -144,8 +144,9 @@ class icms_core_Logger {
 	 * @param   int     $msg  text message for the entry
 	 */
 	public function addExtra($name, $msg) {
-		if ( $this->activated )
-		$this->extra[] = array('name' => $name, 'msg' => $msg);
+		if ( $this->activated ) {
+			$this->extra[] = array('name' => $name, 'msg' => $msg);
+		}
 	}
 
 	/**
@@ -155,32 +156,32 @@ class icms_core_Logger {
 	 * @param  string  $errfile
 	 * @param  string  $errline
 	 */
-	public function handleError( $errno, $errstr, $errfile, $errline ) {
-		$errstr = $this->sanitizePath( $errstr );
-		$errfile = $this->sanitizePath( $errfile );
+	public function handleError($errno, $errstr, $errfile, $errline) {
+		$errstr = $this->sanitizePath($errstr);
+		$errfile = $this->sanitizePath($errfile);
 		if ( $this->activated && ( $errno & error_reporting() ) ) {
 			// NOTE: we only store relative pathnames
-			$this->errors[] = compact( 'errno', 'errstr', 'errfile', 'errline' );
+			$this->errors[] = compact('errno', 'errstr', 'errfile', 'errline');
 		}
 
 		if ( $errno == E_USER_ERROR ) {
 			$trace = true;
-			if ( substr( $errstr, 0, '8' ) == 'notrace:' ) {
+			if ( substr($errstr, 0, '8') == 'notrace:' ) {
 				$trace = false;
-				$errstr = substr( $errstr, 8 );
+				$errstr = substr($errstr, 8);
 			}
 
 			icms_loadLanguageFile('core', 'core');
 
 			$errortext = sprintf(_CORE_PAGENOTDISPLAYED, $errstr);
 			echo $errortext;
-			if ( $trace && function_exists( 'debug_backtrace' ) ) {
+			if ( $trace && function_exists('debug_backtrace') ) {
 				echo "<div style='color:#ffffff;background-color:#ffffff'>Backtrace:<br />";
 				$trace = debug_backtrace();
 				array_shift( $trace );
 				foreach ( $trace as $step ) {
-					if ( isset( $step['file'] ) ) {
-						echo $this->sanitizePath( $step['file'] );
+					if ( isset($step['file']) ) {
+						echo $this->sanitizePath($step['file']);
 						echo ' (' . $step['line'] . ")\n<br />";
 					}
 				}
@@ -198,9 +199,9 @@ class icms_core_Logger {
 	 */
 	function sanitizePath( $path ) {
 		$path = str_replace(
-		array( '\\', ICMS_ROOT_PATH, str_replace( '\\', '/', realpath( ICMS_ROOT_PATH ) ) ),
-		array( '/', '', '' ),
-		$path
+			array('\\', ICMS_ROOT_PATH, str_replace( '\\', '/', realpath(ICMS_ROOT_PATH))),
+			array('/', '', ''),
+			$path
 		);
 		return $path;
 	}
@@ -211,10 +212,10 @@ class icms_core_Logger {
 	 * @param  string  $output
 	 * @return string  $output
 	 */
-	public function render( $output ) {
-		global $icmsUser,$icmsModule;
-		$this->addExtra( 'Included files', count ( get_included_files() ) . ' files' );
-		$this->addExtra( _CORE_MEMORYUSAGE, icms_conv_nr2local(icms_convert_size(memory_get_usage())) );
+	public function render($output) {
+		global $icmsUser, $icmsModule;
+		$this->addExtra('Included files', count(get_included_files()) . ' files');
+		$this->addExtra(_CORE_MEMORYUSAGE, icms_conv_nr2local(icms_convert_size(memory_get_usage())) );
 		$groups   = (is_object($icmsUser)) ? $icmsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
 		$moduleid = (isset($icmsModule) && is_object($icmsModule)) ? $icmsModule->mid() : 1;
 		$gperm_handler =& xoops_gethandler('member_groupperm');
@@ -239,7 +240,7 @@ class icms_core_Logger {
 	 * @return  string  $ret
 	 * @access protected
 	 */
-	public function dump( $mode = '' ) {
+	public function dump($mode = '') {
 		include ICMS_ROOT_PATH . '/libraries/icms/core/Logger_render.php';
 		return $ret;
 	}
@@ -250,11 +251,11 @@ class icms_core_Logger {
 	 * @param   string  $name   name of the counter
 	 * @return  float   current execution time of the counter
 	 */
-	public function dumpTime( $name = 'ICMS' ) {
+	public function dumpTime($name = 'ICMS') {
 		if ( !isset($this->logstart[$name]) ) {
 			return 0;
 		}
-		$stop = isset( $this->logend[$name] ) ? $this->logend[$name] : $this->microtime();
+		$stop = isset($this->logend[$name]) ? $this->logend[$name] : $this->microtime();
 		return $stop - $this->logstart[$name];
 	}
 
@@ -263,32 +264,48 @@ class icms_core_Logger {
 	 *
 	 * @return string
 	 * @deprecated	Use dump('') instead
+	 * @todo	Remove in version 1.4
 	 */
-	public function dumpAll(){ return $this->dump( '' ); }
+	public function dumpAll() {
+		icms_deprecated('$this->dump("")', 'This method will be removed in version 1.4');
+		return $this->dump( '' );
+	}
 
 	/**
 	 * dumpBlocks
 	 *
 	 * @return unknown
 	 * @deprecated	Use dump('blocks'), instead
+	 * @todo	Remove in version 1.4
 	 */
-	public function dumpBlocks(){ return $this->dump( 'blocks' ); }
+	public function dumpBlocks(){
+		icms_deprecated('$this->dump("blocks")', 'This method will be removed in version 1.4');
+		return $this->dump('blocks');
+	}
 
 	/**
 	 * dumpExtra
 	 *
 	 * @return unknown
 	 * @deprecated	Use dump('extra'), instead
+	 * @todo	Remove in version 1.4
 	 */
-	public function dumpExtra(){ return $this->dump( 'extra' ); }
+	public function dumpExtra() {
+		icms_deprecated('$this->dump("extra")', 'This method will be removed in version 1.4');
+		return $this->dump('extra');
+	}
 
 	/**
 	 * dumpQueries
 	 *
 	 * @return unknown
 	 * @deprecated	Use dump('queries'), instead
+	 * @todo	Remove in version 1.4
 	 */
-	public function dumpQueries(){ return $this->dump( 'queries' ); }
+	public function dumpQueries() {
+		icms_deprecated('$this->dump("queries")', 'This method will be removed in version 1.4');
+		return $this->dump('queries');
+	}
 }
 
 /**
@@ -300,18 +317,7 @@ class icms_core_Logger {
  * @internal: Using a function and not calling the handler method directly coz old PHP versions
  * set_error_handler() have problems with the array( obj,methodname ) syntax
  */
-function XoopsErrorHandler_HandleError( $errNo, $errStr, $errFile, $errLine, $errContext = null ) {
+function icmsErrorHandler_HandleError( $errNo, $errStr, $errFile, $errLine, $errContext = null ) {
 	$logger =& icms_core_Logger::instance();
 	$logger->handleError( $errNo, $errStr, $errFile, $errLine, $errContext );
-}
-
-/**
- * @deprecated	use icms_core_Logger, instead
- * @todo 		Remove this in version 1.4
- *
- */
-class XoopsLogger extends icms_core_Logger {
-	public function __construct() {
-		parent::__construct();
-	}
 }

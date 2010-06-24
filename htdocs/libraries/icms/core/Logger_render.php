@@ -2,13 +2,11 @@
 /**
  * The Renderer functions of the Error logger
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package	Core
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		LICENSE.txt
+ * @category	ICMS
+ * @package		Core
+ * @subpackage	Logger
  * @author	modified by UnderDog <underdog@impresscms.org>
  * @version	$Id$
  */
