@@ -2,15 +2,13 @@
 /**
  * Core class for managing comments
  *
+ * @category	ICMS
  * @package     core
- * @subpackage	comment
+ * @subpackage	Comment
  * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright 	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
- * @since		XOOPS
- * @version		$Id: Comment.php 19514 2010-06-21 22:50:14Z skenow $
+ * @version		$Id$
  */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
@@ -18,10 +16,10 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 /**
  * A Comment
  *
- * @package     kernel
+ * @category	ICMS
+ * @package     core
+ * @subpackage	Comment
  *
- * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
 class icms_core_Comment extends icms_core_Object {
 
@@ -59,16 +57,5 @@ class icms_core_Comment extends icms_core_Object {
 	 **/
 	public function isRoot() {
 		return ($this->getVar('com_id') == $this->getVar('com_rootid'));
-	}
-}
-
-/**
- * @deprecated 	Use icms_core_Comment instead
- * @todo		Remove in version 1.4 - all instances have been removed from the core
- */
-class XoopsComment extends icms_core_Comment {
-	public function __construct() {
-		parent::__construct();
-		$this->setErrors = icms_deprecated('icms_core_Comment');
 	}
 }

@@ -2,15 +2,13 @@
 /**
  * Core class for managing comments
  *
+ * @category	ICMS
  * @package     core
- * @subpackage	comment
+ * @subpackage	Comment
  * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright 	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
- * @since		XOOPS
- * @version		$Id: CommentHandler.php 19514 2010-06-21 22:50:14Z skenow $
+ * @version		$Id$
  */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
@@ -21,12 +19,11 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * This class is responsible for providing data access mechanisms to the data source
  * of comment class objects.
  *
- *
- * @package     kernel
- * @subpackage  comment
+ * @category	ICMS
+ * @package     core
+ * @subpackage  Comment
  *
  * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
 class icms_core_CommentHandler extends icms_core_ObjectHandler {
 
@@ -58,7 +55,7 @@ class icms_core_CommentHandler extends icms_core_ObjectHandler {
 		$comment = false;
 		$id = (int) ($id);
 		if ($id > 0) {
-			$sql = "SELECT * FROM ".$this->db->prefix('xoopscomments')." WHERE com_id='".$id."'";
+			$sql = "SELECT * FROM " . $this->db->prefix('xoopscomments') . " WHERE com_id='" . $id . "'";
 			if (!$result = $this->db->query($sql)) {
 				return $comment;
 			}
@@ -97,9 +94,94 @@ class icms_core_CommentHandler extends icms_core_ObjectHandler {
 		}
 		if ($comment->isNew()) {
 			$com_id = $this->db->genId('xoopscomments_com_id_seq');
-			$sql = sprintf("INSERT INTO %s (com_id, com_pid, com_modid, com_icon, com_title, com_text, com_created, com_modified, com_uid, com_ip, com_sig, com_itemid, com_rootid, com_status, com_exparams, dohtml, dosmiley, doxcode, doimage, dobr) VALUES ('%u', '%u', '%u', %s, %s, %s, '%u', '%u', '%u', %s, '%u', '%u', '%u', '%u', %s, '%u', '%u', '%u', '%u', '%u')", $this->db->prefix('xoopscomments'), (int) ($com_id), (int) ($com_pid), (int) ($com_modid), $this->db->quoteString($com_icon), $this->db->quoteString($com_title), $this->db->quoteString($com_text), (int) ($com_created), (int) ($com_modified), (int) ($com_uid), $this->db->quoteString($com_ip), (int) ($com_sig), (int) ($com_itemid), (int) ($com_rootid), (int) ($com_status), $this->db->quoteString($com_exparams), (int) ($dohtml), (int) ($dosmiley), (int) ($doxcode), (int) ($doimage), (int) ($dobr));
+			$sql = sprintf(
+				"INSERT INTO %s (
+				com_id,
+				com_pid,
+				com_modid,
+				com_icon,
+				com_title,
+				com_text,
+				com_created,
+				com_modified,
+				com_uid,
+				com_ip,
+				com_sig,
+				com_itemid,
+				com_rootid,
+				com_status,
+				com_exparams,
+				dohtml,
+				dosmiley,
+				doxcode,
+				doimage,
+				dobr
+				)
+				VALUES ('%u', '%u', '%u', %s, %s, %s, '%u', '%u', '%u', %s, '%u', '%u', '%u', '%u', %s, '%u', '%u', '%u', '%u', '%u')",
+				$this->db->prefix('xoopscomments'),
+				(int) ($com_id),
+				(int) ($com_pid),
+				(int) ($com_modid),
+				$this->db->quoteString($com_icon),
+				$this->db->quoteString($com_title),
+				$this->db->quoteString($com_text),
+				(int) ($com_created),
+				(int) ($com_modified),
+				(int) ($com_uid),
+				$this->db->quoteString($com_ip),
+				(int) ($com_sig),
+				(int) ($com_itemid),
+				(int) ($com_rootid),
+				(int) ($com_status),
+				$this->db->quoteString($com_exparams),
+				(int) ($dohtml),
+				(int) ($dosmiley),
+				(int) ($doxcode),
+				(int) ($doimage),
+				(int) ($dobr)
+			);
 		} else {
-			$sql = sprintf("UPDATE %s SET com_pid = '%u', com_icon = %s, com_title = %s, com_text = %s, com_created = '%u', com_modified = '%u', com_uid = '%u', com_ip = %s, com_sig = '%u', com_itemid = '%u', com_rootid = '%u', com_status = '%u', com_exparams = %s, dohtml = '%u', dosmiley = '%u', doxcode = '%u', doimage = '%u', dobr = '%u' WHERE com_id = '%u'", $this->db->prefix('xoopscomments'), (int) ($com_pid), $this->db->quoteString($com_icon), $this->db->quoteString($com_title), $this->db->quoteString($com_text), (int) ($com_created), (int) ($com_modified), (int) ($com_uid), $this->db->quoteString($com_ip), (int) ($com_sig), (int) ($com_itemid), (int) ($com_rootid), (int) ($com_status), $this->db->quoteString($com_exparams), (int) ($dohtml), (int) ($dosmiley), (int) ($doxcode), (int) ($doimage), (int) ($dobr), (int) ($com_id));
+			$sql = sprintf(
+				"UPDATE %s SET com_pid = '%u',
+				com_icon = %s,
+				com_title = %s,
+				com_text = %s,
+				com_created = '%u',
+				com_modified = '%u',
+				com_uid = '%u',
+				com_ip = %s,
+				com_sig = '%u',
+				com_itemid = '%u',
+				com_rootid = '%u',
+				com_status = '%u',
+				com_exparams = %s,
+				dohtml = '%u',
+				dosmiley = '%u',
+				doxcode = '%u',
+				doimage = '%u',
+				dobr = '%u'
+				WHERE com_id = '%u'",
+				$this->db->prefix('xoopscomments'),
+				(int) ($com_pid),
+				$this->db->quoteString($com_icon),
+				$this->db->quoteString($com_title),
+				$this->db->quoteString($com_text),
+				(int) ($com_created),
+				(int) ($com_modified),
+				(int) ($com_uid),
+				$this->db->quoteString($com_ip),
+				(int) ($com_sig),
+				(int) ($com_itemid),
+				(int) ($com_rootid),
+				(int) ($com_status),
+				$this->db->quoteString($com_exparams),
+				(int) ($dohtml),
+				(int) ($dosmiley),
+				(int) ($doxcode),
+				(int) ($doimage),
+				(int) ($dobr),
+				(int) ($com_id)
+			);
 		}
 		if (!$result = $this->db->query($sql)) {
 			return false;
@@ -107,7 +189,7 @@ class icms_core_CommentHandler extends icms_core_ObjectHandler {
 		if (empty($com_id)) {
 			$com_id = $this->db->getInsertId();
 		}
-		$comment->assignVar('com_id', (int)$com_id);
+		$comment->assignVar('com_id', (int) $com_id);
 		return true;
 	}
 
@@ -126,7 +208,9 @@ class icms_core_CommentHandler extends icms_core_ObjectHandler {
 		if (!is_a($comment, 'xoopscomment')) {
 			return false;
 		}
-		$sql = sprintf("DELETE FROM %s WHERE com_id = '%u'", $this->db->prefix('xoopscomments'), (int) ($comment->getVar('com_id')));
+		$sql = sprintf(
+			"DELETE FROM %s WHERE com_id = '%u'",
+			$this->db->prefix('xoopscomments'), (int) ($comment->getVar('com_id')));
 		if (!$result = $this->db->query($sql)) {
 			return false;
 		}
@@ -148,7 +232,7 @@ class icms_core_CommentHandler extends icms_core_ObjectHandler {
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_core_CriteriaElement')) {
 			$sql .= ' '.$criteria->renderWhere();
 			$sort = ($criteria->getSort() != '') ? $criteria->getSort() : 'com_id';
-			$sql .= ' ORDER BY '.$sort.' '.$criteria->getOrder();
+			$sql .= ' ORDER BY ' . $sort . ' ' . $criteria->getOrder();
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
 		}
@@ -196,9 +280,9 @@ class icms_core_CommentHandler extends icms_core_ObjectHandler {
 	 * @return  bool
 	 **/
 	public function deleteAll($criteria = null) {
-		$sql = 'DELETE FROM '.$this->db->prefix('xoopscomments');
+		$sql = 'DELETE FROM ' . $this->db->prefix('xoopscomments');
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_core_CriteriaElement')) {
-			$sql .= ' '.$criteria->renderWhere();
+			$sql .= ' ' . $criteria->renderWhere();
 		}
 		if (!$result = $this->db->query($sql)) {
 			return false;
@@ -357,12 +441,3 @@ class icms_core_CommentHandler extends icms_core_ObjectHandler {
 	 */
 }
 
-/**
- * @deprecated	Use icms_core_CommentHandler instead
- * @todo		Remove in version 1.4 - all instances have been removed from the core
- */
-class XoopsCommentHandler extends icms_core_CommentHandler {
-	public function __construct() {
-		parent::__construct($db);
-	}
-}
