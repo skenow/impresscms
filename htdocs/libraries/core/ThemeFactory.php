@@ -1,6 +1,6 @@
 <?php
 /**
- * core_Theme component class file
+ * icms_core_Theme component class file
  *
  * @copyright	The Xoops project http://www.xoops.org/
  * @license      http://www.fsf.org/copyleft/gpl.html GNU public license
@@ -12,16 +12,16 @@
  */
 
 /**
- * core_ThemeFactory
+ * icms_core_ThemeFactory
  *
  * @author 		Skalpa Keo
  * @package		xos_opal
- * @subpackage	core_Theme
+ * @subpackage	icms_core_Theme
  * @since        2.3.0
  */
-class core_ThemeFactory {
+class icms_core_ThemeFactory {
 
-	public $xoBundleIdentifier = 'core_ThemeFactory';
+	public $xoBundleIdentifier = 'icms_core_ThemeFactory';
 	/**
 	 * Currently enabled themes (if empty, all the themes in themes/ are allowed)
 	 * @public array
@@ -63,7 +63,7 @@ class core_ThemeFactory {
 			$GLOBALS['xoopsConfig']['theme_set'] = $options['folderName'];
 		}
 		$options['path'] = (is_dir(ICMS_MODULES_PATH.'/system/themes/'.$options['folderName']))?ICMS_MODULES_PATH.'/system/themes/' . $options['folderName']:XOOPS_THEME_PATH . '/' . $options['folderName'];
-		$inst = new core_Theme();
+		$inst = new icms_core_Theme();
 		foreach ( $options as $k => $v ) $inst->$k = $v;
 		$inst->xoInit();
 		return $inst;

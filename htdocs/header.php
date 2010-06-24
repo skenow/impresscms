@@ -32,12 +32,12 @@ if(@$xoopsOption['template_main'])
 {
 	if(false === strpos($xoopsOption['template_main'], ':')) {$xoopsOption['template_main'] = 'db:' . $xoopsOption['template_main'];}
 }
-$xoopsThemeFactory = new core_ThemeFactory();
+$xoopsThemeFactory = new icms_core_ThemeFactory();
 $xoopsThemeFactory->allowedThemes = $icmsConfig['theme_set_allowed'];
 $xoopsThemeFactory->defaultTheme = $icmsConfig['theme_set'];
 
 /**
- * @var core_Theme
+ * @var icms_core_Theme
  */
 $icmsTheme = $xoTheme =& $xoopsThemeFactory->createInstance(array('contentTemplate' => @$xoopsOption['template_main'],));
 $xoopsTpl = $icmsTpl =& $xoTheme->template;

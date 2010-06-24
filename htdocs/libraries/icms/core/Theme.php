@@ -1,6 +1,6 @@
 <?php
 /**
- * core_Theme component class file
+ * icms_core_Theme component class file
  *
  * @copyright	The Xoops project http://www.xoops.org/
  * @license      http://www.fsf.org/copyleft/gpl.html GNU public license
@@ -11,7 +11,7 @@
  * @subpackage 	Templates
  */
 
-class core_Theme {
+class icms_core_Theme {
 	/**
 	 * The name of this theme
 	 * @public string
