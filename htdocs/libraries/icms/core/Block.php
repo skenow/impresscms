@@ -2,15 +2,13 @@
 /**
  * ImpressCMS Block Persistable Class
  *
+ * @category	ICMS
+ * @package		Core
+ * @subpackage	Block
  * @copyright 	The ImpressCMS Project <http://www.impresscms.org>
- * @copyright 	The XOOPS Project <http://www.xoops.org>
  * @license		GNU General Public License (GPL) <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>
- *
- * @version		$Id: Block.php 19514 2010-06-21 22:50:14Z skenow $
- * @since 		XOOPS
- *
- * @author		The XOOPS Project Community <http://www.xoops.org>
  * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * @version		$Id$
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -18,6 +16,9 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 /**
  * ImpressCMS Core Block Object Class
  *
+ * @category	ICMS
+ * @package		Core
+ * @subpackage	Block
  * @since ImpressCMS 1.2
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
@@ -52,30 +53,37 @@ class icms_core_Block extends IcmsPersistableObject {
 
 	// The next Methods are for backward Compatibility
 
-	public function getContent($format = 'S', $c_type = 'T'){
+	/**
+	 *
+	 * @param string $format
+	 * @param string $c_type
+	 */
+	public function getContent($format = 'S', $c_type = 'T') {
 		switch ( $format ) {
 			case 'S':
 				if ( $c_type == 'H' ) {
-					return str_replace('{X_SITEURL}', XOOPS_URL.'/', $this->getVar('content', 'n'));
+					return str_replace('{X_SITEURL}', ICMS_URL . '/', $this->getVar('content', 'n'));
 				} elseif ( $c_type == 'P' ) {
 					ob_start();
 					echo eval($this->getVar('content', 'n'));
 					$content = ob_get_contents();
 					ob_end_clean();
-					return str_replace('{X_SITEURL}', XOOPS_URL.'/', $content);
+					return str_replace('{X_SITEURL}', ICMS_URL . '/', $content);
 				} elseif ( $c_type == 'S' ) {
 					$myts =& icms_core_Textsanitizer::getInstance();
-					$content = str_replace('{X_SITEURL}', XOOPS_URL.'/', $this->getVar('content', 'n'));
+					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $this->getVar('content', 'n'));
 					return $myts->displayTarea($content, 1, 1);
 				} else {
 					$myts =& icms_core_Textsanitizer::getInstance();
-					$content = str_replace('{X_SITEURL}', XOOPS_URL.'/', $this->getVar('content', 'n'));
+					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $this->getVar('content', 'n'));
 					return $myts->displayTarea($content, 0, 0);
 				}
 				break;
+
 			case 'E':
 				return $this->getVar('content', 'e');
 				break;
+
 			default:
 				return $this->getVar('content', 'n');
 				break;
@@ -94,7 +102,7 @@ class icms_core_Block extends IcmsPersistableObject {
 				return false;
 			}
 			icms_loadLanguageFile($this->getVar('dirname'), 'blocks');
-			include_once ICMS_ROOT_PATH.'/modules/'.$this->getVar('dirname').'/blocks/'.$this->getVar('func_file');
+			include_once ICMS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/blocks/' . $this->getVar('func_file');
 			$options = explode('|', $this->getVar('options'));
 			$edit_form = $edit_func($options);
 			if (!$edit_form) {
@@ -110,9 +118,9 @@ class icms_core_Block extends IcmsPersistableObject {
 	 * For backward compatibility
 	 *
 	 * @todo improve with IPF
-	 * @return unknown
+	 * @return boolean
 	 */
-	public function isCustom(){
+	public function isCustom() {
 		if ( $this->getVar("block_type") == "C" || $this->getVar("block_type") == "E" ) {
 			return true;
 		}
@@ -137,9 +145,9 @@ class icms_core_Block extends IcmsPersistableObject {
 				return false;
 			}
 			// Must get lang files before execution of the function.
-			if ( file_exists(ICMS_ROOT_PATH."/modules/".$this->getVar('dirname')."/blocks/".$this->getVar('func_file')) ) {
+			if ( file_exists(ICMS_ROOT_PATH . "/modules/" . $this->getVar('dirname') . "/blocks/" . $this->getVar('func_file')) ) {
 				icms_loadLanguageFile($this->getVar('dirname'), 'blocks');
-				include_once ICMS_ROOT_PATH."/modules/".$this->getVar('dirname')."/blocks/".$this->getVar('func_file');
+				include_once ICMS_ROOT_PATH . "/modules/" . $this->getVar('dirname') . "/blocks/" . $this->getVar('func_file');
 				$options = explode("|", $this->getVar("options"));
 				if ( function_exists($show_func) ) {
 					// execute the function
@@ -155,7 +163,7 @@ class icms_core_Block extends IcmsPersistableObject {
 			}
 		} else {
 			// it is a custom block, so just return the contents
-			$block['content'] = $this->getContent("S",$this->getVar("c_type"));
+			$block['content'] = $this->getContent("S", $this->getVar("c_type"));
 			if (empty($block['content'])) {
 				return false;
 			}
@@ -243,6 +251,7 @@ class icms_core_Block extends IcmsPersistableObject {
 	 * @return boolean
 	 *
 	 * @deprecated use the handler method, instead
+	 * @todo	Remove in version 1.4
 	 */
 	public function delete(){
 		icms_deprecated('icms_core_BlockHandler->delete');
@@ -265,6 +274,7 @@ class icms_core_Block extends IcmsPersistableObject {
 	 * @return array of block objects
 	 *
 	 * @deprecated use the handler method, instead
+	 * @todo	Remove in version 1.4
 	 */
 	public function getAllBlocksByGroup($groupid, $asobject=true, $side=null, $visible=null, $orderby="b.weight,b.bid", $isactive=1){
 		icms_deprecated('icms_core_BlockHandler->getAllBlocksByGroup');
@@ -284,6 +294,7 @@ class icms_core_Block extends IcmsPersistableObject {
 	 * @return unknown
 	 *
 	 * @deprecated use the handler method, instead
+	 * @todo 	Remove in version 1.4
 	 */
 	public function getAllBlocks( $rettype = "object", $side = null, $visible = null, $orderby = "side,weight,bid", $isactive = 1 ){
 		icms_deprecated('icms_core_BlockHandler->getAllBlocks');
@@ -300,6 +311,7 @@ class icms_core_Block extends IcmsPersistableObject {
 	 * @return unknown
 	 *
 	 * @deprecated use the handler method, instead
+	 * @todo 	Remove in version 1.4
 	 */
 	public function getByModule($moduleid, $asobject=true){
 		icms_deprecated('icms_core_BlockHandler->getByModule');
@@ -320,6 +332,7 @@ class icms_core_Block extends IcmsPersistableObject {
 	 * @return unknown
 	 *
 	 * @deprecated use the handler method, instead
+	 * @todo	Remove in version 1.4
 	 *
 	 */
 	public function getAllByGroupModule($groupid, $module_id='0-0', $toponlyblock=false, $visible=null, $orderby='b.weight,b.bid', $isactive=1){
@@ -338,6 +351,7 @@ class icms_core_Block extends IcmsPersistableObject {
 	 * @return array
 	 *
 	 * @deprecated use the handler method, instead
+	 * @todo Remove in version 1.4
 	 */
 	public function getNonGroupedBlocks($module_id=0, $toponlyblock=false, $visible=null, $orderby='b.weight,b.bid', $isactive=1){
 		icms_deprecated( 'icms_core_BlockHandler->getNonGroupedBlocks' );
@@ -358,23 +372,11 @@ class icms_core_Block extends IcmsPersistableObject {
 	 * @return integer
 	 *
 	 * @deprecated use the handler method, instead
+	 * @todo	Remove in version 1.4
 	 */
 	public function countSimilarBlocks($moduleId, $funcNum, $showFunc = null) {
 		icms_deprecated( 'icms_core_BlockHandler->getCountSimilarBlocks' );
 		return $this->handler->getCountSimilarBlocks( $moduleId, $funcNum, $showFunc );
-	}
-
-}
-
-/**
- * @deprecated use icms_core_Block instead
- * @todo Remove in version 1.4 - all instances have been removed from the core
- */
-class XoopsBlock extends icms_core_Block {
-
-	public function __construct(&$db) {
-		parent::__construct(&$db);
-		$this->setErrors = icms_deprecated('icms_core_Block');
 	}
 
 }
