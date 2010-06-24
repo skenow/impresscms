@@ -395,7 +395,7 @@ if ($xoopsConfig['closesite'] == 1) {
 	}
 	if (!$allowed) {
 		include_once XOOPS_ROOT_PATH.'/class/template.php';
-		$xoopsTpl = new icms_core_Tpl();
+		$xoopsTpl = new icms_view_Tpl();
 		$xoopsTpl->assign( array(
             	'sitename' => $xoopsConfig['sitename'],
             	'xoops_themecss' => xoops_getcss(),

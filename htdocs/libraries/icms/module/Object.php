@@ -277,7 +277,7 @@ class icms_module_Object extends icms_core_Object
 		global $icmsModule, $icmsConfig;
 		icms_loadLanguageFile($icmsModule->getVar('dirname'), 'modinfo');
 		icms_loadLanguageFile($icmsModule->getVar('dirname'), 'admin');
-		$tpl = new icms_core_Tpl();
+		$tpl = new icms_view_Tpl();
 		$tpl->assign(array('headermenu' => $this->getAdminHeaderMenu(), 'adminmenu' => $this->getAdminMenu(), 'current' => $currentoption, 'breadcrumb' => $breadcrumb, 'headermenucount' => count($this->getAdminHeaderMenu()), 'submenus' => $submenus, 'currentsub' => $currentsub, 'submenuscount' => count($submenus)));
 		$tpl->display(ICMS_ROOT_PATH.'/modules/system/templates/admin/system_adm_modulemenu.html');
 	}

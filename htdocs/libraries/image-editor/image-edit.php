@@ -24,7 +24,7 @@ include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
 global $xoopsConfig;
 icms_loadLanguageFile('system', 'images', true);
 
-$icmsTpl = new icms_core_Tpl ( );
+$icmsTpl = new icms_view_Tpl ( );
 
 $icmsTpl->assign ( 'icms_url', ICMS_URL );
 $icmsTpl->assign ( 'icms_root_path', ICMS_ROOT_PATH );

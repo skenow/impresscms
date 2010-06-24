@@ -1,6 +1,6 @@
 <?php
 /**
- * icms_core_Tpl
+ * icms_view_Tpl
  *
  * Gateway file to include class/theme_blocks.php when icms_core_PageBuilder class is needed
  *

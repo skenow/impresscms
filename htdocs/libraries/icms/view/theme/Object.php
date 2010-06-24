@@ -58,7 +58,7 @@ class icms_view_theme_Object {
 	public $renderCount = 0;
 	/**
 	 * Pointer to the theme template engine
-	 * @public icms_core_Tpl
+	 * @public icms_view_Tpl
 	 */
 	public $template = false;
 
@@ -114,7 +114,7 @@ class icms_view_theme_Object {
 		$this->path = (is_dir(ICMS_MODULES_PATH.'/system/themes/'.$this->folderName))?ICMS_MODULES_PATH.'/system/themes/' . $this->folderName:XOOPS_THEME_PATH . '/' . $this->folderName;
 		$this->url = (is_dir(ICMS_MODULES_PATH.'/system/themes/'.$this->folderName))?ICMS_MODULES_URL.'/system/themes/' . $this->folderName:XOOPS_THEME_URL . '/' . $this->folderName;
 
-		$this->template = new icms_core_Tpl();
+		$this->template = new icms_view_Tpl();
 		$this->template->currentTheme =& $this;
 		$this->template->assign_by_ref( 'xoTheme', $this );
 

@@ -54,7 +54,7 @@ class IcmsPrinterFriendly
 
 		//include_once ICMS_ROOT_PATH . '/class/template.php';
 
-		$this->_tpl = new icms_core_Tpl();
+		$this->_tpl = new icms_view_Tpl();
 
 		$this->_tpl->assign('icms_print_pageTitle', $this->_pageTitle ? $this->_pageTitle : $this->_title);
 		$this->_tpl->assign('icms_print_title', $this->_title);
