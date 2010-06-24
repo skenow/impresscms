@@ -53,7 +53,7 @@ class icms_view_theme_Object {
 	 * @public array
 	 * @access public
 	 */
-	public $plugins = array( 'icms_core_PageBuilder' );
+	public $plugins = array( 'icms_view_PageBuilder' );
 
 	public $renderCount = 0;
 	/**
