@@ -677,36 +677,15 @@ function &xoops_gethandler($name, $optional = false )
 	$name = strtolower(trim($name));
 
 	if(!isset($handlers[$name])) {
-
-		//if(file_exists($hnd_file = ICMS_ROOT_PATH.'/kernel/'.$name.'.php')) {require_once $hnd_file;}
-		//else {
-		//	if(file_exists($hnd_file = ICMS_ROOT_PATH.'/class/'.$name.'.php')) {require_once $hnd_file;}
-		//}
-
-		$class = 'icms_core_' . ucfirst($name) . 'Handler';
-		$handlers[$name] = new $class($GLOBALS['xoopsDB']);
-		/*
-		$class = 'Icms'.ucfirst($name).'Handler';
-		if(class_exists($class)) {$handlers[$name] = new $class($GLOBALS['xoopsDB']);}
-		else {
-			$class = 'Xoops'.ucfirst($name).'Handler';
-			if(class_exists($class)) {$handlers[$name] = new $class($GLOBALS['xoopsDB']);}
-		}
-		*/
-
-		/**
-		 * @todo improve this
-		 * temporary hack while we are relocating for autoload
-		 */
-		if ($name == 'config') $name = 'icms_core_ConfigHandler';
-		if ($name == 'icms_core_ConfigHandler') {
-			$handlers[$name] = new $name($GLOBALS['xoopsDB']);
-		}
+		$class = 'icms_' . $name . '_Handler';
+		if (!class_exists($class))
+			$class = 'icms_core_' . ucfirst($name) . 'Handler';
+		if (class_exists($class))
+			$handlers[$name] = new $class($GLOBALS['xoopsDB']);
 	}
 
-
-	if(!isset($handlers[$name]) && !$optional) {trigger_error(sprintf(_CORE_COREHANDLER_NOTAVAILABLE, $class, $name), E_USER_ERROR);}
-	if(isset($handlers[$name])) {return $handlers[$name];}
+	if(!isset($handlers[$name]) && !$optional) trigger_error(sprintf(_CORE_COREHANDLER_NOTAVAILABLE, $class, $name), E_USER_ERROR);
+	if(isset($handlers[$name])) return $handlers[$name];
 	$inst = false;
 	return $inst;
 }
