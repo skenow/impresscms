@@ -159,7 +159,7 @@ class icms_core_Tpl extends Smarty {
  * @todo	Make this a static method of the Tpl class, this occurs in several places
  **/
 function xoops_template_touch($tpl_id, $clear_old = true) {
-	$tplfile_handler =& xoops_gethandler('tplfile');
+	$tplfile_handler =& xoops_gethandler('view_template_file');
 	$tplfile =& $tplfile_handler->get($tpl_id);
 
 	if ( is_object($tplfile) ) {

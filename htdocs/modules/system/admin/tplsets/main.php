@@ -35,7 +35,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			icms_cp_header();
 			echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/tplsets/images/tplsets_big.png)">'._MD_TPLMAIN.'</div><br />';
 			$installed = array();
-			$tpltpl_handler =& xoops_gethandler('tplfile');
+			$tpltpl_handler =& xoops_gethandler('view_template_file');
 			$installed_mods = $tpltpl_handler->getModuleTplCount('default');
 			$tcount = count($tplsets);
 			echo '<table width="100%" cellspacing="1" class="outer"><tr align="center"><th width="25%">'._MD_THMSETNAME.'</th><th>'._MD_CREATED.'</th><th>'._MD_TEMPLATES.'</th><th>'._MD_ACTION.'</th><th>&nbsp;</th></tr>';
@@ -114,7 +114,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			} else {
 				echo '<th>'._MD_ACTION.'</th></tr>';
 			}
-			$tpltpl_handler =& xoops_gethandler('tplfile');
+			$tpltpl_handler =& xoops_gethandler('view_template_file');
 			// get files that are already installed
 			$templates =& $tpltpl_handler->find($tplset, 'module', null, $moddir);
 			$inst_files = array();
@@ -242,7 +242,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			if ($id <= 0) {
 				redirect_header('admin.php?fct=tplsets', 1);
 			}
-			$tpltpl_handler =& xoops_gethandler('tplfile');
+			$tpltpl_handler =& xoops_gethandler('view_template_file');
 			$tplfile =& $tpltpl_handler->get($id, true);
 			if (is_object($tplfile)) {
 				$tplset = $tplfile->getVar('tpl_tplset');
@@ -266,7 +266,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			if ($id <= 0 | !$GLOBALS['xoopsSecurity']->check()) {
 				redirect_header('admin.php?fct=tplsets', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 			}
-			$tpltpl_handler =& xoops_gethandler('tplfile');
+			$tpltpl_handler =& xoops_gethandler('view_template_file');
 			$tplfile =& $tpltpl_handler->get($id, true);
 			$err = array();
 			if (!is_object($tplfile)) {
@@ -319,7 +319,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			if ($id <= 0 | !$GLOBALS['xoopsSecurity']->check()) {
 				redirect_header('admin.php?fct=tplsets', 1, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 			}
-			$tpltpl_handler =& xoops_gethandler('tplfile');
+			$tpltpl_handler =& xoops_gethandler('view_template_file');
 			$tplfile =& $tpltpl_handler->get($id);
 			$err = array();
 			if (!is_object($tplfile)) {
@@ -364,7 +364,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			}
 			$msgs = array();
 			if ($tplset != 'default' && $tplset != $xoopsConfig['template_set']) {
-				$tpltpl_handler =& xoops_gethandler('tplfile');
+				$tpltpl_handler =& xoops_gethandler('view_template_file');
 				$templates =& $tpltpl_handler->getObjects(new icms_criteria_Item('tpl_tplset', $tplset));
 				$tcount = count($templates);
 				if ($tcount > 0) {
@@ -454,7 +454,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			$msgs = array();
 			$tplset = trim($tplset);
 			$newtheme = trim($newtheme);
-			$tpltpl_handler =& xoops_gethandler('tplfile');
+			$tpltpl_handler =& xoops_gethandler('view_template_file');
 			icms_cp_header();
 			if ($tplset == $newtheme) {
 				icms_error_msg('Template set name must be a different name.');
@@ -719,7 +719,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			 */
 
 		case 'viewdefault':
-			$tpltpl_handler =& xoops_gethandler('tplfile');
+			$tpltpl_handler =& xoops_gethandler('view_template_file');
 			$tplfile =& $tpltpl_handler->get($id);
 			$default =& $tpltpl_handler->find('default', $tplfile->getVar('tpl_type'), $tplfile->getVar('tpl_refid'), null, $tplfile->getVar('tpl_file'));
 			echo "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>";
@@ -764,7 +764,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			break;
 
 		case 'downloadtpl':
-			$tpltpl_handler =& xoops_gethandler('tplfile');
+			$tpltpl_handler =& xoops_gethandler('view_template_file');
 			$tpl =& $tpltpl_handler->get( (int) ($id), true);
 			if (is_object($tpl)) {
 				$output = $tpl->getVar('tpl_source');
@@ -783,7 +783,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			break;
 
 		case 'uploadtpl':
-			$tpltpl_handler =& xoops_gethandler('tplfile');
+			$tpltpl_handler =& xoops_gethandler('view_template_file');
 			$id = (int) ($_GET['id']);
 			$tpl =& $tpltpl_handler->get($id);
 			icms_cp_header();
@@ -811,7 +811,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			if (!$GLOBALS['xoopsSecurity']->check()) {
 				redirect_header('admin.php?fct=tplsets', 1, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 			}
-			$tpltpl_handler =& xoops_gethandler('tplfile');
+			$tpltpl_handler =& xoops_gethandler('view_template_file');
 			$tpl =& $tpltpl_handler->get($tpl_id);
 			if (is_object($tpl)) {
 				include_once ICMS_ROOT_PATH.'/class/uploader.php';
@@ -882,7 +882,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 				if (!$uploader->upload()) {
 					$err = $uploader->getErrors();
 				} else {
-					$tpltpl_handler =& xoops_gethandler('tplfile');
+					$tpltpl_handler =& xoops_gethandler('view_template_file');
 					$tplfile =& $tpltpl_handler->find('default', $type, null, $moddir, $file);
 					if (is_array($tplfile)) {
 						$tpl =& $tplfile[0]->xoopsClone();
@@ -936,7 +936,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 					$tplset_handler =& xoops_gethandler('tplset');
 					$tplsetobj =& $tplset_handler->getByName($tplset);
 					$xml = "<"."?xml version=\"1.0\"?".">\r\n<tplset>\r\n  <name>".$tplset."</name>\r\n  <dateCreated>".$tplsetobj->getVar('tplset_created')."</dateCreated>\r\n  <credits>\r\n".$tplsetobj->getVar('tplset_credits')."\r\n  </credits>\r\n  <generator>".XOOPS_VERSION."</generator>\r\n  <templates>";
-					$tpltpl_handler =& xoops_gethandler('tplfile');
+					$tpltpl_handler =& xoops_gethandler('view_template_file');
 					$files =& $tpltpl_handler->getObjects(new icms_criteria_Item('tpl_tplset', $tplset), true);
 					$fcount = count($files);
 					if ($fcount > 0) {
@@ -992,7 +992,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			if (!$GLOBALS['xoopsSecurity']->check()) {
 				redirect_header('admin.php?fct=tplsets', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 			}
-			$tpltpl_handler =& xoops_gethandler('tplfile');
+			$tpltpl_handler =& xoops_gethandler('view_template_file');
 			$tplfile =& $tpltpl_handler->find('default', $type, null, $moddir, $file, true);
 			if (count($tplfile) > 0) {
 				$newtpl =& $tplfile[0]->xoopsClone();
@@ -1031,7 +1031,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 				redirect_header('admin.php?fct=tplsets', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 			}
 
-			$tpltpl_handler =& xoops_gethandler('tplfile');
+			$tpltpl_handler =& xoops_gethandler('view_template_file');
 			icms_cp_header();
 			echo '<code>';
 			$tplfiles =& $tpltpl_handler->find('default', 'module', null, $moddir, null, true);
@@ -1135,7 +1135,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 							} else {
 								$tplsetid = $tplset->getVar('tplset_id');
 								echo 'Template set <b>'.htmlspecialchars($tplset_name, ENT_QUOTES).'</b> created. (ID: <b>'.$tplsetid.'</b>)</span><br />';
-								$tpltpl_handler = xoops_gethandler('tplfile');
+								$tpltpl_handler = xoops_gethandler('view_template_file');
 								$themeimages = array();
 								foreach ($tar->files as $id => $info) {
 									$infoarr = explode('/', str_replace("\\", '/', $info['name']));
@@ -1216,7 +1216,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			require_once ICMS_ROOT_PATH.'/class/template.php';
 			$myts =& icms_core_Textsanitizer::getInstance();
 			$html = $myts->stripSlashesGPC($html);
-			$tpltpl_handler =& xoops_gethandler('tplfile');
+			$tpltpl_handler =& xoops_gethandler('view_template_file');
 			$tplfile =& $tpltpl_handler->get($id, true);
 			$xoopsTpl = new icms_core_Tpl();
 
@@ -1294,7 +1294,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 					if (!$uploader->upload()) {
 						$msg[] = $uploader->getErrors();
 					} else {
-						$tpltpl_handler =& xoops_gethandler('tplfile');
+						$tpltpl_handler =& xoops_gethandler('view_template_file');
 						if (!isset($old_template[$upload_file])) {
 							$tplfile =& $tpltpl_handler->find('default', null, null, $moddir, $upload_file);
 							if (count($tplfile) > 0) {
@@ -1358,7 +1358,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			if (!$GLOBALS['xoopsSecurity']->check()) {
 				redirect_header('admin.php?fct=tplsets', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 			}
-			$tpltpl_handler =& xoops_gethandler('tplfile');
+			$tpltpl_handler =& xoops_gethandler('view_template_file');
 			$tplfile = '';
 			if (!empty($id)) {
 				$tplfile =& $tpltpl_handler->get($id, true);
