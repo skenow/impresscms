@@ -1,6 +1,6 @@
 <?php
 /**
- * icms_core_Theme component class file
+ * icms_view_theme_Object component class file
  *
  * @copyright	The Xoops project http://www.xoops.org/
  * @license      http://www.fsf.org/copyleft/gpl.html GNU public license
@@ -16,7 +16,7 @@
  *
  * @author 		Skalpa Keo
  * @package		xos_opal
- * @subpackage	icms_core_Theme
+ * @subpackage	icms_view_theme_Object
  * @since        2.3.0
  */
 class icms_view_theme_Factory {
@@ -63,7 +63,7 @@ class icms_view_theme_Factory {
 			$GLOBALS['xoopsConfig']['theme_set'] = $options['folderName'];
 		}
 		$options['path'] = (is_dir(ICMS_MODULES_PATH.'/system/themes/'.$options['folderName']))?ICMS_MODULES_PATH.'/system/themes/' . $options['folderName']:XOOPS_THEME_PATH . '/' . $options['folderName'];
-		$inst = new icms_core_Theme();
+		$inst = new icms_view_theme_Object();
 		foreach ( $options as $k => $v ) $inst->$k = $v;
 		$inst->xoInit();
 		return $inst;

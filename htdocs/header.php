@@ -37,7 +37,7 @@ $xoopsThemeFactory->allowedThemes = $icmsConfig['theme_set_allowed'];
 $xoopsThemeFactory->defaultTheme = $icmsConfig['theme_set'];
 
 /**
- * @var icms_core_Theme
+ * @var icms_view_theme_Object
  */
 $icmsTheme = $xoTheme =& $xoopsThemeFactory->createInstance(array('contentTemplate' => @$xoopsOption['template_main'],));
 $xoopsTpl = $icmsTpl =& $xoTheme->template;
