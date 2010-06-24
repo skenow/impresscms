@@ -121,7 +121,7 @@ define( 'ICMS_PDF_LIB_URL', ICMS_URL . '/libraries/tcpdf' );
  * Few notes:
  * - modules should use this class methods to generate physical paths/URIs (the ones which do not conform
  * will perform badly when true URL rewriting is implemented)
- * @todo	Replace with core_Kernel, remove this in version 1.3
+ * @todo	Replace with icms_core_Kernel, remove this in version 1.3
  */
 class xos_kernel_Xoops2 {
 	var $paths = array(

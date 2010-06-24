@@ -17,7 +17,7 @@
  * @package		kernel
  * @since 		1.1
  */
-class core_Kernel {
+class icms_core_Kernel {
 	/** @var array */
 	var $paths = array(
 		'www' => array(), 'modules' => array(), 'themes' => array(),
@@ -26,9 +26,9 @@ class core_Kernel {
 	var $urls=false;
 
 	/**
-	 * Constructor for core_Kernel, initiating all properties of the class
+	 * Constructor for icms_core_Kernel, initiating all properties of the class
 	 */
-	function core_Kernel() {
+	function icms_core_Kernel() {
 		$this->paths['www'] = array( ICMS_ROOT_PATH, ICMS_URL );
 		$this->paths['modules'] = array( ICMS_ROOT_PATH . '/modules', ICMS_URL . '/modules' );
 		$this->paths['themes'] = array( ICMS_ROOT_PATH . '/themes', ICMS_URL . '/themes' );
