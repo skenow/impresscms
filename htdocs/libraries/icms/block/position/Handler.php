@@ -16,10 +16,10 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 include_once ICMS_ROOT_PATH . '/kernel/icmspersistableseoobject.php';
 
 /**
- * icms_core_BlockpositionHandler
+ * icms_block_position_Handler
  *
  */
-class icms_core_BlockpositionHandler extends IcmsPersistableObjectHandler {
+class icms_block_position_Handler extends IcmsPersistableObjectHandler {
 
 	/**
 	 * Constructor
@@ -28,7 +28,7 @@ class icms_core_BlockpositionHandler extends IcmsPersistableObjectHandler {
 	 */
 	public function __construct(& $db) {
 		parent::__construct($db, 'blockposition', 'id', 'title', 'description', 'icms');
-		$this->className = 'icms_core_Blockposition';
+		$this->className = 'icms_block_position_Object';
 		$this->table = $this->db->prefix('block_positions');
 	}
 
@@ -52,12 +52,12 @@ class icms_core_BlockpositionHandler extends IcmsPersistableObjectHandler {
 
 /**
  * IcmsBlockpositionHandler
- * @deprecated Use icms_core_BlockpositionHandler, instead
+ * @deprecated Use icms_block_position_Handler, instead
  * @todo Remove in version 1.4 - all instances have been removed from the core
  */
-class IcmsBlockpositionHandler extends icms_core_BlockpositionHandler {
+class IcmsBlockpositionHandler extends icms_block_position_Handler {
 	public function __construct() {
 		parent::__construct(&$db);
-		$this->setVar('_errors', icms_deprecated('icms_core_BlockpositionHandler'));
+		$this->setVar('_errors', icms_deprecated('icms_block_position_Handler'));
 	}
 }
