@@ -100,7 +100,7 @@ switch ( $op ) {
 		if ($dohtml != 0) {
 	  if (is_object($icmsUser)) {
 	  	if (!$icmsUser->isAdmin($com_modid)) {
-	  		$sysperm_handler =& xoops_gethandler('groupperm');
+	  		$sysperm_handler =& xoops_gethandler('member_groupperm');
 	  		if (!$sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $icmsUser->getGroups())) {
 	  			$dohtml = 0;
 	  		}
@@ -150,7 +150,7 @@ switch ( $op ) {
 	  $accesserror = false;
 
 	  if (is_object($icmsUser)) {
-	  	$sysperm_handler =& xoops_gethandler('groupperm');
+	  	$sysperm_handler =& xoops_gethandler('member_groupperm');
 	  	if ($icmsUser->isAdmin($com_modid)
 	  	|| $sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $icmsUser->getGroups())) {
 	  		if (!empty($com_status) && $com_status != XOOPS_COMMENT_PENDING) {
@@ -198,7 +198,7 @@ switch ( $op ) {
 	  $comment->setVar('com_rootid', $com_rootid);
 	  $comment->setVar('com_ip', xoops_getenv('REMOTE_ADDR'));
 	  if (is_object($icmsUser)) {
-	  	$sysperm_handler =& xoops_gethandler('groupperm');
+	  	$sysperm_handler =& xoops_gethandler('member_groupperm');
 	  	if ($icmsUser->isAdmin($com_modid)
 	  	|| $sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $icmsUser->getGroups())) {
 	  		$comment->setVar('com_status', XOOPS_COMMENT_ACTIVE);

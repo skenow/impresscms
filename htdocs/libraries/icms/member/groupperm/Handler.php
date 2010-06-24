@@ -26,21 +26,21 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * of group permission class objects.
  * This class is an abstract class to be implemented by child group permission classes.
  *
- * @see          icms_core_Groupperm
+ * @see          icms_member_groupperm_Object
  * @author       Kazumi Ono  <onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_core_GrouppermHandler extends icms_core_ObjectHandler {
+class icms_member_groupperm_Handler extends icms_core_ObjectHandler {
 	public static $_cachedRights;
 
 	/**
-	 * Create a new {@link icms_core_Groupperm}
+	 * Create a new {@link icms_member_groupperm_Object}
 	 *
 	 * @return	bool    $isNew  Flag the object as "new"?
 	 * @see htdocs/kernel/icms_core_ObjectHandler#create()
 	 */
 	public function &create($isNew = true) {
-		$perm = new icms_core_Groupperm();
+		$perm = new icms_member_groupperm_Object();
 		if ($isNew) {
 			$perm->setNew();
 		}
@@ -52,7 +52,7 @@ class icms_core_GrouppermHandler extends icms_core_ObjectHandler {
 	 *
 	 * @param	int $id ID
 	 *
-	 * @return	object  {@link icms_core_Groupperm}, FALSE on fail
+	 * @return	object  {@link icms_member_groupperm_Object}, FALSE on fail
 	 * @see htdocs/kernel/icms_core_ObjectHandler#get($int_id)
 	 */
 	public function &get($id) {
@@ -65,7 +65,7 @@ class icms_core_GrouppermHandler extends icms_core_ObjectHandler {
 			}
 			$numrows = $this->db->getRowsNum($result);
 			if ( $numrows == 1 ) {
-				$perm = new icms_core_Groupperm();
+				$perm = new icms_member_groupperm_Object();
 				$perm->assignVars($this->db->fetchArray($result));
 			}
 		}
@@ -73,9 +73,9 @@ class icms_core_GrouppermHandler extends icms_core_ObjectHandler {
 	}
 
 	/**
-	 * Store a {@link icms_core_Groupperm}
+	 * Store a {@link icms_member_groupperm_Object}
 	 *
-	 * @param	object  &$perm  {@link icms_core_Groupperm} object
+	 * @param	object  &$perm  {@link icms_member_groupperm_Object} object
 	 *
 	 * @return	bool    TRUE on success
 	 * @see htdocs/kernel/icms_core_ObjectHandler#insert($object)
@@ -84,7 +84,7 @@ class icms_core_GrouppermHandler extends icms_core_ObjectHandler {
 		/**
 		 * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
 		 */
-		if (!is_a($perm, 'icms_core_Groupperm')) {
+		if (!is_a($perm, 'icms_member_groupperm_Object')) {
 			return false;
 		}
 		if ( !$perm->isDirty() ) {
@@ -113,7 +113,7 @@ class icms_core_GrouppermHandler extends icms_core_ObjectHandler {
 	}
 
 	/**
-	 * Delete a {@link icms_core_Groupperm}
+	 * Delete a {@link icms_member_groupperm_Object}
 	 *
 	 * @param	object  &$perm
 	 *
@@ -124,7 +124,7 @@ class icms_core_GrouppermHandler extends icms_core_ObjectHandler {
 		/**
 		 * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
 		 */
-		if (!is_a($perm, 'icms_core_Groupperm')) {
+		if (!is_a($perm, 'icms_member_groupperm_Object')) {
 			return false;
 		}
 		$sql = sprintf("DELETE FROM %s WHERE gperm_id = '%u'", $this->db->prefix('group_permission'), (int) ($perm->getVar('gperm_id')));
@@ -135,12 +135,12 @@ class icms_core_GrouppermHandler extends icms_core_ObjectHandler {
 	}
 
 	/**
-	 * Retrieve multiple {@link icms_core_Groupperm}s
+	 * Retrieve multiple {@link icms_member_groupperm_Object}s
 	 *
 	 * @param	object  $criteria   {@link icms_criteria_Element}
 	 * @param	bool    $id_as_key  Use IDs as array keys?
 	 *
-	 * @return	array   Array of {@link icms_core_Groupperm}s
+	 * @return	array   Array of {@link icms_member_groupperm_Object}s
 	 */
 	public function getObjects($criteria = null, $id_as_key = false) {
 		$ret = array();
@@ -156,7 +156,7 @@ class icms_core_GrouppermHandler extends icms_core_ObjectHandler {
 			return $ret;
 		}
 		while ($myrow = $this->db->fetchArray($result)) {
-			$perm = new icms_core_Groupperm();
+			$perm = new icms_member_groupperm_Object();
 			$perm->assignVars($myrow);
 			if (!$id_as_key) {
 				$ret[] =& $perm;
@@ -169,7 +169,7 @@ class icms_core_GrouppermHandler extends icms_core_ObjectHandler {
 	}
 
 	/**
-	 * Count some {@link icms_core_Groupperm}s
+	 * Count some {@link icms_member_groupperm_Object}s
 	 *
 	 * @param	object  $criteria   {@link icms_criteria_Element}
 	 *
@@ -358,10 +358,10 @@ class icms_core_GrouppermHandler extends icms_core_ObjectHandler {
 }
 
 /**
- * @deprecated	Use icms_core_GrouppermHandler, instead
+ * @deprecated	Use icms_member_groupperm_Handler, instead
  * @todo		Remove in version 1.4
  *
  */
-class XoopsGrouppermHandler extends icms_core_GrouppermHandler {
+class XoopsGrouppermHandler extends icms_member_groupperm_Handler {
 
 }

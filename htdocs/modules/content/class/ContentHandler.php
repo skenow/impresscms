@@ -417,7 +417,7 @@ class mod_content_ContentHandler extends IcmsPersistableObjectHandler {
 	}
 
 	function hasPage($user) {
-		$gperm_handler = & xoops_gethandler ( 'groupperm' );
+		$gperm_handler = & xoops_gethandler('member_groupperm');
 		$groups = is_object ( $user ) ? $user->getGroups () : XOOPS_GROUP_ANONYMOUS;
 		$criteria = new icms_criteria_Compo ( new icms_criteria_Item ( 'content_status', 1 ) );
 		$cont_arr = $this->getObjects ( $criteria );

@@ -39,7 +39,7 @@ require_once ICMS_ROOT_PATH . '/class/xoopsform/form.php';
  * @package kernel
  * @subpackage form
  */
-class icms_core_GrouppermForm extends XoopsForm
+class icms_member_groupperm_ObjectForm extends XoopsForm
 {
 	/**
 	 * Module ID
@@ -69,7 +69,7 @@ class icms_core_GrouppermForm extends XoopsForm
 	/**
 	 * Constructor
 	 */
-	function icms_core_GrouppermForm($title, $modid, $permname, $permdesc, $url = "")
+	function icms_member_groupperm_ObjectForm($title, $modid, $permname, $permdesc, $url = "")
 	{
 		$this->XoopsForm($title, 'groupperm_form', ICMS_URL . '/modules/system/admin/groupperm.php', 'post');
 		$this->_modid = (int) ($modid);
@@ -140,7 +140,7 @@ class icms_core_GrouppermForm extends XoopsForm
 			$this->_itemTree[$item_id]['allchild'] = array();
 			$this->_loadAllChildItemIds($item_id, $this->_itemTree[$item_id]['allchild']);
 		}
-		$gperm_handler =& xoops_gethandler('groupperm');
+		$gperm_handler =& xoops_gethandler('member_groupperm');
 		$member_handler =& xoops_gethandler('member');
 		$glist =& $member_handler->getGroupList();
 		foreach (array_keys($glist) as $i) {

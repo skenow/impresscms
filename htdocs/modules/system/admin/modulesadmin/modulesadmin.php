@@ -385,7 +385,7 @@ function xoops_module_install($dirname) {
 			$icms_block_handler = xoops_gethandler('block');
 			$blocks =& $icms_block_handler->getByModule($newmid, false);
 			$msgs[] = 'Setting group rights...';
-			$gperm_handler =& xoops_gethandler('groupperm');
+			$gperm_handler =& xoops_gethandler('member_groupperm');
 			foreach ($groups as $mygroup) {
 				if ($gperm_handler->checkRight('module_admin', 0, $mygroup)) {
 					$mperm =& $gperm_handler->create();
@@ -676,7 +676,7 @@ function xoops_module_uninstall($dirname) {
 			}
 
 			// delete permissions if any
-			$gperm_handler =& xoops_gethandler('groupperm');
+			$gperm_handler =& xoops_gethandler('member_groupperm');
 			if (!$gperm_handler->deleteByModule($module->getVar('mid'))) {
 				$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete group permissions</span>';
 			} else {
@@ -985,7 +985,7 @@ function icms_module_update($dirname) {
 								$newbid = $xoopsDB->getInsertId();
 							}
 							$groups =& $icmsUser->getGroups();
-							$gperm_handler =& xoops_gethandler('groupperm');
+							$gperm_handler =& xoops_gethandler('member_groupperm');
 							foreach ($groups as $mygroup) {
 								$bperm =& $gperm_handler->create();
 								$bperm->setVar('gperm_groupid', (int) ($mygroup));

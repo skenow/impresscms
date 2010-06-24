@@ -125,7 +125,7 @@ class IcmsCaptcha {
 		$this->config["name"] = $name;
 
 		// Skip CAPTCHA for group
-		//$gperm_handler = & xoops_gethandler( 'groupperm' );
+		//$gperm_handler = & xoops_gethandler('member_groupperm');
 		$icmsUser = $GLOBALS["icmsUser"];
 		$groups = is_object($icmsUser) ? $icmsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
 		if(array_intersect($groups, $icmsConfigCaptcha['captcha_skipmember']) && is_object($GLOBALS["xoopsUser"])) {

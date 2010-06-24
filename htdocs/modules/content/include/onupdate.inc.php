@@ -40,7 +40,7 @@ function icms_module_update_content($module) {
 	$db = $GLOBALS ['xoopsDB'];
 
 	$content_handler = icms_getModuleHandler ( 'content', 'content' );
-	$gperm_handler = & xoops_gethandler ( 'groupperm' );
+	$gperm_handler = & xoops_gethandler('member_groupperm');
 
 	if ($table->exists ()) {
 

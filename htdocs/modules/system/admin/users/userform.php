@@ -113,7 +113,7 @@ $language = new XoopsFormSelectLang(_US_SELECT_LANG,'language', $language_value)
 
 // Groups administration addition XOOPS 2.0.9: Mith
 global $icmsUser;
-$gperm_handler =& xoops_gethandler('groupperm');
+$gperm_handler =& xoops_gethandler('member_groupperm');
 //If user has admin rights on groups
 if ($gperm_handler->checkRight("system_admin", XOOPS_SYSTEM_GROUP, $icmsUser->getGroups(), 1)) {
 	//add group selection

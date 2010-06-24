@@ -319,7 +319,7 @@ function xoops_module_install($dirname) {
 			$icms_block_handler = xoops_gethandler('block');
 			$blocks =& $icms_block_handler->getByModule($newmid, false);
 			$msgs[] = 'Setting group rights...';
-			$gperm_handler =& xoops_gethandler('groupperm');
+			$gperm_handler =& xoops_gethandler('member_groupperm');
 			foreach ($groups as $mygroup) {
 				if ($gperm_handler->checkRight('module_admin', 0, $mygroup)) {
 					$mperm =& $gperm_handler->create();
@@ -639,7 +639,7 @@ function icms_module_update($dirname) {
 								$newbid = $db->getInsertId();
 							}
 							$groups =& $icmsUser->getGroups();
-							$gperm_handler =& xoops_gethandler('groupperm');
+							$gperm_handler =& xoops_gethandler('member_groupperm');
 							foreach ($groups as $mygroup) {
 								$bperm =& $gperm_handler->create();
 								$bperm->setVar('gperm_groupid', (int) ($mygroup));

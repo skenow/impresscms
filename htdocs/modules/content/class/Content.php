@@ -188,7 +188,7 @@ class mod_content_Content extends IcmsPersistableSeoObject {
 		$groups = $xoopsUser->getGroups ();
 
 		$editor_default = $xoopsConfig ['editor_default'];
-		$gperm_handler = xoops_getHandler ( 'groupperm' );
+		$gperm_handler = xoops_gethandler('member_groupperm');
 		if (file_exists ( ICMS_EDITOR_PATH . "/" . $editor_default . "/xoops_version.php" ) && $gperm_handler->checkRight ( 'use_wysiwygeditor', $content_module->mid (), $groups )) {
 			return false;
 		} else {
@@ -209,7 +209,7 @@ class mod_content_Content extends IcmsPersistableSeoObject {
 	function accessGranted() {
 		global $xoopsUser;
 
-		$gperm_handler = & xoops_gethandler ( 'groupperm' );
+		$gperm_handler = & xoops_gethandler('member_groupperm');
 		$groups = is_object ( $xoopsUser ) ? $xoopsUser->getGroups () : array (XOOPS_GROUP_ANONYMOUS );
 
 		$module_handler = xoops_gethandler ( 'module' );

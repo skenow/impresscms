@@ -530,7 +530,7 @@ if (file_exists('./xoops_version.php') || file_exists('./icms_version.php')) {
 		include_once ICMS_ROOT_PATH . '/footer.php';
 		exit();
 	}
-	$moduleperm_handler =& xoops_gethandler('groupperm');
+	$moduleperm_handler =& xoops_gethandler('member_groupperm');
 	if ($icmsUser) {
 		if (!$moduleperm_handler->checkRight('module_read', $icmsModule->getVar('mid'), $icmsUser->getGroups())) {
 			redirect_header(ICMS_URL . "/user.php", 1, _NOPERM, false);

@@ -612,7 +612,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 
 					// add read permission for the start module to all groups
 					if (! $startmod_updated && $new_value != '--' && $config->getVar ( 'conf_catid' ) == ICMS_CONF && $config->getVar ( 'conf_name' ) == 'startpage') {
-						$moduleperm_handler = & xoops_gethandler ( 'groupperm' );
+						$moduleperm_handler = & xoops_gethandler('member_groupperm');
 						$module_handler = & xoops_gethandler ( 'module' );
 
 						foreach ( $new_value as $k => $v ) {

@@ -153,7 +153,7 @@ class icms_view_PageBuilder {
 		}
 
 		/** moved here from buildBlocks to reduce redundant calls */
-		$gperm =& xoops_gethandler ( 'groupperm' );
+		$gperm =& xoops_gethandler('member_groupperm');
 		$ugroups = @is_object ( $icmsUser ) ? $icmsUser->getGroups () : array(XOOPS_GROUP_ANONYMOUS );
 		$agroups = $gperm->getGroupIds('system_admin',5); //XOOPS_SYSTEM_BLOCK constant not available?
 		$this->uagroups = array_intersect($ugroups, $agroups);

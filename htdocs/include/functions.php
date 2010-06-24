@@ -915,7 +915,7 @@ function xoops_groupperm_deletebymoditem($module_id, $perm_name, $item_id = null
 {
 	// do not allow system permissions to be deleted
 	if( (int) ($module_id) <= 1) {return false;}
-	$gperm_handler =& xoops_gethandler('groupperm');
+	$gperm_handler =& xoops_gethandler('member_groupperm');
 	return $gperm_handler->deleteByModule($module_id, $perm_name, $item_id);
 }
 
@@ -3072,7 +3072,7 @@ function icms_need_do_br($moduleName=false) {
 	$groups = $icmsUser->getGroups();
 
 	$editor_default = $icmsConfig['editor_default'];
-	$gperm_handler = xoops_getHandler('groupperm');
+	$gperm_handler = xoops_gethandler('member_groupperm');
 	if (file_exists(ICMS_EDITOR_PATH . "/" . $editor_default . "/xoops_version.php") && $gperm_handler->checkRight('use_wysiwygeditor', $theModule->mid(), $groups)) {
 		return false;
 	} else {

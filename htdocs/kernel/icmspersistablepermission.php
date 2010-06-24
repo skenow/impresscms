@@ -36,7 +36,7 @@ class IcmsPersistablePermissionHandler extends icms_core_ObjectHandler
 		if (!isset($groups[$gperm_name]) || ($id != null && !isset($groups[$gperm_name][$id]))) {
 			$icmsModule =& $this->handler->getModuleInfo();
 			//Get group permissions handler
-			$gperm_handler =& xoops_gethandler('groupperm');
+			$gperm_handler =& xoops_gethandler('member_groupperm');
 
 			//Get groups allowed for an item id
 			$allowedgroups = $gperm_handler->getGroupIds($gperm_name, $id, $icmsModule->getVar('mid'));
@@ -69,7 +69,7 @@ class IcmsPersistablePermissionHandler extends icms_core_ObjectHandler
 		}
 
 		//Get group permissions handler
-		$gperm_handler =& xoops_gethandler('groupperm');
+		$gperm_handler =& xoops_gethandler('member_groupperm');
 
 		$permissionsObj = $gperm_handler->getObjects($criteria);
 
@@ -104,7 +104,7 @@ class IcmsPersistablePermissionHandler extends icms_core_ObjectHandler
 			if (is_object($icmsModule)) {
 
 				//Get group permissions handler
-				$gperm_handler =& xoops_gethandler('groupperm');
+				$gperm_handler =& xoops_gethandler('member_groupperm');
 
 				//Get user's groups
 				$groups = is_object($icmsUser) ? $icmsUser->getGroups() : array(ICMS_GROUP_ANONYMOUS);
@@ -141,7 +141,7 @@ class IcmsPersistablePermissionHandler extends icms_core_ObjectHandler
 
 		$result = true;
 		$module_id = $icmsModule->getVar('mid');
-		$gperm_handler =& xoops_gethandler('groupperm');
+		$gperm_handler =& xoops_gethandler('member_groupperm');
 
 		// First, if the permissions are already there, delete them
 		$gperm_handler->deleteByModule($module_id, $perm_name, $itemid);
@@ -177,7 +177,7 @@ class IcmsPersistablePermissionHandler extends icms_core_ObjectHandler
 
 		$result = true;
 		$module_id = $icmsModule->getVar('mid')   ;
-		$gperm_handler =& xoops_gethandler('groupperm');
+		$gperm_handler =& xoops_gethandler('member_groupperm');
 
 		$gperm_handler->deleteByModule($module_id, $gperm_name, $itemid);
 
@@ -199,7 +199,7 @@ class IcmsPersistablePermissionHandler extends icms_core_ObjectHandler
 		$gperm_modid = $icmsModule->getVar('mid')   ;
 
 		//Get group permissions handler
-		$gperm_handler =& xoops_gethandler('groupperm');
+		$gperm_handler =& xoops_gethandler('member_groupperm');
 
 		return $gperm_handler->checkRight($gperm_name, $gperm_itemid, $gperm_groupid, $gperm_modid);
 	}

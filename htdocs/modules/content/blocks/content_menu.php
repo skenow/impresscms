@@ -97,7 +97,7 @@ function content_content_menu_edit($options){
 function getPages($showsubs = true, $sort='content_weight', $order='ASC', $content_id = 0, $relateds = 0 ) {
 	global $icmsUser;
 
-	$gperm_handler = & xoops_gethandler( 'groupperm' );
+	$gperm_handler = & xoops_gethandler('member_groupperm');
 	$groups = is_object($icmsUser) ? $icmsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
 	$uid = is_object($icmsUser) ? $icmsUser->getVar('uid') : 0;
 	$content_handler =& icms_getModuleHandler('content','content');
