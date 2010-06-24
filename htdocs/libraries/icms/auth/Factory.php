@@ -1,30 +1,24 @@
 <?php
-// $Id: authfactory.php 19118 2010-03-27 17:46:23Z skenow $
-// authfactory.php - Authentification class factory
 /**
  * Authorization classes, factory class file
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package	Authorization
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project
- * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: authfactory.php 19118 2010-03-27 17:46:23Z skenow $
+ * @license		LICENSE.txt
+ * @category	ICMS
+ * @package		Authorization
+ * @author		modified by UnderDog <underdog@impresscms.org>
+ * @version		SVN: $Id$
  */
 
 /**
  * Authentification class factory
  *
- * @package     kernel
- * @subpackage  auth
+ * @category	ICMS
+ * @package     Core
+ * @subpackage  Auth
  * @author	    Pierre-Eric MENUET	<pemphp@free.fr>
- * @copyright	copyright (c) 2000-2005 XOOPS.org
  */
-class icms_auth_Factory
-{
+class icms_auth_Factory {
 
 	/**
 	 * Get a reference to the only instance of authentication class
@@ -35,13 +29,13 @@ class icms_auth_Factory
 	 * @static
 	 * @return  object  Reference to the only instance of authentication class
 	 */
-	function &getAuthConnection($uname)
-	{
+	public static function &getAuthConnection($uname) {
 		static $auth_instance;
 		if (!isset($auth_instance)) {
 			global $icmsConfigAuth;
-			require_once ICMS_ROOT_PATH.'/class/auth/auth.php';
-			if (empty($icmsConfigAuth['auth_method'])) { // If there is a config error, we use xoops
+			require_once ICMS_ROOT_PATH . '/class/auth/auth.php';
+			if (empty($icmsConfigAuth['auth_method'])) {
+				// If there is a config error, we use xoops
 				$xoops_auth_method = 'xoops';
 			} else {
 				$xoops_auth_method = $icmsConfigAuth['auth_method'];
@@ -66,13 +60,17 @@ class icms_auth_Factory
 				case 'xoops' :
 					$dao =& $GLOBALS['xoopsDB'];
 					break;
+
 				case 'ldap'  :
 					$dao = null;
 					break;
+
 				case 'ads'  :
 					$dao = null;
 					break;
 
+				default:
+					break;
 			}
 			$auth_instance = new $class($dao);
 		}
@@ -81,4 +79,3 @@ class icms_auth_Factory
 
 }
 
-?>
