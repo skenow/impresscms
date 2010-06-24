@@ -21,10 +21,10 @@ include_once ICMS_ROOT_PATH . '/kernel/icmspersistableobject.php';
  * @since	ImpressCMS 1.2
  * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
  */
-class icms_core_PageHandler extends IcmsPersistableObjectHandler {
+class icms_page_Handler extends IcmsPersistableObjectHandler {
 
 	public function __construct( & $db ){
-		$this->IcmsPersistableObjectHandler($db, 'page' ,'page_id' ,'page_title', '' , 'icms_core');
+		$this->IcmsPersistableObjectHandler($db, 'page' ,'page_id' ,'page_title', '' , 'icms');
 		$this->table = $db->prefix('icmspage');
 	}
 
