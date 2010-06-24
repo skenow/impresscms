@@ -8,7 +8,7 @@
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright 	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
- * @version		$Id$
+ * @version		$Id: Comment.php 19580 2010-06-24 03:51:49Z skenow $
  */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
@@ -21,7 +21,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @subpackage	Comment
  *
  */
-class icms_core_Comment extends icms_core_Object {
+class icms_comment_Object extends icms_core_Object {
 
 	/**
 	 * Constructor

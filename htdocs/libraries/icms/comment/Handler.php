@@ -8,7 +8,7 @@
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright 	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
- * @version		$Id$
+ * @version		$Id: CommentHandler.php 19580 2010-06-24 03:51:49Z skenow $
  */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
@@ -25,10 +25,10 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  *
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  */
-class icms_core_CommentHandler extends icms_core_ObjectHandler {
+class icms_comment_Handler extends icms_core_ObjectHandler {
 
 	/**
-	 * Create a {@link icms_core_Comment}
+	 * Create a {@link icms_comment_Object}
 	 *
 	 * @param	bool    $isNew  Flag the object as "new"?
 	 *
@@ -36,7 +36,7 @@ class icms_core_CommentHandler extends icms_core_ObjectHandler {
 	 * @see htdocs/kernel/icms_core_ObjectHandler#create()
 	 */
 	public function &create($isNew = true) {
-		$comment = new icms_core_Comment();
+		$comment = new icms_comment_Object();
 		if ($isNew) {
 			$comment->setNew();
 		}
@@ -44,11 +44,11 @@ class icms_core_CommentHandler extends icms_core_ObjectHandler {
 	}
 
 	/**
-	 * Retrieve a {@link icms_core_Comment}
+	 * Retrieve a {@link icms_comment_Object}
 	 *
 	 * @param   int $id ID
 	 *
-	 * @return  object  {@link icms_core_Comment}, FALSE on fail
+	 * @return  object  {@link icms_comment_Object}, FALSE on fail
 	 * @see htdocs/kernel/icms_core_ObjectHandler#get($int_id)
 	 **/
 	public function &get($id) {
@@ -61,7 +61,7 @@ class icms_core_CommentHandler extends icms_core_ObjectHandler {
 			}
 			$numrows = $this->db->getRowsNum($result);
 			if ($numrows == 1) {
-				$comment = new icms_core_Comment();
+				$comment = new icms_comment_Object();
 				$comment->assignVars($this->db->fetchArray($result));
 			}
 		}
@@ -194,7 +194,7 @@ class icms_core_CommentHandler extends icms_core_ObjectHandler {
 	}
 
 	/**
-	 * Delete a {@link icms_core_Comment} from the database
+	 * Delete a {@link icms_comment_Object} from the database
 	 *
 	 * @param   object  &$comment
 	 *
@@ -218,12 +218,12 @@ class icms_core_CommentHandler extends icms_core_ObjectHandler {
 	}
 
 	/**
-	 * Get some {@link icms_core_Comment}s
+	 * Get some {@link icms_comment_Object}s
 	 *
 	 * @param   object  $criteria
 	 * @param   bool    $id_as_key  Use IDs as keys into the array?
 	 *
-	 * @return  array   Array of {@link icms_core_Comment} objects
+	 * @return  array   Array of {@link icms_comment_Object} objects
 	 **/
 	public function getObjects($criteria = null, $id_as_key = false) {
 		$ret = array();
@@ -241,7 +241,7 @@ class icms_core_CommentHandler extends icms_core_ObjectHandler {
 			return $ret;
 		}
 		while ($myrow = $this->db->fetchArray($result)) {
-			$comment = new icms_core_Comment();
+			$comment = new icms_comment_Object();
 			$comment->assignVars($myrow);
 			if (!$id_as_key) {
 				$ret[] =& $comment;
@@ -316,7 +316,7 @@ class icms_core_CommentHandler extends icms_core_ObjectHandler {
 	 * @param   int     $limit      Max num of comments to retrieve
 	 * @param   int     $start      Start offset
 	 *
-	 * @return  array   Array of {@link icms_core_Comment} objects
+	 * @return  array   Array of {@link icms_comment_Object} objects
 	 **/
 	public function getByItemId($module_id, $item_id, $order = null, $status = null, $limit = null, $start = 0) {
 		$criteria = new icms_core_CriteriaCompo(new icms_core_Criteria('com_modid', (int) ($module_id)));
@@ -341,7 +341,7 @@ class icms_core_CommentHandler extends icms_core_ObjectHandler {
 	 * @param   int     $item_id    Item ID
 	 * @param   int     $status     Status of the comment
 	 *
-	 * @return  array   Array of {@link icms_core_Comment} objects
+	 * @return  array   Array of {@link icms_comment_Object} objects
 	 **/
 	public function getCountByItemId($module_id, $item_id, $status = null) {
 		$criteria = new icms_core_CriteriaCompo(new icms_core_Criteria('com_modid', (int) ($module_id)));
@@ -353,14 +353,14 @@ class icms_core_CommentHandler extends icms_core_ObjectHandler {
 	}
 
 	/**
-	 * Get the top {@link icms_core_Comment}s
+	 * Get the top {@link icms_comment_Object}s
 	 *
 	 * @param   int     $module_id
 	 * @param   int     $item_id
 	 * @param   strint  $order
 	 * @param   int     $status
 	 *
-	 * @return  array   Array of {@link icms_core_Comment} objects
+	 * @return  array   Array of {@link icms_comment_Object} objects
 	 **/
 	public function getTopComments($module_id, $item_id, $order, $status = null) {
 		$criteria = new icms_core_CriteriaCompo(new icms_core_Criteria('com_modid', (int) ($module_id)));
@@ -380,7 +380,7 @@ class icms_core_CommentHandler extends icms_core_ObjectHandler {
 	 * @param   int     $comment_id
 	 * @param   int     $status
 	 *
-	 * @return  array   Array of {@link icms_core_Comment} objects
+	 * @return  array   Array of {@link icms_comment_Object} objects
 	 **/
 	public function getThread($comment_rootid, $comment_id, $status = null) {
 		$criteria = new icms_core_CriteriaCompo(new icms_core_Criteria('com_rootid', (int) ($comment_rootid)));
@@ -394,7 +394,7 @@ class icms_core_CommentHandler extends icms_core_ObjectHandler {
 	/**
 	 * Update
 	 *
-	 * @param   object  &$comment       {@link icms_core_Comment} object
+	 * @param   object  &$comment       {@link icms_comment_Object} object
 	 * @param   string  $field_name     Name of the field
 	 * @param   mixed   $field_value    Value to write
 	 *

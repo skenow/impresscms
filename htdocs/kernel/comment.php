@@ -11,18 +11,18 @@
  * @license		LICENSE.txt
  * @since		XOOPS
  * @version		$Id: comment.php 19431 2010-06-16 20:46:34Z david-sf $
- * @deprecated	Use icms_core_Comment, instead
+ * @deprecated	Use icms_comment_Object, instead
  * @toto		Remove this in version 1.4
  */
 
-class XoopsComment extends icms_core_Comment {
+class XoopsComment extends icms_comment_Object {
 
 	/**
 	 * Constructor
 	 **/
 	function XoopsComment() {
 		parent::__construct();
-		$this->setErrors = icms_deprecated('icms_core_Comment', 'This will be removed in version 1.4');
+		$this->setErrors = icms_deprecated('icms_comment_Object', 'This will be removed in version 1.4');
 	}
 }
 
@@ -38,9 +38,9 @@ class XoopsComment extends icms_core_Comment {
  *
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
- * @deprecated	Use icms_core_CommentHandler instead
+ * @deprecated	Use icms_comment_Handler instead
  * @todo		Remove in version 1.4
  */
-class XoopsCommentHandler extends icms_core_CommentHandler {
+class XoopsCommentHandler extends icms_comment_Handler {
 
 }
