@@ -25,7 +25,7 @@ if(!defined('ICMS_ROOT_PATH')){exit();}
  * @author	Kazumi Ono 	<onokazu@xoops.org>
  * @copyright	(c) 2000-2003 The Xoops Project - www.xoops.org
  **/
-class icms_core_ModuleHandler extends icms_core_ObjectHandler
+class icms_module_Handler extends icms_core_ObjectHandler
 {
 	/**
 	 * holds an array of cached module references, indexed by module id
@@ -43,14 +43,14 @@ class icms_core_ModuleHandler extends icms_core_ObjectHandler
 	var $_cachedModule_dirname = array();
 
 	/**
-	 * Create a new {@link icms_core_Module} object
+	 * Create a new {@link icms_module_Object} object
 	 *
 	 * @param   boolean     $isNew   Flag the new object as "new"
-	 * @return  object      {@link icms_core_Module}
+	 * @return  object      {@link icms_module_Object}
 	 **/
 	function &create($isNew = true)
 	{
-		$module = new icms_core_Module();
+		$module = new icms_module_Object();
 		if($isNew) {$module->setNew();}
 		return $module;
 	}
@@ -59,7 +59,7 @@ class icms_core_ModuleHandler extends icms_core_ObjectHandler
 	 * Load a module from the database
 	 *
 	 * @param  	int     $id     ID of the module
-	 * @return	object  {@link icms_core_Module} FALSE on fail
+	 * @return	object  {@link icms_module_Object} FALSE on fail
 	 **/
 	function &get($id)
 	{
@@ -80,7 +80,7 @@ class icms_core_ModuleHandler extends icms_core_ObjectHandler
 				$numrows = $this->db->getRowsNum($result);
 				if($numrows == 1)
 				{
-					$module = new icms_core_Module();
+					$module = new icms_module_Object();
 					$myrow = $this->db->fetchArray($result);
 					$module->assignVars($myrow);
 					$_cachedModule_mid[$id] = & $module;
@@ -96,7 +96,7 @@ class icms_core_ModuleHandler extends icms_core_ObjectHandler
 	 * Load a module by its dirname
 	 *
 	 * @param	string    $dirname
-	 * @return	object  {@link icms_core_Module} FALSE on fail
+	 * @return	object  {@link icms_module_Object} FALSE on fail
 	 **/
 	function &getByDirname($dirname)
 	{
@@ -114,7 +114,7 @@ class icms_core_ModuleHandler extends icms_core_ObjectHandler
 			$numrows = $this->db->getRowsNum($result);
 			if($numrows == 1)
 			{
-				$module = new icms_core_Module();
+				$module = new icms_module_Object();
 				$myrow = $this->db->fetchArray($result);
 				$module->assignVars($myrow);
 				$_cachedModule_dirname[$dirname] = & $module;
@@ -127,7 +127,7 @@ class icms_core_ModuleHandler extends icms_core_ObjectHandler
 	/**
 	 * Inserts a module into the database
 	 *
-	 * @param   object  &$module reference to a {@link icms_core_Module}
+	 * @param   object  &$module reference to a {@link icms_module_Object}
 	 * @return  bool
 	 **/
 	function insert(&$module)
@@ -186,7 +186,7 @@ class icms_core_ModuleHandler extends icms_core_ObjectHandler
 	/**
 	 * Delete a module from the database
 	 *
-	 * @param   object  &$module {@link icms_core_Module}
+	 * @param   object  &$module {@link icms_module_Object}
 	 * @return  bool
 	 **/
 	function delete(&$module) {
@@ -263,7 +263,7 @@ class icms_core_ModuleHandler extends icms_core_ObjectHandler
 		if(!$result) {return $ret;}
 		while($myrow = $this->db->fetchArray($result))
 		{
-			$module = new icms_core_Module();
+			$module = new icms_module_Object();
 			$module->assignVars($myrow);
 			if(!$id_as_key)
 			{

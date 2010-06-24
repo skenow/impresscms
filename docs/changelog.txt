@@ -1002,7 +1002,7 @@ Revision: 9336
 * New User Info config option to enable the mailing of a welcome message to new activated user (malanciault)
 * New User Info config option to customize the welcome message to be send to new activated user (malanciault)
 * IcmsDatabaseUpdater object to easily perform database upgrade procedure (malanciault)
-* New field in the icms_core_Module object, dbversion, which will track the version of the tables related to a module (malanciault)
+* New field in the icms_module_Object object, dbversion, which will track the version of the tables related to a module (malanciault)
 * Implementation of the onUpdate event for the System module to allow easy database upgrades performed automatically while updating the System module (malanciault)
 * Upgrade script from ImpressCMS 1.0 to ImpressCMS 1.1 which only adds the dbversion field to the modules table; after this upgrade has been performed, all database upgrades will be done automatically when updating the System module (malanciault/stranger)
 * Addition of assigning language's css & Javascripts files to the template. (stranger)
