@@ -33,7 +33,7 @@ elseif($password == '' || $password2 == '') {redirect_header('user.php',2,_US_SO
 if((isset($password)) && ($password !== $password2)) {redirect_header('user.php',2,_US_PASSNOTSAME);}
 elseif(($password !== '') && (strlen($password) < $icmsConfigUser['minpass'])) {redirect_header('user.php',2,sprintf(_US_PWDTOOSHORT,$icmsConfigUser['minpass']));}
 
-$myts =& core_Textsanitizer::getInstance();
+$myts =& icms_core_Textsanitizer::getInstance();
 $member_handler =& xoops_gethandler('member');
 $getuser =& $member_handler->getUsers(new icms_core_Criteria('email', $myts->addSlashes($email)));
 

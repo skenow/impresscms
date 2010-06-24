@@ -235,7 +235,7 @@ switch ($op)
 							 * form to ask the admin if he wants to send the welcome message or not
 							 */
 							/*
-							 $myts =& core_Textsanitizer::getInstance();
+							 $myts =& icms_core_Textsanitizer::getInstance();
 							 $xoopsMailer =& getMailer();
 							 $xoopsMailer->useMail();
 							 $xoopsMailer->setTemplate('welcome.tpl');

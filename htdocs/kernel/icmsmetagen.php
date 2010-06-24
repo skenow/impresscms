@@ -51,7 +51,7 @@ class IcmsMetagen
 	 */
 	function IcmsMetagen($title, $keywords=false, $description=false, $categoryPath=false)
 	{
-		$this->_myts = core_Textsanitizer::GetInstance();
+		$this->_myts = icms_core_Textsanitizer::GetInstance();
 		$this->setCategoryPath($categoryPath);
 		$this->setTitle($title);
 		$this->setDescription($description);
@@ -60,7 +60,7 @@ class IcmsMetagen
 			$keywords = $this->createMetaKeywords();
 		}
 
-		/*		$myts = core_Textsanitizer::getInstance();
+		/*		$myts = icms_core_Textsanitizer::getInstance();
 		 if (method_exists($myts, 'formatForML')) {
 			$keywords = $myts->formatForML($keywords);
 			$description = $myts->formatForML($description);

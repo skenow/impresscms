@@ -114,7 +114,7 @@ function content_getLinkedUnameFromId($userid, $name = false, $users = array (),
 		}
 		if(is_object($user))
 		{
-			$ts = & core_Textsanitizer::getInstance();
+			$ts = & icms_core_Textsanitizer::getInstance();
 			$username = $user->getVar('uname');
 			$fullname = '';
 			$fullname2 = $user->getVar('name');

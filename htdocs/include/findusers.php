@@ -141,7 +141,7 @@ class XoopsRankHandler extends icms_core_ObjectHandler
 			return $ret;
 		}
 
-		$myts =& core_Textsanitizer::getInstance();
+		$myts =& icms_core_Textsanitizer::getInstance();
 		while ($myrow = $this->db->fetchArray($result)) {
 			$ret[$myrow["rank_id"]] = $myts->htmlSpecialChars($myrow["rank_title"]);
 		}
@@ -434,7 +434,7 @@ if ( empty($_POST["user_submit"]) ) {
 
 } else {
 
-	$myts =& core_Textsanitizer::getInstance();
+	$myts =& icms_core_Textsanitizer::getInstance();
 
 	$limit = empty($_POST['limit']) ? 50 : (int) ( $_POST['limit'] );
 	$start = (int) ( @$_POST['start'] );

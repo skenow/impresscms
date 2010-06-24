@@ -99,7 +99,7 @@ else
 	$xoopsTpl->assign('user_ownpage', false);
 }
 
-$myts = core_Textsanitizer::getInstance();
+$myts = icms_core_Textsanitizer::getInstance();
 if(is_object($icmsUser) && $isAdmin)
 {
 	icms_makeSmarty(array(

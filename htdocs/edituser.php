@@ -57,7 +57,7 @@ if($op == 'saveuser')
 	}
 
 	$errors = array();
-	$myts =& core_Textsanitizer::getInstance();
+	$myts =& icms_core_Textsanitizer::getInstance();
 
 	if($icmsConfigUser['allow_chgmail'] == 1)
 	{
@@ -580,7 +580,7 @@ if($op == 'avatarchoose')
 		redirect_header('index.php',3,_US_NOEDITRIGHT."<br />".implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 	}
 
-	$myts =& core_Textsanitizer::getInstance();
+	$myts =& icms_core_Textsanitizer::getInstance();
 	$uid = 0;
 	if(!empty($_POST['uid']))
 	{

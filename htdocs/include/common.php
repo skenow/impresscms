@@ -344,7 +344,7 @@ if (empty($_SESSION['xoopsUserId'])
 	exit ;
 	}*/
 
-	$myts =& core_Textsanitizer::getInstance();
+	$myts =& icms_core_Textsanitizer::getInstance();
 	$uname = $myts->stripSlashesGPC($_COOKIE['autologin_uname']);
 	$pass = $myts->stripSlashesGPC($_COOKIE['autologin_pass']);
 	if ( empty($uname) || is_numeric($pass) ) {

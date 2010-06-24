@@ -64,11 +64,11 @@ class icms_core_Block extends IcmsPersistableObject {
 					ob_end_clean();
 					return str_replace('{X_SITEURL}', XOOPS_URL.'/', $content);
 				} elseif ( $c_type == 'S' ) {
-					$myts =& core_Textsanitizer::getInstance();
+					$myts =& icms_core_Textsanitizer::getInstance();
 					$content = str_replace('{X_SITEURL}', XOOPS_URL.'/', $this->getVar('content', 'n'));
 					return $myts->displayTarea($content, 1, 1);
 				} else {
-					$myts =& core_Textsanitizer::getInstance();
+					$myts =& icms_core_Textsanitizer::getInstance();
 					$content = str_replace('{X_SITEURL}', XOOPS_URL.'/', $this->getVar('content', 'n'));
 					return $myts->displayTarea($content, 0, 0);
 				}

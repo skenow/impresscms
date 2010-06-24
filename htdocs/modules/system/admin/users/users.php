@@ -212,7 +212,7 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 	}
 	else
 	{
-		$myts =& core_Textsanitizer::getInstance();
+		$myts =& icms_core_Textsanitizer::getInstance();
 
 		$edituser->setVar('name', $name);
 		$edituser->setVar('uname', $uname);

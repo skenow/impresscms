@@ -139,7 +139,7 @@ if ( $op == "form" ) {
 }
 
 elseif ($op == "submit" & $GLOBALS['xoopsSecurity']->check()) {
-	$myts =& core_Textsanitizer::getInstance();
+	$myts =& icms_core_Textsanitizer::getInstance();
 	$criteria = new icms_core_CriteriaCompo();
 	if ( !empty($_POST['user_uname']) ) {
 		$match = (!empty($_POST['user_uname_match'])) ? (int) ($_POST['user_uname_match']) : XOOPS_MATCH_START;

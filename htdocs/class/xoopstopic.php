@@ -117,7 +117,7 @@ class XoopsTopic
 	 **/
 	function store()
 	{
-		$myts =& core_Textsanitizer::getInstance();
+		$myts =& icms_core_Textsanitizer::getInstance();
 		$title = "";
 		$imgurl = "";
 		if ( isset($this->topic_title) && $this->topic_title != "" ) {
@@ -243,7 +243,7 @@ class XoopsTopic
 	 **/
 	function topic_title($format="S")
 	{
-		$myts =& core_Textsanitizer::getInstance();
+		$myts =& icms_core_Textsanitizer::getInstance();
 		switch($format){
 			case "S":
 				$title = $myts->makeTboxData4Show($this->topic_title);
@@ -268,7 +268,7 @@ class XoopsTopic
 	 **/
 	function topic_imgurl($format="S")
 	{
-		$myts =& core_Textsanitizer::getInstance();
+		$myts =& icms_core_Textsanitizer::getInstance();
 		switch($format){
 			case "S":
 				$imgurl= $myts->makeTboxData4Show($this->topic_imgurl);
@@ -400,7 +400,7 @@ class XoopsTopic
 	{
 		$result = $this->db->query('SELECT topic_id, topic_pid, topic_title FROM '.$this->table);
 		$ret = array();
-		$myts =& core_Textsanitizer::getInstance();
+		$myts =& icms_core_Textsanitizer::getInstance();
 		while ($myrow = $this->db->fetchArray($result)) {
 			$ret[$myrow['topic_id']] = array('title' => $myts->htmlspecialchars($myrow['topic_title']), 'pid' => $myrow['topic_pid']);
 		}

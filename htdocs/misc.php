@@ -44,7 +44,7 @@ if($action == 'showpopups')
 				<table width="100%" class="outer">
 				<tr><th colspan="3">'._MSC_SMILIES.'</th></tr>
 				<tr class="head"><td>'._MSC_CODE.'</td><td>'._MSC_EMOTION.'</td><td>'._IMAGE.'</td></tr>';
-				$myts =& core_Textsanitizer::getInstance();
+				$myts =& icms_core_Textsanitizer::getInstance();
 				$smiles = $myts->getSmileys(1);
 				$count = count($smiles);
 				if($count > 0)
@@ -133,7 +133,7 @@ case 'friend':
 	}
 	elseif(StopXSS($_POST['op']) == 'sendsite')
 	{
-		$myts =& core_Textsanitizer::getInstance();
+		$myts =& icms_core_Textsanitizer::getInstance();
 		if($icmsUser) {$ymail = $icmsUser->getVar('email');}
 		else {$ymail = isset($_POST['ymail']) ? $myts->stripSlashesGPC(trim($_POST['ymail'])) : '';}
 		if(!isset($_POST['yname']) || trim($_POST['yname']) == '' || $ymail == '' || !isset($_POST['fname']) || trim($_POST['fname']) == ''  || !isset($_POST['fmail']) || trim($_POST['fmail']) == '')

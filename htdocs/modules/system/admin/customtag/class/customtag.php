@@ -52,7 +52,7 @@ class SystemCustomtag extends IcmsPersistableObject {
 	}
 
 	function render() {
-		$myts = core_Textsanitizer::getInstance ();
+		$myts = icms_core_Textsanitizer::getInstance ();
 		if (! $this->content) {
 			switch ( $this->getVar ( 'customtag_type' )) {
 				case ICMS_CUSTOMTAG_TYPE_XCODES :

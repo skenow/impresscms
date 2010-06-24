@@ -508,7 +508,7 @@ class IcmsPersistableObjectHandler extends icms_core_ObjectHandler {
 			return $ret;
 		}
 
-		$myts =& core_Textsanitizer::getInstance();
+		$myts =& icms_core_Textsanitizer::getInstance();
 		while ($myrow = $this->db->fetchArray($result)) {
 			//identifiers should be textboxes, so sanitize them like that
 			$ret[$myrow[$this->keyName]] = empty($this->identifierName)?1:$myts->displayTarea($myrow[$this->identifierName]);

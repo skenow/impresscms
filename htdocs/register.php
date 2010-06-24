@@ -29,7 +29,7 @@ if(icms_get_module_status('profile') && file_exists(ICMS_ROOT_PATH.'/modules/pro
 	exit();
 }
 
-$myts =& core_Textsanitizer::getInstance();
+$myts =& icms_core_Textsanitizer::getInstance();
 
 if ($icmsConfigUser['allow_register'] == 0 && $icmsConfigUser['activation_type'] != 3) {
 	redirect_header('index.php', 6, _US_NOREGISTER);

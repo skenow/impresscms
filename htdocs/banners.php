@@ -310,7 +310,7 @@ $op = '';
 if(!empty($_POST['op'])) {$op = $_POST['op'];}
 elseif (!empty($_GET['op'])) {$op = $_GET['op'];}
 
-$myts =& core_Textsanitizer::getInstance();
+$myts =& icms_core_Textsanitizer::getInstance();
 switch($op)
 {
 	case 'click':

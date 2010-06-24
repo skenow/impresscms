@@ -669,7 +669,7 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 		 */
 		static public function getUserRankList() {
 			$db = Database::getInstance();
-			$myts = core_Textsanitizer::getInstance();
+			$myts = icms_core_Textsanitizer::getInstance();
 			$sql = "SELECT rank_id, rank_title FROM ".$db->prefix("ranks")." WHERE rank_special = '1'";
 			$ret = array();
 			$result = $db->query($sql);

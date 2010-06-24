@@ -106,7 +106,7 @@ class XoopsConfigItem extends icms_core_Object
 		if($this->getVar('conf_formtype') == 'textarea')
 		{
 			// include_once XOOPS_ROOT_PATH.'/class/module.textsanitizer.php';
-			$myts =& core_Textsanitizer::getInstance();
+			$myts =& icms_core_Textsanitizer::getInstance();
 			$value = $myts->displayTarea($value, 1);
 		}
 		elseif($this->getVar('conf_formtype') == 'password')

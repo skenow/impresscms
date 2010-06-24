@@ -27,7 +27,7 @@ $pass = !isset($_POST['pass']) ? '' : trim($_POST['pass']);
  exit();
  }*/
 $member_handler =& xoops_gethandler('member');
-$myts =& core_Textsanitizer::getInstance();
+$myts =& icms_core_Textsanitizer::getInstance();
 
 //include_once ICMS_ROOT_PATH.'/class/auth/authfactory.php';
 icms_loadLanguageFile('core', 'auth');

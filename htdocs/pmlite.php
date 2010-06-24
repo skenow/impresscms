@@ -36,7 +36,7 @@ if ( empty($_GET['refresh'] ) && isset($_POST['op']) && $_POST['op'] != "submit"
 }
 xoops_header();
 if ($icmsUser) {
-	$myts =& core_Textsanitizer::getInstance();
+	$myts =& icms_core_Textsanitizer::getInstance();
 	if (isset($_POST['op']) && $_POST['op'] == "submit") {
 		if (!$GLOBALS['xoopsSecurity']->check()) {
 			$security_error = true;

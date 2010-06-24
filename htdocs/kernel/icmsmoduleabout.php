@@ -91,7 +91,7 @@ class IcmsModuleAbout
 	 * @return string sanitized value
 	 */
 	function sanitize($value) {
-		$myts = core_Textsanitizer::getInstance();
+		$myts = icms_core_Textsanitizer::getInstance();
 		return $myts->displayTarea($value, 1);
 	}
 
@@ -105,7 +105,7 @@ class IcmsModuleAbout
 		 * @todo make the output XHTML compliant
 		 */
 
-		$myts = &core_Textsanitizer::getInstance();
+		$myts = &icms_core_Textsanitizer::getInstance();
 
 		global $icmsModule, $icmsConfig;
 

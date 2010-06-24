@@ -25,7 +25,7 @@
  * @author	  Goghs Cheng
  * @copyright	(c) 2000-2003 The Xoops Project - www.xoops.org
  */
-class core_Textsanitizer
+class icms_core_Textsanitizer
 {
 	/**
 	 * @public	array
@@ -49,7 +49,7 @@ class core_Textsanitizer
 	 *
 	 * @todo Sofar, this does nuttin' ;-)
 	 **/
-	function core_Textsanitizer()
+	function icms_core_Textsanitizer()
 	{
 	}
 
@@ -82,7 +82,7 @@ class core_Textsanitizer
 		static $instance;
 		if(!isset($instance))
 		{
-			$instance = new core_Textsanitizer();
+			$instance = new icms_core_Textsanitizer();
 		}
 		return $instance;
 	}
@@ -565,11 +565,11 @@ class core_Textsanitizer
 			$patterns = "/\[code](.*)\[\/code\]/esU";
 			if($image != 0)
 			{
-				$replacements = "'<div class=\"xoopsCode\">'.core_Textsanitizer::textsanitizer_syntaxhighlight(core_Textsanitizer::codeSanitizer('$1')).'</div>'";
+				$replacements = "'<div class=\"xoopsCode\">'.icms_core_Textsanitizer::textsanitizer_syntaxhighlight(icms_core_Textsanitizer::codeSanitizer('$1')).'</div>'";
 			}
 			else
 			{
-				$replacements = "'<div class=\"xoopsCode\">'.core_Textsanitizer::textsanitizer_syntaxhighlight(core_Textsanitizer::codeSanitizer('$1',0)).'</div>'";
+				$replacements = "'<div class=\"xoopsCode\">'.icms_core_Textsanitizer::textsanitizer_syntaxhighlight(icms_core_Textsanitizer::codeSanitizer('$1',0)).'</div>'";
 			}
 			$text = preg_replace($patterns, $replacements, $text);
 		}
@@ -884,7 +884,7 @@ class core_Textsanitizer
 /**
  * For backward compat
  */
-class MyTextsanitizer extends core_Textsanitizer {
+class MyTextsanitizer extends icms_core_Textsanitizer {
 
 }
 ?>

@@ -254,7 +254,7 @@ class XoopsStory
 	function store($approved=false)
 	{
 		//$newpost = 0;
-		$myts = core_Textsanitizer::getInstance();
+		$myts = icms_core_Textsanitizer::getInstance();
 		$title = $myts->censorString($this->title);
 		$hometext = $myts->censorString($this->hometext);
 		$bodytext = $myts->censorString($this->bodytext);
@@ -425,7 +425,7 @@ class XoopsStory
 	 **/
 	function title($format='Show')
 	{
-		$myts = core_Textsanitizer::getInstance();
+		$myts = icms_core_Textsanitizer::getInstance();
 		$smiley = 1;
 		if($this->nosmiley())
 		{
@@ -457,7 +457,7 @@ class XoopsStory
 	 **/
 	function hometext($format='Show')
 	{
-		$myts = core_Textsanitizer::getInstance();
+		$myts = icms_core_Textsanitizer::getInstance();
 		$html = 1;
 		$smiley = 1;
 		$xcodes = 1;
@@ -495,7 +495,7 @@ class XoopsStory
 	 **/
 	function bodytext($format='Show')
 	{
-		$myts =& core_Textsanitizer::getInstance();
+		$myts =& icms_core_Textsanitizer::getInstance();
 		$html = 1;
 		$smiley = 1;
 		$xcodes = 1;

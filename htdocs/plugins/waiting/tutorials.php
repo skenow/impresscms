@@ -4,7 +4,7 @@ function b_waiting_tutorials() {
 	$block = array();
 
 	// tutorials
-	$myts =& core_Textsanitizer::getInstance();
+	$myts =& icms_core_Textsanitizer::getInstance();
 
 	$result = $xoopsDB->query("select count(*) from ".$xoopsDB->prefix("tutorials")." WHERE status=0 or status=2 order by date");
 	if ( $result ) {

@@ -1214,7 +1214,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			}
 
 			require_once ICMS_ROOT_PATH.'/class/template.php';
-			$myts =& core_Textsanitizer::getInstance();
+			$myts =& icms_core_Textsanitizer::getInstance();
 			$html = $myts->stripSlashesGPC($html);
 			$tpltpl_handler =& xoops_gethandler('tplfile');
 			$tplfile =& $tpltpl_handler->get($id, true);
