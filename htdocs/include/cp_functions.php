@@ -67,7 +67,7 @@ function icms_cp_header(){
 		}
 	}
 
-	$xoopsThemeFactory = new icms_icms_core_ThemeFactory();
+	$xoopsThemeFactory = new icms_core_ThemeFactory();
 	$xoopsThemeFactory->allowedThemes = $icmsConfig['theme_set_allowed'];
 
 	// The next 2 lines are for compatibility only... to implement the admin theme ;)

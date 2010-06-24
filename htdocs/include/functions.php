@@ -512,7 +512,7 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 	//require_once ICMS_ROOT_PATH.'/class/template.php';
 	//require_once ICMS_ROOT_PATH.'/class/theme.php';
 
-	$xoopsThemeFactory = new icms_icms_core_ThemeFactory();
+	$xoopsThemeFactory = new icms_core_ThemeFactory();
 	$xoopsThemeFactory->allowedThemes = $icmsConfig['theme_set_allowed'];
 	$xoopsThemeFactory->defaultTheme = $theme;
 	$icmsTheme = $xoTheme =& $xoopsThemeFactory->createInstance(array("plugins" => array()));
