@@ -2,22 +2,20 @@
 /**
  * Criteria Base Class for composing Where clauses in SQL Queries
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package	core
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project
- * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: criteria.php 19118 2010-03-27 17:46:23Z skenow $
+ * @license		LICENSE.txt
+ * @category	ICMS
+ * @package		Core
+ * @subpackage	Criteria
+ * @author		modified by UnderDog <underdog@impresscms.org>
+ * @version		SVN: $Id$
  */
 
 /**
  *
- *
- * @package     kernel
- * @subpackage  database
+ * @category	ICMS
+ * @package     Core
+ * @subpackage  Criteria
  *
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
@@ -30,8 +28,8 @@
  *
  * @abstract
  *
- * @package     kernel
- * @subpackage  database
+ * @package     Core
+ * @subpackage  Database
  *
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
@@ -147,7 +145,7 @@ abstract class icms_criteria_Element {
 	 * @return	string
 	 */
 	public function getGroupby() {
-		return ' GROUP BY '.$this->groupby;
+		return ' GROUP BY ' . $this->groupby;
 	}
 	/**#@-*/
 }

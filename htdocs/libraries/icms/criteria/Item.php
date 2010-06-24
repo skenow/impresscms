@@ -1,10 +1,19 @@
 <?php
 
 /**
+ * A single criteria for a database query
+ *
+ * @category	ICMS
+ * @package		Core
+ * @subpackage	Database
+ * @version		SVN: $Id$
+ */
+/**
  * A single criteria
  *
- * @package     kernel
- * @subpackage  database
+ * @category	ICMS
+ * @package     Core
+ * @subpackage  Database
  *
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
@@ -45,16 +54,16 @@ class icms_criteria_Item extends icms_criteria_Element {
 		if ( !empty($this->_function) ) {
 			$clause = sprintf($this->_function, $clause);
 		}
-		if ( in_array( strtoupper( $this->_operator ), array( 'IS NULL', 'IS NOT NULL' ) ) ) {
+		if ( in_array( strtoupper($this->_operator), array('IS NULL', 'IS NOT NULL')) ) {
 			$clause .= ' ' . $this->_operator;
 		} else {
-			if ( '' === ($value = trim($this->_value) ) ) {
+			if ( '' === ( $value = trim($this->_value) ) ) {
 				return '';
 			}
-			if ( !in_array( strtoupper($this->_operator), array('IN', 'NOT IN') ) ) {
-				if ( ( substr( $value, 0, 1 ) != '`' ) && ( substr( $value, -1 ) != '`' ) ) {
+			if ( !in_array(strtoupper($this->_operator), array('IN', 'NOT IN')) ) {
+				if ( ( substr($value, 0, 1) != '`' ) && ( substr($value, -1) != '`' ) ) {
 					$value = "'$value'";
-				} elseif ( !preg_match( '/^[a-zA-Z0-9_\.\-`]*$/', $value ) ) {
+				} elseif ( !preg_match('/^[a-zA-Z0-9_\.\-`]*$/', $value) ) {
 					$value = '``';
 				}
 			}
@@ -83,17 +92,14 @@ class icms_criteria_Item extends icms_criteria_Element {
 		}
 		else {
 			if ($this->_operator == 'IN') {
-				$newvalue = str_replace(array('(',')'),'',
-				$this->_value);
-				$tab = explode(',',$newvalue);
-				foreach ($tab as $uid)
-				{
+				$newvalue = str_replace(array('(', ')'), '', $this->_value);
+				$tab = explode(',', $newvalue);
+				foreach ($tab as $uid) {
 					$clause .= '(' . $this->_column . '=' . $uid
 					.')';
 				}
 				$clause = '(|' . $clause . ')';
-			}
-			else {
+			} else {
 				$clause = "(" . $this->_column . $this->_operator . $this->_value . ")";
 			}
 		}
