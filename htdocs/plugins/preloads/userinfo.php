@@ -15,7 +15,7 @@
  * @since	1.2
  *
  */
-class IcmsPreloadUserInfo extends icms_core_Preloaditem {
+class IcmsPreloadUserInfo extends icms_preload_Item {
 	/**
 	 * Function to be triggered at the end of the core boot process
 	 *

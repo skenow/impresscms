@@ -1,6 +1,6 @@
 <?php
 /**
- * icms_core_Preloaditem
+ * icms_preload_Item
  *
  * Class which is extended by any preload item. This class is empty for now but is there for
  * extended future purposes
@@ -13,9 +13,9 @@
  * @version		$Id: icmspreloadhandler.php 19421 2010-06-14 07:28:37Z david-sf $
  */
 
-class icms_core_Preloaditem {
+class icms_preload_Item {
 
-	function icms_core_Preloaditem() {
+	function icms_preload_Item() {
 	}
 }
 ?>

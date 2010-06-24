@@ -388,10 +388,8 @@ class icms_core_Textsanitizer
 		// FIXME: Review this fix, is not the best. I dont found the problem,
 		// it really should never worked in the admin side!
 		// Maybe the preload handler should be in the install kernel.
-		if(!is_object($icmsPreloadHandler)){
-			include_once ICMS_ROOT_PATH . '/kernel/icmspreloadhandler.php';
-			$icmsPreloadHandler = icms_core_Preloadhandler::getInstance();
-		}
+		if(!is_object($icmsPreloadHandler))
+			$icmsPreloadHandler = icms_preload_Handler::getInstance();
 		$icmsPreloadHandler->triggerEvent('beforeDisplayTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
 
 		if($html != 1)
@@ -453,7 +451,7 @@ class icms_core_Textsanitizer
 		if(!is_object($icmsPreloadHandler))
 		{
 			include_once ICMS_ROOT_PATH . '/kernel/icmspreloadhandler.php';
-			$icmsPreloadHandler = icms_core_Preloadhandler::getInstance();
+			$icmsPreloadHandler = icms_preload_Handler::getInstance();
 		}
 		$icmsPreloadHandler->triggerEvent('beforePreviewTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
 

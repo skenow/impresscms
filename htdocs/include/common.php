@@ -53,11 +53,9 @@ define('ICMS_MODULES_URL', ICMS_URL . '/modules');
 require_once( ICMS_ROOT_PATH . '/libraries/icms/core/Autoloader.php' );
 icms_core_Autoloader::register();
 
-// ################# Creation of the icms_core_Preloadhandler ##############
-//include_once ICMS_ROOT_PATH . '/kernel/icmspreloadhandler.php';
-
+// ################# Creation of the icms_preload_Handler ##############
 global $icmsPreloadHandler;
-$icmsPreloadHandler = icms_core_Preloadhandler::getInstance();
+$icmsPreloadHandler = icms_preload_Handler::getInstance();
 
 // ################# Creation of the ImpressCMS Libraries ##############
 /**

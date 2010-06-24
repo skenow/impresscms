@@ -18,7 +18,7 @@ if (!defined('ICMS_ROOT_PATH')) {
 include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
 
 /**
- * icms_core_Preloadhandler
+ * icms_preload_Handler
  *
  * Class handling preload events automatically detect from the files in ICMS_PRELOAD_PATH
  *
@@ -29,7 +29,7 @@ include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
  * @author		marcan <marcan@impresscms.org>
  * @version		$Id: icmspreloadhandler.php 19421 2010-06-14 07:28:37Z david-sf $
  */
-class icms_core_PreloadHandler {
+class icms_preload_Handler {
 
 	/**
 	 * @var array $_preloadFilesArray array containing a list of all preload files in ICMS_PRELOAD_PATH
@@ -46,7 +46,7 @@ class icms_core_PreloadHandler {
 	 *
 	 * @return	void
 	 */
-	function icms_core_Preloadhandler() {
+	function icms_preload_Handler() {
 		$preloadFilesArray = XoopsLists::getFileListAsArray(ICMS_PRELOAD_PATH);
 		foreach ($preloadFilesArray as $filename) {
 			// exclude index.html
@@ -119,7 +119,7 @@ class icms_core_PreloadHandler {
 	{
 		static $instance;
 		if (!isset($instance)) {
-			$instance = new icms_core_Preloadhandler();
+			$instance = new icms_preload_Handler();
 		}
 		return $instance;
 	}
@@ -164,7 +164,7 @@ class icms_core_PreloadHandler {
 }
 
 /**
- * icms_core_Preloaditem
+ * icms_preload_Item
  *
  * Class which is extended by any preload item. This class is empty for now but is there for
  * extended future purposes
@@ -177,9 +177,9 @@ class icms_core_PreloadHandler {
  * @version		$Id: icmspreloadhandler.php 19421 2010-06-14 07:28:37Z david-sf $
  */
 
-class icms_core_Preloaditem {
+class icms_preload_Item {
 
-	function icms_core_Preloaditem() {
+	function icms_preload_Item() {
 	}
 }
 ?>
