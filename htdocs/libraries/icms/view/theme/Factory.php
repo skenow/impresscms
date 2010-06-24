@@ -12,16 +12,16 @@
  */
 
 /**
- * icms_core_ThemeFactory
+ * icms_view_theme_Factory
  *
  * @author 		Skalpa Keo
  * @package		xos_opal
  * @subpackage	icms_core_Theme
  * @since        2.3.0
  */
-class icms_core_ThemeFactory {
+class icms_view_theme_Factory {
 
-	public $xoBundleIdentifier = 'icms_core_ThemeFactory';
+	public $xoBundleIdentifier = 'icms_view_theme_Factory';
 	/**
 	 * Currently enabled themes (if empty, all the themes in themes/ are allowed)
 	 * @public array

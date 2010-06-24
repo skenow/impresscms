@@ -32,7 +32,7 @@ if(@$xoopsOption['template_main'])
 {
 	if(false === strpos($xoopsOption['template_main'], ':')) {$xoopsOption['template_main'] = 'db:' . $xoopsOption['template_main'];}
 }
-$xoopsThemeFactory = new icms_core_ThemeFactory();
+$xoopsThemeFactory = new icms_view_theme_Factory();
 $xoopsThemeFactory->allowedThemes = $icmsConfig['theme_set_allowed'];
 $xoopsThemeFactory->defaultTheme = $icmsConfig['theme_set'];
 
