@@ -34,7 +34,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class XoopsImageset extends core_Object
+class XoopsImageset extends icms_core_Object
 {
 	/**
 	 * Constructor
@@ -42,7 +42,7 @@ class XoopsImageset extends core_Object
 	 */
 	function XoopsImageset()
 	{
-		$this->core_Object();
+		$this->icms_core_Object();
 		$this->initVar('imgset_id', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('imgset_name', XOBJ_DTYPE_TXTBOX, null, true, 50);
 		$this->initVar('imgset_refid', XOBJ_DTYPE_INT, 0, false);
@@ -57,7 +57,7 @@ class XoopsImageset extends core_Object
  *
  * @author  Kazumi Ono <onokazu@xoops.org>
  */
-class XoopsImagesetHandler extends core_ObjectHandler
+class XoopsImagesetHandler extends icms_core_ObjectHandler
 {
 
 	/**

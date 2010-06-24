@@ -15,7 +15,7 @@ if (!defined("ICMS_ROOT_PATH")) {
 	die("ImpressCMS root path not defined");
 }
 
-class IcmsPersistablePermissionHandler extends core_ObjectHandler
+class IcmsPersistablePermissionHandler extends icms_core_ObjectHandler
 {
 	var $handler;
 	function IcmsPersistablePermissionHandler($handler) {

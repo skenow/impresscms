@@ -40,7 +40,7 @@ if (!defined('XOBJ_DTYPE_FORM_SECTION_CLOSE')) define('XOBJ_DTYPE_FORM_SECTION_C
  * @author marcan <marcan@smartfactory.ca>
  * @link http://smartfactory.ca The SmartFactory
  */
-class IcmsPersistableObject extends core_Object {
+class IcmsPersistableObject extends icms_core_Object {
 
 	var $_image_path;
 	var $_image_url;

@@ -28,7 +28,7 @@
  * @author  Kazumi Ono <onokazu@xoops.org>
  * @copyright copyright &copy; 2000 The XOOPS Project
  */
-class core_ObjectHandler
+class icms_core_ObjectHandler
 {
 
 	/**
@@ -47,7 +47,7 @@ class core_ObjectHandler
 	* @param object $db reference to the {@link XoopsDatabase} object
 	* @access protected
 	*/
-	function core_ObjectHandler(&$db)
+	function icms_core_ObjectHandler(&$db)
 	{
 		$this->db =& $db;
 	}

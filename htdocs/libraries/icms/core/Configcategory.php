@@ -25,7 +25,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @package     core
  * @subpackage	config
  */
-class icms_core_Configcategory extends core_Object {
+class icms_core_Configcategory extends icms_core_Object {
 	/**
 	 * Constructor
 	 *

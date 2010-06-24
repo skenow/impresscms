@@ -30,14 +30,14 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @author       Kazumi Ono  <onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_core_GrouppermHandler extends core_ObjectHandler {
+class icms_core_GrouppermHandler extends icms_core_ObjectHandler {
 	public static $_cachedRights;
 
 	/**
 	 * Create a new {@link icms_core_Groupperm}
 	 *
 	 * @return	bool    $isNew  Flag the object as "new"?
-	 * @see htdocs/kernel/core_ObjectHandler#create()
+	 * @see htdocs/kernel/icms_core_ObjectHandler#create()
 	 */
 	public function &create($isNew = true) {
 		$perm = new icms_core_Groupperm();
@@ -53,7 +53,7 @@ class icms_core_GrouppermHandler extends core_ObjectHandler {
 	 * @param	int $id ID
 	 *
 	 * @return	object  {@link icms_core_Groupperm}, FALSE on fail
-	 * @see htdocs/kernel/core_ObjectHandler#get($int_id)
+	 * @see htdocs/kernel/icms_core_ObjectHandler#get($int_id)
 	 */
 	public function &get($id) {
 		$id = (int) ($id);
@@ -78,7 +78,7 @@ class icms_core_GrouppermHandler extends core_ObjectHandler {
 	 * @param	object  &$perm  {@link icms_core_Groupperm} object
 	 *
 	 * @return	bool    TRUE on success
-	 * @see htdocs/kernel/core_ObjectHandler#insert($object)
+	 * @see htdocs/kernel/icms_core_ObjectHandler#insert($object)
 	 */
 	public function insert(&$perm) {
 		/**
@@ -118,7 +118,7 @@ class icms_core_GrouppermHandler extends core_ObjectHandler {
 	 * @param	object  &$perm
 	 *
 	 * @return	bool    TRUE on success
-	 * @see htdocs/kernel/core_ObjectHandler#delete($object)
+	 * @see htdocs/kernel/icms_core_ObjectHandler#delete($object)
 	 */
 	public function delete(&$perm) {
 		/**

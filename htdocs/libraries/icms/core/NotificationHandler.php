@@ -32,7 +32,7 @@ include_once XOOPS_ROOT_PATH . '/include/notification_functions.php';
  * @author	    Michael van Dam <mvandam@caltech.edu>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_core_NotificationHandler extends core_ObjectHandler
+class icms_core_NotificationHandler extends icms_core_ObjectHandler
 {
 
 	/**

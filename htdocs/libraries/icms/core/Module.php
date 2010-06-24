@@ -27,7 +27,7 @@ if(!defined('ICMS_ROOT_PATH')){exit();}
  * @author	Kazumi Ono 	<onokazu@xoops.org>
  * @copyright	(c) 2000-2003 The Xoops Project - www.xoops.org
  **/
-class icms_core_Module extends core_Object
+class icms_core_Module extends icms_core_Object
 {
 	/**
 	 * @var string
@@ -57,7 +57,7 @@ class icms_core_Module extends core_Object
 	 */
 	function icms_core_Module()
 	{
-		$this->core_Object();
+		$this->icms_core_Object();
 		$this->initVar('mid', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('name', XOBJ_DTYPE_TXTBOX, null, true, 150);
 		$this->initVar('version', XOBJ_DTYPE_INT, 100, false);

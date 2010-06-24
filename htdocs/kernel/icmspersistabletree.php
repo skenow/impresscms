@@ -28,7 +28,7 @@ class IcmsPersistableTree {
 	/**
 	 * Constructor
 	 *
-	 * @param   array   $objectArr  Array of {@link core_Object}s
+	 * @param   array   $objectArr  Array of {@link icms_core_Object}s
 	 * @param   string     $myId       field name of object ID
 	 * @param   string     $parentId   field name of parent object ID
 	 * @param   string     $rootId     field name of root object ID

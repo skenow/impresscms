@@ -35,7 +35,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  *
  * @version		$Revision: 1102 $ - $Date: 2007-10-18 22:55:52 -0400 (jeu., 18 oct. 2007) $
  */
-class icms_core_PrivmessageHandler extends core_ObjectHandler
+class icms_core_PrivmessageHandler extends icms_core_ObjectHandler
 {
 
 	/**

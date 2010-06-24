@@ -42,7 +42,7 @@ define('ICMS_CONF_PURIFIER', 14);
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class XoopsConfigItem extends core_Object
+class XoopsConfigItem extends icms_core_Object
 {
 	/**
 	 * Config options
@@ -174,7 +174,7 @@ class XoopsConfigItem extends core_Object
  * @package     kernel
  * @subpackage  config
  */
-class XoopsConfigItemHandler extends core_ObjectHandler
+class XoopsConfigItemHandler extends icms_core_ObjectHandler
 {
 
 	/**

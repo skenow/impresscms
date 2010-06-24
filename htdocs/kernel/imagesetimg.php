@@ -34,7 +34,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class XoopsImagesetimg extends core_Object
+class XoopsImagesetimg extends icms_core_Object
 {
 	/**
 	 * Constructor
@@ -42,7 +42,7 @@ class XoopsImagesetimg extends core_Object
 	 */
 	function XoopsImagesetimg()
 	{
-		$this->core_Object();
+		$this->icms_core_Object();
 		$this->initVar('imgsetimg_id', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('imgsetimg_file', XOBJ_DTYPE_OTHER, null, false);
 		$this->initVar('imgsetimg_body', XOBJ_DTYPE_SOURCE, null, false);
@@ -58,7 +58,7 @@ class XoopsImagesetimg extends core_Object
  *
  * @author  Kazumi Ono <onokazu@xoops.org>
  */
-class XoopsImagesetimgHandler extends core_ObjectHandler
+class XoopsImagesetimgHandler extends icms_core_ObjectHandler
 {
 
 	/**

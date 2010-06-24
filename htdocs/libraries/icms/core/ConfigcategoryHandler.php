@@ -28,7 +28,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @package     kernel
  * @subpackage  config
  */
-class icms_core_ConfigcategoryHandler extends core_ObjectHandler {
+class icms_core_ConfigcategoryHandler extends icms_core_ObjectHandler {
 
 	/**
 	 * Create a new category
@@ -36,7 +36,7 @@ class icms_core_ConfigcategoryHandler extends core_ObjectHandler {
 	 * @param	bool    $isNew  Flag the new object as "new"?
 	 *
 	 * @return	object  New {@link icms_core_Configcategory}
-	 * @see htdocs/kernel/core_ObjectHandler#create()
+	 * @see htdocs/kernel/icms_core_ObjectHandler#create()
 	 */
 	function &create($isNew = true) 	{
 		$confcat = new icms_core_Configcategory();
@@ -52,7 +52,7 @@ class icms_core_ConfigcategoryHandler extends core_ObjectHandler {
 	 * @param	int $id ConfigCategoryID to get
 	 *
 	 * @return	object|false  {@link icms_core_Configcategory}, FALSE on fail
-	 * @see htdocs/kernel/core_ObjectHandler#get($int_id)
+	 * @see htdocs/kernel/icms_core_ObjectHandler#get($int_id)
 	 */
 	function &get($id) {
 		$confcat = false;
@@ -77,7 +77,7 @@ class icms_core_ConfigcategoryHandler extends core_ObjectHandler {
 	 * @param	object   &$confcat  {@link icms_core_Configcategory}
 	 *
 	 * @return	bool    TRUE on success
-	 * @see htdocs/kernel/core_ObjectHandler#insert($object)
+	 * @see htdocs/kernel/icms_core_ObjectHandler#insert($object)
 	 */
 	function insert(&$confcat) {
 		/**
@@ -117,7 +117,7 @@ class icms_core_ConfigcategoryHandler extends core_ObjectHandler {
 	 * @param	object  &$confcat   {@link icms_core_Configcategory}
 	 *
 	 * @return	bool    TRUE on success
-	 * @see htdocs/kernel/core_ObjectHandler#delete($object)
+	 * @see htdocs/kernel/icms_core_ObjectHandler#delete($object)
 	 */
 	function delete(&$confcat) {
 		/**

@@ -123,7 +123,7 @@ class icms_core_CommentRenderer {
 	{
 		include_once ICMS_ROOT_PATH.'/class/tree.php';
 		// construct comment tree
-		$xot = new core_ObjectTree($this->_comments, 'com_id', 'com_pid', 'com_rootid');
+		$xot = new icms_core_ObjectTree($this->_comments, 'com_id', 'com_pid', 'com_rootid');
 		$tree =& $xot->getTree();
 
 		if (false != $this->_useIcons) {
@@ -215,7 +215,7 @@ class icms_core_CommentRenderer {
 	function renderNestView($comment_id = 0, $admin_view = false)
 	{
 		include_once ICMS_ROOT_PATH.'/class/tree.php';
-		$xot = new core_ObjectTree($this->_comments, 'com_id', 'com_pid', 'com_rootid');
+		$xot = new icms_core_ObjectTree($this->_comments, 'com_id', 'com_pid', 'com_rootid');
 		$tree =& $xot->getTree();
 		if (false != $this->_useIcons) {
 			$title = $this->_getTitleIcon($tree[$comment_id]['obj']->getVar('com_icon')).'&nbsp;'.$tree[$comment_id]['obj']->getVar('com_title');

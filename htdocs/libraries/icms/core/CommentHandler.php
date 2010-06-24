@@ -28,7 +28,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_core_CommentHandler extends core_ObjectHandler {
+class icms_core_CommentHandler extends icms_core_ObjectHandler {
 
 	/**
 	 * Create a {@link icms_core_Comment}
@@ -36,7 +36,7 @@ class icms_core_CommentHandler extends core_ObjectHandler {
 	 * @param	bool    $isNew  Flag the object as "new"?
 	 *
 	 * @return	object
-	 * @see htdocs/kernel/core_ObjectHandler#create()
+	 * @see htdocs/kernel/icms_core_ObjectHandler#create()
 	 */
 	public function &create($isNew = true) {
 		$comment = new icms_core_Comment();
@@ -52,7 +52,7 @@ class icms_core_CommentHandler extends core_ObjectHandler {
 	 * @param   int $id ID
 	 *
 	 * @return  object  {@link icms_core_Comment}, FALSE on fail
-	 * @see htdocs/kernel/core_ObjectHandler#get($int_id)
+	 * @see htdocs/kernel/icms_core_ObjectHandler#get($int_id)
 	 **/
 	public function &get($id) {
 		$comment = false;
@@ -77,7 +77,7 @@ class icms_core_CommentHandler extends core_ObjectHandler {
 	 * @param   object  &$comment
 	 *
 	 * @return  bool
-	 * @see htdocs/kernel/core_ObjectHandler#insert($object)
+	 * @see htdocs/kernel/icms_core_ObjectHandler#insert($object)
 	 **/
 	public function insert(&$comment) {
 		/**
@@ -117,7 +117,7 @@ class icms_core_CommentHandler extends core_ObjectHandler {
 	 * @param   object  &$comment
 	 *
 	 * @return  bool
-	 *  @see htdocs/kernel/core_ObjectHandler#delete($object)
+	 *  @see htdocs/kernel/icms_core_ObjectHandler#delete($object)
 	 **/
 	public function delete(&$comment) {
 		/**

@@ -25,7 +25,7 @@ if(!defined('ICMS_ROOT_PATH')) {exit();}
  * @package kernel
  * @subpackage users
  */
-class XoopsUser extends core_Object
+class XoopsUser extends icms_core_Object
 {
 	/**
 	 * Array of groups that user belongs to
@@ -342,11 +342,11 @@ class XoopsUser extends core_Object
 	}
 
 	/**#@+
-	 * specialized wrapper for {@link core_Object::getVar()}
+	 * specialized wrapper for {@link icms_core_Object::getVar()}
 	 *
 	 * kept for compatibility reasons.
 	 *
-	 * @see core_Object::getVar()
+	 * @see icms_core_Object::getVar()
 	 * @deprecated
 	 */
 	/**
@@ -360,7 +360,7 @@ class XoopsUser extends core_Object
 
 	/**
 	 * get the users name
-	 * @param string $format format for the output, see {@link core_Object::getVar()}
+	 * @param string $format format for the output, see {@link icms_core_Object::getVar()}
 	 * @return string
 	 */
 	function name($format='S')
@@ -370,7 +370,7 @@ class XoopsUser extends core_Object
 
 	/**
 	 * get the user's uname
-	 * @param string $format format for the output, see {@link core_Object::getVar()}
+	 * @param string $format format for the output, see {@link icms_core_Object::getVar()}
 	 * @return string
 	 */
 	function uname($format='S')
@@ -380,7 +380,7 @@ class XoopsUser extends core_Object
 
 	/**
 	 * get the user's login_name
-	 * @param string $format format for the output, see {@link core_Object::getVar()}
+	 * @param string $format format for the output, see {@link icms_core_Object::getVar()}
 	 * @return string
 	 */
 	function login_name($format='S')
@@ -391,7 +391,7 @@ class XoopsUser extends core_Object
 	/**
 	 * get the user's email
 	 *
-	 * @param string $format format for the output, see {@link core_Object::getVar()}
+	 * @param string $format format for the output, see {@link icms_core_Object::getVar()}
 	 * @return string
 	 */
 	function email($format='S')
@@ -580,7 +580,7 @@ class XoopsGuestUser extends XoopsUser
  * @copyright copyright (c) 2000-2003 XOOPS.org
  * @package kernel
  */
-class XoopsUserHandler extends core_ObjectHandler
+class XoopsUserHandler extends icms_core_ObjectHandler
 {
 	/**
 	 * create a new user

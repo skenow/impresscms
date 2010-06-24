@@ -28,7 +28,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  *
  * @author  Kazumi Ono <onokazu@xoops.org>
  */
-class icms_core_TplfileHandler extends core_ObjectHandler
+class icms_core_TplfileHandler extends icms_core_ObjectHandler
 {
 
 	/**

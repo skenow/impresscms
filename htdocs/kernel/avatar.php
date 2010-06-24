@@ -21,7 +21,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @package avatar
  *
  */
-class XoopsAvatar extends core_Object
+class XoopsAvatar extends icms_core_Object
 {
 	/** @var integer */
 	var $_userCount;
@@ -32,7 +32,7 @@ class XoopsAvatar extends core_Object
 	 */
 	function XoopsAvatar()
 	{
-		$this->core_Object();
+		$this->icms_core_Object();
 		$this->initVar('avatar_id', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('avatar_file', XOBJ_DTYPE_OTHER, null, false, 30);
 		$this->initVar('avatar_name', XOBJ_DTYPE_TXTBOX, null, true, 100);
@@ -72,12 +72,12 @@ class XoopsAvatar extends core_Object
  * @author  Kazumi Ono <onokazu@xoops.org>
  */
 
-class XoopsAvatarHandler extends core_ObjectHandler
+class XoopsAvatarHandler extends icms_core_ObjectHandler
 {
 
 	/**
 	 * Creates a new avatar object
-	 * @see htdocs/kernel/core_ObjectHandler#create()
+	 * @see htdocs/kernel/icms_core_ObjectHandler#create()
 	 */
 	function &create($isNew = true)
 	{
@@ -90,7 +90,7 @@ class XoopsAvatarHandler extends core_ObjectHandler
 
 	/**
 	 * Gets an avatar object
-	 * @see htdocs/kernel/core_ObjectHandler#get($int_id)
+	 * @see htdocs/kernel/icms_core_ObjectHandler#get($int_id)
 	 * @return mixed
 	 */
 	function &get($id)
@@ -114,7 +114,7 @@ class XoopsAvatarHandler extends core_ObjectHandler
 
 	/**
 	 * Inserts an avatar or updates an existing avatar
-	 * @see htdocs/kernel/core_ObjectHandler#insert($object)
+	 * @see htdocs/kernel/icms_core_ObjectHandler#insert($object)
 	 * @return boolean
 	 */
 	function insert(&$avatar)
@@ -152,7 +152,7 @@ class XoopsAvatarHandler extends core_ObjectHandler
 
 	/**
 	 * Deletes an avatar
-	 * @see htdocs/kernel/core_ObjectHandler#delete($object)
+	 * @see htdocs/kernel/icms_core_ObjectHandler#delete($object)
 	 * @return boolean
 	 */
 	function delete(&$avatar)

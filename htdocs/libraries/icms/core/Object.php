@@ -50,7 +50,7 @@ define('XOBJ_DTYPE_FORM_SECTION_CLOSE', 211);
  * @copyright copyright &copy; 2000 XOOPS.org
  * @package kernel
  **/
-class core_Object {
+class icms_core_Object {
 
 	/**
 	 * holds all variables(properties) of an object
@@ -105,7 +105,7 @@ class core_Object {
 	 * normally, this is called from child classes only
 	 * @access public
 	 */
-	public function core_Object() {
+	public function icms_core_Object() {
 	}
 
 	/**#@+
@@ -257,7 +257,7 @@ class core_Object {
 		$vars = array();
 		foreach ( $keys as $key ) {
 			if ( isset( $this->vars[$key] ) ) {
-				if ( is_object( $this->vars[$key] ) && is_a( $this->vars[$key], 'core_Object' ) ) {
+				if ( is_object( $this->vars[$key] ) && is_a( $this->vars[$key], 'icms_core_Object' ) ) {
 					if ( $maxDepth ) {
 						$vars[$key] = $this->vars[$key]->getValues( null, $format, $maxDepth - 1 );
 					}
@@ -621,13 +621,13 @@ class core_Object {
 }
 
 /**
- * @deprecated	Use core_Object instead
+ * @deprecated	Use icms_core_Object instead
  * @todo		Remove this in version 1.4
  *
  */
-class XoopsObject extends core_Object {
+class XoopsObject extends icms_core_Object {
 	public function __construct() {
 		parent::__construct();
-		$this->setErrors(icms_deprecated('core_Object','This will be removed in version 1.4'));
+		$this->setErrors(icms_deprecated('icms_core_Object','This will be removed in version 1.4'));
 	}
 }

@@ -25,7 +25,7 @@ if(!defined('ICMS_ROOT_PATH')){exit();}
  * @author	Kazumi Ono 	<onokazu@xoops.org>
  * @copyright	(c) 2000-2003 The Xoops Project - www.xoops.org
  **/
-class icms_core_ModuleHandler extends core_ObjectHandler
+class icms_core_ModuleHandler extends icms_core_ObjectHandler
 {
 	/**
 	 * holds an array of cached module references, indexed by module id

@@ -25,14 +25,14 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @package     kernel
  * @subpackage	config
  */
-class XoopsConfigOption extends core_Object
+class XoopsConfigOption extends icms_core_Object
 {
 	/**
 	 * Constructor
 	 */
 	function XoopsConfigOption()
 	{
-		$this->core_Object();
+		$this->icms_core_Object();
 		$this->initVar('confop_id', XOBJ_DTYPE_INT, null);
 		$this->initVar('confop_name', XOBJ_DTYPE_TXTBOX, null, true, 255);
 		$this->initVar('confop_value', XOBJ_DTYPE_TXTBOX, null, true, 255);
@@ -51,7 +51,7 @@ class XoopsConfigOption extends core_Object
  * @package     kernel
  * @subpackage  config
  */
-class XoopsConfigOptionHandler extends core_ObjectHandler
+class XoopsConfigOptionHandler extends icms_core_ObjectHandler
 {
 
 	/**

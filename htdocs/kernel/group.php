@@ -23,14 +23,14 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @author Kazumi Ono <onokazu@xoops.org>
  * @package kernel
  */
-class XoopsGroup extends core_Object
+class XoopsGroup extends icms_core_Object
 {
 	/**
 	 * constructor
 	 */
 	function XoopsGroup()
 	{
-		$this->core_Object();
+		$this->icms_core_Object();
 		$this->initVar('groupid', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('name', XOBJ_DTYPE_TXTBOX, null, true, 100);
 		$this->initVar('description', XOBJ_DTYPE_TXTAREA, null, false);
@@ -48,7 +48,7 @@ class XoopsGroup extends core_Object
  * @package kernel
  * @subpackage member
  */
-class XoopsGroupHandler extends core_ObjectHandler
+class XoopsGroupHandler extends icms_core_ObjectHandler
 {
 
 	/**
@@ -56,7 +56,7 @@ class XoopsGroupHandler extends core_ObjectHandler
 	 *
 	 * @param bool $isNew mark the new object as "new"?
 	 * @return object XoopsGroup {@link XoopsGroup} reference to the new object
-	 * @see htdocs/kernel/core_ObjectHandler#create()
+	 * @see htdocs/kernel/icms_core_ObjectHandler#create()
 	 */
 	function &create($isNew = true)
 	{
@@ -72,7 +72,7 @@ class XoopsGroupHandler extends core_ObjectHandler
 	 *
 	 * @param int $id ID of the group to get
 	 * @return object XoopsGroup {@link XoopsGroup} reference to the group object, FALSE if failed
-	 * @see htdocs/kernel/core_ObjectHandler#get($int_id)
+	 * @see htdocs/kernel/icms_core_ObjectHandler#get($int_id)
 	 */
 	function &get($id)
 	{
@@ -97,7 +97,7 @@ class XoopsGroupHandler extends core_ObjectHandler
 	 *
 	 * @param object reference to the group object
 	 * @return mixed ID of the group if inserted, FALSE if failed, TRUE if already present and unchanged.
-	 * @see htdocs/kernel/core_ObjectHandler#insert($object)
+	 * @see htdocs/kernel/icms_core_ObjectHandler#insert($object)
 	 */
 	function insert(&$group)
 	{
@@ -137,7 +137,7 @@ class XoopsGroupHandler extends core_ObjectHandler
 	 *
 	 * @param object $group reference to the group to be removed
 	 * @return bool FALSE if failed
-	 * @see htdocs/kernel/core_ObjectHandler#delete($object)
+	 * @see htdocs/kernel/icms_core_ObjectHandler#delete($object)
 	 */
 	function delete(&$group)
 	{
@@ -197,14 +197,14 @@ class XoopsGroupHandler extends core_ObjectHandler
  * @package kernel
  * @subpackage	member
  */
-class XoopsMembership extends core_Object
+class XoopsMembership extends icms_core_Object
 {
 	/**
 	 * constructor
 	 */
 	function XoopsMembership()
 	{
-		$this->core_Object();
+		$this->icms_core_Object();
 		$this->initVar('linkid', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('groupid', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('uid', XOBJ_DTYPE_INT, null, false);
@@ -222,14 +222,14 @@ class XoopsMembership extends core_Object
  * @package kernel
  * @subpackage	member
  */
-class XoopsMembershipHandler extends core_ObjectHandler
+class XoopsMembershipHandler extends icms_core_ObjectHandler
 {
 	/**
 	 * create a new membership
 	 *
 	 * @param bool $isNew should the new object be set to "new"?
 	 * @return object XoopsMembership {@link XoopsMembership}
-	 * @see htdocs/kernel/core_ObjectHandler#create()
+	 * @see htdocs/kernel/icms_core_ObjectHandler#create()
 	 */
 	function &create($isNew = true)
 	{
@@ -245,7 +245,7 @@ class XoopsMembershipHandler extends core_ObjectHandler
 	 *
 	 * @param int $id ID of the membership to get
 	 * @return mixed reference to the object if successful, else FALSE
-	 * @see htdocs/kernel/core_ObjectHandler#get($int_id)
+	 * @see htdocs/kernel/icms_core_ObjectHandler#get($int_id)
 	 */
 	function &get($id)
 	{
@@ -270,7 +270,7 @@ class XoopsMembershipHandler extends core_ObjectHandler
 	 *
 	 * @param object $mship reference to the membership object
 	 * @return bool TRUE if already in DB or successful, FALSE if failed
-	 * @see htdocs/kernel/core_ObjectHandler#insert($object)
+	 * @see htdocs/kernel/icms_core_ObjectHandler#insert($object)
 	 */
 	function insert(&$mship)
 	{
@@ -310,7 +310,7 @@ class XoopsMembershipHandler extends core_ObjectHandler
 	 *
 	 * @param object $mship reference to the membership object
 	 * @return bool FALSE if failed
-	 * @see htdocs/kernel/core_ObjectHandler#delete($object)
+	 * @see htdocs/kernel/icms_core_ObjectHandler#delete($object)
 	 */
 	function delete(&$mship)
 	{

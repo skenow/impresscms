@@ -27,7 +27,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @copyright copyright &copy; 2000 XOOPS.org
  * @package kernel
  **/
-class icms_core_Tplset extends core_Object
+class icms_core_Tplset extends icms_core_Object
 {
 
 	/**
@@ -35,7 +35,7 @@ class icms_core_Tplset extends core_Object
 	 */
 	function icms_core_Tplset()
 	{
-		$this->core_Object();
+		$this->icms_core_Object();
 		$this->initVar('tplset_id', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('tplset_name', XOBJ_DTYPE_OTHER, null, false);
 		$this->initVar('tplset_desc', XOBJ_DTYPE_TXTBOX, null, false, 255);
@@ -52,7 +52,7 @@ class icms_core_Tplset extends core_Object
  *
  * @author  Kazumi Ono <onokazu@xoops.org>
  */
-class icms_core_TplsetHandler extends core_ObjectHandler
+class icms_core_TplsetHandler extends icms_core_ObjectHandler
 {
 
 	/**

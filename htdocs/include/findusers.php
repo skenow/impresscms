@@ -36,7 +36,7 @@ $name_username = 'uname' . ( @$_REQUEST['multiple'] ? "[]" : "" );
 
 icms_loadLanguageFile('core', 'findusers');
 
-class XoopsRank extends core_Object
+class XoopsRank extends icms_core_Object
 {
 	function __construct() {
 		$this->XoopsRank();
@@ -47,7 +47,7 @@ class XoopsRank extends core_Object
 	 **/
 	function XoopsRank()
 	{
-		$this->core_Object();
+		$this->icms_core_Object();
 		$this->initVar('rank_id', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('rank_title', XOBJ_DTYPE_TXTBOX, null, false);
 		$this->initVar('rank_min', XOBJ_DTYPE_INT, 0);
@@ -57,7 +57,7 @@ class XoopsRank extends core_Object
 	}
 }
 
-class XoopsRankHandler extends core_ObjectHandler
+class XoopsRankHandler extends icms_core_ObjectHandler
 {
 
 	/**
@@ -73,7 +73,7 @@ class XoopsRankHandler extends core_ObjectHandler
 	 * @param   object  $db reference to the DB class object
 	 **/
 	function XoopsRankHandler(&$db) {
-		$this->core_ObjectHandler($db);
+		$this->icms_core_ObjectHandler($db);
 	}
 
 	/**
@@ -172,7 +172,7 @@ class XoUser extends XoopsUser
 	}
 }
 
-class XoUserHandler extends core_ObjectHandler
+class XoUserHandler extends icms_core_ObjectHandler
 {
 	/**
 	 * Constructor for PHP5
@@ -189,7 +189,7 @@ class XoUserHandler extends core_ObjectHandler
 	 * @param   object  $db reference to the DB Class object
 	 **/
 	function XoUserHandler(&$db) {
-		$this->core_ObjectHandler($db);
+		$this->icms_core_ObjectHandler($db);
 	}
 
 	/**

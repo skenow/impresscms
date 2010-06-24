@@ -14,7 +14,7 @@
  */
 
 /**
- * A tree structures with {@link core_Object}s as nodes
+ * A tree structures with {@link icms_core_Object}s as nodes
  *
  * @package		kernel
  * @subpackage	core
@@ -22,7 +22,7 @@
  * @author		Kazumi Ono 	<onokazu@xoops.org>
  * @copyright	(c) 2000-2003 The Xoops Project - www.xoops.org
  */
-class core_ObjectTree {
+class icms_core_ObjectTree {
 
 	/**#@+
 	 * @access	private
@@ -37,12 +37,12 @@ class core_ObjectTree {
 	/**
 	 * Constructor
 	 *
-	 * @param   array      $objectArr  Array of {@link core_Object}s
+	 * @param   array      $objectArr  Array of {@link icms_core_Object}s
 	 * @param   string     $myId       field name of object ID
 	 * @param   string     $parentId   field name of parent object ID
 	 * @param   string     $rootId     field name of root object ID
 	 **/
-	function core_ObjectTree(&$objectArr, $myId, $parentId, $rootId = null)
+	function icms_core_ObjectTree(&$objectArr, $myId, $parentId, $rootId = null)
 	{
 		$this->_objects =& $objectArr;
 		$this->_myId = $myId;

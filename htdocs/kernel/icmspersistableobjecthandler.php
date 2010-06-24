@@ -23,7 +23,7 @@ if (!defined("ICMS_ROOT_PATH")) {
  * @package IcmsPersistableobject
  * @since   1.1
  */
-class IcmsPersistableObjectHandler extends core_ObjectHandler {
+class IcmsPersistableObjectHandler extends icms_core_ObjectHandler {
 
 	var $_itemname;
 
@@ -142,7 +142,7 @@ class IcmsPersistableObjectHandler extends core_ObjectHandler {
 	 */
 	function IcmsPersistableObjectHandler(&$db, $itemname, $keyname, $idenfierName, $summaryName, $modulename) {
 
-		$this->core_ObjectHandler($db);
+		$this->icms_core_ObjectHandler($db);
 
 		$this->_itemname = $itemname;
 		// Todo: Autodect module
