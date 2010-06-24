@@ -243,7 +243,7 @@ class icms_core_ModuleHandler extends icms_core_ObjectHandler
 	/**
 	 * Load some modules
 	 *
-	 * @param   object  $criteria   {@link icms_core_CriteriaElement}
+	 * @param   object  $criteria   {@link icms_criteria_Element}
 	 * @param   boolean $id_as_key  Use the ID as key into the array
 	 * @return  array
 	 **/
@@ -252,7 +252,7 @@ class icms_core_ModuleHandler extends icms_core_ObjectHandler
 		$ret = array();
 		$limit = $start = 0;
 		$sql = "SELECT * FROM ".$this->db->prefix('modules');
-		if(isset($criteria) && is_subclass_of($criteria, 'icms_core_CriteriaElement'))
+		if(isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element'))
 		{
 			$sql .= " ".$criteria->renderWhere();
 			$sql .= " ORDER BY weight ".$criteria->getOrder().", mid ASC";
@@ -281,13 +281,13 @@ class icms_core_ModuleHandler extends icms_core_ObjectHandler
 	/**
 	 * Count some modules
 	 *
-	 * @param   object  $criteria   {@link icms_core_CriteriaElement}
+	 * @param   object  $criteria   {@link icms_criteria_Element}
 	 * @return  int
 	 **/
 	function getCount($criteria = null)
 	{
 		$sql = "SELECT COUNT(*) FROM ".$this->db->prefix('modules');
-		if(isset($criteria) && is_subclass_of($criteria, 'icms_core_CriteriaElement')) {$sql .= " ".$criteria->renderWhere();}
+		if(isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {$sql .= " ".$criteria->renderWhere();}
 		if(!$result = $this->db->query($sql)) {return 0;}
 		list($count) = $this->db->fetchRow($result);
 		return $count;

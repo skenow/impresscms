@@ -281,7 +281,7 @@ class XoopsConfigItemHandler extends icms_core_ObjectHandler
 	/**
 	 * Get configs from the database
 	 *
-	 * @param	object  $criteria   {@link icms_core_CriteriaElement}
+	 * @param	object  $criteria   {@link icms_criteria_Element}
 	 * @param	bool    $id_as_key  return the config's id as key?
 	 * @return	array   Array of {@link XoopsConfigItem} objects
 	 */
@@ -290,7 +290,7 @@ class XoopsConfigItemHandler extends icms_core_ObjectHandler
 		$ret = array();
 		$limit = $start = 0;
 		$sql = 'SELECT * FROM '.$this->db->prefix('config');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_core_CriteriaElement')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
 			$sql .= ' '.$criteria->renderWhere();
 			$sql .= ' ORDER BY conf_order ASC';
 			$limit = $criteria->getLimit();
@@ -316,7 +316,7 @@ class XoopsConfigItemHandler extends icms_core_ObjectHandler
 	/**
 	 * Count configs
 	 *
-	 * @param	object  $criteria   {@link icms_core_CriteriaElement}
+	 * @param	object  $criteria   {@link icms_criteria_Element}
 	 * @return	int     Count of configs matching $criteria
 	 */
 	function getCount($criteria = null)
@@ -324,7 +324,7 @@ class XoopsConfigItemHandler extends icms_core_ObjectHandler
 		$ret = array();
 		$limit = $start = 0;
 		$sql = 'SELECT * FROM '.$this->db->prefix('config');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_core_CriteriaElement')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
 			$sql .= ' '.$criteria->renderWhere();
 		}
 		$result =& $this->db->query($sql);

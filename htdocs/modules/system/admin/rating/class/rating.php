@@ -137,11 +137,11 @@ class SystemRatingHandler extends IcmsPersistableObjectHandler {
 	}
 	function already_rated($item, $itemid, $dirname, $uid){
 
-		$criteria = new icms_core_CriteriaCompo();
-		$criteria->add(new icms_core_Criteria('item',$item ));
-		$criteria->add(new icms_core_Criteria('itemid',$itemid ));
-		$criteria->add(new icms_core_Criteria('dirname', $dirname));
-		$criteria->add(new icms_core_Criteria('user.uid', $uid));
+		$criteria = new icms_criteria_Compo();
+		$criteria->add(new icms_criteria_Item('item',$item ));
+		$criteria->add(new icms_criteria_Item('itemid',$itemid ));
+		$criteria->add(new icms_criteria_Item('dirname', $dirname));
+		$criteria->add(new icms_criteria_Item('user.uid', $uid));
 
 		$ret = $this->getObjects($criteria);
 

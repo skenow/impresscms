@@ -77,9 +77,9 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 		global $icmsConfigUser;
 		$form = new XoopsThemeForm ( constant ( $confcat->getVar ( 'confcat_name' ) ), 'pref_form', 'admin.php?fct=preferences', 'post', true );
 		$config_handler = & xoops_gethandler ( 'config' );
-		$criteria = new icms_core_CriteriaCompo ( );
-		$criteria->add ( new icms_core_Criteria ( 'conf_modid', 0 ) );
-		$criteria->add ( new icms_core_Criteria ( 'conf_catid', $confcat_id ) );
+		$criteria = new icms_criteria_Compo ( );
+		$criteria->add ( new icms_criteria_Item ( 'conf_modid', 0 ) );
+		$criteria->add ( new icms_criteria_Item ( 'conf_catid', $confcat_id ) );
 		$config = $config_handler->getConfigs ( $criteria );
 		$confcount = count ( $config );
 		for($i = 0; $i < $confcount; $i ++) {
@@ -114,7 +114,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 				break;
 				case 'select' :
 					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ),  $config [$i]->getConfValueForOutput () );
-					$options = $config_handler->getConfigOptions ( new icms_core_Criteria ( 'conf_id', $config [$i]->getVar ( 'conf_id' ) ) );
+					$options = $config_handler->getConfigOptions ( new icms_criteria_Item ( 'conf_id', $config [$i]->getVar ( 'conf_id' ) ) );
 					$opcount = count ( $options );
 					for($j = 0; $j < $opcount; $j ++) {
 						$optval = defined ( $options [$j]->getVar ( 'confop_value' ) ) ? constant ( $options [$j]->getVar ( 'confop_value' ) ) : $options [$j]->getVar ( 'confop_value' );
@@ -124,7 +124,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 				break;
 				case 'select_multi' :
 					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput (), 5, true );
-					$options = $config_handler->getConfigOptions ( new icms_core_Criteria ( 'conf_id', $config [$i]->getVar ( 'conf_id' ) ) );
+					$options = $config_handler->getConfigOptions ( new icms_criteria_Item ( 'conf_id', $config [$i]->getVar ( 'conf_id' ) ) );
 					$opcount = count ( $options );
 					for($j = 0; $j < $opcount; $j ++) {
 						$optval = defined ( $options [$j]->getVar ( 'confop_value' ) ) ? constant ( $options [$j]->getVar ( 'confop_value' ) ) : $options [$j]->getVar ( 'confop_value' );
@@ -226,15 +226,15 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 					}
 
 					$module_handler = & xoops_gethandler ( 'module' );
-					$criteria = new icms_core_CriteriaCompo ( new icms_core_Criteria ( 'hasmain', 1 ) );
-					$criteria->add ( new icms_core_Criteria ( 'isactive', 1 ) );
+					$criteria = new icms_criteria_Compo ( new icms_criteria_Item ( 'hasmain', 1 ) );
+					$criteria->add ( new icms_criteria_Item ( 'isactive', 1 ) );
 					$moduleslist = $module_handler->getList ( $criteria, true );
 					$moduleslist ['--'] = _MD_AM_NONE;
 
 					//Adding support to select custom links to be the start page
 					$page_handler = & xoops_gethandler ( 'page' );
-					$criteria = new icms_core_CriteriaCompo ( new icms_core_Criteria ( 'page_status', 1 ) );
-					$criteria->add ( new icms_core_Criteria ( 'page_url', '%*', 'NOT LIKE' ) );
+					$criteria = new icms_criteria_Compo ( new icms_criteria_Item ( 'page_status', 1 ) );
+					$criteria->add ( new icms_criteria_Item ( 'page_url', '%*', 'NOT LIKE' ) );
 					$pagelist = $page_handler->getList ( $criteria );
 
 					$list = array_merge ( $moduleslist, $pagelist );
@@ -267,7 +267,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 				break;
 				case 'module_cache' :
 					$module_handler = & xoops_gethandler ( 'module' );
-					$modules = $module_handler->getObjects ( new icms_core_Criteria ( 'hasmain', 1 ), true );
+					$modules = $module_handler->getObjects ( new icms_criteria_Item ( 'hasmain', 1 ), true );
 					$currrent_val = $config [$i]->getConfValueForOutput ();
 					$cache_options = array ('0' => _NOCACHE, '30' => sprintf ( _SECONDS, 30 ), '60' => _MINUTE, '300' => sprintf ( _MINUTES, 5 ), '1800' => sprintf ( _MINUTES, 30 ), '3600' => _HOUR, '18000' => sprintf ( _HOURS, 5 ), '86400' => _DAY, '259200' => sprintf ( _DAYS, 3 ), '604800' => _WEEK );
 					if (count ( $modules ) > 0) {
@@ -365,7 +365,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 			header ( 'Location: admin.php?fct=preferences' );
 			exit ();
 		}
-		$config = $config_handler->getConfigs ( new icms_core_Criteria ( 'conf_modid', $mod ) );
+		$config = $config_handler->getConfigs ( new icms_criteria_Item ( 'conf_modid', $mod ) );
 		$count = count ( $config );
 		if ($count < 1) {
 			redirect_header ( 'admin.php?fct=preferences', 1 );
@@ -413,7 +413,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 				case 'select' :
 					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
 
-					$options = & $config_handler->getConfigOptions ( new icms_core_Criteria ( 'conf_id', $config [$i]->getVar ( 'conf_id' ) ) );
+					$options = & $config_handler->getConfigOptions ( new icms_criteria_Item ( 'conf_id', $config [$i]->getVar ( 'conf_id' ) ) );
 					$opcount = count ( $options );
 					for($j = 0; $j < $opcount; $j ++) {
 						$optval = defined ( $options [$j]->getVar ( 'confop_value' ) ) ? constant ( $options [$j]->getVar ( 'confop_value' ) ) : $options [$j]->getVar ( 'confop_value' );
@@ -423,7 +423,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 				break;
 				case 'select_multi' :
 					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput (), 5, true );
-					$options = & $config_handler->getConfigOptions ( new icms_core_Criteria ( 'conf_id', $config [$i]->getVar ( 'conf_id' ) ) );
+					$options = & $config_handler->getConfigOptions ( new icms_criteria_Item ( 'conf_id', $config [$i]->getVar ( 'conf_id' ) ) );
 					$opcount = count ( $options );
 					for($j = 0; $j < $opcount; $j ++) {
 						$optval = defined ( $options [$j]->getVar ( 'confop_value' ) ) ? constant ( $options [$j]->getVar ( 'confop_value' ) ) : $options [$j]->getVar ( 'confop_value' );
@@ -598,7 +598,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 
 							// generate image cache files from image binary data, save them under cache/
 							$image_handler = & xoops_gethandler ( 'imagesetimg' );
-							$imagefiles = & $image_handler->getObjects ( new icms_core_Criteria ( 'tplset_name', $newtplset ), true );
+							$imagefiles = & $image_handler->getObjects ( new icms_criteria_Item ( 'tplset_name', $newtplset ), true );
 							foreach ( array_keys ( $imagefiles ) as $i ) {
 								if (! $fp = fopen ( XOOPS_CACHE_PATH . '/' . $newtplset . '_' . $imagefiles [$i]->getVar ( 'imgsetimg_file' ), 'wb' )) {
 								} else {

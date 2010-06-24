@@ -166,7 +166,7 @@ class XoopsImagesetHandler extends icms_core_ObjectHandler
 
 	/**
 	 * retrieve array of {@link XoopsImageset}s meeting certain conditions
-	 * @param object $criteria {@link icms_core_CriteriaElement} with conditions for the imagesets
+	 * @param object $criteria {@link icms_criteria_Element} with conditions for the imagesets
 	 * @param bool $id_as_key should the imageset's imgset_id be the key for the returned array?
 	 * @return array {@link XoopsImageset}s matching the conditions
 	 **/
@@ -175,7 +175,7 @@ class XoopsImagesetHandler extends icms_core_ObjectHandler
 		$ret = array();
 		$limit = $start = 0;
 		$sql = 'SELECT DISTINCT i.* FROM '.$this->db->prefix('imgset'). ' i LEFT JOIN '.$this->db->prefix('imgset_tplset_link'). ' l ON l.imgset_id=i.imgset_id';
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_core_CriteriaElement')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
 			$sql .= ' '.$criteria->renderWhere();
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
@@ -252,12 +252,12 @@ class XoopsImagesetHandler extends icms_core_ObjectHandler
 	 **/
 	function getList($refid = null, $tplset = null)
 	{
-		$criteria = new icms_core_CriteriaCompo();
+		$criteria = new icms_criteria_Compo();
 		if (isset($refid)) {
-			$criteria->add(new icms_core_Criteria('imgset_refid', (int) ($refid)));
+			$criteria->add(new icms_criteria_Item('imgset_refid', (int) ($refid)));
 		}
 		if (isset($tplset)) {
-			$criteria->add(new icms_core_Criteria('tplset_name', $tplset));
+			$criteria->add(new icms_criteria_Item('tplset_name', $tplset));
 		}
 		$imgsets =& $this->getObjects($criteria, true);
 		$ret = array();

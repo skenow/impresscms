@@ -69,7 +69,7 @@ class IcmsPersistableMemberHandler extends icms_core_MemberHandler{
 		$newuser = false;
 		$i = 0;
 		while ($newuser == false) {
-		$crit = new icms_core_Criteria('uname', $usernames[$i]);
+		$crit = new icms_criteria_Item('uname', $usernames[$i]);
 		$count = $this->getUserCount($crit);
 		if ($count == 0) {
 		$newuser = true;

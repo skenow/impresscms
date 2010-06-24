@@ -9,7 +9,7 @@
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_core_Criteria extends icms_core_CriteriaElement {
+class icms_criteria_Item extends icms_criteria_Element {
 
 	/**
 	 * @var	string

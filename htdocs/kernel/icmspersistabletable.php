@@ -137,7 +137,7 @@ class IcmsPersistableTable {
 		$this->_objectHandler = $objectHandler;
 
 		if (!$criteria) {
-			$criteria = new icms_core_CriteriaCompo();
+			$criteria = new icms_criteria_Compo();
 		}
 		$this->_criteria = $criteria;
 		$this->_actions = $actions;
@@ -571,7 +571,7 @@ class IcmsPersistableTable {
 
 					icms_setCookieVar($_SERVER['PHP_SELF'] . '_filtersel2', $this->_filtersel2);
 					if ($this->_filtersel2 != 'default') {
-						$this->_criteria->add(new icms_core_Criteria($this->_filtersel, $this->_filtersel2));
+						$this->_criteria->add(new icms_criteria_Item($this->_filtersel, $this->_filtersel2));
 					}
 				}
 			}
@@ -579,13 +579,13 @@ class IcmsPersistableTable {
 		// Check if we have a quicksearch
 
 		if (isset($_POST['quicksearch_' . $this->_id]) && $_POST['quicksearch_' . $this->_id] != '') {
-			$quicksearch_criteria = new icms_core_CriteriaCompo();
+			$quicksearch_criteria = new icms_criteria_Compo();
 			if (is_array($this->_quickSearch['fields'])) {
 				foreach($this->_quickSearch['fields'] as $v) {
-					$quicksearch_criteria->add(new icms_core_Criteria($v, '%' . $_POST['quicksearch_' . $this->_id] . '%', 'LIKE'), 'OR');
+					$quicksearch_criteria->add(new icms_criteria_Item($v, '%' . $_POST['quicksearch_' . $this->_id] . '%', 'LIKE'), 'OR');
 				}
 			} else {
-				$quicksearch_criteria->add(new icms_core_Criteria($this->_quickSearch['fields'], '%' . $_POST['quicksearch_' . $this->_id] . '%', 'LIKE'));
+				$quicksearch_criteria->add(new icms_criteria_Item($this->_quickSearch['fields'], '%' . $_POST['quicksearch_' . $this->_id] . '%', 'LIKE'));
 			}
 			$this->_criteria->add($quicksearch_criteria);
 		}

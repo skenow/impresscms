@@ -106,8 +106,8 @@ class MastopFormSelectImage extends XoopsFormSelect
 		$image_handler = xoops_gethandler('image');
 		foreach ($catlist as $k=>$v) {
 			$this->_optgroupsID[$v] = $k;
-			$criteria = new icms_core_CriteriaCompo(new icms_core_Criteria('imgcat_id', $k));
-			$criteria->add(new icms_core_Criteria('image_display', 1));
+			$criteria = new icms_criteria_Compo(new icms_criteria_Item('imgcat_id', $k));
+			$criteria->add(new icms_criteria_Item('image_display', 1));
 			$total = $image_handler->getCount($criteria);
 			if ($total > 0) {
 				$imgcat =& $imgcat_handler->get($k);

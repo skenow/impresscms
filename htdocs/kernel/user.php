@@ -336,7 +336,7 @@ class XoopsUser extends icms_core_Object
 		if(!isset($this->_isOnline))
 		{
 			$onlinehandler =& xoops_gethandler('online');
-			$this->_isOnline = ($onlinehandler->getCount(new icms_core_Criteria('online_uid', $this->getVar('uid'))) > 0) ? true : false;
+			$this->_isOnline = ($onlinehandler->getCount(new icms_criteria_Item('online_uid', $this->getVar('uid'))) > 0) ? true : false;
 		}
 		return $this->_isOnline;
 	}
@@ -694,7 +694,7 @@ class XoopsUserHandler extends icms_core_ObjectHandler
 	/**
 	 * retrieve users from the database
 	 *
-	 * @param object $criteria {@link icms_core_CriteriaElement} conditions to be met
+	 * @param object $criteria {@link icms_criteria_Element} conditions to be met
 	 * @param bool $id_as_key use the UID as key for the array?
 	 * @return array array of {@link XoopsUser} objects
 	 */
@@ -703,7 +703,7 @@ class XoopsUserHandler extends icms_core_ObjectHandler
 		$ret = array();
 		$limit = $start = 0;
 		$sql = "SELECT * FROM ".$this->db->prefix('users');
-		if(isset($criteria) && is_subclass_of($criteria, 'icms_core_CriteriaElement'))
+		if(isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element'))
 		{
 			$sql .= " ".$criteria->renderWhere();
 			if($criteria->getSort() != '') {$sql .= " ORDER BY ".$criteria->getSort()." ".$criteria->getOrder();}
@@ -729,13 +729,13 @@ class XoopsUserHandler extends icms_core_ObjectHandler
 	/**
 	 * count users matching a condition
 	 *
-	 * @param object $criteria {@link icms_core_CriteriaElement} to match
+	 * @param object $criteria {@link icms_criteria_Element} to match
 	 * @return int count of users
 	 */
 	function getCount($criteria = null)
 	{
 		$sql = 'SELECT COUNT(*) FROM '.$this->db->prefix('users');
-		if(isset($criteria) && is_subclass_of($criteria, 'icms_core_CriteriaElement')) {$sql .= ' '.$criteria->renderWhere();}
+		if(isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {$sql .= ' '.$criteria->renderWhere();}
 		$result = $this->db->query($sql);
 		if(!$result) {return 0;}
 		list($count) = $this->db->fetchRow($result);
@@ -745,7 +745,7 @@ class XoopsUserHandler extends icms_core_ObjectHandler
 	/**
 	 * delete users matching a set of conditions
 	 *
-	 * @param object $criteria {@link icms_core_CriteriaElement}
+	 * @param object $criteria {@link icms_criteria_Element}
 	 * @return bool FALSE if deletion failed
 	 */
 	function deleteAll($criteria = null)
@@ -753,7 +753,7 @@ class XoopsUserHandler extends icms_core_ObjectHandler
 		$pass = substr ( md5 ( time () ), 0, 8 );
 		$salt = substr ( md5 ( time () * 2 ), 0, 12 );
 		$sql = sprintf("UPDATE %s SET level= '-1', pass = %s, salt = %s", $this->db->prefix('users'), $pass, $salt);
-		if(isset($criteria) && is_subclass_of($criteria, 'icms_core_CriteriaElement')) {$sql .= " ".$criteria->renderWhere();}
+		if(isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {$sql .= " ".$criteria->renderWhere();}
 		if(!$result = $this->db->query($sql)) {return false;}
 		return true;
 	}
@@ -763,7 +763,7 @@ class XoopsUserHandler extends icms_core_ObjectHandler
 	 *
 	 * @param   string  $fieldname  Name of the field
 	 * @param   string  $fieldvalue Value to write
-	 * @param   object  $criteria   {@link icms_core_CriteriaElement}
+	 * @param   object  $criteria   {@link icms_criteria_Element}
 	 *
 	 * @return  bool
 	 **/
@@ -771,7 +771,7 @@ class XoopsUserHandler extends icms_core_ObjectHandler
 	{
 		$set_clause = is_numeric($fieldvalue) ? $fieldname.' = '.$fieldvalue : $fieldname.' = '.$this->db->quoteString($fieldvalue);
 		$sql = 'UPDATE '.$this->db->prefix('users').' SET '.$set_clause;
-		if(isset($criteria) && is_subclass_of($criteria, 'icms_core_CriteriaElement')) {$sql .= ' '.$criteria->renderWhere();}
+		if(isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {$sql .= ' '.$criteria->renderWhere();}
 		if(!$result = $this->db->query($sql)) {return false;}
 		return true;
 	}

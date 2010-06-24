@@ -226,7 +226,7 @@ class XoopsImageHandler extends icms_core_ObjectHandler
 	/**
 	 * Load {@link XoopsImage}s from the database
 	 *
-	 * @param   object  $criteria   {@link icms_core_CriteriaElement}
+	 * @param   object  $criteria   {@link icms_criteria_Element}
 	 * @param   boolean $id_as_key  Use the ID as key into the array
 	 * @param   boolean $getbinary
 	 * @return  array   Array of {@link XoopsImage} objects
@@ -240,7 +240,7 @@ class XoopsImageHandler extends icms_core_ObjectHandler
 		} else {
 			$sql = "SELECT * FROM ".$this->db->prefix('image');
 		}
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_core_CriteriaElement')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
 			$sql .= " ".$criteria->renderWhere();
 			$sort = !in_array($criteria->getSort(), array('image_id', 'image_created', 'image_mimetype', 'image_display', 'image_weight')) ? 'image_weight' : $criteria->getSort();
 			$sql .= " ORDER BY ".$sort." ".$criteria->getOrder();
@@ -267,13 +267,13 @@ class XoopsImageHandler extends icms_core_ObjectHandler
 	/**
 	 * Count some images
 	 *
-	 * @param   object  $criteria   {@link icms_core_CriteriaElement}
+	 * @param   object  $criteria   {@link icms_criteria_Element}
 	 * @return  int
 	 **/
 	function getCount($criteria = null)
 	{
 		$sql = 'SELECT COUNT(*) FROM '.$this->db->prefix('image');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_core_CriteriaElement')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
 			$sql .= ' '.$criteria->renderWhere();
 		}
 		if (!$result =& $this->db->query($sql)) {
@@ -292,9 +292,9 @@ class XoopsImageHandler extends icms_core_ObjectHandler
 	 **/
 	function getList($imgcat_id, $image_display = null)
 	{
-		$criteria = new icms_core_CriteriaCompo(new icms_core_Criteria('imgcat_id', (int) ($imgcat_id)));
+		$criteria = new icms_criteria_Compo(new icms_criteria_Item('imgcat_id', (int) ($imgcat_id)));
 		if (isset($image_display)) {
-			$criteria->add(new icms_core_Criteria('image_display', (int) ($image_display)));
+			$criteria->add(new icms_criteria_Item('image_display', (int) ($image_display)));
 		}
 		$images =& $this->getObjects($criteria, false, true);
 		$ret = array();

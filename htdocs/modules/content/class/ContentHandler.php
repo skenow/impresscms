@@ -135,12 +135,12 @@ class mod_content_ContentHandler extends IcmsPersistableObjectHandler {
 	 * @param int $year of contents to display
 	 * @param int $month of contents to display
 	 * @param int $content_id ID of a single content to retrieve
-	 * @return icms_core_CriteriaCompo $criteria
+	 * @return icms_criteria_Compo $criteria
 	 */
 	function getContentsCriteria($start = 0, $limit = 0, $content_uid = false, $content_tags=false, $content_id = false,  $content_pid = false, $order = 'content_published_date', $sort = 'DESC') {
 		global $xoopsUser;
 
-		$criteria = new icms_core_CriteriaCompo ( );
+		$criteria = new icms_criteria_Compo ( );
 		if ($start) {
 			$criteria->setStart ( $start );
 		}
@@ -150,26 +150,26 @@ class mod_content_ContentHandler extends IcmsPersistableObjectHandler {
 		$criteria->setSort ( $order );
 		$criteria->setOrder ( $sort );
 
-		$criteria->add ( new icms_core_Criteria ( 'content_status', CONTENT_CONTENT_STATUS_PUBLISHED ) );
+		$criteria->add ( new icms_criteria_Item ( 'content_status', CONTENT_CONTENT_STATUS_PUBLISHED ) );
 
 		if ($content_uid) {
-			$criteria->add ( new icms_core_Criteria ( 'content_uid', $content_uid ) );
+			$criteria->add ( new icms_criteria_Item ( 'content_uid', $content_uid ) );
 		}
 
 		if ($content_tags){
-			$criteria->add ( new icms_core_Criteria ( 'content_tags', '%'.$content_tags.'%', 'LIKE' ) );
+			$criteria->add ( new icms_criteria_Item ( 'content_tags', '%'.$content_tags.'%', 'LIKE' ) );
 		}
 
 		if ($content_id) {
-			$crit = new icms_core_CriteriaCompo(new icms_core_Criteria('short_url', $content_id,'LIKE'));
+			$crit = new icms_criteria_Compo(new icms_criteria_Item('short_url', $content_id,'LIKE'));
 			$alt_content_id = str_replace('-',' ',$content_id);
-			$crit->add(new icms_core_Criteria('short_url', $alt_content_id),'OR'); //Added for backward compatiblity in case short_url contains spaces instead of dashes.
-			$crit->add(new icms_core_Criteria('content_id', $content_id),'OR');
+			$crit->add(new icms_criteria_Item('short_url', $alt_content_id),'OR'); //Added for backward compatiblity in case short_url contains spaces instead of dashes.
+			$crit->add(new icms_criteria_Item('content_id', $content_id),'OR');
 			$criteria->add($crit);
 		}
 
 		if ($content_pid !== false){
-			$criteria->add ( new icms_core_Criteria ( 'content_pid', $content_pid ) );
+			$criteria->add ( new icms_criteria_Item ( 'content_pid', $content_pid ) );
 		}
 		return $criteria;
 	}
@@ -247,26 +247,26 @@ class mod_content_ContentHandler extends IcmsPersistableObjectHandler {
 	 * @return array array of contents
 	 */
 	function getContentsForSearch($queryarray, $andor, $limit, $offset, $userid) {
-		$criteria = new icms_core_CriteriaCompo ( );
+		$criteria = new icms_criteria_Compo ( );
 
 		$criteria->setStart ( $offset );
 		$criteria->setLimit ( $limit );
 
 		if ($userid != 0) {
-			$criteria->add ( new icms_core_Criteria ( 'content_uid', $userid ) );
+			$criteria->add ( new icms_criteria_Item ( 'content_uid', $userid ) );
 		}
 		if ($queryarray) {
-			$criteriaKeywords = new icms_core_CriteriaCompo ( );
+			$criteriaKeywords = new icms_criteria_Compo ( );
 			for($i = 0; $i < count ( $queryarray ); $i ++) {
-				$criteriaKeyword = new icms_core_CriteriaCompo ( );
-				$criteriaKeyword->add ( new icms_core_Criteria ( 'content_title', '%' . $queryarray [$i] . '%', 'LIKE' ), 'OR' );
-				$criteriaKeyword->add ( new icms_core_Criteria ( 'content_body', '%' . $queryarray [$i] . '%', 'LIKE' ), 'OR' );
+				$criteriaKeyword = new icms_criteria_Compo ( );
+				$criteriaKeyword->add ( new icms_criteria_Item ( 'content_title', '%' . $queryarray [$i] . '%', 'LIKE' ), 'OR' );
+				$criteriaKeyword->add ( new icms_criteria_Item ( 'content_body', '%' . $queryarray [$i] . '%', 'LIKE' ), 'OR' );
 				$criteriaKeywords->add ( $criteriaKeyword, $andor );
 				unset ( $criteriaKeyword );
 			}
 			$criteria->add ( $criteriaKeywords );
 		}
-		$criteria->add ( new icms_core_Criteria ( 'content_status', CONTENT_CONTENT_STATUS_PUBLISHED ) );
+		$criteria->add ( new icms_criteria_Item ( 'content_status', CONTENT_CONTENT_STATUS_PUBLISHED ) );
 		return $this->getObjects ( $criteria, true, false );
 	}
 
@@ -323,7 +323,7 @@ class mod_content_ContentHandler extends IcmsPersistableObjectHandler {
 	 */
 	function getContentsSubsCount($content_id = 0) {
 		$criteria = $this->getContentsCriteria ();
-		$criteria->add ( new icms_core_Criteria ( 'content_pid', $content_id ) );
+		$criteria->add ( new icms_criteria_Item ( 'content_pid', $content_id ) );
 		return $this->getCount ( $criteria );
 	}
 
@@ -334,9 +334,9 @@ class mod_content_ContentHandler extends IcmsPersistableObjectHandler {
 	 */
 	function getContentSubs($content_id = 0, $toarray=false) {
 		$criteria = $this->getContentsCriteria();
-		$criteria->add( new icms_core_Criteria ( 'content_pid', $content_id ) );
-		$crit = new icms_core_CriteriaCompo(new icms_core_Criteria('content_visibility', 2));
-		$crit->add(new icms_core_Criteria('content_visibility', 3),'OR');
+		$criteria->add( new icms_criteria_Item ( 'content_pid', $content_id ) );
+		$crit = new icms_criteria_Compo(new icms_criteria_Item('content_visibility', 2));
+		$crit->add(new icms_criteria_Item('content_visibility', 3),'OR');
 		$criteria->add($crit);
 		$contents = $this->getObjects($criteria);
 		if (!$toarray){
@@ -355,10 +355,10 @@ class mod_content_ContentHandler extends IcmsPersistableObjectHandler {
 
 
 	function getList($content_status = null) {
-		$criteria = new icms_core_CriteriaCompo ( );
+		$criteria = new icms_criteria_Compo ( );
 
 		if (isset ( $content_status )) {
-			$criteria->add ( new icms_core_Criteria ( 'content_status', (int) ( $content_status ) ) );
+			$criteria->add ( new icms_criteria_Item ( 'content_status', (int) ( $content_status ) ) );
 		}
 		$contents = & $this->getObjects ( $criteria, true );
 		foreach ( array_keys ( $contents ) as $i ) {
@@ -369,24 +369,24 @@ class mod_content_ContentHandler extends IcmsPersistableObjectHandler {
 
 
 	function getContentList($groups = array(), $perm = 'content_read', $status = null, $content_id = null, $showNull = true) {
-		$criteria = new icms_core_CriteriaCompo ( );
+		$criteria = new icms_criteria_Compo ( );
 		if (is_array ( $groups ) && ! empty ( $groups )) {
-			$criteriaTray = new icms_core_CriteriaCompo ( );
+			$criteriaTray = new icms_criteria_Compo ( );
 			foreach ( $groups as $gid ) {
-				$criteriaTray->add ( new icms_core_Criteria ( 'gperm_groupid', $gid ), 'OR' );
+				$criteriaTray->add ( new icms_criteria_Item ( 'gperm_groupid', $gid ), 'OR' );
 			}
 			$criteria->add ( $criteriaTray );
 			if ($perm == 'content_read' || $perm == 'content_admin') {
-				$criteria->add ( new icms_core_Criteria ( 'gperm_name', $perm ) );
-				$criteria->add ( new icms_core_Criteria ( 'gperm_modid', 1 ) );
+				$criteria->add ( new icms_criteria_Item ( 'gperm_name', $perm ) );
+				$criteria->add ( new icms_criteria_Item ( 'gperm_modid', 1 ) );
 			}
 		}
 		if (isset ( $status )) {
-			$criteria->add ( new icms_core_Criteria ( 'content_status', (int) ( $status ) ) );
+			$criteria->add ( new icms_criteria_Item ( 'content_status', (int) ( $status ) ) );
 		}
 		if (is_null ( $content_id ))
 		$content_id = 0;
-		$criteria->add ( new icms_core_Criteria ( 'content_pid', $content_id ) );
+		$criteria->add ( new icms_criteria_Item ( 'content_pid', $content_id ) );
 
 		$contents = & $this->getObjects ( $criteria, true );
 		$ret = array ( );
@@ -406,7 +406,7 @@ class mod_content_ContentHandler extends IcmsPersistableObjectHandler {
 
 
 	function makeLink($content,$onlyUrl=false) {
-		$count = $this->getCount ( new icms_core_Criteria ( "short_url", $content->getVar ( "short_url" ) ) );
+		$count = $this->getCount ( new icms_criteria_Item ( "short_url", $content->getVar ( "short_url" ) ) );
 
 		if ($count > 1) {
 			return $content->getVar ( 'content_id' );
@@ -419,7 +419,7 @@ class mod_content_ContentHandler extends IcmsPersistableObjectHandler {
 	function hasPage($user) {
 		$gperm_handler = & xoops_gethandler ( 'groupperm' );
 		$groups = is_object ( $user ) ? $user->getGroups () : XOOPS_GROUP_ANONYMOUS;
-		$criteria = new icms_core_CriteriaCompo ( new icms_core_Criteria ( 'content_status', 1 ) );
+		$criteria = new icms_criteria_Compo ( new icms_criteria_Item ( 'content_status', 1 ) );
 		$cont_arr = $this->getObjects ( $criteria );
 		if (count ( $cont_arr ) > 0) {
 			$perm = array ( );
@@ -560,8 +560,8 @@ class mod_content_ContentHandler extends IcmsPersistableObjectHandler {
 			$url = str_replace(ICMS_URL.'/','',$obj->handler->_moduleUrl.$obj->handler->_itemname.'.php?page='.$seo);
 
 			$symlink_handler = icms_getModuleHandler('pages','system');
-			$criteria = new icms_core_CriteriaCompo(new icms_core_Criteria('page_url','%'.$seo,'LIKE'));
-			$criteria->add(new icms_core_Criteria('page_moduleid',$module->mid()));
+			$criteria = new icms_criteria_Compo(new icms_criteria_Item('page_url','%'.$seo,'LIKE'));
+			$criteria->add(new icms_criteria_Item('page_moduleid',$module->mid()));
 			$ct = $symlink_handler->getObjects($criteria);
 			if (count($ct) <= 0){
 				$symlink = $symlink_handler->create(true);
@@ -590,8 +590,8 @@ class mod_content_ContentHandler extends IcmsPersistableObjectHandler {
 		$module = $module_handler->getByDirname('content');
 
 		$symlink_handler = icms_getModuleHandler('pages','system');
-		$criteria = new icms_core_CriteriaCompo(new icms_core_Criteria('page_url',$url));
-		$criteria->add(new icms_core_Criteria('page_moduleid',$module->mid()));
+		$criteria = new icms_criteria_Compo(new icms_criteria_Item('page_url',$url));
+		$criteria->add(new icms_criteria_Item('page_moduleid',$module->mid()));
 		$symlink_handler->deleteAll($criteria);
 
 		return true;

@@ -38,8 +38,8 @@ class IcmsPreloadUserInfo extends icms_core_Preloaditem {
 				}
 			}
 			$pm_handler = & xoops_gethandler ( 'privmessage' );
-			$criteria = new icms_core_CriteriaCompo ( new icms_core_Criteria ( 'read_msg', 0 ) );
-			$criteria->add ( new icms_core_Criteria ( 'to_userid', $xoopsUser->getVar ( 'uid' ) ) );
+			$criteria = new icms_criteria_Compo ( new icms_criteria_Item ( 'read_msg', 0 ) );
+			$criteria->add ( new icms_criteria_Item ( 'to_userid', $xoopsUser->getVar ( 'uid' ) ) );
 			$user ['new_messages'] = $pm_handler->getCount ( $criteria );
 
 			$xoopsTpl->assign ( 'user', $user );

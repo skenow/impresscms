@@ -35,7 +35,7 @@ elseif(($password !== '') && (strlen($password) < $icmsConfigUser['minpass'])) {
 
 $myts =& icms_core_Textsanitizer::getInstance();
 $member_handler =& xoops_gethandler('member');
-$getuser =& $member_handler->getUsers(new icms_core_Criteria('email', $myts->addSlashes($email)));
+$getuser =& $member_handler->getUsers(new icms_criteria_Item('email', $myts->addSlashes($email)));
 
 if(empty($getuser)) {redirect_header('user.php',2,_US_SORRYNOTFOUND);}
 else

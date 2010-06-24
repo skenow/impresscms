@@ -158,7 +158,7 @@ class XoopsConfigOptionHandler extends icms_core_ObjectHandler
 	/**
 	 * Get some {@link XoopsConfigOption}s
 	 *
-	 * @param	object  $criteria   {@link icms_core_CriteriaElement}
+	 * @param	object  $criteria   {@link icms_criteria_Element}
 	 * @param	bool    $id_as_key  Use the IDs as array-keys?
 	 *
 	 * @return	array   Array of {@link XoopsConfigOption}s
@@ -168,7 +168,7 @@ class XoopsConfigOptionHandler extends icms_core_ObjectHandler
 		$ret = array();
 		$limit = $start = 0;
 		$sql = 'SELECT * FROM '.$this->db->prefix('configoption');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_core_CriteriaElement')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
 			$sql .= ' '.$criteria->renderWhere().' ORDER BY confop_id '.$criteria->getOrder();
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();

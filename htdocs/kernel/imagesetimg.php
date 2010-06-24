@@ -165,7 +165,7 @@ class XoopsImagesetimgHandler extends icms_core_ObjectHandler
 
 	/**
 	 * retrieve array of {@link XoopsImagesetimg}s meeting certain conditions
-	 * @param object $criteria {@link icms_core_CriteriaElement} with conditions for the imageset images
+	 * @param object $criteria {@link icms_criteria_Element} with conditions for the imageset images
 	 * @param bool $id_as_key should the imagesetimg's imgsetimg_id be the key for the returned array?
 	 * @return array {@link XoopsImagesetimg}s matching the conditions
 	 **/
@@ -174,7 +174,7 @@ class XoopsImagesetimgHandler extends icms_core_ObjectHandler
 		$ret = array();
 		$limit = $start = 0;
 		$sql = 'SELECT DISTINCT i.* FROM '.$this->db->prefix('imgsetimg'). ' i LEFT JOIN '.$this->db->prefix('imgset_tplset_link'). ' l ON l.imgset_id=i.imgsetimg_imgset LEFT JOIN '.$this->db->prefix('imgset').' s ON s.imgset_id=l.imgset_id';
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_core_CriteriaElement')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
 			$sql .= ' '.$criteria->renderWhere();
 			$sql .= ' ORDER BY imgsetimg_id '.$criteria->getOrder();
 			$limit = $criteria->getLimit();
@@ -200,13 +200,13 @@ class XoopsImagesetimgHandler extends icms_core_ObjectHandler
 	/**
 	 * Count some imageset images
 	 *
-	 * @param   object  $criteria   {@link icms_core_CriteriaElement}
+	 * @param   object  $criteria   {@link icms_criteria_Element}
 	 * @return  int number of imageset images
 	 **/
 	function getCount($criteria = null)
 	{
 		$sql = 'SELECT COUNT(i.imgsetimg_id) FROM '.$this->db->prefix('imgsetimg'). ' i LEFT JOIN '.$this->db->prefix('imgset_tplset_link'). ' l ON l.imgset_id=i.imgsetimg_imgset';
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_core_CriteriaElement')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
 			$sql .= ' '.$criteria->renderWhere().' GROUP BY i.imgsetimg_id';
 		}
 		if (!$result =& $this->db->query($sql)) {
@@ -225,7 +225,7 @@ class XoopsImagesetimgHandler extends icms_core_ObjectHandler
 	 **/
 	function getByImageset($imgset_id, $id_as_key = false)
 	{
-		return $this->getObjects(new icms_core_Criteria('imgsetimg_imgset', (int) ($imgset_id)), $id_as_key);
+		return $this->getObjects(new icms_criteria_Item('imgsetimg_imgset', (int) ($imgset_id)), $id_as_key);
 	}
 
 	/**
@@ -237,8 +237,8 @@ class XoopsImagesetimgHandler extends icms_core_ObjectHandler
 	 **/
 	function imageExists($filename, $imgset_id)
 	{
-		$criteria = new icms_core_CriteriaCompo(new icms_core_Criteria('imgsetimg_file', $filename));
-		$criteria->add(new icms_core_Criteria('imgsetimg_imgset', (int) ($imgset_id)));
+		$criteria = new icms_criteria_Compo(new icms_criteria_Item('imgsetimg_file', $filename));
+		$criteria->add(new icms_criteria_Item('imgsetimg_imgset', (int) ($imgset_id)));
 		if ($this->getCount($criteria) > 0) {
 			return true;
 		}

@@ -84,7 +84,7 @@ switch ($xoopsAuth->step) {
 		}
 
 		// checking if this uname is available
-		$criteria = new icms_core_CriteriaCompo(new icms_core_Criteria('uname', $uname));
+		$criteria = new icms_criteria_Compo(new icms_criteria_Item('uname', $uname));
 		$user_handler = & xoops_gethandler('user');
 		$users = & $user_handler->getObjects($criteria, false);
 

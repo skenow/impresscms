@@ -188,7 +188,7 @@ class icms_core_TplsetHandler extends icms_core_ObjectHandler
 
 	/**
 	 * retrieve array of {@link icms_core_Tplset}s meeting certain conditions
-	 * @param object $criteria {@link icms_core_CriteriaElement} with conditions for the blocks
+	 * @param object $criteria {@link icms_criteria_Element} with conditions for the blocks
 	 * @param bool $id_as_key should the tplfile's tpl_id be the key for the returned array?
 	 * @return array {@link icms_core_Tplset}s matching the conditions
 	 **/
@@ -197,7 +197,7 @@ class icms_core_TplsetHandler extends icms_core_ObjectHandler
 		$ret = array();
 		$limit = $start = 0;
 		$sql = 'SELECT * FROM '.$this->db->prefix('tplset');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_core_CriteriaElement')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
 			$sql .= ' '.$criteria->renderWhere().' ORDER BY tplset_id';
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
@@ -222,13 +222,13 @@ class icms_core_TplsetHandler extends icms_core_ObjectHandler
 	/**
 	 * Count some tplfilesets
 	 *
-	 * @param   object  $criteria   {@link icms_core_CriteriaElement}
+	 * @param   object  $criteria   {@link icms_criteria_Element}
 	 * @return  int $count number of template filesets that match the criteria
 	 **/
 	function getCount($criteria = null)
 	{
 		$sql = 'SELECT COUNT(*) FROM '.$this->db->prefix('tplset');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_core_CriteriaElement')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
 			$sql .= ' '.$criteria->renderWhere();
 		}
 		if (!$result =& $this->db->query($sql)) {

@@ -157,7 +157,7 @@ class XoopsGroupHandler extends icms_core_ObjectHandler
 	/**
 	 * retrieve groups from the database
 	 *
-	 * @param object $criteria {@link icms_core_CriteriaElement} with conditions for the groups
+	 * @param object $criteria {@link icms_criteria_Element} with conditions for the groups
 	 * @param bool $id_as_key should the groups' IDs be used as keys for the associative array?
 	 * @return mixed Array of groups
 	 */
@@ -166,7 +166,7 @@ class XoopsGroupHandler extends icms_core_ObjectHandler
 		$ret = array();
 		$limit = $start = 0;
 		$sql = "SELECT * FROM ".$this->db->prefix('groups');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_core_CriteriaElement')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
 			$sql .= " ".$criteria->renderWhere();
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
@@ -331,7 +331,7 @@ class XoopsMembershipHandler extends icms_core_ObjectHandler
 	/**
 	 * retrieve memberships from the database
 	 *
-	 * @param object $criteria {@link icms_core_CriteriaElement} conditions to meet
+	 * @param object $criteria {@link icms_criteria_Element} conditions to meet
 	 * @param bool $id_as_key should the ID be used as the array's key?
 	 * @return array array of references
 	 */
@@ -340,7 +340,7 @@ class XoopsMembershipHandler extends icms_core_ObjectHandler
 		$ret = array();
 		$limit = $start = 0;
 		$sql = "SELECT * FROM ".$this->db->prefix('groups_users_link');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_core_CriteriaElement')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
 			$sql .= " ".$criteria->renderWhere();
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
@@ -365,13 +365,13 @@ class XoopsMembershipHandler extends icms_core_ObjectHandler
 	/**
 	 * count how many memberships meet the conditions
 	 *
-	 * @param object $criteria {@link icms_core_CriteriaElement} conditions to meet
+	 * @param object $criteria {@link icms_criteria_Element} conditions to meet
 	 * @return int
 	 */
 	function getCount($criteria = null)
 	{
 		$sql = "SELECT COUNT(*) FROM ".$this->db->prefix('groups_users_link');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_core_CriteriaElement')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
 			$sql .= " ".$criteria->renderWhere();
 		}
 		$result = $this->db->query($sql);
@@ -385,13 +385,13 @@ class XoopsMembershipHandler extends icms_core_ObjectHandler
 	/**
 	 * delete all memberships meeting the conditions
 	 *
-	 * @param object $criteria {@link icms_core_CriteriaElement} with conditions to meet
+	 * @param object $criteria {@link icms_criteria_Element} with conditions to meet
 	 * @return bool
 	 */
 	function deleteAll($criteria = null)
 	{
 		$sql = "DELETE FROM ".$this->db->prefix('groups_users_link');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_core_CriteriaElement')) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
 			$sql .= " ".$criteria->renderWhere();
 		}
 		if (!$result = $this->db->query($sql)) {

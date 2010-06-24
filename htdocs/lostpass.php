@@ -29,9 +29,9 @@ if($email == '') {redirect_header('user.php',2,_US_SORRYNOTFOUND);}
 
 $myts =& icms_core_Textsanitizer::getInstance();
 $member_handler =& xoops_gethandler('member');
-$criteria = new icms_core_CriteriaCompo();
-$criteria->add(new icms_core_Criteria('email', $myts->addSlashes($email)));
-$criteria->add(new icms_core_Criteria('level', '-1', '!='));
+$criteria = new icms_criteria_Compo();
+$criteria->add(new icms_criteria_Item('email', $myts->addSlashes($email)));
+$criteria->add(new icms_criteria_Item('level', '-1', '!='));
 $getuser =& $member_handler->getUsers($criteria);
 
 if(empty($getuser))

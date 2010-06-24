@@ -49,7 +49,7 @@ else
 		redirect_header('viewpmsg.php', 1, _PM_DELETED);
 	}
 	include ICMS_ROOT_PATH.'/header.php';
-	$criteria = new icms_core_Criteria('to_userid', (int) ($icmsUser->getVar('uid')));
+	$criteria = new icms_criteria_Item('to_userid', (int) ($icmsUser->getVar('uid')));
 	$criteria->setOrder('DESC');
 	$pm_arr =& $pm_handler->getObjects($criteria);
 	echo "<h4 style='text-align:center;'>"._PM_PRIVATEMESSAGE."</h4><br />

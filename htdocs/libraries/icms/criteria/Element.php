@@ -36,7 +36,7 @@
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-abstract class icms_core_CriteriaElement {
+abstract class icms_criteria_Element {
 	/**
 	 * Sort order
 	 * @var	string

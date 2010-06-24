@@ -532,9 +532,9 @@ function impresscms_get_adminmenu() {
 	# Modules menu
 	#########################################################################
 	$module_handler = & xoops_gethandler('module');
-	$criteria = new icms_core_CriteriaCompo();
-	$criteria->add(new icms_core_Criteria('hasadmin', 1));
-	$criteria->add(new icms_core_Criteria('isactive', 1));
+	$criteria = new icms_criteria_Compo();
+	$criteria->add(new icms_criteria_Item('hasadmin', 1));
+	$criteria->add(new icms_criteria_Item('isactive', 1));
 	$criteria->setSort('mid');
 	$modules = $module_handler->getObjects($criteria);
 	foreach ( $modules as $module ) {

@@ -104,15 +104,15 @@ function getPages($showsubs = true, $sort='content_weight', $order='ASC', $conte
 	$module_handler = xoops_gethandler('module');
 	$module = $module_handler->getByDirname('content');
 	$mid = $module->mid();
-	$criteria = new icms_core_CriteriaCompo(new icms_core_Criteria('content_status', 1));
+	$criteria = new icms_criteria_Compo(new icms_criteria_Item('content_status', 1));
 	if (!$relateds){
-		$criteria->add(new icms_core_Criteria('content_pid', $content_id));
+		$criteria->add(new icms_criteria_Item('content_pid', $content_id));
 	}else{
-		$criteria->add(new icms_core_Criteria('short_url', $content_id,'LIKE'));
-		$criteria->add(new icms_core_Criteria('content_id', $content_id),'OR');
+		$criteria->add(new icms_criteria_Item('short_url', $content_id,'LIKE'));
+		$criteria->add(new icms_criteria_Item('content_id', $content_id),'OR');
 	}
-	$crit = new icms_core_CriteriaCompo(new icms_core_Criteria('content_visibility', 1));
-	$crit->add(new icms_core_Criteria('content_visibility', 3),'OR');
+	$crit = new icms_criteria_Compo(new icms_criteria_Item('content_visibility', 1));
+	$crit->add(new icms_criteria_Item('content_visibility', 3),'OR');
 	$criteria->add($crit);
 	$criteria->setSort($sort);
 	$criteria->setOrder($order);

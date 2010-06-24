@@ -75,8 +75,8 @@ class IcmsPluginsHandler {
 		include_once ICMS_ROOT_PATH . "/class/xoopslists.php" ;
 
 		$module_handler = xoops_gethandler('module');
-		$criteria = new icms_core_CriteriaCompo();
-		$criteria->add(new icms_core_Criteria('isactive', 1));
+		$criteria = new icms_criteria_Compo();
+		$criteria->add(new icms_criteria_Item('isactive', 1));
 		$tempModulesObj = $module_handler->getObjects($criteria);
 		$modulesObj = array();
 		foreach ($tempModulesObj as $moduleObj) {

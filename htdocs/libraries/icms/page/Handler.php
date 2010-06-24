@@ -42,14 +42,14 @@ class icms_page_Handler extends IcmsPersistableObjectHandler {
 			$value = array($value);
 		}
 		$module_handler =& xoops_gethandler('module');
-		$criteria = new icms_core_CriteriaCompo(new icms_core_Criteria('hasmain', 1));
-		$criteria->add(new icms_core_Criteria('isactive', 1));
+		$criteria = new icms_criteria_Compo(new icms_criteria_Item('hasmain', 1));
+		$criteria->add(new icms_criteria_Item('isactive', 1));
 		$module_list =& $module_handler->getObjects($criteria);
 		$mods = '';
 		foreach ($module_list as $module){
 			$mods .= '<optgroup label="'.$module->getVar('name').'">';
-			$criteria = new icms_core_CriteriaCompo(new icms_core_Criteria('page_moduleid', $module->getVar('mid')));
-			$criteria->add(new icms_core_Criteria('page_status', 1));
+			$criteria = new icms_criteria_Compo(new icms_criteria_Item('page_moduleid', $module->getVar('mid')));
+			$criteria->add(new icms_criteria_Item('page_status', 1));
 			$pages =& $this->getObjects($criteria);
 			$sel = '';
 			if (in_array($module->getVar('mid').'-0',$value)){
@@ -67,8 +67,8 @@ class icms_page_Handler extends IcmsPersistableObjectHandler {
 		}
 
 		$module = $module_handler->get(1);
-		$criteria = new icms_core_CriteriaCompo(new icms_core_Criteria('page_moduleid', 1));
-		$criteria->add(new icms_core_Criteria('page_status', 1));
+		$criteria = new icms_criteria_Compo(new icms_criteria_Item('page_moduleid', 1));
+		$criteria->add(new icms_criteria_Item('page_status', 1));
 		$pages =& $this->getObjects($criteria);
 		$cont = '';
 		if (count($pages) > 0){
