@@ -34,13 +34,13 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @author	    Michael van Dam	<mvandam@caltech.edu>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_core_Notification extends icms_core_Object
+class icms_notification_Object extends icms_core_Object
 {
 
 	/**
 	 * Constructor
 	 **/
-	function icms_core_Notification()
+	function icms_notification_Object()
 	{
 		$this->icms_core_Object();
 		$this->initVar('not_id', XOBJ_DTYPE_INT, NULL, false);
