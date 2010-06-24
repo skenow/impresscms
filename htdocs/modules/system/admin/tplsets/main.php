@@ -30,7 +30,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 
 	switch ($op) {
 		case 'list':
-			$tplset_handler =& xoops_gethandler('tplset');
+			$tplset_handler =& xoops_gethandler('view_template_set');
 			$tplsets =& $tplset_handler->getObjects();
 			icms_cp_header();
 			echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/tplsets/images/tplsets_big.png)">'._MD_TPLMAIN.'</div><br />';
@@ -410,7 +410,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 				 }
 				 }
 				 */
-				$tplset_handler =& xoops_gethandler('tplset');
+				$tplset_handler =& xoops_gethandler('view_template_set');
 				$tplsets =& $tplset_handler->getObjects(new icms_criteria_Item('tplset_name', $tplset));
 				if (count($tplsets) > 0 && is_object($tplsets[0])) {
 					$msgs[] = 'Deleting template set data...';
@@ -461,7 +461,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			} elseif ($tpltpl_handler->getCount(new icms_criteria_Item('tpl_tplset', $newtheme)) > 0) {
 				icms_error_msg('Template set <b>'.$newtheme.'</b> already exists.');
 			} else {
-				$tplset_handler =& xoops_gethandler('tplset');
+				$tplset_handler =& xoops_gethandler('view_template_set');
 				$tplsetobj =& $tplset_handler->create();
 				$tplsetobj->setVar('tplset_name', $newtheme);
 				$tplsetobj->setVar('tplset_created', time());
@@ -933,7 +933,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 							$downloader = new XoopsZipDownloader();
 						}
 					}
-					$tplset_handler =& xoops_gethandler('tplset');
+					$tplset_handler =& xoops_gethandler('view_template_set');
 					$tplsetobj =& $tplset_handler->getByName($tplset);
 					$xml = "<"."?xml version=\"1.0\"?".">\r\n<tplset>\r\n  <name>".$tplset."</name>\r\n  <dateCreated>".$tplsetobj->getVar('tplset_created')."</dateCreated>\r\n  <credits>\r\n".$tplsetobj->getVar('tplset_credits')."\r\n  </credits>\r\n  <generator>".XOOPS_VERSION."</generator>\r\n  <templates>";
 					$tpltpl_handler =& xoops_gethandler('view_template_file');
@@ -1123,7 +1123,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 					} elseif  (preg_match('/['.preg_quote('\/:*?"<>|','/').']/', $tplset_name)) {
 						echo '<span style="color:#ff0000;">ERROR: Invalid Template Set Name</span><br />';
 					} else {
-						$tplset_handler =& xoops_gethandler('tplset');
+						$tplset_handler =& xoops_gethandler('view_template_set');
 						if ($tplset_handler->getCount(new icms_criteria_Item('tplset_name', $tplset_name)) > 0) {
 							echo '<span style="color:#ff0000;">ERROR: Template set <b>'.htmlspecialchars($tplset_name, ENT_QUOTES).'</b> already exists.</span><br />';
 						} else {

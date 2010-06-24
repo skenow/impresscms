@@ -198,7 +198,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 				break;
 				case 'tplset' :
 					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
-					$tplset_handler = & xoops_gethandler ( 'tplset' );
+					$tplset_handler = & xoops_gethandler ( 'view_template_set' );
 					$tplsetlist = $tplset_handler->getList ();
 					asort ( $tplsetlist );
 					foreach ( $tplsetlist as $key => $name ) {
