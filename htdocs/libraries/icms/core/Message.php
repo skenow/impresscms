@@ -17,7 +17,7 @@
 /**
  *
  */
-class core_Message {
+class icms_core_Message {
 
     /* Since all the methods are static, there is no __construct necessary	 */
 
