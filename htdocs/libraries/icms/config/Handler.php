@@ -31,7 +31,7 @@ require_once XOOPS_ROOT_PATH.'/kernel/configitem.php';
  *          - error handling
  * @access  public
  */
-class icms_core_ConfigHandler {
+class icms_config_Handler {
 
 	/**
 	 * holds reference to config item handler(DAO) class
@@ -63,7 +63,7 @@ class icms_core_ConfigHandler {
 	 *
 	 * @param	object  &$db    reference to database object
 	 */
-	public function icms_core_ConfigHandler(&$db) {
+	public function icms_config_Handler(&$db) {
 		$this->_cHandler = new XoopsConfigItemHandler($db);
 		$this->_oHandler = new XoopsConfigOptionHandler($db);
 	}
@@ -288,10 +288,10 @@ class icms_core_ConfigHandler {
 }
 
 /**
- * @deprecated	Use icms_core_ConfigHandler instead
+ * @deprecated	Use icms_config_Handler instead
  * @todo		Remove this in version 1.4
  */
-class XoopsConfigHandler extends icms_core_ConfigHandler {
+class XoopsConfigHandler extends icms_config_Handler {
 	public function __construct() {
 		parent::__construct();
 	}

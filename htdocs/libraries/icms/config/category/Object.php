@@ -25,7 +25,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @package     core
  * @subpackage	config
  */
-class icms_core_Configcategory extends icms_core_Object {
+class icms_config_category_Object extends icms_core_Object {
 	/**
 	 * Constructor
 	 *
@@ -39,14 +39,14 @@ class icms_core_Configcategory extends icms_core_Object {
 }
 
 /**
- * @deprecated	Use icms_core_Configcategory, instead
+ * @deprecated	Use icms_config_category_Object, instead
  * @todo		Remove in version 1.4 - all instances have been removed from the core
  *
  */
-class XoopsConfigCategory extends icms_core_Configcategory {
+class XoopsConfigCategory extends icms_config_category_Object {
 	public function __construct() {
 		parent::__construct();
-		$this->setErrors(icms_deprecated('icms_core_Configcategory', 'This will be removed in version 1.4'));
+		$this->setErrors(icms_deprecated('icms_config_category_Object', 'This will be removed in version 1.4'));
 	}
 
 }

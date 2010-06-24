@@ -38,7 +38,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 		 * @todo: Create a preference option to set this value and improve the way to change the order.
 		 */
 		$order = 1;
-		$confcat_handler = xoops_gethandler ( 'configcategory' );
+		$confcat_handler = xoops_gethandler ( 'config_category' );
 		$confcats = $confcat_handler->getObjects ();
 		$catcount = count ( $confcats );
 		$ccats = array ( );
@@ -67,7 +67,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 		if (empty ( $confcat_id )) {
 			$confcat_id = 1;
 		}
-		$confcat_handler = & xoops_gethandler ( 'configcategory' );
+		$confcat_handler = & xoops_gethandler ( 'config_category' );
 		$confcat = & $confcat_handler->get ( $confcat_id );
 		if (! is_object ( $confcat )) {
 			redirect_header ( 'admin.php?fct=preferences', 1 );
