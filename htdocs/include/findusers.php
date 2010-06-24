@@ -149,7 +149,7 @@ class XoopsRankHandler extends icms_core_ObjectHandler
 	}
 }
 
-class XoUser extends XoopsUser
+class XoUser extends icms_member_user_Object
 {
 	/**
 	 * Constructor for PHP5
@@ -163,7 +163,7 @@ class XoUser extends XoopsUser
 	 * Constructor for PHP4
 	 **/
 	function XoUser() {
-		$this->XoopsUser();
+		$this->icms_member_user_Object();
 
 		$unsets = array("actkey", "pass", "theme", "umode", "uorder", "notify_mode");
 		foreach($unsets as $var) {
@@ -196,7 +196,7 @@ class XoUserHandler extends icms_core_ObjectHandler
 	 * Create a new user
 	 *
 	 * @param   bool  $isNew is it a new user?
-	 * @return  object	reference to the (@link XoopsUser) object
+	 * @return  object	reference to the (@link icms_member_user_Object) object
 	 **/
 	function &create($isNew = true) {
 		$obj = new XoUser();
@@ -244,7 +244,7 @@ class XoUserHandler extends icms_core_ObjectHandler
 	 *
 	 * @param   object $criteria reference to the Criteria object
 	 * @param   array  $groups array of usergroups
-	 * @return  array	array of (@link XoopsUser) objects
+	 * @return  array	array of (@link icms_member_user_Object) objects
 	 **/
 	function getAll($criteria = null, $groups = array()) {
 		if (!is_array($groups)) {

@@ -60,9 +60,9 @@ class XoopsAuthProvisionning {
 	/**
 	 * Return a Xoops User Object
 	 * @param   string $uname Username of the user
-	 * @return  mixed XoopsUser {@link XoopsUser} or false if failed
+	 * @return  mixed icms_member_user_Object {@link icms_member_user_Object} or false if failed
 	 */
-	function getXoopsUser($uname) {
+	function geticms_member_user_Object($uname) {
 		$member_handler =& xoops_gethandler('member');
 		$criteria = new icms_criteria_Item('uname', $uname);
 		$getuser = $member_handler->getUsers($criteria);
@@ -76,10 +76,10 @@ class XoopsAuthProvisionning {
 	 * @param array $datas Some Data
 	 * @param string $uname Username of the user
 	 * @param string $pwd Password of the user
-	 * @return object XoopsUser {@link XoopsUser}
+	 * @return object icms_member_user_Object {@link icms_member_user_Object}
 	 */
 	function sync($datas, $uname, $pwd = null) {
-		$icmsUser = $this->getXoopsUser($uname);
+		$icmsUser = $this->geticms_member_user_Object($uname);
 		if (!$icmsUser) { // Xoops User Database not exists
 			if ($this->ldap_provisionning) {
 				$icmsUser = $this->add($datas, $uname, $pwd);
@@ -133,11 +133,11 @@ class XoopsAuthProvisionning {
 
 	/**
 	 * Modify user information
-	 * @param object {@link XoopsUser} reference to XoopsUser Object
+	 * @param object {@link icms_member_user_Object} reference to icms_member_user_Object Object
 	 * @param array $datas Some Data
 	 * @param string $uname Username of the user
 	 * @param string $pwd Password of the user
-	 * @return object XoopsUser {@link XoopsUser}
+	 * @return object icms_member_user_Object {@link icms_member_user_Object}
 	 */
 	function change(&$icmsUser, $datas, $uname, $pwd = null) {
 		$ret = false;

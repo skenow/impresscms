@@ -1255,7 +1255,7 @@ Revision: 9336
 * cannot herit methods from kernel's class (Garrath/dugris)
 * Corrected a line hardcoded (young-pee)
 * Making sure params used in queries are properly sanitized with intval() when they are integer (herve/malanciault)
-* In XoopsUser::getUnameFromId, if usereal, then making sure the real name is not just an empty space (herve/malanciault)
+* In icms_member_user_Object::getUnameFromId, if usereal, then making sure the real name is not just an empty space (herve/malanciault)
 * XoopsTree::getNicePathFromId Add separator only if necessary (dugris)
 * Check if $_SERVER[$key] AND $_ENV[$key] exists before turning over the value (xoops_getenv) (dugris)
 

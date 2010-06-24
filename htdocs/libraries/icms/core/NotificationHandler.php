@@ -323,7 +323,7 @@ class icms_core_NotificationHandler extends icms_core_ObjectHandler
 		}
 
 		if (!isset($mode)) {
-			$user = new XoopsUser($user_id);
+			$user = new icms_member_user_Object($user_id);
 			$mode = $user->getVar('notify_mode');
 		}
 

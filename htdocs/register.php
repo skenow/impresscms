@@ -52,7 +52,7 @@ $actkey = isset($_POST['actkey']) ? trim($myts->stripSlashesGPC($_POST['actkey']
 $salt = isset($_POST['salt']) ? trim($myts->stripSlashesGPC($_POST['salt'])) : '';
 $enc_type = $icmsConfigUser['enc_type'];
 
-$thisuser = new XoopsUserHandler();
+$thisuser = new icms_member_user_Handler();
 switch ( $op ) {
 	case 'newuser':
 		include 'header.php';
@@ -190,14 +190,14 @@ switch ( $op ) {
 				exit();
 			}
 
-			$thisuser = new XoopsUser($newid);
+			$thisuser = new icms_member_user_Object($newid);
 
 			// Activation by user
 			if ($icmsConfigUser['activation_type'] == 0) {
 				$xoopsMailer =& getMailer();
 				$xoopsMailer->useMail();
 				$xoopsMailer->setTemplate('register.tpl');
-				$xoopsMailer->setToUsers(new XoopsUser($newid));
+				$xoopsMailer->setToUsers(new icms_member_user_Object($newid));
 				$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
 				$xoopsMailer->setFromName($icmsConfig['sitename']);
 				$xoopsMailer->setSubject(sprintf(_US_USERKEYFOR, $uname));

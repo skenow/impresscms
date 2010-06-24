@@ -50,7 +50,7 @@ if ( !is_object($icmsUser) ) {
 			//echo "failed";
 		}
 		echo $pm_arr[0]->getVar("subject")."<br /><form action='readpmsg.php' method='post' name='delete".$pm_arr[0]->getVar("msg_id")."'><table border='0' cellpadding='4' cellspacing='1' class='outer' width='100%'><tr><th colspan='2'>". _PM_FROM ."</th></tr><tr class='even'>\n";
-		$poster = new XoopsUser( (int) ($pm_arr[0]->getVar("from_userid")));
+		$poster = new icms_member_user_Object( (int) ($pm_arr[0]->getVar("from_userid")));
 		if ( !$poster->isActive() ) {
 			$poster = false;
 		}

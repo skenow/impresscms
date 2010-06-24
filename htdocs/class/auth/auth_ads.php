@@ -69,7 +69,7 @@ class XoopsAuthAds extends XoopsAuthLdap {
 				// We load the Xoops User database
 				$dn = $this->getUserDN($uname);
 				if ($dn)
-				return $this->loadXoopsUser($dn, $uname, $pwd);
+				return $this->loadicms_member_user_Object($dn, $uname, $pwd);
 				else return false;
 			} else $this->setErrors(ldap_errno($this->_ds), ldap_err2str(ldap_errno($this->_ds)) . '(' . $userUPN . ')');
 		}

@@ -408,13 +408,13 @@ class XoopsStory
 	}
 
 	/**
-	 * Returns the current username from (@link XoopsUser)
+	 * Returns the current username from (@link icms_member_user_Object)
 	 *
 	 * @return   string
 	 **/
 	function uname()
 	{
-		return XoopsUser::getUnameFromId($this->uid);
+		return icms_member_user_Object::getUnameFromId($this->uid);
 	}
 
 	/**

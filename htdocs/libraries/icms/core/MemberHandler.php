@@ -14,7 +14,6 @@
  */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
-require_once ICMS_ROOT_PATH . '/kernel/user.php';
 require_once ICMS_ROOT_PATH . '/kernel/group.php';
 
 /**
@@ -57,7 +56,7 @@ class icms_core_MemberHandler {
 	 */
 	function icms_core_MemberHandler(&$db) {
 		$this->_gHandler = new XoopsGroupHandler ( $db );
-		$this->_uHandler = new XoopsUserHandler ( $db );
+		$this->_uHandler = new icms_member_user_Handler ( $db );
 		$this->_mHandler = new XoopsMembershipHandler ( $db );
 	}
 
@@ -74,7 +73,7 @@ class icms_core_MemberHandler {
 	/**
 	 * create a new user
 	 *
-	 * @return object XoopsUser {@link XoopsUser} reference to the new user
+	 * @return object icms_member_user_Object {@link icms_member_user_Object} reference to the new user
 	 */
 	function &createUser() {
 		$inst = & $this->_uHandler->create ();
@@ -95,7 +94,7 @@ class icms_core_MemberHandler {
 	 * retrieve a user
 	 *
 	 * @param int $id ID for the user
-	 * @return object XoopsUser {@link XoopsUser} reference to the user
+	 * @return object icms_member_user_Object {@link icms_member_user_Object} reference to the user
 	 */
 	function &getUser($id) {
 		if (! isset ( $this->_members [$id] )) {
@@ -119,7 +118,7 @@ class icms_core_MemberHandler {
 	/**
 	 * delete a user
 	 *
-	 * @param object $user {@link XoopsUser} reference to the user to delete
+	 * @param object $user {@link icms_member_user_Object} reference to the user to delete
 	 * @return bool FALSE if failed
 	 */
 	function deleteUser(&$user) {
@@ -142,7 +141,7 @@ class icms_core_MemberHandler {
 	/**
 	 * insert a user into the database
 	 *
-	 * @param object $user {@link XoopsUser} reference to the user to insert
+	 * @param object $user {@link icms_member_user_Object} reference to the user to insert
 	 * @return bool TRUE if already in database and unchanged
 	 * FALSE on failure
 	 */
@@ -166,7 +165,7 @@ class icms_core_MemberHandler {
 	 *
 	 * @param object $criteria {@link icms_criteria_Element}
 	 * @param bool $id_as_key use the group's ID as key for the array?
-	 * @return array array of {@link XoopsUser} objects
+	 * @return array array of {@link icms_member_user_Object} objects
 	 */
 	function getUsers($criteria = null, $id_as_key = false) {
 		return $this->_uHandler->getObjects ( $criteria, $id_as_key );
@@ -241,7 +240,7 @@ class icms_core_MemberHandler {
 	 * @param bool $asobject return the users as objects?
 	 * @param int $limit number of users to return
 	 * @param int $start index of the first user to return
-	 * @return array Array of {@link XoopsUser} objects (if $asobject is TRUE)
+	 * @return array Array of {@link icms_member_user_Object} objects (if $asobject is TRUE)
 	 * or of associative arrays matching the record structure in the database.
 	 */
 	function getUsersByGroup($group_id, $asobject = false, $limit = 0, $start = 0) {
@@ -311,7 +310,7 @@ class icms_core_MemberHandler {
 	 * log in a user
 	 * @param string $uname username as entered in the login form
 	 * @param string $pwd password entered in the login form
-	 * @return object XoopsUser {@link XoopsUser} reference to the logged in user. FALSE if failed to log in
+	 * @return object icms_member_user_Object {@link icms_member_user_Object} reference to the logged in user. FALSE if failed to log in
 	 */
 	function loginUser($uname, $pwd)
 	{
@@ -359,7 +358,7 @@ class icms_core_MemberHandler {
 	 *
 	 * @param string $uname username
 	 * @param string $md5pwd password encrypted with md5
-	 * @return object XoopsUser {@link XoopsUser} reference to the logged in user. FALSE if failed to log in
+	 * @return object icms_member_user_Object {@link icms_member_user_Object} reference to the logged in user. FALSE if failed to log in
 	 */
 	/*	function &loginUserMd5($uname, $md5pwd) {
 	 include_once ICMS_ROOT_PATH . '/class/database/databaseupdater.php';
@@ -403,7 +402,7 @@ class icms_core_MemberHandler {
 	/**
 	 * updates a single field in a users record
 	 *
-	 * @param object $user {@link XoopsUser} reference to the {@link XoopsUser} object
+	 * @param object $user {@link icms_member_user_Object} reference to the {@link icms_member_user_Object} object
 	 * @param string $fieldName name of the field to update
 	 * @param string $fieldValue updated value for the field
 	 * @return bool TRUE if success or unchanged, FALSE on failure
@@ -428,7 +427,7 @@ class icms_core_MemberHandler {
 	/**
 	 * activate a user
 	 *
-	 * @param object $user {@link XoopsUser} reference to the object
+	 * @param object $user {@link icms_member_user_Object} reference to the object
 	 * @return bool successful?
 	 */
 	function activateUser(&$user) {
@@ -447,7 +446,7 @@ class icms_core_MemberHandler {
 	 * @param object $criteria {@link icms_criteria_Element} object
 	 * @param bool $asobject return the users as objects?
 	 * @param bool $id_as_key use the UID as key for the array if $asobject is TRUE
-	 * @return array Array of {@link XoopsUser} objects (if $asobject is TRUE)
+	 * @return array Array of {@link icms_member_user_Object} objects (if $asobject is TRUE)
 	 * or of associative arrays matching the record structure in the database.
 	 */
 	function getUsersByGroupLink($groups, $criteria = null, $asobject = false, $id_as_key = false) {
@@ -477,7 +476,7 @@ LEFT JOIN " . $this->_mHandler->db->prefix ( "groups_users_link" ) . " AS m ON m
 		}
 		while ( $myrow = $this->_uHandler->db->fetchArray ( $result ) ) {
 			if ($asobject) {
-				$user = new XoopsUser ( );
+				$user = new icms_member_user_Object ( );
 				$user->assignVars ( $myrow );
 				if (! $id_as_key) {
 					$ret [] = & $user;

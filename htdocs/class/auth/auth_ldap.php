@@ -125,7 +125,7 @@ class XoopsAuthLdap extends XoopsAuth
 				$sess_handler->enableRegenerateId = true;
 				$sess_handler->icms_sessionOpen();
 				// We load the Xoops User database
-				return $this->loadXoopsUser($userDN, $uname, $pwd);
+				return $this->loadicms_member_user_Object($userDN, $uname, $pwd);
 			}
 			else
 			{
@@ -167,7 +167,7 @@ class XoopsAuthLdap extends XoopsAuth
 	/**
 	 * Load user from ImpressCMS Database
 	 * @param string $uname UserName
-	 * @return object {@link XoopsUser} XoopsUser object
+	 * @return object {@link icms_member_user_Object} icms_member_user_Object object
 	 */
 	function getFilter($uname)
 	{
@@ -182,15 +182,15 @@ class XoopsAuthLdap extends XoopsAuth
 	 * @param string $userdn
 	 * @param string $uname Username
 	 * @param string $pwd Password
-	 * @return object {@link XoopsUser} XoopsUser object
+	 * @return object {@link icms_member_user_Object} icms_member_user_Object object
 	 **/
-	function loadXoopsUser($userdn, $uname, $pwd = null)
+	function loadicms_member_user_Object($userdn, $uname, $pwd = null)
 	{
 		$provisHandler = XoopsAuthProvisionning::getInstance($this);
 		$sr = ldap_read($this->_ds, $userdn, '(objectclass=*)');
 		$entries = ldap_get_entries($this->_ds, $sr);
 		if($entries['count'] > 0) {$icmsUser = $provisHandler->sync($entries[0], $uname, $pwd);}
-		else {$this->setErrors(0, sprintf('loadXoopsUser - '._AUTH_LDAP_CANT_READ_ENTRY, $userdn));}
+		else {$this->setErrors(0, sprintf('loadicms_member_user_Object - '._AUTH_LDAP_CANT_READ_ENTRY, $userdn));}
 		return $icmsUser;
 	}
 } // end class

@@ -97,7 +97,7 @@ if ($icmsUser) {
 			$pm_handler =& xoops_gethandler('privmessage');
 			$pm =& $pm_handler->get($msg_id);
 			if ($pm->getVar("to_userid") == (int) ($icmsUser->getVar('uid'))) {
-				$pm_uname = XoopsUser::getUnameFromId($pm->getVar("from_userid"));
+				$pm_uname = icms_member_user_Object::getUnameFromId($pm->getVar("from_userid"));
 				$message  = "[quote]\n";
 				$message .= sprintf(_PM_USERWROTE,$pm_uname);
 				$message .= "\n".$pm->getVar("msg_text", "E")."\n[/quote]";
@@ -111,7 +111,7 @@ if ($icmsUser) {
 		if ( $reply == 1 ) {
 			echo "<td class='even'><input type='hidden' name='to_userid' value='".$pm->getVar("from_userid")."' />".$pm_uname."</td>";
 		} elseif ( $send2 == 1 ) {
-			$to_username = XoopsUser::getUnameFromId($to_userid);
+			$to_username = icms_member_user_Object::getUnameFromId($to_userid);
 			echo "<td class='even'><input type='hidden' name='to_userid' value='".$to_userid."' />".$to_username."</td>";
 		} else {
 			require_once ICMS_ROOT_PATH."/class/xoopsform/formelement.php";
@@ -140,7 +140,7 @@ if ($icmsUser) {
 			$pm_handler =& xoops_gethandler('privmessage');
 			$pm =& $pm_handler->get($msg_id);
 			if ($pm->getVar("to_userid") == (int) ($icmsUser->getVar('uid'))) {
-				$pm_uname = XoopsUser::getUnameFromId($pm->getVar("from_userid"));
+				$pm_uname = icms_member_user_Object::getUnameFromId($pm->getVar("from_userid"));
 				$message  = "[quote]\n";
 				$message .= sprintf(_PM_USERWROTE,$pm_uname);
 				$message .= "\n".$pm->getVar("msg_text", "E")."\n[/quote]";

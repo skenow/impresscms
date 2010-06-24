@@ -123,7 +123,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 		if ( !empty($_POST['mail_to_user']) ) {
 			foreach ($_POST['mail_to_user'] as $to_user) {
 				if ( !in_array($to_user, $added_id) ) {
-					$added[] = new XoopsUser($to_user);
+					$added[] = new icms_member_user_Object($to_user);
 					$added_id[] = $to_user;
 				}
 			}

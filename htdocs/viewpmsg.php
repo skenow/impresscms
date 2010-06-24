@@ -89,7 +89,7 @@ else
 		}
 		echo "<td style='vertical-align: top; width: 5%; text-align: center;'>
             <img src='images/subject/".$pm_arr[$i]->getVar('msg_image', 'E')."' alt='' /></td>\n";
-		$postername = XoopsUser::getUnameFromId($pm_arr[$i]->getVar('from_userid'));
+		$postername = icms_member_user_Object::getUnameFromId($pm_arr[$i]->getVar('from_userid'));
 		echo "<td style='vertical-align: middle; width: 10%; text-align: center;'>";
 		// no need to show deleted users
 		if($postername)

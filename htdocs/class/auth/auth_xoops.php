@@ -36,7 +36,7 @@ class XoopsAuthXoops extends XoopsAuth
 	 *  Authenticate user
 	 * @param string $uname
 	 * @param string $pwd
-	 * @return object {@link XoopsUser} XoopsUser object
+	 * @return object {@link icms_member_user_Object} icms_member_user_Object object
 	 */
 	function authenticate($uname, $pwd = null)
 	{
