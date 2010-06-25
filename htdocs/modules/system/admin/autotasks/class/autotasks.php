@@ -215,7 +215,7 @@ class SystemAutoTasks extends IcmsPersistableObject {
 
 }
 
-class SystemAutotasksHandler extends IcmsPersistableObjectHandler
+class SystemAutotasksHandler extends icms_ipf_Handler
 {
 
 	private $_use_virtual_config = false;
@@ -223,7 +223,7 @@ class SystemAutotasksHandler extends IcmsPersistableObjectHandler
 
 	function SystemAutotasksHandler($db)
 	{
-		$this->IcmsPersistableObjectHandler($db, 'autotasks', 'sat_id', 'sat_name', 'sat_code', 'system');
+		$this->icms_ipf_Handler($db, 'autotasks', 'sat_id', 'sat_name', 'sat_code', 'system');
 	}
 
 	/**

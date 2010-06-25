@@ -36,7 +36,7 @@ define ( 'CONTENT_CONTENT_VISIBLE_DONTSHOW', 4 );
  * @since ImpressCMS 1.2
  * @author Rodrigo P Lima (aka TheRplima) <therplima@impresscms.org>
  */
-class mod_content_ContentHandler extends IcmsPersistableObjectHandler {
+class mod_content_ContentHandler extends icms_ipf_Handler {
 
 	/**
 	 * @public array of status
@@ -54,7 +54,7 @@ class mod_content_ContentHandler extends IcmsPersistableObjectHandler {
 	public $_content_tagsArray = array ( );
 
 	public function __construct(& $db) {
-		$this->IcmsPersistableObjectHandler ( $db, 'content', 'content_id', 'content_title', 'content_body', 'content' );
+		$this->icms_ipf_Handler ( $db, 'content', 'content_id', 'content_title', 'content_body', 'content' );
 
 		icms_loadLanguageFile('content', 'common');
 		$this->addPermission ( 'content_read', _CO_CONTENT_CONTENT_READ, _CO_CONTENT_CONTENT_READ_DSC );

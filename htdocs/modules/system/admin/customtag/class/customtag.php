@@ -134,12 +134,12 @@ class SystemCustomtag extends IcmsPersistableObject {
 	}
 }
 
-class SystemCustomtagHandler extends IcmsPersistableObjectHandler {
+class SystemCustomtagHandler extends icms_ipf_Handler {
 
 	public $objects = false;
 
 	function SystemCustomtagHandler($db) {
-		$this->IcmsPersistableObjectHandler ( $db, 'customtag', 'customtagid', 'name', 'description', 'system' );
+		$this->icms_ipf_Handler ( $db, 'customtag', 'customtagid', 'name', 'description', 'system' );
 		$this->addPermission ( 'view', _CO_ICMS_CUSTOMTAG_PERMISSION_VIEW, _CO_ICMS_CUSTOMTAG_PERMISSION_VIEW_DSC );
 	}
 

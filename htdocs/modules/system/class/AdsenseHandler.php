@@ -15,14 +15,14 @@ die ( "ImpressCMS root path not defined" );
 
 include_once ICMS_ROOT_PATH . "/kernel/icmspersistableobject.php";
 
-class mod_system_AdsenseHandler extends IcmsPersistableObjectHandler {
+class mod_system_AdsenseHandler extends icms_ipf_Handler {
 
 	public $adFormats;
 	public $adFormatsList;
 	public $objects=false;
 
 	function mod_system_AdsenseHandler($db) {
-		$this->IcmsPersistableObjectHandler ( $db, 'adsense', 'adsenseid', 'tag', 'description', 'system' );
+		$this->icms_ipf_Handler ( $db, 'adsense', 'adsenseid', 'tag', 'description', 'system' );
 		$this->adFormats = array();
 		$this->adFormatsList = array();
 

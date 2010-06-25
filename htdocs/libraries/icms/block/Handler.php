@@ -27,7 +27,7 @@ include_once ICMS_ROOT_PATH . '/class/xoopsformloader.php';
  * @since ImpressCMS 1.2
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
-class icms_block_Handler extends IcmsPersistableObjectHandler {
+class icms_block_Handler extends icms_ipf_Handler {
 
 	private $block_positions;
 	private $modules_name;

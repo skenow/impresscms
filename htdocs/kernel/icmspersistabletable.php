@@ -124,7 +124,7 @@ class IcmsPersistableTable {
 	/**
 	 * Constructor
 	 *
-	 * @param object $objectHandler {@link IcmsPersistableObjectHandler}
+	 * @param object $objectHandler {@link icms_ipf_Handler}
 	 * @param array $columns array representing the columns to display in the table
 	 * @param object $criteria
 	 * @param array $actions array representing the actions to offer

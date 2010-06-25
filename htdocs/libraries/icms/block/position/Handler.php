@@ -19,7 +19,7 @@ include_once ICMS_ROOT_PATH . '/kernel/icmspersistableseoobject.php';
  * icms_block_position_Handler
  *
  */
-class icms_block_position_Handler extends IcmsPersistableObjectHandler {
+class icms_block_position_Handler extends icms_ipf_Handler {
 
 	/**
 	 * Constructor

@@ -142,7 +142,7 @@ class IcmsPersistableCategory extends IcmsPersistableSeoObject {
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @since 		1.1
  */
-class IcmsPersistableCategoryHandler extends IcmsPersistableObjectHandler {
+class IcmsPersistableCategoryHandler extends icms_ipf_Handler {
 	/** */
 	var $allCategoriesObj = false;
 	/** */
@@ -156,7 +156,7 @@ class IcmsPersistableCategoryHandler extends IcmsPersistableObjectHandler {
 	 * @return IcmsPersistableCategoryHandler
 	 */
 	function IcmsPersistableCategoryHandler($db, $modulename) {
-		$this->IcmsPersistableObjectHandler($db, 'category', 'categoryid', 'name', 'description', $modulename);
+		$this->icms_ipf_Handler($db, 'category', 'categoryid', 'name', 'description', $modulename);
 	}
 
 	/**

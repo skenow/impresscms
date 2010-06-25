@@ -48,7 +48,7 @@ class IcmsPersistableRegistry {
 	/**
 	 * Adding objects to the registry
 	 *
-	 * @param IcmsPersistableObjectHandler $handler of the objects to add
+	 * @param icms_ipf_Handler $handler of the objects to add
 	 * @param icms_criteria_Compo $criteria to pass to the getObjects method of the handler (with id_as_key)
 	 *
 	 * @return FALSE if an error occured
@@ -66,7 +66,7 @@ class IcmsPersistableRegistry {
 	/**
 	 * Adding objects as list to the registry
 	 *
-	 * @param IcmsPersistableObjectHandler $handler of the objects to add
+	 * @param icms_ipf_Handler $handler of the objects to add
 	 * @param icms_criteria_Compo $criteria to pass to the getObjects method of the handler (with id_as_key)
 	 *
 	 * @return FALSE if an error occured

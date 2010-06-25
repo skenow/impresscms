@@ -90,14 +90,14 @@ class SystemRating extends IcmsPersistableObject {
 	}
 }
 
-class SystemRatingHandler extends IcmsPersistableObjectHandler {
+class SystemRatingHandler extends icms_ipf_Handler {
 
 	public $_rateOptions=array();
 	public $_moduleList=false;
 	public $pluginsObject;
 
 	function SystemRatingHandler($db) {
-		$this->IcmsPersistableObjectHandler ( $db, 'rating', 'ratingid', 'rate', '', 'system' );
+		$this->icms_ipf_Handler ( $db, 'rating', 'ratingid', 'rate', '', 'system' );
 		$this->generalSQL = 'SELECT * FROM ' . $this->table . ' AS ' . $this->_itemname . ' INNER JOIN ' . $this->db->prefix('users') . ' AS user ON ' . $this->_itemname . '.uid=user.uid';
 
 		$this->_rateOptions[1] = 1;

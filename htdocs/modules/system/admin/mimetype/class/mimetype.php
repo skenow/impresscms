@@ -58,12 +58,12 @@ class SystemMimetype extends IcmsPersistableObject {
 	}
 }
 
-class SystemMimetypeHandler extends IcmsPersistableObjectHandler {
+class SystemMimetypeHandler extends icms_ipf_Handler {
 
 	public $objects = false;
 
 	function SystemMimetypeHandler($db) {
-		$this->IcmsPersistableObjectHandler ( $db, 'mimetype', 'mimetypeid', 'mimetypeid', 'name', 'system' );
+		$this->icms_ipf_Handler ( $db, 'mimetype', 'mimetypeid', 'mimetypeid', 'name', 'system' );
 		$this->addPermission ( 'use_extension', _CO_ICMS_MIMETYPE_PERMISSION_VIEW, _CO_ICMS_MIMETYPE_PERMISSION_VIEW_DSC );
 	}
 

@@ -16,7 +16,6 @@ if (!defined("ICMS_ROOT_PATH")) {
 
 icms_loadLanguageFile('system', 'common');
 
-include_once ICMS_ROOT_PATH . "/kernel/icmspersistableobjecthandler.php";
 include_once ICMS_ROOT_PATH . "/kernel/icmspersistablecontroller.php";
 include_once ICMS_ROOT_PATH . "/kernel/icmspersistablepermission.php";
 include_once ICMS_ROOT_PATH . "/kernel/icmspersistableregistry.php";
@@ -52,7 +51,7 @@ class IcmsPersistableObject extends icms_core_Object {
 	/**
 	 * Reference to the handler managing this object
 	 *
-	 * @var object reference to {@link IcmsPersistableObjectHandler}
+	 * @var object reference to {@link icms_ipf_Handler}
 	 */
 	var $handler;
 

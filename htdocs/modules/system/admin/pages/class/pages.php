@@ -63,7 +63,7 @@ class SystemPagesHandler extends icms_page_Handler {
 	private $modules_name;
 
 	public function __construct( & $db ){
-		$this->IcmsPersistableObjectHandler($db, 'pages', 'page_id', 'page_title', '' , 'system');
+		$this->icms_ipf_Handler($db, 'pages', 'page_id', 'page_title', '' , 'system');
 		$this->table = $db->prefix('icmspage');
 	}
 

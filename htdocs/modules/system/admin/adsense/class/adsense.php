@@ -120,14 +120,14 @@ google_color_text = "' . $this->getVar('text_color', 'n') . '";
 	}
 }
 
-class SystemAdsenseHandler extends IcmsPersistableObjectHandler {
+class SystemAdsenseHandler extends icms_ipf_Handler {
 
 	public $adFormats;
 	public $adFormatsList;
 	public $objects=false;
 
 	function SystemAdsenseHandler($db) {
-		$this->IcmsPersistableObjectHandler ( $db, 'adsense', 'adsenseid', 'tag', 'description', 'system' );
+		$this->icms_ipf_Handler ( $db, 'adsense', 'adsenseid', 'tag', 'description', 'system' );
 		$this->adFormats = array();
 		$this->adFormatsList = array();
 
