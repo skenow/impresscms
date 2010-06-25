@@ -57,7 +57,7 @@ class icms_core_Textsanitizer {
 	 * @param	 string	$text	 Text to purify
 	 * @return	string	$text	the purified text
 	 */
-	function html_purifier($text) {
+	public function html_purifier($text) {
 		include_once ICMS_ROOT_PATH . '/class/icms_HTMLPurifier.php';
 		$html_purifier = &icms_HTMLPurifier::getPurifierInstance();
 
@@ -74,7 +74,7 @@ class icms_core_Textsanitizer {
 	 * @static
 	 * @staticvar   object
 	 */
-	function getInstance() {
+	public function getInstance() {
 		static $instance;
 		if (!isset($instance)) {
 			$instance = new icms_core_Textsanitizer();
@@ -88,7 +88,7 @@ class icms_core_Textsanitizer {
 	 * @param	bool	$all
 	 * @return   array
 	 */
-	function getSmileys($all = false) {
+	public function getSmileys($all = false) {
 		global $xoopsDB;
 
 		if (count($this->allSmileys) == 0) {
@@ -110,7 +110,7 @@ class icms_core_Textsanitizer {
 	 * @param	string  $message
 	 * @return   string
 	 */
-	function smiley($message) {
+	public function smiley($message) {
 		$smileys = $this->getSmileys(true);
 		foreach ($smileys as $smile) {
 			$message = str_replace(
@@ -128,7 +128,7 @@ class icms_core_Textsanitizer {
 	 * @param   string  $text
 	 * @return  string
 	 **/
-	function makeClickable(&$text) {
+	public function makeClickable(&$text) {
 		global $icmsConfigPersona;
 		$text = ' ' . $text;
 		$patterns = array(
@@ -165,7 +165,7 @@ class icms_core_Textsanitizer {
 			}
 		}
 		$text = substr($text, 1);
-		return($text);
+		return $text;
 	}
 
 	/**
@@ -176,7 +176,7 @@ class icms_core_Textsanitizer {
 	 *				  On FALSE, uses links to images.
 	 * @return  string
 	 **/
-	function xoopsCodeDecode(&$text, $allowimage = 1) {
+	public function xoopsCodeDecode(&$text, $allowimage = 1) {
 		$patterns = array();
 		$replacements = array();
 		$patterns[] = "/\[siteurl=(['\"]?)([^\"'<>]*)\\1](.*)\[\/siteurl\]/sU";
@@ -251,7 +251,7 @@ class icms_core_Textsanitizer {
 	 * @param   array  $matches
 	 * @return  string
 	 */
-	function _filterImgUrl($matches) {
+	public function _filterImgUrl($matches) {
 		if ($this->checkUrlString($matches[2])) {
 			return $matches[0];
 		} else {
@@ -265,7 +265,7 @@ class icms_core_Textsanitizer {
 	 * @param   string  $text
 	 * @return  bool
 	 */
-	function checkUrlString($text) {
+	public function checkUrlString($text) {
 		// Check control code
 		if (preg_match("/[\0-\31]/", $text)) {
 			return false;
@@ -280,7 +280,7 @@ class icms_core_Textsanitizer {
 	 * @param	string  $text
 	 * @return   string
 	 */
-	function nl2Br($text) {
+	public function nl2Br($text) {
 		return preg_replace("/(\015\012)|(\015)|(\012)/", "<br />", $text);
 	}
 
@@ -290,7 +290,7 @@ class icms_core_Textsanitizer {
 	 * @param   string  $text
 	 * @return  string
 	 **/
-	function addSlashes($text) {
+	public function addSlashes($text) {
 		if (!get_magic_quotes_gpc()) {
 			$text = addslashes($text);
 		}
@@ -303,7 +303,7 @@ class icms_core_Textsanitizer {
 	 * @param	string  $text
 	 * @return   string
 	 **/
-	function stripSlashesGPC($text) {
+	public function stripSlashesGPC($text) {
 		if (get_magic_quotes_gpc()) {
 			$text = stripslashes($text);
 		}
@@ -316,7 +316,7 @@ class icms_core_Textsanitizer {
 	 * @param	string  $text
 	 * @return   string
 	 **/
-	function htmlSpecialChars($text) {
+	public function htmlSpecialChars($text) {
 		return preg_replace(
 			array(
 				"/&amp;/i", "/&nbsp;/i"), array('&', '&amp;nbsp;'),
@@ -331,11 +331,11 @@ class icms_core_Textsanitizer {
 	 * @param   string  $text
 	 * @return  string
 	 **/
-	function undoHtmlSpecialChars($text) {
+	public function undoHtmlSpecialChars($text) {
 		return htmlspecialchars_decode($text, ENT_QUOTES);
 	}
 
-	function icms_htmlEntities($text) {
+	public function icms_htmlEntities($text) {
 		return preg_replace(array("/&amp;/i", "/&nbsp;/i"), array('&', '&amp;nbsp;'),
 		@htmlentities($text, ENT_QUOTES, _CHARSET));
 	}
@@ -351,7 +351,7 @@ class icms_core_Textsanitizer {
 	 * @param   bool	$br	 convert linebreaks?
 	 * @return  string
 	 **/
-	function displayTarea($text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1) {
+	public function displayTarea($text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1) {
 		// ################# Preload Trigger beforeDisplayTarea ##############
 		global $icmsPreloadHandler;
 
@@ -406,7 +406,7 @@ class icms_core_Textsanitizer {
 	 * @param   bool	$br	 convert linebreaks?
 	 * @return  string
 	 **/
-	function previewTarea($text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1) {
+	public function previewTarea($text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1) {
 		// ################# Preload Trigger beforePreviewTarea ##############
 		global $icmsPreloadHandler;
 
@@ -458,7 +458,7 @@ class icms_core_Textsanitizer {
 	 * @return  string
 	 *
 	 **/
-	function censorString(&$text) {
+	public function censorString(&$text) {
 		$config_handler = xoops_gethandler('config');
 		$icmsConfigCensor =& $config_handler->getConfigsByCat(ICMS_CONF_CENSOR);
 		if ($icmsConfigCensor['censor_enable'] == true) {
@@ -486,7 +486,7 @@ class icms_core_Textsanitizer {
 	/**#@+
 	 * Sanitizing of [code] tag
 	 */
-	function codePreConv($text, $xcode = 1) {
+	public function codePreConv($text, $xcode = 1) {
 		if ($xcode != 0) {
 			$patterns = "/\[code](.*)\[\/code\]/esU";
 			$replacements = "'[code]'.base64_encode('$1').'[/code]'";
@@ -503,7 +503,7 @@ class icms_core_Textsanitizer {
 	 * @param	 int	   $image	configuration for the purifier
 	 * @return	string	$text	 the converted text
 	 */
-	function codeConv($text, $xcode = 1, $image = 1) {
+	public function codeConv($text, $xcode = 1, $image = 1) {
 		if ($xcode != 0) {
 			$patterns = "/\[code](.*)\[\/code\]/esU";
 			if ($image != 0) {
@@ -523,16 +523,22 @@ class icms_core_Textsanitizer {
 	 * @param   string	$image	Is the string an image
 	 * @return  string	$str	  The sanitized decoded string
 	 */
-	function codeSanitizer($str, $image = 1) {
+	public function codeSanitizer($str, $image = 1) {
 		$str = $this->htmlSpecialChars(str_replace('\"', '"', base64_decode($str)));
 		$str = $this->xoopsCodeDecode($str, $image);
 		return $str;
 	}
 
 	##################### Deprecated Methods ######################
-	/**#@+
-	* @deprecated
-	*/
+
+	/**
+	 * @deprecated
+	 * Enter description here ...
+	 * @param unknown_type $text
+	 * @param unknown_type $allowhtml
+	 * @param unknown_type $smiley
+	 * @param unknown_type $bbcode
+	 */
 	function sanitizeForDisplay($text, $allowhtml = 0, $smiley = 1, $bbcode = 1) {
 		icms_deprecated('');
 		if($allowhtml == 0)
@@ -555,6 +561,14 @@ class icms_core_Textsanitizer {
 		return $text;
 	}
 
+	/**
+	 * @deprecated
+	 * Enter description here ...
+	 * @param $text
+	 * @param $allowhtml
+	 * @param $smiley
+	 * @param $bbcode
+	 */
 	function sanitizeForPreview($text, $allowhtml = 0, $smiley = 1, $bbcode = 1) {
 		$text = $this->oopsStripSlashesGPC($text);
 		if($allowhtml == 0)
@@ -577,11 +591,22 @@ class icms_core_Textsanitizer {
 		return $text;
 	}
 
+	/**
+	 * @deprecated
+	 * Enter description here ...
+	 * @param unknown_type $text
+	 */
 	function makeTboxData4Save($text) {
 		icms_deprecated('$this->addSlashes', 'This will be removed in version 1.4');
 		return $this->addSlashes($text);
 	}
 
+	/**
+	 * @deprecated
+	 * Enter description here ...
+	 * @param $text
+	 * @param $smiley
+	 */
 	function makeTboxData4Show($text, $smiley=0)
 	{
 		icms_deprecated('$this->htmlSpecialChars', 'This will be removed in version 1.4');
@@ -589,12 +614,23 @@ class icms_core_Textsanitizer {
 		return $text;
 	}
 
+	/**
+	 * @deprecated
+	 * Enter description here ...
+	 * @param $text
+	 */
 	function makeTboxData4Edit($text)
 	{
 		icms_deprecated('$this->htmlSpecialChars', 'This will be removed in version 1.4');
 		return $this->htmlSpecialChars($text);
 	}
 
+	/**
+	 * @deprecated
+	 * Enter description here ...
+	 * @param $text
+	 * @param $smiley
+	 */
 	function makeTboxData4Preview($text, $smiley=0)
 	{
 		icms_deprecated('$this->htmlSpecialChars and $this->stripSlashesGPC', 'This will be removed in version 1.4');
@@ -603,6 +639,11 @@ class icms_core_Textsanitizer {
 		return $text;
 	}
 
+	/**
+	 * @deprecated
+	 * Enter description here ...
+	 * @param unknown_type $text
+	 */
 	function makeTboxData4PreviewInForm($text)
 	{
 		icms_deprecated('$this->htmlSpecialChars and $this->stripSlashesGPC', 'This will be removed in version 1.4');
@@ -610,30 +651,60 @@ class icms_core_Textsanitizer {
 		return $this->htmlSpecialChars($text);
 	}
 
+	/**
+	 * @deprecated
+	 * Enter description here ...
+	 * @param $text
+	 */
 	function makeTareaData4Save($text)
 	{
 		icms_deprecated('$this->addSlashes', 'This will be removed in version 1.4');
 		return $this->addSlashes($text);
 	}
 
+	/**
+	 * @deprecated
+	 * Enter description here ...
+	 * @param unknown_type $text
+	 * @param unknown_type $html
+	 * @param unknown_type $smiley
+	 * @param unknown_type $xcode
+	 */
 	function makeTareaData4Show(&$text, $html=0, $smiley=1, $xcode=1)
 	{
 		$text = $this->displayTarea($text, $html, $smiley, $xcode);
 		return $text;
 	}
 
+	/**
+	 * @deprecated
+	 * Enter description here ...
+	 * @param $text
+	 */
 	function makeTareaData4Edit($text)
 	{
 		icms_deprecated('$this->htmlSpecialChars', 'This will be removed in version 1.4');
 		return $this->htmlSpecialChars($text);
 	}
-
+	/**
+	 * @deprecated
+	 * Enter description here ...
+	 * @param unknown_type $text
+	 * @param unknown_type $html
+	 * @param unknown_type $smiley
+	 * @param unknown_type $xcode
+	 */
 	function makeTareaData4Preview(&$text, $html=0, $smiley=1, $xcode=1)
 	{
 		$text = $this->previewTarea($text, $html, $smiley, $xcode);
 		return $text;
 	}
 
+	/**
+	 * @deprecated
+	 * Enter description here ...
+	 * @param $text
+	 */
 	function makeTareaData4PreviewInForm($text)
 	{
 		icms_deprecated('$this->nl2br', 'This will be removed in version 1.4');
@@ -641,18 +712,33 @@ class icms_core_Textsanitizer {
 		return $this->htmlSpecialChars($text);
 	}
 
+	/**
+	 * @deprecated
+	 * Enter description here ...
+	 * @param $text
+	 */
 	function makeTareaData4InsideQuotes($text)
 	{
 		icms_deprecated('$this->htmlSpecialChars', 'This will be removed in version 1.4');
 		return $this->htmlSpecialChars($text);
 	}
 
+	/**
+	 * @deprecated
+	 * Enter description here ...
+	 * @param $text
+	 */
 	function oopsStripSlashesGPC($text)
 	{
 		icms_deprecated('$this->stripSlashesGPC', 'This will be removed in version 1.4');
 		return $this->stripSlashesGPC($text);
 	}
 
+	/**
+	 * @deprecated
+	 * Enter description here ...
+	 * @param unknown_type $text
+	 */
 	function oopsStripSlashesRT($text)
 	{
 		if(get_magic_quotes_runtime())
@@ -662,18 +748,33 @@ class icms_core_Textsanitizer {
 		return $text;
 	}
 
+	/**
+	 * @deprecated
+	 * Enter description here ...
+	 * @param $text
+	 */
 	function oopsAddSlashes($text)
 	{
 		icms_deprecated('$this->addSlashes', 'This will be removed in version 1.4');
 		return $this->addSlashes($text);
 	}
 
+	/**
+	 * @deprecated
+	 * Enter description here ...
+	 * @param $text
+	 */
 	function oopsHtmlSpecialChars($text)
 	{
 		icms_deprecated('$this->htmlSpecialChars', 'This will be removed in version 1.4');
 		return $this->htmlSpecialChars($text);
 	}
 
+	/**
+	 * @deprecated
+	 * Enter description here ...
+	 * @param $text
+	 */
 	function oopsNl2Br($text)
 	{
 		icms_deprecated('$this->nl2br', 'This will be removed in version 1.4');
@@ -682,13 +783,13 @@ class icms_core_Textsanitizer {
 	/**#@-*/
 	##################### Deprecated Methods ######################
 
-	/*
+	/**
 	 * This function gets allowed plugins from DB and loads them in the sanitizer
 	 * @param	int	 $id			 ID of the config
 	 * @param	bool	$withoptions	load the config's options now?
 	 * @return	object  reference to the {@link XoopsConfig}
 	 */
-	function icmsCodeDecode_extended($text, $allowimage = 1) {
+	public function icmsCodeDecode_extended($text, $allowimage = 1) {
 		global $icmsConfigPlugins;
 		if (!empty($icmsConfigPlugins['sanitizer_plugins'])) {
 			foreach ($icmsConfigPlugins['sanitizer_plugins'] as $item) {
@@ -704,7 +805,7 @@ class icms_core_Textsanitizer {
 	 * @param	 string	$name	 Name of the extension to load
 	 * @return	bool
 	 */
-	function icmsloadExtension($name) {
+	public function icmsloadExtension($name) {
 		if(empty($name) || !include_once ICMS_ROOT_PATH . "/plugins/textsanitizer/{$name}/{$name}.php") {
 			return false;
 		}
@@ -717,7 +818,7 @@ class icms_core_Textsanitizer {
 	 * @param	 string	$text	 Text to show if the function doesn't exist
 	 * @return	array	 the return of the called function
 	 */
-	function icmsExecuteExtension($name, $text) {
+	public function icmsExecuteExtension($name, $text) {
 		$this->icmsloadExtension($name);
 		$func = "textsanitizer_{$name}";
 		if (!function_exists($func)) {
@@ -733,7 +834,7 @@ class icms_core_Textsanitizer {
 	 * @param	 string	$text	 purifies (lightly) and then syntax highlights the text
 	 * @return	string	$text	 the syntax highlighted text
 	 */
-	function textsanitizer_syntaxhighlight(&$text) {
+	public function textsanitizer_syntaxhighlight(&$text) {
 		global $icmsConfigPlugins;
 		if ( $icmsConfigPlugins['code_sanitizer'] == 'php' ) {
 			$text = $this->undoHtmlSpecialChars($text);
@@ -753,7 +854,7 @@ class icms_core_Textsanitizer {
 	 * @param	 string	$text	 Text to highlight
 	 * @return	string	$buffer   the highlighted text
 	 */
-	function textsanitizer_php_highlight($text) {
+	public function textsanitizer_php_highlight($text) {
 		$text = trim($text);
 		$addedtag_open = 0;
 		if (!strpos($text, '<?php') and (substr($text, 0, 5) != '<?php')) {
@@ -793,7 +894,7 @@ class icms_core_Textsanitizer {
 	 * @param	 string	$text	 The text to highlight
 	 * @return	string	$code	 the highlighted text
 	 */
-	function textsanitizer_geshi_highlight($text) {
+	public function textsanitizer_geshi_highlight($text) {
 		global $icmsConfigPlugins;
 
 		if (!@include_once ICMS_LIBRARIES_PATH.'/geshi/geshi.php') {
