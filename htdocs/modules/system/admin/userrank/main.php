@@ -63,14 +63,12 @@ switch ($op) {
 		break;
 
 	case 'adduserrank' :
-		include_once ICMS_ROOT_PATH . '/kernel/icmspersistablecontroller.php' ;
-		$controller = new IcmsPersistableController($icms_userrank_handler);
+		$controller = new icms_ipf_Controller($icms_userrank_handler);
 		$controller->storeFromDefaultForm(_CO_ICMS_USERRANKS_CREATED, _CO_ICMS_USERRANKS_MODIFIED);
 		break;
 
 	case 'del' :
-		include_once ICMS_ROOT_PATH . '/kernel/icmspersistablecontroller.php' ;
-		$controller = new IcmsPersistableController($icms_userrank_handler);
+		$controller = new icms_ipf_Controller($icms_userrank_handler);
 		$controller->handleObjectDeletion();
 
 		break;

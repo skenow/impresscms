@@ -64,14 +64,12 @@ switch ($op) {
 		break;
 
 	case "addcustomtag":
-		include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-		$controller = new IcmsPersistableController($icms_customtag_handler);
+		$controller = new icms_ipf_Controller($icms_customtag_handler);
 		$controller->storeFromDefaultForm(_CO_ICMS_CUSTOMTAG_CREATED, _CO_ICMS_CUSTOMTAG_MODIFIED);
 		break;
 
 	case "del":
-		include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-		$controller = new IcmsPersistableController($icms_customtag_handler);
+		$controller = new icms_ipf_Controller($icms_customtag_handler);
 		$controller->handleObjectDeletion();
 
 		break;

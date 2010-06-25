@@ -114,8 +114,7 @@ class IcmsPersistableTreeTable extends IcmsPersistableTable {
 			}
 		}
 
-		include_once ICMS_ROOT_PATH . "/kernel/icmspersistablecontroller.php";
-		$controller = new IcmsPersistableController($this->_objectHandler);
+		$controller = new icms_ipf_Controller($this->_objectHandler);
 
 		if (in_array('edit', $this->_actions)) {
 			$actions[] = $controller->getEditItemLink($object, false, true);

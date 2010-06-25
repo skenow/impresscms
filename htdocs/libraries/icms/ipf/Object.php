@@ -16,7 +16,6 @@ if (!defined("ICMS_ROOT_PATH")) {
 
 icms_loadLanguageFile('system', 'common');
 
-include_once ICMS_ROOT_PATH . "/kernel/icmspersistablecontroller.php";
 include_once ICMS_ROOT_PATH . "/kernel/icmspersistablepermission.php";
 include_once ICMS_ROOT_PATH . "/kernel/icmspersistableregistry.php";
 
@@ -377,7 +376,7 @@ class icms_ipf_Object extends icms_core_Object {
 			$ret[$key] = $value;
 		}
 		if ($this->handler->identifierName != "") {
-			$controller = new IcmsPersistableController($this->handler);
+			$controller = new icms_ipf_Controller($this->handler);
 			/**
 			 * Addition of some automatic value
 			 */
@@ -548,7 +547,7 @@ class icms_ipf_Object extends icms_core_Object {
 	 */
 	function getAdminViewItemLink($onlyUrl=false)
 	{
-		$controller = new IcmsPersistableController($this->handler);
+		$controller = new icms_ipf_Controller($this->handler);
 		return $controller->getAdminViewItemLink($this, $onlyUrl);
 	}
 
@@ -560,31 +559,31 @@ class icms_ipf_Object extends icms_core_Object {
 	 */
 	function getItemLink($onlyUrl=false)
 	{
-		$controller = new IcmsPersistableController($this->handler);
+		$controller = new icms_ipf_Controller($this->handler);
 		return $controller->getItemLink($this, $onlyUrl);
 	}
 
 	function getViewItemLink($onlyUrl=false, $withimage=true, $userSide=false)
 	{
-		$controller = new IcmsPersistableController($this->handler);
+		$controller = new icms_ipf_Controller($this->handler);
 		return $controller->getViewItemLink($this, $onlyUrl, $withimage, $userSide);
 	}
 
 	function getEditItemLink($onlyUrl=false, $withimage=true, $userSide=false)
 	{
-		$controller = new IcmsPersistableController($this->handler);
+		$controller = new icms_ipf_Controller($this->handler);
 		return $controller->getEditItemLink($this, $onlyUrl, $withimage, $userSide);
 	}
 
 	function getDeleteItemLink($onlyUrl=false, $withimage=false, $userSide=false)
 	{
-		$controller = new IcmsPersistableController($this->handler);
+		$controller = new icms_ipf_Controller($this->handler);
 		return $controller->getDeleteItemLink($this, $onlyUrl, $withimage, $userSide);
 	}
 
 	function getPrintAndMailLink()
 	{
-		$controller = new IcmsPersistableController($this->handler);
+		$controller = new icms_ipf_Controller($this->handler);
 		return $controller->getPrintAndMailLink($this);
 	}
 

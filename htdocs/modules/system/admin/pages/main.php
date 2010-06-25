@@ -86,14 +86,12 @@ if (in_array ( $clean_op, $valid_op, true )) {
 		break;
 
 		case "addpage" :
-			include_once ICMS_ROOT_PATH . "/kernel/icmspersistablecontroller.php";
-			$controller = new IcmsPersistableController ( $icms_page_handler );
+			$controller = new icms_ipf_Controller ( $icms_page_handler );
 			$controller->storeFromDefaultForm ( _AM_SYSTEM_PAGES_CREATED, _AM_SYSTEM_PAGES_MODIFIED );
 		break;
 
 		case "del" :
-			include_once ICMS_ROOT_PATH . "/kernel/icmspersistablecontroller.php";
-			$controller = new IcmsPersistableController ( $icms_page_handler );
+			$controller = new icms_ipf_Controller ( $icms_page_handler );
 			$controller->handleObjectDeletion ();
 
 		break;

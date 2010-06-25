@@ -89,26 +89,24 @@ if (in_array ( $clean_op, $valid_op, true )) {
 			break;
 
 		case "addcontent" :
-			include_once ICMS_ROOT_PATH . "/kernel/icmspersistablecontroller.php";
-			$controller = new IcmsPersistableController ( $content_content_handler );
+			$controller = new icms_ipf_Controller ( $content_content_handler );
 			$controller->storeFromDefaultForm ( _AM_CONTENT_CONTENT_CREATED, _AM_CONTENT_CONTENT_MODIFIED );
 
 			break;
 
 		case "del" :
-			include_once ICMS_ROOT_PATH . "/kernel/icmspersistablecontroller.php";
-			$controller = new IcmsPersistableController ( $content_content_handler );
+			$controller = new icms_ipf_Controller ( $content_content_handler );
 			$controller->handleObjectDeletion ();
 
 			break;
 
 		case "view" :
 			$contentObj = $content_content_handler->get ( $clean_content_id );
-				
+
 			icms_cp_header ();
-				
+
 			$xoopsModule->displayAdminMenu ( 0, _AM_CONTENT_CONTENTS . " > " . _PREVIEW .' > '. $contentObj->getVar('content_title') );
-				
+
 			$icmsAdminTpl->assign ( 'content_content_singleview', $contentObj->displaySingleObject ( true, false, array('edit','delete') ) );
 			$icmsAdminTpl->display ( 'db:content_admin_content.html' );
 
@@ -135,13 +133,13 @@ if (in_array ( $clean_op, $valid_op, true )) {
 			break;
 
 		default :
-				
+
 			icms_cp_header ();
-				
+
 			$xoopsModule->displayAdminMenu ( 0, _AM_CONTENT_CONTENTS );
-				
+
 			include_once ICMS_ROOT_PATH . "/kernel/icmspersistabletable.php";
-				
+
 			$criteria = new icms_criteria_Compo ( );
 			$criteria->add ( new icms_criteria_Item ( 'content_pid', $clean_content_pid ) );
 
@@ -151,27 +149,27 @@ if (in_array ( $clean_op, $valid_op, true )) {
 			$objectTable->addColumn ( new IcmsPersistableColumn ( 'counter', 'center', 100 ) );
 			$objectTable->addColumn ( new IcmsPersistableColumn ( 'content_status', 'center', 150, 'getContent_statusControl' ) );
 			$objectTable->addColumn ( new IcmsPersistableColumn ( 'content_visibility', 'center', 150, 'getContent_visibleControl' ) );
-				
+
 			$objectTable->addColumn ( new IcmsPersistableColumn ( 'content_published_date', 'center', 150 ) );
-				
+
 			$objectTable->addActionButton('changedField', false, _SUBMIT);
 			$objectTable->addCustomAction('getViewItemLink');
 			$objectTable->addCustomAction('getCloneItemLink');
-				
+
 			$objectTable->addIntroButton ( 'addcontent', 'content.php?op=mod'.($clean_content_pid?'&amp;content_pid='.$clean_content_pid:''), _AM_CONTENT_CONTENT_CREATE );
-				
+
 			$objectTable->addQuickSearch ( array ('content_title', 'content_body' ) );
-				
+
 			$objectTable->addFilter('content_status', 'getContent_statusArray');
 			$objectTable->addFilter('content_uid', 'getPostersArray');
 			$objectTable->addFilter('content_pid', 'getContentList');
 			$objectTable->addFilter('content_visibility', 'getContent_visibleArray');
 			$objectTable->addFilter ( 'content_tags', 'getContent_tagsArray' );
-				
+
 			$objectTable->addHeader ( '<p style="margin-bottom: 10px;">' . $content_content_handler->getBreadcrumbForPid ( $clean_content_pid ) . '</p>' );
-				
+
 			$icmsAdminTpl->assign ( 'content_content_table', $objectTable->fetch () );
-				
+
 			$icmsAdminTpl->display ( 'db:content_admin_content.html' );
 			break;
 	}

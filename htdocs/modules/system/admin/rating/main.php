@@ -33,7 +33,7 @@ function editrating($showmenu = false, $ratingid = 0)
 		$ratingObj->hideFieldFromForm(array('item', 'itemid', 'uid', 'date', 'rate'));
 
 		if (isset($_POST['op'])) {
-			$controller = new IcmsPersistableController($icms_rating_handler);
+			$controller = new icms_ipf_Controller($icms_rating_handler);
 			$controller->postDataToObject($ratingObj);
 
 			if ($_POST['op'] == 'changedField') {
@@ -78,14 +78,12 @@ switch ($op) {
 		break;
 
 		case "addrating":
-		include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-		$controller = new IcmsPersistableController($icms_rating_handler);
+		$controller = new icms_ipf_Controller($icms_rating_handler);
 		$controller->storeFromDefaultForm(_CO_ICMS_RATINGS_CREATED, _CO_ICMS_RATINGS_MODIFIED, ICMS_URL . '/modules/system/admin.php?fct=rating');
 		break;
 		*/
 	case "del":
-		include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-		$controller = new IcmsPersistableController($icms_rating_handler);
+		$controller = new icms_ipf_Controller($icms_rating_handler);
 		$controller->handleObjectDeletion();
 
 		break;

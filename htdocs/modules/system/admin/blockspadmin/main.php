@@ -61,14 +61,12 @@ if (in_array($clean_op,$valid_op,true)){
 			break;
 
 		case "addblockposition":
-			include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-			$controller = new IcmsPersistableController($icms_blockposition_handler);
+			$controller = new icms_ipf_Controller($icms_blockposition_handler);
 			$controller->storeFromDefaultForm(_AM_SYSTEM_BLOCKSPADMIN_CREATED, _AM_SYSTEM_BLOCKSPADMIN_MODIFIED);
 			break;
 
 		case "del":
-			include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-			$controller = new IcmsPersistableController($icms_blockposition_handler);
+			$controller = new icms_ipf_Controller($icms_blockposition_handler);
 			$controller->handleObjectDeletion();
 			break;
 

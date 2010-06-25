@@ -60,14 +60,12 @@ switch ($op) {
 		break;
 
 	case "addautotasks":
-		include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-		$controller = new IcmsPersistableController($icms_autotasks_handler);
+		$controller = new icms_ipf_Controller($icms_autotasks_handler);
 		$controller->storeFromDefaultForm(_CO_ICMS_AUTOTASKS_CREATED, _CO_ICMS_AUTOTASKS_MODIFIED, ICMS_URL . '/modules/system/admin.php?fct=autotasks');
 		break;
 
 	case "del":
-		include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-		$controller = new IcmsPersistableController($icms_autotasks_handler);
+		$controller = new icms_ipf_Controller($icms_autotasks_handler);
 		$controller->handleObjectDeletion();
 
 		break;

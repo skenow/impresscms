@@ -204,7 +204,7 @@ class SystemAutoTasks extends icms_ipf_Object {
 	{
 		static $controller = null;
 		if($this->getType(0) == 'addon') return;
-		if($controller===null) $controller = new IcmsPersistableController($this->handler);
+		if($controller===null) $controller = new icms_ipf_Controller($this->handler);
 		return $controller->getDeleteItemLink($this, false, true, false);
 	}
 

@@ -756,7 +756,7 @@ Revision: 9336
 * Warning: Value for HTML. Trusted is of invalid type, should be bool in file /libraries/htmlpurifier/HTMLPurifier.standalone.php line 1447 (vaughan)
 * In HTMLPurifier $is_admin wasn't defined if $xoopsUser wasn't an existing object.(vaughan)
 * In HTMPPurifier $xoopsUser undefined variable on line 130 (vaughan)
-* Wrong smarty variable name in IcmsPersistableController::handleObjectDeletionFromUserSide() (malanciault)
+* Wrong smarty variable name in icms_ipf_Controller::handleObjectDeletionFromUserSide() (malanciault)
 * In IcmsDatabaseUpdater::upgradeObjectItem() when a TEXT field was created, a default value was set which is wrong. TEXT field can't have default value (malanciault)
 * Closed comment tag in include/calendarjs.php that created a problem with IE (skenow)
 * Undefined variable: ret in file /kernel/icmspersistablecontroller.php line 462 (malanciault)
@@ -817,7 +817,7 @@ Revision: 9336
 * Notice: Undefined variable: openid in file /modules/system/admin/users/main.php line 61. (stranger/malanciault)
 * Fixed issues with inserting google meta tag. (stranger)
 * Bug fixed in IcmsForm::render(): the id of the row was the same as the control. Now, the id of the row is <keyname>_row (malanciault)
-* Bug fixed in IcmsPersistableController::postDataToObject where date was not saved properly (malanciault)
+* Bug fixed in icms_ipf_Controller::postDataToObject where date was not saved properly (malanciault)
 * #2118948: Email Protection does not work (real_therplima)
 
 ===2008-08-08 : 1.1 Beta 1===

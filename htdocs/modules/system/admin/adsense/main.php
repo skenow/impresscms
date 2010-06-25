@@ -72,14 +72,12 @@ switch ($op) {
 		 exit;
 		 }
 		 }*/
-		include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-		$controller = new IcmsPersistableController($icms_adsense_handler);
+		$controller = new icms_ipf_Controller($icms_adsense_handler);
 		$controller->storeFromDefaultForm(_CO_ICMS_ADSENSES_CREATED, _CO_ICMS_ADSENSES_MODIFIED);
 		break;
 
 	case "del":
-		include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-		$controller = new IcmsPersistableController($icms_adsense_handler);
+		$controller = new icms_ipf_Controller($icms_adsense_handler);
 		$controller->handleObjectDeletion();
 
 		break;

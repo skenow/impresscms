@@ -65,14 +65,12 @@ switch ($op) {
 		break;*/
 
 	case "addmimetype":
-		include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-		$controller = new IcmsPersistableController($icms_mimetype_handler);
+		$controller = new icms_ipf_Controller($icms_mimetype_handler);
 		$controller->storeFromDefaultForm(_CO_ICMS_MIMETYPE_CREATED, _CO_ICMS_MIMETYPE_MODIFIED);
 		break;
 
 	case "del":
-		include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-		$controller = new IcmsPersistableController($icms_mimetype_handler);
+		$controller = new icms_ipf_Controller($icms_mimetype_handler);
 		$controller->handleObjectDeletion();
 
 		break;

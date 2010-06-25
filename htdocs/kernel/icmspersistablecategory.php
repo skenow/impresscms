@@ -110,7 +110,6 @@ class IcmsPersistableCategory extends IcmsPersistableSeoObject {
 	 */
 	function getCategoryPath($withAllLink=true, $currentCategory=false)	{
 
-		include_once ICMS_ROOT_PATH . "/kernel/icmspersistablecontroller.php";
 		$controller = new icms_ipf_ObjectController($this->handler);
 
 		if (!$this->_categoryPath) {

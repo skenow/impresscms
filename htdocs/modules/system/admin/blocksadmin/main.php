@@ -132,14 +132,12 @@ if (in_array($clean_op, $valid_op, true)) {
 			break;
 
 		case "addblock" :
-			include_once ICMS_ROOT_PATH . "/kernel/icmspersistablecontroller.php";
-			$controller = new IcmsPersistableController($icms_block_handler);
+			$controller = new icms_ipf_Controller($icms_block_handler);
 			$controller->storeFromDefaultForm(_AM_SYSTEM_BLOCKSADMIN_CREATED, _AM_SYSTEM_BLOCKSADMIN_MODIFIED);
 			break;
 
 		case "del" :
-			include_once ICMS_ROOT_PATH . "/kernel/icmspersistablecontroller.php";
-			$controller = new IcmsPersistableController($icms_block_handler);
+			$controller = new icms_ipf_Controller($icms_block_handler);
 			$controller->handleObjectDeletion();
 
 			break;
