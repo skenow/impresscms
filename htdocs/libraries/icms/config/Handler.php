@@ -65,7 +65,7 @@ class icms_config_Handler {
 	 */
 	public function icms_config_Handler(&$db) {
 		$this->_cHandler = new icms_config_Item_Handler($db);
-		$this->_oHandler = new XoopsConfigOptionHandler($db);
+		$this->_oHandler = new icms_config_option_Handler($db);
 	}
 
 	/**
@@ -215,9 +215,9 @@ class icms_config_Handler {
 	}
 
 	/**
-	 * Make a new {@link XoopsConfigOption}
+	 * Make a new {@link icms_config_option_Object}
 	 *
-	 * @return	object  {@link XoopsConfigOption}
+	 * @return	object  {@link icms_config_option_Object}
 	 */
 	public function &createConfigOption() {
 		$inst =& $this->_oHandler->create();
@@ -225,11 +225,11 @@ class icms_config_Handler {
 	}
 
 	/**
-	 * Get a {@link XoopsConfigOption}
+	 * Get a {@link icms_config_option_Object}
 	 *
 	 * @param	int $id ID of the config option
 	 *
-	 * @return	object  {@link XoopsConfigOption}
+	 * @return	object  {@link icms_config_option_Object}
 	 */
 	public function &getConfigOption($id) {
 		$inst =& $this->_oHandler->get($id);
@@ -237,23 +237,23 @@ class icms_config_Handler {
 	}
 
 	/**
-	 * Get one or more {@link XoopsConfigOption}s
+	 * Get one or more {@link icms_config_option_Object}s
 	 *
 	 * @param	object  $criteria   {@link icms_criteria_Element}
 	 * @param	bool    $id_as_key  Use IDs as keys in the array?
 	 *
-	 * @return	array   Array of {@link XoopsConfigOption}s
+	 * @return	array   Array of {@link icms_config_option_Object}s
 	 */
 	public function getConfigOptions($criteria = null, $id_as_key = false) {
 		return $this->_oHandler->getObjects($criteria, $id_as_key);
 	}
 
 	/**
-	 * Count some {@link XoopsConfigOption}s
+	 * Count some {@link icms_config_option_Object}s
 	 *
 	 * @param	object  $criteria   {@link icms_criteria_Element}
 	 *
-	 * @return	int     Count of {@link XoopsConfigOption}s matching $criteria
+	 * @return	int     Count of {@link icms_config_option_Object}s matching $criteria
 	 */
 	public function getConfigOptionsCount($criteria = null) {
 		return $this->_oHandler->getCount($criteria);
