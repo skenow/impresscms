@@ -48,7 +48,7 @@ class icms_member_groupperm_Object extends icms_core_Object {
  * @deprecated	Use icms_member_groupperm_Object, instead
  * @todo		Remove in version 1.4
  */
-class XoopsGroupPerm extends icms_member_groupperm_Object {
+class icms_member_group_ObjectPerm extends icms_member_groupperm_Object {
 	public function __construct() {
 		parent::__construct();
 		$this->setErrors = icms_deprecated('icms_member_groupperm_Object', 'This will be removed in version 1.4');

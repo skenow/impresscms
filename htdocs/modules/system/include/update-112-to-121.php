@@ -582,7 +582,7 @@
 		$icmsDatabaseUpdater->runQuery ( $sql_welcome_msg_content, 'Welcome message form type successfully updated', 'Unable to update the welcome message form type', true );
 
 		/* Set the start page for each group, so they don't default to Admin Control Panel */
-		$groups = xoops_gethandler ( 'group' )->getObjects ( NULL, true );
+		$groups = xoops_gethandler ( 'member_group' )->getObjects ( NULL, true );
 		$start_page = getDbValue ( $icmsDB, 'config', 'conf_value', 'conf_name="startpage"' );
 		foreach ( $groups as $groupid => $group ) {
 			$start_pages [$groupid] = $start_page;

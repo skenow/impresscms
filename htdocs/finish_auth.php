@@ -116,7 +116,7 @@ switch ($xoopsAuth->step) {
 
 		// Now, add the user to the group.
 		$newid = $newUser->getVar('uid');
-		$mship_handler = xoops_getHandler('membership');
+		$mship_handler = xoops_getHandler('member_group_membership');
 		$mship = & $mship_handler->create();
 		$mship->setVar('groupid', XOOPS_GROUP_USERS);
 		$mship->setVar('uid', $newid);

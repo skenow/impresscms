@@ -55,15 +55,15 @@ class icms_member_Handler {
 	 *
 	 */
 	function icms_member_Handler(&$db) {
-		$this->_gHandler = new XoopsGroupHandler ( $db );
+		$this->_gHandler = new icms_member_group_Handler ( $db );
 		$this->_uHandler = new icms_member_user_Handler ( $db );
-		$this->_mHandler = new XoopsMembershipHandler ( $db );
+		$this->_mHandler = new icms_member_group_membership_Handler ( $db );
 	}
 
 	/**
 	 * create a new group
 	 *
-	 * @return object XoopsGroup {@link XoopsGroup} reference to the new group
+	 * @return object icms_member_group_Object {@link icms_member_group_Object} reference to the new group
 	 */
 	function &createGroup() {
 		$inst = & $this->_gHandler->create ();
@@ -84,7 +84,7 @@ class icms_member_Handler {
 	 * retrieve a group
 	 *
 	 * @param int $id ID for the group
-	 * @return object XoopsGroup {@link XoopsGroup} reference to the group
+	 * @return object icms_member_group_Object {@link icms_member_group_Object} reference to the group
 	 */
 	function getGroup($id) {
 		return $this->_gHandler->get ( $id );
@@ -106,7 +106,7 @@ class icms_member_Handler {
 	/**
 	 * delete a group
 	 *
-	 * @param object $group {@link XoopsGroup} reference to the group to delete
+	 * @param object $group {@link icms_member_group_Object} reference to the group to delete
 	 * @return bool FALSE if failed
 	 */
 	function deleteGroup(&$group) {
@@ -130,7 +130,7 @@ class icms_member_Handler {
 	/**
 	 * insert a group into the database
 	 *
-	 * @param object $group {@link XoopsGroup} reference to the group to insert
+	 * @param object $group {@link icms_member_group_Object} reference to the group to insert
 	 * @return bool TRUE if already in database and unchanged
 	 * FALSE on failure
 	 */
@@ -154,7 +154,7 @@ class icms_member_Handler {
 	 *
 	 * @param object $criteria {@link icms_criteria_Element}
 	 * @param bool $id_as_key use the group's ID as key for the array?
-	 * @return array array of {@link XoopsGroup} objects
+	 * @return array array of {@link icms_member_group_Object} objects
 	 */
 	function getGroups($criteria = null, $id_as_key = false) {
 		return $this->_gHandler->getObjects ( $criteria, $id_as_key );
@@ -206,7 +206,7 @@ class icms_member_Handler {
 	 *
 	 * @param int $group_id ID of the group
 	 * @param int $user_id ID of the user
-	 * @return object XoopsMembership {@link XoopsMembership}
+	 * @return object icms_member_group_membership_Object {@link icms_member_group_membership_Object}
 	 */
 	function addUserToGroup($group_id, $user_id) {
 		$mship = & $this->_mHandler->create ();
@@ -264,7 +264,7 @@ class icms_member_Handler {
 	 * get a list of groups that a user is member of
 	 *
 	 * @param int $user_id ID of the user
-	 * @param bool $asobject return groups as {@link XoopsGroup} objects or arrays?
+	 * @param bool $asobject return groups as {@link icms_member_group_Object} objects or arrays?
 	 * @return array array of objects or arrays
 	 */
 	function getGroupsByUser($user_id, $asobject = false) {

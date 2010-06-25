@@ -146,7 +146,7 @@ class icms_member_groupperm_ObjectForm extends XoopsForm
 		foreach (array_keys($glist) as $i) {
 			// get selected item id(s) for each group
 			$selected = $gperm_handler->getItemIds($this->_permName, $i, $this->_modid);
-			$ele = new XoopsGroupFormCheckBox($glist[$i], 'perms[' . $this->_permName . ']', $i, $selected);
+			$ele = new icms_member_group_ObjectFormCheckBox($glist[$i], 'perms[' . $this->_permName . ']', $i, $selected);
 			$ele->setOptionTree($this->_itemTree);
 			$this->addElement($ele);
 			unset($ele);
@@ -186,7 +186,7 @@ class icms_member_groupperm_ObjectForm extends XoopsForm
  * @package kernel
  * @subpackage form
  */
-class XoopsGroupFormCheckBox extends XoopsFormElement
+class icms_member_group_ObjectFormCheckBox extends XoopsFormElement
 {
 	/**
 	 * Pre-selected value(s)
@@ -210,7 +210,7 @@ class XoopsGroupFormCheckBox extends XoopsFormElement
 	/**
 	 * Constructor
 	 */
-	function XoopsGroupFormCheckBox($caption, $name, $groupId, $values = null)
+	function icms_member_group_ObjectFormCheckBox($caption, $name, $groupId, $values = null)
 	{
 		$this->setCaption($caption);
 		$this->setName($name);

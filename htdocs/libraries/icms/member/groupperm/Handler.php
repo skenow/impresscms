@@ -362,6 +362,6 @@ class icms_member_groupperm_Handler extends icms_core_ObjectHandler {
  * @todo		Remove in version 1.4
  *
  */
-class XoopsGrouppermHandler extends icms_member_groupperm_Handler {
+class icms_member_group_ObjectpermHandler extends icms_member_groupperm_Handler {
 
 }
