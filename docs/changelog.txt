@@ -803,7 +803,7 @@ Revision: 9336
 * #2037989: Registration notification sent twice (real_therplima)
 * bug with modules when calling editors. (stranger)
 * bug "Cannot redeclare class XoopsFormCaptcha". (stranger)
-* Language constants in IcmsModuleAbout feature (malanciault)
+* Language constants in icms_ipf_About feature (malanciault)
 * bug with pdf generator. (stranger)
 * bug Hidencontent doesn`t work with TinyMCE. (stranger)
 * # 2090834: Customtag works not with TinyMCE and Custom HTML Blocks (malanciault)
