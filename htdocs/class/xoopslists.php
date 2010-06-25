@@ -674,7 +674,7 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 			$ret = array();
 			$result = $db->query($sql);
 			while ( $myrow = $db->fetchArray($result) ) {
-				$ret[$myrow['rank_id']] = $myts->makeTboxData4Show($myrow['rank_title']);
+				$ret[$myrow['rank_id']] = $myts->htmlSpecialChars($myrow['rank_title']);
 			}
 			return $ret;
 		}

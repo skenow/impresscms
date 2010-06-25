@@ -80,7 +80,7 @@ function xoopsSmilies($textarea_id)
 		for ($i = 0; $i < $count; $i++) {
 			if ($smiles[$i]['display'] == 1) {
 				//hack bis
-				echo "<img src='".ICMS_UPLOAD_URL."/".$myts->oopsHtmlSpecialChars($smiles['smile_url'])."' border='0' alt='' onclick='xoopsCodeSmilie(\"".$textarea_id."\", \" ".$smiles[$i]['code']." \");' onmouseover='style.cursor=\"hand\"' />";
+				echo "<img src='".ICMS_UPLOAD_URL."/".$myts->htmlSpecialChars($smiles['smile_url'])."' border='0' alt='' onclick='xoopsCodeSmilie(\"".$textarea_id."\", \" ".$smiles[$i]['code']." \");' onmouseover='style.cursor=\"hand\"' />";
 				//fin du hack
 			}
 		}

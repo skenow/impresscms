@@ -1,16 +1,14 @@
 <?php
 /**
- * All BB codes allowed in the site are generated through here.
+ * Input validation and processing, BB code conversion, Smiley conversion
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		core
- * @since		XOOPS
- * @author		http://www.xoops.org The XOOPS Project
- * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id: module.textsanitizer.php 19450 2010-06-18 14:15:29Z malanciault $
+ * @category	ICMS
+ * @package		Core
+ * @subpackage	Textsanitizer
+ * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @version		SVN: $Id$
  */
 
 /**
@@ -18,11 +16,12 @@
  *
  * <b>Singleton</b>
  *
- * @package		kernel
- * @subpackage	core
+ * @category	ICMS
+ * @package		Core
+ * @subpackage	Textsanitizer
  *
  * @author		Kazumi Ono 	<onokazu@xoops.org>
- * @author	  Goghs Cheng
+ * @author		Goghs Cheng
  * @copyright	(c) 2000-2003 The Xoops Project - www.xoops.org
  */
 class icms_core_Textsanitizer {
@@ -285,6 +284,8 @@ class icms_core_Textsanitizer {
 	}
 
 	/**
+	 * Note: magic_quotes_gpc and magic_quotes_runtime are deprecated as of PHP5.3.0
+	 *
 	 * Add slashes to the text if magic_quotes_gpc is turned off.
 	 *
 	 * @param   string  $text
@@ -298,7 +299,9 @@ class icms_core_Textsanitizer {
 	}
 
 	/**
-	 * if magic_quotes_gpc is on, stirip back slashes
+	 * Note: magic_quotes_gpc and magic_quotes_runtime are deprecated as of PHP5.3.0
+	 *
+	 * if magic_quotes_gpc is on, strip back slashes
 	 *
 	 * @param	string  $text
 	 * @return   string
@@ -532,7 +535,8 @@ class icms_core_Textsanitizer {
 	##################### Deprecated Methods ######################
 
 	/**
-	 * @deprecated
+	 * @deprecated Use displayTarea, instead
+	 * @todo Remove in version 1.4 - there are no other occurrences in the core
 	 * Enter description here ...
 	 * @param unknown_type $text
 	 * @param unknown_type $allowhtml
@@ -540,7 +544,7 @@ class icms_core_Textsanitizer {
 	 * @param unknown_type $bbcode
 	 */
 	function sanitizeForDisplay($text, $allowhtml = 0, $smiley = 1, $bbcode = 1) {
-		icms_deprecated('');
+		icms_deprecated('icms_core_Textsanitizer->displayTarea', 'This will be removed in version 1.4');
 		if($allowhtml == 0)
 		{
 			$text = $this->htmlSpecialChars($text);
@@ -562,7 +566,8 @@ class icms_core_Textsanitizer {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated Use displayTarea, instead
+	 * @todo	Remove in version 1.4 - there are no other occurrences in the core
 	 * Enter description here ...
 	 * @param $text
 	 * @param $allowhtml
@@ -570,6 +575,7 @@ class icms_core_Textsanitizer {
 	 * @param $bbcode
 	 */
 	function sanitizeForPreview($text, $allowhtml = 0, $smiley = 1, $bbcode = 1) {
+		icms_deprecated('icms_core_Textsanitizer->displayTarea', 'This will be removed in version 1.4');
 		$text = $this->oopsStripSlashesGPC($text);
 		if($allowhtml == 0)
 		{
@@ -592,78 +598,85 @@ class icms_core_Textsanitizer {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated Use addSlashes, instead
+	 * @todo Remove in version 1.4 - there are no other occurrences in the core
 	 * Enter description here ...
 	 * @param unknown_type $text
 	 */
 	function makeTboxData4Save($text) {
-		icms_deprecated('$this->addSlashes', 'This will be removed in version 1.4');
+		icms_deprecated('icms_core_Textsanitizer->addSlashes', 'This will be removed in version 1.4');
 		return $this->addSlashes($text);
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated Use htmlSpecialChars, instead
+	 * @todo Remove this in version 1.4 - there are no other occurrences in the core
 	 * Enter description here ...
 	 * @param $text
 	 * @param $smiley
 	 */
 	function makeTboxData4Show($text, $smiley=0)
 	{
-		icms_deprecated('$this->htmlSpecialChars', 'This will be removed in version 1.4');
+		icms_deprecated('icms_core_Textsanitizer->htmlSpecialChars', 'This will be removed in version 1.4');
 		$text = $this->htmlSpecialChars($text);
 		return $text;
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated Use htmlSpecialChars, instead
+	 * @todo Remove this in version 1.4 - there are no other occurrences in the core
 	 * Enter description here ...
 	 * @param $text
 	 */
 	function makeTboxData4Edit($text)
 	{
-		icms_deprecated('$this->htmlSpecialChars', 'This will be removed in version 1.4');
+		icms_deprecated('icms_core_Textsanitizer->htmlSpecialChars', 'This will be removed in version 1.4');
 		return $this->htmlSpecialChars($text);
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated Use stripSlashesGPC, htmlSpecialChars
+	 * @todo Remove in version 1.4
 	 * Enter description here ...
 	 * @param $text
 	 * @param $smiley
 	 */
 	function makeTboxData4Preview($text, $smiley=0)
 	{
-		icms_deprecated('$this->htmlSpecialChars and $this->stripSlashesGPC', 'This will be removed in version 1.4');
+		icms_deprecated('icms_core_Textsanitizer->htmlSpecialChars and $this->stripSlashesGPC', 'This will be removed in version 1.4');
 		$text = $this->stripSlashesGPC($text);
 		$text = $this->htmlSpecialChars($text);
 		return $text;
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated Use stripSlashesGPC, htmlSpecialChars
+	 * @todo 	Remove this in version 1.4
 	 * Enter description here ...
 	 * @param unknown_type $text
 	 */
 	function makeTboxData4PreviewInForm($text)
 	{
-		icms_deprecated('$this->htmlSpecialChars and $this->stripSlashesGPC', 'This will be removed in version 1.4');
+		icms_deprecated('icms_core_Textsanitizer->htmlSpecialChars and $this->stripSlashesGPC', 'This will be removed in version 1.4');
 		$text = $this->stripSlashesGPC($text);
 		return $this->htmlSpecialChars($text);
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated Use addSlashes, instead
+	 * @todo Remove in version 1.4 - there are no other occurrences in the core
 	 * Enter description here ...
 	 * @param $text
 	 */
 	function makeTareaData4Save($text)
 	{
-		icms_deprecated('$this->addSlashes', 'This will be removed in version 1.4');
+		icms_deprecated('icms_core_Textsanitizer->addSlashes', 'This will be removed in version 1.4');
 		return $this->addSlashes($text);
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated Use displayTarea, instead
+	 * @todo	Remove in version 1.4 - there are no other occurences in the core
 	 * Enter description here ...
 	 * @param unknown_type $text
 	 * @param unknown_type $html
@@ -677,17 +690,19 @@ class icms_core_Textsanitizer {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated Use htmlSpecialChars, instead
+	 * @todo Remove in version 1.4 - there are no other occurrences in the core
 	 * Enter description here ...
 	 * @param $text
 	 */
 	function makeTareaData4Edit($text)
 	{
-		icms_deprecated('$this->htmlSpecialChars', 'This will be removed in version 1.4');
+		icms_deprecated('icms_core_Textsanitizer->htmlSpecialChars', 'This will be removed in version 1.4');
 		return $this->htmlSpecialChars($text);
 	}
 	/**
-	 * @deprecated
+	 * @deprecated	Use previewTarea, instead
+	 * @todo		Remove this in version 1.4 - no other occurrences in the core
 	 * Enter description here ...
 	 * @param unknown_type $text
 	 * @param unknown_type $html
@@ -701,46 +716,55 @@ class icms_core_Textsanitizer {
 	}
 
 	/**
+	 *
 	 * @deprecated
 	 * Enter description here ...
 	 * @param $text
 	 */
 	function makeTareaData4PreviewInForm($text)
 	{
-		icms_deprecated('$this->nl2br', 'This will be removed in version 1.4');
+		icms_deprecated('icms_core_Textsanitizer->stripSlashesGPC(icms_core_Textsanitizer->htmlSpecialChars)', 'This will be removed in version 1.4');
 		$text = $this->stripSlashesGPC($text);
 		return $this->htmlSpecialChars($text);
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated	Use htmlSpecialChars, instead
+	 * @todo		Remove this in version 1.4 - no other occurrences in the core
 	 * Enter description here ...
 	 * @param $text
 	 */
 	function makeTareaData4InsideQuotes($text)
 	{
-		icms_deprecated('$this->htmlSpecialChars', 'This will be removed in version 1.4');
+		icms_deprecated('icms_core_Textsanitizer->htmlSpecialChars', 'This will be removed in version 1.4');
 		return $this->htmlSpecialChars($text);
 	}
 
 	/**
-	 * @deprecated
+	 * Note: magic_quotes_gpc and magic_quotes_runtime are deprecated as of PHP 5.3.0
+	 *
+	 * @deprecated	Use stripSlashesGPC, instead
+	 * @todo 		Remove in version 1.4 - there are no other occurrences in the core
 	 * Enter description here ...
 	 * @param $text
 	 */
 	function oopsStripSlashesGPC($text)
 	{
-		icms_deprecated('$this->stripSlashesGPC', 'This will be removed in version 1.4');
+		icms_deprecated('icms_core_Textsanitizer->stripSlashesGPC', 'This will be removed in version 1.4');
 		return $this->stripSlashesGPC($text);
 	}
 
 	/**
-	 * @deprecated
+	 * Note: magic_quotes_gpc and magic_quotes_runtime are deprecated as of PHP 5.3.0
+	 *
+	 * @deprecated	Use stripSlashesGPC, instead.
+	 * @todo		Remove this in version 1.4 - there are no other occurrences in the core
 	 * Enter description here ...
 	 * @param unknown_type $text
 	 */
 	function oopsStripSlashesRT($text)
 	{
+		icms_deprecated('icms_core_Textsanitizer->stripSlashesGPC', 'This will be removed in version 1.4');
 		if(get_magic_quotes_runtime())
 		{
 			$text = stripslashes($text);
@@ -749,35 +773,38 @@ class icms_core_Textsanitizer {
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated Use addSlashes, instead
+	 * @todo Remove in version 1.4 - there are no other occurrences in the core
 	 * Enter description here ...
 	 * @param $text
 	 */
 	function oopsAddSlashes($text)
 	{
-		icms_deprecated('$this->addSlashes', 'This will be removed in version 1.4');
+		icms_deprecated('icms_core_Textsanitizer->addSlashes', 'This will be removed in version 1.4');
 		return $this->addSlashes($text);
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated Use htmlSpecialChars, instead
+	 * @todo Remove in version 1.4 - there are no other occurrences in the core
 	 * Enter description here ...
 	 * @param $text
 	 */
 	function oopsHtmlSpecialChars($text)
 	{
-		icms_deprecated('$this->htmlSpecialChars', 'This will be removed in version 1.4');
+		icms_deprecated('icms_core_Textsanitizer->htmlSpecialChars', 'This will be removed in version 1.4');
 		return $this->htmlSpecialChars($text);
 	}
 
 	/**
-	 * @deprecated
+	 * @deprecated use nl2br, instead
+	 * @todo Remove in version 1.4 - there are no other occurrences in the core
 	 * Enter description here ...
 	 * @param $text
 	 */
 	function oopsNl2Br($text)
 	{
-		icms_deprecated('$this->nl2br', 'This will be removed in version 1.4');
+		icms_deprecated('icms_core_Textsanitizer->nl2br', 'This will be removed in version 1.4');
 		return $this->nl2br($text);
 	}
 	/**#@-*/

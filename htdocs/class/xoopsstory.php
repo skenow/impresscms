@@ -258,7 +258,7 @@ class XoopsStory
 		$title = $myts->censorString($this->title);
 		$hometext = $myts->censorString($this->hometext);
 		$bodytext = $myts->censorString($this->bodytext);
-		$title = $myts->makeTboxData4Save($title);
+		$title = $myts->addSlashes($title);
 		$hometext = $myts->displayTarea($hometext);
 		$bodytext = $myts->displayTarea($bodytext);
 		if(!isset($this->nohtml) || $this->nohtml != 1)
@@ -434,10 +434,10 @@ class XoopsStory
 		switch($format)
 		{
 			case 'Show':
-				$title = $myts->makeTboxData4Show($this->title, $smiley);
+				$title = $myts->htmlSpecialChars($this->title, $smiley);
 				break;
 			case 'Edit':
-				$title = $myts->makeTboxData4Edit($this->title);
+				$title = $myts->htmlSpecialChars($this->title);
 				break;
 			case 'Preview':
 				$title = $myts->makeTboxData4Preview($this->title, $smiley);

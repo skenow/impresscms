@@ -46,7 +46,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 		while(list($bid, $cid, $imptotal, $impmade, $clicks, $date) = $xoopsDB->fetchRow($result)) {
 			$result2 = $xoopsDB->query("SELECT cid, name FROM ".$xoopsDB->prefix("bannerclient")." WHERE cid='". (int) ($cid)."'");
 			list($cid, $name) = $xoopsDB->fetchRow($result2);
-			$name = $myts->makeTboxData4Show($name);
+			$name = $myts->htmlSpecialChars($name);
 			if ( $impmade == 0 ) {
 				$percent = 0;
 			} else {
@@ -86,7 +86,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 		while(list($bid, $cid, $impressions, $clicks, $datestart, $dateend) = $xoopsDB->fetchRow($result)) {
 			$result2 = $xoopsDB->query("SELECT cid, name FROM ".$xoopsDB->prefix("bannerclient")." WHERE cid='". (int) ($cid)."'");
 			list($cid, $name) = $xoopsDB->fetchRow($result2);
-			$name = $myts->makeTboxData4Show($name);
+			$name = $myts->htmlSpecialChars($name);
 			$percent = substr(100 * $clicks / $impressions, 0, 5);
 			echo "
 			<td align='center'>".icms_conv_nr2local($bid)."</td>
@@ -142,7 +142,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			<select name='cid'>";
 			$result = $xoopsDB->query("SELECT cid, name FROM ".$xoopsDB->prefix("bannerclient"));
 			while(list($cid, $name) = $xoopsDB->fetchRow($result)) {
-				$name = $myts->makeTboxData4Show($name);
+				$name = $myts->htmlSpecialChars($name);
 				echo "<option value='$cid'>$name</option>";
 			}
 			echo "
@@ -216,7 +216,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 		echo "<a href='$clickurl'>$clickurl</a><br /><br /><table width='100%' border='0'><tr align='center'><td align='center'>"._AM_BANNERID."</td><td align='center'>"._AM_IMPRESION."</td><td align='center'>"._AM_IMPLEFT."</td><td align='center'>"._AM_CLICKS."</td><td align='center'>"._AM_NCLICKS."</td><td align='center'>"._AM_CLINAME."</td></tr><tr align='center'>";
 		$result2 = $xoopsDB->query("SELECT cid, name FROM ".$xoopsDB->prefix("bannerclient")." WHERE cid='". (int) ($cid)."'");
 		list($cid, $name) = $xoopsDB->fetchRow($result2);
-		$name = $myts->makeTboxData4Show($name);
+		$name = $myts->htmlSpecialChars($name);
 		$percent = substr(100 * $clicks / $impmade, 0, 5);
 		if ( $imptotal == 0 ) {
 			$left = 'unlimited';
@@ -268,11 +268,11 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 		<select name='cid'>\n";
 		$result = $xoopsDB->query("SELECT cid, name FROM ".$xoopsDB->prefix("bannerclient")." where cid='". (int) ($cid)."'");
 		list($cid, $name) = $xoopsDB->fetchRow($result);
-		$name = $myts->makeTboxData4Show($name);
+		$name = $myts->htmlSpecialChars($name);
 		echo "<option value='$cid' selected='selected'>$name</option>";
 		$result = $xoopsDB->query("SELECT cid, name FROM ".$xoopsDB->prefix("bannerclient"));
 		while(list($ccid, $name) = $xoopsDB->fetchRow($result)) {
-			$name = $myts->makeTboxData4Show($name);
+			$name = $myts->htmlSpecialChars($name);
 			if ( $cid != $ccid ) {
 				echo "<option value='$ccid'>$name</option>";
 			}
@@ -322,7 +322,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 		icms_cp_header();
 		$result = $xoopsDB->query("SELECT cid, name FROM ".$xoopsDB->prefix("bannerclient")." WHERE cid='". (int) ($cid)."'");
 		list($cid, $name) = $xoopsDB->fetchRow($result);
-		$name = $myts->makeTboxData4Show($name);
+		$name = $myts->htmlSpecialChars($name);
 		echo "<table width='100%' border='0' cellspacing='1' class='outer'><tr><td class=\"odd\">";
 		echo "<h4>"._AM_DELEADC."</h4>".sprintf(_AM_SUREDELCLI,$name)."<br /><br />";
 		$result2 = $xoopsDB->query("SELECT imageurl, clickurl, htmlbanner, htmlcode FROM ".$xoopsDB->prefix("banner")." WHERE cid='". (int) ($cid)."'");
@@ -370,12 +370,12 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 		icms_cp_header();
 		$result = $xoopsDB->query("SELECT name, contact, email, login, passwd, extrainfo FROM ".$xoopsDB->prefix("bannerclient")." WHERE cid='". (int) ($cid)."'");
 		list($name, $contact, $email, $login, $passwd, $extrainfo) = $xoopsDB->fetchRow($result);
-		$name = $myts->makeTboxData4Edit($name);
-		$contact = $myts->makeTboxData4Edit($contact);
-		$email = $myts->makeTboxData4Edit($email);
-		$login = $myts->makeTboxData4Edit($login);
-		$passwd = $myts->makeTboxData4Edit($passwd);
-		$extrainfo = $myts->makeTareaData4Edit($extrainfo);
+		$name = $myts->htmlSpecialChars($name);
+		$contact = $myts->htmlSpecialChars($contact);
+		$email = $myts->htmlSpecialChars($email);
+		$login = $myts->htmlSpecialChars($login);
+		$passwd = $myts->htmlSpecialChars($passwd);
+		$extrainfo = $myts->htmlSpecialChars($extrainfo);
 		echo "<table width='100%' border='0' cellspacing='1' class='outer'><tr><td class=\"odd\">";
 		echo "
 		<h4>"._AM_EDITADVCLI."</h4>

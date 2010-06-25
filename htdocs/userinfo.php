@@ -209,7 +209,7 @@ icms_makeSmarty(array(
         						$results[$i]['link'] = "modules/".$module->getVar('dirname')."/".$results[$i]['link'];
         					}
         				}
-        				$results[$i]['title'] = $myts->makeTboxData4Show($results[$i]['title']);
+        				$results[$i]['title'] = $myts->htmlSpecialChars($results[$i]['title']);
         				$results[$i]['time'] = $results[$i]['time'] ? formatTimestamp($results[$i]['time']) : '';
         			}
         			if($count == 5)

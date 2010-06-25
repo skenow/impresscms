@@ -132,7 +132,7 @@ class TextSanitizer
 
 	function sanitizeForPreview($text, $allowhtml = 0, $smiley = 1, $bbcode = 1)
 	{
-		$text = $this->oopsStripSlashesGPC($text);
+		$text = $this->stripSlashesGPC($text);
 		if ( $allowhtml == 0 ) {
 			$text = $this->htmlSpecialChars($text);
 		} else {

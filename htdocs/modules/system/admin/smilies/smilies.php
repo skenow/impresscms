@@ -43,9 +43,9 @@ function SmilesAdmin()
 				} else {
 					$class= 'odd';
 				}
-				$smiles['code'] = $myts->makeTboxData4Show($smiles['code']);
-				$smiles['smile_url'] = $myts->makeTboxData4Edit($smiles['smile_url']);
-				$smiles['smile_emotion'] = $myts->makeTboxData4Edit($smiles['emotion']);
+				$smiles['code'] = $myts->htmlSpecialChars($smiles['code']);
+				$smiles['smile_url'] = $myts->htmlSpecialChars($smiles['smile_url']);
+				$smiles['smile_emotion'] = $myts->htmlSpecialChars($smiles['emotion']);
 				echo "<tr align='center' class='$class'>";
 				echo "<td align='"._GLOBAL_LEFT."'>".$smiles['code']."</td>";
 				echo "<td><img src='".$url_smiles."/".$smiles['smile_url']."' alt='' /></td>";
@@ -89,9 +89,9 @@ function SmilesEdit($id)
 			//EMPTY
 		} else {
 			if ($smiles = $db->fetchArray($getsmiles)) {
-				$smiles['smile_code'] = $myts->makeTboxData4Edit($smiles['code']);
-				$smiles['smile_url'] = $myts->makeTboxData4Edit($smiles['smile_url']);
-				$smiles['smile_desc'] = $myts->makeTboxData4Edit($smiles['emotion']);
+				$smiles['smile_code'] = $myts->htmlSpecialChars($smiles['code']);
+				$smiles['smile_url'] = $myts->htmlSpecialChars($smiles['smile_url']);
+				$smiles['smile_desc'] = $myts->htmlSpecialChars($smiles['emotion']);
 				$smiles['smile_display'] = $smiles['display'];
 				$smiles['smile_form'] = _AM_EDITSMILE;
 				$smiles['op'] = 'SmilesSave';

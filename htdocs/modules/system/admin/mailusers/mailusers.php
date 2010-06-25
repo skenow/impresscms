@@ -140,10 +140,10 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 				$xoopsMailer->setToUsers($added[$i]);
 			}
 
-			$xoopsMailer->setFromName($myts->oopsStripSlashesGPC($_POST['mail_fromname']));
-			$xoopsMailer->setFromEmail($myts->oopsStripSlashesGPC($_POST['mail_fromemail']));
-			$xoopsMailer->setSubject($myts->oopsStripSlashesGPC($_POST['mail_subject']));
-			$xoopsMailer->setBody($myts->oopsStripSlashesGPC($_POST['mail_body']));
+			$xoopsMailer->setFromName($myts->stripSlashesGPC($_POST['mail_fromname']));
+			$xoopsMailer->setFromEmail($myts->stripSlashesGPC($_POST['mail_fromemail']));
+			$xoopsMailer->setSubject($myts->stripSlashesGPC($_POST['mail_subject']));
+			$xoopsMailer->setBody($myts->stripSlashesGPC($_POST['mail_body']));
 			if ( in_array("mail", $_POST['mail_send_to']) ) {
 				$xoopsMailer->useMail();
 			}
