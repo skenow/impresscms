@@ -1,10 +1,10 @@
 <?php
 /**
- * Form control creating an image upload element for an object derived from IcmsPersistableObject
+ * Form control creating an image upload element for an object derived from icms_ipf_Object
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		IcmsPersistableObject
+ * @package		icms_ipf_Object
  * @since		  1.1
  * @author		  marcan <marcan@impresscms.org>
  * @version		$Id$
@@ -20,11 +20,11 @@ include_once ICMS_ROOT_PATH . '/class/xoopsformloader.php';
 /**
  * IcmsForm base class
  *
- * Base class representing a single form for a specific IcmsPersistableObject
+ * Base class representing a single form for a specific icms_ipf_Object
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		IcmsPersistableObject
+ * @package		icms_ipf_Object
  * @since		  1.1
  * @author		  marcan <marcan@impresscms.org>
  * @version		$Id$

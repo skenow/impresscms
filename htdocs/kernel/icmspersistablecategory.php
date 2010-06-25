@@ -1,10 +1,10 @@
 <?php
 /**
- * Contains the basic classe for managing a category object based on IcmsPersistableObject
+ * Contains the basic classe for managing a category object based on icms_ipf_Object
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		IcmsPersistableObject
+ * @package		icms_ipf_Object
  * @since		1.2
  * @author		marcan <marcan@impresscms.org>
  * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
@@ -18,7 +18,7 @@ if (!defined("ICMS_ROOT_PATH")) {
 include_once ICMS_ROOT_PATH . "/kernel/icmspersistableseoobject.php";
 /**
  * Persistble category object
- * @package 	IcmsPersistableObject
+ * @package 	icms_ipf_Object
  * @subpackage 	IcmsPersistableCategory
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -68,7 +68,7 @@ class IcmsPersistableCategory extends IcmsPersistableSeoObject {
 	}
 	/**
 	 * Returns the description for the category
-	 * @see 	IcmsPersistableObject::getValueFor()
+	 * @see 	icms_ipf_Object::getValueFor()
 	 * @return 	string	Text to display as the description
 	 */
 	function description() {
@@ -111,7 +111,7 @@ class IcmsPersistableCategory extends IcmsPersistableSeoObject {
 	function getCategoryPath($withAllLink=true, $currentCategory=false)	{
 
 		include_once ICMS_ROOT_PATH . "/kernel/icmspersistablecontroller.php";
-		$controller = new IcmsPersistableObjectController($this->handler);
+		$controller = new icms_ipf_ObjectController($this->handler);
 
 		if (!$this->_categoryPath) {
 			if ($withAllLink && !$currentCategory) {

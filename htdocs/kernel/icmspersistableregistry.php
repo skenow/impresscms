@@ -4,7 +4,7 @@
  *
  * @copyright      http://www.impresscms.org/ The ImpressCMS Project
  * @license         LICENSE.txt
- * @package	IcmsPersistableObject
+ * @package	icms_ipf_Object
  * @since            1.1
  * @author		marcan <marcan@impresscms.org>
  * @version		$Id$
@@ -13,13 +13,13 @@
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
 /**
- * Registry of IcmsPersistableObject
+ * Registry of icms_ipf_Object
  *
  * Class responsible of caching objects to make them easily reusable without querying the database
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		IcmsPersistableObject
+ * @package		icms_ipf_Object
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
  * @version		$Id$

@@ -171,7 +171,7 @@ class SystemBlocksadmin extends icms_block_Object {
 	 *
 	 * @return a {@link SmartobjectForm} object for this object
 	 *
-	 * @see IcmsPersistableObjectForm::IcmsPersistableObjectForm()
+	 * @see icms_ipf_ObjectForm::icms_ipf_ObjectForm()
 	 */
 	function getForm($form_caption, $form_name, $form_action=false, $submit_button_caption = _CO_ICMS_SUBMIT, $cancel_js_action=false, $captcha=false){
 		if( !$this->isNew() && $this->getVar('block_type') != 'C' ){

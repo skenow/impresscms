@@ -2,11 +2,11 @@
 /**
  * IcmsMetagen
  *
- * Containing the class to manage meta informations of IcmsPersistableObject
+ * Containing the class to manage meta informations of icms_ipf_Object
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		IcmsPersistableObject
+ * @package		icms_ipf_Object
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
  * @version		$Id$
@@ -19,7 +19,7 @@ if (!defined("ICMS_ROOT_PATH")) {
 /**
  * Generates META tags
  *
- * @package IcmsPersistableObject
+ * @package icms_ipf_Object
  */
 class IcmsMetagen
 {

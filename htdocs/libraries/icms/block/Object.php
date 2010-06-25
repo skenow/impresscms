@@ -21,12 +21,12 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @since ImpressCMS 1.2
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
-class icms_block_Object extends IcmsPersistableObject {
+class icms_block_Object extends icms_ipf_Object {
 
 	public function __construct(& $handler) {
 
 		parent::__construct($handler);
-//		$this->IcmsPersistableObject($handler);
+//		$this->icms_ipf_Object($handler);
 
 		$this->quickInitVar('name', XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar('bid', XOBJ_DTYPE_INT, true);

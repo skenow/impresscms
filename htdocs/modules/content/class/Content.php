@@ -27,7 +27,7 @@ class mod_content_Content extends IcmsPersistableSeoObject {
 	public function __construct(&$handler) {
 		global $xoopsConfig, $contentConfig;
 
-		$this->IcmsPersistableObject ( $handler );
+		$this->icms_ipf_Object ( $handler );
 
 		$this->quickInitVar ( 'content_id', XOBJ_DTYPE_INT, true );
 		$this->quickInitVar ( 'content_pid', XOBJ_DTYPE_INT, false );

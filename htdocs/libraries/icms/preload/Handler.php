@@ -4,7 +4,7 @@
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license	LICENSE.txt
- * @package	IcmsPersistableObject
+ * @package	icms_ipf_Object
  * @since	1.1
  * @author		marcan <marcan@impresscms.org>
  * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>

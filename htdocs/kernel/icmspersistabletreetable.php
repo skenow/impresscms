@@ -1,10 +1,10 @@
 <?php
 /**
- * Contains the classes responsible for displaying a tree table filled with IcmsPersistableObject
+ * Contains the classes responsible for displaying a tree table filled with icms_ipf_Object
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		IcmsPersistableObject
+ * @package		icms_ipf_Object
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
  * @version		$Id$
@@ -17,11 +17,11 @@ include_once ICMS_ROOT_PATH . "/kernel/icmspersistabletable.php" ;
 /**
  * IcmsPersistableTreeTable base class
  *
- * Base class representing a table for displaying IcmsPersistableObject tree objects
+ * Base class representing a table for displaying icms_ipf_Object tree objects
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		IcmsPersistableObject
+ * @package		icms_ipf_Object
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
  * @version		$Id$
@@ -38,7 +38,7 @@ class IcmsPersistableTreeTable extends IcmsPersistableTable {
 	 * Get children objects given a specific category_pid
 	 *
 	 * @var int $category_pid id of the parent which children we want to retreive
-	 * @return array of IcmsPersistableObject
+	 * @return array of icms_ipf_Object
 	 */
 	function getChildrenOf($category_pid=0) {
 		return isset($this->_objects[$category_pid]) ? $this->_objects[$category_pid] : false;

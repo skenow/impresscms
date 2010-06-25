@@ -7,7 +7,7 @@
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		IcmsPersistableObject
+ * @package		icms_ipf_Object
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
  * @author		This was inspired by Mithrandir PersistableObjectHanlder: Jan Keller Pedersen <mithrandir@xoops.org> - IDG Danmark A/S <www.idg.dk>
@@ -26,7 +26,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	var $_itemname;
 
 	/**
-	 * Name of the table use to store this {@link IcmsPersistableObject}
+	 * Name of the table use to store this {@link icms_ipf_Object}
 	 *
 	 * Note that the name of the table needs to be free of the database prefix.
 	 * For example "smartsection_categories"
@@ -35,7 +35,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	var $table;
 
 	/**
-	 * Name of the table key that uniquely identify each {@link IcmsPersistableObject}
+	 * Name of the table key that uniquely identify each {@link icms_ipf_Object}
 	 *
 	 * For example : "categoryid"
 	 * @var string
@@ -43,7 +43,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	var $keyName;
 
 	/**
-	 * Name of the class derived from {@link IcmsPersistableObject} and which this handler is handling
+	 * Name of the class derived from {@link icms_ipf_Object} and which this handler is handling
 	 *
 	 * Note that this string needs to be lowercase
 	 *
@@ -53,7 +53,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	var $className;
 
 	/**
-	 * Name of the field which properly identify the {@link IcmsPersistableObject}
+	 * Name of the field which properly identify the {@link icms_ipf_Object}
 	 *
 	 * For example : "name" (this will be the category's name)
 	 * @var string
@@ -69,7 +69,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	var $summaryName;
 
 	/**
-	 * Page name use to basically manage and display the {@link IcmsPersistableObject}
+	 * Page name use to basically manage and display the {@link icms_ipf_Object}
 	 *
 	 * This page needs to be the same in user side and admin side
 	 *
@@ -80,7 +80,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	var $_page;
 
 	/**
-	 * Full path of the module using this {@link IcmsPersistableObject}
+	 * Full path of the module using this {@link icms_ipf_Object}
 	 *
 	 * <code>ICMS_URL . "/modules/smartsection/"</code>
 	 * @todo this could probably be automatically deducted from the class name as it is always prefixed with the module name
@@ -132,8 +132,8 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 *
 	 * @param object $db Database object {@link XoopsDatabase}
 	 * @param string $itemname Object to be managed
-	 * @param string $keyname Name of the table key that uniquely identify each {@link IcmsPersistableObject}
-	 * @param string $idenfierName Name of the field which properly identify the {@link IcmsPersistableObject}
+	 * @param string $keyname Name of the table key that uniquely identify each {@link icms_ipf_Object}
+	 * @param string $idenfierName Name of the field which properly identify the {@link icms_ipf_Object}
 	 * @param string $summaryName Name of the field which will be use as a summary for the object
 	 * @param string $modulename Name of the module controlling this object
 	 * @return object
@@ -208,11 +208,11 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	}
 
 	/**
-	 * create a new {@link IcmsPersistableObject}
+	 * create a new {@link icms_ipf_Object}
 	 *
 	 * @param bool $isNew Flag the new objects as "new"?
 	 *
-	 * @return object {@link IcmsPersistableObject}
+	 * @return object {@link icms_ipf_Object}
 	 */
 	function &create($isNew = true) {
 		$obj = new $this->className($this);
@@ -243,11 +243,11 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	}
 
 	/**
-	 * retrieve a {@link IcmsPersistableObject}
+	 * retrieve a {@link icms_ipf_Object}
 	 *
 	 * @param mixed $id ID of the object - or array of ids for joint keys. Joint keys MUST be given in the same order as in the constructor
 	 * @param bool $as_object whether to return an object or an array
-	 * @return mixed reference to the {@link IcmsPersistableObject}, FALSE if failed
+	 * @return mixed reference to the {@link icms_ipf_Object}, FALSE if failed
 	 */
 	function &get($id, $as_object = true, $debug = false, $criteria = false) {
 		if (!$criteria) {
@@ -256,7 +256,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 		if (is_array($this->keyName)) {
 			for ($i = 0; $i < count($this->keyName); $i++) {
 				/**
-				 * In some situations, the $id is not an INTEGER. IcmsPersistableObjectTag is an example.
+				 * In some situations, the $id is not an INTEGER. icms_ipf_ObjectTag is an example.
 				 * Is the fact that we removed the intval() represents a security risk ?
 				 */
 				//$criteria->add(new icms_criteria_Item($this->keyName[$i], ($id[$i]), '=', $this->_itemname));
@@ -266,7 +266,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 		else {
 			//$criteria = new icms_criteria_Item($this->keyName, intval($id), '=', $this->_itemname);
 			/**
-			 * In some situations, the $id is not an INTEGER. IcmsPersistableObjectTag is an example.
+			 * In some situations, the $id is not an INTEGER. icms_ipf_ObjectTag is an example.
 			 * Is the fact that we removed the intval() represents a security risk ?
 			 */
 			$criteria->add(new icms_criteria_Item($this->keyName, $id, '=', $this->_itemname));
@@ -293,11 +293,11 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	}
 
 	/**
-	 * retrieve a {@link IcmsPersistableObject}
+	 * retrieve a {@link icms_ipf_Object}
 	 *
 	 * @param mixed $id ID of the object - or array of ids for joint keys. Joint keys MUST be given in the same order as in the constructor
 	 * @param bool $as_object whether to return an object or an array
-	 * @return mixed reference to the {@link IcmsPersistableObject}, FALSE if failed
+	 * @return mixed reference to the {@link icms_ipf_Object}, FALSE if failed
 	 */
 	function &getD($id, $as_object = true) {
 		return $this->get($id, $as_object, true);
@@ -620,7 +620,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	/**
 	 * Build an array containing all the ids of an array of objects as array
 	 *
-	 * @param array $objectsAsArray array of IcmsPersistableObject
+	 * @param array $objectsAsArray array of icms_ipf_Object
 	 */
 	function getIdsFromObjectsAsArray($objectsAsArray) {
 		$ret = array();

@@ -19,13 +19,13 @@ define ( 'ICMS_CUSTOMTAG_TYPE_XCODES', 1 );
 define ( 'ICMS_CUSTOMTAG_TYPE_HTML', 2 );
 define ( 'ICMS_CUSTOMTAG_TYPE_PHP', 3 );
 
-class SystemCustomtag extends IcmsPersistableObject {
+class SystemCustomtag extends icms_ipf_Object {
 
 	public $content = false;
 	public $evaluated = false;
 
 	function SystemCustomtag(&$handler) {
-		$this->IcmsPersistableObject($handler);
+		$this->icms_ipf_Object($handler);
 
 		$this->quickInitVar ( 'customtagid', XOBJ_DTYPE_INT, true );
 		$this->quickInitVar ( 'name', XOBJ_DTYPE_TXTBOX, true, _CO_ICMS_CUSTOMTAG_NAME, _CO_ICMS_CUSTOMTAG_NAME_DSC );

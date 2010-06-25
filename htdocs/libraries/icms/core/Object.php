@@ -415,7 +415,7 @@ class icms_core_Object {
 	 * clean values of all variables of the object for storage.
 	 * also add slashes whereever needed
 	 *
-	 * We had to put this method in the IcmsPersistableObject because the XOBJ_DTYPE_ARRAY does not work properly
+	 * We had to put this method in the icms_ipf_Object because the XOBJ_DTYPE_ARRAY does not work properly
 	 * at least on PHP 5.1. So we have created a new type XOBJ_DTYPE_SIMPLE_ARRAY to handle 1 level array
 	 * as a string separated by |
 	 *

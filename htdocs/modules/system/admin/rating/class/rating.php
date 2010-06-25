@@ -16,12 +16,12 @@ die ( "ImpressCMS root path not defined" );
 include_once ICMS_ROOT_PATH . "/kernel/icmspersistableobject.php";
 include_once ICMS_ROOT_PATH . "/class/plugins.php";
 
-class SystemRating extends IcmsPersistableObject {
+class SystemRating extends icms_ipf_Object {
 
 	public $_modulePlugin=false;
 
 	function SystemRating(&$handler) {
-		$this->IcmsPersistableObject($handler);
+		$this->icms_ipf_Object($handler);
 
 		$this->quickInitVar('ratingid', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('dirname', XOBJ_DTYPE_TXTBOX, true, _CO_ICMS_RATING_DIRNAME);

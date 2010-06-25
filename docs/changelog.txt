@@ -291,7 +291,7 @@ Revision: 9336
 * #664: installer error - stage 12 (stranger)
 * #607: Fatal error - function declaration problem if Frameworks is present (stranger)
 * #710: IPF issue: icmsformtextelement.php, icmsformtextelement.php, icmsformcheckelement.php (stranger)
-* #733: Fatal error: Class 'IcmsPersistableObject' not found in G:\xampp\htdocs\trunk\modules\system\admin\autotasks\class\autotasks.php on line 21 (stranger)
+* #733: Fatal error: Class 'icms_ipf_Object' not found in G:\xampp\htdocs\trunk\modules\system\admin\autotasks\class\autotasks.php on line 21 (stranger)
 * #761: exiting redirect_header properly now (Phoenyx)
 * #647: fixed module menu is not displayed on the admin page (mekdrop)
 * #746: After the installation you dont have an autotask (stranger)
@@ -441,7 +441,7 @@ Revision: 9336
 * #274: Smarty image resizer tag plugin. It inserts -and caches- resized copies of images as requested by the template (nachenko)
 * #532: new function icms_buildCriteria() (malanciault)
 * #533: new IcmsBreadcrumb class (malanciault)
-* #535: IcmsPersistableObject store and delete methods (malanciault)
+* #535: icms_ipf_Object store and delete methods (malanciault)
 
 '''Changed'''
 * Identicon for Gravatar added (sato-san)
@@ -903,7 +903,7 @@ Revision: 9336
 * Themes block to be shown as default. (stranger)
 * 3 new plugins for tinymce. Xoopsimagemanager, XoopsEmotions, XoopsCodeQuote (luciorota/real_therplima)
 * OpenID relying party now integrated in the core (malanciault)
-* Implementation of the IcmsPersistableRegistry allowing caching when fetching IcmsPersistableObjects from the database (malanciault)
+* Implementation of the IcmsPersistableRegistry allowing caching when fetching icms_ipf_Objects from the database (malanciault)
 * new theme "iTheme" is now included (MrTheme)
 
 '''Improved'''

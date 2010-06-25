@@ -17,12 +17,12 @@ include_once ICMS_ROOT_PATH . "/kernel/icmspersistableobject.php";
 
 icms_loadLanguageFile('system', 'autotasks', true);
 
-class SystemAutoTasks extends IcmsPersistableObject {
+class SystemAutoTasks extends icms_ipf_Object {
 
 	public $content = false;
 
 	function __construct(&$handler) {
-		$this->IcmsPersistableObject($handler);
+		$this->icms_ipf_Object($handler);
 
 		$this->quickInitVar('sat_id', XOBJ_DTYPE_INT, false);
 		$this->quickInitVar('sat_lastruntime', XOBJ_DTYPE_INT, false, _CO_ICMS_AUTOTASKS_LASTRUNTIME, null, 0);

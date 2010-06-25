@@ -16,12 +16,12 @@ die ( "ImpressCMS root path not defined" );
 include_once ICMS_ROOT_PATH . "/kernel/icmspersistableobject.php";
 icms_loadLanguageFile('system', 'mimetype', true);
 
-class SystemMimetype extends IcmsPersistableObject {
+class SystemMimetype extends icms_ipf_Object {
 
 	public $content = false;
 
 	function SystemMimetype(&$handler) {
-		$this->IcmsPersistableObject($handler);
+		$this->icms_ipf_Object($handler);
 
 		$this->quickInitVar ( 'mimetypeid', XOBJ_DTYPE_INT, true );
 		$this->quickInitVar ( 'extension', XOBJ_DTYPE_TXTBOX, true, _CO_ICMS_MIMETYPE_EXTENSION, _CO_ICMS_MIMETYPE_EXTENSION_DSC );

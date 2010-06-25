@@ -1,12 +1,12 @@
 <?php
 /**
- * IcmsPersistableObjects Registry
+ * icms_ipf_Objects Registry
  *
- * The IcmsPersistableObjects Registry is an object containing IcmsPersistableObject objects that will be reused in the same process
+ * The icms_ipf_Objects Registry is an object containing icms_ipf_Object objects that will be reused in the same process
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		IcmsPersistableObject
+ * @package		icms_ipf_Object
  * @since		1.2
  * @author		marcan <marcan@impresscms.org>
  * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
@@ -17,7 +17,7 @@ if (!defined("ICMS_ROOT_PATH")) {
 	die("ImpressCMS root path not defined");
 }
 
-class IcmsPersistableObjectsRegistry {
+class icms_ipf_ObjectsRegistry {
 
 	var $_registryArray;
 
@@ -33,7 +33,7 @@ class IcmsPersistableObjectsRegistry {
 	{
 		static $instance;
 		if (!isset($instance)) {
-			$instance = new IcmsPersistableObjectsRegistry();
+			$instance = new icms_ipf_ObjectsRegistry();
 		}
 		return $instance;
 	}

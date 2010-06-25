@@ -17,7 +17,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * icms_block_position_Object
  *
  */
-class icms_block_position_Object extends IcmsPersistableObject {
+class icms_block_position_Object extends icms_ipf_Object {
 
 	/**
 	 * Constructor

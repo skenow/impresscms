@@ -5,7 +5,7 @@
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		IcmsPersistableObject
+ * @package		icms_ipf_Object
  * @since		1.1
  * @author		Original idea by Jan Keller Pedersen <mithrandir@xoops.org> - IDG Danmark A/S <www.idg.dk>
  * @author		marcan <marcan@impresscms.org>
@@ -126,7 +126,7 @@ class IcmsPersistableController {
 						$uploaderObj->setTargetFileName(time()."_". $uploaderObj->getMediaName());
 						if ($uploaderObj->upload()) {
 							$uploaderResult = $uploaderResult && true;
-							// Find the related field in the IcmsPersistableObject
+							// Find the related field in the icms_ipf_Object
 							$related_field = str_replace('upload_', '', $name);
 							$uploadedArray[] = $related_field;
 							//si c'est un fichier Rich
@@ -261,11 +261,11 @@ class IcmsPersistableController {
 		}
 	}
 
-	function &storeIcmsPersistableObjectD() {
-		return $this->storeIcmsPersistableObject(true);
+	function &storeicms_ipf_ObjectD() {
+		return $this->storeicms_ipf_Object(true);
 	}
 
-	function &storeIcmsPersistableObject($debug=false, $xparam = false)
+	function &storeicms_ipf_Object($debug=false, $xparam = false)
 	{
 		$ret =& $this->storeFromDefaultForm('', '', null, $debug, $xparam);
 
@@ -418,7 +418,7 @@ class IcmsPersistableController {
 	/**
 	 * This method returns a view link of the Object
 	 *
-	 * @param IcmsPersistableObject $icmsObj
+	 * @param icms_ipf_Object $icmsObj
 	 * @param boolean $onlyUrl
 	 * @param boolean $withimage
 	 * @param boolean $userSide

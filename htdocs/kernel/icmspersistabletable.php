@@ -1,12 +1,12 @@
 <?php
 /**
- * IcmsPersistableObject Table Listing
+ * icms_ipf_Object Table Listing
  *
  * Contains the classes responsible for displaying a highly configurable and features rich listing of IcmseristableObject objects
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		IcmsPersistableObject
+ * @package		icms_ipf_Object
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
  * @version		$Id$
@@ -19,7 +19,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		IcmsPersistableObject
+ * @package		icms_ipf_Object
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
  * @version		$Id$
@@ -74,11 +74,11 @@ class IcmsPersistableColumn {
 /**
  * IcmsPersistableTable base class
  *
- * Base class representing a table for displaying IcmsPersistableObject objects
+ * Base class representing a table for displaying icms_ipf_Object objects
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		IcmsPersistableObject
+ * @package		icms_ipf_Object
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
  * @version		$Id$
@@ -520,8 +520,8 @@ class IcmsPersistableTable {
 		$this->_tpl = new icms_view_Tpl();
 
 		/**
-		 * We need access to the vars of the IcmsPersistableObject for a few things in the table creation.
-		 * Since we may not have an IcmsPersistableObject to look into now, let's create one for this purpose
+		 * We need access to the vars of the icms_ipf_Object for a few things in the table creation.
+		 * Since we may not have an icms_ipf_Object to look into now, let's create one for this purpose
 		 * and we will free it after
 		 */
 		$this->_tempObject =& $this->_objectHandler->create();

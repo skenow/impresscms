@@ -21,11 +21,11 @@ include_once ICMS_ROOT_PATH . '/kernel/icmspersistableobject.php';
  * @since	ImpressCMS 1.2
  * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
  */
-class icms_page_Object extends IcmsPersistableObject {
+class icms_page_Object extends icms_ipf_Object {
 
 	public function __construct( & $handler ){
 
-		$this->IcmsPersistableObject( $handler );
+		$this->icms_ipf_Object( $handler );
 
 		$this->quickInitVar('page_id', XOBJ_DTYPE_INT);
         $this->quickInitVar('page_moduleid', XOBJ_DTYPE_INT, true);

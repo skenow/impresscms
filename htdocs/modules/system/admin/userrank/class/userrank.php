@@ -15,12 +15,12 @@ die ( "ImpressCMS root path not defined" );
 
 include_once ICMS_ROOT_PATH . "/kernel/icmspersistableobject.php";
 
-class SystemUserrank extends IcmsPersistableObject {
+class SystemUserrank extends icms_ipf_Object {
 
 	public $content = false;
 
 	function SystemUserrank(&$handler) {
-		$this->IcmsPersistableObject($handler);
+		$this->icms_ipf_Object($handler);
 
 		$this->quickInitVar('rank_id', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('rank_title', XOBJ_DTYPE_TXTBOX, true, _CO_ICMS_USERRANK_RANK_TITLE, _CO_ICMS_USERRANK_RANK_TITLE_DSC);
