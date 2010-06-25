@@ -64,15 +64,15 @@ class icms_config_Handler {
 	 * @param	object  &$db    reference to database object
 	 */
 	public function icms_config_Handler(&$db) {
-		$this->_cHandler = new XoopsConfigItemHandler($db);
+		$this->_cHandler = new icms_config_Item_Handler($db);
 		$this->_oHandler = new XoopsConfigOptionHandler($db);
 	}
 
 	/**
 	 * Create a config
 	 *
-	 * @see     XoopsConfigItem
-	 * @return	object  reference to the new {@link XoopsConfigItem}
+	 * @see     icms_config_Item_Object
+	 * @return	object  reference to the new {@link icms_config_Item_Object}
 	 */
 	public function &createConfig() {
 		$instance =& $this->_cHandler->create();
@@ -97,7 +97,7 @@ class icms_config_Handler {
 	/**
 	 * insert a new config in the database
 	 *
-	 * @param	object  &$config    reference to the {@link XoopsConfigItem}
+	 * @param	object  &$config    reference to the {@link icms_config_Item_Object}
 	 * @return	true|false if inserting config succeeded or not
 	 */
 	public function insertConfig(&$config) {
@@ -125,7 +125,7 @@ class icms_config_Handler {
 	/**
 	 * Delete a config from the database
 	 *
-	 * @param	object  &$config    reference to a {@link XoopsConfigItem}
+	 * @param	object  &$config    reference to a {@link icms_config_Item_Object}
 	 * @return	true|false if deleting config item succeeded or not
 	 */
 	public function deleteConfig(&$config) {
@@ -156,7 +156,7 @@ class icms_config_Handler {
 	 * @param	bool    $id_as_key      Use the configs' ID as keys?
 	 * @param	bool    $with_options   get the options now?
 	 *
-	 * @return	array   Array of {@link XoopsConfigItem} objects
+	 * @return	array   Array of {@link icms_config_Item_Object} objects
 	 */
 	public function getConfigs($criteria = null, $id_as_key = false, $with_options = false) {
 		return $this->_cHandler->getObjects($criteria, $id_as_key);
