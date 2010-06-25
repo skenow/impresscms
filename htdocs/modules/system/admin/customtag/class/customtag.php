@@ -13,8 +13,6 @@
 if (! defined ( "ICMS_ROOT_PATH" ))
 die ( "ImpressCMS root path not defined" );
 
-include_once ICMS_ROOT_PATH . "/kernel/icmspersistableobject.php";
-
 define ( 'ICMS_CUSTOMTAG_TYPE_XCODES', 1 );
 define ( 'ICMS_CUSTOMTAG_TYPE_HTML', 2 );
 define ( 'ICMS_CUSTOMTAG_TYPE_PHP', 3 );

@@ -14,8 +14,6 @@
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
-include_once ICMS_ROOT_PATH."/kernel/icmspersistableobject.php";
-
 class icms_ipf_Controller {
 	var $handler;
 	function icms_ipf_Controller($handler) {

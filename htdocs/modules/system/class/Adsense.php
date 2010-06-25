@@ -13,8 +13,6 @@
 if (! defined ( "ICMS_ROOT_PATH" ))
 die ( "ImpressCMS root path not defined" );
 
-include_once ICMS_ROOT_PATH . "/kernel/icmspersistableobject.php";
-
 class mod_system_Adsense extends icms_ipf_Object {
 
 	public $content = false;

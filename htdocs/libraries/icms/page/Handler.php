@@ -13,8 +13,6 @@
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
-include_once ICMS_ROOT_PATH . '/kernel/icmspersistableobject.php';
-
 /**
  * ImpressCMS page handler class.
  *

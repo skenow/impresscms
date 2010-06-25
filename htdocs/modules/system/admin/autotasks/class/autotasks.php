@@ -13,8 +13,6 @@ if(!defined('ICMS_ROOT_PATH')) die('ImpressCMS root path not defined');
 //error_reporting(E_ALL);
 //ini_set('display_errors', '1');
 
-include_once ICMS_ROOT_PATH . "/kernel/icmspersistableobject.php";
-
 icms_loadLanguageFile('system', 'autotasks', true);
 
 class SystemAutoTasks extends icms_ipf_Object {
