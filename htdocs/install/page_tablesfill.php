@@ -46,8 +46,6 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 		exit();
 	}
 	include_once './makedata.php';
-	//include_once './class/cachemanager.php';
-	//$cm = new cache_manager;
 	$cm = 'dummy';
 
 	$wizard->loadLangFile( 'install2' );
