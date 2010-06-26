@@ -15,7 +15,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 include_once ICMS_ROOT_PATH . "/kernel/icmspersistabletable.php" ;
 
 /**
- * icms_ipf_view_TreeTable base class
+ * IcmsPersistableTreeTable base class
  *
  * Base class representing a table for displaying icms_ipf_Object tree objects
  *
@@ -27,9 +27,9 @@ include_once ICMS_ROOT_PATH . "/kernel/icmspersistabletable.php" ;
  * @version		$Id$
 
  */
-class icms_ipf_view_TreeTable extends icms_ipf_view_Table {
+class IcmsPersistableTreeTable extends icms_ipf_view_Table {
 
-	function icms_ipf_view_TreeTable(&$objectHandler, $criteria=false, $actions=array('edit', 'delete'), $userSide=false)
+	function IcmsPersistableTreeTable(&$objectHandler, $criteria=false, $actions=array('edit', 'delete'), $userSide=false)
 	{
 		$this->icms_ipf_view_Table($objectHandler, $criteria, $actions, $userSide);
 		$this->_isTree = true;
