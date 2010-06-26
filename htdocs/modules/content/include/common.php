@@ -37,6 +37,6 @@ $contentConfig = icms_getModuleConfig(CONTENT_DIRNAME);
 
 // creating the icmsPersistableRegistry to make it available throughout the module
 global $icmsPersistableRegistry;
-$icmsPersistableRegistry = IcmsPersistableRegistry::getInstance();
+$icmsPersistableRegistry = icms_ipf_registry_Handler::getInstance();
 
 ?>

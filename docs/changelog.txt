@@ -903,7 +903,7 @@ Revision: 9336
 * Themes block to be shown as default. (stranger)
 * 3 new plugins for tinymce. Xoopsimagemanager, XoopsEmotions, XoopsCodeQuote (luciorota/real_therplima)
 * OpenID relying party now integrated in the core (malanciault)
-* Implementation of the IcmsPersistableRegistry allowing caching when fetching icms_ipf_Objects from the database (malanciault)
+* Implementation of the icms_ipf_registry_Handler allowing caching when fetching icms_ipf_Objects from the database (malanciault)
 * new theme "iTheme" is now included (MrTheme)
 
 '''Improved'''
