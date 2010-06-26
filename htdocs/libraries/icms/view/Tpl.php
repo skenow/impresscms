@@ -148,46 +148,46 @@ class icms_view_Tpl extends Smarty {
 			$this->cache_lifetime = $num;
 		}
 	}
-}
 
-/**
- * function to update compiled template file in templates_c folder
- *
- * @param   string  $tpl_id
- * @param   boolean $clear_old
- * @return  boolean
- * @todo	Make this a static method of the Tpl class, this occurs in several places
- **/
-function xoops_template_touch($tpl_id, $clear_old = true) {
-	$tplfile_handler =& xoops_gethandler('view_template_file');
-	$tplfile =& $tplfile_handler->get($tpl_id);
+	/**
+	 * function to update compiled template file in templates_c folder
+	 *
+	 * @param   string  $tpl_id
+	 * @param   boolean $clear_old
+	 * @return  boolean
+	 * @todo	Make this a static method of the Tpl class, this occurs in several places
+	 **/
+	function template_touch($tpl_id, $clear_old = true) {
+		$tplfile_handler =& xoops_gethandler('view_template_file');
+		$tplfile =& $tplfile_handler->get($tpl_id);
 
-	if ( is_object($tplfile) ) {
-		$file = $tplfile->getVar( 'tpl_file', 'n' );
-		$tpl = new icms_view_Tpl();
-		return $tpl->touch( "db:$file" );
+		if ( is_object($tplfile) ) {
+			$file = $tplfile->getVar( 'tpl_file', 'n' );
+			$tpl = new icms_view_Tpl();
+			return $tpl->touch( "db:$file" );
+		}
+		return false;
 	}
-	return false;
-}
 
-/**
- * Clear the module cache
- *
- * @param   int $mid    Module ID
- * @return
- * @todo	Make this a static method of the Tpl class, this is used in system/admin/modulesadmin/modulesadmin.php
- **/
-function xoops_template_clear_module_cache($mid)
-{
-	$icms_block_handler = xoops_gethandler('block');
-	$block_arr = $icms_block_handler->getByModule($mid);
-	$count = count($block_arr);
-	if ($count > 0) {
-		$xoopsTpl = new icms_view_Tpl();
-		$xoopsTpl->xoops_setCaching(2);
-		for ($i = 0; $i < $count; $i++) {
-			if ($block_arr[$i]->getVar('template') != '') {
-				$xoopsTpl->clear_cache('db:'.$block_arr[$i]->getVar('template'), 'blk_'.$block_arr[$i]->getVar('bid'));
+	/**
+	 * Clear the module cache
+	 *
+	 * @param   int $mid    Module ID
+	 * @return
+	 * @todo	Make this a static method of the Tpl class, this is used in system/admin/modulesadmin/modulesadmin.php
+	 **/
+	function template_clear_module_cache($mid)
+	{
+		$icms_block_handler = xoops_gethandler('block');
+		$block_arr = $icms_block_handler->getByModule($mid);
+		$count = count($block_arr);
+		if ($count > 0) {
+			$xoopsTpl = new icms_view_Tpl();
+			$xoopsTpl->xoops_setCaching(2);
+			for ($i = 0; $i < $count; $i++) {
+				if ($block_arr[$i]->getVar('template') != '') {
+					$xoopsTpl->clear_cache('db:'.$block_arr[$i]->getVar('template'), 'blk_'.$block_arr[$i]->getVar('bid'));
+				}
 			}
 		}
 	}

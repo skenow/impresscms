@@ -89,7 +89,7 @@ class icms_view_template_file_Handler extends icms_core_ObjectHandler
 		/**
 		 * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
 		 */
-		if (!is_a($tplfile, 'xoopstplfile')) {
+		if (!is_a($tplfile, 'icms_view_template_file_Object')) {
 			return false;
 		}
 
@@ -116,7 +116,7 @@ class icms_view_template_file_Handler extends icms_core_ObjectHandler
 		/**
 		 * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
 		 */
-		if (!is_a($tplfile, 'xoopstplfile')) {
+		if (!is_a($tplfile, 'icms_view_template_file_Object')) {
 			return false;
 		}
 		if (!$tplfile->isDirty()) {
@@ -170,7 +170,7 @@ class icms_view_template_file_Handler extends icms_core_ObjectHandler
 		/**
 		 * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
 		 */
-		if (!is_a($tplfile, 'xoopstplfile')) {
+		if (!is_a($tplfile, 'icms_view_template_file_Object')) {
 			return false;
 		}
 		if (!$tplfile->isDirty()) {
@@ -209,7 +209,7 @@ class icms_view_template_file_Handler extends icms_core_ObjectHandler
 		/**
 		 * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
 		 */
-		if (!is_a($tplfile, 'xoopstplfile')) {
+		if (!is_a($tplfile, 'icms_view_template_file_Object')) {
 			return false;
 		}
 		$id = (int) ($tplfile->getVar('tpl_id'));

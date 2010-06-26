@@ -14,6 +14,9 @@
 if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
 	exit("Access Denied");
 }
+
+$icmsAdminTpl = new icms_view_Tpl();
+
 include_once ICMS_ROOT_PATH."/modules/system/admin/modulesadmin/modulesadmin.php";
 require_once ICMS_ROOT_PATH."/class/xoopslists.php";
 icms_loadLanguageFile('system', 'blocksadmin', true);

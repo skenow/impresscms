@@ -132,7 +132,7 @@ class icms_module_Handler extends icms_core_ObjectHandler
 	 **/
 	function insert(&$module)
 	{
-		if(strtolower(get_class($module)) != 'xoopsmodule') {return false;}
+		if(get_class($module) != 'icms_module_Object') {return false;}
 		if(!$module->isDirty()) {return true;}
 		if(!$module->cleanVars()) {return false;}
 
@@ -190,7 +190,7 @@ class icms_module_Handler extends icms_core_ObjectHandler
 	 * @return  bool
 	 **/
 	function delete(&$module) {
-		if(strtolower(get_class($module)) != 'xoopsmodule') {return false;}
+		if(get_class($module) != 'icms_module_Object') {return false;}
 
 		$sql = sprintf("DELETE FROM %s WHERE mid = '%u'", $this->db->prefix('modules'), (int) ($module->getVar('mid')));
 		if(!$result = $this->db->query($sql )) {return false;}

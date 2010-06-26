@@ -27,7 +27,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			$op = 'previewtpl';
 		}
 	}
-
+	$icmsAdminTpl = new icms_view_Tpl();
 	switch ($op) {
 		case 'list':
 			$tplset_handler =& xoops_gethandler('view_template_set');
@@ -286,7 +286,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 							}
 						}
 						if ($tplfile->getVar('tpl_tplset') == $xoopsConfig['template_set']) {
-							xoops_template_touch($id);
+							$icmsAdminTpl->template_touch($id);
 						}
 					}
 				} else {
@@ -334,7 +334,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 							$defaulttpl =& $tpltpl_handler->find('default', $tplfile->getVar('tpl_type'), $tplfile->getVar('tpl_refid'), null, $tplfile->getVar('tpl_file'));
 							if (count($defaulttpl) > 0) {
 								include_once ICMS_ROOT_PATH.'/class/template.php';
-								xoops_template_touch($defaulttpl[0]->getVar('tpl_id'), true);
+								$icmsAdminTpl->template_touch($defaulttpl[0]->getVar('tpl_id'), true);
 							}
 						}
 					}
@@ -832,7 +832,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 						} else {
 							if ($tpl->getVar('tpl_tplset') == $xoopsConfig['template_set']) {
 								include_once ICMS_ROOT_PATH.'/class/template.php';
-								xoops_template_touch($tpl_id, true);
+								$icmsAdminTpl->template_touch($tpl_id, true);
 							}
 						}
 					}
@@ -899,7 +899,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 						} else {
 							if ($tplset == $xoopsConfig['template_set']) {
 								include_once ICMS_ROOT_PATH.'/class/template.php';
-								xoops_template_touch($tpl->getVar('tpl_id'), true);
+								$icmsAdminTpl->template_touch($tpl->getVar('tpl_id'), true);
 							}
 						}
 					} else {
@@ -1005,7 +1005,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 				} else {
 					if ($tplset == $xoopsConfig['template_set']) {
 						include_once ICMS_ROOT_PATH.'/class/template.php';
-						xoops_template_touch($newtpl->getVar('tpl_id'));
+						$icmsAdminTpl->template_touch($newtpl->getVar('tpl_id'));
 					}
 				}
 			} else {
@@ -1049,7 +1049,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 					} else {
 						if ($tplset == $xoopsConfig['template_set']) {
 							include_once ICMS_ROOT_PATH.'/class/template.php';
-							xoops_template_touch($newtpl->getVar('tpl_id'));
+							$icmsAdminTpl->template_touch($newtpl->getVar('tpl_id'));
 						}
 						echo '&nbsp;&nbsp;Template <b>'.$tplfiles[$i]->getVar('tpl_file').'</b> added to the database.<br />';
 					}
@@ -1073,7 +1073,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 					} else {
 						if ($tplset == $xoopsConfig['template_set']) {
 							include_once ICMS_ROOT_PATH.'/class/template.php';
-							xoops_template_touch($newtpl->getVar('tpl_id'));
+							$icmsAdminTpl->template_touch($newtpl->getVar('tpl_id'));
 						}
 						echo '&nbsp;&nbsp;&nbsp;&nbsp;Block template <b>'.$tplfiles[$i]->getVar('tpl_file').'</b> added to the database.<br />';
 					}
@@ -1320,7 +1320,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 							$msg[] = 'Template file <b>'.$upload_file.'</b> updated.';
 							if ($tplset == $xoopsConfig['template_set']) {
 								include_once ICMS_ROOT_PATH.'/class/template.php';
-								if (xoops_template_touch($tpl->getVar('tpl_id'), true)) {
+								if ($icmsAdminTpl->template_touch($tpl->getVar('tpl_id'), true)) {
 									$msg[] = 'Template file <b>'.$upload_file.'</b> compiled.';
 								}
 							}

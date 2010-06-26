@@ -23,6 +23,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 			${$k} = $v;
 		}
 	}
+	$icmsAdminTpl = new icms_view_Tpl();
 	$op = (isset ( $_GET ['op'] )) ? trim ( StopXSS ( $_GET ['op'] ) ) : ((isset ( $_POST ['op'] )) ? trim ( StopXSS ( $_POST ['op'] ) ) : 'list');
 
 	if (isset ( $_GET ['confcat_id'] )) {
@@ -582,17 +583,17 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 							$dtemplates = & $tplfile_handler->find ( 'default', 'block' );
 							$dcount = count ( $dtemplates );
 
-							// need to do this to pass to xoops_template_touch function
+							// need to do this to pass to $icmsAdminTpl->template_touch function
 							$GLOBALS ['xoopsConfig'] ['template_set'] = $newtplset;
 
 							for($i = 0; $i < $dcount; $i ++) {
 								$found = & $tplfile_handler->find ( $newtplset, 'block', $dtemplates [$i]->getVar ( 'tpl_refid' ), null );
 								if (count ( $found ) > 0) {
 									// template for the new theme found, compile it
-									xoops_template_touch ( $found [0]->getVar ( 'tpl_id' ) );
+									$icmsAdminTpl->template_touch ( $found [0]->getVar ( 'tpl_id' ) );
 								} else {
 									// not found, so compile 'default' template file
-									xoops_template_touch ( $dtemplates [$i]->getVar ( 'tpl_id' ) );
+									$icmsAdminTpl->template_touch ( $dtemplates [$i]->getVar ( 'tpl_id' ) );
 								}
 							}
 

@@ -86,7 +86,7 @@ function xoops_module_list() {
 }
 
 function xoops_module_install($dirname) {
-	global $icmsUser, $xoopsConfig;
+	global $icmsUser, $xoopsConfig, $icmsAdminTpl;
 	$dirname = trim($dirname);
 	$db =& Database::getInstance();
 	$reservedTables = array('avatar', 'avatar_users_link', 'block_module_link', 'xoopscomments', 'config', 'configcategory', 'configoption', 'image', 'imagebody', 'imagecategory', 'imgset', 'imgset_tplset_link', 'imgsetimg', 'groups','groups_users_link','group_permission', 'online', 'bannerclient', 'banner', 'bannerfinish', 'priv_msgs', 'ranks', 'session', 'smiles', 'users', 'newblocks', 'modules', 'tplfile', 'tplset', 'tplsource', 'xoopsnotifications', 'banner', 'bannerclient', 'bannerfinish');
@@ -210,8 +210,7 @@ function xoops_module_install($dirname) {
 							$msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_INSTEMPFILE, $tpl['file'], $newtplid);
 
 							// generate compiled file
-							//include_once ICMS_ROOT_PATH.'/class/template.php';
-							if (!xoops_template_touch($newtplid)) {
+							if (!$icmsAdminTpl->template_touch($newtplid)) {
 								$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'._MD_AM_FAILCOMPTEMPFILE.'</span>', $tpl['file']);
 							} else {
 								$msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_COMPTEMPFILE, $tpl['file']);
@@ -220,8 +219,7 @@ function xoops_module_install($dirname) {
 						unset($tpldata);
 					}
 				}
-				include_once ICMS_ROOT_PATH.'/class/template.php';
-				xoops_template_clear_module_cache($newmid);
+				$icmsAdminTpl->template_clear_module_cache($newmid);
 				$blocks = $module->getInfo('blocks');
 				if ($blocks != false) {
 					$msgs[] = 'Adding blocks...';
@@ -273,8 +271,7 @@ function xoops_module_install($dirname) {
 									$newtplid = $tplfile->getVar('tpl_id');
 									$msgs[] = '&nbsp;&nbsp;Template <b>'.$block['template'].'</b> added to the database. (ID: <b>'.icms_conv_nr2local($newtplid).'</b>)';
 									// generate compiled file
-									include_once ICMS_ROOT_PATH.'/class/template.php';
-									if (!xoops_template_touch($newtplid)) {
+									if (!$icmsAdminTpl->template_touch($newtplid)) {
 										$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Failed compiling template <b>'.$block['template'].'</b>.</span>';
 									} else {
 										$msgs[] = '&nbsp;&nbsp;Template <b>'.$block['template'].'</b> compiled.</span>';
@@ -541,13 +538,12 @@ function &xoops_module_gettemplate($dirname, $template, $block=false) {
 }
 
 function xoops_module_uninstall($dirname) {
-	global $xoopsConfig;
+	global $xoopsConfig, $icmsAdmindTpl;
 	$reservedTables = array('avatar', 'avatar_users_link', 'block_module_link', 'xoopscomments', 'config', 'configcategory', 'configoption', 'image', 'imagebody', 'imagecategory', 'imgset', 'imgset_tplset_link', 'imgsetimg', 'groups','groups_users_link','group_permission', 'online', 'bannerclient', 'banner', 'bannerfinish', 'priv_msgs', 'ranks', 'session', 'smiles', 'users', 'newblocks', 'modules', 'tplfile', 'tplset', 'tplsource', 'xoopsnotifications', 'banner', 'bannerclient', 'bannerfinish');
 	$db =& Database::getInstance();
 	$module_handler =& xoops_gethandler('module');
 	$module =& $module_handler->getByDirname($dirname);
-	include_once ICMS_ROOT_PATH.'/class/template.php';
-	xoops_template_clear_module_cache($module->getVar('mid'));
+	$icmsAdminTpl->template_clear_module_cache($module->getVar('mid'));
 	if ($module->getVar('dirname') == 'system') {
 		return "<p>".sprintf(_MD_AM_FAILUNINS, "<b>".$module->getVar('name')."</b>")."&nbsp;"._MD_AM_ERRORSC."<br /> - "._MD_AM_SYSNO."</p>";
 	} elseif ($module->getVar('dirname') == $xoopsConfig['startpage']) {
@@ -747,11 +743,10 @@ function xoops_module_uninstall($dirname) {
 }
 
 function xoops_module_activate($mid) {
-	global $icms_block_handler;
+	global $icms_block_handler, $icmsAdminTpl;
 	$module_handler =& xoops_gethandler('module');
 	$module =& $module_handler->get($mid);
-	include_once ICMS_ROOT_PATH.'/class/template.php';
-	xoops_template_clear_module_cache($module->getVar('mid'));
+	$icmsAdminTpl->template_clear_module_cache($module->getVar('mid'));
 	$module->setVar('isactive', 1);
 	if (!$module_handler->insert($module)) {
 		$ret = "<p>".sprintf(_MD_AM_FAILACT, "<b>".$module->getVar('name')."</b>")."&nbsp;"._MD_AM_ERRORSC."<br />".$module->getHtmlErrors();
@@ -768,15 +763,14 @@ function xoops_module_activate($mid) {
 }
 
 function xoops_module_deactivate($mid) {
-	global $icms_page_handler, $icms_block_handler, $xoopsConfig;
+	global $icms_page_handler, $icms_block_handler, $xoopsConfig, $icmsAdminTpl;
 	if(!isset($icms_page_handler)){
 		$icms_page_handler = icms_getModuleHandler ( 'pages', 'system' );
 	}
 
 	$module_handler =& xoops_gethandler('module');
 	$module =& $module_handler->get($mid);
-	include_once ICMS_ROOT_PATH.'/class/template.php';
-	xoops_template_clear_module_cache($mid);
+	$icmsAdminTpl->template_clear_module_cache($mid);
 	$module->setVar('isactive', 0);
 	if ($module->getVar('dirname') == "system") {
 		return "<p>".sprintf(_MD_AM_FAILDEACT, "<b>".$module->getVar('name')."</b>")."&nbsp;"._MD_AM_ERRORSC."<br /> - "._MD_AM_SYSNO."</p>";
@@ -827,7 +821,8 @@ function xoops_module_change($mid, $weight, $name) {
 }
 
 function icms_module_update($dirname) {
-	global $icmsUser, $xoopsConfig, $xoopsDB;
+	global $icmsUser, $xoopsConfig, $xoopsDB, $icmsAdminTpl;
+
 	$dirname = trim($dirname);
 	$module_handler =& xoops_gethandler('module');
 	$module =& $module_handler->getByDirname($dirname);
@@ -835,8 +830,7 @@ function icms_module_update($dirname) {
 	// Save current version for use in the update function
 	$prev_version = $module->getVar('version');
 	$prev_dbversion = $module->getVar('dbversion');
-	include_once ICMS_ROOT_PATH.'/class/template.php';
-	xoops_template_clear_module_cache($module->getVar('mid'));
+	$icmsAdminTpl->template_clear_module_cache($module->getVar('mid'));
 	// we dont want to change the module name set by admin
 	$temp_name = $module->getVar('name');
 	$module->loadInfoAsVar($dirname);
@@ -891,7 +885,7 @@ function icms_module_update($dirname) {
 						$newid = $tplfile->getVar('tpl_id');
 						$msgs[] = sprintf('&nbsp;&nbsp;<span>'._MD_AM_TEMPINS.'</span>', $tpl['file']);
 						if ($xoopsConfig['template_set'] == 'default') {
-							if (!xoops_template_touch($newid)) {
+							if (!$icmsAdminTpl->template_touch($newid)) {
 								$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'._MD_AM_NOTRECOMPTEMPFILE.'</span>', $tpl['file']);
 							} else {
 								$msgs[] = sprintf('&nbsp;&nbsp;<span>'._MD_AM_RECOMPTEMPFILE.'</span>', $tpl['file']);
@@ -961,7 +955,7 @@ function icms_module_update($dirname) {
 								} else {
 									$msgs[] = '&nbsp;&nbsp;Template <b>'.$blocks[$i]['template'].'</b> updated.';
 									if ($xoopsConfig['template_set'] == 'default') {
-										if (!xoops_template_touch($tplfile_new->getVar('tpl_id'))) {
+										if (!$icmsAdminTpl->template_touch($tplfile_new->getVar('tpl_id'))) {
 											$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'._MD_AM_NOTRECOMPTEMPFILE.'</span>', $blocks[$i]['template']);
 										} else {
 											$msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_RECOMPTEMPFILE, $blocks[$i]['template']);
@@ -1016,7 +1010,7 @@ function icms_module_update($dirname) {
 									$newid = $tplfile->getVar('tpl_id');
 									$msgs[] = '&nbsp;&nbsp;Template <b>'.$blocks[$i]['template'].'</b> added to the database.';
 									if ($xoopsConfig['template_set'] == 'default') {
-										if (!xoops_template_touch($newid)) {
+										if (!$icmsAdminTpl->template_touch($newid)) {
 											$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Template <b>'.$blocks[$i]['template'].'</b> recompile failed.</span>';
 										} else {
 											$msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_RECOMPTEMPFILE, $blocks[$i]['template']);
