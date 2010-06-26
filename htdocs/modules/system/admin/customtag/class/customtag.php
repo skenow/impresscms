@@ -154,7 +154,7 @@ class SystemCustomtagHandler extends icms_ipf_Handler {
 			$criteria_language->add ( new icms_criteria_Item ( 'language', 'all' ), 'OR' );
 			$criteria->add ( $criteria_language );
 
-			$icms_permissions_handler = new IcmsPersistablePermissionHandler ( $this );
+			$icms_permissions_handler = new icms_ipf_permission_Handler ( $this );
 			$granted_ids = $icms_permissions_handler->getGrantedItems ( 'view' );
 
 			if ($granted_ids && count ( $granted_ids ) > 0) {

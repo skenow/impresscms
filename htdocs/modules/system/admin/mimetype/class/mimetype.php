@@ -67,7 +67,7 @@ class SystemMimetypeHandler extends icms_ipf_Handler {
 	}
 
 	function UserCanUpload() {
-		$handler = new IcmsPersistablePermissionHandler($this);
+		$handler = new icms_ipf_permission_Handler($this);
 		return $handler->getGrantedItems('use_extension');
 	}
 

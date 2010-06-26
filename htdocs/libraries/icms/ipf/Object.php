@@ -70,7 +70,7 @@ class icms_ipf_Object extends icms_core_Object {
 	 * @return boolean : TRUE if user has access, false if not
 	 **/
 	function accessGranted($perm_name) {
-		$icmspermissions_handler = new IcmsPersistablePermissionHandler($this->handler);
+		$icmspermissions_handler = new icms_ipf_permission_Handler($this->handler);
 		return $icmspermissions_handler->accessGranted($perm_name, $this->id());
 	}
 	function addFormSection($section_name, $value=false, $hide=false) {
@@ -468,7 +468,7 @@ class icms_ipf_Object extends icms_core_Object {
 			return false;
 		}
 
-		$icmspermissions_handler = new IcmsPersistablePermissionHandler($this->handler);
+		$icmspermissions_handler = new icms_ipf_permission_Handler($this->handler);
 		$ret = $icmspermissions_handler->getGrantedGroups($group_perm, $this->id());
 
 		if (count($ret) == 0) {

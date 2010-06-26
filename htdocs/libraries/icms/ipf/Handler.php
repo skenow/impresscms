@@ -197,7 +197,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	}
 
 	function setGrantedObjectsCriteria(&$criteria, $perm_name) {
-		$icmspermissions_handler = new IcmsPersistablePermissionHandler($this);
+		$icmspermissions_handler = new icms_ipf_permission_Handler($this);
 		$grantedItems = $icmspermissions_handler->getGrantedItems($perm_name);
 		if (count($grantedItems) > 0) {
 			$criteria->add(new icms_criteria_Item($this->keyName, '(' . implode(', ', $grantedItems) . ')', 'IN'));
