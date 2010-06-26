@@ -265,7 +265,7 @@ class icms_member_user_Handler extends icms_core_ObjectHandler
 				$restriction = '/[\000-\040]/';
 				break;
 		}
-		$icmsStopSpammers = new IcmsStopSpammer();
+		$icmsStopSpammers = new icms_core_StopSpammer();
 		if ($icmsStopSpammers->badUsername($uname)) {
 			$stop .= _US_INVALIDNICKNAME . '<br />';
 		}
