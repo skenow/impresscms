@@ -145,7 +145,7 @@ function xoops_module_install($dirname) {
 
 							// generate compiled file
 							include_once ICMS_ROOT_PATH.'/class/template.php';
-							if (!xoops_template_touch($newtplid)) {
+							if (!icms_view_Tpl::template_touch($newtplid)) {
 								$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'._MD_AM_FAILCOMPTEMPFILE.'</span>', $tpl['file']);
 							} else {
 								$msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_COMPTEMPFILE, $tpl['file']);
@@ -208,7 +208,7 @@ function xoops_module_install($dirname) {
 									$msgs[] = '&nbsp;&nbsp;Template <b>'.$block['template'].'</b> added to the database. (ID: <b>'.icms_conv_nr2local($newtplid).'</b>)';
 									// generate compiled file
 									include_once ICMS_ROOT_PATH.'/class/template.php';
-									if (!xoops_template_touch($newtplid)) {
+									if (!icms_view_Tpl::template_touch($newtplid)) {
 										$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Failed compiling template <b>'.$block['template'].'</b>.</span>';
 									} else {
 										$msgs[] = '&nbsp;&nbsp;Template <b>'.$block['template'].'</b> compiled.</span>';
@@ -546,7 +546,7 @@ function icms_module_update($dirname) {
 						$newid = $tplfile->getVar('tpl_id');
 						$msgs[] = sprintf('&nbsp;&nbsp;<span>'._MD_AM_TEMPINS.'</span>', $tpl['file']);
 						if ($xoopsConfig['template_set'] == 'default') {
-							if (!xoops_template_touch($newid)) {
+							if (!icms_view_Tpl::template_touch($newid)) {
 								$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'._MD_AM_NOTRECOMPTEMPFILE.'</span>', $tpl['file']);
 							} else {
 								$msgs[] = sprintf('&nbsp;&nbsp;<span>'._MD_AM_RECOMPTEMPFILE.'</span>', $tpl['file']);
@@ -616,7 +616,7 @@ function icms_module_update($dirname) {
 								} else {
 									$msgs[] = '&nbsp;&nbsp;Template <b>'.$blocks[$i]['template'].'</b> updated.';
 									if ($xoopsConfig['template_set'] == 'default') {
-										if (!xoops_template_touch($tplfile_new->getVar('tpl_id'))) {
+										if (!icms_view_Tpl::template_touch($tplfile_new->getVar('tpl_id'))) {
 											$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'._MD_AM_NOTRECOMPTEMPFILE.'</span>', $blocks[$i]['template']);
 										} else {
 											$msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_RECOMPTEMPFILE, $blocks[$i]['template']);
@@ -670,7 +670,7 @@ function icms_module_update($dirname) {
 									$newid = $tplfile->getVar('tpl_id');
 									$msgs[] = '&nbsp;&nbsp;Template <b>'.$blocks[$i]['template'].'</b> added to the database.';
 									if ($xoopsConfig['template_set'] == 'default') {
-										if (!xoops_template_touch($newid)) {
+										if (!icms_view_Tpl::template_touch($newid)) {
 											$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Template <b>'.$blocks[$i]['template'].'</b> recompile failed.</span>';
 										} else {
 											$msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_RECOMPTEMPFILE, $blocks[$i]['template']);

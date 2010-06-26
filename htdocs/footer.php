@@ -40,7 +40,7 @@ if(!defined("XOOPS_FOOTER_INCLUDED"))
 
 		if(isset($xoopsOption['template_main']))
 		{
-			$xoopsTpl->xoops_setCaching(0);
+			$xoopsTpl->caching = 0;
 			$xoopsTpl->display('db:'.$xoopsOption['template_main']);
 		}
 		if(!isset($xoopsOption['show_rblock'])) {$xoopsOption['show_rblock'] = 0;}
