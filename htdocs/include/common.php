@@ -72,7 +72,6 @@ define('ICMS_PDF_LIB_URL', ICMS_URL . '/libraries/tcpdf');
 $icmsPreloadHandler->triggerEvent('startCoreBoot');
 
 // ################# Creation of the ImpressCMS Kernel object ##############
-//include_once ICMS_ROOT_PATH . '/kernel/icmskernel.php' ;
 
 global $impresscms, $xoops;
 $impresscms = new icms_core_Kernel();
