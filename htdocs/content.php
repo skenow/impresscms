@@ -85,7 +85,7 @@ if ($contentConfig ['com_rule'] && $contentObj->getVar ( 'content_cancomment' ))
 /**
  * Generating meta information for this page
  */
-$icms_metagen = new IcmsMetagen ( $contentObj->getVar ( 'content_title' ), $contentObj->getVar ( 'meta_keywords', 'n' ), $contentObj->getVar ( 'meta_description', 'n' ) );
+$icms_metagen = new icms_ipf_Metagen ( $contentObj->getVar ( 'content_title' ), $contentObj->getVar ( 'meta_keywords', 'n' ), $contentObj->getVar ( 'meta_description', 'n' ) );
 $icms_metagen->createMetaTags ();
 
 $xoTheme->addStylesheet ( ICMS_URL . '/modules/content/include/content.css' );

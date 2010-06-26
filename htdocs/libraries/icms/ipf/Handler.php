@@ -663,7 +663,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 
 		if ($obj->seoEnabled) {
 			// Auto create meta tags if empty
-			$icms_metagen = new IcmsMetagen($obj->title(), $obj->getVar('meta_keywords'), $obj->summary());
+			$icms_metagen = new icms_ipf_Metagen($obj->title(), $obj->getVar('meta_keywords'), $obj->summary());
 
 			if (!$obj->getVar('meta_keywords') || !$obj->getVar('meta_description')) {
 

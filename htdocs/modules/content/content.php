@@ -144,7 +144,7 @@ if (in_array($clean_op,$valid_op,true)){
 	/**
 	 * Generating meta information for this page
 	 */
-	$icms_metagen = new IcmsMetagen($contentObj->getVar('content_title'), $contentObj->getVar('meta_keywords','n'), $contentObj->getVar('meta_description', 'n'));
+	$icms_metagen = new icms_ipf_Metagen($contentObj->getVar('content_title'), $contentObj->getVar('meta_keywords','n'), $contentObj->getVar('meta_description', 'n'));
 	$icms_metagen->createMetaTags();
 
 }
