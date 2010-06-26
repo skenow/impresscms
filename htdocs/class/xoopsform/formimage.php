@@ -91,7 +91,7 @@ class MastopFormSelectImage extends XoopsFormSelect
 		} else {
 			$group =& $icmsUser->getGroups();
 		}
-		$imgcat_handler =& xoops_gethandler('imagecategory');
+		$imgcat_handler =& xoops_gethandler('image_category');
 		$catlist =& $imgcat_handler->getList($group, 'imgcat_read', 1);
 		if (is_array($cat) && count($catlist) > 0) {
 			foreach ($catlist as $k=>$v) {
@@ -163,7 +163,7 @@ class MastopFormSelectImage extends XoopsFormSelect
 		} else {
 			$group =& $icmsUser->getGroups();
 		}
-		$imgcat_handler =& xoops_gethandler('imagecategory');
+		$imgcat_handler =& xoops_gethandler('image_category');
 		$catlist =& $imgcat_handler->getList($group, 'imgcat_write', 1);
 		$catlist_total = count($catlist);
 		$optIds = $this->getOptGroupsID();

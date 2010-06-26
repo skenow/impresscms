@@ -27,20 +27,20 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 /**
  * An imageset
  *
- * These sets are managed through a {@link XoopsImagesetHandler} object
+ * These sets are managed through a {@link icms_image_ObjectsetHandler} object
  *
  * @package     kernel
  *
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class XoopsImageset extends icms_core_Object
+class icms_image_Objectset extends icms_core_Object
 {
 	/**
 	 * Constructor
 	 *
 	 */
-	function XoopsImageset()
+	function icms_image_Objectset()
 	{
 		$this->icms_core_Object();
 		$this->initVar('imgset_id', XOBJ_DTYPE_INT, null, false);
@@ -57,18 +57,18 @@ class XoopsImageset extends icms_core_Object
  *
  * @author  Kazumi Ono <onokazu@xoops.org>
  */
-class XoopsImagesetHandler extends icms_core_ObjectHandler
+class icms_image_ObjectsetHandler extends icms_core_ObjectHandler
 {
 
 	/**
 	 * Creates a new imageset
 	 *
 	 * @param bool $isNew is the new imageset new??
-	 * @return object $imgset {@link XoopsImageset} reference to the new imageset
+	 * @return object $imgset {@link icms_image_Objectset} reference to the new imageset
 	 **/
 	function &create($isNew = true)
 	{
-		$imgset = new XoopsImageset();
+		$imgset = new icms_image_Objectset();
 		if ($isNew) {
 			$imgset->setNew();
 		}
@@ -76,11 +76,11 @@ class XoopsImagesetHandler extends icms_core_ObjectHandler
 	}
 
 	/**
-	 * retrieve a specific {@link XoopsImageset}
+	 * retrieve a specific {@link icms_image_Objectset}
 	 *
-	 * @see XoopsImageset
+	 * @see icms_image_Objectset
 	 * @param integer $id imgsetID (imgset_id) of the imageset
-	 * @return object XoopsImageset reference to the image set
+	 * @return object icms_image_Objectset reference to the image set
 	 **/
 	function &get($id)
 	{
@@ -93,7 +93,7 @@ class XoopsImagesetHandler extends icms_core_ObjectHandler
 			}
 			$numrows = $this->db->getRowsNum($result);
 			if ($numrows == 1) {
-				$imgset = new XoopsImageset();
+				$imgset = new icms_image_Objectset();
 				$imgset->assignVars($this->db->fetchArray($result));
 			}
 		}
@@ -101,9 +101,9 @@ class XoopsImagesetHandler extends icms_core_ObjectHandler
 	}
 
 	/**
-	 * Insert a new {@link XoopsImageset} into the database
+	 * Insert a new {@link icms_image_Objectset} into the database
 	 *
-	 * @param object XoopsImageset $imgset reference to the imageset to insert
+	 * @param object icms_image_Objectset $imgset reference to the imageset to insert
 	 * @return bool TRUE if succesful
 	 **/
 	function insert(&$imgset)
@@ -141,9 +141,9 @@ class XoopsImagesetHandler extends icms_core_ObjectHandler
 	}
 
 	/**
-	 * delete an {@link XoopsImageset} from the database
+	 * delete an {@link icms_image_Objectset} from the database
 	 *
-	 * @param object XoopsImageset $imgset reference to the imageset to delete
+	 * @param object icms_image_Objectset $imgset reference to the imageset to delete
 	 * @return bool TRUE if succesful
 	 **/
 	function delete(&$imgset)
@@ -165,10 +165,10 @@ class XoopsImagesetHandler extends icms_core_ObjectHandler
 	}
 
 	/**
-	 * retrieve array of {@link XoopsImageset}s meeting certain conditions
+	 * retrieve array of {@link icms_image_Objectset}s meeting certain conditions
 	 * @param object $criteria {@link icms_criteria_Element} with conditions for the imagesets
 	 * @param bool $id_as_key should the imageset's imgset_id be the key for the returned array?
-	 * @return array {@link XoopsImageset}s matching the conditions
+	 * @return array {@link icms_image_Objectset}s matching the conditions
 	 **/
 	function getObjects($criteria = null, $id_as_key = false)
 	{
@@ -185,7 +185,7 @@ class XoopsImagesetHandler extends icms_core_ObjectHandler
 			return $ret;
 		}
 		while ($myrow = $this->db->fetchArray($result)) {
-			$imgset = new XoopsImageset();
+			$imgset = new icms_image_Objectset();
 			$imgset->assignVars($myrow);
 			if (!$id_as_key) {
 				$ret[] =& $imgset;
@@ -198,7 +198,7 @@ class XoopsImagesetHandler extends icms_core_ObjectHandler
 	}
 
 	/**
-	 * Links a {@link XoopsImageset} to a themeset (tplset)
+	 * Links a {@link icms_image_Objectset} to a themeset (tplset)
 	 * @param int $imgset_id image set id to link
 	 * @param int $tplset_name theme set to link
 	 * @return bool TRUE if succesful FALSE if unsuccesful
@@ -222,7 +222,7 @@ class XoopsImagesetHandler extends icms_core_ObjectHandler
 	}
 
 	/**
-	 * Unlinks a {@link XoopsImageset} from a themeset (tplset)
+	 * Unlinks a {@link icms_image_Objectset} from a themeset (tplset)
 	 *
 	 * @param int $imgset_id image set id to unlink
 	 * @param int $tplset_name theme set to unlink
@@ -244,11 +244,11 @@ class XoopsImagesetHandler extends icms_core_ObjectHandler
 	}
 
 	/**
-	 * get a list of {@link XoopsImageset}s matching certain conditions
+	 * get a list of {@link icms_image_Objectset}s matching certain conditions
 	 *
 	 * @param int $refid conditions to match
 	 * @param int $tplset conditions to match
-	 * @return array array of {@link XoopsImageset}s matching the conditions
+	 * @return array array of {@link icms_image_Objectset}s matching the conditions
 	 **/
 	function getList($refid = null, $tplset = null)
 	{

@@ -99,7 +99,7 @@ if (! is_null ( $op ) && $op == 'save') {
 
 	$image_handler = & xoops_gethandler ( 'image' );
 	$simage = & $image_handler->get ( $simage_id );
-	$imgcat_handler = xoops_gethandler ( 'imagecategory' );
+	$imgcat_handler = xoops_gethandler('image_category');
 	$imagecategory = & $imgcat_handler->get ( $simage->getVar ( 'imgcat_id' ) );
 
 	$categ_path = $imgcat_handler->getCategFolder ( $imagecategory );
@@ -187,7 +187,7 @@ if (! is_object ( $original_image )) {
 	die ( _ERROR );
 }
 
-$imgcat_handler = xoops_gethandler ( 'imagecategory' );
+$imgcat_handler = xoops_gethandler('image_category');
 $imagecategory = & $imgcat_handler->get ( $original_image->getVar ( 'imgcat_id' ) );
 if (! is_object ( $imagecategory )) {
 	die ( _ERROR );

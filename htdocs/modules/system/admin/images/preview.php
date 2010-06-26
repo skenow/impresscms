@@ -14,8 +14,6 @@
  */
 
 include '../../../../mainfile.php' ;
-include ICMS_ROOT_PATH."/kernel/image.php" ;
-include ICMS_ROOT_PATH."/kernel/imagecategory.php" ;
 include ICMS_LIBRARIES_PATH.'/wideimage/lib/WideImage.php';
 
 $file = $_GET['file'];
@@ -33,7 +31,7 @@ if (isset($_GET['arg3'])){
 }
 
 $image_handler = xoops_gethandler('image');
-$imgcat_handler = xoops_gethandler('imagecategory');
+$imgcat_handler = xoops_gethandler('image_category');
 
 $image =& $image_handler->getObjects(new icms_criteria_Item('image_name', $file),false,true);
 $imagecategory =& $imgcat_handler->get($image[0]->getVar('imgcat_id'));

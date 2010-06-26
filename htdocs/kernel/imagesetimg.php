@@ -27,20 +27,20 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 /**
  * An imageset image
  *
- * These sets are managed through a {@link XoopsImagesetimgHandler} object
+ * These sets are managed through a {@link icms_image_ObjectsetimgHandler} object
  *
  * @package     kernel
  *
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class XoopsImagesetimg extends icms_core_Object
+class icms_image_Objectsetimg extends icms_core_Object
 {
 	/**
 	 * Constructor
 	 *
 	 */
-	function XoopsImagesetimg()
+	function icms_image_Objectsetimg()
 	{
 		$this->icms_core_Object();
 		$this->initVar('imgsetimg_id', XOBJ_DTYPE_INT, null, false);
@@ -58,18 +58,18 @@ class XoopsImagesetimg extends icms_core_Object
  *
  * @author  Kazumi Ono <onokazu@xoops.org>
  */
-class XoopsImagesetimgHandler extends icms_core_ObjectHandler
+class icms_image_ObjectsetimgHandler extends icms_core_ObjectHandler
 {
 
 	/**
 	 * Creates a new imageset image
 	 *
 	 * @param bool $isNew is the new imageset image new??
-	 * @return object $imgcat {@link XoopsImagesetimg} reference to the new imageset image
+	 * @return object $imgcat {@link icms_image_Objectsetimg} reference to the new imageset image
 	 **/
 	function &create($isNew = true)
 	{
-		$imgsetimg = new XoopsImagesetimg();
+		$imgsetimg = new icms_image_Objectsetimg();
 		if ($isNew) {
 			$imgsetimg->setNew();
 		}
@@ -77,11 +77,11 @@ class XoopsImagesetimgHandler extends icms_core_ObjectHandler
 	}
 
 	/**
-	 * retrieve a specific {@link XoopsImagesetimg}
+	 * retrieve a specific {@link icms_image_Objectsetimg}
 	 *
-	 * @see XoopsImagesetimg
+	 * @see icms_image_Objectsetimg
 	 * @param integer $id imgsetimageID (imgsetimg_id) of the imageset image
-	 * @return object XoopsImagesetimg reference to the image set image
+	 * @return object icms_image_Objectsetimg reference to the image set image
 	 **/
 	function &get($id)
 	{
@@ -94,7 +94,7 @@ class XoopsImagesetimgHandler extends icms_core_ObjectHandler
 			}
 			$numrows = $this->db->getRowsNum($result);
 			if ($numrows == 1) {
-				$imgsetimg = new XoopsImagesetimg();
+				$imgsetimg = new icms_image_Objectsetimg();
 				$imgsetimg->assignVars($this->db->fetchArray($result));
 			}
 		}
@@ -102,9 +102,9 @@ class XoopsImagesetimgHandler extends icms_core_ObjectHandler
 	}
 
 	/**
-	 * Insert a new {@link XoopsImagesetimg} into the database
+	 * Insert a new {@link icms_image_Objectsetimg} into the database
 	 *
-	 * @param object XoopsImagesetimg $imgsetimg reference to the imageset image to insert
+	 * @param object icms_image_Objectsetimg $imgsetimg reference to the imageset image to insert
 	 * @return bool TRUE if succesful
 	 **/
 	function insert(&$imgsetimg)
@@ -142,9 +142,9 @@ class XoopsImagesetimgHandler extends icms_core_ObjectHandler
 	}
 
 	/**
-	 * delete an {@link XoopsImagesetimg} from the database
+	 * delete an {@link icms_image_Objectsetimg} from the database
 	 *
-	 * @param object XoopsImagesetimg $imgsetimg reference to the imageset image to delete
+	 * @param object icms_image_Objectsetimg $imgsetimg reference to the imageset image to delete
 	 * @return bool TRUE if succesful
 	 **/
 	function delete(&$imgsetimg)
@@ -164,10 +164,10 @@ class XoopsImagesetimgHandler extends icms_core_ObjectHandler
 	}
 
 	/**
-	 * retrieve array of {@link XoopsImagesetimg}s meeting certain conditions
+	 * retrieve array of {@link icms_image_Objectsetimg}s meeting certain conditions
 	 * @param object $criteria {@link icms_criteria_Element} with conditions for the imageset images
 	 * @param bool $id_as_key should the imagesetimg's imgsetimg_id be the key for the returned array?
-	 * @return array {@link XoopsImagesetimg}s matching the conditions
+	 * @return array {@link icms_image_Objectsetimg}s matching the conditions
 	 **/
 	function getObjects($criteria = null, $id_as_key = false)
 	{
@@ -185,7 +185,7 @@ class XoopsImagesetimgHandler extends icms_core_ObjectHandler
 			return $ret;
 		}
 		while ($myrow = $this->db->fetchArray($result)) {
-			$imgsetimg = new XoopsImagesetimg();
+			$imgsetimg = new icms_image_Objectsetimg();
 			$imgsetimg->assignVars($myrow);
 			if (!$id_as_key) {
 				$ret[] =& $imgsetimg;
