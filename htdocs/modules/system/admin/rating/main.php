@@ -94,12 +94,12 @@ switch ($op) {
 
 		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
 
-		$objectTable = new IcmsPersistableTable($icms_rating_handler, false, array('delete'));
-		$objectTable->addColumn(new IcmsPersistableColumn('name', _GLOBAL_LEFT, false, 'getUnameValue'));
-		$objectTable->addColumn(new IcmsPersistableColumn('dirname', _GLOBAL_LEFT));
-		$objectTable->addColumn(new IcmsPersistableColumn('item', _GLOBAL_LEFT, false, 'getItemValue'));
-		$objectTable->addColumn(new IcmsPersistableColumn('date', 'center', 150));
-		$objectTable->addColumn(new IcmsPersistableColumn('rate', 'center', 60, 'getRateValue'));
+		$objectTable = new icms_ipf_view_Table($icms_rating_handler, false, array('delete'));
+		$objectTable->addColumn(new icms_ipf_view_Column('name', _GLOBAL_LEFT, false, 'getUnameValue'));
+		$objectTable->addColumn(new icms_ipf_view_Column('dirname', _GLOBAL_LEFT));
+		$objectTable->addColumn(new icms_ipf_view_Column('item', _GLOBAL_LEFT, false, 'getItemValue'));
+		$objectTable->addColumn(new icms_ipf_view_Column('date', 'center', 150));
+		$objectTable->addColumn(new icms_ipf_view_Column('rate', 'center', 60, 'getRateValue'));
 		//$objectTable->addIntroButton('addrating', 'admin.php?fct=rating&op=mod', _CO_ICMS_RATINGS_CREATE);
 
 		//$objectTable->addQuickSearch(array('title', 'summary', 'description'));

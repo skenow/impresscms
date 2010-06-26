@@ -81,10 +81,10 @@ switch ($op) {
 
 		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
 
-		$objectTable = new IcmsPersistableTable($icms_mimetype_handler);
-		$objectTable->addColumn(new IcmsPersistableColumn('name', _GLOBAL_LEFT, 150));
-		$objectTable->addColumn(new IcmsPersistableColumn('extension', _GLOBAL_LEFT, 150));
-		$objectTable->addColumn(new IcmsPersistableColumn('types', _GLOBAL_LEFT));
+		$objectTable = new icms_ipf_view_Table($icms_mimetype_handler);
+		$objectTable->addColumn(new icms_ipf_view_Column('name', _GLOBAL_LEFT, 150));
+		$objectTable->addColumn(new icms_ipf_view_Column('extension', _GLOBAL_LEFT, 150));
+		$objectTable->addColumn(new icms_ipf_view_Column('types', _GLOBAL_LEFT));
 
 		$objectTable->addIntroButton('addmimetype', 'admin.php?fct=mimetype&amp;op=mod', _CO_ICMS_MIMETYPE_CREATE);
 

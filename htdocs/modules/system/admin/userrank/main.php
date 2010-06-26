@@ -79,11 +79,11 @@ switch ($op) {
 
 		include_once ICMS_ROOT_PATH . '/kernel/icmspersistabletable.php' ;
 
-		$objectTable = new IcmsPersistableTable($icms_userrank_handler);
-		$objectTable->addColumn(new IcmsPersistableColumn('rank_title', _GLOBAL_LEFT, false, 'getUserrankName'));
-		$objectTable->addColumn(new IcmsPersistableColumn('rank_min', _GLOBAL_LEFT));
-		$objectTable->addColumn(new IcmsPersistableColumn('rank_max', _GLOBAL_LEFT));
-		$objectTable->addColumn(new IcmsPersistableColumn('rank_image', 'center', 200, 'getRankPicture', false, false, false));
+		$objectTable = new icms_ipf_view_Table($icms_userrank_handler);
+		$objectTable->addColumn(new icms_ipf_view_Column('rank_title', _GLOBAL_LEFT, false, 'getUserrankName'));
+		$objectTable->addColumn(new icms_ipf_view_Column('rank_min', _GLOBAL_LEFT));
+		$objectTable->addColumn(new icms_ipf_view_Column('rank_max', _GLOBAL_LEFT));
+		$objectTable->addColumn(new icms_ipf_view_Column('rank_image', 'center', 200, 'getRankPicture', false, false, false));
 
 		$objectTable->addIntroButton('adduserrank', 'admin.php?fct=userrank&amp;op=mod', _CO_ICMS_USERRANKS_CREATE);
 

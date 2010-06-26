@@ -143,14 +143,14 @@ if (in_array ( $clean_op, $valid_op, true )) {
 			$criteria = new icms_criteria_Compo ( );
 			$criteria->add ( new icms_criteria_Item ( 'content_pid', $clean_content_pid ) );
 
-			$objectTable = new IcmsPersistableTable ( $content_content_handler, $criteria );
-			$objectTable->addColumn ( new IcmsPersistableColumn ( 'content_title',false,false,'getPreviewItemLink' ) );
-			$objectTable->addColumn ( new IcmsPersistableColumn ( 'content_subs', 'center', 100 ) );
-			$objectTable->addColumn ( new IcmsPersistableColumn ( 'counter', 'center', 100 ) );
-			$objectTable->addColumn ( new IcmsPersistableColumn ( 'content_status', 'center', 150, 'getContent_statusControl' ) );
-			$objectTable->addColumn ( new IcmsPersistableColumn ( 'content_visibility', 'center', 150, 'getContent_visibleControl' ) );
+			$objectTable = new icms_ipf_view_Table ( $content_content_handler, $criteria );
+			$objectTable->addColumn ( new icms_ipf_view_Column ( 'content_title',false,false,'getPreviewItemLink' ) );
+			$objectTable->addColumn ( new icms_ipf_view_Column ( 'content_subs', 'center', 100 ) );
+			$objectTable->addColumn ( new icms_ipf_view_Column ( 'counter', 'center', 100 ) );
+			$objectTable->addColumn ( new icms_ipf_view_Column ( 'content_status', 'center', 150, 'getContent_statusControl' ) );
+			$objectTable->addColumn ( new icms_ipf_view_Column ( 'content_visibility', 'center', 150, 'getContent_visibleControl' ) );
 
-			$objectTable->addColumn ( new IcmsPersistableColumn ( 'content_published_date', 'center', 150 ) );
+			$objectTable->addColumn ( new icms_ipf_view_Column ( 'content_published_date', 'center', 150 ) );
 
 			$objectTable->addActionButton('changedField', false, _SUBMIT);
 			$objectTable->addCustomAction('getViewItemLink');

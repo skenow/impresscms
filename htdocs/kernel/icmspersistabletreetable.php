@@ -27,11 +27,11 @@ include_once ICMS_ROOT_PATH . "/kernel/icmspersistabletable.php" ;
  * @version		$Id$
 
  */
-class IcmsPersistableTreeTable extends IcmsPersistableTable {
+class IcmsPersistableTreeTable extends icms_ipf_view_Table {
 
 	function IcmsPersistableTreeTable(&$objectHandler, $criteria=false, $actions=array('edit', 'delete'), $userSide=false)
 	{
-		$this->IcmsPersistableTable($objectHandler, $criteria, $actions, $userSide);
+		$this->icms_ipf_view_Table($objectHandler, $criteria, $actions, $userSide);
 		$this->_isTree = true;
 	}
 	/**

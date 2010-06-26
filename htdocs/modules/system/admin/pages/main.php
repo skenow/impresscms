@@ -100,11 +100,11 @@ if (in_array ( $clean_op, $valid_op, true )) {
 
 			icms_cp_header ();
 			include_once ICMS_ROOT_PATH . "/kernel/icmspersistabletable.php";
-			$objectTable = new IcmsPersistableTable ( $icms_page_handler );
-			$objectTable->addColumn ( new IcmsPersistableColumn ( 'page_status', 'center', false, 'getCustomPageStatus' ) );
-			$objectTable->addColumn ( new IcmsPersistableColumn ( 'page_title', _GLOBAL_LEFT, false, 'getAdminViewItemLink' ) );
-			$objectTable->addColumn ( new IcmsPersistableColumn ( 'page_url' ) );
-			$objectTable->addColumn ( new IcmsPersistableColumn ( 'page_moduleid', 'center', false, 'getCustomPageModuleid' ) );
+			$objectTable = new icms_ipf_view_Table ( $icms_page_handler );
+			$objectTable->addColumn ( new icms_ipf_view_Column ( 'page_status', 'center', false, 'getCustomPageStatus' ) );
+			$objectTable->addColumn ( new icms_ipf_view_Column ( 'page_title', _GLOBAL_LEFT, false, 'getAdminViewItemLink' ) );
+			$objectTable->addColumn ( new icms_ipf_view_Column ( 'page_url' ) );
+			$objectTable->addColumn ( new icms_ipf_view_Column ( 'page_moduleid', 'center', false, 'getCustomPageModuleid' ) );
 
 			$objectTable->addIntroButton ( 'addpost', 'admin.php?fct=pages&amp;op=mod', _AM_SYSTEM_PAGES_CREATE );
 

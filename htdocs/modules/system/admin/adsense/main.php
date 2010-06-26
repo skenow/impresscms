@@ -88,10 +88,10 @@ switch ($op) {
 
 		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
 
-		$objectTable = new IcmsPersistableTable($icms_adsense_handler);
-		$objectTable->addColumn(new IcmsPersistableColumn('description', _GLOBAL_LEFT));
-		$objectTable->addColumn(new IcmsPersistableColumn(_CO_ICMS_ADSENSE_TAG_CODE, 'center', 200, 'getXoopsCode'));
-		//$objectTable->addColumn(new IcmsPersistableColumn('language', 'center', 150));
+		$objectTable = new icms_ipf_view_Table($icms_adsense_handler);
+		$objectTable->addColumn(new icms_ipf_view_Column('description', _GLOBAL_LEFT));
+		$objectTable->addColumn(new icms_ipf_view_Column(_CO_ICMS_ADSENSE_TAG_CODE, 'center', 200, 'getXoopsCode'));
+		//$objectTable->addColumn(new icms_ipf_view_Column('language', 'center', 150));
 
 		$objectTable->addIntroButton('addadsense', 'admin.php?fct=adsense&amp;op=mod', _CO_ICMS_ADSENSES_CREATE);
 
