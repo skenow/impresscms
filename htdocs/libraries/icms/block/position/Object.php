@@ -4,11 +4,13 @@
  *
  * Longer description about this page
  *
- * @copyright      http://www.impresscms.org/ The ImpressCMS Project
- * @license         LICENSE.txt
- * @package	core
- * @since            1.0
- * @version		$Id: Blockposition.php 19514 2010-06-21 22:50:14Z skenow $
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		LICENSE.txt
+ * @category	ICMS
+ * @package		Block
+ * @subpackage	Position
+ * @since		1.0
+ * @version		SVN: $Id: Blockposition.php 19514 2010-06-21 22:50:14Z skenow $
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -36,18 +38,5 @@ class icms_block_position_Object extends icms_ipf_Object {
 		$this->quickInitVar('block_type', XOBJ_DTYPE_TXTBOX);
 
 	}
-
 }
 
-/**
- * IcmsBlockposition
- * @deprecated Use icms_block_position_Object, instead
- * @todo Remove in version 1.4 - all instances have been removed from the core
- */
-class IcmsBlockposition extends icms_block_position_Object {
-	public function __construct() {
-		parent::__construct(&$handler);
-		$this->setErrors(icms_deprecated('icms_block_position_Object'));
-	}
-
-}
