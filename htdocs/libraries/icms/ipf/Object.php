@@ -976,7 +976,7 @@ class icms_ipf_Object extends icms_core_Object {
 	 */
 	function displaySingleObject($fetchOnly=false, $userSide=false, $actions=array(), $headerAsRow=true) {
 		include_once ICMS_ROOT_PATH."/kernel/icmspersistablesingleview.php";
-		$singleview = new icms_ipf_view_Object($this, $userSide, $actions, $headerAsRow);
+		$singleview = new icms_ipf_view_Single($this, $userSide, $actions, $headerAsRow);
 		// add all fields mark as displayOnSingleView except the keyid
 		foreach($this->vars as $key=>$var) {
 			if ($key != $this->handler->keyName && $var['displayOnSingleView']) {

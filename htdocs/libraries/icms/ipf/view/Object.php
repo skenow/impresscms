@@ -13,7 +13,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  */
 
 /**
- * icms_ipf_view_Object base class
+ * icms_ipf_view_Single base class
  *
  * Base class handling the display of a single object
  *
@@ -21,7 +21,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @author marcan <marcan@smartfactory.ca>
  * @link http://smartfactory.ca The SmartFactory
  */
-class icms_ipf_view_Object {
+class icms_ipf_view_Single {
 
 	var $_object;
 	var $_userSide;
@@ -33,7 +33,7 @@ class icms_ipf_view_Object {
 	/**
 	 * Constructor
 	 */
-	function icms_ipf_view_Object(&$object, $userSide=false, $actions=array(), $headerAsRow=true)
+	function icms_ipf_view_Single(&$object, $userSide=false, $actions=array(), $headerAsRow=true)
 	{
 		$this->_object = $object;
 		$this->_userSide = $userSide;

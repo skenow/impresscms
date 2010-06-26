@@ -4,7 +4,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 /**
  * icms_ipf_view_Row class
  *
- * Class representing a single row of a icms_ipf_view_Object
+ * Class representing a single row of a icms_ipf_view_Single
  *
  * @package ImpressCMS Persistabke Framework
  * @author marcan <marcan@smartfactory.ca>
