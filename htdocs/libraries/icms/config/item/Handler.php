@@ -173,7 +173,7 @@ class icms_config_Item_Handler extends icms_core_ObjectHandler
 			return false;
 		}
 		while ($myrow = $this->db->fetchArray($result)) {
-			$config = new icms_config_Item_Object();
+			$config = new icms_config_item_Object();
 			$config->assignVars($myrow);
 			if (!$id_as_key) {
 				$ret[] =& $config;

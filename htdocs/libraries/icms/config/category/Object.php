@@ -38,15 +38,3 @@ class icms_config_category_Object extends icms_core_Object {
 	}
 }
 
-/**
- * @deprecated	Use icms_config_category_Object, instead
- * @todo		Remove in version 1.4 - all instances have been removed from the core
- *
- */
-class XoopsConfigCategory extends icms_config_category_Object {
-	public function __construct() {
-		parent::__construct();
-		$this->setErrors(icms_deprecated('icms_config_category_Object', 'This will be removed in version 1.4'));
-	}
-
-}
