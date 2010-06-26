@@ -138,8 +138,6 @@ if (in_array ( $clean_op, $valid_op, true )) {
 
 			$xoopsModule->displayAdminMenu ( 0, _AM_CONTENT_CONTENTS );
 
-			include_once ICMS_ROOT_PATH . "/kernel/icmspersistabletable.php";
-
 			$criteria = new icms_criteria_Compo ( );
 			$criteria->add ( new icms_criteria_Item ( 'content_pid', $clean_content_pid ) );
 

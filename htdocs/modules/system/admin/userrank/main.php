@@ -77,8 +77,6 @@ switch ($op) {
 
 		icms_cp_header();
 
-		include_once ICMS_ROOT_PATH . '/kernel/icmspersistabletable.php' ;
-
 		$objectTable = new icms_ipf_view_Table($icms_userrank_handler);
 		$objectTable->addColumn(new icms_ipf_view_Column('rank_title', _GLOBAL_LEFT, false, 'getUserrankName'));
 		$objectTable->addColumn(new icms_ipf_view_Column('rank_min', _GLOBAL_LEFT));

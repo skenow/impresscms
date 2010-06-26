@@ -86,8 +86,6 @@ switch ($op) {
 
 		icms_cp_header();
 
-		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
-
 		$objectTable = new icms_ipf_view_Table($icms_adsense_handler);
 		$objectTable->addColumn(new icms_ipf_view_Column('description', _GLOBAL_LEFT));
 		$objectTable->addColumn(new icms_ipf_view_Column(_CO_ICMS_ADSENSE_TAG_CODE, 'center', 200, 'getXoopsCode'));

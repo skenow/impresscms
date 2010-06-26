@@ -74,8 +74,6 @@ switch ($op) {
 
 		icms_cp_header();
 
-		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
-
 		$objectTable = new icms_ipf_view_Table($icms_autotasks_handler, false, array('edit'));
 		$objectTable->addColumn(new icms_ipf_view_Column('sat_name', 'left', false, 'getNameForDisplay'));
 		$objectTable->addColumn(new icms_ipf_view_Column('sat_repeat', 'center', 80, 'getRepeatForDisplay'));

@@ -78,8 +78,6 @@ switch ($op) {
 
 		icms_cp_header();
 
-		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
-
 		$objectTable = new icms_ipf_view_Table($icms_customtag_handler);
 		$objectTable->addColumn(new icms_ipf_view_Column('name', _GLOBAL_LEFT, 150, 'getCustomtagName'));
 		$objectTable->addColumn(new icms_ipf_view_Column('description', _GLOBAL_LEFT));

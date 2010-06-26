@@ -92,8 +92,6 @@ switch ($op) {
 
 		icms_cp_header();
 
-		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
-
 		$objectTable = new icms_ipf_view_Table($icms_rating_handler, false, array('delete'));
 		$objectTable->addColumn(new icms_ipf_view_Column('name', _GLOBAL_LEFT, false, 'getUnameValue'));
 		$objectTable->addColumn(new icms_ipf_view_Column('dirname', _GLOBAL_LEFT));

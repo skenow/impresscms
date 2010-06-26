@@ -79,8 +79,6 @@ switch ($op) {
 
 		icms_cp_header();
 
-		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
-
 		$objectTable = new icms_ipf_view_Table($icms_mimetype_handler);
 		$objectTable->addColumn(new icms_ipf_view_Column('name', _GLOBAL_LEFT, 150));
 		$objectTable->addColumn(new icms_ipf_view_Column('extension', _GLOBAL_LEFT, 150));

@@ -99,7 +99,6 @@ if (in_array ( $clean_op, $valid_op, true )) {
 		default :
 
 			icms_cp_header ();
-			include_once ICMS_ROOT_PATH . "/kernel/icmspersistabletable.php";
 			$objectTable = new icms_ipf_view_Table ( $icms_page_handler );
 			$objectTable->addColumn ( new icms_ipf_view_Column ( 'page_status', 'center', false, 'getCustomPageStatus' ) );
 			$objectTable->addColumn ( new icms_ipf_view_Column ( 'page_title', _GLOBAL_LEFT, false, 'getAdminViewItemLink' ) );
