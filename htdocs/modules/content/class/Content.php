@@ -17,7 +17,7 @@ defined ( 'ICMS_ROOT_PATH' ) or die ( 'ImpressCMS root path not defined' );
  * @since ImpressCMS 1.2
  * @author Rodrigo P Lima (aka TheRplima) <therplima@impresscms.org>
  */
-class mod_content_Content extends IcmsPersistableSeoObject {
+class mod_content_Content extends icms_ipf_seo_Object {
 
 	private $poster_info = false;
 	public $updating_counter = false;
@@ -74,7 +74,7 @@ class mod_content_Content extends IcmsPersistableSeoObject {
 		$this->setControl ( 'content_showsubs', 'yesno' );
 		$this->setControl ( 'content_cancomment', 'yesno' );
 
-		$this->IcmsPersistableSeoObject ();
+		$this->icms_ipf_seo_Object ();
 	}
 
 	public function getVar($key, $format = 's') {

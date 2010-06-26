@@ -21,7 +21,7 @@ if (!defined("ICMS_ROOT_PATH")) die("ImpressCMS root path not defined");
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @since 		1.1
  */
-class icms_ipf_category_Object extends IcmsPersistableSeoObject {
+class icms_ipf_category_Object extends icms_ipf_seo_Object {
 	/** Path that corresponds to the category */
 	var $_categoryPath;
 	/**
@@ -46,7 +46,7 @@ class icms_ipf_category_Object extends IcmsPersistableSeoObject {
                                             'form_editor' => 'default'));
 
 		// call parent constructor to get SEO fields initiated
-		$this->IcmsPersistableSeoObject();
+		$this->icms_ipf_seo_Object();
 	}
 
 	/**

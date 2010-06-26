@@ -777,7 +777,7 @@ Revision: 9336
 * new function to list all fonts (stranger)
 * new function to generate pdfs (stranger)
 * implementing beforePreviewTarea and afterPreviewTarea preload events (malanciault)
-* implementing IcmsPersistableSeoObject to manage SEO-enabled object within the IcmsPersistable Framework (malanciault)
+* implementing icms_ipf_seo_Object to manage SEO-enabled object within the IcmsPersistable Framework (malanciault)
 
 '''Improved'''
 * Improved how we use rtl in system. (stranger/real_therplima)
