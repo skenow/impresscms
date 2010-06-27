@@ -370,19 +370,6 @@ class icms_block_Object extends icms_ipf_Object {
  * @deprecated use icms_block_Object instead
  * @todo Remove in version 1.4 - all instances have been removed from the core
  */
-class XoopsBlock extends icms_block_Object {
-
-	public function __construct(&$db) {
-		parent::__construct(&$db);
-		$this->setErrors = icms_deprecated('icms_block_Object');
-	}
-
-}
-
-/**
- * @deprecated use icms_block_Object instead
- * @todo Remove in version 1.4 - all instances have been removed from the core
- */
 
 class IcmsBlock extends icms_block_Object {
 	public function __construct(&$db) {
