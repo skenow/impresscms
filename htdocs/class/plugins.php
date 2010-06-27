@@ -83,7 +83,7 @@ class IcmsPluginsHandler {
 			$modulesObj[$moduleObj->getVar('dirname')] = $moduleObj;
 		}
 
-		$aFiles = XoopsLists::getPhpListAsArray(ICMS_ROOT_PATH . '/plugins/'.$path.'/');
+		$aFiles = IcmsLists::getPhpListAsArray(ICMS_ROOT_PATH . '/plugins/'.$path.'/');
 		$ret = array();
 		foreach($aFiles as $pluginName) {
 			$module_xoops_version_file = ICMS_ROOT_PATH . "/modules/$pluginName/xoops_version.php";

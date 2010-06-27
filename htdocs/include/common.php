@@ -438,7 +438,7 @@ if ($icmsConfigMultilang['ml_enable']) {
 	$easiestml_langs = explode(',', $icmsConfigMultilang['ml_tags']);
 	//include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
 
-	$easiestml_langpaths = XoopsLists::getLangList();
+	$easiestml_langpaths = IcmsLists::getLangList();
 	$langs = array_combine($easiestml_langs, explode(',', $icmsConfigMultilang['ml_names']));
 
 	if ( $icmsConfigMultilang['ml_autoselect_enabled']

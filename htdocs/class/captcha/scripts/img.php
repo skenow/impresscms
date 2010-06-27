@@ -222,7 +222,7 @@ class IcmsCaptchaImageHandler {
 
 		require_once ICMS_ROOT_PATH."/class/xoopslists.php";
 		$file_path = "../{$name}";
-		$files = XoopsLists::getFileListAsArray($file_path);
+		$files = IcmsLists::getFileListAsArray($file_path);
 		foreach( $files as $item) {
 			if ( empty($extension) || preg_match("/(\.{$extension})$/i",$item) ) {
 				$items[] = $item;

@@ -141,7 +141,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 				case 'theme_admin' :
 					$ele = ($config [$i]->getVar ( 'conf_formtype' ) != 'theme_multi') ? new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () ) : new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput (), 5, true );
 					require_once ICMS_ROOT_PATH . '/class/xoopslists.php';
-					$dirlist = ($config [$i]->getVar ( 'conf_formtype' ) != 'theme_admin') ? XoopsLists::getThemesList () : XoopsLists::getAdminThemesList ();
+					$dirlist = ($config [$i]->getVar ( 'conf_formtype' ) != 'theme_admin') ? IcmsLists::getThemesList () : IcmsLists::getAdminThemesList ();
 					if (! empty ( $dirlist )) {
 						asort ( $dirlist );
 						$ele->addOptionArray ( $dirlist );
@@ -164,7 +164,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 					if ($type == 'editor') $type = '';
 					//$ele->addOption ( "default" );
 					require_once ICMS_ROOT_PATH . '/class/xoopslists.php';
-					$dirlist = XoopsLists::getEditorsList ($type);
+					$dirlist = IcmsLists::getEditorsList ($type);
 					if (! empty ( $dirlist )) {
 						/*if ($config [$i]->getVar ( 'conf_formtype' ) != 'editor_multi') {
 							unset ( $dirlist ['default'] );
@@ -180,7 +180,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 				case 'select_font' :
 					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
 					require_once ICMS_ROOT_PATH . '/class/xoopslists.php';
-					$dirlist = XoopsLists::getFontListAsArray ( ICMS_ROOT_PATH . '/class/captcha/fonts/' );
+					$dirlist = IcmsLists::getFontListAsArray ( ICMS_ROOT_PATH . '/class/captcha/fonts/' );
 					if (! empty ( $dirlist )) {
 						asort ( $dirlist );
 						$ele->addOptionArray ( $dirlist );
@@ -190,7 +190,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 				case 'select_plugin' :
 					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput (), 8, true );
 					require_once ICMS_ROOT_PATH . '/class/xoopslists.php';
-					$dirlist = XoopsLists::getDirListAsArray ( ICMS_ROOT_PATH.'/plugins/textsanitizer/' );
+					$dirlist = IcmsLists::getDirListAsArray ( ICMS_ROOT_PATH.'/plugins/textsanitizer/' );
 					if (! empty ( $dirlist )) {
 						asort ( $dirlist );
 						$ele->addOptionArray ( $dirlist );
@@ -333,7 +333,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 				case 'select_geshi' :
 					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
 					require_once ICMS_ROOT_PATH . '/class/xoopslists.php';
-					$dirlist = XoopsLists::getPhpListAsArray ( ICMS_LIBRARIES_PATH.'/geshi/geshi/' );
+					$dirlist = IcmsLists::getPhpListAsArray ( ICMS_LIBRARIES_PATH.'/geshi/geshi/' );
 					if (! empty ( $dirlist )) {
 						asort ( $dirlist );
 						$ele->addOptionArray ( $dirlist );

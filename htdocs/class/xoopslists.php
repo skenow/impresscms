@@ -298,7 +298,7 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 		 */
 		static public function getLangList() {
 			$lang_list = array();
-			$lang_list = XoopsLists::getDirListAsArray(ICMS_ROOT_PATH."/language/");
+			$lang_list = IcmsLists::getDirListAsArray(ICMS_ROOT_PATH."/language/");
 			return $lang_list;
 		}
 

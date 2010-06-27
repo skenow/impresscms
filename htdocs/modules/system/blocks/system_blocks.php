@@ -488,7 +488,7 @@ function b_system_topposters_edit($options)
 	}
 	$form .= " />&nbsp;"._NO."";
 	$form .= "<br />"._MB_SYSTEM_NODISPGR."<br /><select id='options[]' name='options[]' multiple='multiple'>";
-	$ranks =& XoopsLists::getUserRankList();
+	$ranks =& IcmsLists::getUserRankList();
 	$size = count($options);
 	foreach ($ranks as $k => $v) {
 		$sel = "";

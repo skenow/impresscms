@@ -35,9 +35,9 @@ if ($icmsConfigAuth['auth_openid'] == 1) {
 }
 $url_text = new XoopsFormText(_AM_URL, "url", 30, 100, $url_value);
 //  $avatar_select = new XoopsFormSelect("", "user_avatar", $avatar_value);
-//  $avatar_array = XoopsLists::getImgListAsArray(XOOPS_ROOT_PATH."/images/avatar/");
+//  $avatar_array = IcmsLists::getImgListAsArray(XOOPS_ROOT_PATH."/images/avatar/");
 //  $avatar_select->addOptionArray($avatar_array);
-//  $a_dirlist = XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH."/images/avatar/");
+//  $a_dirlist = IcmsLists::getDirListAsArray(XOOPS_ROOT_PATH."/images/avatar/");
 //  $a_dir_labels = array();
 //  $a_count = 0;
 //  $a_dir_link = "<a href=\"javascript:openWithSelfMain('".XOOPS_URL."/misc.php?action=showpopups&amp;type=avatars&amp;start=".$a_count."','avatars',600,400);\">XOOPS</a>";
@@ -47,7 +47,7 @@ $url_text = new XoopsFormText(_AM_URL, "url", 30, 100, $url_value);
 //	  if ( $a_dir == "users" ) {
 //		  continue;
 //	  }
-//	  $avatars_array = XoopsLists::getImgListAsArray(XOOPS_ROOT_PATH."/images/avatar/".$a_dir."/", $a_dir."/");
+//	  $avatars_array = IcmsLists::getImgListAsArray(XOOPS_ROOT_PATH."/images/avatar/".$a_dir."/", $a_dir."/");
 //	  $avatar_select->addOptionArray($avatars_array);
 //	  $a_dir_link = "<a href=\"javascript:openWithSelfMain('".XOOPS_URL."/misc.php?action=showpopups&amp;type=avatars&amp;subdir=".$a_dir."&amp;start=".$a_count."','avatars',600,400);\">".$a_dir."</a>";
 //	  $a_dir_labels[] = new XoopsFormLabel("", $a_dir_link);
@@ -97,7 +97,7 @@ $notify_mode_select = new XoopsFormSelect(_NOT_NOTIFYMODE, 'notify_mode', $notif
 $notify_mode_select->addOptionArray(array(XOOPS_NOTIFICATION_MODE_SENDALWAYS=>_NOT_MODE_SENDALWAYS, XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE=>_NOT_MODE_SENDONCE, XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT=>_NOT_MODE_SENDONCEPERLOGIN));
 $bio_tarea = new XoopsFormTextArea(_US_EXTRAINFO, "bio", $bio_value);
 $rank_select = new XoopsFormSelect(_AM_RANK, "rank", $rank_value);
-$ranklist = XoopsLists::getUserRankList();
+$ranklist = IcmsLists::getUserRankList();
 if ( count($ranklist) > 0 ) {
 	$rank_select->addOption(0, "--------------");
 	$rank_select->addOptionArray($ranklist);

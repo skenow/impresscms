@@ -62,7 +62,7 @@ function xoops_module_list() {
 		$listed_mods[] = $module->getVar('dirname');
 	}
 
-	$dirlist = XoopsLists::getModulesList();
+	$dirlist = IcmsLists::getModulesList();
 	foreach($dirlist as $file){
 		clearstatcache();
 		$file = trim($file);

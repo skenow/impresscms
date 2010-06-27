@@ -109,7 +109,7 @@ function b_system_admin_cp_show(){
 	require_once ICMS_ROOT_PATH.'/modules/system/constants.php';
 
 	$admin_dir = ICMS_ROOT_PATH.'/modules/system/admin';
-	$dirlist = XoopsLists::getDirListAsArray($admin_dir);
+	$dirlist = IcmsLists::getDirListAsArray($admin_dir);
 
 	icms_loadLanguageFile('system', 'admin');
 	asort($dirlist);

@@ -27,7 +27,7 @@ $s_cat_checkbox = new XoopsFormCheckBox(_AM_SYSTEMRIGHTS, "system_catids[]", $s_
 include_once ICMS_ROOT_PATH.'/modules/system/constants.php';
 require_once ICMS_ROOT_PATH.'/class/xoopslists.php';
 $admin_dir = ICMS_ROOT_PATH.'/modules/system/admin/';
-$dirlist = XoopsLists::getDirListAsArray($admin_dir);
+$dirlist = IcmsLists::getDirListAsArray($admin_dir);
 /* changes to only allow permission admins you already have */
 global $icmsUser;
 $gperm =& xoops_gethandler('member_groupperm');
