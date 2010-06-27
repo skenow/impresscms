@@ -2,19 +2,15 @@
 /**
  * Manage groups and memberships
  *
- * @copyright	The XOOPS Project <http://www.xoops.org/>
- * @copyright	XOOPS_copyrights.txt
  * @copyright	The ImpressCMS Project <http://www.impresscms.org/>
  * @license		LICENSE.txt
- * @since		XOOPS
  *
  * @author		Kazumi Ono (aka onokazo)
- * @author	The XOOPS Project Community <http://www.xoops.org>
- * @author	Gustavo Alejandro Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nube.com.ar>
- *
- * @package	core
- * @subpackage	groupperm
- * @version		$Id: groupperm.php 19450 2010-06-18 14:15:29Z malanciault $
+ * @author		Gustavo Alejandro Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nube.com.ar>
+ * @category	ICMS
+ * @package		Member
+ * @subpackage	Groupperm
+ * @version		SVN: $Id: groupperm.php 19450 2010-06-18 14:15:29Z malanciault $
  */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
@@ -44,13 +40,3 @@ class icms_member_groupperm_Object extends icms_core_Object {
 	}
 }
 
-/**
- * @deprecated	Use icms_member_groupperm_Object, instead
- * @todo		Remove in version 1.4
- */
-class icms_member_group_ObjectPerm extends icms_member_groupperm_Object {
-	public function __construct() {
-		parent::__construct();
-		$this->setErrors = icms_deprecated('icms_member_groupperm_Object', 'This will be removed in version 1.4');
-	}
-}
