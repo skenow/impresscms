@@ -10,7 +10,7 @@
  * @category	ICMS
  * @package		Member
  * @subpackage	Groupperm
- * @version		SVN: $Id: groupperm.php 19450 2010-06-18 14:15:29Z malanciault $
+ * @version		SVN: $Id$
  */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
