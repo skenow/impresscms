@@ -1,5 +1,5 @@
 <?php
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 class XoopsAvatar extends icms_avatar_Object {
 	private $_deprecated;
