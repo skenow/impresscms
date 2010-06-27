@@ -29,6 +29,9 @@ include_once '../include/version.php';
 require_once 'include/functions.php';
 include_once '../include/debug_functions.php';
 
+require_once( ICMS_ROOT_PATH . '/libraries/icms/core/Autoloader.php' );
+icms_core_Autoloader::register();
+
 error_reporting( E_ALL );
 
 class XoopsInstallWizard {
