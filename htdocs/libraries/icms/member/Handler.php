@@ -43,7 +43,7 @@ class icms_member_Handler {
 	/**
 	 * holds temporary user objects
 	 */
-	private $_members = array ( );
+	private $_members = array();
 	/**#@-*/
 
 	/**
@@ -366,7 +366,7 @@ class icms_member_Handler {
 	 * @return int
 	 */
 	public function getUserCount($criteria = null) {
-		return $this->_uHandler->getCount($criteria );
+		return $this->_uHandler->getCount($criteria);
 	}
 
 	/**
@@ -433,17 +433,17 @@ class icms_member_Handler {
 		$ret = array();
 
 		$select = $asobject ? "u.*" : "u.uid";
-		$sql [] = "	SELECT DISTINCT {$select} "
+		$sql[] = "	SELECT DISTINCT {$select} "
 				. "	FROM " . $this->_uHandler->db->prefix("users") . " AS u"
 				. " LEFT JOIN " . $this->_mHandler->db->prefix("groups_users_link") . " AS m ON m.uid = u.uid"
 				. "	WHERE 1 = '1'";
-		if (! empty ( $groups )) {
-			$sql [] = "m.groupid IN (" . implode(", ", $groups) . ")";
+		if (! empty($groups) ) {
+			$sql[] = "m.groupid IN (" . implode(", ", $groups) . ")";
 		}
 		$limit = $start = 0;
 		if ( isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element') ) {
 			$sql_criteria = $criteria->render();
-			if ( $criteria->getSort () != '' ) {
+			if ( $criteria->getSort() != '' ) {
 				$sql_criteria .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
 			}
 			$limit = $criteria->getLimit();
@@ -483,7 +483,7 @@ class icms_member_Handler {
 	public function getUserCountByGroupLink($groups, $criteria = null) {
 		$ret = 0;
 
-		$sql [] = "	SELECT COUNT(DISTINCT u.uid) "
+		$sql[] = "	SELECT COUNT(DISTINCT u.uid) "
 				. "	FROM " . $this->_uHandler->db->prefix("users") . " AS u"
 				. " LEFT JOIN " . $this->_mHandler->db->prefix("groups_users_link") . " AS m ON m.uid = u.uid"
 				. "	WHERE 1 = '1'";
