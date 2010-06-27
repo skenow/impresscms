@@ -7,15 +7,15 @@
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		libraries
+ * @category	ICMS
+ * @package		Preload
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id: icmspreloadhandler.php 19421 2010-06-14 07:28:37Z david-sf $
+ * @version		SVN: $Id$
  */
 
 class icms_preload_Item {
 
-	function icms_preload_Item() {
+	public function __construct() {
 	}
 }
-?>

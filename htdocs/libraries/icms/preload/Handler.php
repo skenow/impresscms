@@ -3,12 +3,13 @@
  * ICMS Preload Handler
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package	icms_ipf_Object
- * @since	1.1
+ * @license		LICENSE.txt
+ * @category	ICMS
+ * @package		Preload
+ * @since		1.1
  * @author		marcan <marcan@impresscms.org>
  * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version	$Id: icmspreloadhandler.php 19421 2010-06-14 07:28:37Z david-sf $
+ * @version		SVN: $Id$
  */
 
 if (!defined('ICMS_ROOT_PATH')) {
@@ -24,33 +25,33 @@ include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		core
+ * @category	ICMS
+ * @package		Preload
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id: icmspreloadhandler.php 19421 2010-06-14 07:28:37Z david-sf $
  */
 class icms_preload_Handler {
 
 	/**
 	 * @var array $_preloadFilesArray array containing a list of all preload files in ICMS_PRELOAD_PATH
 	 */
-	var $_preloadFilesArray=array();
+	private $_preloadFilesArray=array();
 
 	/**
 	 * @var array $_preloadEventsArray array containing a list of all events for all preload file, indexed by event name and sorted by order ox execution
 	 */
-	var $_preloadEventsArray=array();
+	private $_preloadEventsArray=array();
 
 	/**
 	 * Constructor
 	 *
 	 * @return	void
 	 */
-	function icms_preload_Handler() {
-		$preloadFilesArray = XoopsLists::getFileListAsArray(ICMS_PRELOAD_PATH);
-		foreach ($preloadFilesArray as $filename) {
+	public function __construct() {
+		$preloadFilesArray = IcmsLists::getFileListAsArray(ICMS_PRELOAD_PATH);
+		foreach ( $preloadFilesArray as $filename ) {
 			// exclude index.html
-			if ($filename != 'index.html' && !class_exists( $this->getClassName($filename))) {
+			if ( $filename != 'index.html' && !class_exists( $this->getClassName($filename)) ) {
 				$this->_preloadFilesArray[] = $filename;
 				$this->addPreloadEvents($filename);
 			}
@@ -58,8 +59,8 @@ class icms_preload_Handler {
 
 		// add ondemand preload
 		global $icmsOnDemandPreload;
-		if (isset($icmsOnDemandPreload) && count($icmsOnDemandPreload) > 0) {
-			foreach ($icmsOnDemandPreload as $onDemandPreload) {
+		if ( isset($icmsOnDemandPreload) && count($icmsOnDemandPreload) > 0 ) {
+			foreach ( $icmsOnDemandPreload as $onDemandPreload ) {
 				$this->_preloadFilesArray[] = $onDemandPreload['filename'];
 				$this->addPreloadEvents($onDemandPreload['filename'], $onDemandPreload['module']);
 			}
@@ -71,8 +72,8 @@ class icms_preload_Handler {
 	 *
 	 * @param string $filename
 	 */
-	function addPreloadEvents($filename, $module=false) {
-		if ($module) {
+	public function addPreloadEvents($filename, $module=false) {
+		if ( $module ) {
 			$filepath = ICMS_ROOT_PATH . "/modules/$module/preload/$filename";
 		} else {
 			$filepath = ICMS_PRELOAD_PATH . "/$filename";
@@ -84,8 +85,8 @@ class icms_preload_Handler {
 			$preloadItem = new $classname();
 
 			$class_methods = get_class_methods($classname);
-			foreach($class_methods as $method) {
-				if (strpos($method, 'event') === 0) {
+			foreach ( $class_methods as $method ) {
+				if ( strpos($method, 'event') === 0 ) {
 					$preload_event = strtolower(str_replace('event', '', $method));
 
 					$preload_event_array = array(
@@ -95,7 +96,7 @@ class icms_preload_Handler {
 
 					$preload_event_weight_define_name = strtoupper($classname) . '_' . strtoupper($preload_event);
 
-					if (defined($preload_event_weight_define_name)) {
+					if ( defined($preload_event_weight_define_name) ) {
 						$preload_event_weight = constant($preload_event_weight_define_name);
 						$this->_preloadEventsArray[$preload_event][$preload_event_weight] = $preload_event_array;
 					} else {
@@ -111,14 +112,12 @@ class icms_preload_Handler {
 	 *
 	 * @static
 	 * @staticvar   object
-	 *
 	 * @return	object
 	 *
 	 */
-	static function &getInstance()
-	{
+	public static function &getInstance() {
 		static $instance;
-		if (!isset($instance)) {
+		if ( !isset($instance) ) {
 			$instance = new icms_preload_Handler();
 		}
 		return $instance;
@@ -139,10 +138,10 @@ class icms_preload_Handler {
 	 *
 	 * @return	TRUE if successful, FALSE if not
 	 */
-	function triggerEvent($event, $array=false) {
+	public function triggerEvent($event, $array=false) {
 		$event = strtolower($event);
-		if (isset($this->_preloadEventsArray[$event])) {
-			foreach ($this->_preloadEventsArray[$event] as $eventArray) {
+		if ( isset($this->_preloadEventsArray[$event]) ) {
+			foreach ( $this->_preloadEventsArray[$event] as $eventArray ) {
 				$method = $eventArray['method'];
 				$eventArray['object']->$method($array);
 			}
@@ -157,29 +156,9 @@ class icms_preload_Handler {
 	 * @return	string name of the class
 	 *
 	 */
-	function getClassName($filename) {
+	public function getClassName($filename) {
 		return 'IcmsPreload' . ucfirst(str_replace('.php', '', $filename));
 	}
 
 }
 
-/**
- * icms_preload_Item
- *
- * Class which is extended by any preload item. This class is empty for now but is there for
- * extended future purposes
- *
- * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		libraries
- * @since		1.1
- * @author		marcan <marcan@impresscms.org>
- * @version		$Id: icmspreloadhandler.php 19421 2010-06-14 07:28:37Z david-sf $
- */
-
-class icms_preload_Item {
-
-	function icms_preload_Item() {
-	}
-}
-?>
