@@ -1,5 +1,5 @@
 <?php
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 class XoopsBlock extends icms_core_Block {
 	private $_deprecated;
