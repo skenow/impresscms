@@ -620,14 +620,3 @@ class icms_core_Object {
 	}
 }
 
-/**
- * @deprecated	Use icms_core_Object instead
- * @todo		Remove this in version 1.4
- *
- */
-class XoopsObject extends icms_core_Object {
-	public function __construct() {
-		parent::__construct();
-		$this->setErrors(icms_deprecated('icms_core_Object','This will be removed in version 1.4'));
-	}
-}
