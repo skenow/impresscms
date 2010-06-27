@@ -2,62 +2,52 @@
 /**
  * Manage of modules
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
+
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package	core
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project
- * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: module.php 19450 2010-06-18 14:15:29Z malanciault $
+ * @license		LICENSE.txt
+ * @category	ICMS
+ * @package		Module
+ * @version		SVN: $Id$
  */
 
-if(!defined('ICMS_ROOT_PATH')){exit();}
-
-/**
- * @package 	kernel
- * @copyright 	copyright &copy; 2000 XOOPS.org
- **/
+defined('ICMS_ROOT_PATH') or die('ImpressCMS root path is not defined');
 
 /**
  * A Module
  *
- * @package	kernel
- * @author	Kazumi Ono 	<onokazu@xoops.org>
- * @copyright	(c) 2000-2003 The Xoops Project - www.xoops.org
+ * @category	ICMS
+ * @package		Module
+ * @author		Kazumi Ono 	<onokazu@xoops.org>
  **/
-class icms_module_Object extends icms_core_Object
-{
+class icms_module_Object extends icms_core_Object {
 	/**
 	 * @var string
 	 */
-	var $modinfo;
+	public $modinfo;
 	/**
 	 * AdminMenu of the module
 	 *
 	 * @var array
 	 */
-	var $adminmenu;
+	public $adminmenu;
 	/**
 	 * Header menu on admin of the module
 	 *
 	 * @var array
 	 */
-	var $adminheadermenu;
+	public $adminheadermenu;
 	/**
 	 * array for messages
 	 *
 	 * @var array
 	 */
-	var $messages;
+	public $messages;
 
 	/**
 	 * Constructor
 	 */
-	function icms_module_Object()
-	{
-		$this->icms_core_Object();
+	public function __construct() {
+		parent::__construct();
 		$this->initVar('mid', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('name', XOBJ_DTYPE_TXTBOX, null, true, 150);
 		$this->initVar('version', XOBJ_DTYPE_INT, 100, false);
@@ -81,19 +71,18 @@ class icms_module_Object extends icms_core_Object
 	 * @param   string  $dirname    Directory Name
 	 * @param   boolean $verbose
 	 **/
-	function loadInfoAsVar($dirname, $verbose = true)
-	{
-		if(!isset($this->modinfo)) {$this->loadInfo($dirname, $verbose);}
+	public function loadInfoAsVar($dirname, $verbose = true) {
+		if ( !isset($this->modinfo) ) {$this->loadInfo($dirname, $verbose);}
 		$this->setVar('name', $this->modinfo['name'], true);
 		$this->setVar('version', (int) (100 * ($this->modinfo['version'] + 0.001)), true);
 		$this->setVar('dirname', $this->modinfo['dirname'], true);
-		$hasmain = (isset($this->modinfo['hasMain']) && $this->modinfo['hasMain'] == 1) ? 1 : 0;
-		$hasadmin = (isset($this->modinfo['hasAdmin']) && $this->modinfo['hasAdmin'] == 1) ? 1 : 0;
-		$hassearch = (isset($this->modinfo['hasSearch']) && $this->modinfo['hasSearch'] == 1) ? 1 : 0;
-		$hasconfig = ((isset($this->modinfo['config']) && is_array($this->modinfo['config'])) || !empty($this->modinfo['hasComments'])) ? 1 : 0;
-		$hascomments = (isset($this->modinfo['hasComments']) && $this->modinfo['hasComments'] == 1) ? 1 : 0;
+		$hasmain = ( isset($this->modinfo['hasMain']) && $this->modinfo['hasMain'] == 1 ) ? 1 : 0;
+		$hasadmin = ( isset($this->modinfo['hasAdmin']) && $this->modinfo['hasAdmin'] == 1 ) ? 1 : 0;
+		$hassearch = ( isset($this->modinfo['hasSearch']) && $this->modinfo['hasSearch'] == 1 ) ? 1 : 0;
+		$hasconfig = ( ( isset($this->modinfo['config']) && is_array($this->modinfo['config']) ) || !empty($this->modinfo['hasComments'])) ? 1 : 0;
+		$hascomments = ( isset($this->modinfo['hasComments'] ) && $this->modinfo['hasComments'] == 1 ) ? 1 : 0;
 		// RMV-NOTIFY
-		$hasnotification = (isset($this->modinfo['hasNotification']) && $this->modinfo['hasNotification'] == 1) ? 1 : 0;
+		$hasnotification = ( isset($this->modinfo['hasNotification']) && $this->modinfo['hasNotification'] == 1 ) ? 1 : 0;
 		$this->setVar('hasmain', $hasmain);
 		$this->setVar('hasadmin', $hasadmin);
 		$this->setVar('hassearch', $hassearch);
@@ -110,12 +99,10 @@ class icms_module_Object extends icms_core_Object
 	 * @return  array|string	Array of module information.
 	 * If {@link $name} is set, returns a single module information item as string.
 	 **/
-	function &getInfo($name = null)
-	{
-		if(!isset($this->modinfo)) {$this->loadInfo($this->getVar('dirname'));}
-		if(isset($name))
-		{
-			if(isset($this->modinfo[$name])) {return $this->modinfo[$name];}
+	public function &getInfo($name = null) {
+		if ( !isset($this->modinfo) ) {$this->loadInfo($this->getVar('dirname'));}
+		if ( isset($name) ) {
+			if ( isset($this->modinfo[$name]) ) {return $this->modinfo[$name];}
 			$return = false;
 			return $return;
 		}
@@ -127,8 +114,7 @@ class icms_module_Object extends icms_core_Object
 	 *
 	 * @return int dbversion
 	 **/
-	function getDBVersion()
-	{
+	public function getDBVersion() {
 		$ret = $this->getVar('dbversion');
 		return $ret;
 	}
@@ -138,11 +124,9 @@ class icms_module_Object extends icms_core_Object
 	 *
 	 * @return	string $ret or FALSE on fail
 	 */
-	function mainLink()
-	{
-		if($this->getVar('hasmain') == 1)
-		{
-			$ret = '<a href="'.ICMS_URL.'/modules/'.$this->getVar('dirname').'/">'.$this->getVar('name').'</a>';
+	public function mainLink() {
+		if ( $this->getVar('hasmain') == 1 ) {
+			$ret = '<a href="' . ICMS_URL . '/modules/' . $this->getVar('dirname') . '/">' . $this->getVar('name') . '</a>';
 			return $ret;
 		}
 		return false;
@@ -153,13 +137,10 @@ class icms_module_Object extends icms_core_Object
 	 *
 	 * @return	string $ret
 	 */
-	function subLink()
-	{
+	public function subLink() {
 		$ret = array();
-		if($this->getInfo('sub') && is_array($this->getInfo('sub')))
-		{
-			foreach($this->getInfo('sub') as $submenu)
-			{
+		if ( $this->getInfo('sub') && is_array($this->getInfo('sub')) ) {
+			foreach ( $this->getInfo('sub') as $submenu ) {
 				$ret[] = array('name' => $submenu['name'], 'url' => $submenu['url']);
 			}
 		}
@@ -169,13 +150,11 @@ class icms_module_Object extends icms_core_Object
 	/**
 	 * Load the admin menu for the module
 	 */
-	function loadAdminMenu()
-	{
-		if($this->getInfo('adminmenu') && $this->getInfo('adminmenu') != '' && file_exists(ICMS_ROOT_PATH.'/modules/'.$this->getVar('dirname').'/'.$this->getInfo('adminmenu')))
-		{
-			include_once ICMS_ROOT_PATH.'/modules/'.$this->getVar('dirname').'/'.$this->getInfo('adminmenu');
+	public function loadAdminMenu() {
+		if ( $this->getInfo('adminmenu') && $this->getInfo('adminmenu') != '' && file_exists(ICMS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $this->getInfo('adminmenu')) ) {
+			include_once ICMS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $this->getInfo('adminmenu');
 			$this->adminmenu = & $adminmenu;
-			if(isset($headermenu)) {$this->adminheadermenu = & $headermenu;}
+			if ( isset($headermenu) ) {$this->adminheadermenu = & $headermenu;}
 		}
 	}
 
@@ -184,9 +163,8 @@ class icms_module_Object extends icms_core_Object
 	 *
 	 * @return	string $this->adminmenu
 	 */
-	function &getAdminMenu()
-	{
-		if(!isset($this->adminmenu)) {$this->loadAdminMenu();}
+	public function &getAdminMenu() {
+		if ( !isset($this->adminmenu) ) {$this->loadAdminMenu();}
 		return $this->adminmenu;
 	}
 
@@ -195,9 +173,8 @@ class icms_module_Object extends icms_core_Object
 	 *
 	 * @return	string $this->adminmenu
 	 */
-	function &getAdminHeaderMenu()
-	{
-		if(!isset($this->adminheadermenu)) {$this->loadAdminMenu();}
+	public function &getAdminHeaderMenu() {
+		if ( !isset($this->adminheadermenu) ) {$this->loadAdminMenu();}
 		return $this->adminheadermenu;
 	}
 
@@ -208,23 +185,18 @@ class icms_module_Object extends icms_core_Object
 	 * @param   bool    $verbose    Give an error on fail?
 	 * @return  bool   TRUE if success, FALSE if fail.
 	 */
-	function loadInfo($dirname, $verbose = true)
-	{
+	public function loadInfo($dirname, $verbose = true) {
 		global $icmsConfig;
 		icms_loadLanguageFile($dirname, 'modinfo');
-		if(file_exists(ICMS_ROOT_PATH.'/modules/'.$dirname.'/icms_version.php'))
-		{
-			include ICMS_ROOT_PATH.'/modules/'.$dirname.'/icms_version.php';
-		}elseif(file_exists(ICMS_ROOT_PATH.'/modules/'.$dirname.'/xoops_version.php'))
-		{
-			include ICMS_ROOT_PATH.'/modules/'.$dirname.'/xoops_version.php';
-		}
-		else
-		{
-			if(false != $verbose) {echo "Module File for $dirname Not Found!";}
+		if ( file_exists(ICMS_ROOT_PATH . '/modules/' . $dirname . '/icms_version.php') ) {
+			include ICMS_ROOT_PATH . '/modules/' . $dirname . '/icms_version.php';
+		} elseif ( file_exists(ICMS_ROOT_PATH . '/modules/' . $dirname . '/xoops_version.php') ) {
+			include ICMS_ROOT_PATH . '/modules/' . $dirname . '/xoops_version.php';
+		} else {
+			if ( false != $verbose ) {echo "Module File for $dirname Not Found!";}
 			return false;
 		}
-		$this->modinfo = & $modversion;
+		$this->modinfo =& $modversion;
 		return true;
 	}
 
@@ -238,24 +210,18 @@ class icms_module_Object extends icms_core_Object
 	 * @param   integer $userid
 	 * @return  mixed   Search result or False if fail.
 	 **/
-	function search($term = '', $andor = 'AND', $limit = 0, $offset = 0, $userid = 0)
-	{
-		if($this->getVar('hassearch') != 1) {return false;}
+	public function search($term = '', $andor = 'AND', $limit = 0, $offset = 0, $userid = 0) {
+		if ( $this->getVar('hassearch') != 1 ) {return false;}
 		$search = & $this->getInfo('search');
-		if($this->getVar('hassearch') != 1 || !isset($search['file']) || !isset($search['func']) || $search['func'] == '' || $search['file'] == '')
-		{
+		if ( $this->getVar('hassearch') != 1 || !isset($search['file']) || !isset($search['func']) || $search['func'] == '' || $search['file'] == '' ) {
 			return false;
 		}
-		if(file_exists(ICMS_ROOT_PATH."/modules/".$this->getVar('dirname').'/'.$search['file']))
-		{
-			include_once ICMS_ROOT_PATH.'/modules/'.$this->getVar('dirname').'/'.$search['file'];
-		}
-		else
-		{
+		if ( file_exists(ICMS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $search['file']) ) {
+			include_once ICMS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $search['file'];
+		} else {
 			return false;
 		}
-		if(function_exists($search['func']))
-		{
+		if ( function_exists($search['func']) ) {
 			$func = $search['func'];
 			return $func($term, $andor, $limit, $offset, $userid);
 		}
@@ -272,25 +238,61 @@ class icms_module_Object extends icms_core_Object
 	 *
 	 * @return datatype  description
 	 */
-	function displayAdminMenu($currentoption = 0, $breadcrumb = '', $submenus = false, $currentsub = -1)
-	{
+	public function displayAdminMenu($currentoption = 0, $breadcrumb = '', $submenus = false, $currentsub = -1) {
 		global $icmsModule, $icmsConfig;
 		icms_loadLanguageFile($icmsModule->getVar('dirname'), 'modinfo');
 		icms_loadLanguageFile($icmsModule->getVar('dirname'), 'admin');
 		$tpl = new icms_view_Tpl();
-		$tpl->assign(array('headermenu' => $this->getAdminHeaderMenu(), 'adminmenu' => $this->getAdminMenu(), 'current' => $currentoption, 'breadcrumb' => $breadcrumb, 'headermenucount' => count($this->getAdminHeaderMenu()), 'submenus' => $submenus, 'currentsub' => $currentsub, 'submenuscount' => count($submenus)));
-		$tpl->display(ICMS_ROOT_PATH.'/modules/system/templates/admin/system_adm_modulemenu.html');
+		$tpl->assign(
+			array(
+				'headermenu' => $this->getAdminHeaderMenu(),
+				'adminmenu' => $this->getAdminMenu(),
+				'current' => $currentoption,
+				'breadcrumb' => $breadcrumb,
+				'headermenucount' => count($this->getAdminHeaderMenu()),
+				'submenus' => $submenus,
+				'currentsub' => $currentsub,
+				'submenuscount' => count($submenus)
+			)
+		);
+		$tpl->display(ICMS_ROOT_PATH . '/modules/system/templates/admin/system_adm_modulemenu.html');
 	}
 
 	/**#@+
 	 * For backward compatibility only!
-	 * @deprecated
+	 * @deprecated Use $this->getVar('mid') instead
+	 * @todo		Remove in version 1.4
 	 */
-	function mid() {return $this->getVar('mid');}
-	function dirname() {return $this->getVar('dirname');}
-	function name() {return $this->getVar('name');}
-	function &getByDirName($dirname)
-	{
+	public function mid() {
+		icms_deprecated('getVar("mid")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return $this->getVar('mid');
+	}
+	/**
+	 *
+	 * @deprecated	Use getVar('dirname') instead
+	 * @todo 		Remove in version 1.4
+	 */
+	public function dirname() {
+		icms_deprecated('getVar("dirname")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return $this->getVar('dirname');
+	}
+	/**
+	 *
+	 * @deprecated	Use getVar('name') instead
+	 * @todo		Remove in version 1.4
+	 */
+	public function name() {
+		icms_deprecated('getVar("name")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return $this->getVar('name');
+	}
+	/**
+	 *
+	 * @deprecated	Use the handler method instead
+	 * @todo		Remove in version 1.4
+	 * @param unknown_type $dirname
+	 */
+	public function &getByDirName($dirname) {
+		icms_deprecated('Module Handler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		$modhandler = & xoops_gethandler('module');
 		$inst = & $modhandler->getByDirname($dirname);
 		return $inst;
@@ -308,20 +310,19 @@ class icms_module_Object extends icms_core_Object
 	 *
 	 * @todo Make this work with templates ;)
 	 */
-	function setMessage($msg, $title='', $render = false){
+	function setMessage($msg, $title='', $render = false) {
 		$ret = '<div class="moduleMsg">';
-		if($title != '') {$ret .= '<h4>'.$title.'</h4>';}
-		if(is_array($msg))
-		{
-			foreach($msg as $m) {$ret .= $m.'<br />';}
+		if ( $title != '' ) {$ret .= '<h4>'.$title.'</h4>';}
+		if ( is_array($msg) ) {
+			foreach ( $msg as $m ) {$ret .= $m.'<br />';}
+		} else {
+			$ret .= $msg;
 		}
-		else {$ret .= $msg;}
 		$ret .= '</div>';
-		if($render){
+		if ( $render ) {
 			echo $ret;
-		}else{
+		} else {
 			return $ret;
 		}
 	}
 }
-?>
