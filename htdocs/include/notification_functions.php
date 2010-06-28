@@ -2,6 +2,8 @@
 /**
  * Handles some notification functions within ImpressCMS
  *
+ * @todo		Move these functions into icms_notification_Handler class
+ *
  * @copyright	http://www.xoops.org/ The XOOPS Project
  * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
@@ -33,10 +35,10 @@ function notificationEnabled($style, $module_id=null)
 		if (!isset($module_id)) {
 			return false;
 		}
-		$module_handler =& xoops_gethandler('module');
+		$module_handler = new icms_module_Handler($GLOBALS['xoopsDB']);
 		$module =& $module_handler->get($module_id);
 		if (!empty($module) && $module->getVar('hasnotification') == 1) {
-			$config_handler =& xoops_gethandler('config');
+			$config_handler = new icms_config_Handler($GLOBALS['xoopsDB']);
 			$config = $config_handler->getConfigsByCat(0,$module_id);
 			$status = $config['notification_enabled'];
 		} else {
@@ -72,7 +74,7 @@ function &notificationCategoryInfo($category_name='', $module_id=null)
 		$module_id = !empty($icmsModule) ? $icmsModule->getVar('mid') : 0;
 		$module =& $icmsModule;
 	} else {
-		$module_handler =& xoops_gethandler('module');
+		$module_handler = new icms_module_Handler($GLOBALS['xoopsDB']);
 		$module =& $module_handler->get($module_id);
 	}
 	$not_config =& $module->getInfo('notification');
@@ -140,11 +142,11 @@ function &notificationEvents($category_name, $enabled_only, $module_id=null)
 		$module_id = !empty($icmsModule) ? $icmsModule->getVar('mid') : 0;
 		$module =& $icmsModule;
 	} else {
-		$module_handler =& xoops_gethandler('module');
+		$module_handler = new icms_module_Handler($GLOBALS['xoopsDB']);
 		$module =& $module_handler->get($module_id);
 	}
 	$not_config =& $module->getInfo('notification');
-	$config_handler =& xoops_gethandler('config');
+	$config_handler = new icms_config_Handler($GLOBALS['xoopsDB']);
 	$mod_config = $config_handler->getConfigsByCat(0,$module_id);
 
 	$category =& notificationCategoryInfo($category_name, $module_id);
@@ -183,7 +185,7 @@ function &notificationEvents($category_name, $enabled_only, $module_id=null)
 		if (!empty($category['item_name']) && $category['item_name'] == $com_config['itemName']) {
 			$mail_template_dir = ICMS_ROOT_PATH . '/language/' . $icmsConfig['language'] . '/mail_template/';
 			include_once ICMS_ROOT_PATH . '/include/comment_constants.php';
-			$config_handler =& xoops_gethandler('config');
+			$config_handler = new icms_config_Handler($GLOBALS['xoopsDB']);
 			$com_config = $config_handler->getConfigsByCat(0,$module_id);
 			if (!$enabled_only) {
 				$insert_comment = true;
@@ -259,7 +261,7 @@ function &notificationEvents($category_name, $enabled_only, $module_id=null)
  **/
 function notificationEventEnabled(&$category, &$event, &$module)
 {
-	$config_handler =& xoops_gethandler('config');
+	$config_handler = new icms_config_Handler($GLOBALS['xoopsDB']);
 	$mod_config = $config_handler->getConfigsByCat(0,$module->getVar('mid'));
 
 	if (is_array($mod_config['notification_events']) && $mod_config['notification_events'] != array()) {
@@ -267,7 +269,7 @@ function notificationEventEnabled(&$category, &$event, &$module)
 		if (in_array($option_name, $mod_config['notification_events'])) {
 			return true;
 		}
-		$notification_handler =& xoops_gethandler('notification');
+		$notification_handler = new icms_notification_Handler($GLOBALS['xoopsDB']);
 	}
 	return false;
 }
@@ -366,12 +368,14 @@ function notificationGenerateConfig(&$category, &$event, $type)
 		case 'name':
 			return 'notify:' . $category['name'] . '-' . $event['name'];
 			break;
+
 		case 'option_name':
 			return $category['name'] . '-' . $event['name'];
 			break;
+
 		default:
 			return false;
 			break;
 	}
 }
-?>
+

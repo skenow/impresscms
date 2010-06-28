@@ -2,6 +2,8 @@
 /**
  * Handles all notification select functions within ImpressCMS
  *
+ * @todo		This should be a method of the icms_notification_Handler class
+ *
  * @copyright	http://www.xoops.org/ The XOOPS Project
  * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
@@ -25,7 +27,7 @@ if ($xoops_notification['show']) {
 	$categories =& notificationSubscribableCategoryInfo();
 	$event_count = 0;
 	if (!empty($categories)) {
-		$notification_handler =& xoops_gethandler('notification');
+		$notification_handler = new icms_notification_Handler($GLOBALS['xoopsDB']);
 		foreach ($categories as $category) {
 			$section['name'] = $category['name'];
 			$section['title'] = $category['title'];
@@ -69,4 +71,3 @@ if ($xoops_notification['show']) {
 }
 $xoopsTpl->assign('xoops_notification', $xoops_notification);
 
-?>

@@ -1,48 +1,31 @@
 <?php
 /**
- * Manage of Notifications
+ * Manage Notifications
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package	core
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project
- * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: notification.php 19450 2010-06-18 14:15:29Z malanciault $
+ * @license		LICENSE.txt
+ * @category	ICMS
+ * @package		Notification
+ * @version		SVN: $Id$
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
-
-/**
- *
- *
- * @package     kernel
- * @subpackage  notification
- *
- * @author	    Michael van Dam	<mvandam@caltech.edu>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
- */
+defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
  * A Notification
  *
- * @package     kernel
- * @subpackage  notification
+ * @category	ICMS
+ * @package     Notification
  *
  * @author	    Michael van Dam	<mvandam@caltech.edu>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_notification_Object extends icms_core_Object
-{
+class icms_notification_Object extends icms_core_Object {
 
 	/**
 	 * Constructor
 	 **/
-	function icms_notification_Object()
-	{
-		$this->icms_core_Object();
+	public function __construct() {
+		parent::__construct();
 		$this->initVar('not_id', XOBJ_DTYPE_INT, NULL, false);
 		$this->initVar('not_modid', XOBJ_DTYPE_INT, NULL, false);
 		$this->initVar('not_category', XOBJ_DTYPE_TXTBOX, null, false, 30);
@@ -69,34 +52,35 @@ class icms_notification_Object extends icms_core_Object
 	 *
 	 * @return  bool	true if success, false if error
 	 **/
-	function notifyUser($template_dir, $template, $subject, $tags)
-	{
+	public function notifyUser($template_dir, $template, $subject, $tags) {
 		global $icmsConfigMailer;
 		// Check the user's notification preference.
 
-		$member_handler =& xoops_gethandler('member');
+		$member_handler = new icms_member_Handler($GLOBALS['xoopsDB']);
 		$user =& $member_handler->getUser($this->getVar('not_uid'));
-		if (!is_object($user)) {
+		if ( !is_object($user) ) {
 			return true;
 		}
 		$method = $user->getVar('notify_method');
 
 		$xoopsMailer =& getMailer();
-		include_once XOOPS_ROOT_PATH . '/include/notification_constants.php';
+		include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
 		switch($method) {
 			case XOOPS_NOTIFICATION_METHOD_PM:
 				$xoopsMailer->usePM();
 				$xoopsMailer->setFromUser($member_handler->getUser($icmsConfigMailer['fromuid']));
-				foreach ($tags as $k=>$v) {
+				foreach ( $tags as $k=>$v ) {
 					$xoopsMailer->assign($k, $v);
 				}
 				break;
+
 			case XOOPS_NOTIFICATION_METHOD_EMAIL:
 				$xoopsMailer->useMail();
-				foreach ($tags as $k=>$v) {
+				foreach ( $tags as $k=>$v ) {
 					$xoopsMailer->assign($k, preg_replace("/&amp;/i", '&', $v));
 				}
 				break;
+
 			default:
 				return true; // report error in user's profile??
 				break;
@@ -115,21 +99,18 @@ class icms_notification_Object extends icms_core_Object
 		// If send-once-then-delete, delete notification
 		// If send-once-then-wait, disable notification
 
-		include_once XOOPS_ROOT_PATH . '/include/notification_constants.php';
-		$notification_handler =& xoops_gethandler('notification');
+		include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
+		$notification_handler = new icms_notification_Handler($GLOBALS['xoopsDB']);
 
-		if ($this->getVar('not_mode') == XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE) {
+		if ( $this->getVar('not_mode') == XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE ) {
 			$notification_handler->delete($this);
 			return $success;
 		}
 
-		if ($this->getVar('not_mode') == XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT) {
+		if ( $this->getVar('not_mode') == XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT ) {
 			$this->setVar('not_mode', XOOPS_NOTIFICATION_MODE_WAITFORLOGIN);
 			$notification_handler->insert($this);
 		}
 		return $success;
-
 	}
-
 }
-?>
