@@ -68,7 +68,7 @@ switch ($op) {
 		// Generate the info for the template
 
 		$module_handler = new icms_module_Handler($GLOBALS['xoopsDB']);
-		include_once ICMS_ROOT_PATH . '/include/notification_functions.php';
+		//include_once ICMS_ROOT_PATH . '/include/notification_functions.php';
 
 		$modules = array();
 		$prev_modid = -1;
@@ -108,7 +108,7 @@ switch ($op) {
 			if ($category != $prev_category) {
 				$prev_category = $category;
 				$prev_item = -1;
-				$category_info =& notificationCategoryInfo($category, $modid);
+				$category_info =& $notification_handler->categoryInfo($category, $modid);
 				$modules[$modid]['categories'][$category] = array('name'=>$category, 'title'=>$category_info['title'], 'items'=>array());
 			}
 			$item = $n->getVar('not_itemid');
@@ -121,7 +121,7 @@ switch ($op) {
 				}
 				$modules[$modid]['categories'][$category]['items'][$item] = array('id'=>$item, 'name'=>$item_info['name'], 'url'=>$item_info['url'], 'notifications'=>array());
 			}
-			$event_info =& notificationEventInfo($category, $n->getVar('not_event'), $n->getVar('not_modid'));
+			$event_info =& $notification_handler->eventInfo($category, $n->getVar('not_event'), $n->getVar('not_modid'));
 			$modules[$modid]['categories'][$category]['items'][$item]['notifications'][] = array(
 				'id'=>$n->getVar('not_id'),
 				'module_id'=>$n->getVar('not_modid'),

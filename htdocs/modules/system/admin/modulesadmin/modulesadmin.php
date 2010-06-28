@@ -306,7 +306,7 @@ function xoops_module_install($dirname) {
 					}
 					// Main notification options
 					include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
-					include_once ICMS_ROOT_PATH . '/include/notification_functions.php';
+					//include_once ICMS_ROOT_PATH . '/include/notification_functions.php';
 					$options = array();
 					$options['_NOT_CONFIG_DISABLE'] = XOOPS_NOTIFICATION_DISABLE;
 					$options['_NOT_CONFIG_ENABLEBLOCK'] = XOOPS_NOTIFICATION_ENABLEBLOCK;
@@ -318,9 +318,10 @@ function xoops_module_install($dirname) {
 					// Event-specific notification options
 					// FIXME: doesn't work when update module... can't read back the array of options properly...  " changing to &quot;
 					$options = array();
-					$categories =& notificationCategoryInfo('',$module->getVar('mid'));
+					$notification_handler = new icms_notification_Handler($GLOBALS['xoopsDB']);
+					$categories =& $notification_handler->categoryInfo('',$module->getVar('mid'));
 					foreach ($categories as $category) {
-						$events =& notificationEvents ($category['name'], false, $module->getVar('mid'));
+						$events =& $notification_handler->categoryEvents($category['name'], false, $module->getVar('mid'));
 						foreach ($events as $event) {
 							if (!empty($event['invisible'])) {
 								continue;
@@ -1102,7 +1103,7 @@ function icms_module_update($dirname) {
 			}
 			// Main notification options
 			include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
-			include_once ICMS_ROOT_PATH . '/include/notification_functions.php';
+			//include_once ICMS_ROOT_PATH . '/include/notification_functions.php';
 			$options = array();
 			$options['_NOT_CONFIG_DISABLE'] = XOOPS_NOTIFICATION_DISABLE;
 			$options['_NOT_CONFIG_ENABLEBLOCK'] = XOOPS_NOTIFICATION_ENABLEBLOCK;
@@ -1115,9 +1116,10 @@ function icms_module_update($dirname) {
 			// FIXME: for some reason the default doesn't come up properly
 			//  initially is ok, but not when 'update' module..
 			$options = array();
-			$categories =& notificationCategoryInfo('',$module->getVar('mid'));
+			$notification_handler = new icms_notification_Handler($GLOBALS['xoopsDB']);
+			$categories =& $notification_handler->categoryInfo('',$module->getVar('mid'));
 			foreach ($categories as $category) {
-				$events =& notificationEvents ($category['name'], false, $module->getVar('mid'));
+				$events =& $notification_handler->categoryEvents ($category['name'], false, $module->getVar('mid'));
 				foreach ($events as $event) {
 					if (!empty($event['invisible'])) {
 						continue;

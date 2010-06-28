@@ -400,17 +400,17 @@ function b_system_comments_show($options)
 function b_system_notification_show()
 {
 	global $icmsConfig, $icmsUser, $icmsModule;
-	include_once ICMS_ROOT_PATH . '/include/notification_functions.php';
+	//include_once ICMS_ROOT_PATH . '/include/notification_functions.php';
 	icms_loadLanguageFile('core', 'notification');
 	// Notification must be enabled, and user must be logged in
-	if (empty($icmsUser) || !notificationEnabled('block')) {
+	if (empty($icmsUser) || !icms_notification_Handler::isEnabled('block')) {
 		return false; // do not display block
 	}
-	$notification_handler =& xoops_gethandler('notification');
+	$notification_handler = new icms_notification_Handler($GLOBALS['xoopsDB']);
 	// Now build the a nested associative array of info to pass
 	// to the block template.
 	$block = array();
-	$categories =& notificationSubscribableCategoryInfo();
+	$categories =& $notification_handler->subscribableCategoryInfo();
 	if (empty($categories)) {
 		return false;
 	}
@@ -421,7 +421,7 @@ function b_system_notification_show()
 		$section['itemid'] = $category['item_id'];
 		$section['events'] = array();
 		$subscribed_events = $notification_handler->getSubscribedEvents ($category['name'], $category['item_id'], $icmsModule->getVar('mid'), $icmsUser->getVar('uid'));
-		foreach (notificationEvents($category['name'], true) as $event) {
+		foreach ( $notification_handler->categoryEvents($category['name'], true) as $event) {
 			if (!empty($event['admin_only']) && !$icmsUser->isAdmin($icmsModule->getVar('mid'))) {
 				continue;
 			}

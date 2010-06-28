@@ -357,8 +357,8 @@ switch ( $op ) {
 	  // trigger notification event if necessary
 	  if ($notify_event) {
 	  	$not_modid = $com_modid;
-	  	include_once ICMS_ROOT_PATH . '/include/notification_functions.php';
-	  	$not_catinfo =& notificationCommentCategoryInfo($not_modid);
+	  	$notification_handler = new icms_notification_Handler($GLOBALS['xoopsDB']);
+	  	$not_catinfo =& $notification_handler->commentCategoryInfo($not_modid);
 	  	$not_category = $not_catinfo['name'];
 	  	$not_itemid = $com_itemid;
 	  	$not_event = $notify_event;
@@ -391,7 +391,6 @@ switch ( $op ) {
 	  	ICMS_URL . '/modules/' . $not_module->getVar('dirname') . '/' .$comment_url . '=' . $com_itemid
 	  	. '&amp;com_id=' . $newcid . '&amp;com_rootid=' . $com_rootid . '&amp;com_mode=' . $com_mode
 	  	. '&amp;com_order=' . $com_order . '#comment' . $newcid;
-	  	$notification_handler =& xoops_gethandler('notification');
 	  	$notification_handler->triggerEvent($not_category, $not_itemid, $not_event, $comment_tags, false, $not_modid);
 	  }
 

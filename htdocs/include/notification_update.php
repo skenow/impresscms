@@ -37,7 +37,7 @@ if (!defined('ICMS_ROOT_PATH') || !is_object($icmsModule)) {
 }
 
 include_once ICMS_ROOT_PATH.'/include/notification_constants.php';
-include_once ICMS_ROOT_PATH.'/include/notification_functions.php';
+//include_once ICMS_ROOT_PATH.'/include/notification_functions.php';
 icms_loadLanguageFile('core', 'notification');
 
 if (!isset($_POST['not_submit'])) {
@@ -88,12 +88,12 @@ foreach ($update_list as $update_item) {
 // notifyUsers at appropriate places... (need to figure out where
 // comment submit occurs and where comment approval occurs)...
 
-include_once ICMS_ROOT_PATH . '/include/notification_functions.php';
+//include_once ICMS_ROOT_PATH . '/include/notification_functions.php';
 
 $redirect_args = array();
 foreach ($update_list as $update_item) {
 	list($category,$item_id,$event) = explode( ',',$update_item['params'] );
-	$category_info =& notificationCategoryInfo($category);
+	$category_info =& icms_notification_Handler::categoryInfo($category);
 	if (!empty($category_info['item_name'])) {
 		$redirect_args[$category_info['item_name']] = $item_id;
 	}
