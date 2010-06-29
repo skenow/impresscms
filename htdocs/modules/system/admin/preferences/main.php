@@ -596,17 +596,6 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 									$icmsAdminTpl->template_touch ( $dtemplates [$i]->getVar ( 'tpl_id' ) );
 								}
 							}
-
-							// generate image cache files from image binary data, save them under cache/
-							$image_handler = & xoops_gethandler ( 'imagesetimg' );
-							$imagefiles = & $image_handler->getObjects ( new icms_criteria_Item ( 'tplset_name', $newtplset ), true );
-							foreach ( array_keys ( $imagefiles ) as $i ) {
-								if (! $fp = fopen ( XOOPS_CACHE_PATH . '/' . $newtplset . '_' . $imagefiles [$i]->getVar ( 'imgsetimg_file' ), 'wb' )) {
-								} else {
-									fwrite ( $fp, $imagefiles [$i]->getVar ( 'imgsetimg_body' ) );
-									fclose ( $fp );
-								}
-							}
 						}
 						$tpl_updated = true;
 					}
