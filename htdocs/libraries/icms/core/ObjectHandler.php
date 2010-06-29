@@ -1,35 +1,27 @@
 <?php
 /**
- * Manage of original Xoops Objects
+ * Manage of original Objects
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package	core
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project
- * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: object.php 19419 2010-06-13 22:52:12Z skenow $
+ * @license		LICENSE.txt
+ * @category	ICMS
+ * @package		Object
+ * @version		SVN: $Id: object.php 19419 2010-06-13 22:52:12Z skenow $
  */
 
 /**
- * @package kernel
- * @copyright copyright &copy; 2000 XOOPS.org
- */
-
-/**
- * XOOPS object handler class.
+ * Abstract object handler class.
+ *
  * This class is an abstract class of handler classes that are responsible for providing
  * data access mechanisms to the data source of its corresponsing data objects
- * @package kernel
+ *
+ * @category	ICMS
+ * @package		Object
  * @abstract
  *
  * @author  Kazumi Ono <onokazu@xoops.org>
- * @copyright copyright &copy; 2000 The XOOPS Project
  */
-class icms_core_ObjectHandler
-{
+abstract class icms_core_ObjectHandler {
 
 	/**
 	 * holds referenced to {@link XoopsDatabase} class object
@@ -38,7 +30,7 @@ class icms_core_ObjectHandler
 	 * @see XoopsDatabase
 	 * @access protected
 	 */
-	var $db;
+	protected $db;
 
 	//
 	/**
@@ -47,8 +39,7 @@ class icms_core_ObjectHandler
 	* @param object $db reference to the {@link XoopsDatabase} object
 	* @access protected
 	*/
-	function icms_core_ObjectHandler(&$db)
-	{
+	public function __construct(&$db) {
 		$this->db =& $db;
 	}
 
@@ -57,8 +48,8 @@ class icms_core_ObjectHandler
 	 *
 	 * @abstract
 	 */
-	function &create()
-	{
+	function &create() {
+
 	}
 
 	/**
@@ -67,8 +58,8 @@ class icms_core_ObjectHandler
 	 * @param int $int_id
 	 * @abstract
 	 */
-	function &get($int_id)
-	{
+	function &get($int_id) {
+
 	}
 
 	/**
@@ -77,8 +68,8 @@ class icms_core_ObjectHandler
 	 * @param object $object
 	 * @abstract
 	 */
-	function insert(&$object)
-	{
+	function insert(&$object) {
+
 	}
 
 	/**
@@ -87,10 +78,9 @@ class icms_core_ObjectHandler
 	 * @param object $object
 	 * @abstract
 	 */
-	function delete(&$object)
-	{
+	function delete(&$object) {
+
 	}
 
 }
 
-?>

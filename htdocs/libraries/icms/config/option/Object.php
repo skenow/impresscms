@@ -26,7 +26,7 @@ class icms_config_option_Object extends icms_core_Object {
 	 * Constructor
 	 */
 	public function __construct() {
-		$this->icms_core_Object();
+		parent::__construct();
 		$this->initVar('confop_id', XOBJ_DTYPE_INT, null);
 		$this->initVar('confop_name', XOBJ_DTYPE_TXTBOX, null, true, 255);
 		$this->initVar('confop_value', XOBJ_DTYPE_TXTBOX, null, true, 255);

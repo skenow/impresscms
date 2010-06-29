@@ -31,7 +31,7 @@ class icms_member_groupperm_Object extends icms_core_Object {
 	 *
 	 */
 	function __construct() {
-		$this->icms_core_Object();
+		parent::__construct();
 		$this->initVar('gperm_id', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('gperm_groupid', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('gperm_itemid', XOBJ_DTYPE_INT, null, false);

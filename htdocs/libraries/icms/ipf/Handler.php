@@ -140,7 +140,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 */
 	function icms_ipf_Handler(&$db, $itemname, $keyname, $idenfierName, $summaryName, $modulename) {
 
-		$this->icms_core_ObjectHandler($db);
+		parent::__construct($db);
 
 		$this->_itemname = $itemname;
 		// Todo: Autodect module

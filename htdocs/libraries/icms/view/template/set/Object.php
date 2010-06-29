@@ -35,7 +35,7 @@ class icms_view_template_set_Object extends icms_core_Object
 	 */
 	function icms_view_template_set_Object()
 	{
-		$this->icms_core_Object();
+		parent::__construct();
 		$this->initVar('tplset_id', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('tplset_name', XOBJ_DTYPE_OTHER, null, false);
 		$this->initVar('tplset_desc', XOBJ_DTYPE_TXTBOX, null, false, 255);

@@ -2,16 +2,11 @@
 /**
  * Manage Objects
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package	core
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project
- * @author	modified by UnderDog <underdog@impresscms.org>
- * @todo	Properly declare the visibility of all properties and methods
- * @version	$Id: Object.php 19514 2010-06-21 22:50:14Z skenow $
+ * @license		LICENSE.txt
+ * @category	ICMS
+ * @package		Core
+ * @version		SVN: $Id: Object.php 19514 2010-06-21 22:50:14Z skenow $
  */
 
 /**#@+
@@ -46,9 +41,10 @@ define('XOBJ_DTYPE_FORM_SECTION_CLOSE', 211);
 /**
  * Base class for all objects in the kernel (and beyond)
  *
+ * @category	ICMS
+ * @package		Core
+ *
  * @author Kazumi Ono (AKA onokazu)
- * @copyright copyright &copy; 2000 XOOPS.org
- * @package kernel
  **/
 class icms_core_Object {
 
@@ -105,7 +101,7 @@ class icms_core_Object {
 	 * normally, this is called from child classes only
 	 * @access public
 	 */
-	public function icms_core_Object() {
+	public function __construct() {
 	}
 
 	/**#@+

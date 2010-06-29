@@ -40,7 +40,7 @@ class icms_privmessage_Object extends icms_core_Object
 	 **/
 	function icms_privmessage_Object()
 	{
-		$this->icms_core_Object();
+		parent::__construct();
 		$this->initVar('msg_id', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('msg_image', XOBJ_DTYPE_OTHER, 'icon1.gif', false, 100);
 		$this->initVar('subject', XOBJ_DTYPE_TXTBOX, null, true, 255);

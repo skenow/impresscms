@@ -47,7 +47,7 @@ class XoopsRank extends icms_core_Object
 	 **/
 	function XoopsRank()
 	{
-		$this->icms_core_Object();
+		parent::__construct();
 		$this->initVar('rank_id', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('rank_title', XOBJ_DTYPE_TXTBOX, null, false);
 		$this->initVar('rank_min', XOBJ_DTYPE_INT, 0);
@@ -73,7 +73,7 @@ class XoopsRankHandler extends icms_core_ObjectHandler
 	 * @param   object  $db reference to the DB class object
 	 **/
 	function XoopsRankHandler(&$db) {
-		$this->icms_core_ObjectHandler($db);
+		parent::__construct($db);
 	}
 
 	/**
@@ -189,7 +189,7 @@ class XoUserHandler extends icms_core_ObjectHandler
 	 * @param   object  $db reference to the DB Class object
 	 **/
 	function XoUserHandler(&$db) {
-		$this->icms_core_ObjectHandler($db);
+		parent::__construct($db);
 	}
 
 	/**

@@ -35,7 +35,7 @@ class icms_view_template_file_Object extends icms_core_Object
 	 */
 	function icms_view_template_file_Object()
 	{
-		$this->icms_core_Object();
+		parent::__construct();
 		$this->initVar('tpl_id', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('tpl_refid', XOBJ_DTYPE_INT, 0, false);
 		$this->initVar('tpl_tplset', XOBJ_DTYPE_OTHER, null, false);

@@ -31,7 +31,7 @@ class icms_member_group_membership_Object extends icms_core_Object
 	 */
 	function icms_member_group_membership_Object()
 	{
-		$this->icms_core_Object();
+		parent::__construct();
 		$this->initVar('linkid', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('groupid', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('uid', XOBJ_DTYPE_INT, null, false);

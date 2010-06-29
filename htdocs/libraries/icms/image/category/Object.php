@@ -44,7 +44,7 @@ class icms_image_category_Object extends icms_core_Object
 	 */
 	function icms_image_category_Object()
 	{
-		$this->icms_core_Object();
+		parent::__construct();
 		$this->initVar('imgcat_id', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('imgcat_pid', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('imgcat_name', XOBJ_DTYPE_TXTBOX, null, true, 100);
