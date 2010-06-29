@@ -1,50 +1,35 @@
 <?php
 /**
- * Manage of images
+ * Manage images
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package	core
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project
- * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: image.php 19586 2010-06-24 11:48:14Z malanciault $
+ * @license		LICENSE.txt
+ * @category	ICMS
+ * @package		Image
+ * @version		SVN: $Id$
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
+ * An Image Object
  *
- *
- * @package     kernel
- *
- * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
- */
-
-/**
- * An Image
- *
- * @package		kernel
+ * @category	ICMS
+ * @package		Image
  * @author		Kazumi Ono 	<onokazu@xoops.org>
- * @copyright	(c) 2000-2003 The Xoops Project - www.xoops.org
  */
-class icms_image_Object extends icms_core_Object
-{
+class icms_image_Object extends icms_core_Object {
 	/**
 	 * Info of Image file (width, height, bits, mimetype)
 	 *
 	 * @var array
 	 */
-	var $image_info = array();
+	public $image_info = array();
 
 	/**
 	 * Constructor
 	 **/
-	function icms_image_Object()
-	{
+	public function __construct() {
 		parent::__construct();
 		$this->initVar('image_id', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('image_name', XOBJ_DTYPE_OTHER, null, false, 30);
@@ -58,7 +43,7 @@ class icms_image_Object extends icms_core_Object
 	}
 
 	/**
-	 * Function short description
+	 * Returns information
 	 *
 	 * @param string  $path  the path to search through
 	 * @param string  $type  the path type, url or other
@@ -66,11 +51,11 @@ class icms_image_Object extends icms_core_Object
 	 *
 	 * @return array  the array of image information
 	 */
-	function getInfo($path,$type='url',$ret=false){
-		$path = (substr($path,-1) != '/')?$path.'/':$path;
-		if ($type == 'url'){
-			$img = $path.$this->getVar('image_name');
-		}else{
+	public function getInfo($path, $type='url', $ret=false) {
+		$path = ( substr($path,-1) != '/' ) ? $path . '/' : $path;
+		if ( $type == 'url' ) {
+			$img = $path . $this->getVar('image_name');
+		} else {
 			$img = $path;
 		}
 		$get_size = getimagesize($img);
@@ -80,9 +65,8 @@ class icms_image_Object extends icms_core_Object
 			'bits' => $get_size['bits'],
 			'mime' => $get_size['mime']
 		);
-		if ($ret){
+		if ($ret) {
 			return $this->image_info;
 		}
 	}
 }
-?>

@@ -1,49 +1,35 @@
 <?php
 /**
- * Manage of Image categories
+ * Image categories
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package	core
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project
- * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: imagecategory.php 19586 2010-06-24 11:48:14Z malanciault $
+ * @license		LICENSE.txt
+ * @category	ICMS
+ * @package		Image
+ * @subpackage	Category
+ * @version		SVN: $Id: imagecategory.php 19586 2010-06-24 11:48:14Z malanciault $
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
-
-/**
- *
- *
- * @package     kernel
- *
- * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
- */
+defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
  * An image category
  *
  * These categories are managed through a {@link icms_image_category_Handler} object
- *
- * @package     kernel
- *
+
+ * @category	ICMS
+ * @package     Image
+ * @subpackage	Category
  * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_image_category_Object extends icms_core_Object
-{
-	var $_imageCount;
+class icms_image_category_Object extends icms_core_Object {
+	private $_imageCount;
 
 	/**
 	 * Constructor
 	 *
 	 */
-	function icms_image_category_Object()
-	{
+	public function __construct() {
 		parent::__construct();
 		$this->initVar('imgcat_id', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('imgcat_pid', XOBJ_DTYPE_INT, null, false);
@@ -59,21 +45,19 @@ class icms_image_category_Object extends icms_core_Object
 	}
 
 	/**
-	 * Set Image count to a value
+	 * Set count of images in a category
 	 * @param	int $value Value
 	 */
-	function setImageCount($value)
-	{
-		$this->_imageCount = (int) ($value);
+	public function setImageCount($value) {
+		$this->_imageCount = (int) $value;
 	}
 
 	/**
-	 * Gets Image count
+	 * Gets count of images in a category
 	 * @return	int _imageCount number of images
 	 */
-	function getImageCount()
-	{
+	public function getImageCount() {
 		return $this->_imageCount;
 	}
 }
-?>
+

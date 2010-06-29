@@ -1,33 +1,27 @@
 <?php
 /**
- * Manage of images
+ * Manage images
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package	core
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project
- * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: image.php 19586 2010-06-24 11:48:14Z malanciault $
+ * @license		LICENSE.txt
+ * @category	ICMS
+ * @package		Image
+ * @version		SVN: $Id$
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
- * XOOPS image handler class.
+ * Image handler class.
  *
  * This class is responsible for providing data access mechanisms to the data source
- * of XOOPS image class objects.
+ * of image class objects.
  *
- * @package		kernel
- *
+ * @category	ICMS
+ * @package		Image
  * @author		Kazumi Ono 	<onokazu@xoops.org>
- * @copyright	(c) 2000-2003 The Xoops Project - www.xoops.org
  */
-class icms_image_Handler extends icms_core_ObjectHandler
-{
+class icms_image_Handler extends icms_core_ObjectHandler {
 
 	/**
 	 * Create a new {@link icms_image_Object}
@@ -35,10 +29,9 @@ class icms_image_Handler extends icms_core_ObjectHandler
 	 * @param   boolean $isNew  Flag the object as "new"
 	 * @return  object
 	 **/
-	function &create($isNew = true)
-	{
+	public function &create($isNew = true) {
 		$image = new icms_image_Object();
-		if ($isNew) {
+		if ( $isNew ) {
 			$image->setNew();
 		}
 		return $image;
@@ -51,17 +44,19 @@ class icms_image_Handler extends icms_core_ObjectHandler
 	 * @param   boolean $getbinary
 	 * @return  object  {@link icms_image_Object}, FALSE on fail
 	 **/
-	function &get($id, $getbinary=true)
-	{
+	public function &get($id, $getbinary=true) {
 		$image = false;
-		$id = (int) ($id);
-		if ($id > 0) {
-			$sql = "SELECT i.*, b.image_body FROM ".$this->db->prefix('image')." i LEFT JOIN ".$this->db->prefix('imagebody')." b ON b.image_id=i.image_id WHERE i.image_id='".$id."'";
-			if (!$result = $this->db->query($sql)) {
+		$id = (int) $id;
+		if ( $id > 0 ) {
+			$sql = "SELECT i.*, b.image_body FROM "
+				. $this->db->prefix('image') . " i LEFT JOIN "
+				. $this->db->prefix('imagebody')
+				. " b ON b.image_id=i.image_id WHERE i.image_id='" . $id . "'";
+			if ( !$result = $this->db->query($sql) ) {
 				return $image;
 			}
 			$numrows = $this->db->getRowsNum($result);
-			if ($numrows == 1) {
+			if ( $numrows == 1 ) {
 				$image = new icms_image_Object();
 				$image->assignVars($this->db->fetchArray($result));
 			}
@@ -75,36 +70,51 @@ class icms_image_Handler extends icms_core_ObjectHandler
 	 * @param   object  &$image {@link icms_image_Object}
 	 * @return  bool
 	 **/
-	function insert(&$image)
-	{
-		/**
-		 * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
+	public function insert(&$image) {
+		/* As of PHP 5.3, is_a is no longer deprecated, this is an acceptable usage
+		 * and is compatible with more versions of PHP. http://us2.php.net/manual/en/language.operators.type.php
 		 */
-		if (!is_a($image, 'xoopsimage')) {
+		if ( !is_a($image, 'icms_image_Object') ) {
 			return false;
 		}
 
-		if (!$image->isDirty()) {
+		if ( !$image->isDirty() ) {
 			return true;
 		}
-		if (!$image->cleanVars()) {
+		if ( !$image->cleanVars() ) {
 			return false;
 		}
-		foreach ($image->cleanVars as $k => $v) {
+		foreach ( $image->cleanVars as $k => $v ) {
 			${$k} = $v;
 		}
-		if ($image->isNew()) {
+		if ( $image->isNew() ) {
 			$image_id = $this->db->genId('image_image_id_seq');
-			$sql = sprintf("INSERT INTO %s (image_id, image_name, image_nicename, image_mimetype, image_created, image_display, image_weight, imgcat_id) VALUES ('%u', %s, %s, %s, '%u', '%u', '%u', '%u')", $this->db->prefix('image'), (int) ($image_id), $this->db->quoteString($image_name), $this->db->quoteString($image_nicename), $this->db->quoteString($image_mimetype), time(), (int) ($image_display), (int) ($image_weight), (int) ($imgcat_id));
-			if (!$result = $this->db->queryF($sql)) {
+			$sql = sprintf(
+				"INSERT INTO %s (image_id, image_name, image_nicename, image_mimetype, image_created, image_display, image_weight, imgcat_id) VALUES ('%u', %s, %s, %s, '%u', '%u', '%u', '%u')",
+				$this->db->prefix('image'),
+				(int) $image_id,
+				$this->db->quoteString($image_name),
+				$this->db->quoteString($image_nicename),
+				$this->db->quoteString($image_mimetype),
+				time(),
+				(int) $image_display,
+				(int) $image_weight,
+				(int) $imgcat_id
+			);
+			if ( !$result = $this->db->queryF($sql) ) {
 				return false;
 			}
-			if (empty($image_id)) {
+			if ( empty($image_id) ) {
 				$image_id = $this->db->getInsertId();
 			}
-			if (isset($image_body) && $image_body != '') {
-				$sql = sprintf("INSERT INTO %s (image_id, image_body) VALUES ('%u', %s)", $this->db->prefix('imagebody'), (int) ($image_id), $this->db->quoteString($image_body));
-				if (!$result = $this->db->queryF($sql)) {
+			if ( isset($image_body) && $image_body != '' ) {
+				$sql = sprintf(
+					"INSERT INTO %s (image_id, image_body) VALUES ('%u', %s)",
+					$this->db->prefix('imagebody'),
+					(int) ($image_id),
+					$this->db->quoteString($image_body)
+				);
+				if ( !$result = $this->db->queryF($sql) ) {
 					$sql = sprintf("DELETE FROM %s WHERE image_id = '%u'", $this->db->prefix('image'), (int) ($image_id));
 					$this->db->query($sql);
 					return false;
@@ -112,14 +122,28 @@ class icms_image_Handler extends icms_core_ObjectHandler
 			}
 			$image->assignVar('image_id', $image_id);
 		} else {
-			$sql = sprintf("UPDATE %s SET image_name = %s, image_nicename = %s, image_display = '%u', image_weight = '%u', imgcat_id = '%u' WHERE image_id = '%u'", $this->db->prefix('image'), $this->db->quoteString($image_name), $this->db->quoteString($image_nicename), (int) ($image_display), (int) ($image_weight), (int) ($imgcat_id), (int) ($image_id));
-			if (!$result = $this->db->queryF($sql)) {
+			$sql = sprintf(
+				"UPDATE %s SET image_name = %s, image_nicename = %s, image_display = '%u', image_weight = '%u', imgcat_id = '%u' WHERE image_id = '%u'",
+				$this->db->prefix('image'),
+				$this->db->quoteString($image_name),
+				$this->db->quoteString($image_nicename),
+				(int) $image_display,
+				(int) $image_weight,
+				(int) $imgcat_id,
+				(int) $image_id
+			);
+			if ( !$result = $this->db->queryF($sql) ) {
 				return false;
 			}
-			if (isset($image_body) && $image_body != '') {
-				$sql = sprintf("UPDATE %s SET image_body = %s WHERE image_id = '%u'", $this->db->prefix('imagebody'), $this->db->quoteString($image_body), (int) ($image_id));
-				if (!$result = $this->db->queryF($sql)) {
-					$this->db->query(sprintf("DELETE FROM %s WHERE image_id = '%u'", $this->db->prefix('image'), (int) ($image_id)));
+			if ( isset($image_body) && $image_body != '' ) {
+				$sql = sprintf(
+					"UPDATE %s SET image_body = %s WHERE image_id = '%u'",
+					$this->db->prefix('imagebody'),
+					$this->db->quoteString($image_body),
+					(int) $image_id
+				);
+				if ( !$result = $this->db->queryF($sql) ) {
+					$this->db->query(sprintf("DELETE FROM %s WHERE image_id = '%u'", $this->db->prefix('image'), (int) $image_id));
 					return false;
 				}
 			}
@@ -133,12 +157,11 @@ class icms_image_Handler extends icms_core_ObjectHandler
 	 * @param   object  &$image {@link icms_image_Object}
 	 * @return  bool
 	 **/
-	function delete(&$image)
-	{
-		/**
-		 * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
+	public function delete(&$image) {
+		/* As of PHP 5.3, is_a is no longer deprecated, this is an acceptable usage
+		 * and is compatible with more versions of PHP. http://us2.php.net/manual/en/language.operators.type.php
 		 */
-		if (!is_a($image, 'xoopsimage')) {
+		if ( !is_a($image, 'icms_image_Object') ) {
 			return false;
 		}
 
@@ -160,33 +183,34 @@ class icms_image_Handler extends icms_core_ObjectHandler
 	 * @param   boolean $getbinary
 	 * @return  array   Array of {@link icms_image_Object} objects
 	 **/
-	function getObjects($criteria = null, $id_as_key = false, $getbinary = false)
-	{
+	public function getObjects($criteria = null, $id_as_key = false, $getbinary = false) {
 		$ret = array();
 		$limit = $start = 0;
-		if ($getbinary) {
+		if ( $getbinary ) {
 			$sql = "SELECT i.*, b.image_body FROM ".$this->db->prefix('image')." i LEFT JOIN ".$this->db->prefix('imagebody')." b ON b.image_id=i.image_id";
 		} else {
 			$sql = "SELECT * FROM ".$this->db->prefix('image');
 		}
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
+		if ( isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element') ) {
 			$sql .= " ".$criteria->renderWhere();
-			$sort = !in_array($criteria->getSort(), array('image_id', 'image_created', 'image_mimetype', 'image_display', 'image_weight')) ? 'image_weight' : $criteria->getSort();
-			$sql .= " ORDER BY ".$sort." ".$criteria->getOrder();
+			$sort = !in_array($criteria->getSort(), array('image_id', 'image_created', 'image_mimetype', 'image_display', 'image_weight'))
+					? 'image_weight'
+					: $criteria->getSort();
+			$sql .= " ORDER BY " . $sort . " " . $criteria->getOrder();
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
 		}
 		$result = $this->db->query($sql, $limit, $start);
-		if (!$result) {
+		if ( !$result ) {
 			return $ret;
 		}
-		while ($myrow = $this->db->fetchArray($result)) {
+		while ( $myrow = $this->db->fetchArray($result) ) {
 			$image = new icms_image_Object();
 			$image->assignVars($myrow);
-			if (!$id_as_key) {
-				$ret[] =& $image;
+			if ( !$id_as_key ) {
+				$ret[] = &$image;
 			} else {
-				$ret[$myrow['image_id']] =& $image;
+				$ret[$myrow['image_id']] = &$image;
 			}
 			unset($image);
 		}
@@ -199,13 +223,12 @@ class icms_image_Handler extends icms_core_ObjectHandler
 	 * @param   object  $criteria   {@link icms_criteria_Element}
 	 * @return  int
 	 **/
-	function getCount($criteria = null)
-	{
+	public function getCount($criteria = null) {
 		$sql = 'SELECT COUNT(*) FROM '.$this->db->prefix('image');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
+		if ( isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element') ) {
 			$sql .= ' '.$criteria->renderWhere();
 		}
-		if (!$result =& $this->db->query($sql)) {
+		if ( !$result = &$this->db->query($sql) ) {
 			return 0;
 		}
 		list($count) = $this->db->fetchRow($result);
@@ -219,19 +242,17 @@ class icms_image_Handler extends icms_core_ObjectHandler
 	 * @param   bool    $image_display
 	 * @return  array   Array of {@link icms_image_Object} objects
 	 **/
-	function getList($imgcat_id, $image_display = null)
-	{
+	public function getList($imgcat_id, $image_display = null) {
 		$criteria = new icms_criteria_Compo(new icms_criteria_Item('imgcat_id', (int) ($imgcat_id)));
-		if (isset($image_display)) {
+		if ( isset($image_display) ) {
 			$criteria->add(new icms_criteria_Item('image_display', (int) ($image_display)));
 		}
-		$images =& $this->getObjects($criteria, false, true);
+		$images = &$this->getObjects($criteria, false, true);
 		$ret = array();
-		foreach (array_keys($images) as $i) {
+		foreach ( array_keys($images) as $i ) {
 			$ret[$images[$i]->getVar('image_name')] = $images[$i]->getVar('image_nicename');
 		}
 		return $ret;
 	}
 }
 
-?>
