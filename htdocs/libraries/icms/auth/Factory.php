@@ -33,7 +33,7 @@ class icms_auth_Factory {
 		static $auth_instance;
 		if (!isset($auth_instance)) {
 			global $icmsConfigAuth;
-			require_once ICMS_ROOT_PATH . '/class/auth/auth.php';
+
 			if (empty($icmsConfigAuth['auth_method'])) {
 				// If there is a config error, we use xoops
 				$xoops_auth_method = 'xoops';
@@ -53,9 +53,9 @@ class icms_auth_Factory {
 			}
 			// Verify if uname allow to bypass LDAP auth
 			if (in_array($uname, $icmsConfigAuth['ldap_users_bypass'])) $xoops_auth_method = 'xoops';
-			$file = ICMS_ROOT_PATH . '/class/auth/auth_' . $xoops_auth_method . '.php';
-			require_once $file;
-			$class = 'XoopsAuth' . ucfirst($xoops_auth_method);
+			//$file = ICMS_ROOT_PATH . '/class/auth/auth_' . $xoops_auth_method . '.php';
+			//require_once $file;
+			$class = 'icms_auth_' . ucfirst($xoops_auth_method);
 			switch ($xoops_auth_method) {
 				case 'xoops' :
 					$dao =& $GLOBALS['xoopsDB'];
