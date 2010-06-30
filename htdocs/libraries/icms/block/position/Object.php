@@ -2,22 +2,22 @@
 /**
  * Block Positions manager for the Impress Persistable Framework
  *
- * Longer description about this page
- *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
  * @category	ICMS
  * @package		Block
  * @subpackage	Position
  * @since		1.0
- * @version		SVN: $Id: Blockposition.php 19514 2010-06-21 22:50:14Z skenow $
+ * @version		SVN: $Id$
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 /**
  * icms_block_position_Object
- *
+ * @category	ICMS
+ * @package		Block
+ * @subpackage	Position
  */
 class icms_block_position_Object extends icms_ipf_Object {
 

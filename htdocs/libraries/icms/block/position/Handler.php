@@ -10,7 +10,7 @@
  * @package		Block
  * @subpackage	Position
  * @since		1.0
- * @version		SVN: $Id: BlockpositionHandler.php 19514 2010-06-21 22:50:14Z skenow $
+ * @version		SVN: $Id$
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -42,10 +42,10 @@ class icms_block_position_Handler extends icms_ipf_Handler {
 	 *
 	 * @return bool  the result of the insert action
 	 */
-	public function insert(& $obj, $force = false, $checkObject = true, $debug=false){
+	public function insert(& $obj, $force = false, $checkObject = true, $debug=false) {
 		$obj->setVar('block_default', 0);
 		$obj->setVar('block_type', 'L');
-		return parent::insert( $obj, $force, $checkObject, $debug );
+		return parent::insert($obj, $force, $checkObject, $debug);
 	}
 }
 
