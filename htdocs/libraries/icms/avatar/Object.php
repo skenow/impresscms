@@ -2,36 +2,31 @@
 /**
  * Manage avatars for users
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
- * @package		core
- * @subpackage	avatar
- * @since		XOOPS
+ * @category	ICMS
+ * @package		Avatar
  * @author		Kazumi Ono (aka onokazo)
- * @author		http://www.xoops.org The XOOPS Project
- * @version		$Id: avatar.php 19569 2010-06-24 00:53:57Z malanciault $
+ * @version		SVN: $Id$
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
  * Avatar class
- * @package avatar
+ * @category	ICMS
+ * @package		Avatar
  *
  */
-class icms_core_avatar_Object extends icms_core_Object
-{
+class icms_core_avatar_Object extends icms_core_Object {
 	/** @var integer */
-	var $_userCount;
+	private $_userCount;
 
 	/**
 	 * Constructor for avatar class, initializing all the properties of the class object
 	 *
 	 */
-	function icms_core_avatar_Object()
-	{
+	public function __construct() {
 		parent::__construct();
 		$this->initVar('avatar_id', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('avatar_file', XOBJ_DTYPE_OTHER, null, false, 30);
@@ -48,18 +43,16 @@ class icms_core_avatar_Object extends icms_core_Object
 	 * @param integer $value
 	 *
 	 */
-	function setUserCount($value)
-	{
-		$this->_userCount = (int) ($value);
+	public function setUserCount($value) {
+		$this->_userCount = (int) $value;
 	}
 
 	/**
 	 * Gets the value for the number of users
 	 * @return integer
 	 */
-	function getUserCount()
-	{
+	public function getUserCount() {
 		return $this->_userCount;
 	}
 }
-?>
+
