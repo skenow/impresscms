@@ -1,45 +1,29 @@
 <?php
 /**
- * Manage of private messages
+ * Private messages
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package	core
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project
- * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: privmessage.php 19450 2010-06-18 14:15:29Z malanciault $
+ * @license		LICENSE.txt
+ * @category	ICMS
+ * @package		Privmessage
+ * @version		SVN: $Id$
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
-
-/**
- * @package     kernel
- *
- * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
- */
+defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
  * A handler for Private Messages
  *
- * @package		kernel
- *
+ * @category	ICMS
+ * @package		Privmessage
  * @author		Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 The XOOPS Project (http://www.xoops.org)
- *
- * @version		$Revision: 1102 $ - $Date: 2007-10-18 22:55:52 -0400 (jeu., 18 oct. 2007) $
  */
-class icms_privmessage_Object extends icms_core_Object
-{
+class icms_privmessage_Object extends icms_core_Object {
 
 	/**
 	 * constructor
 	 **/
-	function icms_privmessage_Object()
-	{
+	public function __construct() {
 		parent::__construct();
 		$this->initVar('msg_id', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('msg_image', XOBJ_DTYPE_OTHER, 'icon1.gif', false, 100);
@@ -51,4 +35,4 @@ class icms_privmessage_Object extends icms_core_Object
 		$this->initVar('read_msg', XOBJ_DTYPE_INT, 0, false);
 	}
 }
-?>
+
