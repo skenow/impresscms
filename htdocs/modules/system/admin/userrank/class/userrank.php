@@ -17,8 +17,8 @@ class SystemUserrank extends icms_ipf_Object {
 
 	public $content = false;
 
-	function SystemUserrank(&$handler) {
-		$this->icms_ipf_Object($handler);
+	function __construct(&$handler) {
+		parent::__construct($handler);
 
 		$this->quickInitVar('rank_id', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('rank_title', XOBJ_DTYPE_TXTBOX, true, _CO_ICMS_USERRANK_RANK_TITLE, _CO_ICMS_USERRANK_RANK_TITLE_DSC);
@@ -64,7 +64,7 @@ class SystemUserrankHandler extends icms_ipf_Handler {
 
 	function SystemUserrankHandler($db) {
 		global $icmsConfigUser;
-		$this->icms_ipf_Handler ( $db, 'userrank', 'rank_id', 'rank_title', '', 'system' );
+		parent::__construct( $db, 'userrank', 'rank_id', 'rank_title', '', 'system' );
 		$this->table = $this->db->prefix('ranks');
 		$this->setUploaderConfig(false, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png'), $icmsConfigUser['rank_maxsize'], $icmsConfigUser['rank_width'], $icmsConfigUser['rank_height']);
 	}

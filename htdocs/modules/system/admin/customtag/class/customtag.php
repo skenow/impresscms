@@ -22,8 +22,8 @@ class SystemCustomtag extends icms_ipf_Object {
 	public $content = false;
 	public $evaluated = false;
 
-	function SystemCustomtag(&$handler) {
-		$this->icms_ipf_Object($handler);
+	function __construct(&$handler) {
+		parent::__construct($handler);
 
 		$this->quickInitVar ( 'customtagid', XOBJ_DTYPE_INT, true );
 		$this->quickInitVar ( 'name', XOBJ_DTYPE_TXTBOX, true, _CO_ICMS_CUSTOMTAG_NAME, _CO_ICMS_CUSTOMTAG_NAME_DSC );
@@ -137,7 +137,7 @@ class SystemCustomtagHandler extends icms_ipf_Handler {
 	public $objects = false;
 
 	function SystemCustomtagHandler($db) {
-		$this->icms_ipf_Handler ( $db, 'customtag', 'customtagid', 'name', 'description', 'system' );
+		parent::__construct( $db, 'customtag', 'customtagid', 'name', 'description', 'system' );
 		$this->addPermission ( 'view', _CO_ICMS_CUSTOMTAG_PERMISSION_VIEW, _CO_ICMS_CUSTOMTAG_PERMISSION_VIEW_DSC );
 	}
 

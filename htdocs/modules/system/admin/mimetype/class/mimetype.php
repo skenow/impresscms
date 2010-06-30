@@ -19,8 +19,8 @@ class SystemMimetype extends icms_ipf_Object {
 
 	public $content = false;
 
-	function SystemMimetype(&$handler) {
-		$this->icms_ipf_Object($handler);
+	function __construct(&$handler) {
+		parent::__construct($handler);
 
 		$this->quickInitVar ( 'mimetypeid', XOBJ_DTYPE_INT, true );
 		$this->quickInitVar ( 'extension', XOBJ_DTYPE_TXTBOX, true, _CO_ICMS_MIMETYPE_EXTENSION, _CO_ICMS_MIMETYPE_EXTENSION_DSC );
@@ -62,7 +62,7 @@ class SystemMimetypeHandler extends icms_ipf_Handler {
 	public $objects = false;
 
 	function SystemMimetypeHandler($db) {
-		$this->icms_ipf_Handler ( $db, 'mimetype', 'mimetypeid', 'mimetypeid', 'name', 'system' );
+		parent::__construct( $db, 'mimetype', 'mimetypeid', 'mimetypeid', 'name', 'system' );
 		$this->addPermission ( 'use_extension', _CO_ICMS_MIMETYPE_PERMISSION_VIEW, _CO_ICMS_MIMETYPE_PERMISSION_VIEW_DSC );
 	}
 

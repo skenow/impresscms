@@ -18,8 +18,7 @@
  * @category	ICMS
  * @package		Object
  * @abstract
- *
- * @author  Kazumi Ono <onokazu@xoops.org>
+ *@author  Kazumi Ono <onokazu@xoops.org>
  */
 abstract class icms_core_ObjectHandler {
 
@@ -39,7 +38,7 @@ abstract class icms_core_ObjectHandler {
 	* @param object $db reference to the {@link XoopsDatabase} object
 	* @access protected
 	*/
-	public function __construct(&$db) {
+	function __construct(&$db) {
 		$this->db =& $db;
 	}
 
@@ -48,9 +47,7 @@ abstract class icms_core_ObjectHandler {
 	 *
 	 * @abstract
 	 */
-	function &create() {
-
-	}
+	abstract function &create();
 
 	/**
 	 * gets a value object
@@ -58,9 +55,7 @@ abstract class icms_core_ObjectHandler {
 	 * @param int $int_id
 	 * @abstract
 	 */
-	function &get($int_id) {
-
-	}
+	abstract function &get($int_id);
 
 	/**
 	 * insert/update object
@@ -68,9 +63,7 @@ abstract class icms_core_ObjectHandler {
 	 * @param object $object
 	 * @abstract
 	 */
-	function insert(&$object) {
-
-	}
+	abstract function insert(&$object);
 
 	/**
 	 * delete object from database
@@ -78,9 +71,7 @@ abstract class icms_core_ObjectHandler {
 	 * @param object $object
 	 * @abstract
 	 */
-	function delete(&$object) {
-
-	}
+	abstract function delete(&$object);
 
 }
 

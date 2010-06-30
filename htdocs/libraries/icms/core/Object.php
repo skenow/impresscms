@@ -52,17 +52,17 @@ class icms_core_Object {
 	 * holds all variables(properties) of an object
 	 *
 	 * @var array
-	 * @access protected
+	 * @access public
 	 **/
-	var $vars = array();
+	public $vars = array();
 
 	/**
 	 * variables cleaned for store in DB
 	 *
 	 * @var array
-	 * @access protected
+	 * @access public
 	 */
-	var $cleanVars = array();
+	public $cleanVars = array();
 
 	/**
 	 * is it a newly created object?
@@ -149,7 +149,14 @@ class icms_core_Object {
 	 * @param string $option  does this data have any select options?
 	 */
 	public function initVar($key, $data_type, $value = null, $required = false, $maxlength = null, $options = '') {
-		$this->vars[$key] = array('value' => $value, 'required' => $required, 'data_type' => $data_type, 'maxlength' => $maxlength, 'changed' => false, 'options' => $options);
+		$this->vars[$key] = array(
+			'value' => $value,
+			'required' => $required,
+			'data_type' => $data_type,
+			'maxlength' => $maxlength,
+			'changed' => false,
+			'options' => $options
+		);
 	}
 
 	/**
@@ -168,10 +175,10 @@ class icms_core_Object {
 	/**
 	 * assign values to multiple variables in a batch
 	 *
-	 * @access private
+	 * @access public
 	 * @param array $var_array associative array of values to assign
 	 */
-	function assignVars($var_arr) {
+	public function assignVars($var_arr) {
 		foreach ($var_arr as $key => $value) {
 			$this->assignVar($key, $value);
 		}
@@ -186,7 +193,7 @@ class icms_core_Object {
 	 * @param bool $not_gpc
 	 */
 	public function setVar($key, $value, $not_gpc = false) {
-		if (!empty($key) && isset($value) && isset($this->vars[$key])) {
+		if ( !empty($key) && isset($value) && isset($this->vars[$key]) ) {
 			$this->vars[$key]['value'] =& $value;
 			$this->vars[$key]['not_gpc'] = $not_gpc;
 			$this->vars[$key]['changed'] = true;
@@ -201,8 +208,7 @@ class icms_core_Object {
 	 * @param array $var_arr associative array of values to assign
 	 * @param bool $not_gpc
 	 */
-	function setVars($var_arr, $not_gpc = false)
-	{
+	private function _setVars($var_arr, $not_gpc = false) {
 		foreach ($var_arr as $key => $value) {
 			$this->setVar($key, $value, $not_gpc);
 		}
@@ -219,7 +225,7 @@ class icms_core_Object {
 	 * @param array $var_arr associative array of values to assign
 	 * @param string $pref prefix (only keys starting with the prefix will be set)
 	 */
-	function setFormVars($var_arr=null, $pref='xo_', $not_gpc=false) {
+	private function _setFormVars($var_arr=null, $pref='xo_', $not_gpc=false) {
 		$len = strlen($pref);
 		foreach ($var_arr as $key => $value) {
 			if ($pref == substr($key, 0, $len)) {
@@ -286,6 +292,7 @@ class icms_core_Object {
 						$ts =& icms_core_Textsanitizer::getInstance();
 						return $ts->htmlSpecialChars($ret);
 						break 1;
+
 					case 'p':
 					case 'preview':
 					case 'f':
@@ -293,6 +300,7 @@ class icms_core_Object {
 						$ts =& icms_core_Textsanitizer::getInstance();
 						return $ts->htmlSpecialChars($ts->stripSlashesGPC($ret));
 						break 1;
+
 					case 'n':
 					case 'none':
 					default:
@@ -306,10 +314,10 @@ class icms_core_Object {
 					case 'show':
 						$ts =& icms_core_Textsanitizer::getInstance();
 						$html = !empty($this->vars['dohtml']['value']) ? 1 : 0;
-						$xcode = (!isset($this->vars['doxcode']['value']) || $this->vars['doxcode']['value'] == 1) ? 1 : 0;
-						$smiley = (!isset($this->vars['dosmiley']['value']) || $this->vars['dosmiley']['value'] == 1) ? 1 : 0;
-						$image = (!isset($this->vars['doimage']['value']) || $this->vars['doimage']['value'] == 1) ? 1 : 0;
-						$br = (!isset($this->vars['dobr']['value']) || $this->vars['dobr']['value'] == 1) ? 1 : 0;
+						$xcode = ( !isset($this->vars['doxcode']['value']) || $this->vars['doxcode']['value'] == 1 ) ? 1 : 0;
+						$smiley = ( !isset($this->vars['dosmiley']['value']) || $this->vars['dosmiley']['value'] == 1 ) ? 1 : 0;
+						$image = ( !isset($this->vars['doimage']['value']) || $this->vars['doimage']['value'] == 1 ) ? 1 : 0;
+						$br = ( !isset($this->vars['dobr']['value']) || $this->vars['dobr']['value'] == 1 ) ? 1 : 0;
 						return $ts->displayTarea($ret, $html, $smiley, $xcode, $image, $br);
 						break 1;
 
@@ -322,10 +330,10 @@ class icms_core_Object {
 					case 'preview':
 						$ts =& icms_core_Textsanitizer::getInstance();
 						$html = !empty($this->vars['dohtml']['value']) ? 1 : 0;
-						$xcode = (!isset($this->vars['doxcode']['value']) || $this->vars['doxcode']['value'] == 1) ? 1 : 0;
-						$smiley = (!isset($this->vars['dosmiley']['value']) || $this->vars['dosmiley']['value'] == 1) ? 1 : 0;
-						$image = (!isset($this->vars['doimage']['value']) || $this->vars['doimage']['value'] == 1) ? 1 : 0;
-						$br = (!isset($this->vars['dobr']['value']) || $this->vars['dobr']['value'] == 1) ? 1 : 0;
+						$xcode = ( !isset($this->vars['doxcode']['value']) || $this->vars['doxcode']['value'] == 1 ) ? 1 : 0;
+						$smiley = ( !isset($this->vars['dosmiley']['value']) || $this->vars['dosmiley']['value'] == 1 ) ? 1 : 0;
+						$image = ( !isset($this->vars['doimage']['value']) || $this->vars['doimage']['value'] == 1 ) ? 1 : 0;
+						$br = ( !isset($this->vars['dobr']['value']) || $this->vars['dobr']['value'] == 1 ) ? 1 : 0;
 						return $ts->previewTarea($ret, $html, $smiley, $xcode, $image, $br);
 						break 1;
 
@@ -377,7 +385,7 @@ class icms_core_Object {
 				break;
 
 			default:
-				if ($this->vars[$key]['options'] != '' && $ret != '') {
+				if ( $this->vars[$key]['options'] != '' && $ret != '' ) {
 					switch (strtolower($format)) {
 						case 's':
 						case 'show':
@@ -422,7 +430,7 @@ class icms_core_Object {
 		$ts =& icms_core_Textsanitizer::getInstance();
 		$existing_errors = $this->getErrors();
 		$this->_errors = array();
-		foreach ($this->vars as $k => $v) {
+		foreach ( $this->vars as $k => $v ) {
 			$cleanv = $v['value'];
 			if (!$v['changed']) {
 			} else {
@@ -433,8 +441,8 @@ class icms_core_Object {
 							$this->setErrors(sprintf(_XOBJ_ERR_REQUIRED, $k));
 							continue;
 						}
-						if (isset($v['maxlength']) && strlen($cleanv) > (int) ($v['maxlength'])) {
-							$this->setErrors(sprintf(_XOBJ_ERR_SHORTERTHAN, $k, (int) ($v['maxlength'])));
+						if ( isset($v['maxlength']) && strlen($cleanv) > (int) ($v['maxlength']) ) {
+							$this->setErrors(sprintf(_XOBJ_ERR_SHORTERTHAN, $k, (int) $v['maxlength']));
 							continue;
 						}
 						if (!$v['not_gpc']) {
@@ -445,7 +453,7 @@ class icms_core_Object {
 						break;
 
 					case XOBJ_DTYPE_TXTAREA:
-						if ($v['required'] && $cleanv != '0' && $cleanv == '') {
+						if ( $v['required'] && $cleanv != '0' && $cleanv == '' ) {
 							$this->setErrors(sprintf(_XOBJ_ERR_REQUIRED, $k));
 							continue;
 						}
@@ -466,7 +474,7 @@ class icms_core_Object {
 
 					case XOBJ_DTYPE_INT:
 					case XOBJ_DTYPE_TIME_ONLY:
-						$cleanv = (int) ($cleanv);
+						$cleanv = (int) $cleanv;
 						break;
 
 					case XOBJ_DTYPE_CURRENCY:
@@ -515,8 +523,8 @@ class icms_core_Object {
 					case XOBJ_DTYPE_STIME:
 					case XOBJ_DTYPE_MTIME:
 					case XOBJ_DTYPE_LTIME:
-						$cleanv = !is_string($cleanv) ? (int) ($cleanv) : strtotime($cleanv);
-						if (!($cleanv > 0)) {
+						$cleanv = !is_string($cleanv) ? (int) $cleanv : strtotime($cleanv);
+						if ( !($cleanv > 0) ) {
 							$cleanv = strtotime($cleanv);
 						}
 						break;
@@ -552,8 +560,7 @@ class icms_core_Object {
 	 *
 	 * @access private
 	 */
-	function _loadFilters()
-	{
+	private function _loadFilters() {
 		//include_once XOOPS_ROOT_PATH.'/class/filters/filter.php';
 		//foreach ($this->_filters as $f) {
 		//    include_once XOOPS_ROOT_PATH.'/class/filters/'.strtolower($f).'php';
@@ -569,7 +576,7 @@ class icms_core_Object {
 	public function &xoopsClone() {
 		$class = get_class($this);
 		$clone = new $class();
-		foreach ($this->vars as $k => $v) {
+		foreach ( $this->vars as $k => $v ) {
 			$clone->assignVar($k, $v['value']);
 		}
 		// need this to notify the handler class that this is a newly created object
@@ -604,13 +611,13 @@ class icms_core_Object {
 	 * @access public
 	 */
 	public function getHtmlErrors() {
-		$ret = '<h4>'._ERROR.'</h4>';
+		$ret = '<h4>' . _ERROR . '</h4>';
 		if (!empty($this->_errors)) {
 			foreach ($this->_errors as $error) {
-				$ret .= $error.'<br />';
+				$ret .= $error . '<br />';
 			}
 		} else {
-			$ret .= _NONE.'<br />';
+			$ret .= _NONE . '<br />';
 		}
 		return $ret;
 	}

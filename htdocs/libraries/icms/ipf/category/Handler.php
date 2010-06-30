@@ -36,8 +36,8 @@ class icms_ipf_category_Handler extends icms_ipf_Handler {
 	 * @param string $modulename The directory name for the module
 	 * @return icms_ipf_category_Handler
 	 */
-	function icms_ipf_category_Handler($db, $modulename) {
-		$this->icms_ipf_Handler($db, 'category', 'categoryid', 'name', 'description', $modulename);
+	function __construct($db, $modulename) {
+		parent::__construct($db, 'category', 'categoryid', 'name', 'description', $modulename);
 	}
 
 	/**

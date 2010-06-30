@@ -19,8 +19,8 @@ class SystemRating extends icms_ipf_Object {
 
 	public $_modulePlugin=false;
 
-	function SystemRating(&$handler) {
-		$this->icms_ipf_Object($handler);
+	function __construct(&$handler) {
+		parent::__construct($handler);
 
 		$this->quickInitVar('ratingid', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('dirname', XOBJ_DTYPE_TXTBOX, true, _CO_ICMS_RATING_DIRNAME);
@@ -96,7 +96,7 @@ class SystemRatingHandler extends icms_ipf_Handler {
 	public $pluginsObject;
 
 	function SystemRatingHandler($db) {
-		$this->icms_ipf_Handler ( $db, 'rating', 'ratingid', 'rate', '', 'system' );
+		parent::__construct( $db, 'rating', 'ratingid', 'rate', '', 'system' );
 		$this->generalSQL = 'SELECT * FROM ' . $this->table . ' AS ' . $this->_itemname . ' INNER JOIN ' . $this->db->prefix('users') . ' AS user ON ' . $this->_itemname . '.uid=user.uid';
 
 		$this->_rateOptions[1] = 1;

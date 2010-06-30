@@ -97,7 +97,7 @@ class SystemBlockspadminHandler extends icms_block_position_Handler {
 	 * @param IcmsDatabase $db
 	 */
 	public function __construct(& $db) {
-		$this->icms_ipf_Handler($db, 'blockspadmin', 'id', 'title', 'description', 'system');
+		parent::__construct($db, 'blockspadmin', 'id', 'title', 'description', 'system');
 		$this->table = $this->db->prefix('block_positions');
 	}
 }

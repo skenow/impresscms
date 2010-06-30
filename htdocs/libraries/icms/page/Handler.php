@@ -22,7 +22,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 class icms_page_Handler extends icms_ipf_Handler {
 
 	public function __construct( & $db ){
-		$this->icms_ipf_Handler($db, 'page' ,'page_id' ,'page_title', '' , 'icms');
+		parent::__construct($db, 'page' ,'page_id' ,'page_title', '' , 'icms');
 		$this->table = $db->prefix('icmspage');
 	}
 

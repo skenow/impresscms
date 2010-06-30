@@ -19,8 +19,8 @@ class mod_system_AdsenseHandler extends icms_ipf_Handler {
 	public $adFormatsList;
 	public $objects=false;
 
-	function mod_system_AdsenseHandler($db) {
-		$this->icms_ipf_Handler ( $db, 'adsense', 'adsenseid', 'tag', 'description', 'system' );
+	function __construct($db) {
+		parent::__construct( $db, 'adsense', 'adsenseid', 'tag', 'description', 'system' );
 		$this->adFormats = array();
 		$this->adFormatsList = array();
 

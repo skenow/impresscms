@@ -215,7 +215,7 @@ class SystemBlocksadminHandler extends icms_block_Handler {
 	private $modules_name;
 
 	public function __construct(& $db) {
-		$this->icms_ipf_Handler($db, 'blocksadmin', 'bid', 'title', 'content', 'system');
+		parent::__construct($db, 'blocksadmin', 'bid', 'title', 'content', 'system');
 		$this->table = $this->db->prefix('newblocks');
 
 		$this->addPermission ( 'block_read', _CO_SYSTEM_BLOCKSADMIN_BLOCKRIGHTS, _CO_SYSTEM_BLOCKSADMIN_BLOCKRIGHTS_DSC );

@@ -17,8 +17,8 @@ class SystemAdsense extends icms_ipf_Object {
 
 	public $content = false;
 
-	function SystemAdsense(&$handler) {
-		$this->icms_ipf_Object($handler);
+	public function __construct(&$handler) {
+		parent::__construct($handler);
 
 		$this->quickInitVar('adsenseid', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('description', XOBJ_DTYPE_TXTAREA, true, _CO_ICMS_ADSENSE_DESCRIPTION, _CO_ICMS_ADSENSE_DESCRIPTION_DSC);
@@ -125,7 +125,7 @@ class SystemAdsenseHandler extends icms_ipf_Handler {
 	public $objects=false;
 
 	function SystemAdsenseHandler($db) {
-		$this->icms_ipf_Handler ( $db, 'adsense', 'adsenseid', 'tag', 'description', 'system' );
+		parent::__construct( $db, 'adsense', 'adsenseid', 'tag', 'description', 'system' );
 		$this->adFormats = array();
 		$this->adFormatsList = array();
 

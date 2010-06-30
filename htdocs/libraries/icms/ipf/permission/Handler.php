@@ -6,18 +6,20 @@
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		icms_ipf_Object
+ * @category	ICMS
+ * @package		ipf_Object
+ * @subpackage	Permission
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id: icmspersistablepermission.php 19623 2010-06-25 14:59:15Z malanciault $
+ * @version		SVN: $Id: icmspersistablepermission.php 19623 2010-06-25 14:59:15Z malanciault $
  */
 
-if (!defined("ICMS_ROOT_PATH")) die("ImpressCMS root path not defined");
+defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 
-class icms_ipf_permission_Handler extends icms_core_ObjectHandler
-{
-	var $handler;
-	function icms_ipf_permission_Handler($handler) {
+class icms_ipf_permission_Handler {
+	public $handler;
+
+	public function __construct($handler) {
 		$this->handler=$handler;
 	}
 
@@ -29,10 +31,10 @@ class icms_ipf_permission_Handler extends icms_core_ObjectHandler
 	 *
 	 * @return array
 	 */
-	function getGrantedGroups($gperm_name, $id = null) {
+	public function getGrantedGroups($gperm_name, $id = null) {
 		static $groups;
 
-		if (!isset($groups[$gperm_name]) || ($id != null && !isset($groups[$gperm_name][$id]))) {
+		if ( !isset($groups[$gperm_name]) || ( $id != null && !isset($groups[$gperm_name][$id]) ) ) {
 			$icmsModule =& $this->handler->getModuleInfo();
 			//Get group permissions handler
 			$gperm_handler =& xoops_gethandler('member_groupperm');
@@ -45,12 +47,12 @@ class icms_ipf_permission_Handler extends icms_core_ObjectHandler
 		return isset($groups[$gperm_name][$id]) ? $groups[$gperm_name][$id] : array();
 	}
 
-	function getGrantedGroupsForIds($item_ids_array, $gperm_name=false) {
+	public function getGrantedGroupsForIds($item_ids_array, $gperm_name=false) {
 
 		static $groups;
 
-		if ($gperm_name){
-			if (isset($groups[$gperm_name])) {
+		if ( $gperm_name ) {
+			if ( isset($groups[$gperm_name]) ) {
 				return $groups[$gperm_name];
 			}
 		} else {
@@ -63,7 +65,7 @@ class icms_ipf_permission_Handler extends icms_core_ObjectHandler
 		$criteria = new icms_criteria_Compo();
 		$criteria->add(new icms_criteria_Item('gperm_modid', $icmsModule->getVar('mid')));
 
-		if ($gperm_name) {
+		if ( $gperm_name ) {
 			$criteria->add(new icms_criteria_Item('gperm_name', $gperm_name));
 		}
 
@@ -72,12 +74,12 @@ class icms_ipf_permission_Handler extends icms_core_ObjectHandler
 
 		$permissionsObj = $gperm_handler->getObjects($criteria);
 
-		foreach ($permissionsObj as $permissionObj) {
+		foreach ( $permissionsObj as $permissionObj ) {
 			$groups[$permissionObj->getVar('gperm_name')][$permissionObj->getVar('gperm_itemid')][] = $permissionObj->getVar('gperm_groupid');
 		}
 
 		//Return the permission array
-		if ($gperm_name) {
+		if ( $gperm_name ) {
 			return isset($groups[$gperm_name]) ? $groups[$gperm_name] : array();
 		} else {
 			return isset($groups) ? $groups : array();
@@ -92,15 +94,15 @@ class icms_ipf_permission_Handler extends icms_core_ObjectHandler
 	 *
 	 * @return array
 	 */
-	function getGrantedItems($gperm_name, $id = null) {
+	public function getGrantedItems($gperm_name, $id = null) {
 		global $icmsUser;
 		static $permissions;
 
-		if (!isset($permissions[$gperm_name]) || ($id != null && !isset($permissions[$gperm_name][$id]))) {
+		if ( !isset($permissions[$gperm_name]) || ( $id != null && !isset($permissions[$gperm_name][$id]) ) ) {
 
 			$icmsModule =& $this->handler->getModuleInfo();
 
-			if (is_object($icmsModule)) {
+			if ( is_object($icmsModule) ) {
 
 				//Get group permissions handler
 				$gperm_handler =& xoops_gethandler('member_groupperm');
@@ -117,7 +119,7 @@ class icms_ipf_permission_Handler extends icms_core_ObjectHandler
 		return isset($permissions[$gperm_name]) ? $permissions[$gperm_name] : array();
 	}
 
-	function storeAllPermissionsForId($id) {
+	public function storeAllPermissionsForId($id) {
 		foreach ($this->handler->getPermissions() as $permission) {
 			$this->saveItem_Permissions($_POST[$permission['perm_name']], $id, $permission['perm_name']);
 		}
@@ -134,8 +136,7 @@ class icms_ipf_permission_Handler extends icms_core_ObjectHandler
 	 * @return boolean : TRUE if the no errors occured
 	 **/
 
-	function saveItem_Permissions($groups, $itemid, $perm_name)
-	{
+	public function saveItem_Permissions($groups, $itemid, $perm_name) {
 		$icmsModule =& $this->handler->getModuleInfo();
 
 		$result = true;
@@ -148,8 +149,8 @@ class icms_ipf_permission_Handler extends icms_core_ObjectHandler
 		//exit;
 		// Save the new permissions
 
-		if (count($groups) > 0) {
-			foreach ($groups as $group_id) {
+		if ( count($groups) > 0 ) {
+			foreach ( $groups as $group_id ) {
 				$gperm_handler->addRight($perm_name, $itemid, $group_id, $module_id);
 			}
 		}
@@ -190,7 +191,7 @@ class icms_ipf_permission_Handler extends icms_core_ObjectHandler
 	 * @param int $gperm_itemid id of the object to check
 	 * @return boolean : TRUE if user has access, FALSE if not
 	 **/
-	function accessGranted($gperm_name, $gperm_itemid) {
+	public function accessGranted($gperm_name, $gperm_itemid) {
 		global $icmsUser;
 
 		$gperm_groupid = is_object($icmsUser) ? $icmsUser->getGroups() : array(ICMS_GROUP_ANONYMOUS);
@@ -203,4 +204,4 @@ class icms_ipf_permission_Handler extends icms_core_ObjectHandler
 		return $gperm_handler->checkRight($gperm_name, $gperm_itemid, $gperm_groupid, $gperm_modid);
 	}
 }
-?>
+

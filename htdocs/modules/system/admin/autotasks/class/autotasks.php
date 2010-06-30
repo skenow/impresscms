@@ -20,7 +20,7 @@ class SystemAutoTasks extends icms_ipf_Object {
 	public $content = false;
 
 	function __construct(&$handler) {
-		$this->icms_ipf_Object($handler);
+		parent::__construct($handler);
 
 		$this->quickInitVar('sat_id', XOBJ_DTYPE_INT, false);
 		$this->quickInitVar('sat_lastruntime', XOBJ_DTYPE_INT, false, _CO_ICMS_AUTOTASKS_LASTRUNTIME, null, 0);
@@ -221,7 +221,7 @@ class SystemAutotasksHandler extends icms_ipf_Handler
 
 	function SystemAutotasksHandler($db)
 	{
-		$this->icms_ipf_Handler($db, 'autotasks', 'sat_id', 'sat_name', 'sat_code', 'system');
+		parent::__construct($db, 'autotasks', 'sat_id', 'sat_name', 'sat_code', 'system');
 	}
 
 	/**
