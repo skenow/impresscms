@@ -12,7 +12,7 @@
 require_once ICMS_ROOT_PATH.'/class/autotasks/icmsautotaskssystem.php';
 
 class IcmsAutoTasksAt
-extends IcmsAutoTasksSystem {
+extends icms_autotasks_System {
 
 	/*
 	 * check if can run

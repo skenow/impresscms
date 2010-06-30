@@ -16,7 +16,7 @@ require_once ICMS_ROOT_PATH.'/class/autotasks/icmsautotaskssystem.php';
  * some parts are taked from CronTab class developed by cjpa@audiophile.com
  */
 class IcmsAutoTasksCron
-extends IcmsAutoTasksSystem {
+extends icms_autotasks_System {
 
 	private $_lines = array();
 	private $_line_id = -1;

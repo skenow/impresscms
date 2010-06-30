@@ -11,8 +11,8 @@
 
 require_once ICMS_ROOT_PATH . '/class/autotasks/iautotasksystem.php';
 
-abstract class IcmsAutoTasksSystem
-implements iAutoTaskSystem  {
+abstract class icms_autotasks_System
+implements icms_autotasks_ISystem  {
 
 	function getName() {
 		return strtolower(substr(get_class($this),strlen('IcmsAutoTasks')));

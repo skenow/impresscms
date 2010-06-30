@@ -1,6 +1,6 @@
 <?php
 /**
- * ImpressCMS AUTOTASKSs Library - iAutoTaskSystem interface
+ * ImpressCMS AUTOTASKSs Library - icms_autotasks_ISystem interface
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -9,7 +9,7 @@
  * @author		MekDrop <mekdrop@gmail.com>
  */
 
-interface iAutoTaskSystem {
+interface icms_autotasks_ISystem {
 
 	/**
 	 * check if can run
