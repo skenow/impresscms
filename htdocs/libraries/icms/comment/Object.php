@@ -3,12 +3,11 @@
  * Core class for managing comments
  *
  * @category	ICMS
- * @package     core
- * @subpackage	Comment
+ * @package		Comment
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright 	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
- * @version		$Id: Comment.php 19580 2010-06-24 03:51:49Z skenow $
+ * @version		SVN: $Id$
  */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
@@ -17,8 +16,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * A Comment
  *
  * @category	ICMS
- * @package     core
- * @subpackage	Comment
+ * @package		Comment
  *
  */
 class icms_comment_Object extends icms_core_Object {
