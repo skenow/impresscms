@@ -23,7 +23,7 @@
  */
 include_once ICMS_ROOT_PATH.'/class/auth/auth_provisionning.php';
 
-class icms_auth_Ldap extends XoopsAuth
+class icms_auth_Ldap extends icms_auth_Object
 {
 	var $cp1252_map = array(
 		"\xc2\x80" => "\xe2\x82\xac", /* EURO SIGN */
@@ -52,7 +52,7 @@ class icms_auth_Ldap extends XoopsAuth
 		"\xc2\x9b" => "\xe2\x80\xba", /* SINGLE RIGHT-POINTING ANGLE QUOTATION*/
 		"\xc2\x9c" => "\xc5\x93",     /* LATIN SMALL LIGATURE OE */
 		"\xc2\x9e" => "\xc5\xbe",     /* LATIN SMALL LETTER Z WITH CARON */
-		"\xc2\x9f" => "\xc5\xb8"      /* LATIN CAPITAL LETTER Y WITH DIAERESIS*/    	
+		"\xc2\x9f" => "\xc5\xb8"      /* LATIN CAPITAL LETTER Y WITH DIAERESIS*/
 	);
 
 	var $ldap_server;

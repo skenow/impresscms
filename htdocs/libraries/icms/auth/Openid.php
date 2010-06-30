@@ -23,7 +23,7 @@ define('OPENID_STEP_LINK', 3);
 define('OPENID_STEP_NO_USER_FOUND', 4);
 define('OPENID_STEP_USER_FOUND', 5);
 
-class icms_auth_Openid extends XoopsAuth {
+class icms_auth_Openid extends icms_auth_Object {
 
 	/**
 	 * @var string $displayid $displayid fetch from the openid authentication

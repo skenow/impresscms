@@ -19,14 +19,14 @@
  * @author       Pierre-Eric MENUET <pemphp@free.fr>
  * @copyright    copyright (c) 2000-2003 XOOPS.org
  */
-class icms_auth_Xoops extends icms_auth_Factory
+class icms_auth_Xoops extends icms_auth_Object
 {
 	/**
 	 * Authentication Service constructor
 	 * constructor
 	 * @param object $dao reference to dao object
 	 */
-	function XoopsAuthXoops(&$dao)
+	function icms_auth_Xoops(&$dao)
 	{
 		$this->_dao = $dao;
 		$this->auth_method = 'xoops';
