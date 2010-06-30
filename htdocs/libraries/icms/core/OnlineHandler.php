@@ -6,7 +6,7 @@
  * @license		LICENSE.txt
  * @category	ICMS
  * @package		Core
- * @version		SVN: $Id: online.php 19450 2010-06-18 14:15:29Z malanciault $
+ * @version		SVN: $Id$
  */
 
 /**
