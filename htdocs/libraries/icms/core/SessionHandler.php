@@ -1,15 +1,11 @@
 <?php
 /**
  * Session Management
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package	core
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project
- * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: session.php 19118 2010-03-27 17:46:23Z skenow $
+ * @license		LICENSE.txt
+ * @category	ICMS
+ * @package		Session
+ * @version		SVN: $Id$
  */
 /*
  Based on SecureSession class
@@ -18,18 +14,17 @@
  */
 /**
  * Handler for a session
- * @package     kernel
+ * @category	ICMS
+ * @package     Session
  * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_core_SessionHandler
-{
+class icms_core_SessionHandler {
 	/**
 	 * Database connection
 	 * @var	object
 	 * @access	private
 	 */
-	var $db;
+	private $db;
 
 	/**
 	 * Security checking level
@@ -42,22 +37,21 @@ class icms_core_SessionHandler
 	 * @var	int
 	 * @access	public
 	 */
-	var $securityLevel = 3;
+	public $securityLevel = 3;
 
 	/**
 	 * Enable regenerate_id
 	 * @var	bool
 	 * @access	public
 	 */
-	var $enableRegenerateId = false;
+	public $enableRegenerateId = false;
 
 	/**
 	 * Constructor
 	 * @param object $db reference to the {@link XoopsDatabase} object
 	 *
 	 */
-	function icms_core_SessionHandler(&$db)
-	{
+	public function __construct(&$db) {
 		$this->db =& $db;
 	}
 
@@ -67,8 +61,7 @@ class icms_core_SessionHandler
 	 * @param	string  $session_name
 	 * @return	bool
 	 */
-	function open($save_path, $session_name)
-	{
+	public function open($save_path, $session_name) {
 		return true;
 	}
 
@@ -76,8 +69,7 @@ class icms_core_SessionHandler
 	 * Close a session
 	 * @return	bool
 	 */
-	function close()
-	{
+	public function close()	{
 		$this->gc_force();
 		return true;
 	}
@@ -87,17 +79,14 @@ class icms_core_SessionHandler
 	 * @param	string  &sess_id    ID of the session
 	 * @return	array   Session data
 	 */
-	function read($sess_id)
-	{
-		$sql = sprintf('SELECT sess_data, sess_ip FROM %s WHERE sess_id = %s', $this->db->prefix('session'), $this->db->quoteString($sess_id));
-		if(false != $result = $this->db->query($sql))
-		{
-			if(list($sess_data, $sess_ip) = $this->db->fetchRow($result))
-			{
-				if($this->securityLevel > 1)
-				{
+	public function read($sess_id) {
+		$sql = sprintf('SELECT sess_data, sess_ip FROM %s WHERE sess_id = %s',
+			$this->db->prefix('session'), $this->db->quoteString($sess_id));
+		if ( false != $result = $this->db->query($sql) ) {
+			if ( list($sess_data, $sess_ip) = $this->db->fetchRow($result) ) {
+				if ( $this->securityLevel > 1) {
 					$pos = strpos($sess_ip, ".", $this->securityLevel - 1);
-					if(strncmp($sess_ip, $_SERVER['REMOTE_ADDR'], $pos)) {$sess_data = '';}
+					if ( strncmp($sess_ip, $_SERVER['REMOTE_ADDR'], $pos) ) { $sess_data = ''; }
 				}
 				return $sess_data;
 			}
@@ -111,14 +100,22 @@ class icms_core_SessionHandler
 	 * @param   string  $sess_data
 	 * @return  bool
 	 **/
-	function write($sess_id, $sess_data)
-	{
+	public function write($sess_id, $sess_data) {
 		$sess_id = $this->db->quoteString($sess_id);
-		$sql = sprintf("UPDATE %s SET sess_updated = '%u', sess_data = %s WHERE sess_id = %s", $this->db->prefix('session'), time(), $this->db->quoteString($sess_data), $sess_id);
+		$sql = sprintf(
+			"UPDATE %s SET sess_updated = '%u', sess_data = %s WHERE sess_id = %s",
+			$this->db->prefix('session'), time(), $this->db->quoteString($sess_data), $sess_id
+		);
 		$this->db->queryF($sql);
-		if(!$this->db->getAffectedRows())
-		{
-			$sql = sprintf("INSERT INTO %s (sess_id, sess_updated, sess_ip, sess_data) VALUES (%s, '%u', %s, %s)", $this->db->prefix('session'), $sess_id, time(), $this->db->quoteString($_SERVER['REMOTE_ADDR']), $this->db->quoteString($sess_data));
+		if ( !$this->db->getAffectedRows() ) {
+			$sql = sprintf(
+				"INSERT INTO %s (sess_id, sess_updated, sess_ip, sess_data)"
+				. " VALUES (%s, '%u', %s, %s)",
+				$this->db->prefix('session'),
+				$sess_id, time(),
+				$this->db->quoteString($_SERVER['REMOTE_ADDR']),
+				$this->db->quoteString($sess_data)
+			);
 			return $this->db->queryF($sql);
 		}
 		return true;
@@ -129,11 +126,12 @@ class icms_core_SessionHandler
 	 * @param   string  $sess_id
 	 * @return  bool
 	 **/
-	function destroy($sess_id)
-	{
-		$sql = sprintf('DELETE FROM %s WHERE sess_id = %s', $this->db->prefix('session'), $this->db->quoteString($sess_id));
-		if(!$result = $this->db->queryF($sql))
-		{
+	public function destroy($sess_id) {
+		$sql = sprintf(
+			'DELETE FROM %s WHERE sess_id = %s',
+			$this->db->prefix('session'), $this->db->quoteString($sess_id)
+		);
+		if ( !$result = $this->db->queryF($sql) ) {
 			return false;
 		}
 		return true;
@@ -144,13 +142,11 @@ class icms_core_SessionHandler
 	 * @param   int $expire Time in seconds until a session expires
 	 * @return  bool
 	 **/
-	function gc($expire)
-	{
-		if(empty($expire))
-		{
+	public function gc($expire) {
+		if ( empty($expire) ) {
 			return true;
 		}
-		$mintime = time() - (int) ($expire);
+		$mintime = time() - (int) $expire;
 		$sql = sprintf("DELETE FROM %s WHERE sess_updated < '%u'", $this->db->prefix('session'), $mintime);
 		return $this->db->queryF($sql);
 	}
@@ -158,11 +154,11 @@ class icms_core_SessionHandler
 	/**
 	 * Force gc for situations where gc is registered but not executed
 	 **/
-	function gc_force()
-	{
-		if(rand(1, 100) < 11)
-		{
-			$expiration = empty($GLOBALS['xoopsConfig']['session_expire']) ? @ini_get('session.gc_maxlifetime') : $GLOBALS['xoopsConfig']['session_expire'] * 60;
+	public function gc_force() {
+		if ( rand(1, 100) < 11 ) {
+			$expiration = empty($GLOBALS['xoopsConfig']['session_expire'])
+						? @ini_get('session.gc_maxlifetime')
+						: $GLOBALS['xoopsConfig']['session_expire'] * 60;
 			$this->gc($expiration);
 		}
 	}
@@ -173,21 +169,16 @@ class icms_core_SessionHandler
 	 * @param   bool $delete_old_session
 	 * @return  bool
 	 **/
-	function icms_sessionRegenerateId($regenerate = false)
-	{
+	public function icms_sessionRegenerateId($regenerate = false) {
 		$old_session_id = session_id();
-		if($regenerate)
-		{
+		if ( $regenerate ) {
 			$success = session_regenerate_id(true);
 			//			$this->destroy($old_session_id);
-		}
-		else
-		{
+		} else {
 			$success = session_regenerate_id();
 		}
 		// Force updating cookie for session cookie is not issued correctly in some IE versions or not automatically issued prior to PHP 4.3.3 for all browsers
-		if($success)
-		{
+		if ( $success ) {
 			$this->update_cookie();
 		}
 		return $success;
@@ -201,56 +192,54 @@ class icms_core_SessionHandler
 	 * @param   int     $expire     Time in seconds until a session expires
 	 * @return  bool
 	 **/
-	function update_cookie($sess_id = null, $expire = null)
-	{
+	public function update_cookie($sess_id = null, $expire = null) {
 		global $icmsConfig;
 		$secure = substr(ICMS_URL, 0, 5) == 'https' ? 1 : 0; // we need to secure cookie when using SSL
-		$session_name = ($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '') ? $icmsConfig['session_name'] : session_name();
-		$session_expire = !is_null($expire) ? (int) ($expire) : ( ($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '') ? $icmsConfig['session_expire'] * 60 : ini_get('session.cookie_lifetime') );
+		$session_name = ( $icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '' )
+				? $icmsConfig['session_name']
+				: session_name();
+		$session_expire = $expire !== NULL
+						? (int) $expire
+						: ( ($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '')
+								? $icmsConfig['session_expire'] * 60
+								: ini_get('session.cookie_lifetime') );
 		$session_id = empty($sess_id) ? session_id() : $sess_id;
 		setcookie($session_name, $session_id, $session_expire ? time() + $session_expire : 0, '/',  '', $secure, 0);
 	}
 
 	// Call this when init session.
-	function icms_sessionOpen($regenerate = false)
-	{
+	public function icms_sessionOpen($regenerate = false) {
 		$_SESSION['icms_fprint'] = $this->icms_sessionFingerprint();
-		if($regenerate)
-		{
+		if ( $regenerate ) {
 			$this->icms_sessionRegenerateId(true);
 		}
 	}
 
 	// Call this to check session.
-	function icms_sessionCheck()
-	{
+	public function icms_sessionCheck() {
 		//		$this->icms_sessionRegenerateId();
-		return (isset($_SESSION['icms_fprint']) && $_SESSION['icms_fprint'] == $this->icms_sessionFingerprint());
+		return ( isset($_SESSION['icms_fprint'])
+				&& $_SESSION['icms_fprint'] == $this->icms_sessionFingerprint() );
 	}
 
 	// Internal function. Returns sha256 from fingerprint.
-	function icms_sessionFingerprint()
-	{
+	public function icms_sessionFingerprint() {
 		$securityLevel = $this->securityLevel;
 		$fingerprint = XOOPS_DB_SALT;
-		if($securityLevel >= 1)
-		{
+		if ( $securityLevel >= 1 ) {
 			$fingerprint .= $_SERVER['HTTP_USER_AGENT'];
 		}
-		if($securityLevel >= 2)
-		{
-			$num_blocks = abs( (int) ($securityLevel));
-			if($num_blocks > 4)
-			{
+		if ( $securityLevel >= 2 ) {
+			$num_blocks = abs((int) $securityLevel);
+			if ( $num_blocks > 4 ) {
 				$num_blocks = 4;
 			}
 			$blocks = explode('.', $_SERVER['REMOTE_ADDR']);
-			for($i = 0; $i < $num_blocks; $i++)
-			{
+			for ( $i = 0; $i < $num_blocks; $i++ ) {
 				$fingerprint .= $blocks[$i].'.';
 			}
 		}
 		return hash('sha256',$fingerprint);
 	}
 }
-?>
+
