@@ -22,10 +22,17 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
  * @category	ICMS
  * @package		ipf_Object
  * @since   1.1
+ * @todo	Properly name the vars using the naming conventions
  */
 class icms_ipf_Handler extends icms_core_ObjectHandler {
 
-	var $_itemname;
+	/**
+	 *
+	 * The name of the IPF object
+	 * @var string
+	 * @todo	Rename using the proper naming convention (this is a public var)
+	 */
+	public $_itemname;
 
 	/**
 	 * Name of the table use to store this {@link icms_ipf_Object}
@@ -77,9 +84,11 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 *
 	 * For example category.php - we will deduct smartsection/category.php as well as smartsection/admin/category.php
 	 * @todo this could probably be automatically deducted from the class name - for example, the class SmartsectionCategory will have "category.php" as it's managing page
+	 * @todo	Rename using the proper naming convention - this is a public var
+	 *
 	 * @var string
 	 */
-	var $_page;
+	public $_page;
 
 	/**
 	 * Full path of the module using this {@link icms_ipf_Object}
@@ -92,6 +101,12 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 
 	var $_moduleUrl;
 
+	/**
+	 *
+	 * The name of the module for the object
+	 * @var string
+	 * @todo	Rename using the proper naming convention (This is a public var)
+	 */
 	var $_moduleName;
 
 	public $uploadEnabled=false;
