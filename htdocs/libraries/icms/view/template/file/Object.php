@@ -1,40 +1,31 @@
 <?php
 /**
- * Manage of template files
+ * Template file object
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package	core
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project
- * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: tplfile.php 19459 2010-06-18 14:58:18Z malanciault $
+ * @license		LICENSE.txt
+ * @category	ICMS
+ * @package		View
+ * @subpackage	Template
+ * @version		SVN: $Id$
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
-
-/**
- * @package kernel
- * @copyright copyright &copy; 2000 XOOPS.org
- */
+defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
  * Base class for all templates
  *
  * @author Kazumi Ono (AKA onokazu)
- * @copyright copyright &copy; 2000 XOOPS.org
- * @package kernel
+ * @category	ICMS
+ * @package		View
+ * @subpackage	Template
  **/
-class icms_view_template_file_Object extends icms_core_Object
-{
+class icms_view_template_file_Object extends icms_core_Object {
 
 	/**
 	 * constructor
 	 */
-	function icms_view_template_file_Object()
-	{
+	public function __construct() {
 		parent::__construct();
 		$this->initVar('tpl_id', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('tpl_refid', XOBJ_DTYPE_INT, 0, false);
@@ -51,17 +42,15 @@ class icms_view_template_file_Object extends icms_core_Object
 	/**
 	 * Gets Template Source
 	 */
-	function getSource()
-	{
+	public function getSource()	{
 		return $this->getVar('tpl_source');
 	}
 
 	/**
 	 * Gets Last Modified timestamp
 	 */
-	function getLastModified()
-	{
+	public function getLastModified()	{
 		return $this->getVar('tpl_lastmodified');
 	}
 }
-?>
+
