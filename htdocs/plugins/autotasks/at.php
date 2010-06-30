@@ -9,8 +9,6 @@
  * @author		MekDrop <mekdrop@gmail.com>
  */
 
-require_once ICMS_ROOT_PATH.'/class/autotasks/icmsautotaskssystem.php';
-
 class IcmsAutoTasksAt
 extends icms_autotasks_System {
 

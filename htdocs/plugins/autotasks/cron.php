@@ -10,8 +10,6 @@
  * @author		MekDrop <mekdrop@gmail.com>
  */
 
-require_once ICMS_ROOT_PATH.'/class/autotasks/icmsautotaskssystem.php';
-
 /**
  * some parts are taked from CronTab class developed by cjpa@audiophile.com
  */

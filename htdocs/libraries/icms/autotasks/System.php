@@ -9,8 +9,6 @@
  * @author		MekDrop <mekdrop@gmail.com>
  */
 
-require_once ICMS_ROOT_PATH . '/class/autotasks/iautotasksystem.php';
-
 abstract class icms_autotasks_System
 implements icms_autotasks_ISystem  {
 
