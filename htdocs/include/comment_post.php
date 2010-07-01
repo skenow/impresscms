@@ -125,10 +125,9 @@ switch ( $op ) {
 		}
 		break;
 	case "post":
-		// Captcha Hack
-		if(@include_once ICMS_ROOT_PATH . '/class/captcha/captcha.php') {
+
 	  if ( $icmsConfig['use_captchaf'] == true ) {
-	  	$icmsCaptcha = IcmsCaptcha::instance();
+	  	$icmsCaptcha = icms_captcha_Object::instance();
 	  	if(! $icmsCaptcha->verify(true) ) {
 	  		redirect_header(
 	  		$redirect_page . '=' . $com_itemid . '&com_id=' . $com_id . '&com_mode=' . $com_mode . '&com_order=' . $com_order,
@@ -136,8 +135,7 @@ switch ( $op ) {
 	  		);
 	  	}
 	  }
-		}
-		// Captcha Hack
+
 		$doimage = 1;
 		$comment_handler =& xoops_gethandler('comment');
 		$add_userpost = false;

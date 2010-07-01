@@ -60,7 +60,7 @@ $reg_form->addElement(new XoopsFormHidden("enc_type", (int) ($enc_type)));
 $reg_form->addElement(new XoopsFormHidden("actkey", $myts->htmlSpecialChars($actkey)));
 
 if ($icmsConfigUser['use_captcha'] == true) {
-	$reg_form->addElement(new IcmsFormCaptcha(_SECURITYIMAGE_GETCODE, "scode"), true);
+	$reg_form->addElement(new icms_form_elements_Captcha(_SECURITYIMAGE_GETCODE, "scode"), true);
 	$reg_form->addElement(new XoopsFormHidden("op", "finish"));
 } else {
 	$reg_form->addElement(new XoopsFormHidden("op", "newuser"));

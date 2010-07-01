@@ -117,9 +117,8 @@ switch ( $op ) {
 			$stop .= implode('<br />', $GLOBALS['xoopsSecurity']->getErrors())."<br />";
 		}
 		if ($icmsConfigUser['use_captcha'] == 1) {
-			include_once ICMS_ROOT_PATH ."/class/captcha/captcha.php" ;
 			include_once ICMS_ROOT_PATH ."/class/xoopsformloader.php" ;
-			$icmsCaptcha = IcmsCaptcha::instance();
+			$icmsCaptcha = icms_captcha_Object::instance();
 			if(! $icmsCaptcha->verify() ) {
 				$stop .= $icmsCaptcha->getMessage().'<br />';
 

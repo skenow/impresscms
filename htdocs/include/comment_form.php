@@ -116,7 +116,7 @@ if ('system' != $icmsModule->getVar('dirname')) {
 }
 // Captcha Hack
 if ( $icmsConfig['use_captchaf'] == true ) {
-	$cform->addElement(new IcmsFormCaptcha());
+	$cform->addElement(new icms_form_elements_Captcha());
 }
 // Captcha Hack
 $button_tray->addElement(new XoopsFormButton('', 'com_dopreview', _PREVIEW, 'submit'));

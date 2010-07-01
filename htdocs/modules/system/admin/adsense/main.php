@@ -65,13 +65,7 @@ switch ($op) {
 		break;
 
 	case "addadsense":
-		/*if(@include_once ICMS_ROOT_PATH ."/class/captcha/captcha.php") {
-		 $icmsCaptcha = IcmsCaptcha::instance();
-		 if(! $icmsCaptcha->verify() ) {
-		 redirect_header('javascript:history.go(-1);', 3, $icmsCaptcha->getMessage());
-		 exit;
-		 }
-		 }*/
+
 		$controller = new icms_ipf_Controller($icms_adsense_handler);
 		$controller->storeFromDefaultForm(_CO_ICMS_ADSENSES_CREATED, _CO_ICMS_ADSENSES_MODIFIED);
 		break;

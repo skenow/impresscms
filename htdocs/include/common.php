@@ -200,13 +200,6 @@ $icmsConfigCaptcha    = $configs[ICMS_CONF_CAPTCHA];
 $icmsConfigSearch     = $configs[ICMS_CONF_SEARCH];
 unset($configs);
 
-// ################# Creation of the ImpressCMS Captcha object ##############
-
-// Instantiate Captcha object
-/*require_once ICMS_ROOT_PATH ."/class/captcha/captcha.php" ;
- global $icmsCaptcha;
- $icmsCaptcha = IcmsCaptcha::instance();*/
-
 // #################### Easiest ML by Gijoe #################
 
 // Disable gzip compression if PHP is run under CLI mode

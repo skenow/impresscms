@@ -1,6 +1,6 @@
 <?php
 /**
- * Text form for CAPTCHA
+ * Image Creation script
  *
  * @copyright	http://www.xoops.org/ The XOOPS Project
  * @copyright	XOOPS_copyrights.txt
@@ -11,14 +11,17 @@
  * @author		http://www.xoops.org/ The XOOPS Project
  * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id: text.php 19090 2010-03-13 17:41:42Z skenow $
  */
 
-class icms_captcha_ObjectText extends icms_captcha_Text {
-	private $_deprecated;
-	public function __construct() {
-		parent::__construct();
-		$this->_deprecated = icms_deprecated('icms_captcha_Text', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
+include "../../../mainfile.php";
+error_reporting(0);
+$xoopsLogger->activated = false;
+
+if(empty($_SERVER['HTTP_REFERER']) || !preg_match("/^".preg_quote(ICMS_URL, '/')."/", $_SERVER['HTTP_REFERER'])) {
+	exit();
 }
+
+$image_handler = new icms_captcha_ImageHandler();
+$image_handler->loadImage();
+
 ?>
