@@ -7,14 +7,14 @@
  * @category	ICMS
  * @package		Config
  * @author		Kazumi Ono (aka onokazo)
- * @version		SVN: $Id: config.php 19431 2010-06-16 20:46:34Z david-sf $
+ * @version		SVN: $Id$
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
  * Configuration handling class.
- * This class acts as an interface for handling general configurations of XOOPS
+ * This class acts as an interface for handling general configurations
  * and its modules.
  *
  * @category	ICMS
@@ -56,7 +56,7 @@ class icms_config_Handler {
 	 *
 	 * @param	object  &$db    reference to database object
 	 */
-	public function icms_config_Handler(&$db) {
+	public function __construct(&$db) {
 		$this->_cHandler = new icms_config_item_Handler($db);
 		$this->_oHandler = new icms_config_option_Handler($db);
 	}
@@ -177,7 +177,7 @@ class icms_config_Handler {
 		static $_cachedConfigs;
 
 		if ( is_array($category) ) {
-			$criteria = new icms_criteria_Compo(new icms_criteria_Item('conf_modid', (int) ($module)));
+			$criteria = new icms_criteria_Compo(new icms_criteria_Item('conf_modid', (int) $module));
 			$criteria->add(new icms_criteria_Item('conf_catid', '(' . implode(',', $category) . ')', 'IN'));
 			$configs = $this->getConfigs($criteria, true);
 			if ( is_array($configs) ) {
@@ -192,9 +192,9 @@ class icms_config_Handler {
 		} else {
 			if ( !empty($_cachedConfigs[$module][$category]) ) return $_cachedConfigs[$module][$category];
 
-			$criteria = new icms_criteria_Compo(new icms_criteria_Item('conf_modid', (int) ($module)));
+			$criteria = new icms_criteria_Compo(new icms_criteria_Item('conf_modid', (int) $module));
 			if ( !empty($category) ) {
-				$criteria->add(new icms_criteria_Item('conf_catid', (int) ($category)));
+				$criteria->add(new icms_criteria_Item('conf_catid', (int) $category));
 			}
 			$configs = $this->getConfigs($criteria, true);
 			if ( is_array($configs) ) {

@@ -11,7 +11,7 @@
  * @since        XOOPS
  * @author       Kazumi Ono (aka onokazo)
  * @author       http://www.xoops.org The XOOPS Project
- * @version      $Id: configitem.php 19586 2010-06-24 11:48:14Z malanciault $
+ * @version      $Id$
  */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
@@ -36,18 +36,17 @@ define('ICMS_CONF_PURIFIER', 14);
 /**#@-*/
 
 /**
- * XOOPS configuration handler class.
+ * Configuration handler class.
  *
  * This class is responsible for providing data access mechanisms to the data source
- * of XOOPS configuration class objects.
+ * of configuration class objects.
  *
  * @author       Kazumi Ono <onokazu@xoops.org>
- * @copyright    copyright (c) 2000-2003 XOOPS.org
- * @package     kernel
- * @subpackage  config
+ * @category	ICMS
+ * @package     Config
+ * @subpackage  Item
  */
-class icms_config_Item_Handler extends icms_core_ObjectHandler
-{
+class icms_config_Item_Handler extends icms_core_ObjectHandler {
 
 	/**
 	 * Create a new {@link icms_config_Item_Object}
@@ -56,10 +55,9 @@ class icms_config_Item_Handler extends icms_core_ObjectHandler
 	 * @param	bool    $isNew  Flag the config as "new"?
 	 * @return	object  reference to the new config
 	 */
-	function &create($isNew = true)
-	{
+	public function &create($isNew = true) {
 		$config = new icms_config_Item_Object();
-		if ($isNew) {
+		if ( $isNew ) {
 			$config->setNew();
 		}
 		return $config;
@@ -71,17 +69,16 @@ class icms_config_Item_Handler extends icms_core_ObjectHandler
 	 * @param	int $id ID of the config
 	 * @return	object  reference to the config, FALSE on fail
 	 */
-	function &get($id)
-	{
+	public function &get($id) {
 		$config = false;
-		$id = (int) ($id);
-		if ($id > 0) {
-			$sql = "SELECT * FROM ".$this->db->prefix('config')." WHERE conf_id='".$id."'";
-			if (!$result = $this->db->query($sql)) {
+		$id = (int) $id;
+		if ( $id > 0 ) {
+			$sql = "SELECT * FROM " . $this->db->prefix('config') . " WHERE conf_id='" . $id . "'";
+			if ( !$result = $this->db->query($sql) ) {
 				return $config;
 			}
 			$numrows = $this->db->getRowsNum($result);
-			if ($numrows == 1) {
+			if ( $numrows == 1 ) {
 				$myrow = $this->db->fetchArray($result);
 				$config = new icms_config_Item_Object();
 				$config->assignVars($myrow);
@@ -96,33 +93,76 @@ class icms_config_Item_Handler extends icms_core_ObjectHandler
 	 * @param	object  &$config    {@link icms_config_Item_Object} object
 	 * @return  mixed   FALSE on fail.
 	 */
-	function insert(&$config)
-	{
-		/**
-		 * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-		 */
-		if (!is_a($config, 'icms_config_Item_Object')) {
+	public function insert(&$config) {
+		/* As of PHP5.3.0, is_a() is no longer deprecated, no need to replace this */
+		if ( !is_a($config, 'icms_config_Item_Object') ) {
 			return false;
 		}
-		if (!$config->isDirty()) {
+		if ( !$config->isDirty() ) {
 			return true;
 		}
-		if (!$config->cleanVars()) {
+		if ( !$config->cleanVars() ) {
 			return false;
 		}
-		foreach ($config->cleanVars as $k => $v) {
+		foreach ( $config->cleanVars as $k => $v ) {
 			${$k} = $v;
 		}
-		if ($config->isNew()) {
+		if ( $config->isNew() ) {
 			$conf_id = $this->db->genId('config_conf_id_seq');
-			$sql = sprintf("INSERT INTO %s (conf_id, conf_modid, conf_catid, conf_name, conf_title, conf_value, conf_desc, conf_formtype, conf_valuetype, conf_order) VALUES ('%u', '%u', '%u', %s, %s, %s, %s, %s, %s, '%u')", $this->db->prefix('config'), (int) ($conf_id), (int) ($conf_modid), (int) ($conf_catid), $this->db->quoteString($conf_name), $this->db->quoteString($conf_title), $this->db->quoteString($conf_value), $this->db->quoteString($conf_desc), $this->db->quoteString($conf_formtype), $this->db->quoteString($conf_valuetype), (int) ($conf_order));
+			$sql = sprintf(
+				"INSERT INTO %s (
+				conf_id,
+				conf_modid,
+				conf_catid,
+				conf_name,
+				conf_title,
+				conf_value,
+				conf_desc,
+				conf_formtype,
+				conf_valuetype,
+				conf_order)
+				 VALUES ('%u', '%u', '%u', %s, %s, %s, %s, %s, %s, '%u')",
+				$this->db->prefix('config'),
+				(int) $conf_id,
+				(int) $conf_modid,
+				(int) $conf_catid,
+				$this->db->quoteString($conf_name),
+				$this->db->quoteString($conf_title),
+				$this->db->quoteString($conf_value),
+				$this->db->quoteString($conf_desc),
+				$this->db->quoteString($conf_formtype),
+				$this->db->quoteString($conf_valuetype),
+				(int) $conf_order
+			);
 		} else {
-			$sql = sprintf("UPDATE %s SET conf_modid = '%u', conf_catid = '%u', conf_name = %s, conf_title = %s, conf_value = %s, conf_desc = %s, conf_formtype = %s, conf_valuetype = %s, conf_order = '%u' WHERE conf_id = '%u'", $this->db->prefix('config'), (int) ($conf_modid), (int) ($conf_catid), $this->db->quoteString($conf_name), $this->db->quoteString($conf_title), $this->db->quoteString($conf_value), $this->db->quoteString($conf_desc), $this->db->quoteString($conf_formtype), $this->db->quoteString($conf_valuetype), (int) ($conf_order), (int) ($conf_id));
+			$sql = sprintf(
+				"UPDATE %s SET conf_modid = '%u',
+				conf_catid = '%u',
+				conf_name = %s,
+				conf_title = %s,
+				conf_value = %s,
+				conf_desc = %s,
+				conf_formtype = %s,
+				conf_valuetype = %s,
+				conf_order = '%u'
+				WHERE conf_id = '%u'",
+				$this->db->prefix('config'),
+				(int) $conf_modid,
+				(int) $conf_catid,
+				$this->db->quoteString($conf_name),
+				$this->db->quoteString($conf_title),
+				$this->db->quoteString($conf_value),
+				$this->db->quoteString($conf_desc),
+				$this->db->quoteString($conf_formtype),
+				$this->db->quoteString($conf_valuetype),
+				(int) $conf_order,
+				(int) $conf_id
+			);
 		}
-		if (!$result = $this->db->query($sql)) {
+		if ( !$result = $this->db->query($sql) ) {
 			return false;
 		}
-		if (empty($conf_id)) {
+		if ( empty($conf_id) ) {
 			$conf_id = $this->db->getInsertId();
 		}
 		$config->assignVar('conf_id', $conf_id);
@@ -135,16 +175,16 @@ class icms_config_Item_Handler extends icms_core_ObjectHandler
 	 * @param	object  &$config    Config to delete
 	 * @return	bool    Successful?
 	 */
-	function delete(&$config)
-	{
-		/**
-		 * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-		 */
-		if (!is_a($config, 'icms_config_Item_Object')) {
+	public function delete(&$config) {
+		/* As of PHP5.3.0, is_as() is no longer deprecated, there is no need to replace it */
+		if ( !is_a($config, 'icms_config_Item_Object') ) {
 			return false;
 		}
-		$sql = sprintf("DELETE FROM %s WHERE conf_id = '%u'", $this->db->prefix('config'), (int) ($config->getVar('conf_id')));
-		if (!$result = $this->db->query($sql)) {
+		$sql = sprintf(
+			"DELETE FROM %s WHERE conf_id = '%u'",
+			$this->db->prefix('config'), (int) $config->getVar('conf_id')
+		);
+		if ( !$result = $this->db->query($sql) ) {
 			return false;
 		}
 		return true;
@@ -157,25 +197,24 @@ class icms_config_Item_Handler extends icms_core_ObjectHandler
 	 * @param	bool    $id_as_key  return the config's id as key?
 	 * @return	array   Array of {@link icms_config_Item_Object} objects
 	 */
-	function getObjects($criteria = null, $id_as_key = false)
-	{
+	public function getObjects($criteria = null, $id_as_key = false) {
 		$ret = array();
 		$limit = $start = 0;
-		$sql = 'SELECT * FROM '.$this->db->prefix('config');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
-			$sql .= ' '.$criteria->renderWhere();
+		$sql = 'SELECT * FROM ' . $this->db->prefix('config');
+		if ( isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element') ) {
+			$sql .= ' ' . $criteria->renderWhere();
 			$sql .= ' ORDER BY conf_order ASC';
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
 		}
 		$result = $this->db->query($sql, $limit, $start);
-		if (!$result) {
+		if ( !$result ) {
 			return false;
 		}
-		while ($myrow = $this->db->fetchArray($result)) {
+		while ( $myrow = $this->db->fetchArray($result) ) {
 			$config = new icms_config_item_Object();
 			$config->assignVars($myrow);
-			if (!$id_as_key) {
+			if ( !$id_as_key ) {
 				$ret[] =& $config;
 			} else {
 				$ret[$myrow['conf_id']] =& $config;
@@ -191,20 +230,19 @@ class icms_config_Item_Handler extends icms_core_ObjectHandler
 	 * @param	object  $criteria   {@link icms_criteria_Element}
 	 * @return	int     Count of configs matching $criteria
 	 */
-	function getCount($criteria = null)
-	{
+	public function getCount($criteria = null) {
 		$ret = array();
 		$limit = $start = 0;
-		$sql = 'SELECT * FROM '.$this->db->prefix('config');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
-			$sql .= ' '.$criteria->renderWhere();
+		$sql = 'SELECT * FROM ' . $this->db->prefix('config');
+		if ( isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element') ) {
+			$sql .= ' ' . $criteria->renderWhere();
 		}
 		$result =& $this->db->query($sql);
-		if (!$result) {
+		if ( !$result ) {
 			return false;
 		}
 		list($count) = $this->db->fetchRow($result);
 		return $count;
 	}
 }
-?>
+

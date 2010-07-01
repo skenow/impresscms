@@ -2,28 +2,24 @@
 /**
  * Manage configuration categories
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
- * @package		core
- * @subpackage	config
- * @since		XOOPS
+ * @category	ICMS
+ * @package		Config
+ * @subpackage	Category
  * @author		Kazumi Ono (aka onokazo)
- * @author		http://www.xoops.org The XOOPS Project
- * @version		$Id: Configcategory.php 19514 2010-06-21 22:50:14Z skenow $
+ * @version		SVN: $Id: Configcategory.php 19514 2010-06-21 22:50:14Z skenow $
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
  * A category of configs
  *
  * @author	Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
- *
- * @package     core
- * @subpackage	config
+ * @category	ICMS
+ * @package     Config
+ * @subpackage	Category
  */
 class icms_config_category_Object extends icms_core_Object {
 	/**

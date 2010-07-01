@@ -8,7 +8,7 @@
  * @package		Config
  * @subpackage	Item
  * @author		Kazumi Ono (aka onokazo)
- * @version		SVN: $Id: configitem.php 19586 2010-06-24 11:48:14Z malanciault $
+ * @version		SVN: $Id$
  */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
@@ -61,7 +61,7 @@ class icms_config_Item_Object extends icms_core_Object {
 
 			case 'float':
 				$value = $this->getVar('conf_value', 'N');
-				return (float)$value;
+				return (float) $value;
 				break;
 
 			case 'textarea':

@@ -8,10 +8,10 @@
  * @package		Config
  * @subpackage	Category
  * @author		Kazumi Ono (aka onokazo)
- * @version		SVN: $Id: ConfigcategoryHandler.php 19514 2010-06-21 22:50:14Z skenow $
+ * @version		SVN: $Id$
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
  * Configuration category handler class.
@@ -19,7 +19,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * This class is responsible for providing data access mechanisms to the data source
  * of configuration category class objects.
  *
- * @author  Kazumi Ono <onokazu@xoops.org>
+ * @author  	Kazumi Ono <onokazu@xoops.org>
  * @category	ICMS
  * @package     Config
  * @subpackage  Category
@@ -52,7 +52,7 @@ class icms_config_category_Handler extends icms_core_ObjectHandler {
 	 */
 	public function &get($id) {
 		$confcat = false;
-		$id = (int) ($id);
+		$id = (int) $id;
 		if ( $id > 0 ) {
 			$sql = "SELECT * FROM " . $this->db->prefix('configcategory') . " WHERE confcat_id='" . $id . "'";
 			if ( !$result = $this->db->query($sql) ) {
@@ -151,11 +151,13 @@ class icms_config_category_Handler extends icms_core_ObjectHandler {
 	public function getObjects($criteria = null, $id_as_key = false) {
 		$ret = array();
 		$limit = $start = 0;
-		$sql = 'SELECT * FROM '.$this->db->prefix('configcategory');
+		$sql = 'SELECT * FROM ' . $this->db->prefix('configcategory');
 		if ( isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element') ) {
 			$sql .= ' '.$criteria->renderWhere();
-			$sort = !in_array($criteria->getSort(), array('confcat_id', 'confcat_name', 'confcat_order')) ? 'confcat_order' : $criteria->getSort();
-			$sql .= ' ORDER BY '.$sort.' '.$criteria->getOrder();
+			$sort = !in_array($criteria->getSort(), array('confcat_id', 'confcat_name', 'confcat_order'))
+					? 'confcat_order'
+					: $criteria->getSort();
+			$sql .= ' ORDER BY ' . $sort . ' ' . $criteria->getOrder();
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
 		}

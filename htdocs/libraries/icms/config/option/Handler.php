@@ -8,10 +8,10 @@
  * @package		Config
  * @subpackage	Option
  * @author		Kazumi Ono (aka onokazo)
- * @version		$Id: configoption.php 19586 2010-06-24 11:48:14Z malanciault $
+ * @version		SVN: $Id$
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
  * Configuration option handler class.
@@ -50,7 +50,7 @@ class icms_config_option_Handler extends icms_core_ObjectHandler {
 	 */
 	public function &get($id) {
 		$confoption = false;
-		$id = (int) ($id);
+		$id = (int) $id;
 		if ( $id > 0 ) {
 			$sql = "SELECT * FROM " . $this->db->prefix('configoption') . " WHERE confop_id='" . $id . "'";
 			if ( !$result = $this->db->query($sql) ) {
@@ -72,9 +72,7 @@ class icms_config_option_Handler extends icms_core_ObjectHandler {
 	 * @return	bool    TRUE if successfull.
 	 */
 	public function insert(&$confoption) {
-		/**
-		 * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-		 */
+		/* As of PHP5.3.0, is_a() is no longer deprecated, no need to replace it */
 		if ( !is_a($confoption, 'icms_config_option_Object') ) {
 			return false;
 		}
@@ -93,10 +91,10 @@ class icms_config_option_Handler extends icms_core_ObjectHandler {
 				"INSERT INTO %s (confop_id, confop_name, confop_value, conf_id)
 				VALUES ('%u', %s, %s, '%u')",
 				$this->db->prefix('configoption'),
-				(int) ($confop_id),
+				(int) $confop_id,
 				$this->db->quoteString($confop_name),
 				$this->db->quoteString($confop_value),
-				(int) ($conf_id)
+				(int) $conf_id
 				);
 		} else {
 			$sql = sprintf(
@@ -125,9 +123,7 @@ class icms_config_option_Handler extends icms_core_ObjectHandler {
 	 * @return	bool    TRUE if successful
 	 */
 	public function delete(&$confoption) {
-		/**
-		 * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-		 */
+		/* As of PHP5.3.0, is_a() is no longer deprecated, no need to replace it */
 		if ( !is_a($confoption, 'icms_config_option_Object') ) {
 			return false;
 		}
@@ -153,9 +149,9 @@ class icms_config_option_Handler extends icms_core_ObjectHandler {
 	public function getObjects($criteria = null, $id_as_key = false) {
 		$ret = array();
 		$limit = $start = 0;
-		$sql = 'SELECT * FROM '.$this->db->prefix('configoption');
+		$sql = 'SELECT * FROM ' . $this->db->prefix('configoption');
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
-			$sql .= ' '.$criteria->renderWhere().' ORDER BY confop_id '.$criteria->getOrder();
+			$sql .= ' ' . $criteria->renderWhere() . ' ORDER BY confop_id ' . $criteria->getOrder();
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
 		}
@@ -166,7 +162,7 @@ class icms_config_option_Handler extends icms_core_ObjectHandler {
 		while ( $myrow = $this->db->fetchArray($result) ) {
 			$confoption = new icms_config_option_Object();
 			$confoption->assignVars($myrow);
-			if (!$id_as_key ) {
+			if ( !$id_as_key ) {
 				$ret[] =& $confoption;
 			} else {
 				$ret[$myrow['confop_id']] =& $confoption;

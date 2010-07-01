@@ -8,7 +8,7 @@
  * @package		Config
  * @subpackage	Option
  * @author		Kazumi Ono (aka onokazo)
- * @version		SVN: $Id: configoption.php 19586 2010-06-24 11:48:14Z malanciault $
+ * @version		SVN: $Id$
  */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
