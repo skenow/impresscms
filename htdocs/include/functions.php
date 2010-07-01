@@ -439,7 +439,7 @@ function formatURL($url)
  * @todo Remove in version 1.4 - all occurrences have been removed from the core
  */
 function showbanner() {
-	icms_deprecated('xoops_getbanner','This will be removed in version 1.4');
+	icms_deprecated('xoops_getbanner',sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	echo xoops_getbanner();}
 
 /**

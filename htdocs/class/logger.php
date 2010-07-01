@@ -29,7 +29,7 @@ class XoopsLogger extends icms_core_Logger {
 	private $_deprecated;
 	public function __construct() {
 		parent::__construct();
-		$this->_deprecated = icms_deprecated('icms_core_Logger', 'This will be removed in version 1.4');
+		$this->_deprecated = icms_deprecated('icms_core_Logger', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
 

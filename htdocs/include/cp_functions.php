@@ -350,7 +350,7 @@ function icms_cp_header(){
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 function xoops_cp_header() {
-	icms_deprecated('icms_cp_header', 'This will be removed in version 1.4');
+	icms_deprecated('icms_cp_header', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	icms_cp_header();
 }
 
@@ -402,7 +402,7 @@ function icms_cp_footer() {
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 function xoops_cp_footer() {
-	icms_deprecated('icms_cp_footer', 'This will be removed in version 1.4');
+	icms_deprecated('icms_cp_footer', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	icms_cp_footer();
 }
 

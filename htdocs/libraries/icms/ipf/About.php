@@ -2,12 +2,13 @@
 /**
  * Information about a module
  *
- * @copyright      http://www.impresscms.org/ The ImpressCMS Project
- * @license         LICENSE.txt
- * @package	core
- * @since            1.1
+ * @copyright		http://www.impresscms.org/ The ImpressCMS Project
+ * @license		LICENSE.txt
+ * @category	ICMS
+ * @package		Ipf
+ * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id: icmsmoduleabout.php 19606 2010-06-24 19:48:21Z malanciault $
+ * @version		SVN: $Id$
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -19,34 +20,35 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		core
+ * @category	ICMS
+ * @package		Ipf
  * @since		1.0
  * @author		marcan <marcan@impresscms.org>
+ * @todo		Properly set visibility of vars
  */
 
-class icms_ipf_About
-{
-	var $_lang_aboutTitle;
-	var $_lang_author_info;
-	var $_lang_developer_lead;
-	var $_lang_developer_contributor;
-	var $_lang_developer_website;
-	var $_lang_developer_email;
-	var $_lang_developer_credits;
-	var $_lang_module_info;
-	var $_lang_module_status;
-	var $_lang_module_release_date;
-	var $_lang_module_demo;
-	var $_lang_module_support;
-	var $_lang_module_bug;
-	var $_lang_module_submit_bug;
-	var $_lang_module_feature;
-	var $_lang_module_submit_feature;
-	var $_lang_module_disclaimer;
-	var $_lang_author_word;
-	var $_lang_version_history;
-	var $_lang_by;
-	var $_tpl;
+class icms_ipf_About {
+	public $_lang_aboutTitle;
+	public $_lang_author_info;
+	public $_lang_developer_lead;
+	public $_lang_developer_contributor;
+	public $_lang_developer_website;
+	public $_lang_developer_email;
+	public $_lang_developer_credits;
+	public $_lang_module_info;
+	public $_lang_module_status;
+	public $_lang_module_release_date;
+	public $_lang_module_demo;
+	public $_lang_module_support;
+	public $_lang_module_bug;
+	public $_lang_module_submit_bug;
+	public $_lang_module_feature;
+	public $_lang_module_submit_feature;
+	public $_lang_module_disclaimer;
+	public $_lang_author_word;
+	public $_lang_version_history;
+	public $_lang_by;
+	public $_tpl;
 
 	/**
 	 * Constructor
@@ -57,8 +59,7 @@ class icms_ipf_About
 	 * @return icms_ipf_About
 	 */
 
-	function icms_ipf_About($aboutTitle = _MODABOUT_ABOUT)
-	{
+	public function __construct($aboutTitle = _MODABOUT_ABOUT) {
 		global $icmsModule, $icmsConfig;
 
 		icms_loadLanguageFile($icmsModule->dirname(), 'modinfo');
@@ -90,7 +91,7 @@ class icms_ipf_About
 	 * @param string $value to be sanitized
 	 * @return string sanitized value
 	 */
-	function sanitize($value) {
+	public function sanitize($value) {
 		$myts = icms_core_Textsanitizer::getInstance();
 		return $myts->displayTarea($value, 1);
 	}
@@ -99,8 +100,7 @@ class icms_ipf_About
 	 * Render the whole About page of a module
 	 *
 	 */
-	function render()
-	{
+	public function render() {
 		/**
 		 * @todo make the output XHTML compliant
 		 */
@@ -111,8 +111,8 @@ class icms_ipf_About
 
 		icms_cp_header();
 
-		$module_handler = &xoops_gethandler('module');
-		$versioninfo = &$module_handler->get($icmsModule->getVar('mid'));
+		$module_handler =& xoops_gethandler('module');
+		$versioninfo =& $module_handler->get($icmsModule->getVar('mid'));
 
 		$icmsModule->displayAdminMenu(-1, $this->_aboutTitle . " " . $versioninfo->getInfo('name'));
 
@@ -127,7 +127,7 @@ class icms_ipf_About
 		$this->_tpl->assign('module_status_version', $versioninfo->getInfo('status_version'));
 
 		// Left headings...
-		if ($versioninfo->getInfo('author_realname') != '') {
+		if ( $versioninfo->getInfo('author_realname') != '' ) {
 			$author_name = $versioninfo->getInfo('author') . " (" . $versioninfo->getInfo('author_realname') . ")";
 		} else {
 			$author_name = $versioninfo->getInfo('author');
@@ -146,13 +146,28 @@ class icms_ipf_About
 		$this->_tpl->assign('module_developer_email', $versioninfo->getInfo('developer_email'));
 
 		$people = $versioninfo->getInfo('people');
-		if ($people) {
+		if ( $people ) {
 
-			$this->_tpl->assign('module_people_developers', isset($people['developers']) ? array_map(array($this, 'sanitize'), $people['developers']) : false);
-			$this->_tpl->assign('module_people_testers', isset($people['testers']) ? array_map(array($this, 'sanitize'), $people['testers']) : false);
-			$this->_tpl->assign('module_people_translators', isset($people['translators']) ? array_map(array($this, 'sanitize'), $people['translators']) : false);
-			$this->_tpl->assign('module_people_documenters', isset($people['documenters']) ? array_map(array($this, 'sanitize'), $people['documenters']) : false);
-			$this->_tpl->assign('module_people_other', isset($people['other']) ? array_map(array($this, 'sanitize'), $people['other']) : false);
+			$this->_tpl->assign('module_people_developers', isset($people['developers'])
+				? array_map(array($this, 'sanitize'), $people['developers'])
+				: false
+			);
+			$this->_tpl->assign('module_people_testers', isset($people['testers'])
+				? array_map(array($this, 'sanitize'), $people['testers'])
+				: false
+			);
+			$this->_tpl->assign('module_people_translators', isset($people['translators'])
+				? array_map(array($this, 'sanitize'), $people['translators'])
+				: false
+			);
+			$this->_tpl->assign('module_people_documenters', isset($people['documenters'])
+				? array_map(array($this, 'sanitize'), $people['documenters'])
+				: false
+			);
+			$this->_tpl->assign('module_people_other', isset($people['other'])
+				? array_map(array($this, 'sanitize'), $people['other'])
+				: false
+			);
 		}
 		//$this->_tpl->assign('module_developers', $versioninfo->getInfo('developer_email'));
 
@@ -168,7 +183,7 @@ class icms_ipf_About
 
 		// Manual
 		$manual =$versioninfo->getInfo('manual');
-		if ($manual) {
+		if ( $manual ) {
 			$this->_tpl->assign('module_manual', isset($manual['wiki']) ? array_map(array($this, 'sanitize'), $manual['wiki']) : false);
 		}
 
@@ -190,7 +205,7 @@ class icms_ipf_About
 		}
 
 		$filename = ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/docs/changelog.txt';
-		if(is_file($filename)){
+		if ( is_file($filename) ) {
 
 			$filesize = filesize($filename);
 			$handle = fopen($filename, 'r');
@@ -210,7 +225,7 @@ class icms_ipf_About
 		} elseif ( file_exists( ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license.txt' ) ) {
 			$filename = ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license.txt';
 		}
-		if(is_file($filename)){
+		if ( is_file($filename) ) {
 			$filesize = filesize($filename);
 			$handle = fopen($filename, 'r');
 			$this->_tpl->assign('module_license_txt', $myts->displayTarea(fread($handle, $filesize), 0, 0, 1, 1, 1, true));
@@ -223,4 +238,3 @@ class icms_ipf_About
 	}
 }
 
-?>

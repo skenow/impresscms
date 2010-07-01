@@ -5,7 +5,7 @@ class IcmsPersistableController extends icms_ipf_Controller{
 	private $_deprecated;
 	public function __construct() {
 		parent::getInstance();
-		$this->_deprecated = icms_deprecated('icms_ipf_Controller', 'This will be removed in version 1.4');
+		$this->_deprecated = icms_deprecated('icms_ipf_Controller', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
 

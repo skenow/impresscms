@@ -2,11 +2,13 @@
 /**
  * ICMS kernel Base Class
  *
- * @copyright      http://www.impresscms.org/ The ImpressCMS Project
- * @license         LICENSE.txt
- * @package	kernel
- * @since            1.1
- * @version		$Id: icmskernel.php 19118 2010-03-27 17:46:23Z skenow $
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		LICENSE.txt
+ * @category	ICMS
+ * @package		Core
+ * @subpackage	Kernel
+ * @since		1.1
+ * @version		SVN: $Id$
  */
 
 /**
@@ -16,7 +18,8 @@
  * will perform badly when true URL rewriting is implemented)
  *
  * @category	ICMS
- * @package		core
+ * @package		Core
+ * @subpackage	Kernel
  * @since 		1.1
  */
 class icms_core_Kernel extends icms_core_Object {
@@ -93,16 +96,18 @@ class icms_core_Kernel extends icms_core_Object {
 	 */
 	public function _buildRelevantUrls() {
 
-		if (!$this->urls) {
-			$http = ((strpos(ICMS_URL, "https://")) === false) ? ("http://") : ("https://");
+		if ( !$this->urls ) {
+			$http = strpos(ICMS_URL, "https://") === false
+				? "http://"
+				: "https://";
 			$phpself = $_SERVER['PHP_SELF'];
 			$httphost = $_SERVER['HTTP_HOST'];
 			$querystring = $_SERVER['QUERY_STRING'];
-			if ($querystring != '') {
+			if ( $querystring != '' ) {
 				$querystring = '?' . $querystring;
 			}
 			$currenturl = $http . $httphost . $phpself . $querystring;
-			$this->urls = array ();
+			$this->urls = array();
 			$this->urls['http'] = $http;
 			$this->urls['httphost'] = $httphost;
 			$this->urls['phpself'] = $phpself;

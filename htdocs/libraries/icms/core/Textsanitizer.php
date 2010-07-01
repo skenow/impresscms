@@ -544,7 +544,7 @@ class icms_core_Textsanitizer {
 	 * @param unknown_type $bbcode
 	 */
 	function sanitizeForDisplay($text, $allowhtml = 0, $smiley = 1, $bbcode = 1) {
-		icms_deprecated('icms_core_Textsanitizer->displayTarea', 'This will be removed in version 1.4');
+		icms_deprecated('icms_core_Textsanitizer->displayTarea', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		if($allowhtml == 0)
 		{
 			$text = $this->htmlSpecialChars($text);
@@ -575,7 +575,7 @@ class icms_core_Textsanitizer {
 	 * @param $bbcode
 	 */
 	function sanitizeForPreview($text, $allowhtml = 0, $smiley = 1, $bbcode = 1) {
-		icms_deprecated('icms_core_Textsanitizer->displayTarea', 'This will be removed in version 1.4');
+		icms_deprecated('icms_core_Textsanitizer->displayTarea', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		$text = $this->oopsStripSlashesGPC($text);
 		if($allowhtml == 0)
 		{
@@ -604,7 +604,7 @@ class icms_core_Textsanitizer {
 	 * @param unknown_type $text
 	 */
 	function makeTboxData4Save($text) {
-		icms_deprecated('icms_core_Textsanitizer->addSlashes', 'This will be removed in version 1.4');
+		icms_deprecated('icms_core_Textsanitizer->addSlashes', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->addSlashes($text);
 	}
 
@@ -617,7 +617,7 @@ class icms_core_Textsanitizer {
 	 */
 	function makeTboxData4Show($text, $smiley=0)
 	{
-		icms_deprecated('icms_core_Textsanitizer->htmlSpecialChars', 'This will be removed in version 1.4');
+		icms_deprecated('icms_core_Textsanitizer->htmlSpecialChars', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		$text = $this->htmlSpecialChars($text);
 		return $text;
 	}
@@ -630,7 +630,7 @@ class icms_core_Textsanitizer {
 	 */
 	function makeTboxData4Edit($text)
 	{
-		icms_deprecated('icms_core_Textsanitizer->htmlSpecialChars', 'This will be removed in version 1.4');
+		icms_deprecated('icms_core_Textsanitizer->htmlSpecialChars', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->htmlSpecialChars($text);
 	}
 
@@ -643,7 +643,7 @@ class icms_core_Textsanitizer {
 	 */
 	function makeTboxData4Preview($text, $smiley=0)
 	{
-		icms_deprecated('icms_core_Textsanitizer->htmlSpecialChars and $this->stripSlashesGPC', 'This will be removed in version 1.4');
+		icms_deprecated('icms_core_Textsanitizer->htmlSpecialChars and $this->stripSlashesGPC', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		$text = $this->stripSlashesGPC($text);
 		$text = $this->htmlSpecialChars($text);
 		return $text;
@@ -657,7 +657,7 @@ class icms_core_Textsanitizer {
 	 */
 	function makeTboxData4PreviewInForm($text)
 	{
-		icms_deprecated('icms_core_Textsanitizer->htmlSpecialChars and $this->stripSlashesGPC', 'This will be removed in version 1.4');
+		icms_deprecated('icms_core_Textsanitizer->htmlSpecialChars and $this->stripSlashesGPC', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		$text = $this->stripSlashesGPC($text);
 		return $this->htmlSpecialChars($text);
 	}
@@ -670,7 +670,7 @@ class icms_core_Textsanitizer {
 	 */
 	function makeTareaData4Save($text)
 	{
-		icms_deprecated('icms_core_Textsanitizer->addSlashes', 'This will be removed in version 1.4');
+		icms_deprecated('icms_core_Textsanitizer->addSlashes', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->addSlashes($text);
 	}
 
@@ -697,7 +697,7 @@ class icms_core_Textsanitizer {
 	 */
 	function makeTareaData4Edit($text)
 	{
-		icms_deprecated('icms_core_Textsanitizer->htmlSpecialChars', 'This will be removed in version 1.4');
+		icms_deprecated('icms_core_Textsanitizer->htmlSpecialChars', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->htmlSpecialChars($text);
 	}
 	/**
@@ -723,7 +723,7 @@ class icms_core_Textsanitizer {
 	 */
 	function makeTareaData4PreviewInForm($text)
 	{
-		icms_deprecated('icms_core_Textsanitizer->stripSlashesGPC(icms_core_Textsanitizer->htmlSpecialChars)', 'This will be removed in version 1.4');
+		icms_deprecated('icms_core_Textsanitizer->stripSlashesGPC(icms_core_Textsanitizer->htmlSpecialChars)', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		$text = $this->stripSlashesGPC($text);
 		return $this->htmlSpecialChars($text);
 	}
@@ -736,7 +736,7 @@ class icms_core_Textsanitizer {
 	 */
 	function makeTareaData4InsideQuotes($text)
 	{
-		icms_deprecated('icms_core_Textsanitizer->htmlSpecialChars', 'This will be removed in version 1.4');
+		icms_deprecated('icms_core_Textsanitizer->htmlSpecialChars', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->htmlSpecialChars($text);
 	}
 
@@ -750,7 +750,7 @@ class icms_core_Textsanitizer {
 	 */
 	function oopsStripSlashesGPC($text)
 	{
-		icms_deprecated('icms_core_Textsanitizer->stripSlashesGPC', 'This will be removed in version 1.4');
+		icms_deprecated('icms_core_Textsanitizer->stripSlashesGPC', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->stripSlashesGPC($text);
 	}
 
@@ -764,7 +764,7 @@ class icms_core_Textsanitizer {
 	 */
 	function oopsStripSlashesRT($text)
 	{
-		icms_deprecated('icms_core_Textsanitizer->stripSlashesGPC', 'This will be removed in version 1.4');
+		icms_deprecated('icms_core_Textsanitizer->stripSlashesGPC', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		if(get_magic_quotes_runtime())
 		{
 			$text = stripslashes($text);
@@ -780,7 +780,7 @@ class icms_core_Textsanitizer {
 	 */
 	function oopsAddSlashes($text)
 	{
-		icms_deprecated('icms_core_Textsanitizer->addSlashes', 'This will be removed in version 1.4');
+		icms_deprecated('icms_core_Textsanitizer->addSlashes', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->addSlashes($text);
 	}
 
@@ -792,7 +792,7 @@ class icms_core_Textsanitizer {
 	 */
 	function oopsHtmlSpecialChars($text)
 	{
-		icms_deprecated('icms_core_Textsanitizer->htmlSpecialChars', 'This will be removed in version 1.4');
+		icms_deprecated('icms_core_Textsanitizer->htmlSpecialChars', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->htmlSpecialChars($text);
 	}
 
@@ -804,7 +804,7 @@ class icms_core_Textsanitizer {
 	 */
 	function oopsNl2Br($text)
 	{
-		icms_deprecated('icms_core_Textsanitizer->nl2br', 'This will be removed in version 1.4');
+		icms_deprecated('icms_core_Textsanitizer->nl2br', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->nl2br($text);
 	}
 	/**#@-*/
