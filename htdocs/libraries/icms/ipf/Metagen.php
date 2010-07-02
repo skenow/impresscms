@@ -288,7 +288,6 @@ class icms_ipf_Metagen {
 		$text = preg_replace("/[\r\n]*\r\n[\r\n]*/", "\r\n\r\n", $text);
 		$text = preg_replace("/[ ]* [ ]*/", ' ', $text);
 		$text = StripSlashes($text);
-		//$text = // commenting this out - the line is incomplete
 
 		$originalKeywords = preg_split ('/[^a-zA-Z\'"-]+/', $text, -1, PREG_SPLIT_NO_EMPTY);
 
