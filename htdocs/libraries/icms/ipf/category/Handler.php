@@ -4,30 +4,31 @@
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		icms_ipf_Object
+ * @category	ICMS
+ * @package		Ipf
+ * @subpackage	Category
  * @since		1.2
  * @author		marcan <marcan@impresscms.org>
  * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id: icmspersistablecategory.php 19627 2010-06-25 15:38:42Z malanciault $
+ * @version		SVN: $Id$
  */
 
-if (!defined("ICMS_ROOT_PATH")) {
-	die("ImpressCMS root path not defined");
-}
-/** Make sure the IcmsPersistableOject class is loaded */
-include_once ICMS_ROOT_PATH . "/kernel/icmspersistableseoobject.php";
+defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 
 /**
  * Provides data access mechanisms to the icms_ipf_category_Object object
  * @copyright 	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @category	ICMS
+ * @package		Ipf
+ * @subpackage	Category
  * @since 		1.1
  */
 class icms_ipf_category_Handler extends icms_ipf_Handler {
 	/** */
-	var $allCategoriesObj = false;
+	public $allCategoriesObj = false;
 	/** */
-	var $_allCategoriesId = false;
+	private $_allCategoriesId = false;
 
 	/**
 	 * Constructor for the object handler
@@ -36,7 +37,7 @@ class icms_ipf_category_Handler extends icms_ipf_Handler {
 	 * @param string $modulename The directory name for the module
 	 * @return icms_ipf_category_Handler
 	 */
-	function __construct($db, $modulename) {
+	public function __construct($db, $modulename) {
 		parent::__construct($db, 'category', 'categoryid', 'name', 'description', $modulename);
 	}
 
@@ -49,17 +50,17 @@ class icms_ipf_category_Handler extends icms_ipf_Handler {
 	 * @param string $order
 	 * @return array
 	 */
-	function getAllCategoriesArray($parentid=0, $perm_name=false, $sort = 'parentid', $order='ASC') {
+	public function getAllCategoriesArray($parentid=0, $perm_name=false, $sort = 'parentid', $order='ASC') {
 
-		if (!$this->allCategoriesObj) {
+		if ( !$this->allCategoriesObj ) {
 			$criteria = new icms_criteria_Compo();
 			$criteria->setSort($sort);
 			$criteria->setOrder($order);
 			global $icmsUser;
 			$userIsAdmin = is_object($icmsUser) && $icmsUser->isAdmin();
 
-			if ($perm_name && !$userIsAdmin) {
-				if (!$this->setGrantedObjectsCriteria($criteria, $perm_name)) {
+			if ( $perm_name && !$userIsAdmin ) {
+				if ( !$this->setGrantedObjectsCriteria($criteria, $perm_name) ) {
 					return false;
 				}
 			}
@@ -68,10 +69,10 @@ class icms_ipf_category_Handler extends icms_ipf_Handler {
 		}
 
 		$ret = array();
-		if (isset($this->allCategoriesObj[$parentid])) {
-			foreach($this->allCategoriesObj[$parentid] as $categoryid=>$categoryObj) {
+		if ( isset($this->allCategoriesObj[$parentid]) ) {
+			foreach ( $this->allCategoriesObj[$parentid] as $categoryid=>$categoryObj ) {
 				$ret[$categoryid]['self'] =& $categoryObj->toArray();
-				if (isset($this->allCategoriesObj[$categoryid])) {
+				if ( isset($this->allCategoriesObj[$categoryid]) ) {
 					$ret[$categoryid]['sub'] =& $this->getAllCategoriesArray($categoryid);
 					$ret[$categoryid]['subcatscount'] = count($ret[$categoryid]['sub']);
 				}
@@ -80,32 +81,39 @@ class icms_ipf_category_Handler extends icms_ipf_Handler {
 		return $ret;
 	}
 
-	function getParentIds($parentid, $asString=true) {
+	/**
+	 *
+	 * @param	int		$parentid
+	 * @param	bool	$asString
+	 * @return	array|string	array of ids, or if $asString is TRUE a comma-separated string of ids
+	 */
+	public function getParentIds($parentid, $asString=true) {
 
-		if (!$this->allCategoriesId) {
+		if ( !$this->allCategoriesId ) {
 
 			$ret = array();
-			$sql = 'SELECT categoryid, parentid FROM '.$this->table . " AS " . $this->_itemname . ' ORDER BY parentid';
+			$sql = 'SELECT categoryid, parentid FROM ' . $this->table
+				. " AS " . $this->_itemname . ' ORDER BY parentid';
 
 			$result = $this->db->query($sql);
 
-			if (!$result) {
+			if ( !$result ) {
 				return $ret;
 			}
 
-			while ($myrow = $this->db->fetchArray($result)) {
+			while ( $myrow = $this->db->fetchArray($result) ) {
 				$this->allCategoriesId[$myrow['categoryid']] =  $myrow['parentid'];
 			}
 		}
 
 		$retArray = array($parentid);
-		while ($parentid != 0) {
+		while ( $parentid != 0 ) {
 			$parentid = $this->allCategoriesId[$parentid];
-			if ($parentid != 0) {
+			if ( $parentid != 0 ) {
 				$retArray[] = $parentid;
 			}
 		}
-		if ($asString) {
+		if ( $asString ) {
 			return implode(', ', $retArray);
 		} else {
 			return $retArray;
@@ -113,4 +121,3 @@ class icms_ipf_category_Handler extends icms_ipf_Handler {
 	}
 }
 
-?>

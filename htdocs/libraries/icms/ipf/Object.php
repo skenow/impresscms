@@ -4,20 +4,16 @@
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		icms_ipf_Object
+ * @category	ICMS
+ * @package		ipf_Object
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id: icmspersistableobject.php 19622 2010-06-25 14:56:13Z malanciault $
+ * @version		SVN: $Id$
  */
 
-if (!defined("ICMS_ROOT_PATH")) {
-	die("ImpressCMS root path not defined");
-}
+defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 
 icms_loadLanguageFile('system', 'common');
-
-include_once ICMS_ROOT_PATH . "/kernel/icmspersistablepermission.php";
-include_once ICMS_ROOT_PATH . "/kernel/icmspersistableregistry.php";
 
 if (!defined('XOBJ_DTYPE_SIMPLE_ARRAY')) define('XOBJ_DTYPE_SIMPLE_ARRAY', 101);
 if (!defined('XOBJ_DTYPE_CURRENCY')) define('XOBJ_DTYPE_CURRENCY', 200);

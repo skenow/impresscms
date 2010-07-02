@@ -2,7 +2,9 @@
 /**
  * This file contains the keyhighlighter class that highlights the chosen keyword in the current output buffer.
  *
- * @package keyhighlighter
+ * @category	ICMS
+ * @package		Ipf
+ * @subpackage	Keyhighlighter
  */
 
 /**
@@ -10,35 +12,35 @@
  *
  * This class highlight the chosen keywords in the current output buffer
  *
- * @package keyhighlighter
- * @author Setec Astronomy
- * @version 1.0
- * @abstract Highlight specific keywords.
- * @copyright 2004
- * @example sample.php A sample code.
- * @link http://setecastronomy.stufftoread.com
+ * @category	ICMS
+ * @package		Ipf
+ * @subpackage	Keyhighlighter
+ * @author		Setec Astronomy
+ * @version 	1.0
+ * @abstract	Highlight specific keywords.
+ * @copyright	2004
+ * @link 		http://setecastronomy.stufftoread.com
  */
-
 class icms_ipf_Highlighter {
 
 	/**
 	 * @access private
 	 */
-	var $preg_keywords = '';
+	private $preg_keywords = '';
 	/**
 	 * @access private
 	 */
-	var $keywords = '';
+	private $keywords = '';
 	/**
 	 * @access private
 	 */
-	var $singlewords = false;
+	private $singlewords = false;
 	/**
 	 * @access private
 	 */
-	var $replace_callback = null;
+	private $replace_callback = null;
 
-	var $content;
+	public $content;
 
 	/**
 	 * Main constructor
@@ -61,8 +63,7 @@ class icms_ipf_Highlighter {
 	 *
 	 * </code>
 	 */
-	// public function __construct ()
-	function icms_ipf_Highlighter ($keywords, $singlewords = false, $replace_callback = null ) {
+	public function __construct($keywords, $singlewords = false, $replace_callback = null ) {
 		$this->keywords = $keywords;
 		$this->singlewords = $singlewords;
 		$this->replace_callback = $replace_callback;
@@ -71,11 +72,11 @@ class icms_ipf_Highlighter {
 	/**
 	 * @access private
 	 */
-	function replace ($replace_matches) {
+	private function replace($replace_matches) {
 
-		$patterns = array ();
+		$patterns = array();
 		if ($this->singlewords) {
-			$keywords = explode (' ', $this->preg_keywords);
+			$keywords = explode(' ', $this->preg_keywords);
 			foreach ($keywords as $keyword) {
 				$patterns[] = '/(?' . '>' . $keyword . '+)/si';
 			}
@@ -86,10 +87,10 @@ class icms_ipf_Highlighter {
 		$result = $replace_matches[0];
 
 		foreach ($patterns as $pattern) {
-			if (!is_null ($this->replace_callback)) {
-				$result = preg_replace_callback ($pattern, $this->replace_callback, $result);
+			if (!is_null($this->replace_callback)) {
+				$result = preg_replace_callback($pattern, $this->replace_callback, $result);
 			} else {
-				$result = preg_replace ($pattern, '<span class="highlightedkey">\\0</span>', $result);
+				$result = preg_replace($pattern, '<span class="highlightedkey">\\0</span>', $result);
 			}
 		}
 
@@ -99,13 +100,12 @@ class icms_ipf_Highlighter {
 	/**
 	 * @access private
 	 */
-	function highlight ($buffer) {
+	private function highlight($buffer) {
 		$buffer = '>' . $buffer . '<';
-		$this->preg_keywords = preg_replace ('/[^\w ]/si', '', $this->keywords);
-		$buffer = preg_replace_callback ("/(\>(((?" . ">[^><]+)|(?R))*)\<)/is", array (&$this, 'replace'), $buffer);
-		$buffer = substr ($buffer, 1, -1);
+		$this->preg_keywords = preg_replace('/[^\w ]/si', '', $this->keywords);
+		$buffer = preg_replace_callback ("/(\>(((?" . ">[^><]+)|(?R))*)\<)/is", array(&$this, 'replace'), $buffer);
+		$buffer = substr($buffer, 1, -1);
 		return $buffer;
 	}
 }
 
-?>

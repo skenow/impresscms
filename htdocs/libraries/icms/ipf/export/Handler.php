@@ -4,24 +4,32 @@
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		icms_ipf_Object
+ * @category	ICMS
+ * @package		Ipf
+ * @subpackage	Export
  * @since		1.2
  * @author		marcan <marcan@impresscms.org>
  * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id: icmspersistableexport.php 19623 2010-06-25 14:59:15Z malanciault $
+ * @version		SVN: $Id$
  */
 
+/**
+ *
+ * @category	ICMS
+ * @package		Ipf
+ * @subpackage	Export
+ */
 class icms_ipf_export_Handler {
 
-	var $handler;
-	var $criteria;
-	var $fields;
-	var $format;
-	var $filename;
-	var $filepath;
-	var	$options;
-	var $outputMethods=false;
-	var $notDisplayFields;
+	public $handler;
+	public $criteria;
+	public $fields;
+	public $format;
+	public $filename;
+	public $filepath;
+	public	$options;
+	public $outputMethods=false;
+	public $notDisplayFields;
 
 	/**
 	 * Constructor
@@ -34,7 +42,7 @@ class icms_ipf_export_Handler {
 	 * @param string $format format of the ouputed export. Currently only supports CSV
 	 * @param array $options options of the format to be exported in
 	 */
-	function icms_ipf_export_Handler(&$objectHandler, $criteria=null, $fields=false, $filename=false, $filepath=false, $format='csv', $options=false) {
+	public function __construct(&$objectHandler, $criteria=null, $fields=false, $filename=false, $filepath=false, $format='csv', $options=false) {
 		$this->handler = $objectHandler;
 		$this->criteria = $criteria;
 		$this->fields = $fields;
@@ -47,7 +55,7 @@ class icms_ipf_export_Handler {
 	/**
 	 * Renders the export
 	 */
-	function render($filename) {
+	public function render($filename) {
 
 		$this->filename = $filename;
 
@@ -55,17 +63,17 @@ class icms_ipf_export_Handler {
 		$rows = array();
 		$columnsHeaders = array();
 		$firstObject = true;
-		foreach ($objects as $object) {
+		foreach ( $objects as $object ) {
 			$row = array();
-			foreach ($object->vars as $key=>$var) {
-				if ((!$this->fields || in_array($key, $this->fields)) && !in_array($key, $this->notDisplayFields)) {
-					if ($this->outputMethods && (isset($this->outputMethods[$key])) && (method_exists($object, $this->outputMethods[$key]))) {
+			foreach ( $object->vars as $key=>$var ) {
+				if ( (!$this->fields || in_array($key, $this->fields)) && !in_array($key, $this->notDisplayFields) ) {
+					if ( $this->outputMethods && (isset($this->outputMethods[$key])) && (method_exists($object, $this->outputMethods[$key])) ) {
 						$method = $this->outputMethods[$key];
 						$row[$key] = $object->$method();
 					} else {
 						$row[$key] = $object->getVar($key);
 					}
-					if ($firstObject) {
+					if ( $firstObject ) {
 						// then set the columnsHeaders array as well
 						$columnsHeaders[$key] = $var['form_caption'];
 					}
@@ -85,30 +93,31 @@ class icms_ipf_export_Handler {
 	/**
 	 * Set an array contaning the alternate methods to use instead of the default getVar()
 	 *
-	 * $outputMethods array example : 'uid' => 'getUserName'...
+	 * @param 	array	$outputMethods array example : 'uid' => 'getUserName'...
 	 */
-	function setOuptutMethods($outputMethods) {
+	public function setOuptutMethods($outputMethods) {
 		$this->outputMethods = $outputMethods;
 	}
 
 	/*
 	 * Set an array of fields that we don't want in export
+	 *
+	 * @param	str|array	$fields
 	 */
-	function setNotDisplayFields($fields){
-		if(!$this->notDisplayFields){
-			if(is_array($fields)){
+	public function setNotDisplayFields($fields) {
+		if (!$this->notDisplayFields) {
+			if (is_array($fields)) {
 				$this->notDisplayFields = $fields;
-			}else{
+			} else {
 				$this->notDisplayFields = array($fields);
 			}
-		}else{
-			if(is_array($fields)){
+		} else {
+			if (is_array($fields)) {
 				$this->notDisplayFields = array_merge($this->notDisplayFields, $fields);
-			}else{
+			} else {
 				$this->notDisplayFields[] = $fields;
 			}
 		}
 	}
 }
 
-?>

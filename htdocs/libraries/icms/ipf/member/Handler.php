@@ -4,12 +4,14 @@
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		icms_ipf_Object
+ * @category	ICMS
+ * @package		Ipf
+ * @subpackage	Member
  * @since		1.2
  * @author		Original idea by Jan Keller Pedersen <mithrandir@xoops.org> - IDG Danmark A/S <www.idg.dk>
  * @author		marcan <marcan@impresscms.org>
  * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id: icmspersistablememberhandler.php 19623 2010-06-25 14:59:15Z malanciault $
+ * @version		SVN: $Id$
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');

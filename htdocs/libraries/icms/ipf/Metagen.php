@@ -7,10 +7,10 @@
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @category	ICMS
- * @package		ipf_Metagen
+ * @package		Ipf
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		SVN: $Id: icmsmetagen.php 19623 2010-06-25 14:59:15Z malanciault $
+ * @version		SVN: $Id$
  */
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");

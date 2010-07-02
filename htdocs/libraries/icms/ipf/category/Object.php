@@ -4,31 +4,37 @@
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		icms_ipf_Object
+ * @category	ICMS
+ * @package		Ipf
+ * @subpackage	Category
  * @since		1.2
  * @author		marcan <marcan@impresscms.org>
  * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id: icmspersistablecategory.php 19627 2010-06-25 15:38:42Z malanciault $
+ * @version		SVN: $Id$
+ *
+ * @todo		Properly set visibility of variables - in version 1.4
  */
 
-if (!defined("ICMS_ROOT_PATH")) die("ImpressCMS root path not defined");
+defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 
 /**
  * Persistble category object
- * @package 	icms_ipf_Object
- * @subpackage 	icms_ipf_category_Object
+ *
+ * @category	ICMS
+ * @package 	Ipf
+ * @subpackage 	Category
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @since 		1.1
  */
 class icms_ipf_category_Object extends icms_ipf_seo_Object {
 	/** Path that corresponds to the category */
-	var $_categoryPath;
+	private $_categoryPath;
 	/**
 	 * Constructor for icms_ipf_category_Object
 	 * @return icms_ipf_category_Object
 	 */
-	function icms_ipf_category_Object() {
+	public function __construct() {
 		$this->initVar('categoryid', XOBJ_DTYPE_INT, '', true);
 		$this->initVar('parentid', XOBJ_DTYPE_INT, '', false, null, '', false, _CO_ICMS_CATEGORY_PARENTID, _CO_ICMS_CATEGORY_PARENTID_DSC);
 		$this->initVar('name', XOBJ_DTYPE_TXTBOX, '', false, null, '', false, _CO_ICMS_CATEGORY_NAME, _CO_ICMS_CATEGORY_NAME_DSC);
@@ -46,7 +52,7 @@ class icms_ipf_category_Object extends icms_ipf_seo_Object {
                                             'form_editor' => 'default'));
 
 		// call parent constructor to get SEO fields initiated
-		$this->icms_ipf_seo_Object();
+		parent::__construct();
 	}
 
 	/**
@@ -57,8 +63,8 @@ class icms_ipf_category_Object extends icms_ipf_seo_Object {
 	 * @param string $format format to use for the output
 	 * @return mixed formatted value of the variable
 	 */
-	function getVar($key, $format = 's') {
-		if ($format == 's' && in_array($key, array('description', 'image'))) {
+	public function getVar($key, $format = 's') {
+		if ( $format == 's' && in_array($key, array('description', 'image')) ) {
 			return call_user_func(array($this,$key));
 		}
 		return parent::getVar($key, $format);
@@ -68,7 +74,7 @@ class icms_ipf_category_Object extends icms_ipf_seo_Object {
 	 * @see 	icms_ipf_Object::getValueFor()
 	 * @return 	string	Text to display as the description
 	 */
-	function description() {
+	public function description() {
 		return $this->getValueFor('description', false);
 	}
 	/**
@@ -76,9 +82,9 @@ class icms_ipf_category_Object extends icms_ipf_seo_Object {
 	 *
 	 * @return 	mixed	Returns false if there is no image, or the image, if it exists
 	 */
-	function image() {
+	public function image() {
 		$ret = $this->getVar('image', 'e');
-		if ($ret == '-1') {
+		if ( $ret == '-1' ) {
 			return false;
 		} else {
 			return $ret;
@@ -89,11 +95,11 @@ class icms_ipf_category_Object extends icms_ipf_seo_Object {
 	 *
 	 * @return 	array An array of the category's properties
 	 */
-	function toArray() {
+	public function toArray() {
 		$this->setVar('doxcode', true);
 		global $myts;
 		$objectArray = parent::toArray();
-		if ($objectArray['image']) {
+		if ( $objectArray['image'] ) {
 			$objectArray['image'] = $this->getImageDir() . $objectArray['image'];
 		}
 		return $objectArray;
@@ -105,21 +111,21 @@ class icms_ipf_category_Object extends icms_ipf_seo_Object {
 	 * @param bool $withAllLink make all name clickable
 	 * @return string complete path (breadcrumb)
 	 */
-	function getCategoryPath($withAllLink=true, $currentCategory=false)	{
+	public function getCategoryPath($withAllLink=true, $currentCategory=false)	{
 
 		$controller = new icms_ipf_ObjectController($this->handler);
 
-		if (!$this->_categoryPath) {
-			if ($withAllLink && !$currentCategory) {
+		if ( !$this->_categoryPath ) {
+			if ( $withAllLink && !$currentCategory ) {
 				$ret = $controller->getItemLink($this);
 			} else {
 				$currentCategory = false;
 				$ret = $this->getVar('name');
 			}
 			$parentid = $this->getVar('parentid');
-			if ($parentid != 0) {
+			if ( $parentid != 0 ) {
 				$parentObj =& $this->handler->get($parentid);
-				if ($parentObj->isNew()) {
+				if ( $parentObj->isNew() ) {
 					exit;
 				}
 				$parentid = $parentObj->getVar('parentid');
@@ -132,4 +138,3 @@ class icms_ipf_category_Object extends icms_ipf_seo_Object {
 	}
 
 }
-?>

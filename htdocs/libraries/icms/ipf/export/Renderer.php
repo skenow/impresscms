@@ -3,18 +3,28 @@
  * icms_ipf_export_Renderer class
  *
  * Class that renders a set of data into a specific export format
+ * @category	ICMS
+ * @package		Ipf
+ * @subpackage	Export
+ * @author		marcan <marcan@smartfactory.ca>
+ * @version		SVN: $Id$
+ */
+
+/**
+ * renders a set of data into a specific export format
  *
- * @package IcmsPersistable
- * @author marcan <marcan@smartfactory.ca>
- * @link http://www.smartfactory.ca The SmartFactory
+ * @category	ICMS
+ * @package		Ipf
+ * @subpackage	Export
+ *
  */
 class icms_ipf_export_Renderer {
 
-	var $data;
-	var $format;
-	var $filename;
-	var $filepath;
-	var $options;
+	public $data;
+	public $format;
+	public $filename;
+	public $filepath;
+	public $options;
 
 	/**
 	 * Constructor
@@ -25,7 +35,7 @@ class icms_ipf_export_Renderer {
 	 * @param string $filepath path where the file will be saved
 	 * @param array $options options of the format to be exported in
 	 */
-	function icms_ipf_export_Renderer($data, $filename=false, $filepath=false, $format='csv', $options=array('separator'=>';')) {
+	public function __construct($data, $filename=false, $filepath=false, $format='csv', $options=array('separator'=>';')) {
 		$this->data = $data;
 		$this->format = $format;
 		$this->filename = $filename;
@@ -33,32 +43,52 @@ class icms_ipf_export_Renderer {
 		$this->options = $options;
 	}
 
-	function arrayToCsvString($dataArray, $separator, $trim = 'both', $removeEmptyLines = TRUE) {
+	/**
+	 * Converts an array to a comma-separated string
+	 *
+	 *
+	 * @param arr $dataArray
+	 * @param str $separator
+	 * @param str $trim
+	 * @param bool $removeEmptyLines
+	 */
+	public function arrayToCsvString($dataArray, $separator, $trim = 'both', $removeEmptyLines = TRUE) {
 		if (!is_array($dataArray) || empty ($dataArray))
 		return '';
 		switch ($trim) {
 			case 'none' :
 				$trimFunction = FALSE;
 				break;
+
 			case 'left' :
 				$trimFunction = 'ltrim';
 				break;
+
 			case 'right' :
 				$trimFunction = 'rtrim';
 				break;
+
 			default : //'both':
 				$trimFunction = 'trim';
 				break;
 		}
-		$ret = array ();
-		foreach($dataArray as $key=>$field){
+		$ret = array();
+		foreach ($dataArray as $key=>$field) {
 			$ret[$key] = $this->valToCsvHelper($field, $separator, $trimFunction);
 		}
 
 		return implode($separator, $ret);
 
 	}
-	function valToCsvHelper($val, $separator, $trimFunction) {
+
+	/**
+	 *
+	 *
+	 * @param str $val
+	 * @param str $separator
+	 * @param str $trimFunction
+	 */
+	public function valToCsvHelper($val, $separator, $trimFunction) {
 		if ($trimFunction)
 		$val = $trimFunction ($val);
 		//If there is a separator (;) or a quote (") or a linebreak in the string, we need to quote it.
@@ -73,7 +103,8 @@ class icms_ipf_export_Renderer {
 				$needQuote = TRUE;
 				break;
 			}
-			if ((strpos($val, "\n") !== FALSE) || (strpos($val, "\r") !== FALSE)) { // \r is for mac
+			if ((strpos($val, "\n") !== FALSE) || (strpos($val, "\r") !== FALSE)) {
+				// \r is for mac
 				$needQuote = TRUE;
 				break;
 			}
@@ -84,7 +115,10 @@ class icms_ipf_export_Renderer {
 		return $val;
 	}
 
-	function execute() {
+	/**
+	 *
+	 */
+	public function execute() {
 		$exportFileData = '';
 
 		switch ($this->format) {
@@ -93,23 +127,39 @@ class icms_ipf_export_Renderer {
 				$firstRow = implode($separator, $this->data['columnsHeaders']);
 				$exportFileData .= $firstRow . "\r\n";
 
-				foreach($this->data['rows'] as $cols) {
+				foreach ($this->data['rows'] as $cols) {
 					$exportFileData .= $this->arrayToCsvString($cols, $separator) . "\r\n";
 				}
+				break;
+
+			default:
 				break;
 		}
 		$this->saveExportFile($exportFileData);
 	}
 
-	function saveExportFile($content) {
+	/**
+	 *
+	 *
+	 * @param str $content
+	 */
+	public function saveExportFile($content) {
 		switch ($this->format) {
 			case 'csv':
 				$this->saveCsv($content);
 				break;
+
+			default:
+				break;
 		}
 	}
 
-	function saveCsv($content) {
+	/**
+	 *
+	 *
+	 * @param str $content
+	 */
+	public function saveCsv($content) {
 		if (!$this->filepath) {
 			$this->filepath = ICMS_UPLOAD_PATH . '/';
 		}
@@ -127,7 +177,7 @@ class icms_ipf_export_Renderer {
 		} else {
 			$mimeType = 'text/csv';
 			$file = strrev($this->filename);
-			$temp_name = strtolower(strrev(substr($file,0,strpos($file,"--"))) );
+			$temp_name = strtolower(strrev(substr($file,0,strpos($file,"--"))));
 			if ($temp_name == '') {
 				$file_name = $this->filename;
 			} else {
@@ -135,7 +185,7 @@ class icms_ipf_export_Renderer {
 			}
 			$fullFileName = $this->filepath . stripslashes(trim($this->filename));
 
-			if(ini_get('zlib.output_compression')) {
+			if (ini_get('zlib.output_compression')) {
 				ini_set('zlib.output_compression', 'Off');
 			}
 
@@ -143,16 +193,15 @@ class icms_ipf_export_Renderer {
 			header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 			header("Cache-Control: private",false);
 			header("Content-Transfer-Encoding: binary");
-			if(isset($mimeType)) {
+			if (isset($mimeType)) {
 				header("Content-Type: " . $mimeType);
 			}
 
 			header("Content-Disposition: attachment; filename=" . $file_name);
 
-			if(isset($mimeType) && strstr($mimeType, "text/")) {
+			if (isset($mimeType) && strstr($mimeType, "text/")) {
 				$fp = fopen($fullFileName, "r");
-			}
-			else {
+			} else {
 				$fp = fopen($fullFileName, "rb");
 			}
 			fpassthru($fp);
@@ -162,4 +211,3 @@ class icms_ipf_export_Renderer {
 	}
 }
 
-?>
