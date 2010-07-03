@@ -44,7 +44,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 **/
 	public function &create($isNew = true) {
 		$module = new icms_module_Object();
-		if ( $isNew ) { $module->setNew(); }
+		if ($isNew) { $module->setNew(); }
 		return $module;
 	}
 
@@ -59,14 +59,14 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 		static $_cachedModule_mid;
 		$id = (int) ($id);
 		$module = false;
-		if ( $id > 0 ) {
-			if ( !empty($_cachedModule_mid[$id]) ) {
+		if ($id > 0) {
+			if (!empty($_cachedModule_mid[$id])) {
 				return $_cachedModule_mid[$id];
 			} else {
 				$sql = "SELECT * FROM " . $this->db->prefix('modules') . " WHERE mid = '" . $id . "'";
-				if ( !$result = $this->db->query($sql) ) {return $module;}
+				if (!$result = $this->db->query($sql)) {return $module;}
 				$numrows = $this->db->getRowsNum($result);
-				if ( $numrows == 1 ) {
+				if ($numrows == 1) {
 					$module = new icms_module_Object();
 					$myrow = $this->db->fetchArray($result);
 					$module->assignVars($myrow);
@@ -88,14 +88,14 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	public function &getByDirname($dirname) {
 		static $_cachedModule_mid;
 		static $_cachedModule_dirname;
-		if ( !empty($_cachedModule_dirname[$dirname]) && $_cachedModule_dirname[$dirname]->dirname() == $dirname ) {
+		if (!empty($_cachedModule_dirname[$dirname]) && $_cachedModule_dirname[$dirname]->dirname() == $dirname) {
 			return $_cachedModule_dirname[$dirname];
 		} else {
 			$module = false;
 			$sql = "SELECT * FROM " . $this->db->prefix('modules') . " WHERE dirname = '" . trim($dirname) . "'";
-			if ( !$result = $this->db->query($sql) ) {return $module;}
+			if (!$result = $this->db->query($sql)) {return $module;}
 			$numrows = $this->db->getRowsNum($result);
-			if ( $numrows == 1) {
+			if ($numrows == 1) {
 				$module = new icms_module_Object();
 				$myrow = $this->db->fetchArray($result);
 				$module->assignVars($myrow);
@@ -113,20 +113,20 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 * @return  bool
 	 **/
 	public function insert(&$module) {
-		if ( get_class($module) != 'icms_module_Object' ) { return false; }
-		if ( !$module->isDirty() ) { return true; }
-		if ( !$module->cleanVars() ) { return false; }
+		if (get_class($module) != 'icms_module_Object') { return false; }
+		if (!$module->isDirty()) { return true; }
+		if (!$module->cleanVars()) { return false; }
 
 		/**
 		 * Editing the insert and update methods
 		 * this is temporaray as will soon be based on a persistableObjectHandler
 		 **/
 		$fieldsToStoreInDB = array();
-		foreach ( $module->cleanVars as $k => $v ) {
-			if ( $k == 'last_update' ) { $v = time(); }
-			if ( $module->vars[$k]['data_type'] == XOBJ_DTYPE_INT ) {
+		foreach ($module->cleanVars as $k => $v) {
+			if ($k == 'last_update') { $v = time(); }
+			if ($module->vars[$k]['data_type'] == XOBJ_DTYPE_INT) {
 				$cleanvars[$k] = (int) ($v);
-			} elseif ( is_array($v) ) {
+			} elseif (is_array($v)) {
 				$cleanvars[$k] = $this->db->quoteString(implode(',', $v));
 			} else {
 				$cleanvars[$k] = $this->db->quoteString($v);
@@ -134,14 +134,14 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 			$fieldsToStoreInDB[$k] = $cleanvars[$k];
 		}
 
-		if ( $module->isNew() ) {
+		if ($module->isNew()) {
 			$sql = "INSERT INTO " . $this->db->prefix('modules')
 				. " (" . implode(',', array_keys($fieldsToStoreInDB))
 				. ") VALUES (" . implode(',', array_values($fieldsToStoreInDB)) . ")";
 		} else {
 			$sql = "UPDATE " . $this->db->prefix('modules') . " SET";
-			foreach ( $fieldsToStoreInDB as $key => $value ) {
-				if ( isset($notfirst) ) { $sql .= ","; }
+			foreach ($fieldsToStoreInDB as $key => $value) {
+				if (isset($notfirst)) { $sql .= ","; }
 				$sql .= " " . $key . " = " . $value;
 				$notfirst = true;
 			}
@@ -149,12 +149,12 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 			$sql .= " WHERE " . $whereclause;
 		}
 
-		if ( !$result = $this->db->query($sql) ) { return false; }
-		if ( $module->isNew() ) { $module->assignVar('mid', $this->db->getInsertId()); }
-		if ( !empty($this->_cachedModule_dirname[$module->getVar('dirname')]) ) {
+		if (!$result = $this->db->query($sql)) { return false; }
+		if ($module->isNew()) { $module->assignVar('mid', $this->db->getInsertId()); }
+		if (!empty($this->_cachedModule_dirname[$module->getVar('dirname')])) {
 			unset($this->_cachedModule_dirname[$module->getVar('dirname')]);
 		}
-		if ( !empty($this->_cachedModule_mid[$module->getVar('mid')]) ) {
+		if (!empty($this->_cachedModule_mid[$module->getVar('mid')])) {
 			unset($this->_cachedModule_mid[$module->getVar('mid')]);
 		}
 		return true;
@@ -167,13 +167,13 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 * @return  bool
 	 **/
 	public function delete(&$module) {
-		if ( get_class($module) != 'icms_module_Object' ) { return false; }
+		if (get_class($module) != 'icms_module_Object') { return false; }
 
 		$sql = sprintf(
 			"DELETE FROM %s WHERE mid = '%u'",
 			$this->db->prefix('modules'), (int) ($module->getVar('mid'))
 		);
-		if ( !$result = $this->db->query($sql) ) { return false; }
+		if (!$result = $this->db->query($sql)) { return false; }
 
 		// delete admin permissions assigned for this module
 		$sql = sprintf(
@@ -192,22 +192,22 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 			"SELECT block_id FROM %s WHERE module_id = '%u'",
 			$this->db->prefix('block_module_link'), (int) ($module->getVar('mid'))
 		);
-		if ( $result = $this->db->query($sql) ) {
+		if ($result = $this->db->query($sql)) {
 			$block_id_arr = array();
-			while ( $myrow = $this->db->fetchArray($result) ) {
+			while ($myrow = $this->db->fetchArray($result)) {
 				array_push($block_id_arr, $myrow['block_id']);
 			}
 		}
 
 		// loop through block_id_arr
-		if ( isset($block_id_arr) ) {
-			foreach ( $block_id_arr as $i ) {
+		if (isset($block_id_arr)) {
+			foreach ($block_id_arr as $i) {
 				$sql = sprintf(
 					"SELECT block_id FROM %s WHERE module_id != '%u' AND block_id = '%u'",
 					$this->db->prefix('block_module_link'), (int) ($module->getVar('mid')), (int) ($i)
 				);
-				if ( $result2 = $this->db->query($sql) ) {
-					if ( 0 < $this->db->getRowsNum($result2) ) {
+				if ($result2 = $this->db->query($sql)) {
+					if (0 < $this->db->getRowsNum($result2)) {
 						// this block has other entries, so delete the entry for this module
 						$sql = sprintf(
 							"DELETE FROM %s WHERE (module_id = '%u') AND (block_id = '%u')",
@@ -231,10 +231,10 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 			}
 		}
 
-		if ( !empty($this->_cachedModule_dirname[$module->getVar('dirname')]) ) {
+		if (!empty($this->_cachedModule_dirname[$module->getVar('dirname')])) {
 			unset($this->_cachedModule_dirname[$module->getVar('dirname')]);
 		}
-		if ( !empty($this->_cachedModule_mid[$module->getVar('mid')]) ) {
+		if (!empty($this->_cachedModule_mid[$module->getVar('mid')])) {
 			unset($this->_cachedModule_mid[$module->getVar('mid')]);
 		}
 		return true;
@@ -251,18 +251,18 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 		$ret = array();
 		$limit = $start = 0;
 		$sql = "SELECT * FROM " . $this->db->prefix('modules');
-		if ( isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element') ) {
-			$sql .= " ".$criteria->renderWhere();
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
+			$sql .= " " . $criteria->renderWhere();
 			$sql .= " ORDER BY weight " . $criteria->getOrder() . ", mid ASC";
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
 		}
 		$result = $this->db->query($sql, $limit, $start);
-		if ( !$result ) { return $ret; }
-		while ( $myrow = $this->db->fetchArray($result) ) {
+		if (!$result) { return $ret; }
+		while ($myrow = $this->db->fetchArray($result)) {
 			$module = new icms_module_Object();
 			$module->assignVars($myrow);
-			if ( !$id_as_key ) {
+			if (!$id_as_key) {
 				$ret[] = & $module;
 			} else {
 				$ret[$myrow['mid']] =& $module;
@@ -280,10 +280,10 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 **/
 	public function getCount($criteria = null) {
 		$sql = "SELECT COUNT(*) FROM " . $this->db->prefix('modules');
-		if ( isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element') ) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
 			$sql .= " " . $criteria->renderWhere();
 		}
-		if ( !$result = $this->db->query($sql) ) { return 0; }
+		if (!$result = $this->db->query($sql)) { return 0; }
 		list($count) = $this->db->fetchRow($result);
 		return $count;
 	}
@@ -300,8 +300,8 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	public function getList($criteria = null, $dirname_as_key = false) {
 		$ret = array();
 		$modules = & $this->getObjects($criteria, true);
-		foreach ( array_keys($modules) as $i ) {
-			if ( !$dirname_as_key ) {
+		foreach (array_keys($modules) as $i) {
+			if (!$dirname_as_key) {
 				$ret[$i] = $modules[$i]->getVar('name');
 			} else {
 				$ret[$modules[$i]->getVar('dirname')] = $modules[$i]->getVar('name');

@@ -5,12 +5,14 @@
  * This class is responsible for cross referencing register information with StopForumSpam.com API
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package	icms_ipf_Object
+ * @license		LICENSE.txt
+ * @category	ICMS
+ * @package		Core
+ * @subpackage	StopSpammer
  * @since	1.2
  * @author		marcan <marcan@impresscms.org>
  * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id
+ * @version		SVN: $Id
  */
 class icms_core_StopSpammer {
 	private $api_url;
@@ -30,13 +32,13 @@ class icms_core_StopSpammer {
 	 * @param string $value value to validate
 	 * @return true if spammer was found with passed info
 	 */
-	function checkForField($field, $value) {
+	public function checkForField($field, $value) {
 		$spam = false;
 
 		$url = $this->api_url . $field . '=' . $value;
 		if (!ini_get('allow_url_fopen')) {
 			$output = '';
-			$ch=curl_init();
+			$ch = curl_init();
 			if (!curl_setopt($ch, CURLOPT_URL, "$url")) {
 				icms_debug($this->api_url . $field . '=' . $value);
 				echo "<script> alert('" . _US_SERVER_PROBLEM_OCCURRED . "'); window.history.go(-1); </script>\n";
@@ -44,7 +46,7 @@ class icms_core_StopSpammer {
 			curl_setopt($ch, CURLOPT_URL, "$url");
 			curl_setopt($ch, CURLOPT_HEADER,0);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			$output .=curl_exec($ch);
+			$output .= curl_exec($ch);
 			curl_close($ch);
 
 			if (preg_match( "/<appears>(.*)</appears>/i", $output, $out)) {
@@ -84,7 +86,7 @@ class icms_core_StopSpammer {
 	 * @param string $email email to check
 	 * @return true if spammer was found with this email
 	 */
-	function badEmail($email) {
+	public function badEmail($email) {
 		return $this->checkForField('email', $email);
 	}
 
@@ -94,9 +96,8 @@ class icms_core_StopSpammer {
 	 * @param string $ip ip to check
 	 * @return true if spammer was found with this IP
 	 */
-	function badIP($ip) {
+	public function badIP($ip) {
 		return $this->checkForField('ip', $ip);
 	}
 }
 
-?>

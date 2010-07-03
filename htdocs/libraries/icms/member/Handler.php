@@ -10,7 +10,7 @@
  * @version		SVN: $Id$
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 /**
  * Member handler class.
@@ -93,7 +93,7 @@ class icms_member_Handler {
 	 * @return object icms_member_user_Object {@link icms_member_user_Object} reference to the user
 	 */
 	public function &getUser($id) {
-		if ( ! isset($this->_members[$id]) ) {
+		if (! isset($this->_members[$id])) {
 			$this->_members[$id] = & $this->_uHandler->get($id);
 		}
 		return $this->_members[$id];
@@ -176,7 +176,7 @@ class icms_member_Handler {
 	public function getGroupList($criteria = null) {
 		$groups = $this->_gHandler->getObjects($criteria, true);
 		$ret = array();
-		foreach ( array_keys($groups) as $i ) {
+		foreach (array_keys($groups) as $i) {
 			$ret[$i] = $groups[$i]->getVar('name');
 		}
 		return $ret;
@@ -191,7 +191,7 @@ class icms_member_Handler {
 	public function getUserList($criteria = null) {
 		$users = $this->_uHandler->getObjects($criteria, true);
 		$ret = array();
-		foreach ( array_keys($users) as $i ) {
+		foreach (array_keys($users) as $i) {
 			$ret[$i] = $users[$i]->getVar('uname');
 		}
 		return $ret;
@@ -222,7 +222,7 @@ class icms_member_Handler {
 		$criteria = new icms_criteria_Compo();
 		$criteria->add(new icms_criteria_Item('groupid', $group_id));
 		$criteria2 = new icms_criteria_Compo();
-		foreach ( $user_ids as $uid ) {
+		foreach ($user_ids as $uid) {
 			$criteria2->add(new icms_criteria_Item('uid', $uid), 'OR');
 		}
 		$criteria->add($criteria2);
@@ -241,13 +241,13 @@ class icms_member_Handler {
 	 */
 	public function getUsersByGroup($group_id, $asobject = false, $limit = 0, $start = 0) {
 		$user_ids = $this->_mHandler->getUsersByGroup($group_id, $limit, $start);
-		if ( ! $asobject ) {
+		if (! $asobject) {
 			return $user_ids;
 		} else {
 			$ret = array();
-			foreach ( $user_ids as $u_id ) {
+			foreach ($user_ids as $u_id) {
 				$user =& $this->getUser($u_id);
-				if ( is_object($user) ) {
+				if (is_object($user)) {
 					$ret[] =& $user;
 				}
 				unset($user);
@@ -265,10 +265,10 @@ class icms_member_Handler {
 	 */
 	public function getGroupsByUser($user_id, $asobject = false) {
 		$group_ids = $this->_mHandler->getGroupsByUser($user_id);
-		if ( ! $asobject ) {
+		if (! $asobject) {
 			return $group_ids;
 		} else {
-			foreach ( $group_ids as $g_id ) {
+			foreach ($group_ids as $g_id) {
 				$ret[] =& $this->getGroup($g_id);
 			}
 			return $ret;
@@ -280,13 +280,13 @@ class icms_member_Handler {
 		include_once ICMS_ROOT_PATH . '/class/database/databaseupdater.php';
 		$table = new IcmsDatabasetable('users');
 
-		if ( $email !== '' ) {
-			if ( $table->fieldExists('loginname') ) {
+		if ($email !== '') {
+			if ($table->fieldExists('loginname')) {
 				$sql = $db->query("SELECT loginname, email FROM " . $db->prefix('users')
 					. " WHERE email = '" . @htmlspecialchars($email, ENT_QUOTES, _CHARSET) . "'");
-			} elseif ( $table->fieldExists('login_name') ) {
-				$sql = $db->query("SELECT login_name, email FROM ".$db->prefix('users')
-					." WHERE email = '" . @htmlspecialchars($email, ENT_QUOTES, _CHARSET) . "'");
+			} elseif ($table->fieldExists('login_name')) {
+				$sql = $db->query("SELECT login_name, email FROM " . $db->prefix('users')
+					 . " WHERE email = '" . @htmlspecialchars($email, ENT_QUOTES, _CHARSET) . "'");
 			}
 			list($uname, $email) = $db->fetchRow($sql);
 		} else {
@@ -305,28 +305,28 @@ class icms_member_Handler {
 		include_once ICMS_ROOT_PATH . '/class/icms_Password.php';
 		$icmspass = new icms_Password();
 
-		if ( strstr($uname, '@') ) {
+		if (strstr($uname, '@')) {
 			$uname = $this->icms_getLoginFromUserEmail($uname);
 		}
 
 		$is_expired = $icmspass->icms_passExpired($uname);
-		if ( $is_expired == 1 ) {
+		if ($is_expired == 1) {
 			redirect_header(ICMS_URL . '/user.php?op=resetpass&uname=' . $uname, 5, _US_PASSEXPIRED, false);
 		}
 		$salt = $icmspass->icms_getUserSaltFromUname($uname);
 		$pwd = $icmspass->icms_encryptPass($pwd, $salt);
 		include_once ICMS_ROOT_PATH . '/class/database/databaseupdater.php';
 		$table = new IcmsDatabasetable('users');
-		if ( $table->fieldExists('loginname') ) {
+		if ($table->fieldExists('loginname')) {
 			$criteria = new icms_criteria_Compo(new icms_criteria_Item('loginname', $uname));
-		} elseif ( $table->fieldExists('login_name') ) {
+		} elseif ($table->fieldExists('login_name')) {
 			$criteria = new icms_criteria_Compo(new icms_criteria_Item('login_name', $uname));
 		} else {
 			$criteria = new icms_criteria_Compo(new icms_criteria_Item('uname', $uname));
 		}
 		$criteria->add(new icms_criteria_Item('pass', $pwd));
 		$user = $this->_uHandler->getObjects($criteria, false);
-		if ( !$user || count($user) != 1 ) {
+		if (!$user || count($user) != 1) {
 			$user = false;
 			return $user;
 		}
@@ -344,15 +344,15 @@ class icms_member_Handler {
 	 include_once ICMS_ROOT_PATH . '/class/database/databaseupdater.php';
 	 $table = new IcmsDatabasetable('users');
 	 if ($table->fieldExists('loginname')) {
-	 $criteria = new icms_criteria_Compo ( new icms_criteria_Item ( 'loginname', $uname ) );
+	 $criteria = new icms_criteria_Compo(new icms_criteria_Item('loginname', $uname));
 	 }elseif ($table->fieldExists('login_name')) {
-	 $criteria = new icms_criteria_Compo ( new icms_criteria_Item ( 'login_name', $uname ) );
+	 $criteria = new icms_criteria_Compo(new icms_criteria_Item('login_name', $uname));
 	 }else{
-	 $criteria = new icms_criteria_Compo ( new icms_criteria_Item ( 'uname', $uname ) );
+	 $criteria = new icms_criteria_Compo(new icms_criteria_Item('uname', $uname));
 	 }
-	 $criteria->add ( new icms_criteria_Item ( 'pass', $md5pwd ) );
-	 $user = $this->_uHandler->getObjects ( $criteria, false );
-	 if (! $user || count ( $user ) != 1) {
+	 $criteria->add(new icms_criteria_Item('pass', $md5pwd));
+	 $user = $this->_uHandler->getObjects($criteria, false);
+	 if (! $user || count($user) != 1) {
 	 $user = false;
 	 return $user;
 	 }
@@ -411,7 +411,7 @@ class icms_member_Handler {
 	 * @return bool successful?
 	 */
 	public function activateUser(&$user) {
-		if ( $user->getVar('level') != 0 ) {
+		if ($user->getVar('level') != 0) {
 			return true;
 		}
 		$user->setVar('level', 1);
@@ -437,30 +437,30 @@ class icms_member_Handler {
 				. "	FROM " . $this->_uHandler->db->prefix("users") . " AS u"
 				. " LEFT JOIN " . $this->_mHandler->db->prefix("groups_users_link") . " AS m ON m.uid = u.uid"
 				. "	WHERE 1 = '1'";
-		if (! empty($groups) ) {
+		if (! empty($groups)) {
 			$sql[] = "m.groupid IN (" . implode(", ", $groups) . ")";
 		}
 		$limit = $start = 0;
-		if ( isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element') ) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
 			$sql_criteria = $criteria->render();
-			if ( $criteria->getSort() != '' ) {
+			if ($criteria->getSort() != '') {
 				$sql_criteria .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
 			}
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
-			if ( $sql_criteria ) {
+			if ($sql_criteria) {
 				$sql[] = $sql_criteria;
 			}
 		}
 		$sql_string = implode(" AND ", array_filter($sql));
-		if ( ! $result = $this->_uHandler->db->query($sql_string, $limit, $start) ) {
+		if (! $result = $this->_uHandler->db->query($sql_string, $limit, $start)) {
 			return $ret;
 		}
-		while ( $myrow = $this->_uHandler->db->fetchArray($result) ) {
-			if ( $asobject ) {
+		while ($myrow = $this->_uHandler->db->fetchArray($result)) {
+			if ($asobject) {
 				$user = new icms_member_user_Object();
 				$user->assignVars($myrow);
-				if ( ! $id_as_key ) {
+				if (! $id_as_key) {
 					$ret[] =& $user;
 				} else {
 					$ret[$myrow['uid']] =& $user;
@@ -487,14 +487,14 @@ class icms_member_Handler {
 				. "	FROM " . $this->_uHandler->db->prefix("users") . " AS u"
 				. " LEFT JOIN " . $this->_mHandler->db->prefix("groups_users_link") . " AS m ON m.uid = u.uid"
 				. "	WHERE 1 = '1'";
-		if ( ! empty($groups) ) {
+		if (! empty($groups)) {
 			$sql[] = "m.groupid IN (" . implode(", ", $groups) . ")";
 		}
-		if ( isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element') ) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
 			$sql[] = $criteria->render();
 		}
 		$sql_string = implode(" AND ", array_filter($sql));
-		if ( ! $result = $this->_uHandler->db->query($sql_string) ) {
+		if (! $result = $this->_uHandler->db->query($sql_string)) {
 			return $ret;
 		}
 		list($ret) = $this->_uHandler->db->fetchRow($result);
@@ -512,26 +512,26 @@ class icms_member_Handler {
 		$ret = ICMS_GROUP_ANONYMOUS;
 		$uid = (int) $uid;
 		$gperms = array();
-		if ( $uid <= 0 ) {
+		if ($uid <= 0) {
 			return $ret;
 		}
 
 		$groups = $this->getGroupsByUser($uid);
-		if ( in_array(ICMS_GROUP_ADMIN, $groups) ) {
+		if (in_array(ICMS_GROUP_ADMIN, $groups)) {
 			$ret = ICMS_GROUP_ADMIN;
 		} else {
-			foreach ( $groups as $group ) {
+			foreach ($groups as $group) {
 				$sql = 'SELECT COUNT(gperm_id) as total FROM '
 					. $this->_uHandler->db->prefix("group_permission")
 					. ' WHERE gperm_groupid=' . $group;
-				if ( ! $result = $this->_uHandler->db->query($sql) ) {
+				if (! $result = $this->_uHandler->db->query($sql)) {
 					return $ret;
 				}
 				list($t) = $this->_uHandler->db->fetchRow($result);
 				$gperms[$group] = $t;
 			}
-			foreach ( $gperms as $key => $val ) {
-				if ( $val == max($gperms) ) {
+			foreach ($gperms as $key => $val) {
+				if ($val == max($gperms)) {
 					$ret = $key;
 					break;
 				}

@@ -247,7 +247,7 @@ class icms_view_template_file_Handler extends icms_core_ObjectHandler {
 		$ret = array();
 		$limit = $start = 0;
 		if ( $getsource ) {
-			$sql = "SELECT f.*, s.tpl_source FROM ".$this->db->prefix('tplfile')
+			$sql = "SELECT f.*, s.tpl_source FROM " . $this->db->prefix('tplfile')
 				. " f LEFT JOIN " . $this->db->prefix('tplsource') . " s ON s.tpl_id=f.tpl_id";
 		} else {
 			$sql = "SELECT * FROM " . $this->db->prefix('tplfile');

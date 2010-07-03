@@ -9,7 +9,7 @@
  * @version		SVN: $Id$
  */
 
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 /**
  * A Notification
@@ -58,7 +58,7 @@ class icms_notification_Object extends icms_core_Object {
 
 		$member_handler = new icms_member_Handler($GLOBALS['xoopsDB']);
 		$user =& $member_handler->getUser($this->getVar('not_uid'));
-		if ( !is_object($user) ) {
+		if (!is_object($user)) {
 			return true;
 		}
 		$method = $user->getVar('notify_method');
@@ -69,14 +69,14 @@ class icms_notification_Object extends icms_core_Object {
 			case XOOPS_NOTIFICATION_METHOD_PM:
 				$xoopsMailer->usePM();
 				$xoopsMailer->setFromUser($member_handler->getUser($icmsConfigMailer['fromuid']));
-				foreach ( $tags as $k=>$v ) {
+				foreach ($tags as $k=>$v) {
 					$xoopsMailer->assign($k, $v);
 				}
 				break;
 
 			case XOOPS_NOTIFICATION_METHOD_EMAIL:
 				$xoopsMailer->useMail();
-				foreach ( $tags as $k=>$v ) {
+				foreach ($tags as $k=>$v) {
 					$xoopsMailer->assign($k, preg_replace("/&amp;/i", '&', $v));
 				}
 				break;
@@ -102,12 +102,12 @@ class icms_notification_Object extends icms_core_Object {
 		include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
 		$notification_handler = new icms_notification_Handler($GLOBALS['xoopsDB']);
 
-		if ( $this->getVar('not_mode') == XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE ) {
+		if ($this->getVar('not_mode') == XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE) {
 			$notification_handler->delete($this);
 			return $success;
 		}
 
-		if ( $this->getVar('not_mode') == XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT ) {
+		if ($this->getVar('not_mode') == XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT) {
 			$this->setVar('not_mode', XOOPS_NOTIFICATION_MODE_WAITFORLOGIN);
 			$notification_handler->insert($this);
 		}

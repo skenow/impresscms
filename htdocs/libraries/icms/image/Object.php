@@ -9,7 +9,7 @@
  * @version		SVN: $Id$
  */
 
-defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 /**
  * An Image Object
@@ -51,9 +51,9 @@ class icms_image_Object extends icms_core_Object {
 	 *
 	 * @return array  the array of image information
 	 */
-	public function getInfo($path, $type='url', $ret=false) {
-		$path = ( substr($path,-1) != '/' ) ? $path . '/' : $path;
-		if ( $type == 'url' ) {
+	public function getInfo($path, $type = 'url', $ret = false) {
+		$path = (substr($path,-1) != '/') ? $path . '/' : $path;
+		if ($type == 'url') {
 			$img = $path . $this->getVar('image_name');
 		} else {
 			$img = $path;

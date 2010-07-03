@@ -6,7 +6,7 @@
  * @license		LICENSE.txt
  * @category	ICMS
  * @package		Object
- * @version		SVN: $Id: object.php 19419 2010-06-13 22:52:12Z skenow $
+ * @version		SVN: $Id$
  */
 
 /**
@@ -18,7 +18,7 @@
  * @category	ICMS
  * @package		Object
  * @abstract
- *@author  Kazumi Ono <onokazu@xoops.org>
+ * @author  Kazumi Ono <onokazu@xoops.org>
  */
 abstract class icms_core_ObjectHandler {
 

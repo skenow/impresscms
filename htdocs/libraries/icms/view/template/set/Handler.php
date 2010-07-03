@@ -34,7 +34,7 @@ class icms_view_template_set_Handler extends icms_core_ObjectHandler {
 	 **/
 	public function &create($isNew = true) {
 		$tplset = new icms_view_template_set_Object();
-		if ( $isNew ) {
+		if ($isNew) {
 			$tplset->setNew();
 		}
 		return $tplset;
@@ -50,14 +50,14 @@ class icms_view_template_set_Handler extends icms_core_ObjectHandler {
 	public function &get($id) {
 		$tplset = false;
 		$id = (int) $id;
-		if ( $id > 0 ) {
-			$sql = "SELECT * FROM ".$this->db->prefix('tplset')
+		if ($id > 0) {
+			$sql = "SELECT * FROM " . $this->db->prefix('tplset')
 				. " WHERE tplset_id='" . $id . "'";
-			if ( !$result = $this->db->query($sql) ) {
+			if (!$result = $this->db->query($sql)) {
 				return $tplset;
 			}
 			$numrows = $this->db->getRowsNum($result);
-			if ( $numrows == 1 ) {
+			if ($numrows == 1) {
 				$tplset = new icms_view_template_set_Object();
 				$tplset->assignVars($this->db->fetchArray($result));
 			}
@@ -75,14 +75,14 @@ class icms_view_template_set_Handler extends icms_core_ObjectHandler {
 	public function &getByName($tplset_name) {
 		$tplset = false;
 		$tplset_name = trim($tplset_name);
-		if ( $tplset_name != '' ) {
+		if ($tplset_name != '') {
 			$sql = "SELECT * FROM " . $this->db->prefix('tplset')
 				. " WHERE tplset_name=" . $this->db->quoteString($tplset_name) . "";
-			if ( !$result = $this->db->query($sql) ) {
+			if (!$result = $this->db->query($sql)) {
 				return $tplset;
 			}
 			$numrows = $this->db->getRowsNum($result);
-			if ( $numrows == 1 ) {
+			if ($numrows == 1) {
 				$tplset = new icms_view_template_set_Object();
 				$tplset->assignVars($this->db->fetchArray($result));
 			}
@@ -99,19 +99,19 @@ class icms_view_template_set_Handler extends icms_core_ObjectHandler {
 	 **/
 	public function insert(&$tplset) {
 		/* As of PHP5.3.0, is_as() is no longer deprecated */
-		if ( !is_a($tplset, 'icms_view_template_set_Object') ) {
+		if (!is_a($tplset, 'icms_view_template_set_Object')) {
 			return false;
 		}
-		if ( !$tplset->isDirty() ) {
+		if (!$tplset->isDirty()) {
 			return true;
 		}
-		if ( !$tplset->cleanVars() ) {
+		if (!$tplset->cleanVars()) {
 			return false;
 		}
-		foreach ( $tplset->cleanVars as $k => $v ) {
+		foreach ($tplset->cleanVars as $k => $v) {
 			${$k} = $v;
 		}
-		if ( $tplset->isNew() ) {
+		if ($tplset->isNew()) {
 			$tplset_id = $this->db->genId('tplset_tplset_id_seq');
 			$sql = sprintf(
 				"INSERT INTO %s (tplset_id, tplset_name, tplset_desc, tplset_credits, tplset_created)
@@ -139,10 +139,10 @@ class icms_view_template_set_Handler extends icms_core_ObjectHandler {
 				(int) $tplset_id
 			);
 		}
-		if ( !$result = $this->db->query($sql) ) {
+		if (!$result = $this->db->query($sql)) {
 			return false;
 		}
-		if ( empty($tplset_id) ) {
+		if (empty($tplset_id)) {
 			$tplset_id = $this->db->getInsertId();
 		}
 		$tplset->assignVar('tplset_id', $tplset_id);
@@ -158,7 +158,7 @@ class icms_view_template_set_Handler extends icms_core_ObjectHandler {
 	 **/
 	public function delete(&$tplset) {
 		/* As of PHP5.3.0, ia_a() is no longer deprecated */
-		if ( !is_a($tplset, 'icms_view_template_set_Object') ) {
+		if (!is_a($tplset, 'icms_view_template_set_Object')) {
 			return false;
 		}
 
@@ -167,7 +167,7 @@ class icms_view_template_set_Handler extends icms_core_ObjectHandler {
 			$this->db->prefix('tplset'),
 			(int) $tplset->getVar('tplset_id')
 		);
-		if ( !$result = $this->db->query($sql) ) {
+		if (!$result = $this->db->query($sql)) {
 			return false;
 		}
 		$sql = sprintf(
@@ -188,20 +188,20 @@ class icms_view_template_set_Handler extends icms_core_ObjectHandler {
 	public function getObjects($criteria = null, $id_as_key = false) {
 		$ret = array();
 		$limit = $start = 0;
-		$sql = 'SELECT * FROM '.$this->db->prefix('tplset');
-		if ( isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element') ) {
+		$sql = 'SELECT * FROM ' . $this->db->prefix('tplset');
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
 			$sql .= ' ' . $criteria->renderWhere() . ' ORDER BY tplset_id';
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
 		}
 		$result = $this->db->query($sql, $limit, $start);
-		if ( !$result ) {
+		if (!$result) {
 			return $ret;
 		}
-		while ( $myrow = $this->db->fetchArray($result) ) {
+		while ($myrow = $this->db->fetchArray($result)) {
 			$tplset = new icms_view_template_set_Object();
 			$tplset->assignVars($myrow);
-			if ( !$id_as_key ) {
+			if (!$id_as_key) {
 				$ret[] =& $tplset;
 			} else {
 				$ret[$myrow['tplset_id']] =& $tplset;
@@ -219,10 +219,10 @@ class icms_view_template_set_Handler extends icms_core_ObjectHandler {
 	 **/
 	public function getCount($criteria = null) {
 		$sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('tplset');
-		if ( isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element') ) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
 			$sql .= ' ' . $criteria->renderWhere();
 		}
-		if ( !$result =& $this->db->query($sql) ) {
+		if (!$result =& $this->db->query($sql)) {
 			return 0;
 		}
 		list($count) = $this->db->fetchRow($result);
@@ -239,7 +239,7 @@ class icms_view_template_set_Handler extends icms_core_ObjectHandler {
 	public function getList($criteria = null) {
 		$ret = array();
 		$tplsets = $this->getObjects($criteria, true);
-		foreach ( array_keys($tplsets) as $i ) {
+		foreach (array_keys($tplsets) as $i) {
 			$ret[$tplsets[$i]->getVar('tplset_name')] = $tplsets[$i]->getVar('tplset_name');
 		}
 		return $ret;

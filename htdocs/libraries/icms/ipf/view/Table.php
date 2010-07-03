@@ -11,7 +11,7 @@
  * @subpackage	View
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		SVN: $Id: icmspersistabletable.php 19623 2010-06-25 14:59:15Z malanciault $
+ * @version		SVN: $Id$
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -28,6 +28,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  * @subpackage	View
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
+ * @todo		Properly declare all vars with their visibility (private, protected, public) and follow naming convention
  */
 class icms_ipf_view_Table {
 

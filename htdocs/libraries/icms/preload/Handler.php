@@ -12,9 +12,7 @@
  * @version		SVN: $Id$
  */
 
-if (!defined('ICMS_ROOT_PATH')) {
-	die("ImpressCMS root path not defined");
-}
+defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
 
@@ -35,12 +33,12 @@ class icms_preload_Handler {
 	/**
 	 * @var array $_preloadFilesArray array containing a list of all preload files in ICMS_PRELOAD_PATH
 	 */
-	private $_preloadFilesArray=array();
+	private $_preloadFilesArray = array();
 
 	/**
 	 * @var array $_preloadEventsArray array containing a list of all events for all preload file, indexed by event name and sorted by order ox execution
 	 */
-	private $_preloadEventsArray=array();
+	private $_preloadEventsArray = array();
 
 	/**
 	 * Constructor
@@ -49,9 +47,9 @@ class icms_preload_Handler {
 	 */
 	public function __construct() {
 		$preloadFilesArray = IcmsLists::getFileListAsArray(ICMS_PRELOAD_PATH);
-		foreach ( $preloadFilesArray as $filename ) {
+		foreach ($preloadFilesArray as $filename) {
 			// exclude index.html
-			if ( $filename != 'index.html' && !class_exists( $this->getClassName($filename)) ) {
+			if ($filename != 'index.html' && !class_exists($this->getClassName($filename))) {
 				$this->_preloadFilesArray[] = $filename;
 				$this->addPreloadEvents($filename);
 			}
@@ -59,8 +57,8 @@ class icms_preload_Handler {
 
 		// add ondemand preload
 		global $icmsOnDemandPreload;
-		if ( isset($icmsOnDemandPreload) && count($icmsOnDemandPreload) > 0 ) {
-			foreach ( $icmsOnDemandPreload as $onDemandPreload ) {
+		if (isset($icmsOnDemandPreload) && count($icmsOnDemandPreload) > 0) {
+			foreach ($icmsOnDemandPreload as $onDemandPreload) {
 				$this->_preloadFilesArray[] = $onDemandPreload['filename'];
 				$this->addPreloadEvents($onDemandPreload['filename'], $onDemandPreload['module']);
 			}
@@ -72,8 +70,8 @@ class icms_preload_Handler {
 	 *
 	 * @param string $filename
 	 */
-	public function addPreloadEvents($filename, $module=false) {
-		if ( $module ) {
+	public function addPreloadEvents($filename, $module = false) {
+		if ($module) {
 			$filepath = ICMS_ROOT_PATH . "/modules/$module/preload/$filename";
 		} else {
 			$filepath = ICMS_PRELOAD_PATH . "/$filename";
@@ -81,12 +79,12 @@ class icms_preload_Handler {
 		include_once $filepath;
 
 		$classname = $this->getClassName($filename);
-		if ( class_exists( $classname ) ) {
+		if (class_exists($classname)) {
 			$preloadItem = new $classname();
 
 			$class_methods = get_class_methods($classname);
-			foreach ( $class_methods as $method ) {
-				if ( strpos($method, 'event') === 0 ) {
+			foreach ($class_methods as $method) {
+				if (strpos($method, 'event') === 0) {
 					$preload_event = strtolower(str_replace('event', '', $method));
 
 					$preload_event_array = array(
@@ -96,7 +94,7 @@ class icms_preload_Handler {
 
 					$preload_event_weight_define_name = strtoupper($classname) . '_' . strtoupper($preload_event);
 
-					if ( defined($preload_event_weight_define_name) ) {
+					if (defined($preload_event_weight_define_name)) {
 						$preload_event_weight = constant($preload_event_weight_define_name);
 						$this->_preloadEventsArray[$preload_event][$preload_event_weight] = $preload_event_array;
 					} else {
@@ -117,7 +115,7 @@ class icms_preload_Handler {
 	 */
 	public static function &getInstance() {
 		static $instance;
-		if ( !isset($instance) ) {
+		if (!isset($instance)) {
 			$instance = new icms_preload_Handler();
 		}
 		return $instance;
@@ -138,10 +136,10 @@ class icms_preload_Handler {
 	 *
 	 * @return	TRUE if successful, FALSE if not
 	 */
-	public function triggerEvent($event, $array=false) {
+	public function triggerEvent($event, $array = false) {
 		$event = strtolower($event);
-		if ( isset($this->_preloadEventsArray[$event]) ) {
-			foreach ( $this->_preloadEventsArray[$event] as $eventArray ) {
+		if (isset($this->_preloadEventsArray[$event])) {
+			foreach ($this->_preloadEventsArray[$event] as $eventArray) {
 				$method = $eventArray['method'];
 				$eventArray['object']->$method($array);
 			}

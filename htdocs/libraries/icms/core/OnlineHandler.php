@@ -47,7 +47,7 @@ class icms_core_OnlineHandler {
 	 */
 	public function write($uid, $uname, $time, $module, $ip) {
 		$uid = (int) $uid;
-		if ( $uid > 0 ) {
+		if ($uid > 0) {
 			$sql = "SELECT COUNT(*) FROM " . $this->db->prefix('online')
 				. " WHERE online_uid='" . $uid . "'";
 		} else {
@@ -55,7 +55,7 @@ class icms_core_OnlineHandler {
 				. " WHERE online_uid='" . $uid . "' AND online_ip='" . $ip . "'";
 		}
 		list($count) = $this->db->fetchRow($this->db->queryF($sql));
-		if ( $count > 0 ) {
+		if ($count > 0) {
 			$sql = "UPDATE " . $this->db->prefix('online')
 				. " SET online_updated='" . $time . "', online_module = '" . $module
 				. "' WHERE online_uid = '" . $uid . "'";
@@ -74,7 +74,7 @@ class icms_core_OnlineHandler {
 				(int) $module
 			);
 		}
-		if ( !$this->db->queryF($sql) ) {
+		if (!$this->db->queryF($sql)) {
 			return false;
 		}
 		return true;
@@ -89,7 +89,7 @@ class icms_core_OnlineHandler {
 	 */
 	public function destroy($uid) {
 		$sql = sprintf("DELETE FROM %s WHERE online_uid = '%u'", $this->db->prefix('online'), (int) ($uid));
-		if ( !$result = $this->db->queryF($sql) ) {
+		if (!$result = $this->db->queryF($sql)) {
 			return false;
 		}
 		return true;
@@ -117,16 +117,16 @@ class icms_core_OnlineHandler {
 		$ret = array();
 		$limit = $start = 0;
 		$sql = 'SELECT * FROM ' . $this->db->prefix('online');
-		if ( is_object($criteria) && is_subclass_of($criteria, 'icms_criteria_Element') ) {
+		if (is_object($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
 			$sql .= ' ' . $criteria->renderWhere();
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
 		}
 		$result = $this->db->query($sql, $limit, $start);
-		if ( !$result ) {
+		if (!$result) {
 			return false;
 		}
-		while ( $myrow = $this->db->fetchArray($result) ) {
+		while ($myrow = $this->db->fetchArray($result)) {
 			$ret[] = $myrow;
 			unset($myrow);
 		}
@@ -140,10 +140,10 @@ class icms_core_OnlineHandler {
 	 */
 	public function getCount($criteria = null) {
 		$sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('online');
-		if ( is_object($criteria) && is_subclass_of($criteria, 'icms_criteria_Element') ) {
+		if (is_object($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
 			$sql .= ' ' . $criteria->renderWhere();
 		}
-		if ( !$result = $this->db->query($sql) ) {
+		if (!$result = $this->db->query($sql)) {
 			return false;
 		}
 		list($ret) = $this->db->fetchRow($result);

@@ -1,5 +1,9 @@
 <?php
-class IcmsStopSpammer extends imcs_core_StopSpammer{
+/**
+ * @deprecated	Use imcs_core_StopSpammer, instead
+ * @todo		Remove in version 1.4
+ */
+class IcmsStopSpammer extends icms_core_StopSpammer{
 	private $_deprecated;
 	public function __construct() {
 		parent::getInstance();
