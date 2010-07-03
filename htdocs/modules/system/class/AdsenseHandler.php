@@ -4,23 +4,32 @@
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @category	ICMS
  * @package		Administration
+ * @subpackage	Adsense
  * @since		1.2
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id$
+ * @version		SVN: $Id$
  */
 
-if (! defined ( "ICMS_ROOT_PATH" ))
-die ( "ImpressCMS root path not defined" );
-
+defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
+/**
+ * Handler for the Adsense object
+ *
+ *
+ * @category	ICMS
+ * @package		Administration
+ * @subpackage	Adsense
+ *
+ */
 class mod_system_AdsenseHandler extends icms_ipf_Handler {
 
 	public $adFormats;
 	public $adFormatsList;
-	public $objects=false;
+	public $objects = false;
 
-	function __construct($db) {
-		parent::__construct( $db, 'adsense', 'adsenseid', 'tag', 'description', 'system' );
+	public function __construct($db) {
+		parent::__construct($db, 'adsense', 'adsenseid', 'tag', 'description', 'system');
 		$this->adFormats = array();
 		$this->adFormatsList = array();
 
@@ -83,14 +92,22 @@ class mod_system_AdsenseHandler extends icms_ipf_Handler {
 		$this->adFormats['125x125_as']['width'] = 125;
 		$this->adFormats['125x125_as']['height'] = 125;
 		$this->adFormatsList['125x125_as'] = $this->adFormats['125x125_as']['caption'];
-		//$this->addPermission ( 'view', _CO_ICMS_CUSTOMTAG_PERMISSION_VIEW, _CO_ICMS_CUSTOMTAG_PERMISSION_VIEW_DSC );
+		//$this->addPermission('view', _CO_ICMS_CUSTOMTAG_PERMISSION_VIEW, _CO_ICMS_CUSTOMTAG_PERMISSION_VIEW_DSC);
 	}
 
-	function getFormats() {
+	/**
+	 * Get a list of ad sizes
+	 */
+	public function getFormats() {
 		return $this->adFormatsList;
 	}
 
-	function beforeSave(&$obj) {
+	/**
+	 * Action to take before saving the object
+	 *
+	 * @param $obj
+	 */
+	public function beforeSave(&$obj) {
 		if ($obj->getVar('tag') == '') {
 			$obj->setVar('tag', $title  = $obj->generateTag());
 		}
@@ -98,11 +115,14 @@ class mod_system_AdsenseHandler extends icms_ipf_Handler {
 		return true;
 	}
 
-	function getAdsensesByTag() {
+	/**
+	 * Retrieve a list of ads by a tag value
+	 */
+	public function getAdsensesByTag() {
 		if (!$this->objects) {
 			$adsensesObj = $this->getObjects(null, true);
 			$ret = array();
-			foreach($adsensesObj as $adsenseObj) {
+			foreach ($adsensesObj as $adsenseObj) {
 				$ret[$adsenseObj->getVar('tag')] = $adsenseObj;
 			}
 			$this->objects = $ret;
@@ -111,4 +131,3 @@ class mod_system_AdsenseHandler extends icms_ipf_Handler {
 	}
 }
 
-?>

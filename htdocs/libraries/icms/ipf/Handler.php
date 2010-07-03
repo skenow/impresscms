@@ -8,21 +8,25 @@
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @category	ICMS
- * @package		ipf_Object
+ * @package		Ipf
+ * @subpackage	Object
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
  * @author		This was inspired by Mithrandir PersistableObjectHanlder: Jan Keller Pedersen <mithrandir@xoops.org> - IDG Danmark A/S <www.idg.dk>
  * @author		Gustavo Alejandro Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
- * @version		$Id: icmspersistableobjecthandler.php 19586 2010-06-24 11:48:14Z malanciault $
+ * @version		SVN: $Id$
+ * @todo		Use language constants for messages
+ * @todo		Properly determine visibility for methods and vars (private, protected, public) and apply naming conventions
  */
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 /**
  * Persistable Object Handlder
  * @category	ICMS
- * @package		ipf_Object
- * @since   1.1
- * @todo	Properly name the vars using the naming conventions
+ * @package		Ipf
+ * @subpackage	Object
+ * @since		1.1
+ * @todo		Properly name the vars using the naming conventions
  */
 class icms_ipf_Handler extends icms_core_ObjectHandler {
 
@@ -97,9 +101,9 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 * @todo this could probably be automatically deducted from the class name as it is always prefixed with the module name
 	 * @var string
 	 */
-	var $_modulePath;
+	public $_modulePath;
 
-	var $_moduleUrl;
+	public $_moduleUrl;
 
 	/**
 	 *
@@ -107,21 +111,21 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 * @var string
 	 * @todo	Rename using the proper naming convention (This is a public var)
 	 */
-	var $_moduleName;
+	public $_moduleName;
 
-	public $uploadEnabled=false;
+	public $uploadEnabled = false;
 
-	var $_uploadUrl;
+	public $_uploadUrl;
 
-	var $_uploadPath;
+	public $_uploadPath;
 
-	var $_allowedMimeTypes = 0;
+	public $_allowedMimeTypes = 0;
 
-	var $_maxFileSize = 1000000;
+	public $_maxFileSize = 1000000;
 
-	var $_maxWidth = 500;
+	public $_maxWidth = 500;
 
-	var $_maxHeight = 500;
+	public $_maxHeight = 500;
 
 	public $highlightFields = array();
 
@@ -141,8 +145,8 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 
 	public $generalSQL = false;
 
-	var $_eventHooks = array();
-	var $_disabledEvents = array();
+	public $_eventHooks = array();
+	public $_disabledEvents = array();
 
 	/**
 	 * Constructor - called from child classes
@@ -192,6 +196,11 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 		$this->_uploadUrl = ICMS_UPLOAD_URL . "/" . $this->_moduleName . "/";
 	}
 
+	/**
+	 *
+	 * @param str $event
+	 * @param str $method
+	 */
 	public function addEventHook($event, $method) {
 		$this->_eventHooks[$event] = $method;
 	}
@@ -213,6 +222,11 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 		);
 	}
 
+	/**
+	 *
+	 * @param obj $criteria
+	 * @param str $perm_name
+	 */
 	public function setGrantedObjectsCriteria(&$criteria, $perm_name) {
 		$icmspermissions_handler = new icms_ipf_permission_Handler($this);
 		$grantedItems = $icmspermissions_handler->getGrantedItems($perm_name);
@@ -247,10 +261,16 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 		return $obj;
 	}
 
+	/**
+	 *
+	 */
 	public function getImageUrl() {
 		return $this->_uploadUrl . $this->_itemname . "/";
 	}
 
+	/**
+	 *
+	 */
 	public function getImagePath() {
 		$dir = $this->_uploadPath . $this->_itemname;
 		if (!file_exists($dir)) {
@@ -279,8 +299,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 				//$criteria->add(new icms_criteria_Item($this->keyName[$i], ($id[$i]), '=', $this->_itemname));
 				$criteria->add(new icms_criteria_Item($this->keyName[$i], $id[$i], '=', $this->_itemname));
 			}
-		}
-		else {
+		} else {
 			//$criteria = new icms_criteria_Item($this->keyName, intval($id), '=', $this->_itemname);
 			/**
 			 * In some situations, the $id is not an INTEGER. icms_ipf_ObjectTag is an example.
@@ -329,21 +348,20 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 *
 	 * @return array
 	 */
-	public function getObjects($criteria = null, $id_as_key = false, $as_object = true, $sql=false, $debug=false)
-	{
+	public function getObjects($criteria = null, $id_as_key = false, $as_object = true, $sql = false, $debug = false) {
 		$ret = array();
 		$limit = $start = 0;
 
 		if ($this->generalSQL) {
 			$sql = $this->generalSQL;
 		} elseif(!$sql) {
-			$sql = 'SELECT * FROM '.$this->table . " AS " . $this->_itemname;
+			$sql = 'SELECT * FROM ' . $this->table . " AS " . $this->_itemname;
 		}
 
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
-			$sql .= ' '.$criteria->renderWhere();
+			$sql .= ' ' . $criteria->renderWhere();
 			if ($criteria->getSort() != '') {
-				$sql .= ' ORDER BY '.$criteria->getSort().' '.$criteria->getOrder();
+				$sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
 			}
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
@@ -369,17 +387,16 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 *
 	 * @return array
 	 */
-	public function query($sql, $criteria, $force=false, $debug=false)
-	{
+	public function query($sql, $criteria, $force = false, $debug = false) {
 		$ret = array();
 
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
-			$sql .= ' '.$criteria->renderWhere();
+			$sql .= ' ' . $criteria->renderWhere();
 			if ($criteria->groupby) {
 				$sql .= $criteria->getGroupby();
 			}
 			if ($criteria->getSort() != '') {
-				$sql .= ' ORDER BY '.$criteria->getSort().' '.$criteria->getOrder();
+				$sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
 			}
 
 		}
@@ -413,11 +430,14 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 *
 	 * @return array
 	 */
-	public function getObjectsD($criteria = null, $id_as_key = false, $as_object = true, $sql = false)
-	{
+	public function getObjectsD($criteria = null, $id_as_key = false, $as_object = true, $sql = false) {
 		return $this->getObjects($criteria, $id_as_key, $as_object, $sql, true);
 	}
 
+	/**
+	 *
+	 * @param arr $arrayObjects
+	 */
 	public function getObjectsAsArray($arrayObjects) {
 		$ret = array();
 		foreach ($arrayObjects as $key => $object) {
@@ -490,7 +510,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 *
 	 * @return array
 	 */
-	public function getList($criteria = null, $limit = 0, $start = 0, $debug=false) {
+	public function getList($criteria = null, $limit = 0, $start = 0, $debug = false) {
 		$ret = array();
 		if ($criteria == null) {
 			$criteria = new icms_criteria_Compo();
@@ -500,15 +520,15 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 			$criteria->setSort($this->getIdentifierName());
 		}
 
-		$sql = 'SELECT '.(is_array($this->keyName) ? implode(', ', $this->keyName) : $this->keyName) ;
-		if(!empty($this->identifierName)){
-			$sql .= ', '.$this->getIdentifierName();
+		$sql = 'SELECT ' . (is_array($this->keyName) ? implode(', ', $this->keyName) : $this->keyName) ;
+		if (!empty($this->identifierName)) {
+			$sql .= ', ' . $this->getIdentifierName();
 		}
 		$sql .= ' FROM '.$this->table . " AS " . $this->_itemname;
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
-			$sql .= ' '.$criteria->renderWhere();
+			$sql .= ' ' . $criteria->renderWhere();
 			if ($criteria->getSort() != '') {
-				$sql .= ' ORDER BY '.$criteria->getSort().' '.$criteria->getOrder();
+				$sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
 			}
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
@@ -526,7 +546,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 		$myts =& icms_core_Textsanitizer::getInstance();
 		while ($myrow = $this->db->fetchArray($result)) {
 			//identifiers should be textboxes, so sanitize them like that
-			$ret[$myrow[$this->keyName]] = empty($this->identifierName)?1:$myts->displayTarea($myrow[$this->identifierName]);
+			$ret[$myrow[$this->keyName]] = empty($this->identifierName) ? 1 : $myts->displayTarea($myrow[$this->identifierName]);
 		}
 		return $ret;
 	}
@@ -537,14 +557,13 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 * @param object $criteria {@link icms_criteria_Element} to match
 	 * @return int count of objects
 	 */
-	public function getCount($criteria = null)
-	{
+	public function getCount($criteria = null) {
 		$field = "";
 		$groupby = false;
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
 			if ($criteria->groupby != "") {
 				$groupby = true;
-				$field = $criteria->groupby.", "; //Not entirely secure unless you KNOW that no criteria's groupby clause is going to be mis-used
+				$field = $criteria->groupby . ", "; //Not entirely secure unless you KNOW that no criteria's groupby clause is going to be mis-used
 			}
 		}
 		/**
@@ -555,10 +574,10 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 			$sql = $this->generalSQL;
 			$sql = str_replace('SELECT *', 'SELECT COUNT(*)', $sql);
 		} else {
-			$sql = 'SELECT '.$field.'COUNT(*) FROM '.$this->table . ' AS ' . $this->_itemname;
+			$sql = 'SELECT ' . $field . 'COUNT(*) FROM ' . $this->table . ' AS ' . $this->_itemname;
 		}
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
-			$sql .= ' '.$criteria->renderWhere();
+			$sql .= ' ' . $criteria->renderWhere();
 			if ($criteria->groupby != "") {
 				$sql .= $criteria->getGroupby();
 			}
@@ -571,8 +590,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 		if ($groupby == false) {
 			list($count) = $this->db->fetchRow($result);
 			return $count;
-		}
-		else {
+		} else {
 			$ret = array();
 			while (list($id, $count) = $this->db->fetchRow($result)) {
 				$ret[$id] = $count;
@@ -588,8 +606,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 * @param bool $force
 	 * @return bool FALSE if failed.
 	 */
-	public function delete(&$obj, $force = false)
-	{
+	public function delete(&$obj, $force = false) {
 		$eventResult = $this->executeEvent('beforeDelete', $obj);
 		if (!$eventResult) {
 			$obj->setErrors("An error occured during the BeforeDelete event");
@@ -599,14 +616,13 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 		if (is_array($this->keyName)) {
 			$clause = array();
 			for ($i = 0; $i < count($this->keyName); $i++) {
-				$clause[] = $this->keyName[$i]." = ".$obj->getVar($this->keyName[$i]);
+				$clause[] = $this->keyName[$i] . ' = ' . $obj->getVar($this->keyName[$i]);
 			}
 			$whereclause = implode(" AND ", $clause);
+		} else {
+			$whereclause = $this->keyName . ' = ' . $obj->getVar($this->keyName);
 		}
-		else {
-			$whereclause = $this->keyName." = ".$obj->getVar($this->keyName);
-		}
-		$sql = "DELETE FROM ".$this->table . " WHERE ".$whereclause;
+		$sql = 'DELETE FROM ' . $this->table . ' WHERE ' . $whereclause;
 		if (false != $force) {
 			$result = $this->db->queryF($sql);
 		} else {
@@ -624,9 +640,13 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 		return true;
 	}
 
+	/**
+	 *
+	 * @param arr|str $event
+	 */
 	public function disableEvent($event) {
 		if (is_array($event)) {
-			foreach($event as $v) {
+			foreach ($event as $v) {
 				$this->_disabledEvents[] = $v;
 			}
 		} else {
@@ -647,6 +667,9 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 		return $ret;
 	}
 
+	/**
+	 * Accessor for the permissions array property
+	 */
 	public function getPermissions() {
 		return $this->permissionsArray;
 	}
@@ -659,8 +682,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 * @param bool $checkObject check if the object is dirty and clean the attributes
 	 * @return bool FALSE if failed, TRUE if already present and unchanged or successful
 	 */
-	public function insert(&$obj, $force = false, $checkObject = true, $debug=false)
-	{
+	public function insert(&$obj, $force = false, $checkObject = true, $debug = false) {
 		if ($checkObject != false) {
 			if (!is_object($obj)) {
 				return false;
@@ -669,7 +691,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 			 * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
 			 */
 			if (!is_a($obj, $this->className)) {
-				$obj->setErrors(get_class($obj)." Differs from ".$this->className);
+				$obj->setErrors(get_class($obj) . ' Differs from ' . $this->className);
 				return false;
 			}
 			if (!$obj->isDirty()) {
@@ -701,21 +723,21 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 
 		$eventResult = $this->executeEvent('beforeSave', $obj);
 		if (!$eventResult) {
-			$obj->setErrors("An error occured during the BeforeSave event");
+			$obj->setErrors('An error occured during the BeforeSave event');
 			return false;
 		}
 
 		if ($obj->isNew()) {
 			$eventResult = $this->executeEvent('beforeInsert', $obj);
 			if (!$eventResult) {
-				$obj->setErrors("An error occured during the BeforeInsert event");
+				$obj->setErrors('An error occured during the BeforeInsert event');
 				return false;
 			}
 
 		}	else {
 			$eventResult = $this->executeEvent('beforeUpdate', $obj);
 			if (!$eventResult) {
-				$obj->setErrors("An error occured during the BeforeUpdate event");
+				$obj->setErrors('An error occured during the BeforeUpdate event');
 				return false;
 			}
 		}
@@ -744,34 +766,35 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 				}
 			}
 
-			$sql = "INSERT INTO ".$this->table." (".implode(',', array_keys($fieldsToStoreInDB)).") VALUES (".implode(',', array_values($fieldsToStoreInDB)) .")";
+			$sql = 'INSERT INTO ' . $this->table . ' (' . implode(',', array_keys($fieldsToStoreInDB))
+				. ') VALUES (' . implode(',', array_values($fieldsToStoreInDB)) . ')';
 
 		} else {
 
-			$sql = "UPDATE ".$this->table." SET";
+			$sql = 'UPDATE ' . $this->table . ' SET';
 			foreach ($fieldsToStoreInDB as $key => $value) {
-				if ((!is_array($this->keyName) && $key == $this->keyName) || (is_array($this->keyName) && in_array($key, $this->keyName))) {
+				if ((!is_array($this->keyName) && $key == $this->keyName)
+					|| (is_array($this->keyName) && in_array($key, $this->keyName))) {
 					continue;
 				}
 				if (isset($notfirst) ) {
-					$sql .= ",";
+					$sql .= ',';
 				}
-				$sql .= " ".$key." = ".$value;
+				$sql .= ' ' . $key . ' = ' . $value;
 				$notfirst = true;
 			}
 			if (is_array($this->keyName)) {
-				$whereclause = "";
+				$whereclause = '';
 				for ($i = 0; $i < count($this->keyName); $i++) {
 					if ($i > 0) {
-						$whereclause .= " AND ";
+						$whereclause .= ' AND ';
 					}
-					$whereclause .= $this->keyName[$i]." = ".$obj->getVar($this->keyName[$i]);
+					$whereclause .= $this->keyName[$i] . ' = ' . $obj->getVar($this->keyName[$i]);
 				}
+			} else {
+				$whereclause = $this->keyName . ' = ' . $obj->getVar($this->keyName);
 			}
-			else {
-				$whereclause = $this->keyName." = ".$obj->getVar($this->keyName);
-			}
-			$sql .= " WHERE ".$whereclause;
+			$sql .= ' WHERE ' . $whereclause;
 		}
 
 		if ($debug) {
@@ -794,7 +817,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 		}
 		$eventResult = $this->executeEvent('afterSave', $obj);
 		if (!$eventResult) {
-			$obj->setErrors("An error occured during the AfterSave event");
+			$obj->setErrors('An error occured during the AfterSave event');
 			return false;
 		}
 
@@ -802,21 +825,27 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 			$obj->unsetNew();
 			$eventResult = $this->executeEvent('afterInsert', $obj);
 			if (!$eventResult) {
-				$obj->setErrors("An error occured during the AfterInsert event");
+				$obj->setErrors('An error occured during the AfterInsert event');
 				return false;
 			}
 		} else {
 			$eventResult = $this->executeEvent('afterUpdate', $obj);
 			if (!$eventResult) {
-				$obj->setErrors("An error occured during the AfterUpdate event");
+				$obj->setErrors('n error occured during the AfterUpdate event');
 				return false;
 			}
 		}
 		return true;
 	}
 
-	public function insertD(&$obj, $force = false, $checkObject = true, $debug=false)
-	{
+	/**
+	 *
+	 * @param	obj		$obj
+	 * @param	bool	$force
+	 * @param	bool	$checkObject
+	 * @param	bool	$debug
+	 */
+	public function insertD(&$obj, $force = false, $checkObject = true, $debug = false) {
 		return $this->insert($obj, $force, $checkObject, true);
 	}
 
@@ -829,19 +858,18 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 *
 	 * @return  bool
 	 **/
-	public function updateAll($fieldname, $fieldvalue, $criteria = null, $force = false)
-	{
+	public function updateAll($fieldname, $fieldvalue, $criteria = null, $force = false) {
 		$set_clause = $fieldname . ' = ';
-		if ( is_numeric( $fieldvalue ) ) {
+		if (is_numeric($fieldvalue)) {
 			$set_clause .=  $fieldvalue;
-		} elseif ( is_array( $fieldvalue ) ) {
-			$set_clause .= $this->db->quoteString( implode( ',', $fieldvalue ) );
+		} elseif (is_array($fieldvalue)) {
+			$set_clause .= $this->db->quoteString(implode(',', $fieldvalue));
 		} else {
-			$set_clause .= $this->db->quoteString( $fieldvalue );
+			$set_clause .= $this->db->quoteString($fieldvalue);
 		}
 		$sql = 'UPDATE '.$this->table.' SET '.$set_clause;
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
-			$sql .= ' '.$criteria->renderWhere();
+			$sql .= ' ' . $criteria->renderWhere();
 		}
 		if (false != $force) {
 			$result = $this->db->queryF($sql);
@@ -861,11 +889,10 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 * @return bool
 	 */
 
-	public function deleteAll($criteria = null)
-	{
+	public function deleteAll($criteria = null) {
 		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
-			$sql = 'DELETE FROM '.$this->table;
-			$sql .= ' '.$criteria->renderWhere();
+			$sql = 'DELETE FROM ' . $this->table;
+			$sql .= ' ' . $criteria->renderWhere();
 			if (!$this->db->query($sql)) {
 				return false;
 			}
@@ -875,23 +902,37 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 		return false;
 	}
 
-	function getModuleInfo() {
+	/**
+	 *
+	 */
+	public function getModuleInfo() {
 		return icms_getModuleInfo($this->_moduleName);
 	}
 
+	/**
+	 *
+	 */
 	public function getModuleConfig() {
 		return icms_getModuleConfig($this->_moduleName);
 	}
 
+	/**
+	 *
+	 */
 	public function getModuleItemString() {
 		$ret = $this->_moduleName . '_' . $this->_itemname;
 		return $ret;
 	}
 
+	/**
+	 *
+	 * @param $object
+	 */
 	public function updateCounter($object) {
 		if (isset($object->vars['counter'])) {
 			$new_counter = $object->getVar('counter') + 1;
-			$sql = 'UPDATE ' . $this->table . ' SET counter=' . $new_counter . ' WHERE ' . $this->keyName . '=' . $object->id();
+			$sql = 'UPDATE ' . $this->table . ' SET counter=' . $new_counter
+				. ' WHERE ' . $this->keyName . '=' . $object->id();
 			$this->query($sql, null, true);
 		}
 	}
@@ -925,7 +966,11 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 		return true;
 	}
 
-	public function getIdentifierName($withprefix=true) {
+	/**
+	 *
+	 * @param	bool	$withprefix
+	 */
+	public function getIdentifierName($withprefix = true) {
 		if ($withprefix) {
 			return $this->_itemname . "." . $this->identifierName;
 		} else {
@@ -933,7 +978,14 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 		}
 	}
 
-	public function enableUpload($allowedMimeTypes=false, $maxFileSize=false, $maxWidth=false, $maxHeight=false) {
+	/**
+	 *
+	 * @param unknown_type $allowedMimeTypes
+	 * @param unknown_type $maxFileSize
+	 * @param unknown_type $maxWidth
+	 * @param unknown_type $maxHeight
+	 */
+	public function enableUpload($allowedMimeTypes = false, $maxFileSize = false, $maxWidth = false, $maxHeight = false) {
 		$this->uploadEnabled = true;
 		$this->_allowedMimeTypes = $allowedMimeTypes ? $allowedMimeTypes : $this->_allowedMimeTypes;
 		$this->_maxFileSize = $maxFileSize ? $maxFileSize : $this->_maxFileSize;
@@ -952,7 +1004,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 * @param int $_maxFileHeight
 	 * @return VOID
 	 */
-	public function setUploaderConfig($_uploadPath=false, $_allowedMimeTypes=false, $_maxFileSize=false, $_maxWidth=false, $_maxHeight=false) {
+	public function setUploaderConfig($_uploadPath = false, $_allowedMimeTypes = false, $_maxFileSize = false, $_maxWidth = false, $_maxHeight = false) {
 		$this->uploadEnabled = true;
 		$this->_uploadPath = $_uploadPath ? $_uploadPath : $this->_uploadPath;
 		$this->_allowedMimeTypes = $_allowedMimeTypes ? $_allowedMimeTypes : $this->_allowedMimeTypes;

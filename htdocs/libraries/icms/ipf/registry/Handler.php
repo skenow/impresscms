@@ -2,15 +2,17 @@
 /**
  * Persistable object registry
  *
- * @copyright      http://www.impresscms.org/ The ImpressCMS Project
- * @license         LICENSE.txt
- * @package	icms_ipf_Object
- * @since            1.1
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		LICENSE.txt
+ * @category	ICMS
+ * @package		Ipf
+ * @subpackage	Registry
+ * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id: icmspersistableregistry.php 19623 2010-06-25 14:59:15Z malanciault $
+ * @version		SVN: $Id$
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 /**
  * Registry of icms_ipf_Object
@@ -19,14 +21,19 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		icms_ipf_Object
+ * @category	ICMS
+ * @package		Ipf
+ * @subpackage	Object
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id: icmspersistableregistry.php 19623 2010-06-25 14:59:15Z malanciault $
  */
 class icms_ipf_registry_Handler {
 
-	var $_registryArray;
+	/**
+	 *
+	 * @var unknown_type
+	 */
+	private $_registryArray;
 
 	/**
 	 * Access the only instance of this class
@@ -36,8 +43,7 @@ class icms_ipf_registry_Handler {
 	 * @static
 	 * @staticvar   object
 	 */
-	function &getInstance()
-	{
+	public static function &getInstance() {
 		static $instance;
 		if (!isset($instance)) {
 			$instance = new icms_ipf_registry_Handler();
@@ -53,7 +59,7 @@ class icms_ipf_registry_Handler {
 	 *
 	 * @return FALSE if an error occured
 	 */
-	function addObjectsFromHandler(&$handler, $criteria=false) {
+	public function addObjectsFromHandler(&$handler, $criteria = false) {
 		if (method_exists($handler, 'getObjects')) {
 			$objects = $handler->getObjects($criteria, true);
 			$this->_registryArray['objects'][$handler->_moduleName][$handler->_itemname] = $objects;
@@ -71,7 +77,7 @@ class icms_ipf_registry_Handler {
 	 *
 	 * @return FALSE if an error occured
 	 */
-	function addListFromHandler(&$handler, $criteria=false) {
+	public function addListFromHandler(&$handler, $criteria = false) {
 		if (method_exists($handler, 'getList')) {
 			$list = $handler->getList($criteria);
 			$this->_registryArray['list'][$handler->_moduleName][$handler->_itemname] = $list;
@@ -91,7 +97,7 @@ class icms_ipf_registry_Handler {
 	 *
 	 * @return FALSE if an error occured
 	 */
-	function addObjectsFromItemName($item, $modulename=false, $criteria=false) {
+	public function addObjectsFromItemName($item, $modulename = false, $criteria = false) {
 		if (!$modulename) {
 			global $icmsModule;
 			if (!is_object($icmsModule)) {
@@ -114,7 +120,7 @@ class icms_ipf_registry_Handler {
 	 *
 	 * @return FALSE if an error occured
 	 */
-	function addListFromItemName($item, $modulename=false, $criteria=false) {
+	public function addListFromItemName($item, $modulename = false, $criteria = false) {
 		if (!$modulename) {
 			global $icmsModule;
 			if (!is_object($icmsModule)) {
@@ -136,7 +142,7 @@ class icms_ipf_registry_Handler {
 	 *
 	 * @return the requested objects or FALSE if they don't exists in the registry
 	 */
-	function getObjects($itemname, $modulename) {
+	public function getObjects($itemname, $modulename) {
 		if (!$modulename) {
 			global $icmsModule;
 			if (!is_object($icmsModule)) {
@@ -166,7 +172,7 @@ class icms_ipf_registry_Handler {
 	 *
 	 * @return the requested objects or FALSE if they don't exists in the registry
 	 */
-	function getList($itemname, $modulename) {
+	public function getList($itemname, $modulename) {
 		if (!$modulename) {
 			global $icmsModule;
 			if (!is_object($icmsModule)) {
@@ -196,7 +202,7 @@ class icms_ipf_registry_Handler {
 	 *
 	 * @return the requestd object or FALSE if they don't exists in the registry
 	 */
-	function getSingleObject($itemname, $key, $modulename=false) {
+	public function getSingleObject($itemname, $key, $modulename = false) {
 		if (!$modulename) {
 			global $icmsModule;
 			if (!is_object($icmsModule)) {
@@ -221,4 +227,3 @@ class icms_ipf_registry_Handler {
 	}
 }
 
-?>

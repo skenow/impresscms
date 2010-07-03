@@ -4,21 +4,33 @@
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @category	ICMS
  * @package		Administration
+ * @subpackage	Adsense
  * @since		1.2
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id$
+ * @version		SVN: $Id$
  */
 
-if (! defined ( "ICMS_ROOT_PATH" ))
-die ( "ImpressCMS root path not defined" );
+defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 
+/**
+ *
+ * @category	ICMS
+ * @package		Administration
+ * @subpackage	Adsense
+ *
+ */
 class mod_system_Adsense extends icms_ipf_Object {
 
+	/**
+	 *
+	 * @var unknown_type
+	 */
 	public $content = false;
 
-	function mod_system_Adsense(&$handler) {
-		$this->icms_ipf_Object($handler);
+	public function __construct(&$handler) {
+		parent::__construct($handler);
 
 		$this->quickInitVar('adsenseid', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('description', XOBJ_DTYPE_TXTAREA, true, _CO_ICMS_ADSENSE_DESCRIPTION, _CO_ICMS_ADSENSE_DESCRIPTION_DSC);
@@ -40,14 +52,23 @@ class mod_system_Adsense extends icms_ipf_Object {
 		$this->setControl('text_color', array('name' => 'text','size' => 6,'maxlength' => 6));
 	}
 
-	function getVar($key, $format = 's') {
-		if ($format == 's' && in_array ( $key, array ( ) )) {
-			return call_user_func ( array ($this, $key ) );
+
+	/**
+	 *
+	 * @param unknown_type $key
+	 * @param str $format
+	 */
+	public function getVar($key, $format = 's') {
+		if ($format == 's' && in_array($key, array())) {
+			return call_user_func(array($this, $key));
 		}
-		return parent::getVar ( $key, $format );
+		return parent::getVar($key, $format);
 	}
 
-	function render() {
+	/**
+	 *
+	 */
+	public function render() {
 		global $icms_adsense_handler;
 		if ($this->getVar('style', 'n') != '') {
 			$ret = '<div style="' . $this->getVar('style', 'n') . '">';
@@ -56,64 +77,82 @@ class mod_system_Adsense extends icms_ipf_Object {
 		}
 
 		$ret .= '<script type="text/javascript"><!--
-google_ad_client = "' . $this->getVar('client_id', 'n') . '";
-google_ad_width = ' . $icms_adsense_handler->adFormats[$this->getVar('format', 'n')]['width'] . ';
-google_ad_height = ' . $icms_adsense_handler->adFormats[$this->getVar('format', 'n')]['height'] . ';
-google_ad_format = "' . $this->getVar('format', 'n') . '";
-google_ad_type = "text";
-google_ad_channel ="";
-google_color_border = "' . $this->getVar('border_color', 'n') . '";
-google_color_bg = "' . $this->getVar('background_color', 'n') . '";
-google_color_link = "' . $this->getVar('link_color', 'n') . '";
-google_color_url = "' . $this->getVar('url_color', 'n') . '";
-google_color_text = "' . $this->getVar('text_color', 'n') . '";
-//--></script>
-<script type="text/javascript"
-  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-</script>
-</div>';
+			google_ad_client = "' . $this->getVar('client_id', 'n') . '";
+			google_ad_width = ' . $icms_adsense_handler->adFormats[$this->getVar('format', 'n')]['width'] . ';
+			google_ad_height = ' . $icms_adsense_handler->adFormats[$this->getVar('format', 'n')]['height'] . ';
+			google_ad_format = "' . $this->getVar('format', 'n') . '";
+			google_ad_type = "text";
+			google_ad_channel ="";
+			google_color_border = "' . $this->getVar('border_color', 'n') . '";
+			google_color_bg = "' . $this->getVar('background_color', 'n') . '";
+			google_color_link = "' . $this->getVar('link_color', 'n') . '";
+			google_color_url = "' . $this->getVar('url_color', 'n') . '";
+			google_color_text = "' . $this->getVar('text_color', 'n') . '";
+			//--></script>
+			<script type="text/javascript"
+			  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+			</script>
+			</div>';
 		return $ret;
 	}
 
-	function getXoopsCode() {
-		$ret = '[adsense]' . $this->getVar ( 'tag', 'n' ) . '[/adsense]';
+	/**
+	 *
+	 */
+	public function getXoopsCode() {
+		$ret = '[adsense]' . $this->getVar('tag', 'n') . '[/adsense]';
 		return $ret;
 	}
 
-	function getCloneLink() {
-		$ret = '<a href="' . ICMS_URL . '/modules/system/admin.php?fct=adsense&amp;op=clone&amp;adsenseid=' . $this->id () . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/editcopy.png" style="vertical-align: middle;" alt="' . _CO_ICMS_CUSTOMTAG_CLONE . '" title="' . _CO_ICMS_CUSTOMTAG_CLONE . '" /></a>';
+	/**
+	 *
+	 */
+	public function getCloneLink() {
+		$ret = '<a href="' . ICMS_URL . '/modules/system/admin.php?fct=adsense&amp;op=clone&amp;adsenseid='
+			. $this->id() . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/editcopy.png" style="vertical-align: middle;" alt="'
+			. _CO_ICMS_CUSTOMTAG_CLONE . '" title="' . _CO_ICMS_CUSTOMTAG_CLONE . '" /></a>';
 		return $ret;
 	}
 
-	function emptyString($var) {
-		return (strlen ( $var ) > 0);
+	/**
+	 *
+	 * @param str $var
+	 */
+	public function emptyString($var) {
+		return (strlen($var) > 0);
 	}
 
-	function generateTag() {
-		$title = rawurlencode ( strtolower ( $this->getVar ( 'description', 'e' ) ) );
-		$title = icms_substr ( $title, 0, 10, '' );
+	/***
+	 *
+	 */
+	public function generateTag() {
+		$title = rawurlencode(strtolower($this->getVar('description', 'e')));
+		$title = icms_substr($title, 0, 10, '');
 		// Transformation des ponctuations
 		//				 Tab	 Space	  !		"		#		%		&		'		(		)		,		/		:		;		<		=		>		?		@		[		\		]		^		{		|		}		~	   .
-		$pattern = array ("/%09/", "/%20/", "/%21/", "/%22/", "/%23/", "/%25/", "/%26/", "/%27/", "/%28/", "/%29/", "/%2C/", "/%2F/", "/%3A/", "/%3B/", "/%3C/", "/%3D/", "/%3E/", "/%3F/", "/%40/", "/%5B/", "/%5C/", "/%5D/", "/%5E/", "/%7B/", "/%7C/", "/%7D/", "/%7E/", "/\./" );
-		$rep_pat = array ("-", "-", "-", "-", "-", "-100", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-at-", "-", "-", "-", "-", "-", "-", "-", "-", "-" );
-		$title = preg_replace ( $pattern, $rep_pat, $title );
+		$pattern = array("/%09/", "/%20/", "/%21/", "/%22/", "/%23/", "/%25/", "/%26/", "/%27/", "/%28/", "/%29/", "/%2C/", "/%2F/", "/%3A/", "/%3B/", "/%3C/", "/%3D/", "/%3E/", "/%3F/", "/%40/", "/%5B/", "/%5C/", "/%5D/", "/%5E/", "/%7B/", "/%7C/", "/%7D/", "/%7E/", "/\./");
+		$rep_pat = array("-", "-", "-", "-", "-", "-100", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-at-", "-", "-", "-", "-", "-", "-", "-", "-", "-");
+		$title = preg_replace($pattern, $rep_pat, $title);
 
 		// Transformation des caract�res accentu�s
 		//				  �		�		�		�		�		�		�		�		�		�		�		�		�		�		�		�		$pattern = array ("/%B0/", "/%E8/", "/%E9/", "/%EA/", "/%EB/", "/%E7/", "/%E0/", "/%E2/", "/%E4/", "/%EE/", "/%EF/", "/%F9/", "/%FC/", "/%FB/", "/%F4/", "/%F6/" );
-		$rep_pat = array ("-", "e", "e", "e", "e", "c", "a", "a", "a", "i", "i", "u", "u", "u", "o", "o" );
-		$title = preg_replace ( $pattern, $rep_pat, $title );
+		$rep_pat = array("-", "e", "e", "e", "e", "c", "a", "a", "a", "i", "i", "u", "u", "u", "o", "o");
+		$title = preg_replace($pattern, $rep_pat, $title);
 
-		$tableau = explode ( "-", $title ); // Transforme la chaine de caract�res en tableau
-		$tableau = array_filter ( $tableau, array ($this, "emptyString" ) ); // Supprime les chaines vides du tableau
-		$title = implode ( "-", $tableau ); // Transforme un tableau en chaine de caract�res s�par� par un tiret
+		$tableau = explode("-", $title); // Transforme la chaine de caract�res en tableau
+		$tableau = array_filter($tableau, array($this, "emptyString")); // Supprime les chaines vides du tableau
+		$title = implode("-", $tableau); // Transforme un tableau en chaine de caract�res s�par� par un tiret
 
-		$title = $title . time ();
-		$title = md5 ( $title );
+		$title = $title . time();
+		$title = md5($title);
 		return $title;
 	}
 
-	function getAdsenseName() {
-		$ret = $this->getVar ( 'description' );
+	/**
+	 *
+	 */
+	public function getAdsenseName() {
+		$ret = $this->getVar('description');
 		return $ret;
 	}
 }

@@ -5,7 +5,8 @@
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @category	ICMS
- * @package		ipf_Object
+ * @package		Ipf
+ * @subpackage	Object
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
  * @version		SVN: $Id$
@@ -30,32 +31,34 @@ if (!defined('XOBJ_DTYPE_FORM_SECTION_CLOSE')) define('XOBJ_DTYPE_FORM_SECTION_C
  *
  * Base class representing a single icms_ipf_Object
  *
- * @package icms_ipf_Object
+ * @category	ICMS
+ * @package		Ipf
+ * @subpackage	Object
  * @author marcan <marcan@smartfactory.ca>
- * @link http://smartfactory.ca The SmartFactory
+ * @todo		Properly identify and declare the visibility of vars and functions
  */
 class icms_ipf_Object extends icms_core_Object {
 
-	var $_image_path;
-	var $_image_url;
+	public $_image_path;
+	public $_image_url;
 
-	var $seoEnabled = false;
-	var $titleField;
-	var $summaryField=false;
+	public $seoEnabled = false;
+	public $titleField;
+	public $summaryField = false;
 
 	/**
 	 * Reference to the handler managing this object
 	 *
 	 * @var object reference to {@link icms_ipf_Handler}
 	 */
-	var $handler;
+	public $handler;
 
 	/**
 	 * References to control objects, managing the form fields of this object
 	 */
-	var $controls = array();
+	public $controls = array();
 
-	function icms_ipf_Object(&$handler) {
+	public function __construct(&$handler) {
 		$this->handler = $handler;
 	}
 
@@ -65,15 +68,27 @@ class icms_ipf_Object extends icms_core_Object {
 	 * @param string $gperm_name name of the permission to test
 	 * @return boolean : TRUE if user has access, false if not
 	 **/
-	function accessGranted($perm_name) {
+	public function accessGranted($perm_name) {
 		$icmspermissions_handler = new icms_ipf_permission_Handler($this->handler);
 		return $icmspermissions_handler->accessGranted($perm_name, $this->id());
 	}
-	function addFormSection($section_name, $value=false, $hide=false) {
+	/**
+	 *
+	 *
+	 * @param	str		$section_name
+	 * @param	bool	$value
+	 * @param	bool	$hide
+	 */
+	public function addFormSection($section_name, $value = false, $hide = false) {
 		$this->initVar($section_name, XOBJ_DTYPE_FORM_SECTION, $value, false, null, '', false, '', '', false, false, true);
 		$this->vars[$section_name]['hide'] = $hide;
 	}
-	function closeSection($section_name) {
+	/**
+	 *
+	 *
+	 * @param	str		$section_name
+	 */
+	public function closeSection($section_name) {
 		$this->initVar('close_section_' . $section_name, XOBJ_DTYPE_FORM_SECTION_CLOSE, '', false, null, '', false, '', '', false, false, true);
 	}
 
@@ -92,9 +107,9 @@ class icms_ipf_Object extends icms_core_Object {
 	 * @param bool $persistent set to FALSE if this field is not to be saved in the database
 	 * @param bool $displayOnForm to be displayed on the form or not
 	 */
-	function initVar($key, $data_type, $value = null, $required = false, $maxlength = null, $options = '', $multilingual=false, $form_caption='', $form_dsc='', $sortby=false, $persistent=true, $displayOnForm=true) {
+	public function initVar($key, $data_type, $value = null, $required = false, $maxlength = null, $options = '', $multilingual = false, $form_caption = '', $form_dsc = '', $sortby = false, $persistent = true, $displayOnForm = true) {
 		//url_ is reserved for files.
-		if (substr($key, 0,4) == 'url_' ) {
+		if (substr($key, 0,4) == 'url_') {
 			trigger_error("Cannot use variable starting with 'url_'.");
 		}
 		parent::initVar($key, $data_type, $value, $required, $maxlength, $options);
@@ -121,7 +136,19 @@ class icms_ipf_Object extends icms_core_Object {
         'readonly' => false));
 	}
 
-	function initNonPersistableVar($key, $data_type, $itemName=false, $form_caption='', $sortby=false, $value='', $displayOnForm=false, $required=false) {
+	/**
+	 *
+	 *
+	 * @param			$key
+	 * @param			$data_type
+	 * @param	str		$itemName
+	 * @param	str 	$form_caption
+	 * @param			$sortby
+	 * @param			$value
+	 * @param	bool	$displayOnForm
+	 * @param	bool	$required
+	 */
+	public function initNonPersistableVar($key, $data_type, $itemName = false, $form_caption = '', $sortby = false, $value = '', $displayOnForm = false, $required = false) {
 		$this->initVar($key, $data_type, $value, $required, null, '', false, $form_caption, '', $sortby, false, $displayOnForm);
 		$this->vars[$key]['itemName'] = $itemName;
 		$this->vars[$key]['displayOnSingleView'] = false;
@@ -142,12 +169,19 @@ class icms_ipf_Object extends icms_core_Object {
 	 * @param string $form_dsc description of this variable in a {@link IcmsForm}
 	 * @param mixed $value default value of this variable
 	 */
-	function quickInitVar($key, $data_type, $required=false, $form_caption='', $form_dsc='', $value = null) {
+	public function quickInitVar($key, $data_type, $required = false, $form_caption = '', $form_dsc = '', $value = null) {
 		$maxlength = $data_type == 'XOBJ_DTYPE_TXTBOX' ? 255 : null;
 		$this->initVar($key, $data_type, $value, $required, $maxlength, '', false, $form_caption, $form_dsc, false, true, true);
 	}
 
-	function initCommonVar($varname, $displayOnForm=true, $default='notdefined') {
+	/**
+	 *
+	 *
+	 * @param	str		$varname
+	 * @param	bool	$displayOnForm
+	 * @param	str		$default
+	 */
+	public function initCommonVar($varname, $displayOnForm = true, $default = 'notdefined') {
 
 		switch ($varname) {
 			case "dohtml":
@@ -185,18 +219,18 @@ class icms_ipf_Object extends icms_core_Object {
 				$this->initVar($varname, XOBJ_DTYPE_TXTAREA, $value, false, null, '', false, _CO_ICMS_META_KEYWORDS, _CO_ICMS_META_KEYWORDS_DSC, false, true, $displayOnForm);
 				$this->setControl('meta_keywords', array(
 										'name' => 'textarea',
-                                        'form_editor'=>'textarea'
-                                        ));
-                                        break;
+										'form_editor'=>'textarea'
+										));
+				break;
 
 			case "meta_description":
 				$value = $default != 'notdefined' ? $default : '';
 				$this->initVar($varname, XOBJ_DTYPE_TXTAREA, $value, false, null, '', false, _CO_ICMS_META_DESCRIPTION, _CO_ICMS_META_DESCRIPTION_DSC, false, true, $displayOnForm);
 				$this->setControl('meta_description', array(
 										'name' => 'textarea',
-                                        'form_editor'=>'textarea'
-                                        ));
-                                        break;
+										'form_editor'=>'textarea'
+										));
+				break;
 
 			case "short_url":
 				$value = $default != 'notdefined' ? $default : '';
@@ -223,7 +257,11 @@ class icms_ipf_Object extends icms_core_Object {
 				$this->setControl('custom_css', array(
 									'name' => 'textarea',
 									'form_editor'=>'textarea',
-				));
+					)
+				);
+				break;
+
+			default:
 				break;
 		}
 		$this->hideFieldFromSingleView($varname);
@@ -314,7 +352,7 @@ class icms_ipf_Object extends icms_core_Object {
 	 * @param string $var name of the variable for which we want to set a control
 	 * @param array $options
 	 */
-	function setControl($var, $options=array()) {
+	public function setControl($var, $options = array()) {
 		if (isset($this->controls[$var])) {
 			unset($this->controls[$var]);
 		}
@@ -329,7 +367,7 @@ class icms_ipf_Object extends icms_core_Object {
 	 *
 	 * @param string $var
 	 */
-	function getControl($var) {
+	public function getControl($var) {
 		return isset($this->controls[$var]) ? $this->controls[$var] : false;
 	}
 
@@ -340,8 +378,7 @@ class icms_ipf_Object extends icms_core_Object {
 	 *
 	 * @see icms_ipf_ObjectForm::icms_ipf_ObjectForm()
 	 */
-	function getForm($form_caption, $form_name, $form_action=false, $submit_button_caption = _CO_ICMS_SUBMIT, $cancel_js_action=false, $captcha=false)
-	{
+	public function getForm($form_caption, $form_name, $form_action = false, $submit_button_caption = _CO_ICMS_SUBMIT, $cancel_js_action = false, $captcha = false) {
 		include_once ICMS_ROOT_PATH . "/class/icmsform/icmsform.php";
 		$form = new IcmsForm($this, $form_name, $form_caption, $form_action, null, $submit_button_caption, $cancel_js_action, $captcha);
 
@@ -351,20 +388,21 @@ class icms_ipf_Object extends icms_core_Object {
 	/**
 	 * Create the secure form for this object
 	 *
-	 * @return a {@link SmartobjectForm} object for this object
+	 * @return a {@link IcmsSecureForm} object for this object
 	 *
 	 * @see icms_ipf_ObjectForm::icms_ipf_ObjectForm()
 	 */
-	function getSecureForm($form_caption, $form_name, $form_action=false, $submit_button_caption = _CO_ICMS_SUBMIT, $cancel_js_action=false, $captcha=false)
-	{
-		include_once ICMS_ROOT_PATH . "/class/icmsform/icmssecureform.php";
+	public function getSecureForm($form_caption, $form_name, $form_action = false, $submit_button_caption = _CO_ICMS_SUBMIT, $cancel_js_action = false, $captcha = false) {
+		//include_once ICMS_ROOT_PATH . "/class/icmsform/icmssecureform.php";
 		$form = new IcmsSecureForm($this, $form_name, $form_caption, $form_action, null, $submit_button_caption, $cancel_js_action, $captcha);
 
 		return $form;
 	}
 
-	function toArray()
-	{
+	/**
+	 *
+	 */
+	public function toArray() {
 		$ret = array();
 		$vars = $this->getVars();
 		foreach ($vars as $key=>$var) {
@@ -409,10 +447,9 @@ class icms_ipf_Object extends icms_core_Object {
 	 * @param string $value error to add
 	 * @access public
 	 */
-	function setErrors($err_str, $prefix=false)
-	{
+	public function setErrors($err_str, $prefix = false) {
 		if (is_array($err_str)) {
-			foreach($err_str as $str) {
+			foreach ($err_str as $str) {
 				$this->setErrors($str, $prefix);
 			}
 		} else {
@@ -423,9 +460,15 @@ class icms_ipf_Object extends icms_core_Object {
 		}
 	}
 
-	function setFieldAsRequired($field, $required=true) {
+	/**
+	 *
+	 *
+	 * @param $field
+	 * @param $required
+	 */
+	public function setFieldAsRequired($field, $required = true) {
 		if (is_array($field)) {
-			foreach($field as $v) {
+			foreach ($field as $v) {
 				$this->doSetFieldAsRequired($v, $required);
 			}
 		} else {
@@ -433,9 +476,14 @@ class icms_ipf_Object extends icms_core_Object {
 		}
 	}
 
-	function setFieldForSorting($field) {
+	/**
+	 *
+	 *
+	 * @param $field
+	 */
+	public function setFieldForSorting($field) {
 		if (is_array($field)) {
-			foreach($field as $v) {
+			foreach ($field as $v) {
 				$this->doSetFieldForSorting($v);
 			}
 		} else {
@@ -443,12 +491,20 @@ class icms_ipf_Object extends icms_core_Object {
 		}
 	}
 
-	function hasError() {
+	/**
+	 *
+	 */
+	public function hasError() {
 		return count($this->_errors) > 0;
 	}
 
-	function setImageDir($url, $path)
-	{
+	/**
+	 *
+	 *
+	 * @param $url
+	 * @param $path
+	 */
+	public function setImageDir($url, $path) {
 		$this->_image_url = $url;
 		$this->_image_path = $path;
 	}
@@ -458,7 +514,7 @@ class icms_ipf_Object extends icms_core_Object {
 	 *
 	 * @return string $group_perm name of the permission
 	 */
-	function getGroupPerm($group_perm) {
+	public function getGroupPerm($group_perm) {
 		if (!$this->handler->getPermissions()) {
 			$this->setError("Trying to access a permission that does not exists for this object's handler");
 			return false;
@@ -474,8 +530,12 @@ class icms_ipf_Object extends icms_core_Object {
 		}
 	}
 
-	function getImageDir($path=false)
-	{
+	/**
+	 *
+	 *
+	 * @param $path
+	 */
+	public function getImageDir($path = false) {
 		if ($path) {
 			return $this->_image_path;
 		} else {
@@ -483,8 +543,12 @@ class icms_ipf_Object extends icms_core_Object {
 		}
 	}
 
-	function getUploadDir($path=false)
-	{
+	/**
+	 *
+	 *
+	 * @param	str		$path
+	 */
+	public function getUploadDir($path = false) {
 		if ($path) {
 			return $this->_image_path;
 		} else {
@@ -492,12 +556,18 @@ class icms_ipf_Object extends icms_core_Object {
 		}
 	}
 
-	function getVarInfo($key = '', $info = '') {
+	/**
+	 *
+	 *
+	 * @param	str		$key
+	 * @param	str		$info
+	 */
+	public function getVarInfo($key = '', $info = '') {
 		if (isset($this->vars[$key][$info])) {
 			return $this->vars[$key][$info];
-		}elseif ($info == '' && isset($this->vars[$key])) {
+		} elseif ($info == '' && isset($this->vars[$key])) {
 			return $this->vars[$key];
-		}  else {
+		} else {
 			return $this->vars;
 		}
 	}
@@ -507,7 +577,7 @@ class icms_ipf_Object extends icms_core_Object {
 	 *
 	 * @return int id of this object
 	 */
-	function id() {
+	public function id() {
 		return $this->getVar($this->handler->keyName, 'e');
 	}
 
@@ -516,8 +586,7 @@ class icms_ipf_Object extends icms_core_Object {
 	 *
 	 * @return string
 	 */
-	function title($format='s')
-	{
+	public function title($format = 's') {
 		return $this->getVar($this->handler->identifierName, $format);
 	}
 
@@ -526,8 +595,7 @@ class icms_ipf_Object extends icms_core_Object {
 	 *
 	 * @return string
 	 */
-	function summary()
-	{
+	public function summary() {
 		if ($this->handler->summaryName) {
 			return $this->getVar($this->handler->summaryName);
 		} else {
@@ -541,8 +609,7 @@ class icms_ipf_Object extends icms_core_Object {
 	 * @param bool $onlyUrl wether or not to return a simple URL or a full <a> link
 	 * @return string user side link to the object
 	 */
-	function getAdminViewItemLink($onlyUrl=false)
-	{
+	public function getAdminViewItemLink($onlyUrl = false) {
 		$controller = new icms_ipf_Controller($this->handler);
 		return $controller->getAdminViewItemLink($this, $onlyUrl);
 	}
@@ -553,40 +620,64 @@ class icms_ipf_Object extends icms_core_Object {
 	 * @param bool $onlyUrl wether or not to return a simple URL or a full <a> link
 	 * @return string user side link to the object
 	 */
-	function getItemLink($onlyUrl=false)
-	{
+	public function getItemLink($onlyUrl = false) {
 		$controller = new icms_ipf_Controller($this->handler);
 		return $controller->getItemLink($this, $onlyUrl);
 	}
 
-	function getViewItemLink($onlyUrl=false, $withimage=true, $userSide=false)
-	{
+	/**
+	 *
+	 *
+	 * @param $onlyUrl
+	 * @param $withimage
+	 * @param $userSide
+	 */
+	public function getViewItemLink($onlyUrl = false, $withimage = true, $userSide = false) {
 		$controller = new icms_ipf_Controller($this->handler);
 		return $controller->getViewItemLink($this, $onlyUrl, $withimage, $userSide);
 	}
 
-	function getEditItemLink($onlyUrl=false, $withimage=true, $userSide=false)
-	{
+	/**
+	 *
+	 *
+	 * @param	bool	$onlyUrl
+	 * @param	bool	$withimage
+	 * @param	bool	$userSide
+	 */
+	public function getEditItemLink($onlyUrl = false, $withimage = true, $userSide = false) {
 		$controller = new icms_ipf_Controller($this->handler);
 		return $controller->getEditItemLink($this, $onlyUrl, $withimage, $userSide);
 	}
 
-	function getDeleteItemLink($onlyUrl=false, $withimage=false, $userSide=false)
-	{
+	/**
+	 *
+	 *
+	 * @param	bool	$onlyUrl
+	 * @param	bool	$withimage
+	 * @param	bool	$userSide
+	 */
+	public function getDeleteItemLink($onlyUrl = false, $withimage = false, $userSide = false) {
 		$controller = new icms_ipf_Controller($this->handler);
 		return $controller->getDeleteItemLink($this, $onlyUrl, $withimage, $userSide);
 	}
 
-	function getPrintAndMailLink()
-	{
+	/**
+	 *
+	 */
+	public function getPrintAndMailLink() {
 		$controller = new icms_ipf_Controller($this->handler);
 		return $controller->getPrintAndMailLink($this);
 	}
 
-	function getFieldsForSorting($sortsel) {
+	/**
+	 *
+	 *
+	 * @param		$sortsel
+	 */
+	public function getFieldsForSorting($sortsel) {
 		$ret = array();
 
-		foreach($this->vars as $key=>$field_info) {
+		foreach ($this->vars as $key=>$field_info) {
 			if ($field_info['sortby']) {
 				$ret[$key]['caption'] = $field_info['form_caption'];
 				$ret[$key]['selected'] = $key == $sortsel ? "selected='selected'" : '';
@@ -600,11 +691,24 @@ class icms_ipf_Object extends icms_core_Object {
 		}
 	}
 
-	function setType($key, $newType) {
+	/**
+	 *
+	 *
+	 * @param 		$key
+	 * @param 		$newType
+	 */
+	public function setType($key, $newType) {
 		$this->vars[$key]['data_type'] = $newType;
 	}
 
-	function setVarInfo($key, $info, $value) {
+	/**
+	 *
+	 *
+	 * @param unknown_type $key
+	 * @param unknown_type $info
+	 * @param unknown_type $value
+	 */
+	public function setVarInfo($key, $info, $value) {
 		$this->vars[$key][$info] = $value;
 	}
 
@@ -614,11 +718,17 @@ class icms_ipf_Object extends icms_core_Object {
 	 * @param bool $force
 	 * @return bool true if successful, false if not
 	 */
-	function store($force=false) {
+	public function store($force = false) {
 		return $this->handler->insert($this, $force);
 	}
 
-	function getValueFor($key, $editor=true) {
+	/**
+	 *
+	 *
+	 * @param unknown_type $key
+	 * @param unknown_type $editor
+	 */
+	public function getValueFor($key, $editor = true) {
 		global $icmsModuleConfig;
 
 		$ret = $this->getVar($key, 'n');
@@ -667,8 +777,7 @@ class icms_ipf_Object extends icms_core_Object {
 	 * @param string $format format to use for the output
 	 * @return mixed formatted value of the variable
 	 */
-	function getVar($key, $format = 's')
-	{
+	public function getVar($key, $format = 's') {
 		global $myts;
 
 		$ret = $this->vars[$key]['value'];
@@ -689,6 +798,7 @@ class icms_ipf_Object extends icms_core_Object {
 							return $ret;
 						}
 						break 1;
+
 						// End of ML Hack by marcan
 
 					case 'clean':
@@ -706,6 +816,7 @@ class icms_ipf_Object extends icms_core_Object {
 						$ts =& icms_core_Textsanitizer::getInstance();
 						return $ts->htmlSpecialChars($ret);
 						break 1;
+
 					case 'p':
 					case 'preview':
 					case 'f':
@@ -713,12 +824,14 @@ class icms_ipf_Object extends icms_core_Object {
 						$ts =& icms_core_Textsanitizer::getInstance();
 						return $ts->htmlSpecialChars($ts->stripSlashesGPC($ret));
 						break 1;
+
 					case 'n':
 					case 'none':
 					default:
 						break 1;
 				}
 				break;
+
 			case XOBJ_DTYPE_LTIME:
 				switch (strtolower($format)) {
 					case 's':
@@ -730,15 +843,18 @@ class icms_ipf_Object extends icms_core_Object {
 						$ret = formatTimestamp($ret, _DATESTRING);
 						return $ret;
 						break 1;
+
 					case 'n':
 					case 'none':
 					case 'e':
 					case 'edit':
 						break 1;
+
 					default:
 						break 1;
 				}
 				break;
+
 			case XOBJ_DTYPE_STIME:
 				switch (strtolower($format)) {
 					case 's':
@@ -750,15 +866,18 @@ class icms_ipf_Object extends icms_core_Object {
 						$ret = formatTimestamp($ret, _SHORTDATESTRING);
 						return $ret;
 						break 1;
+
 					case 'n':
 					case 'none':
 					case 'e':
 					case 'edit':
 						break 1;
+
 					default:
 						break 1;
 				}
 				break;
+
 			case XOBJ_DTYPE_TIME_ONLY:
 				switch (strtolower($format)) {
 					case 's':
@@ -770,11 +889,13 @@ class icms_ipf_Object extends icms_core_Object {
 						$ret = formatTimestamp($ret, 'G:i');
 						return $ret;
 						break 1;
+
 					case 'n':
 					case 'none':
 					case 'e':
 					case 'edit':
 						break 1;
+
 					default:
 						break 1;
 				}
@@ -822,10 +943,12 @@ class icms_ipf_Object extends icms_core_Object {
 
 						return $ts->displayTarea($ret, $html, $smiley, $xcode, $image, $br);
 						break 1;
+
 					case 'e':
 					case 'edit':
 						return htmlspecialchars($ret, ENT_QUOTES);
 						break 1;
+
 					case 'p':
 					case 'preview':
 						$ts = icms_core_Textsanitizer::getInstance();
@@ -836,48 +959,58 @@ class icms_ipf_Object extends icms_core_Object {
 						$br = (!isset($this->vars['dobr']['value']) || $this->vars['dobr']['value'] == 1) ? 1 : 0;
 						return $ts->previewTarea($ret, $html, $smiley, $xcode, $image, $br);
 						break 1;
+
 					case 'f':
 					case 'formpreview':
 						$ts = icms_core_Textsanitizer::getInstance();
 						return htmlspecialchars($ts->stripSlashesGPC($ret), ENT_QUOTES);
 						break 1;
+
 					case 'n':
 					case 'none':
 					default:
 						break 1;
 				}
 				break;
+
 			case XOBJ_DTYPE_SIMPLE_ARRAY:
 				$ret =& explode('|', $ret);
 				break;
+
 			case XOBJ_DTYPE_ARRAY:
 				$ret =& unserialize($ret);
 				break;
+
 			case XOBJ_DTYPE_SOURCE:
 				switch (strtolower($format)) {
 					case 's':
 					case 'show':
 						break 1;
+
 					case 'e':
 					case 'edit':
 						return htmlspecialchars($ret, ENT_QUOTES);
 						break 1;
+
 					case 'p':
 					case 'preview':
 						$ts = icms_core_Textsanitizer::getInstance();
 						return $ts->stripSlashesGPC($ret);
 						break 1;
+
 					case 'f':
 					case 'formpreview':
 						$ts = icms_core_Textsanitizer::getInstance();
 						return htmlspecialchars($ts->stripSlashesGPC($ret), ENT_QUOTES);
 						break 1;
+
 					case 'n':
 					case 'none':
 					default:
 						break 1;
 				}
 				break;
+
 			default:
 				if ($this->vars[$key]['options'] != '' && $ret != '') {
 					switch (strtolower($format)) {
@@ -894,10 +1027,12 @@ class icms_ipf_Object extends icms_core_Object {
 								$i++;
 							}
 							return implode(', ', $ret);
+
 						case 'e':
 						case 'edit':
 							$ret = explode('|', $ret);
 							break 1;
+
 						default:
 							break 1;
 					}
@@ -908,14 +1043,24 @@ class icms_ipf_Object extends icms_core_Object {
 		return $ret;
 	}
 
-	function doMakeFieldreadOnly($key) {
+	/**
+	 *
+	 *
+	 * @param	str	$key
+	 */
+	public function doMakeFieldreadOnly($key) {
 		if (isset($this->vars[$key])) {
 			$this->vars[$key]['readonly'] = true;
 			$this->vars[$key]['displayOnForm'] = true;
 		}
 	}
 
-	function makeFieldReadOnly($key) {
+	/**
+	 *
+	 *
+	 * @param	str|arr	$key
+	 */
+	public function makeFieldReadOnly($key) {
 		if (is_array($key)) {
 			foreach($key as $v) {
 				$this->doMakeFieldreadOnly($v);
@@ -925,19 +1070,34 @@ class icms_ipf_Object extends icms_core_Object {
 		}
 	}
 
-	function doHideFieldFromForm($key) {
+	/**
+	 *
+	 *
+	 * @param	str	$key
+	 */
+	public function doHideFieldFromForm($key) {
 		if (isset($this->vars[$key])) {
 			$this->vars[$key]['displayOnForm'] = false;
 		}
 	}
 
-	function doHideFieldFromSingleView($key) {
+	/**
+	 *
+	 *
+	 * @param $key
+	 */
+	public function doHideFieldFromSingleView($key) {
 		if (isset($this->vars[$key])) {
 			$this->vars[$key]['displayOnSingleView'] = false;
 		}
 	}
 
-	function hideFieldFromForm($key) {
+	/**
+	 *
+	 *
+	 * @param $key
+	 */
+	public function hideFieldFromForm($key) {
 		if (is_array($key)) {
 			foreach($key as $v) {
 				$this->doHideFieldFromForm($v);
@@ -947,7 +1107,12 @@ class icms_ipf_Object extends icms_core_Object {
 		}
 	}
 
-	function hideFieldFromSingleView($key) {
+	/**
+	 *
+	 *
+	 * @param $key
+	 */
+	public function hideFieldFromSingleView($key) {
 		if (is_array($key)) {
 			foreach($key as $v) {
 				$this->doHideFieldFromSingleView($v);
@@ -957,7 +1122,12 @@ class icms_ipf_Object extends icms_core_Object {
 		}
 	}
 
-	function doShowFieldOnForm($key) {
+	/**
+	 *
+	 *
+	 * @param unknown_type $key
+	 */
+	public function doShowFieldOnForm($key) {
 		if (isset($this->vars[$key])) {
 			$this->vars[$key]['displayOnForm'] = true;
 		}
@@ -970,11 +1140,11 @@ class icms_ipf_Object extends icms_core_Object {
 	 * @param bool $userSide for futur use, to do something different on the user side
 	 * @return content of the template if $fetchOnly or nothing if !$fetchOnly
 	 */
-	function displaySingleObject($fetchOnly=false, $userSide=false, $actions=array(), $headerAsRow=true) {
-		include_once ICMS_ROOT_PATH."/kernel/icmspersistablesingleview.php";
+	public function displaySingleObject($fetchOnly = false, $userSide = false, $actions = array(), $headerAsRow = true) {
+		//include_once ICMS_ROOT_PATH."/kernel/icmspersistablesingleview.php";
 		$singleview = new icms_ipf_view_Single($this, $userSide, $actions, $headerAsRow);
 		// add all fields mark as displayOnSingleView except the keyid
-		foreach($this->vars as $key=>$var) {
+		foreach ($this->vars as $key=>$var) {
 			if ($key != $this->handler->keyName && $var['displayOnSingleView']) {
 				$is_header = ($key == $this->handler->identifierName);
 				$singleview->addRow(new icms_ipf_view_Row($key, false, $is_header));
@@ -984,26 +1154,47 @@ class icms_ipf_Object extends icms_core_Object {
 		if ($fetchOnly) {
 			$ret = $singleview->render($fetchOnly);;
 			return $ret;
-		}else {
+		} else {
 			$singleview->render($fetchOnly);
 		}
 	}
 
-	function doDisplayFieldOnSingleView($key) {
+	/**
+	 *
+	 *
+	 * @param unknown_type $key
+	 */
+	public function doDisplayFieldOnSingleView($key) {
 		if (isset($this->vars[$key])) {
 			$this->vars[$key]['displayOnSingleView'] = true;
 		}
 	}
 
-	function doSetFieldAsRequired($field, $required=true) {
+	/**
+	 *
+	 *
+	 * @param $field
+	 * @param $required
+	 */
+	public function doSetFieldAsRequired($field, $required = true) {
 		$this->setVarInfo($field, 'required', $required);
 	}
 
-	function doSetFieldForSorting($field) {
+	/**
+	 *
+	 *
+	 * @param unknown_type $field
+	 */
+	public function doSetFieldForSorting($field) {
 		$this->setVarInfo($field, 'sortby', true);
 	}
 
-	function showFieldOnForm($key) {
+	/**
+	 *
+	 *
+	 * @param unknown_type $key
+	 */
+	public function showFieldOnForm($key) {
 		if (is_array($key)) {
 			foreach($key as $v) {
 				$this->doShowFieldOnForm($v);
@@ -1019,11 +1210,16 @@ class icms_ipf_Object extends icms_core_Object {
 	 * @param bool $force
 	 * @return bool true if successful, false if not
 	 */
-	function delete($force=false) {
+	public function delete($force = false) {
 		return $this->handler->delete($this, $force);
 	}
 
-	function displayFieldOnSingleView($key) {
+	/**
+	 *
+	 *
+	 * @param $key
+	 */
+	public function displayFieldOnSingleView($key) {
 		if (is_array($key)) {
 			foreach($key as $v) {
 				$this->doDisplayFieldOnSingleView($v);
@@ -1033,13 +1229,23 @@ class icms_ipf_Object extends icms_core_Object {
 		}
 	}
 
-	function doSetAdvancedFormFields($key){
+	/**
+	 *
+	 *
+	 * @param $key
+	 */
+	public function doSetAdvancedFormFields($key){
 		if (isset($this->vars[$key])) {
 			$this->vars[$key]['advancedform'] = true;
 		}
 	}
 
-	function setAdvancedFormFields($key) {
+	/**
+	 *
+	 *
+	 * @param $key
+	 */
+	public function setAdvancedFormFields($key) {
 		if (is_array($key)) {
 			foreach($key as $v) {
 				$this->doSetAdvancedFormFields($v);
@@ -1085,4 +1291,3 @@ class icms_ipf_Object extends icms_core_Object {
 		*/
 }
 
-?>

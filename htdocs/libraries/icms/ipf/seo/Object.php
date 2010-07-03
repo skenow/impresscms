@@ -4,13 +4,15 @@
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		icms_ipf_Object
+ * @category	ICMS
+ * @package		Ipf
+ * @subpackage	SeoObject
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id: icmspersistableseoobject.php 19628 2010-06-25 15:41:19Z malanciault $
+ * @version		SVN: $Id$
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 /**
  * icms_ipf_Object base SEO-enabled class
@@ -19,16 +21,21 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		icms_ipf_Object
+ * @category	ICMS
+ * @package		Ipf
+ * @subpackage	Object
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id: icmspersistableseoobject.php 19628 2010-06-25 15:41:19Z malanciault $
  */
 class icms_ipf_seo_Object extends icms_ipf_Object {
-	function icms_ipf_seo_Object() {
-		$this->initCommonVar("meta_keywords");
-		$this->initCommonVar("meta_description");
-		$this->initCommonVar("short_url");
+
+	/**
+	 * Constructor
+	 */
+	public function __construct() {
+		$this->initCommonVar('meta_keywords');
+		$this->initCommonVar('meta_description');
+		$this->initCommonVar('short_url');
 		$this->seoEnabled = true;
 	}
 
@@ -37,8 +44,7 @@ class icms_ipf_seo_Object extends icms_ipf_Object {
 	 *
 	 * @return string
 	 */
-	function short_url()
-	{
+	public function short_url() {
 		return $this->getVar('short_url');
 	}
 
@@ -47,8 +53,7 @@ class icms_ipf_seo_Object extends icms_ipf_Object {
 	 *
 	 * @return string
 	 */
-	function meta_keywords()
-	{
+	public function meta_keywords() {
 		return $this->getVar('meta_keywords');
 	}
 
@@ -57,10 +62,8 @@ class icms_ipf_seo_Object extends icms_ipf_Object {
 	 *
 	 * @return string
 	 */
-	function meta_description()
-	{
+	public function meta_description() {
 		return $this->getVar('meta_description');
 	}
 }
 
-?>

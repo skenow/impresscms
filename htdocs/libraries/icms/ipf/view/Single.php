@@ -1,25 +1,28 @@
 <?php
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
-
 /**
  * Contains the basis classes for displaying a single icms_ipf_Object
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		icms_ipf_Object
+ * @category	ICMS
+ * @package		Ipf
+ * @subpackage	Object
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id: icmspersistablesingleview.php 19623 2010-06-25 14:59:15Z malanciault $
+ * @version		SVN: $Id: icmspersistablesingleview.php 19623 2010-06-25 14:59:15Z malanciault $
  */
+
+defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 /**
  * icms_ipf_view_Single base class
  *
  * Base class handling the display of a single object
  *
- * @package ImpressCMS Persistabke Framework
+ * @category	ICMS
+ * @package		Ipf
+ * @subpackage	View
  * @author marcan <marcan@smartfactory.ca>
- * @link http://smartfactory.ca The SmartFactory
  */
 class icms_ipf_view_Single {
 
@@ -28,25 +31,32 @@ class icms_ipf_view_Single {
 	var $_tpl;
 	var $_rows;
 	var $_actions;
-	var $_headerAsRow=true;
+	var $_headerAsRow = true;
 
 	/**
 	 * Constructor
 	 */
-	function icms_ipf_view_Single(&$object, $userSide=false, $actions=array(), $headerAsRow=true)
-	{
+	public function __construct(&$object, $userSide = false, $actions = array(), $headerAsRow = true) {
 		$this->_object = $object;
 		$this->_userSide = $userSide;
 		$this->_actions = $actions;
 		$this->_headerAsRow = $headerAsRow;
 	}
 
-	function addRow($rowObj) {
+	/**
+	 *
+	 * @param $rowObj
+	 */
+	public function addRow($rowObj) {
 		$this->_rows[] = $rowObj;
 	}
 
-	function render($fetchOnly=false, $debug=false)
-	{
+	/**
+	 *
+	 * @param $fetchOnly
+	 * @param $debug
+	 */
+	public function render($fetchOnly = false, $debug = false) {
 		//include_once ICMS_ROOT_PATH . '/class/template.php';
 
 		$this->_tpl = new icms_view_Tpl();
@@ -89,15 +99,18 @@ class icms_ipf_view_Single {
 		 * @todo when ICMS 1.2 is out, change this for system_persistable_singleview.html
 		 */
 		if ($fetchOnly) {
-			return $this->_tpl->fetch( 'db:system_persistable_singleview.html' );
+			return $this->_tpl->fetch('db:system_persistable_singleview.html');
 		} else {
-			$this->_tpl->display( 'db:system_persistable_singleview.html' );
+			$this->_tpl->display('db:system_persistable_singleview.html');
 		}
 	}
 
-	function fetch($debug=false) {
+	/**
+	 *
+	 * @param unknown_type $debug
+	 */
+	public function fetch($debug = false) {
 		return $this->render(true, $debug);
 	}
 }
 
-?>

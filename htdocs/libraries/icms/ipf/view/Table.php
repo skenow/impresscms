@@ -6,13 +6,15 @@
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		icms_ipf_Object
+ * @category	ICMS
+ * @package		Ipf
+ * @subpackage	View
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id: icmspersistabletable.php 19623 2010-06-25 14:59:15Z malanciault $
+ * @version		SVN: $Id: icmspersistabletable.php 19623 2010-06-25 14:59:15Z malanciault $
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 /**
  * icms_ipf_view_Table base class
@@ -21,11 +23,11 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		icms_ipf_Object
+ * @category	ICMS
+ * @package		Ipf
+ * @subpackage	View
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id: icmspersistabletable.php 19623 2010-06-25 14:59:15Z malanciault $
-
  */
 class icms_ipf_view_Table {
 
@@ -34,7 +36,7 @@ class icms_ipf_view_Table {
 	var $_columns;
 	var $_criteria;
 	var $_actions;
-	var $_objects=false;
+	var $_objects = false;
 	var $_aObjects;
 	var $_custom_actions;
 	var $_sortsel;
@@ -49,14 +51,14 @@ class icms_ipf_view_Table {
 	var $_tempObject;
 	var $_tpl;
 	var $_introButtons;
-	var $_quickSearch=false;
-	var $_actionButtons=false;
-	var $_head_css_class='bg3';
-	var $_hasActions=false;
-	var $_userSide=false;
-	var $_printerFriendlyPage=false;
-	var $_tableHeader=false;
-	var $_tableFooter=false;
+	var $_quickSearch = false;
+	var $_actionButtons = false;
+	var $_head_css_class = 'bg3';
+	var $_hasActions = false;
+	var $_userSide = false;
+	var $_printerFriendlyPage = false;
+	var $_tableHeader = false;
+	var $_tableFooter = false;
 	var $_showActionsColumnTitle = true;
 	var $_isTree = false;
 	var $_showFilterAndLimit = true;
@@ -74,8 +76,7 @@ class icms_ipf_view_Table {
 	 *
 	 * @return array
 	 */
-	function icms_ipf_view_Table(&$objectHandler, $criteria=false, $actions=array('edit', 'delete'), $userSide=false)
-	{
+	public function __construct(&$objectHandler, $criteria = false, $actions = array('edit', 'delete'), $userSide = false) {
 		$this->_id = $objectHandler->className;
 		$this->_objectHandler = $objectHandler;
 
@@ -91,7 +92,13 @@ class icms_ipf_view_Table {
 		}
 	}
 
-	function addActionButton($op, $caption=false, $text=false) {
+	/**
+	 *
+	 * @param $op
+	 * @param $caption
+	 * @param $text
+	 */
+	public function addActionButton($op, $caption = false, $text = false) {
 		$action = array(
 					'op' => $op,
 					'caption' => $caption,
@@ -100,11 +107,21 @@ class icms_ipf_view_Table {
 		$this->_actionButtons[] = $action;
 	}
 
-	function addColumn($columnObj) {
+	/**
+	 *
+	 * @param $columnObj
+	 */
+	public function addColumn($columnObj) {
 		$this->_columns[] = $columnObj;
 	}
 
-	function addIntroButton($name, $location, $value) {
+	/**
+	 *
+	 * @param $name
+	 * @param $location
+	 * @param $value
+	 */
+	public function addIntroButton($name, $location, $value) {
 		$introButton = array();
 		$introButton['name'] = $name;
 		$introButton['location'] = $location;
@@ -113,38 +130,69 @@ class icms_ipf_view_Table {
 		unset($introButton);
 	}
 
-	function addPrinterFriendlyLink() {
+	/**
+	 *
+	 */
+	public function addPrinterFriendlyLink() {
 		global $impresscms;
 
 		$current_url = $impresscms->urls['full'];
 		$this->_printerFriendlyPage = $current_url . '&print';
 	}
 
-	function addQuickSearch($fields, $caption=_CO_ICMS_QUICK_SEARCH) {
+	/**
+	 *
+	 * @param $fields
+	 * @param $caption
+	 */
+	public function addQuickSearch($fields, $caption = _CO_ICMS_QUICK_SEARCH) {
 		$this->_quickSearch = array('fields' => $fields, 'caption' => $caption);
 	}
 
-	function addHeader($content) {
+	/**
+	 *
+	 * @param unknown_type $content
+	 */
+	public function addHeader($content) {
 		$this->_tableHeader = $content;
 	}
 
-	function addFooter($content) {
+	/**
+	 *
+	 * @param $content
+	 */
+	public function addFooter($content) {
 		$this->_tableFooter = $content;
 	}
 
-	function addDefaultIntroButton($caption) {
+	/**
+	 *
+	 * @param $caption
+	 */
+	public function addDefaultIntroButton($caption) {
 		$this->addIntroButton($this->_objectHandler->_itemname, $this->_objectHandler->_page . "?op=mod", $caption);
 	}
 
-	function addCustomAction($method) {
+	/**
+	 *
+	 * @param $method
+	 */
+	public function addCustomAction($method) {
 		$this->_custom_actions[] = $method;
 	}
 
-	function setDefaultSort($default_sort) {
+	/**
+	 *
+	 * @param $default_sort
+	 */
+	public function setDefaultSort($default_sort) {
 		$this->_sortsel = $default_sort;
 	}
 
-	function getDefaultSort() {
+	/**
+	 *
+	 */
+	public function getDefaultSort() {
 		if ($this->_sortsel) {
 			return icms_getCookieVar($_SERVER['PHP_SELF'] . '_' . $this->_id . '_sortsel', $this->_sortsel);
 		} else {
@@ -152,18 +200,30 @@ class icms_ipf_view_Table {
 		}
 	}
 
-	function setDefaultOrder($default_order) {
+	/**
+	 *
+	 * @param unknown_type $default_order
+	 */
+	public function setDefaultOrder($default_order) {
 		$this->_ordersel = $default_order;
 	}
 
-	function getDefaultOrder() {
+	/**
+	 *
+	 */
+	public function getDefaultOrder() {
 		if ($this->_ordersel) {
 			return icms_getCookieVar($_SERVER['PHP_SELF'] . '_' . $this->_id . '_ordersel', $this->_ordersel);
 		} else {
 			return icms_getCookieVar($_SERVER['PHP_SELF'] . '_' . $this->_id . '_ordersel', 'ASC');
 		}
 	}
-	function addWithSelectedActions($actions = array()){
+
+	/**
+	 *
+	 * @param $actions
+	 */
+	public function addWithSelectedActions($actions = array()) {
 		$this->addColumn(new icms_ipf_view_Column('checked', 'center', 20, false, false, '&nbsp;'));
 		$this->_withSelectedActions = $actions;
 	}
@@ -174,22 +234,38 @@ class icms_ipf_view_Table {
 	 * @param string $key key to the field that will be used for sorting
 	 * @param string $method method of the handler that will be called to populate the options when this filter is selected
 	 */
-	function addFilter($key, $method, $default=false) {
+	public function addFilter($key, $method, $default = false) {
 		$this->_filterseloptions[$key] = $method;
 		$this->_filtersel2optionsDefault = $default;
 	}
 
-	function setDefaultFilter($default_filter) {
+	/**
+	 *
+	 * @param $default_filter
+	 */
+	public function setDefaultFilter($default_filter) {
 		$this->_filtersel = $default_filter;
 	}
 
-	function isForUserSide() {
+	/**
+	 *
+	 */
+	public function isForUserSide() {
 		$this->_userSide = true;
 	}
-	function setCustomTemplate($template) {
+
+	/**
+	 *
+	 * @param $template
+	 */
+	public function setCustomTemplate($template) {
 		$this->_customTemplate = $template;
 	}
-	function setSortOrder() {
+
+	/**
+	 *
+	 */
+	public function setSortOrder() {
 		$this->_sortsel = isset($_GET[$this->_objectHandler->_itemname . '_' . 'sortsel']) ? $_GET[$this->_objectHandler->_itemname . '_' . 'sortsel'] : $this->getDefaultSort();
 		//$this->_sortsel = isset($_POST['sortsel']) ? $_POST['sortsel'] : $this->_sortsel;
 
@@ -209,15 +285,26 @@ class icms_ipf_view_Table {
 		$this->_criteria->setOrder($this->_ordersel);
 	}
 
-	function setTableId($id) {
+	/**
+	 *
+	 * @param $id
+	 */
+	public function setTableId($id) {
 		$this->_id = $id;
 	}
 
-	function setObjects($objects) {
+	/**
+	 *
+	 * @param $objects
+	 */
+	public function setObjects($objects) {
 		$this->_objects = $objects;
 	}
 
-	function createTableRows() {
+	/**
+	 *
+	 */
+	public function createTableRows() {
 		$this->_aObjects = array();
 
 		$doWeHaveActions = false;
@@ -229,7 +316,7 @@ class icms_ipf_view_Table {
 
 				$aObject = array();
 
-				$i=0;
+				$i = 0;
 
 				$aColumns = array();
 
@@ -244,16 +331,16 @@ class icms_ipf_view_Table {
 					} else {
 						$class = "odd";
 					}
-					if(method_exists($object, 'initiateCustomFields')){
+					if (method_exists($object, 'initiateCustomFields')) {
 						//$object->initiateCustomFields();
 					}
-					if($column->_keyname == 'checked'){
-						$value = '<input type ="checkbox" name="selected_icms_persistableobjects[]" value="'.$object->id().'" />';
-					}elseif ($column->_customMethodForValue && method_exists($object, $column->_customMethodForValue)) {
+					if ($column->_keyname == 'checked') {
+						$value = '<input type ="checkbox" name="selected_icms_persistableobjects[]" value="' . $object->id() . '" />';
+					} elseif ($column->_customMethodForValue && method_exists($object, $column->_customMethodForValue)) {
 						$method = $column->_customMethodForValue;
-						if($column->_param){
+						if ($column->_param) {
 							$value = $object->$method($column->_param);
-						}else{
+						} else {
 							$value = $object->$method();
 						}
 					} else {
@@ -261,9 +348,9 @@ class icms_ipf_view_Table {
 						 * If the column is the identifier, then put a link on it
 						 */
 						if ($column->getKeyName() == $this->_objectHandler->identifierName) {
-							$value = $object->getViewItemLink( false, false, $this->_userSide );
+							$value = $object->getViewItemLink(false, false, $this->_userSide);
 						} else {
-							$value = $object->getVar( $column->getKeyName() );
+							$value = $object->getVar($column->getKeyName());
 						}
 					}
 
@@ -297,7 +384,7 @@ class icms_ipf_view_Table {
 					$actions[] = $object->getEditItemLink(false, true, $this->_userSide);
 				}
 				if ((!is_array($this->_actions)) || in_array('delete', $this->_actions)) {
-					$actions[] = $object->getDeleteItemLink( false, true, $this->_userSide);
+					$actions[] = $object->getDeleteItemLink(false, true, $this->_userSide);
 				}
 				$aObject['actions'] = $actions;
 
@@ -315,11 +402,18 @@ class icms_ipf_view_Table {
 		$this->_hasActions = $doWeHaveActions;
 	}
 
-	function fetchObjects($debug=false) {
+	/**
+	 *
+	 * @param unknown_type $debug
+	 */
+	public function fetchObjects($debug = false) {
 		return $this->_objectHandler->getObjects($this->_criteria, true,true, false, $debug);
 	}
 
-	function getDefaultFilter() {
+	/**
+	 *
+	 */
+	public function getDefaultFilter() {
 		if ($this->_filtersel) {
 			return icms_getCookieVar($_SERVER['PHP_SELF'] . '_' . $this->_id . '_filtersel', $this->_filtersel);
 		} else {
@@ -327,7 +421,10 @@ class icms_ipf_view_Table {
 		}
 	}
 
-	function getFiltersArray() {
+	/**
+	 *
+	 */
+	public function getFiltersArray() {
 		$ret = array();
 		$field = array();
 		$field['caption'] = _CO_ICMS_NONE;
@@ -336,7 +433,7 @@ class icms_ipf_view_Table {
 		unset($field);
 
 		if ($this->_filterseloptions) {
-			foreach($this->_filterseloptions as $key=>$value) {
+			foreach ($this->_filterseloptions as $key=>$value) {
 				$field = array();
 				if (is_array($value)) {
 					$field['caption'] = $key;
@@ -354,22 +451,31 @@ class icms_ipf_view_Table {
 		return $ret;
 	}
 
-	function setDefaultFilter2($default_filter2) {
+	/**
+	 *
+	 * @param unknown_type $default_filter2
+	 */
+	public function setDefaultFilter2($default_filter2) {
 		$this->_filtersel2 = $default_filter2;
 	}
 
-	function getDefaultFilter2() {
+	/**
+	 *
+	 */
+	public function getDefaultFilter2() {
 		if ($this->_filtersel2) {
 			return icms_getCookieVar($_SERVER['PHP_SELF'] . '_filtersel2', $this->_filtersel2);
 		} else {
 			return icms_getCookieVar($_SERVER['PHP_SELF'] . '_filtersel2', 'default');
 		}
 	}
-
-	function getFilters2Array() {
+	 /**
+	  *
+	  */
+	public function getFilters2Array() {
 		$ret = array();
 
-		foreach($this->_filtersel2options as $key=>$value) {
+		foreach ($this->_filtersel2options as $key=>$value) {
 			$field = array();
 			$field['caption'] = $value;
 			$field['selected'] = $this->_filtersel2 == $key ? "selected='selected'" : '';
@@ -379,7 +485,12 @@ class icms_ipf_view_Table {
 		return $ret;
 	}
 
-	function renderOptionSelection($limitsArray, $params_of_the_options_sel) {
+	/**
+	 *
+	 * @param $limitsArray
+	 * @param $params_of_the_options_sel
+	 */
+	public function renderOptionSelection($limitsArray, $params_of_the_options_sel) {
 		global $impresscms;
 		// Rendering the form to select options on the table
 		$current_url = $impresscms->urls['full'];
@@ -388,11 +499,14 @@ class icms_ipf_view_Table {
 		 * What was $params_of_the_options_sel doing again ?
 		 */
 		//$this->_tpl->assign('icms_optionssel_action', $_SERVER['PHP_SELF'] . "?" . implode('&', $params_of_the_options_sel));
-		$this->_tpl->assign('icms_optionssel_action', $current_url );
+		$this->_tpl->assign('icms_optionssel_action', $current_url);
 		$this->_tpl->assign('icms_optionssel_limitsArray', $limitsArray);
 	}
 
-	function getLimitsArray() {
+	/**
+	 *
+	 */
+	public function getLimitsArray() {
 		$ret = array();
 		$ret['all']['caption'] = _CO_ICMS_LIMIT_ALL;
 		$ret['all']['selected'] = ('all' == $this->_limitsel) ? "selected='selected'" : "";
@@ -423,19 +537,31 @@ class icms_ipf_view_Table {
 		return $ret;
 	}
 
-	function getObjects() {
+	/**
+	 *
+	 */
+	public function getObjects() {
 		return $this->_objects;
 	}
 
-	function hideActionColumnTitle() {
+	/**
+	 *
+	 */
+	public function hideActionColumnTitle() {
 		$this->_showActionsColumnTitle = false;
 	}
 
-	function hideFilterAndLimit() {
+	/**
+	 *
+	 */
+	public function hideFilterAndLimit() {
 		$this->_showFilterAndLimit = false;
 	}
 
-	function getOrdersArray() {
+	/**
+	 *
+	 */
+	public function getOrdersArray() {
 		$ret = array();
 		$ret['ASC']['caption'] = _CO_ICMS_SORT_ASC;
 		$ret['ASC']['selected'] = ('ASC' == $this->_ordersel) ? "selected='selected'" : "";
@@ -446,16 +572,26 @@ class icms_ipf_view_Table {
 		return $ret;
 	}
 
-	function renderD() {
+	/**
+	 *
+	 */
+	public function renderD() {
 		return $this->render(false, true);
 	}
 
-	function renderForPrint() {
+	/**
+	 *
+	 */
+	public function renderForPrint() {
 
 	}
 
-	function render($fetchOnly=false, $debug=false)
-	{
+	/**
+	 *
+	 * @param $fetchOnly
+	 * @param $debug
+	 */
+	public function render($fetchOnly = false, $debug = false) {
 		global $impresscms;
 
 		//include_once ICMS_ROOT_PATH . '/class/template.php';
@@ -524,7 +660,7 @@ class icms_ipf_view_Table {
 		if (isset($_POST['quicksearch_' . $this->_id]) && $_POST['quicksearch_' . $this->_id] != '') {
 			$quicksearch_criteria = new icms_criteria_Compo();
 			if (is_array($this->_quickSearch['fields'])) {
-				foreach($this->_quickSearch['fields'] as $v) {
+				foreach ($this->_quickSearch['fields'] as $v) {
 					$quicksearch_criteria->add(new icms_criteria_Item($v, '%' . $_POST['quicksearch_' . $this->_id] . '%', 'LIKE'), 'OR');
 				}
 			} else {
@@ -579,7 +715,7 @@ class icms_ipf_view_Table {
 		}
 		$query_stringArray = explode('&', $query_string);
 		$new_query_stringArray = array();
-		foreach($query_stringArray as $query_string) {
+		foreach ($query_stringArray as $query_string) {
 			if (strpos($query_string, 'sortsel') == FALSE && strpos($query_string, 'ordersel') == FALSE) {
 				$new_query_stringArray[] = $query_string;
 			}
@@ -600,12 +736,12 @@ class icms_ipf_view_Table {
 			$aColumn['align'] = $column->getAlign();
 			$aColumn['key'] = $column->getKeyName();
 
-			if($column->_keyname == 'checked'){
+			if ($column->_keyname == 'checked') {
 				$aColumn['caption'] = '<input type ="checkbox" id="checkall_icmspersistableobjects" name="checkall_icmspersistableobjects"' .
-						' value="checkall_icmspersistableobjects" onclick="icms_checkall(window.document.form_'.$this->_id.', \'selected_icmspersistableobjects\');" />';
-			}elseif($column->getCustomCaption()){
+						' value="checkall_icmspersistableobjects" onclick="icms_checkall(window.document.form_' . $this->_id . ', \'selected_icmspersistableobjects\');" />';
+			} elseif ($column->getCustomCaption()) {
 				$aColumn['caption'] = $column->getCustomCaption();
-			}else{
+			} else {
 				$aColumn['caption'] = isset($this->_tempObject->vars[$column->getKeyName()]['form_caption']) ? $this->_tempObject->vars[$column->getKeyName()]['form_caption'] : $column->getKeyName();
 			}
 			// Are we doing a GET sort on this column ?
@@ -613,16 +749,16 @@ class icms_ipf_view_Table {
 			$order = isset($_GET[$this->_objectHandler->_itemname . '_' . 'ordersel']) ? $_GET[$this->_objectHandler->_itemname . '_' . 'ordersel'] : 'DESC';
 
 			if (isset($_REQUEST['quicksearch_' . $this->_id]) && $_REQUEST['quicksearch_' . $this->_id] != '') {
-				$qs_param = "&amp;quicksearch_".$this->_id."=".$_REQUEST['quicksearch_' . $this->_id];
+				$qs_param = "&amp;quicksearch_" . $this->_id . "=" . $_REQUEST['quicksearch_' . $this->_id];
 			} else {
 				$qs_param = '';
 			}
 			if (!$this->_enableColumnsSorting || $column->_keyname == 'checked' || !$column->_sortable) {
 				$aColumn['caption'] =  $aColumn['caption'];
 			} elseif ($getSort) {
-				$aColumn['caption'] =  '<a href="' . $current_url . '?' . $this->_objectHandler->_itemname . '_' . 'sortsel=' . $column->getKeyName() . '&amp;' . $this->_objectHandler->_itemname . '_' . 'ordersel=' . $orderArray[$order]['neworder'].$qs_param . '&amp;' . $new_query_string . '">' . $aColumn['caption'] . ' <img src="' . ICMS_IMAGES_SET_URL .'/actions/' . $orderArray[$order]['image'] . '" alt="ASC" /></a>';
+				$aColumn['caption'] =  '<a href="' . $current_url . '?' . $this->_objectHandler->_itemname . '_' . 'sortsel=' . $column->getKeyName() . '&amp;' . $this->_objectHandler->_itemname . '_' . 'ordersel=' . $orderArray[$order]['neworder'] . $qs_param . '&amp;' . $new_query_string . '">' . $aColumn['caption'] . ' <img src="' . ICMS_IMAGES_SET_URL .'/actions/' . $orderArray[$order]['image'] . '" alt="ASC" /></a>';
 			} else {
-				$aColumn['caption'] =  '<a href="' . $current_url . '?' . $this->_objectHandler->_itemname . '_' . 'sortsel=' . $column->getKeyName() . '&amp;' . $this->_objectHandler->_itemname . '_' . 'ordersel=ASC'.$qs_param.'&amp;' . $new_query_string . '">' . $aColumn['caption'] . '</a>';
+				$aColumn['caption'] =  '<a href="' . $current_url . '?' . $this->_objectHandler->_itemname . '_' . 'sortsel=' . $column->getKeyName() . '&amp;' . $this->_objectHandler->_itemname . '_' . 'ordersel=ASC' . $qs_param . '&amp;' . $new_query_string . '">' . $aColumn['caption'] . '</a>';
 			}
 			$aColumns[] = $aColumn;
 		}
@@ -646,25 +782,31 @@ class icms_ipf_view_Table {
 		$this->_tpl->assign('icms_actionButtons', $this->_actionButtons);
 		$this->_tpl->assign('icms_introButtons', $this->_introButtons);
 		$this->_tpl->assign('icms_id', $this->_id);
-		if(!empty($this->_withSelectedActions)){
+		if (!empty($this->_withSelectedActions)) {
 			$this->_tpl->assign('icms_withSelectedActions', $this->_withSelectedActions);
 		}
 
 		$icms_table_template = $this->_customTemplate ? $this->_customTemplate : 'system_persistabletable_display.html';
 		if ($fetchOnly) {
-			return $this->_tpl->fetch( 'db:' . $icms_table_template );
+			return $this->_tpl->fetch('db:' . $icms_table_template);
 		} else {
-			$this->_tpl->display( 'db:' . $icms_table_template );
+			$this->_tpl->display('db:' . $icms_table_template);
 		}
 	}
 
-	function disableColumnsSorting() {
+	/**
+	 *
+	 */
+	public function disableColumnsSorting() {
 		$this->_enableColumnsSorting = false;
 	}
 
-	function fetch($debug=false) {
+	/**
+	 *
+	 * @param $debug
+	 */
+	public function fetch($debug = false) {
 		return $this->render(true, $debug);
 	}
 }
 
-?>
