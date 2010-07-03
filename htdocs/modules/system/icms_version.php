@@ -190,7 +190,7 @@ $modversion['blocks'][] = array(
 
 /**
  * @todo Remove this blocks on future versions. When 1.1.2 isn't supported anymore.
- */
+
 if (function_exists('xoops_gethandler')){
 	$icms_modules_handler = xoops_gethandler('module');
 	$module = $icms_modules_handler->getByDirname('content');
@@ -225,7 +225,7 @@ if (function_exists('xoops_gethandler')){
 		'template' => 'system_block_contentmenu.html');
 	}
 }
-/**/
+*/
 $modversion['blocks'][] = array(
 	'file' => 'system_blocks.php',
 	'name' => _MI_SYSTEM_BNAME18,
