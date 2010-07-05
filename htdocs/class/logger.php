@@ -32,20 +32,3 @@ class XoopsLogger extends icms_core_Logger {
 		$this->_deprecated = icms_deprecated('icms_core_Logger', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
-
-/**
- * PHP Error handler
- *
- * NB: You're not supposed to call this function directly, if you dont understand why, then
- * you'd better spend some time reading your PHP manual before you hurt somebody
- *
- * @internal: Using a function and not calling the handler method directly coz old PHP versions
- * set_error_handler() have problems with the array( obj,methodname ) syntax
- * @deprecated
- * @todo Remove this - but replace with the appropriate function in libraries/icms/core/Logger.php
- */
-function XoopsErrorHandler_HandleError( $errNo, $errStr, $errFile, $errLine, $errContext = null ) {
-	$logger =& XoopsLogger::instance();
-	$logger->handleError( $errNo, $errStr, $errFile, $errLine, $errContext );
-}
-

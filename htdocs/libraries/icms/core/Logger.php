@@ -52,7 +52,7 @@ class icms_core_Logger {
 		if ( !isset( $instance ) ) {
 			$instance = new icms_core_Logger();
 			// Always catch errors, for security reasons
-			set_error_handler( 'icmsErrorHandler_HandleError' );
+			set_error_handler( array( $instance, "handleError" ) );
 		}
 		return $instance;
 	}
@@ -306,18 +306,4 @@ class icms_core_Logger {
 		icms_deprecated('$this->dump("queries")', 'This method will be removed in version 1.4');
 		return $this->dump('queries');
 	}
-}
-
-/**
- * PHP Error handler
- *
- * NB: You're not supposed to call this function directly, if you dont understand why, then
- * you'd better spend some time reading your PHP manual before you hurt somebody
- *
- * @internal: Using a function and not calling the handler method directly coz old PHP versions
- * set_error_handler() have problems with the array( obj,methodname ) syntax
- */
-function icmsErrorHandler_HandleError( $errNo, $errStr, $errFile, $errLine, $errContext = null ) {
-	$logger =& icms_core_Logger::instance();
-	$logger->handleError( $errNo, $errStr, $errFile, $errLine, $errContext );
 }
