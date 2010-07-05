@@ -63,7 +63,7 @@ class SystemPagesHandler extends icms_page_Handler {
 	private $modules_name;
 
 	public function __construct( & $db ){
-		parent::__construct($db, 'pages', 'page_id', 'page_title', '' , 'system');
+		icms_ipf_Handler::__construct($db, 'pages', 'page_id', 'page_title', '' , 'system');
 		$this->table = $db->prefix('icmspage');
 	}
 
