@@ -10,7 +10,7 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id$
+ * @version	$Id: xmlrpcapi.php 19612 2010-06-24 23:28:29Z malanciault $
  */
 
 class XoopsXmlRpcApi

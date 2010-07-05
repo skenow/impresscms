@@ -10,7 +10,7 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id$
+ * @version	$Id: movabletypeapi.php 19118 2010-03-27 17:46:23Z skenow $
  */
 
 if (!defined('ICMS_ROOT_PATH')) {
