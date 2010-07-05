@@ -27,7 +27,7 @@ class mod_content_Content extends icms_ipf_seo_Object {
 	public function __construct(&$handler) {
 		global $xoopsConfig, $contentConfig;
 
-		$this->icms_ipf_Object ( $handler );
+		icms_ipf_Object::__construct ( $handler );
 
 		$this->quickInitVar ( 'content_id', XOBJ_DTYPE_INT, true );
 		$this->quickInitVar ( 'content_pid', XOBJ_DTYPE_INT, false );
@@ -74,7 +74,7 @@ class mod_content_Content extends icms_ipf_seo_Object {
 		$this->setControl ( 'content_showsubs', 'yesno' );
 		$this->setControl ( 'content_cancomment', 'yesno' );
 
-		$this->icms_ipf_seo_Object ();
+		parent::__construct ();
 	}
 
 	public function getVar($key, $format = 's') {
