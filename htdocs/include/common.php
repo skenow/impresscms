@@ -163,11 +163,10 @@ if (!defined('XOOPS_XMLRPC')) {
 include_once ICMS_ROOT_PATH . '/include/functions.php';
 
 // #################### Connect to DB ##################
-require_once ICMS_ROOT_PATH . '/class/database/databasefactory.php';
 if ($_SERVER['REQUEST_METHOD'] != 'POST' || !$xoopsSecurity->checkReferer(XOOPS_DB_CHKREF)) {
 	define('XOOPS_DB_PROXY', 1);
 }
-$xoopsDB =& XoopsDatabaseFactory::getDatabaseConnection();
+$xoopsDB =& icms_database_Factory::getDatabaseConnection();
 
 // ################# Include required files ##############
 //require_once ICMS_ROOT_PATH.'/kernel/object.php';

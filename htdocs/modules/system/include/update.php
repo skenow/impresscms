@@ -48,7 +48,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		}
 	}
 
-	$icmsDatabaseUpdater = IcmsDatabaseFactory::getDatabaseUpdater ();
+	$icmsDatabaseUpdater = icms_database_Factory::getDatabaseUpdater ();
 	//$dbVersion  = $module->getDBVersion();
 	//$oldversion  = $module->getVar('version');
 

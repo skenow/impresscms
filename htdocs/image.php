@@ -38,7 +38,7 @@ $xoopsLogger->startTime();
 include_once ICMS_ROOT_PATH.'/class/database/databasefactory.php';
 /** Define XOOPS_DB_PROXY */
 define('XOOPS_DB_PROXY', 1);
-$xoopsDB =& XoopsDatabaseFactory::getDatabaseConnection();
+$xoopsDB =& icms_database_Factory::getDatabaseConnection();
 // ################# Include class manager file ##############
 /** Require the object class */
 //require_once ICMS_ROOT_PATH.'/kernel/object.php';

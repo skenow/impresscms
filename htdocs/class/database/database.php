@@ -130,12 +130,12 @@ if ( !defined("XOOPS_C_DATABASE_INCLUDED") ) {
  * @copyright   copyright (c) 2000-2003 XOOPS.org
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  *
- * @deprecated Use XoopsDatabaseFactory instead
+ * @deprecated Use icms_database_Factory instead
  * @todo		Remove this in version 1.4?
  */
 class Database {
 	static public function &getInstance() {
-		return XoopsDatabaseFactory::getDatabaseConnection();
+		return icms_database_Factory::getDatabaseConnection();
 	}
 }
 

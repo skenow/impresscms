@@ -14,7 +14,6 @@
  */
 
 include_once ICMS_ROOT_PATH.'/class/logger.php';
-include_once ICMS_ROOT_PATH.'/class/database/databasefactory.php';
 include_once ICMS_ROOT_PATH.'/class/database/drivers/'.XOOPS_DB_TYPE.'/database.php';
 include_once ICMS_ROOT_PATH.'/class/database/drivers/'.XOOPS_DB_TYPE.'/sqlutility.php';
 
@@ -32,7 +31,7 @@ class db_manager {
 	var $db;
 
 	function db_manager(){
-		$this->db = XoopsDatabaseFactory::getDatabase();
+		$this->db = icms_database_Factory::getDatabase();
 		$this->db->setPrefix(XOOPS_DB_PREFIX);
 		$this->db->setLogger(XoopsLogger::instance());
 	}

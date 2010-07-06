@@ -458,7 +458,7 @@ function xoops_module_install($dirname) {
 
 				$is_IPF = $module->getInfo('object_items');
 				if(!empty($is_IPF)){
-					$icmsDatabaseUpdater = XoopsDatabaseFactory::getDatabaseUpdater();
+					$icmsDatabaseUpdater = icms_database_Factory::getDatabaseUpdater();
 					$icmsDatabaseUpdater->moduleUpgrade($module, true);
 					foreach ($icmsDatabaseUpdater->_messages as $msg) {
 						$msgs[] = $msg;
@@ -1227,7 +1227,7 @@ function icms_module_update($dirname) {
 
 			$is_IPF = $module->getInfo('object_items');
 			if(!empty($is_IPF)){
-				$icmsDatabaseUpdater = XoopsDatabaseFactory::getDatabaseUpdater();
+				$icmsDatabaseUpdater = icms_database_Factory::getDatabaseUpdater();
 				$icmsDatabaseUpdater->moduleUpgrade($module, true);
 				foreach ($icmsDatabaseUpdater->_messages as $msg) {
 					$msgs[] = $msg;
