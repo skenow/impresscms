@@ -134,7 +134,7 @@ class icms_member_user_Object extends icms_core_Object
 	 * @param int $usereal switch for usename or realname
 	 * @return string name of the user. name for "anonymous" if not found.
 	 */
-	function getUnameFromId($userid, $usereal = 0)
+	static public function getUnameFromId($userid, $usereal = 0)
 	{
 		$userid = (int) ($userid);
 		$usereal = (int) ($usereal);

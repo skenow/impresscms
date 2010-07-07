@@ -52,7 +52,7 @@ class IcmsForm extends XoopsThemeForm {
 	 * @param	bool      $cancel_js_action         whether to invoke a javascript action when cancel button is clicked
 	 * @param	bool      $captcha                  whether to add captcha
 	 */
-	function IcmsForm(&$target, $form_name, $form_caption, $form_action, $form_fields=null, $submit_button_caption = false, $cancel_js_action=false, $captcha=false) {
+	function __construct(&$target, $form_name, $form_caption, $form_action, $form_fields=null, $submit_button_caption = false, $cancel_js_action=false, $captcha=false) {
 
 		$this->targetObject =& $target;
 		$this->form_fields = $form_fields;

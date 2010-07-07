@@ -44,7 +44,7 @@ class icms_captcha_Object {
 	 * Creates instance of icms_captcha_Object Object
 	 * @return  object Reference to the icms_captcha_Object Object
 	 */
-	function &instance()
+	static public function &instance()
 	{
 		static $instance;
 		if(!isset($instance)) {

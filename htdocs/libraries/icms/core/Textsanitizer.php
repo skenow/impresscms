@@ -73,7 +73,7 @@ class icms_core_Textsanitizer {
 	 * @static
 	 * @staticvar   object
 	 */
-	public function getInstance() {
+	static public function getInstance() {
 		static $instance;
 		if (!isset($instance)) {
 			$instance = new icms_core_Textsanitizer();
@@ -334,7 +334,7 @@ class icms_core_Textsanitizer {
 	 * @param   string  $text
 	 * @return  string
 	 **/
-	public function undoHtmlSpecialChars($text) {
+	static public function undoHtmlSpecialChars($text) {
 		return htmlspecialchars_decode($text, ENT_QUOTES);
 	}
 
