@@ -1013,9 +1013,9 @@ class IcmsDatabaseupdater {
 		if (!$dirname) {
 			$dirname = icms_getCurrentModuleName();
 		}
-		$module = icms_module_Handler::getByDirname($dirname);
-		$module->setVar('dbversion', $newDBVersion);
 		$module_handler = xoops_getHandler('module');
+		$module = $module_handler->getByDirname($dirname);
+		$module->setVar('dbversion', $newDBVersion);
 
 		if (!$module_handler->insert($module)) {
 			$module->setErrors(_DATABASEUPDATER_MSG_DB_VERSION_ERR);
