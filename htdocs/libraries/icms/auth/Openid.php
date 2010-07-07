@@ -9,12 +9,14 @@
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		Authorization
+ * @category	ICMS
+ * @package		Auth
+ * @subpackage	Openid
  * @since		1.1
  * @author		malanciault <marcan@impresscms.org)
  * @credits		Sakimura <http://www.sakimura.org/> Evan Prodromou <http://evan.prodromou.name/>
  * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id: auth_openid.php 19586 2010-06-24 11:48:14Z malanciault $
+ * @version		SVN: $Id$
  */
 
 define('OPENID_STEP_BACK_FROM_SERVER', 1);
@@ -23,24 +25,31 @@ define('OPENID_STEP_LINK', 3);
 define('OPENID_STEP_NO_USER_FOUND', 4);
 define('OPENID_STEP_USER_FOUND', 5);
 
+/**
+ * OpenID authorization class
+ *
+ * @category	ICMS
+ * @package		Auth
+ * @subpackage	Openid
+ */
 class icms_auth_Openid extends icms_auth_Object {
 
 	/**
 	 * @var string $displayid $displayid fetch from the openid authentication
 	 */
-	var $displayid;
+	private $displayid;
 
 	/**
 	 * @var string $openid openid used for this authentication
 	 */
-	var $openid;
+	private $openid;
 
 	/**
 	 * OpenID response
 	 *
 	 * @var OpenIDResponse object
 	 */
-	var $response;
+	private $response;
 
 	/**
 	 * Where are we in the process
@@ -51,12 +60,12 @@ class icms_auth_Openid extends icms_auth_Object {
 	 *   - OPENID_STEP_NO_USER_FOUND
 	 * @var int
 	 */
-	var $step = OPENID_STEP_BACK_FROM_SERVER;
+	private $step = OPENID_STEP_BACK_FROM_SERVER;
 
 	/**
 	 * Authentication Service constructor
 	 */
-	function icms_auth_Openid (&$dao) {
+	public function __construct(&$dao) {
 		$this->_dao = $dao;
 		$this->auth_method = 'openid';
 	}
@@ -67,16 +76,10 @@ class icms_auth_Openid extends icms_auth_Object {
 	 * @param bool $debug Turn debug on or not
 	 * @return bool successful?
 	 */
-	function authenticate($debug=false) {
-		//require_once ICMS_LIBRARIES_PATH . "/phpopenid/occommon.php";
-
-		// session_start();
-
+	public function authenticate($debug = false) {
 		// check to see if we alredy have an OpenID response in SESSION
 		if (isset($_SESSION['openid_response'])) {
 			if ($debug) icms_debug(_CORE_OID_INSESSIONS);
-			//icms_debug_vardump($_SESSION['openid_response']);
-
 			$this->response = $_SESSION['openid_response'];
 		} else {
 			if ($debug) icms_debug(_CORE_OID_FETCHING);
@@ -143,12 +146,12 @@ class icms_auth_Openid extends icms_auth_Object {
 			 * trying to link to an existing account
 			 */
 			if (isset($_POST['openid_register'])) {
-				if ($debug) icms_debug(_CORE_OID_STEPIS.'OPENID_STEP_REGISTER');
+				if ($debug) icms_debug(_CORE_OID_STEPIS . 'OPENID_STEP_REGISTER');
 				$this->step = OPENID_STEP_REGISTER;
 			} elseif (isset($_POST['openid_link'])) {
-				if ($debug) icms_debug(_CORE_OID_STEPIS.'OPENID_STEP_LINK');
+				if ($debug) icms_debug(_CORE_OID_STEPIS . 'OPENID_STEP_LINK');
 				$this->step = OPENID_STEP_LINK;
-			} elseif(isset($_SESSION['openid_step'])) {
+			} elseif (isset($_SESSION['openid_step'])) {
 				if ($debug) icms_debug(_CORE_OID_STEPIS . $_SESSION['openid_step']);
 				$this->step = $_SESSION['openid_step'];
 			} else {
@@ -160,11 +163,11 @@ class icms_auth_Openid extends icms_auth_Object {
 				$users =& $member_handler->getUsers($criteria);
 				if ($users && count($users) > 0) {
 					$this->step = OPENID_STEP_USER_FOUND;
-					if ($debug) icms_debug(_CORE_OID_FOUNDSTEPIS.'OPENID_STEP_USER_FOUND');
+					if ($debug) icms_debug(_CORE_OID_FOUNDSTEPIS . 'OPENID_STEP_USER_FOUND');
 					return $users[0];
 				} else {
 					/*
-					 * This openid was not found in the users table.Let's ask the user if he wants
+					 * This openid was not found in the users table. Let's ask the user if he wants
 					 * to create a new user account on the site or else login with his already registered
 					 * account
 					 */
@@ -181,9 +184,8 @@ class icms_auth_Openid extends icms_auth_Object {
 	 *
 	 * @return bool true if number of errors are greater than 0
 	 */
-	function errorOccured() {
+	public function errorOccured() {
 		return count($this->_errors) > 0;
 	}
 }
 
-?>

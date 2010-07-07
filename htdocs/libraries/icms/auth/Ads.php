@@ -1,37 +1,30 @@
 <?php
-// $Id: auth_ads.php 19609 2010-06-24 20:06:09Z malanciault $
-// auth_ads.php - Authentification class for Active Directory
 /**
  * Authorization classes, Active Directory class file
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package	Authorization
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project
- * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: auth_ads.php 19609 2010-06-24 20:06:09Z malanciault $
+ * @license		LICENSE.txt
+ * @category	ICMS
+ * @package		Auth
+ * @subpackage	Ads
+ * @version		SVN: $Id$
  */
 
 /**
  * Authentification class for Active Directory
  *
- * @package     kernel
- * @subpackage  auth
+ * @category	ICMS
+ * @package     Auth
+ * @subpackage	Ads
  * @author	    Pierre-Eric MENUET	<pemphp@free.fr>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-include_once ICMS_ROOT_PATH . '/class/auth/auth_ldap.php';
-
 class icms_auth_Ads extends icms_auth_Ldap {
 
 	/**
 	 * Authentication Service constructor
 	 */
-	function icms_auth_Ads (&$dao) {
-		parent::icms_auth_Ldap($dao);
+	public function __construct(&$dao) {
+		parent::__construct($dao);
 	}
 
 	/**
@@ -45,7 +38,7 @@ class icms_auth_Ads extends icms_auth_Ldap {
 	 *
 	 * @return bool
 	 */
-	function authenticate($uname, $pwd = null) {
+	public function authenticate($uname, $pwd = null) {
 		$authenticated = false;
 		if (!extension_loaded('ldap')) {
 			$this->setErrors(0, _AUTH_LDAP_EXTENSION_NOT_LOAD);
@@ -55,9 +48,9 @@ class icms_auth_Ads extends icms_auth_Ldap {
 		if ($this->_ds) {
 			ldap_set_option($this->_ds, LDAP_OPT_PROTOCOL_VERSION, $this->ldap_version);
 			ldap_set_option($this->_ds, LDAP_OPT_REFERRALS, 0);
-			if ($this->ldap_use_TLS) { // We use TLS secure connection
-				if (!ldap_start_tls($this->_ds))
-				$this->setErrors(0, _AUTH_LDAP_START_TLS_FAILED);
+			if ($this->ldap_use_TLS) {
+				// We use TLS secure connection
+				if (!ldap_start_tls($this->_ds)) $this->setErrors(0, _AUTH_LDAP_START_TLS_FAILED);
 			}
 			// If the uid is not in the DN we proceed to a search
 			// The uid is not always in the dn
@@ -66,14 +59,17 @@ class icms_auth_Ads extends icms_auth_Ldap {
 			// We bind as user to test the credentials
 			$authenticated = ldap_bind($this->_ds, $userUPN, $this->cp1252_to_utf8(stripslashes($pwd)));
 			if ($authenticated) {
-				// We load the Xoops User database
+				// We load the User database
 				$dn = $this->getUserDN($uname);
-				if ($dn)
-				return $this->loadicms_member_user_Object($dn, $uname, $pwd);
-				else return false;
-			} else $this->setErrors(ldap_errno($this->_ds), ldap_err2str(ldap_errno($this->_ds)) . '(' . $userUPN . ')');
-		}
-		else {
+				if ($dn) {
+					return $this->loadicms_member_user_Object($dn, $uname, $pwd);
+				} else {
+					return false;
+				}
+			} else {
+				$this->setErrors(ldap_errno($this->_ds), ldap_err2str(ldap_errno($this->_ds)) . '(' . $userUPN . ')');
+			}
+		} else {
 			$this->setErrors(0, _AUTH_LDAP_SERVER_NOT_FOUND);
 		}
 		@ldap_close($this->_ds);
@@ -89,12 +85,11 @@ class icms_auth_Ads extends icms_auth_Ldap {
 	 * @param string $uname Username
 	 * @return userDN or false
 	 */
-	function getUPN($uname) {
+	public function getUPN($uname) {
 		$userDN = false;
-		$userDN = $uname."@".$this->ldap_domain_name;
+		$userDN = $uname . "@" . $this->ldap_domain_name;
 		return $userDN;
 	}
 
-} // end class
+}
 
-?>

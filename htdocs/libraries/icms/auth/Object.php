@@ -1,53 +1,43 @@
 <?php
-// $Id: auth.php 19118 2010-03-27 17:46:23Z skenow $
-// auth.php - defines abstract authentification wrapper class
 /**
  * Authorization classes, Base class file
  *
  * defines abstract authentification wrapper class
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package	Authorization
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project
- * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: auth.php 19118 2010-03-27 17:46:23Z skenow $
+ * @license		LICENSE.txt
+ * @category	ICMS
+ * @package		Auth
+ * @version		SVN: $Id$
  */
 
 /**
  * Authentification base class
  *
- * @package     kernel
- * @subpackage  auth
+ * @category	ICMS
+ * @package     Auth
  * @author	    Pierre-Eric MENUET	<pemphp@free.fr>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
 class icms_auth_Object {
 
-	var	$_dao;
+	private	$_dao;
 
-	var	$_errors;
+	private	$_errors;
 
 	/**
 	 * Authentication Service constructor
 	 */
-	function icms_auth_Object (&$dao){
+	public function __construct(&$dao){
 		$this->_dao = $dao;
 	}
 
 	/**
 	 * authenticate
 	 *
-	 * @abstract need to be write in the derived class
+	 * @abstract need to be written in the derived class
 	 * @return bool whether user is authenticated
 	 */
-	function authenticate() {
-		$authenticated = false;
-
-		return $authenticated;
+	public function authenticate($uname, $pwd = null) {
 	}
 
 	/**
@@ -56,8 +46,7 @@ class icms_auth_Object {
 	 * @param string $value error to add
 	 * @access public
 	 */
-	function setErrors($err_no, $err_str)
-	{
+	public function setErrors($err_no, $err_str) {
 		$this->_errors[$err_no] = trim($err_str);
 	}
 
@@ -67,8 +56,7 @@ class icms_auth_Object {
 	 * @return array an array of errors
 	 * @access public
 	 */
-	function getErrors()
-	{
+	public function getErrors() {
 		return $this->_errors;
 	}
 
@@ -78,18 +66,17 @@ class icms_auth_Object {
 	 * @return string $ret html listing the errors
 	 * @access public
 	 */
-	function getHtmlErrors()
-	{
+	public function getHtmlErrors() {
 		global $icmsConfigPersona;
 		$ret = '<br />';
-		if ( $icmsConfigPersona['debug_mode'] == 1 || $icmsConfigPersona['debug_mode'] == 2 )
-		{
-			if (!empty($this->_errors)) {
+		if ($icmsConfigPersona['debug_mode'] < 3) {
+			$ret .= _US_INCORRECTLOGIN;
+		} else {
+			if (empty($this->_errors)) {
+				$ret .= _NONE . '<br />';
+			} else {
 				foreach ($this->_errors as $errno => $errstr) {
 					$ret .=  $errstr . '<br/>';
-				}
-			} else {
-				$ret .= _NONE.'<br />';
 			}
 			/**
 			 * Fix to replace the message "Incorrect Login using xoops authenticated method"
@@ -99,11 +86,8 @@ class icms_auth_Object {
 			$auth_method_name = $this->auth_method == 'xoops' ? 'standard' : $this->auth_method;
 			$ret .= sprintf(_AUTH_MSG_AUTH_METHOD, $auth_method_name);
 		}
-		else {
-			$ret .= _US_INCORRECTLOGIN;
-		}
 		return $ret;
+		}
 	}
 }
 
-?>
