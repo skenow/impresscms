@@ -2,9 +2,17 @@
 /**
  * ImpressCMS AUTOTASKSs Library - icms_autotasks_ISystem interface
  *
+ * @category	ICMS
+ * @package		Autotasks
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		core
+ * @version		SVN: $Id$
+ */
+/**
+ * ImpressCMS AUTOTASKSs Library - icms_autotasks_ISystem interface
+ *
+ * @category	ICMS
+ * @package		Autotasks
  * @since		1.2 alpha 2
  * @author		MekDrop <mekdrop@gmail.com>
  */
@@ -67,4 +75,3 @@ interface icms_autotasks_ISystem {
 
 }
 
-?>

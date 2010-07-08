@@ -17,11 +17,12 @@ include_once ICMS_ROOT_PATH . '/class/xoopsformloader.php';
 /**
  * ImpressCMS Core Block Object Handler Class
  *
- * @copyright The ImpressCMS Project <http://www.impresscms.org>
- * @license GNU GPL v2
- *
- * @since ImpressCMS 1.2
- * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * @copyright	The ImpressCMS Project <http://www.impresscms.org>
+ * @license		GNU GPL v2
+ * @category	ICMS
+ * @package		Block
+ * @since		ImpressCMS 1.2
+ * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 class icms_block_Handler extends icms_ipf_Handler {
 
@@ -42,15 +43,15 @@ class icms_block_Handler extends icms_ipf_Handler {
 	 * @param bool $full
 	 * @return array
 	 */
-	public function getBlockPositions($full=false){
-		if ( !count($this->block_positions ) ) {
+	public function getBlockPositions($full = false) {
+		if (!count($this->block_positions)) {
 			// TODO: Implement IPF for block_positions
 			$icms_blockposition_handler = xoops_gethandler('block_position');
 			//			$sql = 'SELECT * FROM '.$this->db->prefix('block_positions').' ORDER BY id ASC';
 			//			$result = $this->db->query($sql);
 			//			while ($row = $this->db->fetchArray($result)) {
 			$block_positions = $icms_blockposition_handler->getObjects();
-			foreach ( $block_positions as $bp) {
+			foreach ($block_positions as $bp) {
 				$this->block_positions[$bp->getVar('id')]['pname'] = $bp->getVar('pname');
 				$this->block_positions[$bp->getVar('id')]['title'] = $bp->getVar('title');
 				$this->block_positions[$bp->getVar('id')]['description'] = $bp->getVar('description');
@@ -58,7 +59,7 @@ class icms_block_Handler extends icms_ipf_Handler {
 				$this->block_positions[$bp->getVar('id')]['block_type'] = $bp->getVar('block_type');
 			}
 		}
-		if ( !$full ) {
+		if (!$full) {
 			foreach($this->block_positions as $k => $block_position) {
 				$rtn[ $k ] = $block_position['pname'];
 			}
@@ -99,38 +100,38 @@ class icms_block_Handler extends icms_ipf_Handler {
 	 * @todo Implement IPF for block_positions.
 	 * @todo Rewrite all the core to dont use any more this method.
 	 */
-	public function getAllBlocks($rettype="object", $side=null, $visible=null, $orderby="side,weight,bid", $isactive=1) {
+	public function getAllBlocks($rettype = "object", $side = null, $visible = null, $orderby = "side, weight, bid", $isactive = 1) {
 		$ret = array();
 		$where_query = " WHERE isactive='". (int) $isactive . "'";
 
-		if ( isset($side) ) {
+		if (isset($side)) {
 			// get both sides in sidebox? (some themes need this)
 			$tp = ($side == -2)?'L':($side == -6)?'C':'';
-			if ( $tp != '') {
+			if ($tp != '') {
 			 	$q_side = "";
 				$icms_blockposition_handler = xoops_gethandler('blockposition');
 				$criteria = new icms_criteria_Compo();
-				$criteria->add( new icms_criteria_Item('block_type', $tp) );
+				$criteria->add(new icms_criteria_Item('block_type', $tp));
 				$blockpositions = $icms_blockposition_handler->getObjects($criteria);
-				foreach ( $blockpositions as $bp ) {
+				foreach ($blockpositions as $bp) {
 					$q_side .= "side='". (int) $bp->getVar('id') . "' OR ";
 				}
-				$q_side = "('".substr($q_side,0,strlen($q_side)-4)."')";
+				$q_side = "('" . substr($q_side, 0, strlen($q_side)-4) . "')";
 			} else {
 				$q_side = "side='". (int) $side . "'";
 			}
 			$where_query .= " AND ". $q_side;
 		}
 
-		if ( isset($visible) ) {
+		if (isset($visible)) {
 			$where_query .= " AND visible='". (int) $visible . "'";
 		}
 		$where_query .= " ORDER BY $orderby";
-		switch ( $rettype ) {
+		switch ($rettype) {
 			case "object":
 				$sql = "SELECT * FROM " . $this->db->prefix("newblocks") . "" . $where_query;
 				$result = $this->db->query($sql);
-				while ( $myrow = $this->db->fetchArray($result) ) {
+				while ($myrow = $this->db->fetchArray($result)) {
 					// @todo this is causing to many SQL queries. In case this section is still needed,
 					// we should switch it just like it's done in the list case
 					$ret[] = $this->get($myrow['bid']);
@@ -140,15 +141,15 @@ class icms_block_Handler extends icms_ipf_Handler {
 			case "list":
 				$sql = "SELECT * FROM " . $this->db->prefix("newblocks") . "" . $where_query;
 				$result = $this->db->query($sql);
-				if ( $this->db->getRowsNum($result) > 0 ) {
+				if ($this->db->getRowsNum($result) > 0) {
 					$blockids = array();
-					while ( $myrow = $this->db->fetchArray($result) ) {
+					while ($myrow = $this->db->fetchArray($result)) {
 						$blockids[] = $myrow['bid'];
 					}
 					$criteria = new icms_criteria_Compo();
 					$criteria->add(new icms_criteria_Item('bid', '(' . implode(',', $blockids) . ')', 'IN'));
 					$blocks = $this->getObjects($criteria, true, true);
-					foreach ( $blocks as $block ) {
+					foreach ($blocks as $block) {
 						$ret[$block->getVar("bid")] = $block->getVar("title");
 					}
 					unset($blockids, $blocks);
@@ -158,7 +159,7 @@ class icms_block_Handler extends icms_ipf_Handler {
 			case "id":
 				$sql = "SELECT bid FROM " . $this->db->prefix("newblocks") . "" . $where_query;
 				$result = $this->db->query($sql);
-				while ( $myrow = $this->db->fetchArray($result) ) {
+				while ($myrow = $this->db->fetchArray($result)) {
 					$ret[] = $myrow['bid'];
 				}
 				break;
@@ -182,41 +183,41 @@ class icms_block_Handler extends icms_ipf_Handler {
 	 *
 	 * @todo rewrite
 	 */
-	public function getAllByGroupModule($groupid, $module_id='0-0', $toponlyblock=false, $visible=null, $orderby='b.weight,b.bid', $isactive=1) {
+	public function getAllByGroupModule($groupid, $module_id = '0-0', $toponlyblock = false, $visible = null, $orderby = 'b.weight, b.bid', $isactive = 1) {
 		// TODO: use $this->getObjects($criteria);
 
 		$isactive = (int)$isactive;
 		$ret = array();
 		$sql = "SELECT DISTINCT gperm_itemid FROM " . $this->db->prefix('group_permission')
 			. " WHERE gperm_name = 'block_read' AND gperm_modid = '1'";
-		if ( is_array($groupid) ) {
+		if (is_array($groupid)) {
 			$gid = array_map(create_function('$a', '$r = "\'" . intval($a) . "\'"; return($r);'), $groupid);
 			$sql .= " AND gperm_groupid IN (" . implode(',', $gid) . ")";
 		} else {
-			if ( (int) $groupid > 0) {
+			if ((int) $groupid > 0) {
 				$sql .= " AND gperm_groupid='" . (int) $groupid . "'";
 			}
 		}
 		$result = $this->db->query($sql);
 		$blockids = array();
-		while ( $myrow = $this->db->fetchArray($result) ) {
+		while ($myrow = $this->db->fetchArray($result)) {
 			$blockids[] = $myrow['gperm_itemid'];
 		}
 
-		if ( !empty($blockids) ) {
-			$sql = "SELECT b.* FROM ".$this->db->prefix('newblocks')." b, ".$this->db->prefix('block_module_link')
+		if (!empty($blockids)) {
+			$sql = "SELECT b.* FROM " . $this->db->prefix('newblocks') . " b, " . $this->db->prefix('block_module_link')
 				. " m WHERE m.block_id=b.bid";
 			$sql .= " AND b.isactive='" . $isactive."'";
-			if ( isset($visible) ) {
+			if (isset($visible)) {
 				$sql .= " AND b.visible='" . (int) ($visible) . "'";
 			}
 
 			$arr = explode('-', $module_id);
 			$module_id = (int) $arr[0];
 			$page_id = (int) $arr[1];
-			if ( $module_id == 0 ) {
+			if ($module_id == 0) {
 				//Entire Site
-				if ( $page_id == 0 ) {
+				if ($page_id == 0) {
 					//All pages
 					$sql .= " AND m.module_id='0' AND m.page_id=0";
 				} elseif ($page_id == 1) { //Top Page
@@ -224,7 +225,7 @@ class icms_block_Handler extends icms_ipf_Handler {
 				}
 			} else {
 				//Specific Module (including system)
-				if ( $page_id == 0 ){
+				if ($page_id == 0) {
 					//All pages of this module
 					$sql .= " AND ((m.module_id='0' AND m.page_id=0) OR (m.module_id='$module_id' AND m.page_id=0))";
 				}else{
@@ -238,15 +239,15 @@ class icms_block_Handler extends icms_ipf_Handler {
 			$result = $this->db->query($sql);
 
 			// old method of gathering block data. Since this could result in a whole bunch of queries, a new method was introduced
-			/*while ( $myrow = $this->db->fetchArray($result) ) {
+			/*while ($myrow = $this->db->fetchArray($result)) {
 				$block =& $this->get($myrow['bid']);
 				$ret[$myrow['bid']] =& $block;
 				unset($block);
 			}*/
 
-			if ( $this->db->getRowsNum($result) > 0 ) {
+			if ($this->db->getRowsNum($result) > 0) {
 				unset($blockids);
-				while ( $myrow = $this->db->fetchArray($result) ) {
+				while ($myrow = $this->db->fetchArray($result)) {
 					$blockids[] = $myrow['bid'];
 				}
 				$ret = $this->getMultiple($blockids);
@@ -268,41 +269,41 @@ class icms_block_Handler extends icms_ipf_Handler {
 	 *
 	 * @todo remove - this is the only instance in the core
 	 */
-	public function getNonGroupedBlocks($module_id=0, $toponlyblock=false, $visible=null, $orderby='b.weight,b.bid', $isactive=1) {
+	public function getNonGroupedBlocks($module_id = 0, $toponlyblock = false, $visible = null, $orderby = 'b.weight, b.bid', $isactive = 1) {
 		$ret = array();
 		$bids = array();
-		$sql = "SELECT DISTINCT(bid) from ".$this->db->prefix('newblocks');
-		if ( $result = $this->db->query($sql) ) {
-			while ( $myrow = $this->db->fetchArray($result) ) {
+		$sql = "SELECT DISTINCT(bid) from " . $this->db->prefix('newblocks');
+		if ($result = $this->db->query($sql)) {
+			while ($myrow = $this->db->fetchArray($result)) {
 				$bids[] = $myrow['bid'];
 			}
 		}
-		$sql = "SELECT DISTINCT(p.gperm_itemid) from " . $this->db->prefix('group_permission')." p, "
+		$sql = "SELECT DISTINCT(p.gperm_itemid) from " . $this->db->prefix('group_permission') . " p, "
 			. $this->db->prefix('groups') . " g WHERE g.groupid=p.gperm_groupid AND p.gperm_name='block_read'";
 		$grouped = array();
-		if ( $result = $this->db->query($sql) ) {
-			while ( $myrow = $this->db->fetchArray($result) ) {
+		if ($result = $this->db->query($sql)) {
+			while ($myrow = $this->db->fetchArray($result)) {
 				$grouped[] = $myrow['gperm_itemid'];
 			}
 		}
 		$non_grouped = array_diff($bids, $grouped);
-		if ( !empty($non_grouped) ) {
-			$sql = "SELECT b.* FROM " . $this->db->prefix('newblocks')." b, "
-				. $this->db->prefix('block_module_link')." m WHERE m.block_id=b.bid";
+		if (!empty($non_grouped)) {
+			$sql = "SELECT b.* FROM " . $this->db->prefix('newblocks') . " b, "
+				. $this->db->prefix('block_module_link') . " m WHERE m.block_id=b.bid";
 			$sql .= " AND b.isactive='". (int) $isactive . "'";
-			if ( isset($visible) ) {
+			if (isset($visible)) {
 				$sql .= " AND b.visible='" .  (int) $visible . "'";
 			}
 			$module_id = (int) $module_id;
-			if ( !empty($module_id) ) {
-				$sql .= " AND m.module_id IN ('0','" . (int) $module_id . "'";
-				if ( $toponlyblock ) {
+			if (!empty($module_id)) {
+				$sql .= " AND m.module_id IN ('0', '" . (int) $module_id . "'";
+				if ($toponlyblock) {
 					$sql .= ",'-1'";
 				}
 				$sql .= ")";
 			} else {
-				if ( $toponlyblock ) {
-					$sql .= " AND m.module_id IN ('0','-1')";
+				if ($toponlyblock) {
+					$sql .= " AND m.module_id IN ('0', '-1')";
 				} else {
 					$sql .= " AND m.module_id='0'";
 				}
@@ -312,15 +313,15 @@ class icms_block_Handler extends icms_ipf_Handler {
 			$result = $this->db->query($sql);
 
 			// old method of gathering block data. Since this could result in a whole bunch of queries, a new method was introduced
-			/*while ( $myrow = $this->db->fetchArray($result) ) {
+			/*while ($myrow = $this->db->fetchArray($result)) {
 				$block =& $this->get($myrow['bid']);
 				$ret[$myrow['bid']] =& $block;
 				unset($block);
 			}*/
 
-			if ( $this->db->getRowsNum($result) > 0 ) {
+			if ($this->db->getRowsNum($result) > 0) {
 				unset($blockids);
-				while ( $myrow = $this->db->fetchArray($result) ) {
+				while ($myrow = $this->db->fetchArray($result)) {
 					$blockids[] = $myrow['bid'];
 				}
 				$ret = $this->getMultiple($blockids);
@@ -340,24 +341,24 @@ class icms_block_Handler extends icms_ipf_Handler {
 	 * @param unknown_type $debug
 	 * @return unknown
 	 */
-	public function insert(& $obj, $force = false, $checkObject = true, $debug=false) {
+	public function insert(& $obj, $force = false, $checkObject = true, $debug = false) {
 		$new = $obj->isNew();
 		$obj->setVar('last_modified', time());
 		$obj->setVar('isactive', true);
-		if ( !$new ){
+		if (!$new) {
 			$sql = sprintf("DELETE FROM %s WHERE block_id = '%u'",
 				$this->db->prefix('block_module_link'), (int) $obj->getVar('bid'));
-			if ( false != $force ) {
+			if (false != $force) {
 				$this->db->queryF($sql);
 			} else {
 				$this->db->query($sql);
 			}
 		} else {
 			icms_loadLanguageFile('system', 'blocksadmin', true);
-			if ( $obj->getVar('block_type') == 'K' ) {
+			if ($obj->getVar('block_type') == 'K') {
 				$obj->setVar('name', _AM_CLONE);
 			} else {
-				switch ( $obj->getVar('c_type') ) {
+				switch ($obj->getVar('c_type')) {
 					case 'H':
 						$obj->setVar('name', _AM_CUSTOMHTML);
 						break;
@@ -381,9 +382,9 @@ class icms_block_Handler extends icms_ipf_Handler {
 		$status = parent::insert($obj, $force, $checkObject, $debug);
 		// TODO: Make something to no query here... implement IPF for block_module_link
 		$page = $obj->getVar('visiblein', 'e');
-		if ( !empty($page) ) {
-			if ( is_array($obj->getVar('visiblein', 'e')) ) {
-				foreach ( $obj->getVar('visiblein', 'e') as $bmid ) {
+		if (!empty($page)) {
+			if (is_array($obj->getVar('visiblein', 'e'))) {
+				foreach ($obj->getVar('visiblein', 'e') as $bmid) {
 					$page = explode('-', $bmid);
 					$mid = $page[0];
 					$pageid = $page[1];
@@ -392,7 +393,7 @@ class icms_block_Handler extends icms_ipf_Handler {
 						. (int) $obj->getVar("bid") . "', '"
 						. (int) $mid . "', '"
 						. (int) $pageid . "')";
-					if ( false != $forc ) {
+					if (false != $forc) {
 						$this->db->queryF($sql);
 					} else {
 						$this->db->query($sql);
@@ -402,11 +403,11 @@ class icms_block_Handler extends icms_ipf_Handler {
 				$page = explode('-', $obj->getVar('visiblein', 'e'));
 				$mid = $page[0];
 				$pageid = $page[1];
-				$sql = "INSERT INTO ".$this->db->prefix('block_module_link') . " (block_id, module_id, page_id) VALUES ('"
+				$sql = "INSERT INTO " . $this->db->prefix('block_module_link') . " (block_id, module_id, page_id) VALUES ('"
 					. (int) $obj->getVar("bid") . "', '"
 					. (int) $mid . "', '"
 					. (int) $pageid . "')";
-				if ( false != $force ) {
+				if (false != $force) {
 					$this->db->queryF($sql);
 				} else {
 					$this->db->query($sql);
@@ -417,13 +418,13 @@ class icms_block_Handler extends icms_ipf_Handler {
 
 	}
 
-	public function &get($id, $as_object = true, $debug=false, $criteria=false) {
+	public function &get($id, $as_object = true, $debug = false, $criteria = false) {
 		$obj = parent::get($id, $as_object, $debug, $criteria);
-		$sql = "SELECT module_id,page_id FROM " . $this->db->prefix('block_module_link')
+		$sql = "SELECT module_id, page_id FROM " . $this->db->prefix('block_module_link')
 			. " WHERE block_id='" . (int) $obj->getVar('bid') . "'";
 		$result = $this->db->query($sql);
 		$modules = $bcustomp = array();
-		while ( $row = $this->db->fetchArray($result) ) {
+		while ($row = $this->db->fetchArray($result)) {
 			$modules[] = (int) $row['module_id'] . '-' . (int) $row['page_id'];
 		}
 		$obj->setVar('visiblein', $modules);
@@ -446,10 +447,10 @@ class icms_block_Handler extends icms_ipf_Handler {
 		$result = $this->db->query($sql);
 		$modules = array();
 		$last_block_id = 0;
-		while ( $row = $this->db->fetchArray($result) ) {
+		while ($row = $this->db->fetchArray($result)) {
 			$modules[] = (int)($row['module_id']) . '-' . (int)($row['page_id']);
 			$ret[$row['block_id']]->setVar('visiblein', $modules);
-			if ( $row['block_id'] != $last_block_id ) $modules = array();
+			if ($row['block_id'] != $last_block_id) $modules = array();
 			$last_block_id = $row['block_id'];
 		}
 		return $ret;
@@ -458,11 +459,11 @@ class icms_block_Handler extends icms_ipf_Handler {
 	public function getCountSimilarBlocks($moduleId, $funcNum, $showFunc = null) {
 		$funcNum = (int) $funcNum;
 		$moduleId = (int) $moduleId;
-		if ( $funcNum < 1 || $moduleId < 1 ) {
+		if ($funcNum < 1 || $moduleId < 1) {
 			return 0;
 		}
 		$criteria = new icms_criteria_Compo();
-		if ( isset($showFunc) ) {
+		if (isset($showFunc)) {
 			// showFunc is set for more strict comparison
 			$criteria->add(new icms_criteria_Item('mid', $moduleId));
 			$criteria->add(new icms_criteria_Item('func_num', $funcNum));

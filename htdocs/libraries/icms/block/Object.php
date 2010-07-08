@@ -15,15 +15,20 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 /**
  * ImpressCMS Core Block Object Class
  *
- * @since ImpressCMS 1.2
- * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * @category	ICMS
+ * @package		Block
+ * @since		ImpressCMS 1.2
+ * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 class icms_block_Object extends icms_ipf_Object {
 
+	/**
+	 * Constructor for the block object
+	 * @param $handler
+	 */
 	public function __construct(& $handler) {
 
 		parent::__construct($handler);
-//		$this->icms_ipf_Object($handler);
 
 		$this->quickInitVar('name', XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar('bid', XOBJ_DTYPE_INT, true);
@@ -49,18 +54,18 @@ class icms_block_Object extends icms_ipf_Object {
 
 	// The next Methods are for backward Compatibility
 
-	public function getContent($format = 'S', $c_type = 'T'){
-		switch ( $format ) {
+	public function getContent($format = 'S', $c_type = 'T') {
+		switch ($format) {
 			case 'S':
-				if ( $c_type == 'H' ) {
+				if ($c_type == 'H') {
 					return str_replace('{X_SITEURL}', ICMS_URL . '/', $this->getVar('content', 'n'));
-				} elseif ( $c_type == 'P' ) {
+				} elseif ($c_type == 'P') {
 					ob_start();
 					echo eval($this->getVar('content', 'n'));
 					$content = ob_get_contents();
 					ob_end_clean();
 					return str_replace('{X_SITEURL}', ICMS_URL . '/', $content);
-				} elseif ( $c_type == 'S' ) {
+				} elseif ($c_type == 'S') {
 					$myts =& icms_core_Textsanitizer::getInstance();
 					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $this->getVar('content', 'n'));
 					return $myts->displayTarea($content, 1, 1);
@@ -87,16 +92,16 @@ class icms_block_Object extends icms_ipf_Object {
 	 * @return string|false $edit_form is HTML for the form, FALSE if no options defined for this block
 	 **/
 	public function getOptions() {
-		if ( $this->getVar('block_type') != 'C' ) {
+		if ($this->getVar('block_type') != 'C') {
 			$edit_func = $this->getVar('edit_func');
-			if ( !$edit_func ) {
+			if (!$edit_func) {
 				return false;
 			}
 			icms_loadLanguageFile($this->getVar('dirname'), 'blocks');
-			include_once ICMS_ROOT_PATH . '/modules/'.$this->getVar('dirname') . '/blocks/' . $this->getVar('func_file');
+			include_once ICMS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/blocks/' . $this->getVar('func_file');
 			$options = explode('|', $this->getVar('options'));
 			$edit_form = $edit_func($options);
-			if ( !$edit_form ) {
+			if (!$edit_form) {
 				return false;
 			}
 			return $edit_form;
@@ -112,7 +117,7 @@ class icms_block_Object extends icms_ipf_Object {
 	 * @return unknown
 	 */
 	public function isCustom() {
-		if ( $this->getVar("block_type") == "C" || $this->getVar("block_type") == "E" ) {
+		if ($this->getVar("block_type") == "C" || $this->getVar("block_type") == "E") {
 			return true;
 		}
 		return false;
@@ -125,38 +130,38 @@ class icms_block_Object extends icms_ipf_Object {
 	 *
 	 * @todo improve with IPF
 	 */
-	public function buildBlock(){
+	public function buildBlock() {
 		global $icmsConfig, $xoopsOption;
 		$block = array();
 		// M for module block, S for system block C for Custom
-		if ( !$this->isCustom() ) {
-			// get block display function
-			$show_func = $this->getVar('show_func');
-			if ( !$show_func ) {
-				return false;
-			}
-			// Must get lang files before execution of the function.
-			if ( file_exists(ICMS_ROOT_PATH . "/modules/" . $this->getVar('dirname') . "/blocks/" . $this->getVar('func_file')) ) {
-				icms_loadLanguageFile($this->getVar('dirname'), 'blocks');
-				include_once ICMS_ROOT_PATH . "/modules/" . $this->getVar('dirname') . "/blocks/" . $this->getVar('func_file');
-				$options = explode("|", $this->getVar("options"));
-				if ( function_exists($show_func) ) {
-					// execute the function
-					$block = $show_func($options);
-					if ( !$block ) {
-						return false;
-					}
-				} else {
-					return false;
-				}
-			} else {
+		if ($this->isCustom()) {
+			// it is a custom block, so just return the contents
+			$block['content'] = $this->getContent("S", $this->getVar("c_type"));
+			if (empty($block['content'])) {
 				return false;
 			}
 		} else {
-			// it is a custom block, so just return the contents
-			$block['content'] = $this->getContent("S",$this->getVar("c_type"));
-			if ( empty($block['content']) ) {
+			// get block display function
+			$show_func = $this->getVar('show_func');
+			if (!$show_func) {
 				return false;
+			}
+			// Must get lang files before execution of the function.
+			if (!file_exists(ICMS_ROOT_PATH . "/modules/" . $this->getVar('dirname') . "/blocks/" . $this->getVar('func_file'))) {
+				return false;
+			} else {
+				icms_loadLanguageFile($this->getVar('dirname'), 'blocks');
+				include_once ICMS_ROOT_PATH . "/modules/" . $this->getVar('dirname') . "/blocks/" . $this->getVar('func_file');
+				$options = explode("|", $this->getVar("options"));
+				if (!function_exists($show_func)) {
+					return false;
+				} else {
+					// execute the function
+					$block = $show_func($options);
+					if (!$block) {
+						return false;
+					}
+				}
 			}
 		}
 		return $block;
@@ -171,11 +176,11 @@ class icms_block_Object extends icms_ipf_Object {
 	 *
 	 * @todo remove this? It is not found anywhere else in the core
 	 */
-	public function buildContent($position,$content="",$contentdb=""){
-		if ( $position == 0 ) {
-			$ret = $contentdb.$content;
-		} elseif ( $position == 1 ) {
-			$ret = $content.$contentdb;
+	public function buildContent($position, $content = "", $contentdb = "") {
+		if ($position == 0) {
+			$ret = $contentdb . $content;
+		} elseif ($position == 1) {
+			$ret = $content . $contentdb;
 		}
 		return $ret;
 	}
@@ -189,8 +194,8 @@ class icms_block_Object extends icms_ipf_Object {
 	 *
 	 * @todo remove this? it is not found anywhere else in the core
 	 */
-	public function buildTitle($originaltitle, $newtitle=""){
-		if ( $newtitle != "" ) {
+	public function buildTitle($originaltitle, $newtitle = "") {
+		if ($newtitle != "") {
 			$ret = $newtitle;
 		} else {
 			$ret = $originaltitle;
@@ -206,7 +211,7 @@ class icms_block_Object extends icms_ipf_Object {
 	 *
 	 * @deprecated use the handler method, instead
 	 */
-	public function getBlockPositions($full=false){
+	public function getBlockPositions($full = false) {
 		icms_deprecated('icms_block_Handler->getBlockPositions');
 		return $this->handler->getBlockPositions($full);
 	}
@@ -218,7 +223,7 @@ class icms_block_Object extends icms_ipf_Object {
 	 *
 	 * @deprecated use the handler method, instead
 	 */
-	public function load($id){
+	public function load($id) {
 		icms_deprecated('icms_block_Handler->getObject');
 		$this->$this->handler->getObject($id);
 	}
@@ -232,7 +237,7 @@ class icms_block_Object extends icms_ipf_Object {
 	 */
 	public function store() {
 		icms_deprecated('icms_block_Handler->insert');
-		$this->handler->insert( $this );
+		$this->handler->insert($this);
 		return $this->getVar('bid');
 	}
 
@@ -243,7 +248,7 @@ class icms_block_Object extends icms_ipf_Object {
 	 *
 	 * @deprecated use the handler method, instead
 	 */
-	public function delete(){
+	public function delete() {
 		icms_deprecated('icms_block_Handler->delete');
 		return $this->handler->delete($this);
 	}
@@ -265,7 +270,7 @@ class icms_block_Object extends icms_ipf_Object {
 	 *
 	 * @deprecated use the handler method, instead
 	 */
-	public function getAllBlocksByGroup($groupid, $asobject=true, $side=null, $visible=null, $orderby="b.weight,b.bid", $isactive=1){
+	public function getAllBlocksByGroup($groupid, $asobject = true, $side = null, $visible = null, $orderby = "b.weight, b.bid", $isactive = 1) {
 		icms_deprecated('icms_block_Handler->getAllBlocksByGroup');
 		return $this->handler->getAllBlocksByGroup($groupid, $asobject, $side, $visible, $orderby, $isactive);
 	}
@@ -284,7 +289,7 @@ class icms_block_Object extends icms_ipf_Object {
 	 *
 	 * @deprecated use the handler method, instead
 	 */
-	public function getAllBlocks( $rettype = "object", $side = null, $visible = null, $orderby = "side,weight,bid", $isactive = 1 ){
+	public function getAllBlocks($rettype = "object", $side = null, $visible = null, $orderby = "side, weight, bid", $isactive = 1) {
 		icms_deprecated('icms_block_Handler->getAllBlocks');
 		return $this->handler->getAllBlocks($rettype, $side, $visible, $orderby, $isactive);
 	}
@@ -300,9 +305,9 @@ class icms_block_Object extends icms_ipf_Object {
 	 *
 	 * @deprecated use the handler method, instead
 	 */
-	public function getByModule($moduleid, $asobject=true){
+	public function getByModule($moduleid, $asobject = true) {
 		icms_deprecated('icms_block_Handler->getByModule');
-		return $this->handler->getByModule( $moduleid, $asobject );
+		return $this->handler->getByModule($moduleid, $asobject);
 	}
 
 	/**
@@ -321,7 +326,7 @@ class icms_block_Object extends icms_ipf_Object {
 	 * @deprecated use the handler method, instead
 	 *
 	 */
-	public function getAllByGroupModule($groupid, $module_id='0-0', $toponlyblock=false, $visible=null, $orderby='b.weight,b.bid', $isactive=1){
+	public function getAllByGroupModule($groupid, $module_id = '0-0', $toponlyblock = false, $visible = null, $orderby = 'b.weight, b.bid', $isactive = 1) {
 		icms_deprecated('icms_block_Handler->getAllByGroupModule');
 		return $this->handler->getAllByGroupModule($groupid, $module_id, $toponlyblock, $visible, $orderby, $isactive);
 	}
@@ -338,7 +343,7 @@ class icms_block_Object extends icms_ipf_Object {
 	 *
 	 * @deprecated use the handler method, instead
 	 */
-	public function getNonGroupedBlocks($module_id=0, $toponlyblock=false, $visible=null, $orderby='b.weight,b.bid', $isactive=1){
+	public function getNonGroupedBlocks($module_id = 0, $toponlyblock = false, $visible = null, $orderby = 'b.weight, b.bid', $isactive = 1) {
 		icms_deprecated('icms_block_Handler->getNonGroupedBlocks');
 		return $this->handler->getNonGroupedBlocks($module_id, $toponlyblock, $visible, $orderby, $isactive);
 	}

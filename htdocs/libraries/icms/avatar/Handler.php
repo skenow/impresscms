@@ -30,7 +30,7 @@ class icms_avatar_Handler extends icms_core_ObjectHandler {
 	 */
 	public function &create($isNew = true) {
 		$avatar = new icms_core_avatar_Object();
-		if ( $isNew ) {
+		if ($isNew) {
 			$avatar->setNew();
 		}
 		return $avatar;
@@ -44,14 +44,14 @@ class icms_avatar_Handler extends icms_core_ObjectHandler {
 	public function &get($id) {
 		$avatar = false;
 		$id = (int) $id;
-		if ( $id > 0 ) {
+		if ($id > 0) {
 			$sql = "SELECT * FROM " . $this->db->prefix('avatar')
 				. " WHERE avatar_id='" . $id . "'";
-			if ( !$result = $this->db->query($sql) ) {
+			if (!$result = $this->db->query($sql)) {
 				return false;
 			}
 			$numrows = $this->db->getRowsNum($result);
-			if ( $numrows == 1 ) {
+			if ($numrows == 1) {
 				$avatar = new icms_core_avatar_Object();
 				$avatar->assignVars($this->db->fetchArray($result));
 				return $avatar;
@@ -67,19 +67,19 @@ class icms_avatar_Handler extends icms_core_ObjectHandler {
 	 */
 	public function insert(&$avatar) {
 		/* As of PHP5.3.0, is_a() is no longer deprecated */
-		if ( !is_a($avatar, 'icms_avatar_Object') ) {
+		if (!is_a($avatar, 'icms_avatar_Object')) {
 			return false;
 		}
-		if ( !$avatar->isDirty() ) {
+		if (!$avatar->isDirty()) {
 			return true;
 		}
-		if ( !$avatar->cleanVars() ) {
+		if (!$avatar->cleanVars()) {
 			return false;
 		}
-		foreach ( $avatar->cleanVars as $k => $v ) {
+		foreach ($avatar->cleanVars as $k => $v) {
 			${$k} = $v;
 		}
-		if ( $avatar->isNew() ) {
+		if ($avatar->isNew()) {
 			$avatar_id = $this->db->genId('avatar_avatar_id_seq');
 			$sql = sprintf(
 				"INSERT INTO %s (avatar_id, avatar_file, avatar_name, avatar_created, avatar_mimetype, avatar_display, avatar_weight, avatar_type)
@@ -116,10 +116,10 @@ class icms_avatar_Handler extends icms_core_ObjectHandler {
 				(int) $avatar_id
 			);
 		}
-		if ( !$result = $this->db->query($sql) ) {
+		if (!$result = $this->db->query($sql)) {
 			return false;
 		}
-		if ( empty($avatar_id) ) {
+		if (empty($avatar_id)) {
 			$avatar_id = $this->db->getInsertId();
 		}
 		$avatar->assignVar('avatar_id', $avatar_id);
@@ -133,7 +133,7 @@ class icms_avatar_Handler extends icms_core_ObjectHandler {
 	 */
 	public function delete(&$avatar) {
 		/* As of PHP5.3.0, is_a() is no longer deprecated */
-		if ( !is_a($avatar, 'icms_avatar_Object') ) {
+		if (!is_a($avatar, 'icms_avatar_Object')) {
 			return false;
 		}
 
@@ -142,7 +142,7 @@ class icms_avatar_Handler extends icms_core_ObjectHandler {
 			"DELETE FROM %s WHERE avatar_id = '%u'",
 			$this->db->prefix('avatar'), $id
 		);
-		if ( !$result = $this->db->query($sql) ) {
+		if (!$result = $this->db->query($sql)) {
 			return false;
 		}
 		$sql = sprintf(
@@ -163,23 +163,23 @@ class icms_avatar_Handler extends icms_core_ObjectHandler {
 		$ret = array();
 		$limit = $start = 0;
 		$sql = "SELECT a.*, COUNT(u.user_id) AS count FROM "
-			. $this->db->prefix('avatar')." a LEFT JOIN "
-			. $this->db->prefix('avatar_user_link')." u ON u.avatar_id=a.avatar_id";
-		if ( isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element') ) {
-			$sql .= " ".$criteria->renderWhere();
+			. $this->db->prefix('avatar') . " a LEFT JOIN "
+			. $this->db->prefix('avatar_user_link') . " u ON u.avatar_id=a.avatar_id";
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
+			$sql .= " " . $criteria->renderWhere();
 			$sql .= " GROUP BY a.avatar_id ORDER BY avatar_weight, avatar_id";
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
 		}
 		$result = $this->db->query($sql, $limit, $start);
-		if ( !$result ) {
+		if (!$result) {
 			return $ret;
 		}
-		while ( $myrow = $this->db->fetchArray($result) ) {
+		while ($myrow = $this->db->fetchArray($result)) {
 			$avatar = new icms_core_avatar_Object();
 			$avatar->assignVars($myrow);
 			$avatar->setUserCount($myrow['count']);
-			if ( !$id_as_key ) {
+			if (!$id_as_key) {
 				$ret[] =& $avatar;
 			} else {
 				$ret[$myrow['avatar_id']] =& $avatar;
@@ -195,11 +195,11 @@ class icms_avatar_Handler extends icms_core_ObjectHandler {
 	 * @return integer
 	 */
 	public function getCount($criteria = null) {
-		$sql = 'SELECT COUNT(*) FROM '.$this->db->prefix('avatar');
-		if ( isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element') ) {
-			$sql .= ' '.$criteria->renderWhere();
+		$sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('avatar');
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
+			$sql .= ' ' . $criteria->renderWhere();
 		}
-		if ( !$result =& $this->db->query($sql) ) {
+		if (!$result =& $this->db->query($sql)) {
 			return 0;
 		}
 		list($count) = $this->db->fetchRow($result);
@@ -215,7 +215,7 @@ class icms_avatar_Handler extends icms_core_ObjectHandler {
 	public function addUser($avatar_id, $user_id) {
 		$avatar_id = (int) $avatar_id;
 		$user_id = (int) ($user_id);
-		if ( $avatar_id < 1 || $user_id < 1 ) {
+		if ($avatar_id < 1 || $user_id < 1) {
 			return false;
 		}
 		$sql = sprintf(
@@ -227,7 +227,7 @@ class icms_avatar_Handler extends icms_core_ObjectHandler {
 			"INSERT INTO %s (avatar_id, user_id) VALUES ('%u', '%u')",
 			$this->db->prefix('avatar_user_link'), $avatar_id, $user_id
 		);
-		if ( !$result =& $this->db->query($sql) ) {
+		if (!$result =& $this->db->query($sql)) {
 			return false;
 		}
 		return true;
@@ -242,16 +242,16 @@ class icms_avatar_Handler extends icms_core_ObjectHandler {
 		$ret = array();
 
 		/* As of PHP5.3.0, is_a() is no longer deprecated */
-		if ( !is_a($avatar, 'icms_avatar_Object') ) {
+		if (!is_a($avatar, 'icms_avatar_Object')) {
 			return false;
 		}
 
-		$sql = "SELECT user_id FROM ".$this->db->prefix('avatar_user_link')
+		$sql = "SELECT user_id FROM " . $this->db->prefix('avatar_user_link')
 			. " WHERE avatar_id='". (int) $avatar->getVar('avatar_id') . "'";
-		if ( !$result = $this->db->query($sql) ) {
+		if (!$result = $this->db->query($sql)) {
 			return $ret;
 		}
-		while ( $myrow = $this->db->fetchArray($result) ) {
+		while ($myrow = $this->db->fetchArray($result)) {
 			$ret[] =& $myrow['user_id'];
 		}
 		return $ret;
@@ -265,11 +265,11 @@ class icms_avatar_Handler extends icms_core_ObjectHandler {
 	 */
 	public function getList($avatar_type = null, $avatar_display = null) {
 		$criteria = new icms_criteria_Compo();
-		if ( isset($avatar_type) ) {
-			$avatar_type = ( $avatar_type == 'C' ) ? 'C' : 'S';
+		if (isset($avatar_type)) {
+			$avatar_type = ($avatar_type == 'C') ? 'C' : 'S';
 			$criteria->add(new icms_criteria_Item('avatar_type', $avatar_type));
 		}
-		if ( isset($avatar_display) ) {
+		if (isset($avatar_display)) {
 			$criteria->add(new icms_criteria_Item('avatar_display', (int) $avatar_display));
 		}
 		$avatars =& $this->getObjects($criteria, true);

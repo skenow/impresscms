@@ -17,6 +17,9 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 /**
  * icms_block_position_Handler
+ * @category	ICMS
+ * @package		Block
+ * @subpackage	Position
  *
  */
 class icms_block_position_Handler extends icms_ipf_Handler {
