@@ -28,7 +28,7 @@ class icms_core_Debug {
 	 * @param string $msg
 	 * @param boolean $exit
 	 */
-	public static function message($msg, $exit = false) {
+	static public function message($msg, $exit = false) {
 		echo "<div style='padding: 5px; color: red; font-weight: bold'>debug :: $msg</div>";
 		if ($exit) {
 			die();
@@ -40,7 +40,7 @@ class icms_core_Debug {
  	 *
  	 * @param string $var
  	 */
- 	public static function vardump($var) {
+ 	static public function vardump($var) {
  		if (class_exists('MyTextSanitizer')) {
 			$myts = MyTextSanitizer::getInstance();
 			self::message($myts->displayTarea(var_export($var, true)));
@@ -58,7 +58,7 @@ class icms_core_Debug {
  	 * @param string $replacement Method or function to be used instead of the deprecated method or function
  	 * @param string $extra Additional information to provide about the change
  	 */
- 	public static function setDeprecated($replacement='', $extra='') {
+ 	static public function setDeprecated($replacement='', $extra='') {
 		$trace = debug_backtrace();
 		array_shift($trace);
 		$level = $msg = $message = '';

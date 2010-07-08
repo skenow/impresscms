@@ -43,7 +43,7 @@ class icms_ipf_registry_Handler {
 	 * @static
 	 * @staticvar   object
 	 */
-	public static function &getInstance() {
+	static public function &getInstance() {
 		static $instance;
 		if (!isset($instance)) {
 			$instance = new icms_ipf_registry_Handler();

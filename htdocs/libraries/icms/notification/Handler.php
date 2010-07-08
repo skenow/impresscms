@@ -668,7 +668,7 @@ class icms_notification_Handler extends icms_core_ObjectHandler {
 	 * @param  int	 $module_id  ID of the module  (default current module)
 	 * @return bool
 	 */
-	public static function isEnabled($style, $module_id=null) {
+	static public function isEnabled($style, $module_id=null) {
 		if (isset($GLOBALS['xoopsModuleConfig']['notification_enabled'])) {
 			$status = $GLOBALS['xoopsModuleConfig']['notification_enabled'];
 		} else {
@@ -706,7 +706,7 @@ class icms_notification_Handler extends icms_core_ObjectHandler {
 	 * @param  int	 $module_id  ID of the module (default current module)
 	 * @return mixed
 	 */
-	public static function &categoryInfo($category_name='', $module_id=null) {
+	static public function &categoryInfo($category_name='', $module_id=null) {
 		if (!isset($module_id)) {
 			global $icmsModule;
 			$module_id = !empty($icmsModule) ? $icmsModule->getVar('mid') : 0;
@@ -743,7 +743,7 @@ class icms_notification_Handler extends icms_core_ObjectHandler {
 	 * @param  int  $module_id  ID of the module (default current module)
 	 * @return mixed			Associative array of category info
 	 */
-	public static function &commentCategoryInfo($module_id=null) {
+	static public function &commentCategoryInfo($module_id=null) {
 		$ret = false;
 		$all_categories =& $this->categoryInfo('', $module_id);
 		if (empty($all_categories)) {

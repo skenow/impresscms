@@ -31,7 +31,7 @@ class icms_core_Filesystem {
 	 * @param	int		$mode	permission
 	 * @return	bool	Returns true on success, false on failure
 	 */
-	public static function chmod($target, $mode = 0777) {
+	static public function chmod($target, $mode = 0777) {
 		return @chmod($target, $mode);
 	}
 
@@ -46,7 +46,7 @@ class icms_core_Filesystem {
 	 * @param array		$metachars	Characters to exclude from a valid path name
 	 * @return boolean True if folder is created, False if it is not
 	 */
-	public static function mkdir($target, $mode = 0777, $base = ICMS_ROOT_PATH, $metachars = array()) {
+	static public function mkdir($target, $mode = 0777, $base = ICMS_ROOT_PATH, $metachars = array()) {
 
 		if( is_dir( $target )) return TRUE;
 		if ( !isset($metachars) ) {
@@ -86,7 +86,7 @@ class icms_core_Filesystem {
 	 * @param	string	$dir	The folder path to cleaned. Must be an array like: array('templates_c' => ICMS_ROOT_PATH."/templates_c/");
 	 * @param	bool  $remove_admin_cache	  True to remove admin cache, if required.
 	 */
-	public static function cleanFolders($dir, $remove_admin_cache = FALSE) {
+	static public function cleanFolders($dir, $remove_admin_cache = FALSE) {
 		global $icmsConfig;
 		foreach ($dir as $d) {
 			$dd = opendir($d);
@@ -111,7 +111,7 @@ class icms_core_Filesystem {
 	 * Replaces icms_cleaning_write_folders()
 	 *
 	 */
-	public static function cleanWriteFolders() {
+	static public function cleanWriteFolders() {
 		return self::cleanFolders(
 			array(
 				'templates_c' => ICMS_ROOT_PATH . '/templates_c/',
@@ -130,7 +130,7 @@ class icms_core_Filesystem {
 	 * @param	string	$dest	The destination
 	 * @return	boolean	Returns true on success, false on failure
 	 */
-	public static function copyRecursive($source, $dest) {
+	static public function copyRecursive($source, $dest) {
 		// Simple copy for a file
 		if (is_file($source)) {return copy($source, $dest);}
 
@@ -164,7 +164,7 @@ class icms_core_Filesystem {
 	 * @param string $dirname path of the file
 	 * @return	The unlinked dirname
 	 */
-	public static function deleteFile($dirname) {
+	static public function deleteFile($dirname) {
 		// Simple delete for a file
 		if (is_file($dirname)) {
 			return unlink($dirname);
@@ -182,7 +182,7 @@ class icms_core_Filesystem {
 	 * @param	string 	$dest	  The destination
 	 * @return 	boolean	Returns stream_copy_to_stream($src, $dest) on success, false on failure
 	 */
-	public static function copyStream($src, $dest) {
+	static public function copyStream($src, $dest) {
 		$len = false;
 		if(@ini_get('allow_url_fopen')){
 			$fsrc = fopen($src, 'r');
@@ -202,7 +202,7 @@ class icms_core_Filesystem {
 	 * @param string $dir Directory name
 	 * @param bool $deleteRootToo Delete specified top-level directory as well
 	 */
-	public static function deleteRecursive($dir, $deleteRootToo=true) {
+	static public function deleteRecursive($dir, $deleteRootToo=true) {
 		if (!$dh = @opendir($dir)) {
 			return;
 		}
@@ -233,7 +233,7 @@ class icms_core_Filesystem {
 	 * @return bool
 	 * @todo use language constants for error messages
 	 */
-	public static function writeIndexFile($path = '') {
+	static public function writeIndexFile($path = '') {
 		if (empty($path)) {
 			return false;
 		}
@@ -259,7 +259,7 @@ class icms_core_Filesystem {
 	 * @author	Steve Kenow <skenow@impresscms.org>
 	 *
 	 */
-	public static function generateChecksum() {
+	static public function generateChecksum() {
 		$rootdir = preg_replace('#[\|/]#', DIRECTORY_SEPARATOR, ICMS_ROOT_PATH);
 		$dir = new RecursiveDirectoryIterator($rootdir);
 		$checkfile = preg_replace('#[\|/]#', DIRECTORY_SEPARATOR, ICMS_TRUST_PATH) . DIRECTORY_SEPARATOR . 'checkfile.sha1';
@@ -293,7 +293,7 @@ class icms_core_Filesystem {
 	 * @author	Steve Kenow <skenow@impresscms.org>
 	 *
 	 */
-	public static function validateChecksum() {
+	static public function validateChecksum() {
 		$validationFile = new SplFileObject($checkfile);
 		if ($validationFile->isReadable()) {
 			$currentHash = $currentPerms = array();

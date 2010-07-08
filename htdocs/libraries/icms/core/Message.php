@@ -28,7 +28,7 @@ class icms_core_Message {
 	 * @param string $title
 	 * @param boolean $render
 	 */
-	public static function warning($msg, $title='', $render = false) {
+	static public function warning($msg, $title='', $render = false) {
 		$ret = '<div class="warningMsg">';
 		if ($title != '') {
 			$ret .= '<h4>' . $title . '</h4>';
@@ -56,7 +56,7 @@ class icms_core_Message {
 	 * @param boolean $render
 	 * @return mixed
 	 */
-	public static function error($msg, $title, $render = true) {
+	static public function error($msg, $title, $render = true) {
 		$ret = '<div class="errorMsg">';
 		if ($title != '') {
 			$ret .= '<h4>' . $title . '</h4>';
@@ -84,7 +84,7 @@ class icms_core_Message {
 	 * @param string $title
 	 * @return void
 	 */
-	public static function result($msg, $title='') {
+	static public function result($msg, $title='') {
 		echo '<div class="resultMsg">';
 		if ($title != '') {
 			echo '<h4>' . $title . '</h4>';
@@ -111,7 +111,7 @@ class icms_core_Message {
 	 * @param boolean $addtoken Whether or not to add a security token
 	 * @return void
 	 */
-	public static function confirm($hiddens, $action, $msg, $submit='', $addtoken = true) {
+	static public function confirm($hiddens, $action, $msg, $submit='', $addtoken = true) {
 	$submit = ($submit != '') ? trim($submit) : _SUBMIT;
 	echo '<div class="confirmMsg">
 			<h4>' . $msg . '</h4>

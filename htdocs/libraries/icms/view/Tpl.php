@@ -227,7 +227,7 @@ class icms_view_Tpl extends Smarty {
 	 * @param   string  $tpl_id
 	 * @return  boolean
 	 **/
-	public static function template_touch($tpl_id) {
+	static public function template_touch($tpl_id) {
 		$tplfile_handler =& xoops_gethandler('view_template_file');
 		$tplfile =& $tplfile_handler->get($tpl_id);
 
@@ -254,7 +254,7 @@ class icms_view_Tpl extends Smarty {
 	 * @param   int $mid    Module ID
 	 * @return
 	 **/
-	public static function template_clear_module_cache($mid) {
+	static public function template_clear_module_cache($mid) {
 		$icms_block_handler = xoops_gethandler('block');
 		$block_arr = $icms_block_handler->getByModule($mid);
 		$count = count($block_arr);
