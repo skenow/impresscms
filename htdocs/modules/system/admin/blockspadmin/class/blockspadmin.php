@@ -42,7 +42,7 @@ class SystemBlockspadmin extends icms_block_position_Object {
 	 *
 	 * @return string
 	 */
-	public function getCustomTitle(){
+	public function getCustomTitle() {
 		$rtn = defined($this->getVar('title')) ? constant($this->getVar('title')) : $this->getVar('title');
 		return $rtn;
 	}
@@ -57,8 +57,8 @@ class SystemBlockspadmin extends icms_block_position_Object {
 	 * @param boolean $userSide
 	 * @return string
 	 */
-	public function getEditItemLink($onlyUrl=false, $withimage=true, $userSide=false){
-		if($this->getVar('block_default') == 1)
+	public function getEditItemLink($onlyUrl=false, $withimage=true, $userSide=false) {
+		if ($this->getVar('block_default') == 1)
 		return "";
 		return parent::getEditItemLink($onlyUrl, $withimage, $userSide);
 	}
@@ -73,8 +73,8 @@ class SystemBlockspadmin extends icms_block_position_Object {
 	 * @param boolean $userSide
 	 * @return string
 	 */
-	public function getDeleteItemLink($onlyUrl=false, $withimage=true, $userSide=false){
-		if($this->getVar('block_default') == 1)
+	public function getDeleteItemLink($onlyUrl=false, $withimage=true, $userSide=false) {
+		if ($this->getVar('block_default') == 1)
 		return "";
 		return parent::getDeleteItemLink($onlyUrl, $withimage, $userSide);
 	}

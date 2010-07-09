@@ -14,13 +14,13 @@
  * @version	$Id$
  */
 
-if(!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid())) {exit('Access Denied');}
+if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid())) {exit('Access Denied');}
 include_once ICMS_ROOT_PATH.'/modules/system/admin/banners/banners.php';
 //include_once ICMS_ROOT_PATH.'/class/module.textsanitizer.php';
 $allowedHTML = array('htmlcode');
 
-if(!empty($_POST)){ foreach($_POST as $k => $v){ if (!in_array($k,$allowedHTML)){${$k} = StopXSS($v);}else{${$k} = $v;}}}
-if(!empty($_GET)){ foreach($_GET as $k => $v){ if (!in_array($k,$allowedHTML)){${$k} = StopXSS($v);}else{${$k} = $v;}}}
+if (!empty($_POST)) { foreach ($_POST as $k => $v) { if (!in_array($k,$allowedHTML)) {${$k} = StopXSS($v);} else {${$k} = $v;}}}
+if (!empty($_GET)) { foreach ($_GET as $k => $v) { if (!in_array($k,$allowedHTML)) {${$k} = StopXSS($v);} else {${$k} = $v;}}}
 
 $op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'BannersAdmin');
 
@@ -31,7 +31,7 @@ switch($op)
 		break;
 
 	case 'BannersAdd':
-		if(!$GLOBALS['xoopsSecurity']->check())
+		if (!$GLOBALS['xoopsSecurity']->check())
 		{
 			redirect_header('admin.php?fct=banners&amp;op=BannersAdmin#top', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 		}
@@ -42,7 +42,7 @@ switch($op)
 		$imptotal = isset($_POST['imptotal']) ? (int) ($_POST['imptotal']) : 0;
 		$htmlbanner = isset($_POST['htmlbanner']) ? (int) ($_POST['htmlbanner']) : 0;
 		$htmlcode = isset($_POST['htmlcode']) ? trim($_POST['htmlcode']) : '';
-		if($cid <= 0) {redirect_header('admin.php?fct=banners&amp;op=BannersAdmin#top');}
+		if ($cid <= 0) {redirect_header('admin.php?fct=banners&amp;op=BannersAdmin#top');}
 		$db =& Database::getInstance();
 		$myts =& icms_core_Textsanitizer::getInstance();
 		$newid = $db->genId($db->prefix('banner').'_bid_seq');
@@ -52,7 +52,7 @@ switch($op)
 		break;
 
 	case 'BannerAddClient':
-		if(!$GLOBALS['xoopsSecurity']->check())
+		if (!$GLOBALS['xoopsSecurity']->check())
 		{
 			redirect_header('admin.php?fct=banners&amp;op=BannersAdmin#top', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 		}
@@ -78,7 +78,7 @@ switch($op)
 
 	case 'BannerFinishDelete2':
 		$bid = isset($_POST['bid']) ? (int) ($_POST['bid']) : 0;
-		if($bid <= 0 | !$GLOBALS['xoopsSecurity']->check())
+		if ($bid <= 0 | !$GLOBALS['xoopsSecurity']->check())
 		{
 			redirect_header('admin.php?fct=banners&amp;op=BannersAdmin#top', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 		}
@@ -90,12 +90,12 @@ switch($op)
 
 	case 'BannerDelete':
 		$bid = isset($_GET['bid']) ? (int) ($_GET['bid']) : 0;
-		if($bid > 0) {BannerDelete($bid);}
+		if ($bid > 0) {BannerDelete($bid);}
 		break;
 
 	case 'BannerDelete2':
 		$bid = isset($_POST['bid']) ? (int) ($_POST['bid']) : 0;
-		if($bid <= 0 | !$GLOBALS['xoopsSecurity']->check())
+		if ($bid <= 0 | !$GLOBALS['xoopsSecurity']->check())
 		{
 			redirect_header('admin.php?fct=banners&amp;op=BannersAdmin#top', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 		}
@@ -107,13 +107,13 @@ switch($op)
 
 	case 'BannerEdit':
 		$bid = isset($_GET['bid']) ? (int) ($_GET['bid']) : 0;
-		if($bid > 0) {BannerEdit($bid);}
+		if ($bid > 0) {BannerEdit($bid);}
 		break;
 
 	case 'BannerChange':
 		$bid = isset($_POST['bid']) ? (int) ($_POST['bid']) : 0;
 		$cid = isset($_POST['cid']) ? (int) ($_POST['cid']) : 0;
-		if(($cid <= 0 || $bid <= 0) | !$GLOBALS['xoopsSecurity']->check())
+		if (($cid <= 0 || $bid <= 0) | !$GLOBALS['xoopsSecurity']->check())
 		{
 			redirect_header('admin.php?fct=banners&amp;op=BannersAdmin#top', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 		}
@@ -132,13 +132,13 @@ switch($op)
 
 	case 'BannerClientDelete':
 		$cid = isset($_GET['cid']) ? (int) ($_GET['cid']) : 0;
-		if($cid > 0) {BannerClientDelete($cid);}
+		if ($cid > 0) {BannerClientDelete($cid);}
 		break;
 
 	case 'BannerClientDelete2':
 		$cid = isset($_POST['cid']) ? (int) ($_POST['cid']) : 0;
 		$db =& Database::getInstance();
-		if($cid <= 0 | !$GLOBALS['xoopsSecurity']->check())
+		if ($cid <= 0 | !$GLOBALS['xoopsSecurity']->check())
 		{
 			redirect_header('admin.php?fct=banners&amp;op=BannersAdmin#top', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 		}
@@ -151,12 +151,12 @@ switch($op)
 
 	case 'BannerClientEdit':
 		$cid = isset($_GET['cid']) ? (int) ($_GET['cid']) : 0;
-		if($cid > 0) {BannerClientEdit($cid);}
+		if ($cid > 0) {BannerClientEdit($cid);}
 		break;
 
 	case 'BannerClientChange':
 		$cid = isset($_POST['cid']) ? (int) ($_POST['cid']) : 0;
-		if($cid <= 0 | !$GLOBALS['xoopsSecurity']->check())
+		if ($cid <= 0 | !$GLOBALS['xoopsSecurity']->check())
 		{
 			redirect_header('admin.php?fct=banners&amp;op=BannersAdmin#top', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 		}

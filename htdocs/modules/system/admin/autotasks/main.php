@@ -8,7 +8,7 @@
  * @since		1.2 alpha 2
  * @author		MekDrop <mekdrop@gmail.com>
  */
-if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid()) ) {
+if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid())) {
 	exit("Access Denied");
 }
 
@@ -20,7 +20,7 @@ function editautotasks($showmenu = false, $autotasksid = 0, $clone=false)
 
 	$autotasksObj = $icms_autotasks_handler->get($autotasksid);
 
-	if (!$clone && !$autotasksObj->isNew()){
+	if (!$clone && !$autotasksObj->isNew()) {
 
 		$sform = $autotasksObj->getForm(_CO_ICMS_AUTOTASKS_EDIT, 'addautotasks');
 		$sform->assign($icmsAdminTpl);

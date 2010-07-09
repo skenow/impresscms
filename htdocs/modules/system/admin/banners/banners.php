@@ -16,7 +16,7 @@
  * @version	$Id$
  */
 
-if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
+if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid())) {
 	exit("Access Denied");
 } else {
 
@@ -43,16 +43,16 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 		<td align='center'>"._AM_FUNCTION."</td></tr><tr align='center'>";
 		$result = $xoopsDB->query("SELECT bid, cid, imptotal, impmade, clicks, date FROM ".$xoopsDB->prefix("banner")." ORDER BY bid");
 		$myts =& icms_core_Textsanitizer::getInstance();
-		while(list($bid, $cid, $imptotal, $impmade, $clicks, $date) = $xoopsDB->fetchRow($result)) {
+		while (list($bid, $cid, $imptotal, $impmade, $clicks, $date) = $xoopsDB->fetchRow($result)) {
 			$result2 = $xoopsDB->query("SELECT cid, name FROM ".$xoopsDB->prefix("bannerclient")." WHERE cid='". (int) ($cid)."'");
 			list($cid, $name) = $xoopsDB->fetchRow($result2);
 			$name = $myts->htmlSpecialChars($name);
-			if ( $impmade == 0 ) {
+			if ($impmade == 0) {
 				$percent = 0;
 			} else {
 				$percent = substr(100 * $clicks / $impmade, 0, 5);
 			}
-			if ( $imptotal == 0 ) {
+			if ($imptotal == 0) {
 				$left = ""._AM_UNLIMIT."";
 			} else {
 				$left = $imptotal-$impmade;
@@ -83,7 +83,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 		<td align='center'>"._AM_FUNCTION."</td></tr>
 		<tr>";
 		$result = $xoopsDB->query("SELECT bid, cid, impressions, clicks, datestart, dateend FROM ".$xoopsDB->prefix("bannerfinish")." ORDER BY bid");
-		while(list($bid, $cid, $impressions, $clicks, $datestart, $dateend) = $xoopsDB->fetchRow($result)) {
+		while (list($bid, $cid, $impressions, $clicks, $datestart, $dateend) = $xoopsDB->fetchRow($result)) {
 			$result2 = $xoopsDB->query("SELECT cid, name FROM ".$xoopsDB->prefix("bannerclient")." WHERE cid='". (int) ($cid)."'");
 			list($cid, $name) = $xoopsDB->fetchRow($result2);
 			$name = $myts->htmlSpecialChars($name);
@@ -113,7 +113,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 		<td align='center'>"._AM_CONTMAIL."</td>
 		<td align='center'>"._AM_FUNCTION."</td></tr><tr align='center'>";
 		$result = $xoopsDB->query("SELECT cid, name, contact, email FROM ".$xoopsDB->prefix("bannerclient")." ORDER BY cid");
-		while(list($cid, $name, $contact, $email) = $xoopsDB->fetchRow($result)) {
+		while (list($cid, $name, $contact, $email) = $xoopsDB->fetchRow($result)) {
 			$name = htmlspecialchars($name,ENT_QUOTES);
 			$contact = htmlspecialchars($contact,ENT_QUOTES);
 			$email = htmlspecialchars($email,ENT_QUOTES);
@@ -133,7 +133,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 		// Add Banner
 		$result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("bannerclient"));
 		list($numrows) = $xoopsDB->fetchRow($result);
-		if ( $numrows > 0 ) {
+		if ($numrows > 0) {
 			echo"<table width='100%' border='0' cellspacing='1' class='outer'><tr><td class=\"odd\">";
 			echo"
 			<h4>"._AM_ADDNWBNR."</h4>
@@ -141,7 +141,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			"._AM_CLINAMET."
 			<select name='cid'>";
 			$result = $xoopsDB->query("SELECT cid, name FROM ".$xoopsDB->prefix("bannerclient"));
-			while(list($cid, $name) = $xoopsDB->fetchRow($result)) {
+			while (list($cid, $name) = $xoopsDB->fetchRow($result)) {
 				$name = $myts->htmlSpecialChars($name);
 				echo "<option value='$cid'>$name</option>";
 			}
@@ -201,10 +201,10 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 		$clickurl = htmlspecialchars($clickurl, ENT_QUOTES);
 		echo"<table width='100%' border='0' cellspacing='1' class='outer'><tr><td class=\"odd\">";
 		echo "<h4>"._AM_DELEBNR."</h4>";
-		if ($htmlbanner){
+		if ($htmlbanner) {
 			echo $myts->displayTarea($htmlcode,1);
-		}else{
-			if(strtolower(substr($imageurl,strrpos($imageurl,".")))==".swf") {
+		} else {
+			if (strtolower(substr($imageurl,strrpos($imageurl,".")))==".swf") {
 				echo '<object type="application/x-shockwave-flash" data="'.$imageurl.'" width="468" height="60">';
 				echo '<param name="movie" value="'.$imageurl.'" />';
 				echo '<param name="quality" value="high" />';
@@ -218,7 +218,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 		list($cid, $name) = $xoopsDB->fetchRow($result2);
 		$name = $myts->htmlSpecialChars($name);
 		$percent = substr(100 * $clicks / $impmade, 0, 5);
-		if ( $imptotal == 0 ) {
+		if ($imptotal == 0) {
 			$left = 'unlimited';
 		} else {
 			$left = $imptotal-$impmade;
@@ -251,10 +251,10 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 		list($cid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $htmlbanner, $htmlcode) = $xoopsDB->fetchRow($result);
 		echo"<table width='100%' border='0' cellspacing='1' class='outer'><tr><td class=\"odd\">";
 		echo"<h4>"._AM_EDITBNR."</h4>";
-		if ($htmlbanner){
+		if ($htmlbanner) {
 			echo $myts->displayTarea($htmlcode, 1, 0, 0, 0, 0);
-		}else{
-			if(strtolower(substr($imageurl,strrpos($imageurl,".")))==".swf") {
+		} else {
+			if (strtolower(substr($imageurl,strrpos($imageurl,".")))==".swf") {
 				echo '<object type="application/x-shockwave-flash" data="'.$imageurl.'" width="468" height="60">';
 				echo '<param name="movie" value="'.$imageurl.'" />';
 				echo '<param name="quality" value="high" />';
@@ -271,14 +271,14 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 		$name = $myts->htmlSpecialChars($name);
 		echo "<option value='$cid' selected='selected'>$name</option>";
 		$result = $xoopsDB->query("SELECT cid, name FROM ".$xoopsDB->prefix("bannerclient"));
-		while(list($ccid, $name) = $xoopsDB->fetchRow($result)) {
+		while (list($ccid, $name) = $xoopsDB->fetchRow($result)) {
 			$name = $myts->htmlSpecialChars($name);
-			if ( $cid != $ccid ) {
+			if ($cid != $ccid) {
 				echo "<option value='$ccid'>$name</option>";
 			}
 		}
 		echo "</select><br />";
-		if ( $imptotal == 0 ) {
+		if ($imptotal == 0) {
 			$impressions = ""._AM_UNLIMIT."";
 		} else {
 			$impressions = $imptotal;
@@ -288,9 +288,9 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 		"._AM_IMGURLT."<input type='text' name='imageurl' size='50' maxlength='200' value='".htmlspecialchars($imageurl, ENT_QUOTES)."' /><br />
 		"._AM_CLICKURLT."<input type='text' name='clickurl' size='50' maxlength='200' value='".htmlspecialchars($clickurl, ENT_QUOTES)."' /><br />
 		"._AM_USEHTML;
-		if ($htmlbanner){
+		if ($htmlbanner) {
 			echo " <input type='checkbox' name='htmlbanner' value='1' checked='checked' />";
-		}else{
+		} else {
 			echo " <input type='checkbox' name='htmlbanner' value='1' />";
 		}
 		echo "
@@ -327,20 +327,20 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 		echo "<h4>"._AM_DELEADC."</h4>".sprintf(_AM_SUREDELCLI,$name)."<br /><br />";
 		$result2 = $xoopsDB->query("SELECT imageurl, clickurl, htmlbanner, htmlcode FROM ".$xoopsDB->prefix("banner")." WHERE cid='". (int) ($cid)."'");
 		$numrows = $xoopsDB->getRowsNum($result2);
-		if ( $numrows == 0 ) {
+		if ($numrows == 0) {
 			echo ""._AM_NOBNRRUN."<br /><br />";
 		} else {
 			echo "<font color='#ff0000'><b>"._AM_WARNING."</b></font><br />"._AM_ACTBNRRUN."<br /><br />";
 		}
-		while(list($imageurl, $clickurl, $htmlbanner, $htmlcode) = $xoopsDB->fetchRow($result2)) {
+		while (list($imageurl, $clickurl, $htmlbanner, $htmlcode) = $xoopsDB->fetchRow($result2)) {
 			$imageurl = htmlspecialchars($imageurl, ENT_QUOTES);
 			$clickurl = htmlspecialchars($clickurl, ENT_QUOTES);
 			$bannerobject = "";
-			if ($htmlbanner){
+			if ($htmlbanner) {
 				$bannerobject = $myts->displayTarea($htmlcode,1);
 			} else {
 				$bannerobject = '<div><a href="'.$clickurl.'" rel="external">';
-				if(strtolower(substr($imageurl,strrpos($imageurl,".")))==".swf") {
+				if (strtolower(substr($imageurl,strrpos($imageurl,".")))==".swf") {
 					$bannerobject = $bannerobject;
 					echo '<object type="application/x-shockwave-flash" data="'.$imageurl.'" width="468" height="60">';
 					echo '<param name="movie" value="'.$imageurl.'" />';

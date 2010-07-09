@@ -13,7 +13,7 @@
  * @version		$Id$
  */
 
-if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
+if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid())) {
 	exit(_CT_ACCESS_DENIED);
 }
 
@@ -23,7 +23,7 @@ function editblockposition($id = 0)
 
 	$blockObj = $icms_blockposition_handler->get($id);
 
-	if (!$blockObj->isNew()){
+	if (!$blockObj->isNew()) {
 		$sform = $blockObj->getForm(_AM_SYSTEM_BLOCKSPADMIN_EDIT, 'addblockposition');
 		$sform->assign($icmsAdminTpl);
 
@@ -49,7 +49,7 @@ if (isset($_POST['op'])) $clean_op = htmlentities($_POST['op']);
 $clean_id = isset($_GET['id']) ? (int) $_GET['id'] : 0 ;
 $clean_id = isset($_POST['id']) ? (int) $_POST['id'] : $clean_id;
 
-if (in_array($clean_op,$valid_op,true)){
+if (in_array($clean_op,$valid_op,true)) {
 
 	switch ($clean_op) {
 		case "mod":

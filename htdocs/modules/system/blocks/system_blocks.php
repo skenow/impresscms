@@ -142,7 +142,7 @@ function b_system_main_show()
 			$block['modules'][$i]['directory'] = $modules[$i]->getVar('dirname');
 			$sublinks = $modules[$i]->subLink();
 			if ((count($sublinks) > 0) && (!empty($icmsModule)) && ($i == $icmsModule->getVar('mid'))) {
-				foreach($sublinks as $sublink){
+				foreach ($sublinks as $sublink) {
 					$block['modules'][$i]['sublinks'][] = array('name' => $sublink['name'], 'url' => XOOPS_URL.'/modules/'.$modules[$i]->getVar('dirname').'/'.$sublink['url']);
 				}
 			} else {
@@ -255,8 +255,8 @@ function b_system_newmembers_show($options)
 	$newmembers = $member_handler->getUsers($criteria);
 	$count = count($newmembers);
 	for ($i = 0; $i < $count; $i++) {
-		if ( $options[1] == 1 ) {
-			if ($newmembers[$i]->getVar('user_avatar') && $newmembers[$i]->getVar('user_avatar') != 'blank.gif' && $newmembers[$i]->getVar('user_avatar') != ''){
+		if ($options[1] == 1) {
+			if ($newmembers[$i]->getVar('user_avatar') && $newmembers[$i]->getVar('user_avatar') != 'blank.gif' && $newmembers[$i]->getVar('user_avatar') != '') {
 				$block['users'][$i]['avatar'] = ICMS_UPLOAD_URL.'/'.$newmembers[$i]->getVar('user_avatar');
 			} elseif ($icmsConfigUser['avatar_allow_gravatar'] == 1) {
 				$block['users'][$i]['avatar'] = $newmembers[$i]->gravatar('G', $icmsConfigUser['avatar_width']);
@@ -271,7 +271,7 @@ function b_system_newmembers_show($options)
 		$block['users'][$i]['joindate'] = formatTimestamp($newmembers[$i]->getVar('user_regdate'), 's');
 		$block['users'][$i]['login_name'] = $newmembers[$i]->getVar('login_name');
 	}
-	if ( !empty($options[2]) && $options[2] == 1 ) {
+	if (!empty($options[2]) && $options[2] == 1) {
 		$block['index_enabled'] = true;
 		$block['registered'] = icms_conv_nr2local($member_handler->getUserCount(new icms_criteria_Item('level')));
 		$block['inactive'] = icms_conv_nr2local($member_handler->getUserCount(new icms_criteria_Item('level', 0)));
@@ -307,8 +307,8 @@ function b_system_topposters_show($options)
 	$topposters =& $member_handler->getUsers($criteria);
 	$count = count($topposters);
 	for ($i = 0; $i < $count; $i++) {
-		if ( $options[1] == 1 ) {
-			if ($topposters[$i]->getVar('user_avatar') && $topposters[$i]->getVar('user_avatar') != 'blank.gif' && $topposters[$i]->getVar('user_avatar') != ''){
+		if ($options[1] == 1) {
+			if ($topposters[$i]->getVar('user_avatar') && $topposters[$i]->getVar('user_avatar') != 'blank.gif' && $topposters[$i]->getVar('user_avatar') != '') {
 				$block['users'][$i]['avatar'] = ICMS_UPLOAD_URL.'/'.$topposters[$i]->getVar('user_avatar');
 			} elseif ($icmsConfigUser['avatar_allow_gravatar'] == 1) {
 				$block['users'][$i]['avatar'] = $topposters[$i]->gravatar('G', $icmsConfigUser['avatar_width']);
@@ -349,10 +349,10 @@ function b_system_comments_show($options)
 	$criteria1->add(new icms_criteria_Item('gperm_groupid', '('.implode(',', $gperm_groupid).')', 'IN'));
 	$perms = $moduleperm_handler->getObjects($criteria1, true);
 	$modIds = array();
-	foreach($perms as $item) {
+	foreach ($perms as $item) {
 		$modIds[] = $item->getVar('gperm_itemid');
 	}
-	if(count($modIds) > 0 ) {
+	if (count($modIds) > 0) {
 		$modIds = array_unique($modIds);
 		$criteria->add(new icms_criteria_Item('com_modid', '('.implode(',', $modIds).')', 'IN'));
 	}
@@ -479,11 +479,11 @@ function b_system_topposters_edit($options)
 	$inputtag = "<input type='text' name='options[]' value='". (int) ($options[0])."' />";
 	$form = sprintf(_MB_SYSTEM_DISPLAY,$inputtag);
 	$form .= "<br />"._MB_SYSTEM_DISPLAYA."&nbsp;<input type='radio' id='options[]' name='options[]' value='1'";
-	if ( $options[1] == 1 ) {
+	if ($options[1] == 1) {
 		$form .= " checked='checked'";
 	}
 	$form .= " />&nbsp;"._YES."<input type='radio' id='options[]' name='options[]' value='0'";
-	if ( $options[1] == 0 ) {
+	if ($options[1] == 0) {
 		$form .= " checked='checked'";
 	}
 	$form .= " />&nbsp;"._NO."";
@@ -492,7 +492,7 @@ function b_system_topposters_edit($options)
 	$size = count($options);
 	foreach ($ranks as $k => $v) {
 		$sel = "";
-		for ( $i = 2; $i < $size; $i++ ) {
+		for ( $i = 2; $i < $size; $i++) {
 			if ($k == $options[$i]) {
 				$sel = " selected='selected'";
 			}
@@ -514,20 +514,20 @@ function b_system_newmembers_edit($options)
 	$inputtag = "<input type='text' name='options[0]' value='".$options[0]."' />";
 	$form = sprintf(_MB_SYSTEM_DISPLAY,$inputtag);
 	$form .= "<br />"._MB_SYSTEM_DISPLAYA."&nbsp;<input type='radio' id='options[1]' name='options[1]' value='1'";
-	if ( $options[1] == 1 ) {
+	if ($options[1] == 1) {
 		$form .= " checked='checked'";
 	}
 	$form .= " />&nbsp;"._YES."<input type='radio' id='options[1]' name='options[1]' value='0'";
-	if ( $options[1] == 0 ) {
+	if ($options[1] == 0) {
 		$form .= " checked='checked'";
 	}
 	$form .= " />&nbsp;"._NO."";
 	$form .= "<br />"._MB_SYSTEM_DISPLAYTOT."&nbsp;<input type='radio' id='options[2]' name='options[2]' value='1'";
-	if ( $options[2] == 1 ) {
+	if ($options[2] == 1) {
 		$form .= " checked='checked'";
 	}
 	$form .= " />&nbsp;"._YES."<input type='radio' id='options[2]' name='options[2]' value='0'";
-	if ( $options[2] == 0 ) {
+	if ($options[2] == 0) {
 		$form .= " checked='checked'";
 	}
 	$form .= " />&nbsp;"._NO."";
@@ -550,12 +550,12 @@ function b_system_info_edit($options)
 	$form .= "<input type='text' name='options[]' value='".$options[2]."' />";
 	$chk = "";
 	$form .= "<br />"._MB_SYSTEM_SADMIN."&nbsp;";
-	if ( $options[3] == 1 ) {
+	if ($options[3] == 1) {
 		$chk = " checked='checked'";
 	}
 	$form .= "<input type='radio' name='options[3]' value='1'".$chk." />&nbsp;"._YES."";
 	$chk = "";
-	if ( $options[3] == 0 ) {
+	if ($options[3] == 0) {
 		$chk = " checked=\"checked\"";
 	}
 	$form .= "&nbsp;<input type='radio' name='options[3]' value='0'".$chk." />"._NO."";
@@ -601,12 +601,12 @@ function b_system_themes_edit($options)
 
 	$chk = "";
 	$form = _MB_SYSTEM_THSHOW."&nbsp;";
-	if ( $options[0] == 1 ) {
+	if ($options[0] == 1) {
 		$chk = " checked='checked'";
 	}
 	$form .= "<input type='radio' name='options[0]' value='1'".$chk." />&nbsp;"._YES;
 	$chk = "";
-	if ( $options[0] == 0 ) {
+	if ($options[0] == 0) {
 		$chk = ' checked="checked"';
 	}
 	$form .= '&nbsp;<input type="radio" name="options[0]" value="0"'.$chk.' />'._NO;

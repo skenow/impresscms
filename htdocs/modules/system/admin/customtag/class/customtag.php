@@ -160,7 +160,7 @@ class SystemCustomtagHandler extends icms_ipf_Handler {
 			if ($granted_ids && count ( $granted_ids ) > 0) {
 				$criteria->add ( new icms_criteria_Item ( 'customtagid', '(' . implode ( ', ', $granted_ids ) . ')', 'IN' ) );
 				$customtagsObj = $this->getObjects ( $criteria, true );
-				foreach ( $customtagsObj as $customtagObj ) {
+				foreach ( $customtagsObj as $customtagObj) {
 					$ret [$customtagObj->getVar ( 'name' )] = $customtagObj;
 				}
 			}

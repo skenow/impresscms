@@ -11,7 +11,7 @@
  * @version		$Id$
  */
 
-if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
+if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid())) {
 	exit("Access Denied");
 }
 
@@ -20,8 +20,8 @@ $icmsAdminTpl = new icms_view_Tpl();
 include_once ICMS_ROOT_PATH."/modules/system/admin/modulesadmin/modulesadmin.php";
 require_once ICMS_ROOT_PATH."/class/xoopslists.php";
 icms_loadLanguageFile('system', 'blocksadmin', true);
-if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
-if(!empty($_GET)) foreach($_GET as $k => $v) ${$k} = StopXSS($v);
+if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
+if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
 $op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'list');
 
 if (in_array($op, array('submit', 'install_ok', 'update_ok', 'uninstall_ok'))) {
@@ -30,25 +30,25 @@ if (in_array($op, array('submit', 'install_ok', 'update_ok', 'uninstall_ok'))) {
 	}
 }
 
-if ( $op == "list" ) {
+if ($op == "list") {
 	icms_cp_header();
 	echo xoops_module_list();
 	icms_cp_footer();
 	exit();
 }
 
-if ( $op == "confirm" ) {
+if ($op == "confirm") {
 	icms_cp_header();
 	//OpenTable();
 	$error = array();
-	if ( !is_writable(XOOPS_CACHE_PATH.'/') ) {
+	if (!is_writable(XOOPS_CACHE_PATH.'/')) {
 		// attempt to chmod 666
-		if ( !chmod(XOOPS_CACHE_PATH.'/', 0777) ) {
+		if (!chmod(XOOPS_CACHE_PATH.'/', 0777)) {
 			$error[] = sprintf(_MUSTWABLE, "<b>".XOOPS_CACHE_PATH.'/</b>');
 		}
 	}
 
-	if ( count($error) > 0 ) {
+	if (count($error) > 0) {
 		icms_error_msg($error);
 		echo "<p><a href='admin.php?fct=modulesadmin'>"._MD_AM_BTOMADMIN."</a></p>";
 		icms_cp_footer();
@@ -114,7 +114,7 @@ if ( $op == "confirm" ) {
 	exit();
 }
 
-if ( $op == "submit" ) {
+if ($op == "submit") {
 	$ret = array();
 	$write = false;
 	foreach ($module as $mid) {
@@ -134,14 +134,14 @@ if ( $op == "submit" ) {
 		}
 		flush();
 	}
-	if ( $write ) {
+	if ($write) {
 		$contents = impresscms_get_adminmenu();
 		if (!xoops_module_write_admin_menu($contents)) {
 			$ret[] = "<p>"._MD_AM_FAILWRITE."</p>";
 		}
 	}
 	icms_cp_header();
-	if ( count($ret) > 0 ) {
+	if (count($ret) > 0) {
 		foreach ($ret as $msg) {
 			if ($msg != '') {
 				echo $msg;
@@ -161,7 +161,7 @@ if ($op == 'install') {
 		$msgs ='<img src="'.XOOPS_URL.'/modules/'.$mod->getVar('dirname').'/'.trim($mod->getInfo('image')).'" alt="" />';
 	}
 	$msgs .= '<br /><span style="font-size:smaller;">'.$mod->getVar('name').'</span><br /><br />'._MD_AM_RUSUREINS;
-	if (empty($from_112)){
+	if (empty($from_112)) {
 		$from_112 = false;
 	}
 	icms_cp_header();
@@ -173,7 +173,7 @@ if ($op == 'install') {
 if ($op == 'install_ok') {
 	$ret = array();
 	$ret[] = xoops_module_install($module);
-	if ($from_112){
+	if ($from_112) {
 		$ret[] = icms_module_update($module);
 	}
 	$contents = impresscms_get_adminmenu();

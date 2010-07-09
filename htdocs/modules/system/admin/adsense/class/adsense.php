@@ -207,7 +207,7 @@ class SystemAdsenseHandler extends icms_ipf_Handler {
 		if (!$this->objects) {
 			$adsensesObj = $this->getObjects(null, true);
 			$ret = array();
-			foreach($adsensesObj as $adsenseObj) {
+			foreach ($adsensesObj as $adsenseObj) {
 				$ret[$adsenseObj->getVar('tag')] = $adsenseObj;
 			}
 			$this->objects = $ret;

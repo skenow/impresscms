@@ -191,11 +191,11 @@ $modversion['blocks'][] = array(
 /**
  * @todo Remove this blocks on future versions. When 1.1.2 isn't supported anymore.
 
-if (function_exists('xoops_gethandler')){
+if (function_exists('xoops_gethandler')) {
 	$icms_modules_handler = xoops_gethandler('module');
 	$module = $icms_modules_handler->getByDirname('content');
 
-	if (!is_object($module)){
+	if (!is_object($module)) {
 	//Content Manager
 	$modversion['blocks'][] = array(
 		'file' => 'content_blocks.php',
@@ -262,6 +262,13 @@ $modversion['blocks'][] = array(
 	'description' => _MI_SYSTEM_BLOCK_BOOKMARKS_DESC,
 	'show_func' => 'b_system_bookmarks_show',
 	'template' => 'system_block_bookmarks.html');
+
+$modversion['blocks'][] = array(
+	'file' => 'system_admin_blocks.php',
+	'name' => '	New Control Panel', //_MI_SYSTEM_BLOCK_CP_NEW,
+	'description' => '',
+	'show_func' => 'b_system_admin_cp_new_show',
+	'template' => 'system_admin_block_cp_new.html');
 
 /** Templates information */
 $modversion['templates'][1] = array(

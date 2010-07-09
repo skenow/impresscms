@@ -10,7 +10,7 @@
  * @version		$Id$
  */
 
-if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
+if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid())) {
 	exit("Access Denied");
 }
 
@@ -23,7 +23,7 @@ function edituserrank($showmenu = false, $rank_id = 0, $clone=false)
 
 	$userrankObj = $icms_userrank_handler->get($rank_id);
 
-	if (!$clone && !$userrankObj->isNew()){
+	if (!$clone && !$userrankObj->isNew()) {
 
 		$sform = $userrankObj->getForm(_CO_ICMS_USERRANKS_EDIT, 'adduserrank');
 
@@ -42,8 +42,8 @@ function edituserrank($showmenu = false, $rank_id = 0, $clone=false)
 }
 icms_loadLanguageFile('system', 'common');
 
-if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
-if(!empty($_GET)) foreach($_GET as $k => $v) ${$k} = StopXSS($v);
+if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
+if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
 $op = (isset($_POST['op'])) ? trim(StopXSS($_POST['op'])) : ((isset($_GET['op'])) ? trim(StopXSS($_GET['op'])) : '');
 
 switch ($op) {

@@ -69,15 +69,15 @@ class SystemUserrankHandler extends icms_ipf_Handler {
 		$this->setUploaderConfig(false, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png'), $icmsConfigUser['rank_maxsize'], $icmsConfigUser['rank_width'], $icmsConfigUser['rank_height']);
 	}
 
-	function MoveAllRanksImagesToProperPath(){
+	function MoveAllRanksImagesToProperPath() {
 		$sql = 'SELECT rank_image FROM '. $this->table;
 		$Query = $this->query($sql, false);
 		for ($i = 0; $i < count($Query); $i++) {
 			$values[]= $Query[$i]['rank_image'];
 		}
 
-		foreach($values as $value){
-			if(file_exists(ICMS_UPLOAD_PATH.'/'.$value)){
+		foreach ($values as $value) {
+			if (file_exists(ICMS_UPLOAD_PATH.'/'.$value)) {
 				icms_copyr(ICMS_UPLOAD_PATH.'/'.$value, ICMS_UPLOAD_PATH.'/system/userrank/'.$value);
 			}
 		}

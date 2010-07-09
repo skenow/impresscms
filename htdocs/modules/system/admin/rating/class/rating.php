@@ -134,7 +134,7 @@ class SystemRatingHandler extends icms_ipf_Handler {
 		$ret['sum'] = isset($sum) ? $sum : 0;
 		return $ret;
 	}
-	function already_rated($item, $itemid, $dirname, $uid){
+	function already_rated($item, $itemid, $dirname, $uid) {
 
 		$criteria = new icms_criteria_Compo();
 		$criteria->add(new icms_criteria_Item('item',$item ));
@@ -144,9 +144,9 @@ class SystemRatingHandler extends icms_ipf_Handler {
 
 		$ret = $this->getObjects($criteria);
 
-		if(!$ret){
+		if (!$ret) {
 			return false;
-		}else{
+		} else {
 			return $ret[0];
 		}
 	}

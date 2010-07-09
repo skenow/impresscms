@@ -57,7 +57,7 @@ icms_loadLanguageFile('system', 'preferences', true);
 $confcat_handler = xoops_gethandler('config_category');
 $confcats = $confcat_handler->getObjects();
 $catcount = count($confcats);
-if ($catcount > 0){
+if ($catcount > 0) {
 	$adminmenu[$i]['hassubs'] = 1;
 	for ($x = 0; $x < $catcount; $x++) {
 		$subs[$x]['title'] = constant($confcats[$x]->getVar('confcat_name'));

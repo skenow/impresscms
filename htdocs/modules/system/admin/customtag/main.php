@@ -9,7 +9,7 @@
  * @author		marcan <marcan@impresscms.org>
  * @version		$Id$
  */
-if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
+if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid())) {
 	exit("Access Denied");
 }
 
@@ -21,7 +21,7 @@ function editcustomtag($showmenu = false, $customtagid = 0, $clone=false)
 
 	$customtagObj = $icms_customtag_handler->get($customtagid);
 
-	if (!$clone && !$customtagObj->isNew()){
+	if (!$clone && !$customtagObj->isNew()) {
 
 		$sform = $customtagObj->getForm(_CO_ICMS_CUSTOMTAG_EDIT, 'addcustomtag');
 
@@ -43,8 +43,8 @@ icms_loadLanguageFile('system', 'common');
 
 $icms_customtag_handler = icms_getModuleHandler('customtag');
 
-if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
-if(!empty($_GET)) foreach($_GET as $k => $v) ${$k} = StopXSS($v);
+if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
+if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
 $op = (isset($_POST['op']))?trim(StopXSS($_POST['op'])):((isset($_GET['op']))?trim(StopXSS($_GET['op'])):'');
 
 switch ($op) {

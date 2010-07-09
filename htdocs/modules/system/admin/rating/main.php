@@ -10,7 +10,7 @@
  * @version		$Id$
  */
 
-if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
+if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid())) {
 	exit("Access Denied");
 }
 
@@ -22,7 +22,7 @@ function editrating($showmenu = false, $ratingid = 0)
 
 	$ratingObj = $icms_rating_handler->get($ratingid);
 
-	if (!$ratingObj->isNew()){
+	if (!$ratingObj->isNew()) {
 
 		$sform = $ratingObj->getForm(_CO_ICMS_RATINGS_EDIT, 'addrating');
 
@@ -56,8 +56,8 @@ icms_loadLanguageFile('system', 'common');
 
 $icms_rating_handler = icms_getmodulehandler('rating');
 
-if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
-if(!empty($_GET)) foreach($_GET as $k => $v) ${$k} = StopXSS($v);
+if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
+if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
 $op = (isset($_POST['op']))?trim(StopXSS($_POST['op'])):((isset($_GET['op']))?trim(StopXSS($_GET['op'])):'');
 
 switch ($op) {

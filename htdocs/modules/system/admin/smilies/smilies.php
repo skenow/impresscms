@@ -13,7 +13,7 @@
  * @version	$Id$
  */
 
-if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
+if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid())) {
 	exit("Access Denied");
 }
 
@@ -85,7 +85,7 @@ function SmilesEdit($id)
 	echo '<a href="admin.php?fct=smilies">'._AM_SMILESCONTROL .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._AM_EDITSMILE.'<br /><br />';
 	if ($getsmiles = $db->query("SELECT * FROM ".$db->prefix("smiles")." WHERE id = '". (int) ($id)."'")) {
 		$numsmiles = $db->getRowsNum($getsmiles);
-		if ( $numsmiles == 0 ) {
+		if ($numsmiles == 0) {
 			//EMPTY
 		} else {
 			if ($smiles = $db->fetchArray($getsmiles)) {

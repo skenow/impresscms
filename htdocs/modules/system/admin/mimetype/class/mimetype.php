@@ -75,10 +75,10 @@ class SystemMimetypeHandler extends icms_ipf_Handler {
 		$GrantedItems =  $this->UserCanUpload();
 		$array = array();
 		$grantedItemValues = array_values($GrantedItems);
-		if(!empty($grantedItemValues)){
+		if (!empty($grantedItemValues)) {
 			$sql = "SELECT types " ."FROM " . $this->table . " WHERE (mimetypeid='";
-			if (count($grantedItemValues)>1){
-				foreach($grantedItemValues as $grantedItemValue){
+			if (count($grantedItemValues)>1) {
+				foreach ($grantedItemValues as $grantedItemValue) {
 					$sql .= ($grantedItemValue != $grantedItemValues[0])?$grantedItemValue."' OR mimetypeid='":"";
 				}
 			}
@@ -87,7 +87,7 @@ class SystemMimetypeHandler extends icms_ipf_Handler {
 			for ($i = 0; $i < count($Qvalues); $i++) {
 				$values[]= explode(' ', $Qvalues[$i]['types']);
 			}
-			foreach($values as $item=>$value){
+			foreach ($values as $item=>$value) {
 				$array = array_merge($array, $value);
 			}
 		}
@@ -107,37 +107,37 @@ class SystemMimetypeHandler extends icms_ipf_Handler {
 
 		$sql = 'SELECT mimetypeid, dirname, types FROM ' . $this->table;
 		$rows = $this->query($sql, $criteria);
-		if(count($rows)>1){
+		if (count($rows)>1) {
 			for ($i = 0; $i < count($rows); $i++) {
 				$mimetypeids[]= $rows[$i]['mimetypeid'];
 				$dirname[]= explode('|', $rows[$i]['dirname']);
 				$types[]= $rows[$i]['types'];
 			}
 
-			foreach($mimetypeids as $mimetypeid){
-				if(in_array($mimetypeid, $GrantedItems)){
+			foreach ($mimetypeids as $mimetypeid) {
+				if (in_array($mimetypeid, $GrantedItems)) {
 					$mimetypeid_allowed = true;
 				}
 			}
-			foreach($dirname as $dir){
-				if(!empty($module) && in_array($module, $dir)){
+			foreach ($dirname as $dir) {
+				if (!empty($module) && in_array($module, $dir)) {
 					$dirname_allowed = true;
 				}
 			}
-		}else{
+		} else {
 			$mimetypeid= $rows[0]['mimetypeid'];
 			$dirname= explode('|', $rows[0]['dirname']);
 			$types= $rows[0]['types'];
-			if(in_array($mimetypeid, $GrantedItems)){
+			if (in_array($mimetypeid, $GrantedItems)) {
 				$mimetypeid_allowed = true;
 			}
-			if(!empty($module) && in_array($module, $dirname)){
+			if (!empty($module) && in_array($module, $dirname)) {
 				$dirname_allowed = true;
 			}
 		}
-		if($mimetypeid_allowed && $dirname_allowed){
+		if ($mimetypeid_allowed && $dirname_allowed) {
 			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}

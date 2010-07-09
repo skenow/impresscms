@@ -14,11 +14,11 @@
  * @version		$Id$
  */
 
-if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
+if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid())) {
 	exit("Access Denied");
 } else {
-	if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
-	if(!empty($_GET)) foreach($_GET as $k => $v) ${$k} = StopXSS($v);
+	if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
+	if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
 	$op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'list');
 	if ($op == 'list') {
 		icms_cp_header();

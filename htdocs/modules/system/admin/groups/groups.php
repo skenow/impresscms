@@ -14,7 +14,7 @@
  * @version	$Id$
  */
 
-if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
+if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid())) {
 	exit("Access Denied");
 }
 
@@ -34,7 +34,7 @@ function displayGroups()
 	$ugroups  = (is_object($icmsUser)) ? $icmsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
 	for ($i = 0; $i < $count; $i++) {
 		$id = $groups[$i]->getVar('groupid');
-		if($gperm_handler->checkRight('group_manager', $id, $ugroups)){
+		if ($gperm_handler->checkRight('group_manager', $id, $ugroups)) {
 			echo '<tr><td class="head">'.$groups[$i]->getVar('name').'</td>';
 			echo '<td class="even"><a href="admin.php?fct=groups&amp;op=modify&amp;g_id='.$id.'">'._AM_MODIFY.'</a>';
 			if (XOOPS_GROUP_ADMIN == $id || XOOPS_GROUP_USERS == $id || XOOPS_GROUP_ANONYMOUS == $id) {
@@ -67,12 +67,12 @@ function displayGroups()
 function modifyGroup($g_id)
 {
 	$userstart = $memstart = 0;
-	if ( !empty($_POST['userstart']) ) {
+	if (!empty($_POST['userstart'])) {
 		$userstart = (int) ($_POST['userstart']);
 	} elseif (!empty($_GET['userstart'])) {
 		$userstart = (int) ($_GET['userstart']);
 	}
-	if ( !empty($_POST['memstart']) ) {
+	if (!empty($_POST['memstart'])) {
 		$memstart = (int) ($_POST['memstart']);
 	} elseif (!empty($_GET['memstart'])) {
 		$memstart = (int) ($_GET['memstart']);
@@ -178,7 +178,7 @@ function modifyGroup($g_id)
 		<input type='hidden' name='memstart' value='".$memstart."' />
 		".$GLOBALS['xoopsSecurity']->getTokenHTML()."
 		<select name='uids[]' size='10' multiple='multiple'>";
-		foreach ($mlist as $m_id => $m_name ) {
+		foreach ($mlist as $m_id => $m_name) {
 			echo '<option value="'.$m_id.'">'.$m_name.'</option>'."\n";
 		}
 		echo "</select><br />

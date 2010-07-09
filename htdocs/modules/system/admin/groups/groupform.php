@@ -32,7 +32,7 @@ $dirlist = IcmsLists::getDirListAsArray($admin_dir);
 global $icmsUser;
 $gperm =& xoops_gethandler('member_groupperm');
 $groups = $icmsUser->getGroups ();
-foreach($dirlist as $file){
+foreach ($dirlist as $file) {
 	include ICMS_ROOT_PATH.'/modules/system/admin/'.$file.'/xoops_version.php';
 	if (!empty($modversion['category']) && count(array_intersect($groups, $gperm->getGroupIds('system_admin', $modversion['category'])))>0) {
 		$s_cat_checkbox->addOption($modversion['category'], $modversion['name']);
@@ -47,7 +47,7 @@ $criteria = new icms_criteria_Compo(new icms_criteria_Item('hasadmin', 1));
 $criteria->add(new icms_criteria_Item('isactive', 1));
 $criteria->add(new icms_criteria_Item('dirname', 'system', '<>'));
 /* criteria added to see if the active user can admin the module, do not filter for administrator group  (module_admin)*/
-if (!in_array(XOOPS_GROUP_ADMIN, $groups)){
+if (!in_array(XOOPS_GROUP_ADMIN, $groups)) {
 	$a_mod = $gperm->getItemIds('module_admin',$groups);
 	$criteria->add(new icms_criteria_Item('mid', '('.implode(',',$a_mod).')', 'IN'));}
 	$a_mod_checkbox->addOptionArray($module_handler->getList($criteria));
@@ -56,7 +56,7 @@ if (!in_array(XOOPS_GROUP_ADMIN, $groups)){
 	$criteria = new icms_criteria_Compo(new icms_criteria_Item('hasmain', 1));
 	$criteria->add(new icms_criteria_Item('isactive', 1));
 	/* criteria added to see if the active user can access the module, do not filter for administrator group  (module_read)*/
-	if (!in_array(XOOPS_GROUP_ADMIN, $groups)){
+	if (!in_array(XOOPS_GROUP_ADMIN, $groups)) {
 		$r_mod = $gperm->getItemIds('module_read',$groups);
 		$criteria->add(new icms_criteria_Item('mid', '('.implode(',',$r_mod).')', 'IN'));}
 		$r_mod_checkbox->addOptionArray($module_handler->getList($criteria));
@@ -66,7 +66,7 @@ if (!in_array(XOOPS_GROUP_ADMIN, $groups)){
 		/* criteria added to see where the active user can use the wysiwyg editors (use_wysiwygeditor)
 		 * administrators don't have explicit entries for this, do not filter
 		 */
-		if (!in_array(XOOPS_GROUP_ADMIN, $groups)){
+		if (!in_array(XOOPS_GROUP_ADMIN, $groups)) {
 			$ed_mod = $gperm->getItemIds('use_wysiwygeditor',$groups);
 			$criteria->add(new icms_criteria_Item('mid', '('.implode(',',$ed_mod).')', 'IN'));}
 			$ed_mod_checkbox->addOptionArray($module_handler->getList($criteria));
@@ -76,7 +76,7 @@ if (!in_array(XOOPS_GROUP_ADMIN, $groups)){
 			/* criteria added to see where the active user can view the debug mode (enable_debug)
 			 * administrators do not have explicit entries for this, do not filter
 			 */
-			if (!in_array(XOOPS_GROUP_ADMIN, $groups)){
+			if (!in_array(XOOPS_GROUP_ADMIN, $groups)) {
 				$debug_mod = $gperm->getItemIds('enable_debug',$groups);
 				$criteria->add(new icms_criteria_Item('mid', '('.implode(',',$debug_mod).')', 'IN'));}
 				$debug_mod_checkbox->addOptionArray($module_handler->getList($criteria));
@@ -91,8 +91,8 @@ if (!in_array(XOOPS_GROUP_ADMIN, $groups)){
 				$gperm_handler =& xoops_gethandler('member_groupperm');
 
 				//global $icmsUser; // already declared above
-				foreach($groups as $group){
-					if($gperm_handler->checkRight('group_manager', $group->getVar('groupid'), $icmsUser->getGroups()))
+				foreach ($groups as $group) {
+					if ($gperm_handler->checkRight('group_manager', $group->getVar('groupid'), $icmsUser->getGroups()))
 					$group_manager_checkbox->addOption($group->getVar('groupid'),$group->getVar('name'));
 				}
 				$icms_block_handler = xoops_gethandler('block');
@@ -100,14 +100,14 @@ if (!in_array(XOOPS_GROUP_ADMIN, $groups)){
 				$block_checkbox = array();
 				$i = 0;
 				$groups = $icmsUser->getGroups();
-				foreach ($posarr as $k=>$v){
+				foreach ($posarr as $k=>$v) {
 					$tit = (defined($posarr[$k]['title'])) ? constant($posarr[$k]['title']) : $posarr[$k]['title'];
 					$block_checkbox[$i] = new XoopsFormCheckBox('<b>'.$tit.'</b><br />', "read_bids[]", $r_block_value);
 					$new_blocks_array = array();
 					$blocks_array = $icms_block_handler->getAllBlocks("list", $k);
 
 					/* compare to list of blocks the group can read, do not filter for administrator group */
-					if (!in_array(XOOPS_GROUP_ADMIN, $groups)){
+					if (!in_array(XOOPS_GROUP_ADMIN, $groups)) {
 						$r_blocks = $gperm->getItemIds('block_read', $groups);
 						$n_blocks_array = array_intersect_key($blocks_array, array_flip($r_blocks));
 					} else {
@@ -120,7 +120,7 @@ if (!in_array(XOOPS_GROUP_ADMIN, $groups)){
 					$i++;
 				}
 				$r_block_tray = new XoopsFormElementTray(_AM_BLOCKRIGHTS, "<br /><br />");
-				foreach ($block_checkbox as $k=>$v){
+				foreach ($block_checkbox as $k=>$v) {
 					$r_block_tray->addElement($block_checkbox[$k]);
 				}
 
@@ -134,26 +134,26 @@ if (!in_array(XOOPS_GROUP_ADMIN, $groups)){
 				/**
 				 * @todo: use constants instead of hard values
 				 */
-				if (!isset($g_id) || ($g_id != 1 && $g_id != 3)){
+				if (!isset($g_id) || ($g_id != 1 && $g_id != 3)) {
 					$form->addElement($group_manager_checkbox);
 				}
 				$form->addElement($a_mod_checkbox);
 				$form->addElement($r_mod_checkbox);
-				if (!isset($g_id) || $g_id != 3){
+				if (!isset($g_id) || $g_id != 3) {
 					$form->addElement($ed_mod_checkbox);
 				}
 				/**
 				 * @todo: use constants instead of hard values
 				 */
 
-				if( !isset($g_id) || $g_id != 1 ){
+				if (!isset($g_id) || $g_id != 1) {
 					$form->addElement($debug_mod_checkbox);
 				}
 
 				$form->addElement($r_block_tray);
 				$form->addElement($op_hidden);
 				$form->addElement($fct_hidden);
-				if ( !empty($g_id_value) ) {
+				if (!empty($g_id_value)) {
 					$g_id_hidden = new XoopsFormHidden("g_id", $g_id_value);
 					$form->addElement($g_id_hidden);
 				}
