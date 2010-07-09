@@ -107,7 +107,7 @@ function xoops_module_install($dirname) {
 					$db->query("DROP TABLE ".$db->prefix($ct));
 				}
 				$ret = "<p>".sprintf(_MD_AM_FAILINS, "<b>".$module->name()."</b>")."&nbsp;"._MD_AM_ERRORSC."<br />";
-				foreach ( $errs as $err ) {
+				foreach ( $errs as $err) {
 					$ret .= " - ".$err."<br />";
 				}
 				$ret .= "</p>";
@@ -392,7 +392,7 @@ function xoops_module_install($dirname) {
 				include_once ICMS_ROOT_PATH.'/modules/'.$dirname.'/'.trim($install_script);
 
 				$is_IPF = $module->getInfo('object_items');
-				if(!empty($is_IPF)){
+				if (!empty($is_IPF)) {
 					$icmsDatabaseUpdater = icms_database_Factory::getDatabaseUpdater();
 					$icmsDatabaseUpdater->moduleUpgrade($module, true);
 					foreach ($icmsDatabaseUpdater->_messages as $msg) {
@@ -402,21 +402,21 @@ function xoops_module_install($dirname) {
 
 				if (function_exists('xoops_module_install_'.$ModName)) {
 					$func = 'xoops_module_install_'.$ModName;
-					if ( !( $lastmsg = $func($module) ) ) {
+					if (!( $lastmsg = $func($module) )) {
 						$msgs[] = sprintf(_MD_AM_FAIL_EXEC, $func);
 					} else {
 						$msgs[] = sprintf(_MD_AM_FUNCT_EXEC, $func);
-						if ( is_string( $lastmsg ) ) {
+						if (is_string( $lastmsg )) {
 							$msgs[] = $lastmsg;
 						}
 					}
-				}elseif (function_exists('icms_module_install_'.$ModName)) {
+				} elseif (function_exists('icms_module_install_'.$ModName)) {
 					$func = 'icms_module_install_'.$ModName;
-					if ( !( $lastmsg = $func($module) ) ) {
+					if (!( $lastmsg = $func($module) )) {
 						$msgs[] = sprintf(_MD_AM_FAIL_EXEC, $func);
 					} else {
 						$msgs[] = sprintf(_MD_AM_FUNCT_EXEC, $func);
-						if ( is_string( $lastmsg ) ) {
+						if (is_string( $lastmsg )) {
 							$msgs[] = $lastmsg;
 						}
 					}
@@ -565,7 +565,7 @@ function icms_module_update($dirname) {
 			$count = count($blocks);
 			$showfuncs = array();
 			$funcfiles = array();
-			for ( $i = 1; $i <= $count; $i++ ) {
+			for ( $i = 1; $i <= $count; $i++) {
 				if (isset($blocks[$i]['show_func']) && $blocks[$i]['show_func'] != '' && isset($blocks[$i]['file']) && $blocks[$i]['file'] != '') {
 					$editfunc = isset($blocks[$i]['edit_func']) ? $blocks[$i]['edit_func'] : '';
 					$showfuncs[] = $blocks[$i]['show_func'];
@@ -691,7 +691,7 @@ function icms_module_update($dirname) {
 			foreach ($block_arr as $block) {
 				if (!in_array($block->getVar('show_func'), $showfuncs) || !in_array($block->getVar('func_file'), $funcfiles)) {
 					$sql = sprintf("DELETE FROM %s WHERE bid = '%u'", $db->prefix('newblocks'), (int) ($block->getVar('bid')));
-					if(!$db->query($sql)) {
+					if (!$db->query($sql)) {
 						$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete block <b>'.$block->getVar('name').'</b>. Block ID: <b>'.$block->getVar('bid').'</b></span>';
 					} else {
 						$msgs[] = '&nbsp;&nbsp;Block <b>'.$block->getVar('name').' deleted. Block ID: <b>'.$block->getVar('bid').'</b>';
@@ -878,7 +878,7 @@ function icms_module_update($dirname) {
 			include_once ICMS_ROOT_PATH.'/modules/'.$dirname.'/'.trim($update_script);
 
 			$is_IPF = $module->getInfo('object_items');
-			if(!empty($is_IPF)){
+			if (!empty($is_IPF)) {
 				$icmsDatabaseUpdater = icms_database_Factory::getDatabaseUpdater();
 				$icmsDatabaseUpdater->moduleUpgrade($module, true);
 				foreach ($icmsDatabaseUpdater->_messages as $msg) {
@@ -893,7 +893,7 @@ function icms_module_update($dirname) {
 				} else {
 					$msgs[] = sprintf(_MD_AM_FUNCT_EXEC, $func);
 				}
-			}elseif (function_exists('icms_module_update_'.$ModName)) {
+			} elseif (function_exists('icms_module_update_'.$ModName)) {
 				$func = 'icms_module_update_'.$ModName;
 				if (!$func($module, $prev_version, $prev_dbversion)) {
 					$msgs[] = sprintf(_MD_AM_FAIL_EXEC, $func);
