@@ -18,19 +18,19 @@ $xoopsOption['pagetype'] = 'user';
 include 'mainfile.php';
 $uid = (int) ($_GET['uid']);
 
-if(icms_get_module_status('profile'))
+if (icms_get_module_status('profile'))
 {
 	$module_handler = xoops_gethandler('module');
 	$config_handler = xoops_gethandler('config');
 	$icmsModule =& $module_handler->getByDirname('profile');
 	$icmsModuleConfig =& $config_handler->getConfigsByCat(0, $icmsModule->getVar('mid'));
 
-	if($icmsModuleConfig['profile_social'] && file_exists(ICMS_ROOT_PATH.'/modules/profile/index.php'))
+	if ($icmsModuleConfig['profile_social'] && file_exists(ICMS_ROOT_PATH.'/modules/profile/index.php'))
 	{
 		header('Location: '.ICMS_URL.'/modules/profile/index.php?uid='.$uid);
 		exit();
 	}
-	elseif(!$icmsModuleConfig['profile_social'] && file_exists(ICMS_ROOT_PATH.'/modules/profile/userinfo.php'))
+	elseif (!$icmsModuleConfig['profile_social'] && file_exists(ICMS_ROOT_PATH.'/modules/profile/userinfo.php'))
 	{
 		header('Location: '.ICMS_URL.'/modules/profile/userinfo.php?uid='.$uid);
 		exit();
@@ -40,11 +40,11 @@ if(icms_get_module_status('profile'))
 
 include_once ICMS_ROOT_PATH.'/modules/system/constants.php';
 
-if(!$icmsConfigUser['allow_annon_view_prof'] && !is_object($icmsUser))
+if (!$icmsConfigUser['allow_annon_view_prof'] && !is_object($icmsUser))
 {
 	redirect_header(ICMS_URL.'/user.php', 3, _NOPERM);
 }
-if($uid <= 0)
+if ($uid <= 0)
 {
 	redirect_header('index.php', 3, _US_SELECTNG);
 }
@@ -56,9 +56,9 @@ $groups = is_object($icmsUser) ? $icmsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
 
 $isAdmin = $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_USER, $groups);
 
-if(is_object($icmsUser))
+if (is_object($icmsUser))
 {
-	if($uid == (int) ($icmsUser->getVar('uid')))
+	if ($uid == (int) ($icmsUser->getVar('uid')))
 	{
 		$xoopsOption['template_main'] = 'system_userinfo.html';
 		include ICMS_ROOT_PATH.'/header.php';
@@ -72,12 +72,10 @@ if(is_object($icmsUser))
             'user_candelete' => $icmsConfigUser['self_delete'] ? true : false,
             'lang_deleteaccount' => $icmsConfigUser['self_delete'] ? _US_DELACCOUNT : ''));
 		$thisUser = & $icmsUser;
-	}
-	else
-	{
+	} else {
 		$member_handler = xoops_gethandler('member');
 		$thisUser = & $member_handler->getUser($uid);
-		if(!is_object($thisUser) || !$thisUser->isActive())
+		if (!is_object($thisUser) || !$thisUser->isActive())
 		{
 			redirect_header('index.php', 3, _US_SELECTNG);
 		}
@@ -85,12 +83,10 @@ if(is_object($icmsUser))
 		include ICMS_ROOT_PATH.'/header.php';
 		$xoopsTpl->assign('user_ownpage', false);
 	}
-}
-else
-{
+} else {
 	$member_handler = xoops_gethandler('member');
 	$thisUser = & $member_handler->getUser($uid);
-	if(!is_object($thisUser) || !$thisUser->isActive())
+	if (!is_object($thisUser) || !$thisUser->isActive())
 	{
 		redirect_header('index.php', 3, _US_SELECTNG);
 	}
@@ -100,7 +96,7 @@ else
 }
 
 $myts = icms_core_Textsanitizer::getInstance();
-if(is_object($icmsUser) && $isAdmin)
+if (is_object($icmsUser) && $isAdmin)
 {
 	icms_makeSmarty(array(
         'lang_editprofile' => _US_EDITPROFILE,
@@ -169,7 +165,7 @@ icms_makeSmarty(array(
         && ($thisUser->getVar('user_viewoid') == true || (is_object($icmsUser) && ($icmsUserIsAdmin
         || ($icmsUser->getVar('uid') == $thisUser->getVar('uid')))))) ? $thisUser->getVar('openid', 'E') : '&nbsp;'
         ));
-        if($icmsConfigUser['allwshow_sig'] == true)
+        if ($icmsConfigUser['allwshow_sig'] == true)
         {
         	icms_makeSmarty(array(
         'user_showsignature' => true,
@@ -183,28 +179,26 @@ icms_makeSmarty(array(
         $criteria->add(new icms_criteria_Item('isactive', 1));
         $mids = & array_keys($module_handler->getList($criteria));
 
-        foreach($mids as $mid)
+        foreach ($mids as $mid)
         {
-        	if($gperm_handler->checkRight('module_read', $mid, $groups))
+        	if ($gperm_handler->checkRight('module_read', $mid, $groups))
         	{
         		$module = & $module_handler->get($mid);
         		$results = & $module->search('', '', 5, 0, (int) ($thisUser->getVar('uid')));
         		$count = count($results);
-        		if(is_array($results) && $count > 0)
+        		if (is_array($results) && $count > 0)
         		{
-        			for($i = 0; $i < $count; $i++)
+        			for ($i = 0; $i < $count; $i++)
         			{
-        				if(isset($results[$i]['image']) && $results[$i]['image'] != '')
+        				if (isset($results[$i]['image']) && $results[$i]['image'] != '')
         				{
         					$results[$i]['image'] = 'modules/'.$module->getVar('dirname').'/'.$results[$i]['image'];
-        				}
-        				else
-        				{
+        				} else {
         					$results[$i]['image'] = 'images/icons/'.$icmsConfig['language'].'/posticon2.gif';
         				}
-        				if(isset($results[$i]['link']) && $results[$i]['link'] != '')
+        				if (isset($results[$i]['link']) && $results[$i]['link'] != '')
         				{
-        					if(!preg_match("/^http[s]*:\/\//i", $results[$i]['link']))
+        					if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link']))
         					{
         						$results[$i]['link'] = "modules/".$module->getVar('dirname')."/".$results[$i]['link'];
         					}
@@ -212,13 +206,11 @@ icms_makeSmarty(array(
         				$results[$i]['title'] = $myts->htmlSpecialChars($results[$i]['title']);
         				$results[$i]['time'] = $results[$i]['time'] ? formatTimestamp($results[$i]['time']) : '';
         			}
-        			if($count == 5)
+        			if ($count == 5)
         			{
         				$showall_link = '<a href="search.php?action=showallbyuser&amp;mid='. (int) ($mid).'&amp;
                     uid='. (int) ($thisUser->getVar('uid')).'">'._US_SHOWALL.'</a>';
-        			}
-        			else
-        			{
+        			} else {
         				$showall_link = '';
         			}
         			$xoopsTpl->append('modules', array(

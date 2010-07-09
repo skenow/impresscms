@@ -25,7 +25,7 @@ if ($icmsConfigUser['activation_type'] == 3 && $icmsConfigUser['allow_register']
 $op = !isset($_POST['op']) ? 'invite' : $_POST['op'];
 $email = isset($_POST['email']) ? trim($myts->stripSlashesGPC($_POST['email'])) : '';
 
-switch ( $op ) {
+switch ( $op) {
 	case 'finish':
 		include 'header.php';
 		$stop = '';
@@ -33,14 +33,14 @@ switch ( $op ) {
 			$stop .= implode('<br />', $GLOBALS['xoopsSecurity']->getErrors())."<br />";
 		}
 		$icmsCaptcha = icms_captcha_Object::instance();
-		if(! $icmsCaptcha->verify() ) {
+		if (! $icmsCaptcha->verify()) {
 			$stop .= $icmsCaptcha->getMessage().'<br />';
 
 		}
 		if (!checkEmail($email)) {
 			$stop .= _US_INVALIDMAIL.'<br />';
 		}
-		if ( empty($stop) ) {
+		if (empty($stop)) {
 			$invite_code = substr(md5(uniqid(mt_rand(), 1)), 0, 8);
 			$xoopsDB =& Database::getInstance();
 			$myts =& icms_core_Textsanitizer::getInstance();
@@ -66,7 +66,7 @@ switch ( $op ) {
 				$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
 				$xoopsMailer->setFromName($icmsConfig['sitename']);
 				$xoopsMailer->setSubject(sprintf(_US_INVITEREGLINK,ICMS_URL));
-				if ( !$xoopsMailer->send() ) {
+				if (!$xoopsMailer->send()) {
 					$stop .= _US_INVITEMAILERR;
 				} else {
 					echo _US_INVITESENT;
