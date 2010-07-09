@@ -72,7 +72,7 @@ class IcmsPreloadCustomtag extends icms_preload_Item {
 		global $xoopsTpl, $icms_customtag_handler;
 		$customtags_array = array();
 		if (is_object($xoopsTpl)) {
-			foreach($icms_customtag_handler->objects as $k=>$v) {
+			foreach ($icms_customtag_handler->objects as $k=>$v) {
 				$customtags_array[$k] = $v->render();
 			}
 			$xoopsTpl->assign('icmsCustomtags', $customtags_array);

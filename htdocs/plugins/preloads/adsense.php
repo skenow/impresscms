@@ -73,7 +73,7 @@ class IcmsPreloadAdsense extends icms_preload_Item {
 		global $xoopsTpl, $icms_adsense_handler;
 		$adsenses_array = array();
 		if (is_object($xoopsTpl)) {
-			foreach($icms_adsense_handler->objects as $k=>$v) {
+			foreach ($icms_adsense_handler->objects as $k=>$v) {
 				$adsenses_array[$k] = $v->render();
 			}
 			$xoopsTpl->assign('icmsAdsenses', $adsenses_array);

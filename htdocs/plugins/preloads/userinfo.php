@@ -24,11 +24,11 @@ class IcmsPreloadUserInfo extends icms_preload_Item {
 	function eventStartOutputInit() {
 		global $xoopsUser,$xoopsTpl;
 		if (is_object($xoopsUser)) {
-			foreach ( $xoopsUser->vars as $key => $value ) {
+			foreach ( $xoopsUser->vars as $key => $value) {
 				$user [$key] = $value;
 			}
-			foreach ( $user as $key => $value ) {
-				foreach ( $user [$key] as $key1 => $value1 ) {
+			foreach ( $user as $key => $value) {
+				foreach ( $user [$key] as $key1 => $value1) {
 					if ($key1 == 'value') {
 						if ($key == 'last_login') {
 							$value1 = formatTimestamp( (isset ( $_SESSION ['xoopsUserLastLogin'] )) ? $_SESSION ['xoopsUserLastLogin'] : time (), 'd/m/Y H:i:s' );
