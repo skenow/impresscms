@@ -41,7 +41,7 @@ if (file_exists(ICMS_ROOT_PATH."/modules/system/language/".$icmsConfig['language
 	include ICMS_ROOT_PATH."/modules/system/language/english/admin/images.php";
 }
 
-switch ($op){
+switch ($op) {
 	case 'list':
 		icmsPopupHeader();
 		echo imanager_index($imgcat_id);
@@ -81,7 +81,7 @@ switch ($op){
 		break;
 }
 
-function imanager_index($imgcat_id=null){
+function imanager_index($imgcat_id=null) {
 	global $icmsTpl,$icmsUser,$icmsConfig,$target,$type;
 
 	if (!is_object($icmsUser)) {
@@ -171,7 +171,7 @@ function imanager_index($imgcat_id=null){
 		$subs[$i]  = count($imgcat_handler->getObjects($criteriaRead));
 	}
 	$scount = array();
-	foreach ($subs as $k=>$v){
+	foreach ($subs as $k=>$v) {
 		$criteriaRead = new icms_criteria_Compo();
 		if (is_array($groups) && !empty($groups)) {
 			$criteriaTray = new icms_criteria_Compo();
@@ -186,7 +186,7 @@ function imanager_index($imgcat_id=null){
 		$criteriaRead->add(new icms_criteria_Item('imgcat_pid', $imagecategorys[$k]->getVar('imgcat_id')));
 		$ssubs = $imgcat_handler->getObjects($criteriaRead);
 		$sc = 0;
-		foreach ($ssubs as $id=>$va){
+		foreach ($ssubs as $id=>$va) {
 			$sc += $image_handler->getCount(new icms_criteria_Item('imgcat_id', $va->getVar('imgcat_id')));
 		}
 		$scount[$k] = $sc;
@@ -338,7 +338,7 @@ function imanager_listimg($imgcat_id,$start=0) {
 	$criteriaRead->add(new icms_criteria_Item('imgcat_pid', $imagecategory->getVar('imgcat_id')));
 	$ssubs = $imgcat_handler->getObjects($criteriaRead);
 	$sc = 0;
-	foreach ($ssubs as $id=>$va){
+	foreach ($ssubs as $id=>$va) {
 		$sc += $image_handler->getCount(new icms_criteria_Item('imgcat_id', $va->getVar('imgcat_id')));
 	}
 	$scount = $sc;
@@ -368,7 +368,7 @@ function imanager_listimg($imgcat_id,$start=0) {
 
 	$image_handler = xoops_gethandler('image');
 	$criteria = new icms_criteria_Compo(new icms_criteria_Item('imgcat_id', $imgcat_id));
-	if (!is_null($query)){
+	if (!is_null($query)) {
 		$criteria->add(new icms_criteria_Item('image_nicename', $query.'%','LIKE'));
 	}
 	$imgcount = $image_handler->getCount($criteria);
@@ -421,14 +421,14 @@ function imanager_listimg($imgcat_id,$start=0) {
 		$arrimg[$i]['preview_link'] = $preview_url;
 
 		$extra_perm = array("image/jpeg","image/jpeg","image/png","image/gif");
-		if (in_array($images[$i]->getVar('image_mimetype'),$extra_perm)){
+		if (in_array($images[$i]->getVar('image_mimetype'),$extra_perm)) {
 			$arrimg[$i]['hasextra_link'] = 1;
-			if (file_exists(ICMS_LIBRARIES_PATH.'/image-editor/image-edit.php')){
+			if (file_exists(ICMS_LIBRARIES_PATH.'/image-editor/image-edit.php')) {
 				$arrimg[$i]['editor_link'] = 'window.open(\''.ICMS_LIBRARIES_URL.'/image-editor/image-edit.php?image_id='.$images[$i]->getVar('image_id').'&uniq='.$uniq.'&target='.$target.'&type='.$type.'\',\'icmsDHTMLImageEditor\',\'width=800,height=600,left=\'+parseInt(screen.availWidth/2-400)+\',top=\'+parseInt(screen.availHeight/2-350)+\',resizable=no,location=no,menubar=no,status=no,titlebar=no,scrollbars=no\'); return false;';
-			}else{
+			} else {
 				$arrimg[$i]['editor_link'] = '';
 			}
-		}else{
+		} else {
 			$arrimg[$i]['hasextra_link'] = 0;
 		}
 
@@ -453,10 +453,10 @@ function imanager_listimg($imgcat_id,$start=0) {
 			include_once ICMS_ROOT_PATH.'/class/pagenav.php';
 			$nav = new XoopsPageNav($imgcount, 15, $start, 'start', 'op=listimg&amp;imgcat_id='.$imgcat_id.'&type='.$type.'&target='.$target);
 			$icmsTpl->assign('pag','<div class="img_list_info_panel" align="center">'.$nav->renderNav().'</div>');
-		}else{
+		} else {
 		    $icmsTpl->assign('pag','');
 	    }
-	}else{
+	} else {
 		$icmsTpl->assign('pag','');
 	}
 	$icmsTpl->assign('addimgform',showAddImgForm($imgcat_id));
@@ -480,14 +480,14 @@ function imanager_addcat() {
 	$imagecategory->setVar('imgcat_display', $imgcat_display);
 	$imagecategory->setVar('imgcat_weight', $imgcat_weight);
 	$imagecategory->setVar('imgcat_storetype', $imgcat_storetype);
-	if ($imgcat_storetype == 'file'){
+	if ($imgcat_storetype == 'file') {
 		$imagecategory->setVar('imgcat_foldername', $imgcat_foldername);
 		$categ_path = $imgcat_handler->getCategFolder($imagecategory);
 	}
 	$imagecategory->setVar('imgcat_type', 'C');
 
-	if (!file_exists($categ_path)){
-		if (!mkdir($categ_path)){
+	if (!file_exists($categ_path)) {
+		if (!mkdir($categ_path)) {
 			redirect_header($_SERVER['PHP_SELF'].'?op=list&target='.$target.'&type='.$type,1,_MD_FAILADDCAT);
 		}
 	}
@@ -545,7 +545,7 @@ function imanager_addfile() {
 	include_once ICMS_ROOT_PATH.'/class/uploader.php';
 	if ($imagecategory->getVar('imgcat_storetype') == 'db') {
 		$updir = ICMS_IMANAGER_FOLDER_PATH;
-	}else{
+	} else {
 		$updir = $categ_path;
 	}
 	$uploader = new XoopsMediaUploader($updir, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png', 'image/bmp'), $imagecategory->getVar('imgcat_maxsize'), $imagecategory->getVar('imgcat_maxwidth'), $imagecategory->getVar('imgcat_maxheight'));
@@ -589,9 +589,9 @@ function imanager_addfile() {
 		icms_cp_footer();
 		exit();
 	}
-	if (isset($imgcat_id)){
+	if (isset($imgcat_id)) {
 		$redir = '?op=listimg&imgcat_id='.$imgcat_id.'&target='.$target.'&type='.$type;
-	}else{
+	} else {
 		$redir = '?op=list&target='.$target.'&type='.$type;
 	}
 	redirect_header($_SERVER['PHP_SELF'].$redir,2,_MD_AM_DBUPDATED);
@@ -616,17 +616,17 @@ function imanager_updateimage() {
 			$image->setVar('image_display', $image_display[$i]);
 			$image->setVar('image_weight', $image_weight[$i]);
 			$image->setVar('image_nicename', $image_nicename[$i]);
-			if ($image->getVar('imgcat_id') != $imgcat_id[$i]){
+			if ($image->getVar('imgcat_id') != $imgcat_id[$i]) {
 				$changedCat = true;
 				$oldcat = $image->getVar('imgcat_id');
-			}else{
+			} else {
 				$changedCat = false;
 			}
 			$image->setVar('imgcat_id', $imgcat_id[$i]);
 			if (!$image_handler->insert($image)) {
 				$error[] = sprintf(_FAILSAVEIMG, $image_id[$i]);
 			}
-			if ($changedCat){
+			if ($changedCat) {
 				$imgcat_handler =& xoops_gethandler('image_category');
 				$imagecategory  =& $imgcat_handler->get( (int) ($imgcat_id[$i]));
 				$dest_categ_path = $imgcat_handler->getCategFolder($imagecategory);
@@ -635,7 +635,7 @@ function imanager_updateimage() {
 					$src_categ_path = $imgcat_handler->getCategFolder($oldimgcategory);
 					$src = $src_categ_path.'/'.$image->getVar('image_name');
 					$dest = $dest_categ_path.'/'.$image->getVar('image_name');
-					if (!copy($src,$dest)){
+					if (!copy($src,$dest)) {
 						$error[] = sprintf(_FAILSAVEIMG, $image_id[$i]);
 					}
 				}
@@ -650,9 +650,9 @@ function imanager_updateimage() {
 			exit();
 		}
 	}
-	if (isset($redir)){
+	if (isset($redir)) {
 		$redir = '?op=listimg&imgcat_id='.$redir.'&target='.$target.'&type='.$type;
-	}else{
+	} else {
 		$redir = '?op=list&target='.$target.'&type='.$type;
 	}
 	redirect_header($_SERVER['PHP_SELF'].$redir,2,_MD_AM_DBUPDATED);
@@ -683,9 +683,9 @@ function imanager_delfileok($image_id,$redir=null) {
 		exit();
 	}
 	@unlink($categ_path.'/'.$image->getVar('image_name'));
-	if (isset($redir)){
+	if (isset($redir)) {
 		$redir = '?op=listimg&imgcat_id='.$redir.'&target='.$target.'&type='.$type;
-	}else{
+	} else {
 		$redir = '?op=list&target='.$target.'&type='.$type;
 	}
 	redirect_header($_SERVER['PHP_SELF'].$redir,2,_MD_AM_DBUPDATED);
@@ -710,7 +710,7 @@ function imanager_clone() {
 
 	$image_handler =& xoops_gethandler('image');
 	$image =& $image_handler->get($image_id);
-	if ( ($ext = strrpos( $image->getVar('image_name'), '.' )) !== false ) {
+	if (($ext = strrpos( $image->getVar('image_name'), '.' )) !== false) {
 		$ext = strtolower(substr( $image->getVar('image_name'), $ext + 1 ));
 	}
 
@@ -731,26 +731,26 @@ function imanager_clone() {
 		@fclose($fp);
 		$newimg->setVar('image_body', $fbinary, true);
 		@unlink(ICMS_IMANAGER_FOLDER_PATH.'/'.$image->getVar('image_name'));
-	}else{
-		if (!@copy($categ_path.'/'.$image->getVar('image_name'),$categ_path.'/'.$imgname)){
+	} else {
+		if (!@copy($categ_path.'/'.$image->getVar('image_name'),$categ_path.'/'.$imgname)) {
 			$msg = sprintf(_FAILSAVEIMG, $image->getVar('image_nicename'));
 		}
 	}
 	if (!$image_handler->insert($newimg)) {
 		$msg = sprintf(_FAILSAVEIMG, $newimg->getVar('image_nicename'));
-	}else{
+	} else {
 		$msg = _MD_AM_DBUPDATED;
 	}
 
-	if (isset($imgcat_id)){
+	if (isset($imgcat_id)) {
 		$redir = '?op=listimg&imgcat_id='.$imgcat_id.'&target='.$target.'&type='.$type;
-	}else{
+	} else {
 		$redir = '?op=list&target='.$target.'&type='.$type;
 	}
 	redirect_header($_SERVER['PHP_SELF'].$redir,2,$msg);
 }
 
-function icmsPopupHeader(){
+function icmsPopupHeader() {
 	global $icmsConfig,$icmsPreloadHandler;
 	if (! headers_sent ()) {
 		header ( 'Content-Type:text/html; charset=' . _CHARSET );
@@ -769,7 +769,7 @@ function icmsPopupHeader(){
 	<script type="text/javascript" src="' . XOOPS_URL . '/include/xoops.js"></script>' . '<link rel="shortcut icon" type="image/ico" href="' . XOOPS_URL . '/favicon.ico" />
 	<link rel="icon" type="image/png" href="' . XOOPS_URL . '/favicon.ico" />
 	';
-	if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
+	if (defined('_ADM_USE_RTL') && _ADM_USE_RTL) {
 		echo '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/xoops_rtl.css" />';
 		echo '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/modules/system/style_rtl.css" />';
 	} else {
@@ -785,13 +785,13 @@ function icmsPopupHeader(){
 	echo "<div id='containBodyCP'><br /><div id='bodyCP'>";
 }
 
-function icmsPopupFooter(){
+function icmsPopupFooter() {
 	echo "</div>";
 	echo '<div style="float: right; padding:11px;"><input type="button" id="cancel" name="cancel" value="'._CLOSE.'" onclick="window.close();" /></div><br style="clear:both;" />';
 	echo "</div></body></html>";
 }
 
-function showAddImgForm($imgcat_id){
+function showAddImgForm($imgcat_id) {
 	global $target,$type;
 	include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 	$imgcat_handler = xoops_gethandler('image_category');
@@ -817,36 +817,36 @@ function showAddImgForm($imgcat_id){
 	return $form->render();
 }
 
-function adminNav($id = null, $separador = "/", $list = false, $style="style='font-weight:bold'"){
+function adminNav($id = null, $separador = "/", $list = false, $style="style='font-weight:bold'") {
 	global $target,$type;
 
 	$admin_url = $_SERVER['PHP_SELF'].'?target='.$target.'&type='.$type;
 	if ($id == false) {
 		return false;
-	}else{
+	} else {
 		if ($id > 0) {
 			$imgcat_handler =& xoops_gethandler('image_category');
 			$imagecategory =& $imgcat_handler->get( (int) ($id));
 			if ($imagecategory->getVar('imgcat_id') > 0) {
-				if ($list){
+				if ($list) {
 					$ret = $imagecategory->getVar('imgcat_name');
-				}else{
+				} else {
 					$ret = "<a href='".$admin_url."&imgcat_id=".$imagecategory->getVar('imgcat_id')."'>".$imagecategory->getVar('imgcat_name')."</a>";
 				}
 				if ($imagecategory->getVar('imgcat_pid') == 0) {
 					return "<a href='".$admin_url."'>"._MD_IMGMAIN."</a> $separador ".$ret;
-				}elseif ($imagecategory->getVar('imgcat_pid') > 0){
+				} elseif ($imagecategory->getVar('imgcat_pid') > 0) {
 					$ret = adminNav($imagecategory->getVar('imgcat_pid'), $separador)." $separador ". $ret;
 				}
 			}
-		}else{
+		} else {
 			return false;
 		}
 	}
 	return $ret;
 }
 
-function redir($imgcat_id,$msg=null){
+function redir($imgcat_id,$msg=null) {
 	global $target,$type;
 
 	redirect_header($_SERVER['PHP_SELF'].'?op=listimg&imgcat_id='.$imgcat_id.'&target='.$target.'&type='.$type,2,$msg);
