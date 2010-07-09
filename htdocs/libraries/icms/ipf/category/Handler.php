@@ -52,15 +52,15 @@ class icms_ipf_category_Handler extends icms_ipf_Handler {
 	 */
 	public function getAllCategoriesArray($parentid=0, $perm_name=false, $sort = 'parentid', $order='ASC') {
 
-		if ( !$this->allCategoriesObj ) {
+		if (!$this->allCategoriesObj) {
 			$criteria = new icms_criteria_Compo();
 			$criteria->setSort($sort);
 			$criteria->setOrder($order);
 			global $icmsUser;
 			$userIsAdmin = is_object($icmsUser) && $icmsUser->isAdmin();
 
-			if ( $perm_name && !$userIsAdmin ) {
-				if ( !$this->setGrantedObjectsCriteria($criteria, $perm_name) ) {
+			if ($perm_name && !$userIsAdmin) {
+				if (!$this->setGrantedObjectsCriteria($criteria, $perm_name)) {
 					return false;
 				}
 			}
@@ -69,10 +69,10 @@ class icms_ipf_category_Handler extends icms_ipf_Handler {
 		}
 
 		$ret = array();
-		if ( isset($this->allCategoriesObj[$parentid]) ) {
-			foreach ( $this->allCategoriesObj[$parentid] as $categoryid=>$categoryObj ) {
+		if (isset($this->allCategoriesObj[$parentid])) {
+			foreach ( $this->allCategoriesObj[$parentid] as $categoryid=>$categoryObj) {
 				$ret[$categoryid]['self'] =& $categoryObj->toArray();
-				if ( isset($this->allCategoriesObj[$categoryid]) ) {
+				if (isset($this->allCategoriesObj[$categoryid])) {
 					$ret[$categoryid]['sub'] =& $this->getAllCategoriesArray($categoryid);
 					$ret[$categoryid]['subcatscount'] = count($ret[$categoryid]['sub']);
 				}
@@ -89,7 +89,7 @@ class icms_ipf_category_Handler extends icms_ipf_Handler {
 	 */
 	public function getParentIds($parentid, $asString=true) {
 
-		if ( !$this->allCategoriesId ) {
+		if (!$this->allCategoriesId) {
 
 			$ret = array();
 			$sql = 'SELECT categoryid, parentid FROM ' . $this->table
@@ -97,23 +97,23 @@ class icms_ipf_category_Handler extends icms_ipf_Handler {
 
 			$result = $this->db->query($sql);
 
-			if ( !$result ) {
+			if (!$result) {
 				return $ret;
 			}
 
-			while ( $myrow = $this->db->fetchArray($result) ) {
+			while ($myrow = $this->db->fetchArray($result)) {
 				$this->allCategoriesId[$myrow['categoryid']] =  $myrow['parentid'];
 			}
 		}
 
 		$retArray = array($parentid);
-		while ( $parentid != 0 ) {
+		while ($parentid != 0) {
 			$parentid = $this->allCategoriesId[$parentid];
-			if ( $parentid != 0 ) {
+			if ($parentid != 0) {
 				$retArray[] = $parentid;
 			}
 		}
-		if ( $asString ) {
+		if ($asString) {
 			return implode(', ', $retArray);
 		} else {
 			return $retArray;

@@ -56,18 +56,18 @@ class icms_view_Tpl extends Smarty {
 			$this->plugins_dir[] = ICMS_ROOT_PATH . '/class/smarty/xoops_plugins';
 		}
 
-		if ( $icmsConfig['debug_mode'] ) {
+		if ($icmsConfig['debug_mode']) {
 			global $icmsUser;
 			$this->debugging_ctrl = 'URL';
 			$groups = (is_object($icmsUser)) ? $icmsUser->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 			$moduleid = (isset($icmsModule) && is_object($icmsModule)) ? $icmsModule->mid() : 1;
 			$gperm_handler =& xoops_gethandler('member_groupperm');
-			if ( $icmsConfig['debug_mode'] == 3 && $gperm_handler->checkRight('enable_debug', $moduleid, $groups)) {
+			if ($icmsConfig['debug_mode'] == 3 && $gperm_handler->checkRight('enable_debug', $moduleid, $groups)) {
 				$this->debugging = true;
 			}
 		}
 		$this->Smarty();
-		if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL ) {
+		if (defined('_ADM_USE_RTL') && _ADM_USE_RTL) {
 			$this->assign('icms_rtl', true);
 		}
 
@@ -100,10 +100,10 @@ class icms_view_Tpl extends Smarty {
 	 * @return  string  			Rendered output if $display was false
 	 **/
 	public function fetchFromData($tplSource, $display = false, $vars = null) {
-		if ( !function_exists('smarty_function_eval') ) {
+		if (!function_exists('smarty_function_eval')) {
 			require_once SMARTY_DIR . '/plugins/function.eval.php';
 		}
-		if ( isset($vars) ) {
+		if (isset($vars)) {
 			$oldVars = $this->_tpl_vars;
 			$this->assign($vars);
 			$out = smarty_function_eval(array('var' => $tplSource), $this);
@@ -158,7 +158,7 @@ class icms_view_Tpl extends Smarty {
 	 * @todo		Remove in version 1.4 - all occurrences have been removed from the core
 	 * @param $num
 	 */
-	function xoops_setCaching( $num = 0 ) {
+	function xoops_setCaching( $num = 0) {
 		$this->caching = (int)$num;
 		icms_deprecated('$this->caching = $num', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
@@ -193,7 +193,7 @@ class icms_view_Tpl extends Smarty {
 	 * @todo		Remove in version 1.4 - there are no other occurrences in the core
 	 * @param $data
 	 */
-	function xoops_fetchFromData( $data ) {
+	function xoops_fetchFromData( $data) {
 		icms_deprecated('$this->fetchFromData( $data )', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->fetchFromData( $data );
 	}
@@ -202,8 +202,8 @@ class icms_view_Tpl extends Smarty {
 	 * @todo		Remove in version 1.4 - there are no other occurrences in the core
 	 * @param unknown_type $num
 	 */
-	function xoops_setCacheTime( $num = 0 ) {
-		if ( ( $num = (int)$num ) <= 0) {
+	function xoops_setCacheTime( $num = 0) {
+		if (( $num = (int)$num ) <= 0) {
 			icms_deprecated('$this->caching = 0', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 			$this->caching = 0;
 		} else {
@@ -231,7 +231,7 @@ class icms_view_Tpl extends Smarty {
 		$tplfile_handler =& xoops_gethandler('view_template_file');
 		$tplfile =& $tplfile_handler->get($tpl_id);
 
-		if ( is_object($tplfile) ) {
+		if (is_object($tplfile)) {
 			$file = $tplfile->getVar('tpl_file', 'n');
 			$tpl = new icms_view_Tpl();
 			return $tpl->touch("db:$file");

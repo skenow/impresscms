@@ -13,7 +13,7 @@
  * @version	$Id: user.php 19586 2010-06-24 11:48:14Z malanciault $
  */
 
-if(!defined('ICMS_ROOT_PATH')) {exit();}
+if (!defined('ICMS_ROOT_PATH')) {exit();}
 /**
  * @package kernel
  * @copyright copyright &copy; 2000 XOOPS.org
@@ -98,17 +98,15 @@ class icms_member_user_Object extends icms_core_Object
 		$this->initVar('login_name', XOBJ_DTYPE_TXTBOX, null, true, 255);
 
 		// for backward compatibility
-		if(isset($id))
+		if (isset($id))
 		{
-			if(is_array($id))
+			if (is_array($id))
 			{
 				$this->assignVars($id);
-			}
-			else
-			{
+			} else {
 				$member_handler =& xoops_gethandler('member');
 				$user =& $member_handler->getUser($id);
-				foreach($user->vars as $k => $v)
+				foreach ($user->vars as $k => $v)
 				{
 					$this->assignVar($k, $v['value']);
 				}
@@ -138,27 +136,23 @@ class icms_member_user_Object extends icms_core_Object
 	{
 		$userid = (int) ($userid);
 		$usereal = (int) ($usereal);
-		if($userid > 0)
+		if ($userid > 0)
 		{
 			$member_handler =& xoops_gethandler('member');
 			$user =& $member_handler->getUser($userid);
-			if(is_object($user))
+			if (is_object($user))
 			{
 				$ts =& icms_core_Textsanitizer::getInstance();
-				if($usereal)
+				if ($usereal)
 				{
 					$name = $user->getVar('name');
-					if($name != '')
+					if ($name != '')
 					{
 						return $ts->htmlSpecialChars($name);
-					}
-					else
-					{
+					} else {
 						return $ts->htmlSpecialChars($user->getVar('uname'));
 					}
-				}
-				else
-				{
+				} else {
 					return $ts->htmlSpecialChars($user->getVar('uname'));
 				}
 			}
@@ -184,7 +178,7 @@ class icms_member_user_Object extends icms_core_Object
 	 */
 	function setGroups($groupsArr)
 	{
-		if(is_array($groupsArr))
+		if (is_array($groupsArr))
 		{
 			$this->_groups =& $groupsArr;
 		}
@@ -201,7 +195,7 @@ class icms_member_user_Object extends icms_core_Object
 
 		$myts =& icms_core_Textsanitizer::getInstance();
 
-		if(!$icmsConfigUser['welcome_msg']) {return true;}
+		if (!$icmsConfigUser['welcome_msg']) {return true;}
 
 		$xoopsMailer =& getMailer();
 		$xoopsMailer->useMail();
@@ -213,7 +207,7 @@ class icms_member_user_Object extends icms_core_Object
 		$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
 		$xoopsMailer->setFromName($icmsConfig['sitename']);
 		$xoopsMailer->setSubject(sprintf(_US_YOURREGISTRATION, $myts->stripSlashesGPC($icmsConfig['sitename'])));
-		if(!$xoopsMailer->send(true))
+		if (!$xoopsMailer->send(true))
 		{
 			$this->setErrors(_US_WELCOMEMSGFAILED);
 			return false;
@@ -233,7 +227,7 @@ class icms_member_user_Object extends icms_core_Object
 	{
 		global $icmsConfigUser, $icmsConfig;
 
-		if($icmsConfigUser['new_user_notify'] == 1 && !empty($icmsConfigUser['new_user_notify_group']))
+		if ($icmsConfigUser['new_user_notify'] == 1 && !empty($icmsConfigUser['new_user_notify_group']))
 		{
 			$member_handler = xoops_getHandler('member');
 			$xoopsMailer =& getMailer();
@@ -245,7 +239,7 @@ class icms_member_user_Object extends icms_core_Object
 			$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
 			$xoopsMailer->setFromName($icmsConfig['sitename']);
 			$xoopsMailer->setSubject(sprintf(_US_NEWUSERREGAT,$icmsConfig['sitename']));
-			if(!$xoopsMailer->send(true))
+			if (!$xoopsMailer->send(true))
 			{
 				$this->setErrors(_US_NEWUSERNOTIFYADMINFAIL);
 				return false;
@@ -262,7 +256,7 @@ class icms_member_user_Object extends icms_core_Object
 	 */
 	function &getGroups()
 	{
-		if(empty($this->_groups))
+		if (empty($this->_groups))
 		{
 			$member_handler =& xoops_gethandler('member');
 			$this->_groups =& $member_handler->getGroupsByUser($this->getVar('uid'));
@@ -294,11 +288,11 @@ class icms_member_user_Object extends icms_core_Object
 	 */
 	function isAdmin($module_id = null)
 	{
-		if(is_null($module_id))
+		if (is_null($module_id))
 		{
 			$module_id = isset($GLOBALS['xoopsModule']) ? $GLOBALS['xoopsModule']->getVar('mid', 'n') : 1;
 		}
-		elseif( (int) ($module_id) < 1) {$module_id = 0;}
+		elseif ((int) ($module_id) < 1) {$module_id = 0;}
 
 		$moduleperm_handler =& xoops_gethandler('member_groupperm');
 		return $moduleperm_handler->checkRight('module_admin', $module_id, $this->getGroups());
@@ -310,7 +304,7 @@ class icms_member_user_Object extends icms_core_Object
 	 */
 	function rank()
 	{
-		if(!isset($this->_rank))
+		if (!isset($this->_rank))
 		{
 			$this->_rank = xoops_getrank($this->getVar('rank'), $this->getVar('posts'));
 		}
@@ -323,7 +317,7 @@ class icms_member_user_Object extends icms_core_Object
 	 */
 	function isActive()
 	{
-		if($this->getVar('level') <= 0) {return false;}
+		if ($this->getVar('level') <= 0) {return false;}
 		return true;
 	}
 
@@ -333,7 +327,7 @@ class icms_member_user_Object extends icms_core_Object
 	 */
 	function isOnline()
 	{
-		if(!isset($this->_isOnline))
+		if (!isset($this->_isOnline))
 		{
 			$onlinehandler =& xoops_gethandler('online');
 			$this->_isOnline = ($onlinehandler->getCount(new icms_criteria_Item('online_uid', $this->getVar('uid'))) > 0) ? true : false;
@@ -537,15 +531,15 @@ class icms_member_user_Object extends icms_core_Object
 	 */
 	function gravatar($rating = false, $size = false, $default = false, $border = false, $overwrite = false)
 	{
-		if(!$overwrite && file_exists(XOOPS_UPLOAD_PATH.'/'.$this->getVar('user_avatar')) && $this->getVar('user_avatar') != 'blank.gif')
+		if (!$overwrite && file_exists(XOOPS_UPLOAD_PATH.'/'.$this->getVar('user_avatar')) && $this->getVar('user_avatar') != 'blank.gif')
 		{
 			return XOOPS_UPLOAD_URL.'/'.$this->getVar('user_avatar');
 		}
 		$ret = "http://www.gravatar.com/avatar/".md5(strtolower($this->getVar('email', 'E')))."?d=identicon";
-		if($rating && $rating != ''){$ret .= "&amp;rating=".$rating;}
-		if($size && $size != ''){$ret .="&amp;size=".$size;}
-		if($default && $default != ''){$ret .= "&amp;default=".urlencode($default);}
-		if($border && $border != ''){$ret .= "&amp;border=".$border;}
+		if ($rating && $rating != '') {$ret .= "&amp;rating=".$rating;}
+		if ($size && $size != '') {$ret .="&amp;size=".$size;}
+		if ($default && $default != '') {$ret .= "&amp;default=".urlencode($default);}
+		if ($border && $border != '') {$ret .= "&amp;border=".$border;}
 		return $ret;
 	}
 

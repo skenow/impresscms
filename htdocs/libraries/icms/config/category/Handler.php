@@ -36,7 +36,7 @@ class icms_config_category_Handler extends icms_core_ObjectHandler {
 	 */
 	public function &create($isNew = true)	{
 		$confcat = new icms_config_category_Object();
-		if ( $isNew ) {
+		if ($isNew) {
 			$confcat->setNew();
 		}
 		return $confcat;
@@ -53,13 +53,13 @@ class icms_config_category_Handler extends icms_core_ObjectHandler {
 	public function &get($id) {
 		$confcat = false;
 		$id = (int) $id;
-		if ( $id > 0 ) {
+		if ($id > 0) {
 			$sql = "SELECT * FROM " . $this->db->prefix('configcategory') . " WHERE confcat_id='" . $id . "'";
-			if ( !$result = $this->db->query($sql) ) {
+			if (!$result = $this->db->query($sql)) {
 				return $confcat;
 			}
 			$numrows = $this->db->getRowsNum($result);
-			if ( $numrows == 1 ) {
+			if ($numrows == 1) {
 				$confcat = new icms_config_category_Object();
 				$confcat->assignVars($this->db->fetchArray($result), false);
 			}
@@ -79,19 +79,19 @@ class icms_config_category_Handler extends icms_core_ObjectHandler {
 		/**
 		 * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
 		 */
-		if ( !is_a($confcat, 'xoopsconfigcategory') ) {
+		if (!is_a($confcat, 'xoopsconfigcategory')) {
 			return false;
 		}
-		if ( !$confcat->isDirty() ) {
+		if (!$confcat->isDirty()) {
 			return true;
 		}
-		if ( !$confcat->cleanVars() ) {
+		if (!$confcat->cleanVars()) {
 			return false;
 		}
-		foreach ( $confcat->cleanVars as $k => $v ) {
+		foreach ( $confcat->cleanVars as $k => $v) {
 			${$k} = $v;
 		}
-		if ( $confcat->isNew() ) {
+		if ($confcat->isNew()) {
 			$confcat_id = $this->db->genId('configcategory_confcat_id_seq');
 			$sql = sprintf(
 				"INSERT INTO %s (confcat_id, confcat_name, confcat_order)
@@ -104,10 +104,10 @@ class icms_config_category_Handler extends icms_core_ObjectHandler {
 				WHERE confcat_id = '%u'",
 				$this->db->prefix('configcategory'), $this->db->quoteString($confcat_name), (int) ($confcat_order), (int) ($confcat_id));
 		}
-		if ( !$result = $this->db->query($sql) ) {
+		if (!$result = $this->db->query($sql)) {
 			return false;
 		}
-		if ( empty($confcat_id) ) {
+		if (empty($confcat_id)) {
 			$confcat_id = $this->db->getInsertId();
 		}
 		$confcat->assignVar('confcat_id', $confcat_id);
@@ -126,7 +126,7 @@ class icms_config_category_Handler extends icms_core_ObjectHandler {
 		/**
 		 * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
 		 */
-		if ( !is_a($confcat, 'xoopsconfigcategory') ) {
+		if (!is_a($confcat, 'xoopsconfigcategory')) {
 			return false;
 		}
 
@@ -134,7 +134,7 @@ class icms_config_category_Handler extends icms_core_ObjectHandler {
 			"DELETE FROM %s WHERE confcat_id = '%u'",
 			$this->db->prefix('configcategory'), (int) ($configcategory->getVar('confcat_id'))
 			);
-		if ( !$result = $this->db->query($sql) ) {
+		if (!$result = $this->db->query($sql)) {
 			return false;
 		}
 		return true;
@@ -152,7 +152,7 @@ class icms_config_category_Handler extends icms_core_ObjectHandler {
 		$ret = array();
 		$limit = $start = 0;
 		$sql = 'SELECT * FROM ' . $this->db->prefix('configcategory');
-		if ( isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element') ) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
 			$sql .= ' '.$criteria->renderWhere();
 			$sort = !in_array($criteria->getSort(), array('confcat_id', 'confcat_name', 'confcat_order'))
 					? 'confcat_order'
@@ -162,13 +162,13 @@ class icms_config_category_Handler extends icms_core_ObjectHandler {
 			$start = $criteria->getStart();
 		}
 		$result = $this->db->query($sql, $limit, $start);
-		if ( !$result ) {
+		if (!$result) {
 			return $ret;
 		}
-		while ( $myrow = $this->db->fetchArray($result) ) {
+		while ($myrow = $this->db->fetchArray($result)) {
 			$confcat = new icms_config_category_Object();
 			$confcat->assignVars($myrow, false);
-			if ( !$id_as_key ) {
+			if (!$id_as_key) {
 				$ret[] =& $confcat;
 			} else {
 				$ret[$myrow['confcat_id']] =& $confcat;

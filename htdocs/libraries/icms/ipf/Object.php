@@ -428,12 +428,12 @@ class icms_ipf_Object extends icms_core_Object {
 		 include_once SMARTOBJECT_ROOT_PATH . 'class/smarthighlighter.php' ;
 		 $highlight = icms_getConfig('module_search_highlighter', false, true);
 
-		 if($highlight && isset($_GET['keywords']))
+		 if ($highlight && isset($_GET['keywords']))
 		 {
 			$myts =& icms_core_Textsanitizer::getInstance();
 			$keywords=$myts->htmlSpecialChars(trim(urldecode($_GET['keywords'])));
 			$h= new SmartHighlighter ($keywords, true , 'smart_highlighter');
-			foreach($this->handler->highlightFields as $field) {
+			foreach ($this->handler->highlightFields as $field) {
 			$ret[$field] = $h->highlight($ret[$field]);
 			}
 			}
@@ -728,7 +728,7 @@ class icms_ipf_Object extends icms_core_Object {
 	 * @param unknown_type $key
 	 * @param unknown_type $editor
 	 */
-	public function getValueFor($key, $editor = true) {
+	public function getValueFor ($key, $editor = true) {
 		global $icmsModuleConfig;
 
 		$ret = $this->getVar($key, 'n');
@@ -907,7 +907,7 @@ class icms_ipf_Object extends icms_core_Object {
 				if ($decimal_section) {
 					if (strlen($decimal_section) == 1) {
 						$decimal_section = '.00';
-					} elseif(strlen($decimal_section) == 2) {
+					} elseif (strlen($decimal_section) == 2) {
 						$decimal_section = $decimal_section . '0';
 					}
 					$ret = str_replace($decimal_section_original, $decimal_section, $ret);
@@ -1062,7 +1062,7 @@ class icms_ipf_Object extends icms_core_Object {
 	 */
 	public function makeFieldReadOnly($key) {
 		if (is_array($key)) {
-			foreach($key as $v) {
+			foreach ($key as $v) {
 				$this->doMakeFieldreadOnly($v);
 			}
 		} else {
@@ -1099,7 +1099,7 @@ class icms_ipf_Object extends icms_core_Object {
 	 */
 	public function hideFieldFromForm($key) {
 		if (is_array($key)) {
-			foreach($key as $v) {
+			foreach ($key as $v) {
 				$this->doHideFieldFromForm($v);
 			}
 		} else {
@@ -1114,7 +1114,7 @@ class icms_ipf_Object extends icms_core_Object {
 	 */
 	public function hideFieldFromSingleView($key) {
 		if (is_array($key)) {
-			foreach($key as $v) {
+			foreach ($key as $v) {
 				$this->doHideFieldFromSingleView($v);
 			}
 		} else {
@@ -1196,7 +1196,7 @@ class icms_ipf_Object extends icms_core_Object {
 	 */
 	public function showFieldOnForm($key) {
 		if (is_array($key)) {
-			foreach($key as $v) {
+			foreach ($key as $v) {
 				$this->doShowFieldOnForm($v);
 			}
 		} else {
@@ -1221,7 +1221,7 @@ class icms_ipf_Object extends icms_core_Object {
 	 */
 	public function displayFieldOnSingleView($key) {
 		if (is_array($key)) {
-			foreach($key as $v) {
+			foreach ($key as $v) {
 				$this->doDisplayFieldOnSingleView($v);
 			}
 		} else {
@@ -1234,7 +1234,7 @@ class icms_ipf_Object extends icms_core_Object {
 	 *
 	 * @param $key
 	 */
-	public function doSetAdvancedFormFields($key){
+	public function doSetAdvancedFormFields($key) {
 		if (isset($this->vars[$key])) {
 			$this->vars[$key]['advancedform'] = true;
 		}
@@ -1247,7 +1247,7 @@ class icms_ipf_Object extends icms_core_Object {
 	 */
 	public function setAdvancedFormFields($key) {
 		if (is_array($key)) {
-			foreach($key as $v) {
+			foreach ($key as $v) {
 				$this->doSetAdvancedFormFields($v);
 			}
 		} else {
@@ -1259,32 +1259,32 @@ class icms_ipf_Object extends icms_core_Object {
 	 * @todo to be implemented in ImpressCMS core
 	 */
 	/*
-	 function getUrlLinkObj($key){
+	 function getUrlLinkObj($key) {
 		$smartobject_linkurl_handler = icms_getModuleHandler('urllink', 'smartobject');
 		$urllinkid = $this->getVar($key) != null ? $this->getVar($key) : 0;
-		if($urllinkid != 0){
+		if ($urllinkid != 0) {
 		return  $smartobject_linkurl_handler->get($urllinkid);
-		}else{
+		} else {
 		return $smartobject_linkurl_handler->create();
 		}
 		}
 
-		function &storeUrlLinkObj($urlLinkObj){
+		function &storeUrlLinkObj($urlLinkObj) {
 		$smartobject_linkurl_handler = icms_getModuleHandler('urllink', 'smartobject');
 		return $smartobject_linkurl_handler->insert($urlLinkObj);
 		}
 
-		function getFileObj($key){
+		function getFileObj($key) {
 		$smartobject_file_handler = icms_getModuleHandler('file', 'smartobject');
 		$fileid = $this->getVar($key) != null ? $this->getVar($key) : 0;
-		if($fileid != 0){
+		if ($fileid != 0) {
 		return  $smartobject_file_handler->get($fileid);
-		}else{
+		} else {
 		return $smartobject_file_handler->create();
 		}
 		}
 
-		function &storeFileObj($fileObj){
+		function &storeFileObj($fileObj) {
 		$smartobject_file_handler = icms_getModuleHandler('file', 'smartobject');
 		return $smartobject_file_handler->insert($fileObj);
 		}

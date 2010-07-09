@@ -79,18 +79,18 @@ class icms_config_Item_Object extends icms_core_Object {
 	 * @param	bool    $force_slash
 	 */
 	public function setConfValueForInput(&$value, $force_slash = false) {
-		if ( $this->getVar('conf_formtype') == 'textarea' ) {
+		if ($this->getVar('conf_formtype') == 'textarea') {
 			// include_once XOOPS_ROOT_PATH.'/class/module.textsanitizer.php';
 			$myts =& icms_core_Textsanitizer::getInstance();
 			$value = $myts->displayTarea($value, 1);
-		} elseif ( $this->getVar('conf_formtype') == 'password' ) {
+		} elseif ($this->getVar('conf_formtype') == 'password') {
 			$value = filter_var($value, FILTER_SANITIZE_URL);
 		} else {
 			$value = StopXSS($value);
 		}
 		switch($this->getVar('conf_valuetype')) {
 			case 'array':
-				if ( !is_array($value) ) {
+				if (!is_array($value)) {
 					$value = explode('|', trim($value));
 				}
 				$this->setVar('conf_value', serialize($value), $force_slash);
@@ -114,11 +114,11 @@ class icms_config_Item_Object extends icms_core_Object {
 	public function setConfOptions($option) {
 		if (is_array($option)) {
 			$count = count($option);
-			for ( $i = 0; $i < $count; $i++ ) {
+			for ( $i = 0; $i < $count; $i++) {
 				$this->setConfOptions($option[$i]);
 			}
 		} else {
-			if ( is_object($option) ) {
+			if (is_object($option)) {
 				$this->_confOptions[] =& $option;
 			}
 		}

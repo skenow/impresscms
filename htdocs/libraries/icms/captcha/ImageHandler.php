@@ -36,16 +36,16 @@ class icms_captcha_ImageHandler {
 	 */
 	function icms_captcha_ImageHandler()
 	{
-		if(empty($_SESSION['icms_captcha_Object_name'])) {
+		if (empty($_SESSION['icms_captcha_Object_name'])) {
 			$this->invalid = true;
 		}
 
-		if(!extension_loaded('gd')) {
+		if (!extension_loaded('gd')) {
 			$this->mode = "bmp";
 		}else{
 			$required_functions = array("imagecreatetruecolor", "imagecolorallocate", "imagefilledrectangle", "imagejpeg", "imagedestroy", "imageftbbox");
-			foreach($required_functions as $func) {
-				if(!function_exists($func)) {
+			foreach ($required_functions as $func) {
+				if (!function_exists($func)) {
 					$this->mode = "bmp";
 					break;
 				}
@@ -69,11 +69,11 @@ class icms_captcha_ImageHandler {
 	function createCode()
 	{
 		global $icmsConfigCaptcha;
-		if($this->invalid) {
+		if ($this->invalid) {
 			return;
 		}
 
-		if($this->mode == "bmp") {
+		if ($this->mode == "bmp") {
 			$icmsConfigCaptcha['captcha_num_chars'] = 4;
 			$this->code = rand( pow(10, $icmsConfigCaptcha['captcha_num_chars'] - 1), (int) ( str_pad("9", $icmsConfigCaptcha['captcha_num_chars'], "9") ) );
 		}else{
@@ -95,7 +95,7 @@ class icms_captcha_ImageHandler {
 	 */
 	function setCode()
 	{
-		if($this->invalid) {
+		if ($this->invalid) {
 			return;
 		}
 
@@ -103,9 +103,9 @@ class icms_captcha_ImageHandler {
 		$maxAttempts = (int) ( @$_SESSION['icms_captcha_Object_maxattempts'] );
 
 		// Increase the attempt records on refresh
-		if(!empty($maxAttempts)) {
+		if (!empty($maxAttempts)) {
 			$_SESSION['icms_captcha_Object_attempt_'.$_SESSION['icms_captcha_Object_name']]++;
-			if($_SESSION['icms_captcha_Object_attempt_'.$_SESSION['icms_captcha_Object_name']] > $maxAttempts) {
+			if ($_SESSION['icms_captcha_Object_attempt_'.$_SESSION['icms_captcha_Object_name']] > $maxAttempts) {
 				$this->invalid = true;
 			}
 		}
@@ -118,12 +118,12 @@ class icms_captcha_ImageHandler {
 	 */
 	function createImage($file = "")
 	{
-		if($this->invalid) {
+		if ($this->invalid) {
 			header("Content-type: image/gif");
 			readfile(ICMS_ROOT_PATH."/images/subject/icon2.gif");
 			return;
 		}
-		if($this->mode == "bmp") {
+		if ($this->mode == "bmp") {
 			return $this->createImageBmp();
 		}else{
 			return $this->createImageGd();
@@ -185,7 +185,7 @@ class icms_captcha_ImageHandler {
 		}
 		$this->drawBorder();
 		$this->drawCode();
-		if(empty($file)) {
+		if (empty($file)) {
 			header("Content-type: image/jpeg");
 			imagejpeg($this->oImage);
 		}else{
@@ -206,12 +206,12 @@ class icms_captcha_ImageHandler {
 
 		$file_path = "{$name}";
 		$files = IcmsLists::getFileListAsArray($file_path);
-		foreach( $files as $item) {
-			if ( empty($extension) || preg_match("/(\.{$extension})$/i",$item) ) {
+		foreach ($files as $item) {
+			if (empty($extension) || preg_match("/(\.{$extension})$/i",$item)) {
 				$items[] = $item;
 			}
 		}
-		if(function_exists("mod_createCacheFile")) {
+		if (function_exists("mod_createCacheFile")) {
 			mod_createCacheFile($items, "captcha_{$name}", "captcha");
 		}
 		return $items;
@@ -241,11 +241,11 @@ class icms_captcha_ImageHandler {
 			for ($i = 65; $i <= 90; $i++) {
 				$CharDetails = imageftbbox($FontSize, $Angle, $this->font, chr($i), array());
 				$_MaxCharWidth  = abs($CharDetails[0] + $CharDetails[2]);
-				if ($_MaxCharWidth > $MaxCharWidth ) {
+				if ($_MaxCharWidth > $MaxCharWidth) {
 					$MaxCharWidth = $_MaxCharWidth;
 				}
 				$_MaxCharHeight  = abs($CharDetails[1] + $CharDetails[5]);
-				if ($_MaxCharHeight > $MaxCharHeight ) {
+				if ($_MaxCharHeight > $MaxCharHeight) {
 					$MaxCharHeight = $_MaxCharHeight;
 				}
 			}
@@ -265,7 +265,7 @@ class icms_captcha_ImageHandler {
 	function loadBackground()
 	{
 		$RandBackground = null;
-		if( $backgrounds = $this->_getList("backgrounds", "(gif|jpg|png)") ) {
+		if ($backgrounds = $this->_getList("backgrounds", "(gif|jpg|png)")) {
 			$RandBackground = "backgrounds/".$backgrounds[array_rand($backgrounds)];
 		}
 		return $RandBackground;
@@ -276,11 +276,11 @@ class icms_captcha_ImageHandler {
 	 */
 	function createFromFile()
 	{
-		if ( $RandImage = $this->loadBackground() ) {
+		if ($RandImage = $this->loadBackground()) {
 			$ImageType = @getimagesize($RandImage);
-			switch ( @$ImageType[2] ) {
+			switch ( @$ImageType[2]) {
 				case 1:
-					$BackgroundImage = imagecreatefromgif($RandImage);
+					$BackgroundImage = imagecreatefromgif ($RandImage);
 					break;
 
 				case 2:
@@ -292,7 +292,7 @@ class icms_captcha_ImageHandler {
 					break;
 			}
 		}
-		if(!empty($BackgroundImage)){
+		if (!empty($BackgroundImage)) {
 			imagecopyresized($this->oImage, $BackgroundImage, 0, 0, 0, 0, imagesx($this->oImage), imagesy($this->oImage), imagesx($BackgroundImage), imagesy($BackgroundImage));
 			imagedestroy($BackgroundImage);
 		} else {
@@ -346,7 +346,7 @@ class icms_captcha_ImageHandler {
 	function drawCircles()
 	{
 		global $icmsConfigCaptcha;
-		for($i = 1; $i <= $icmsConfigCaptcha['captcha_background_num']; $i++){
+		for ($i = 1; $i <= $icmsConfigCaptcha['captcha_background_num']; $i++) {
 			$randomcolor = imagecolorallocate ($this->oImage , mt_rand(190,255), mt_rand(190,255), mt_rand(190,255));
 			imagefilledellipse($this->oImage, mt_rand(0,$this->width-10), mt_rand(0,$this->height-3), mt_rand(10,20), mt_rand(20,30),$randomcolor);
 		}
@@ -399,7 +399,7 @@ class icms_captcha_ImageHandler {
 	function drawEllipses()
 	{
 		global $icmsConfigCaptcha;
-		for($i = 1; $i <= $icmsConfigCaptcha['captcha_background_num']; $i++){
+		for ($i = 1; $i <= $icmsConfigCaptcha['captcha_background_num']; $i++) {
 			$randomcolor = imagecolorallocate ($this->oImage , mt_rand(190,255), mt_rand(190,255), mt_rand(190,255));
 			imageellipse($this->oImage, mt_rand(0,$this->width), mt_rand(0,$this->height), mt_rand(0,$this->width), mt_rand(0,$this->height), $randomcolor);
 		}
@@ -411,7 +411,7 @@ class icms_captcha_ImageHandler {
 	function drawPolygons()
 	{
 		global $icmsConfigCaptcha;
-		for($i = 1; $i <= $icmsConfigCaptcha['captcha_background_num']; $i++){
+		for ($i = 1; $i <= $icmsConfigCaptcha['captcha_background_num']; $i++) {
 			$randomcolor = imagecolorallocate ($this->oImage , mt_rand(190,255), mt_rand(190,255), mt_rand(190,255));
 			$coords = array();
 			for ($j=1; $j <= $icmsConfigCaptcha['captcha_polygon_point']; $j++) {
@@ -433,7 +433,7 @@ class icms_captcha_ImageHandler {
 	{
 		$image = "";
 
-		if(empty($file)) {
+		if (empty($file)) {
 			header("Content-type: image/bmp");
 			echo $image;
 		}else{

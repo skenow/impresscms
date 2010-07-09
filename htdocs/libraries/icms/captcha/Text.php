@@ -32,7 +32,7 @@ class icms_captcha_Text {
 	function &instance()
 	{
 		static $instance;
-		if(!isset($instance)) {
+		if (!isset($instance)) {
 			$instance = new icms_captcha_Text();
 		}
 		return $instance;
@@ -65,7 +65,7 @@ class icms_captcha_Text {
 		global $icmsConfigCaptcha;
 		$form = $this->loadText()  . "&nbsp;&nbsp; <input type='text' name='".$this->config["name"]."' id='".$this->config["name"]."' size='" . $icmsConfigCaptcha['captcha_num_chars'] . "' maxlength='" . $icmsConfigCaptcha['captcha_num_chars'] . "' value='' />";
 		$rule = constant("ICMS_CAPTCHA_RULE_TEXT");
-		if(!empty($rule)) {
+		if (!empty($rule)) {
 			$form .= "&nbsp;&nbsp;<small>{$rule}</small>";
 		}
 
@@ -82,10 +82,10 @@ class icms_captcha_Text {
 	{
 		$val_a = rand(0, 9);
 		$val_b = rand(0, 9);
-		if($val_a > $val_b) {
+		if ($val_a > $val_b) {
 			$expression = "{$val_a} - {$val_b} = ?";
 			$this->code = $val_a - $val_b;
-		}else{
+		} else {
 			$expression = "{$val_a} + {$val_b} = ?";
 			$this->code = $val_a + $val_b;
 		}

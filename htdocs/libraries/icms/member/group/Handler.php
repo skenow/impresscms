@@ -34,7 +34,7 @@ class icms_member_group_Handler extends icms_core_ObjectHandler {
 	 */
 	public function &create($isNew = true) {
 		$group = new icms_member_group_Object();
-		if ( $isNew ) {
+		if ($isNew) {
 			$group->setNew();
 		}
 		return $group;
@@ -50,13 +50,13 @@ class icms_member_group_Handler extends icms_core_ObjectHandler {
 	public function &get($id) {
 		$id = (int) $id;
 		$group = false;
-		if ( $id > 0 ) {
+		if ($id > 0) {
 			$sql = "SELECT * FROM " . $this->db->prefix('groups') . " WHERE groupid='" . $id . "'";
-			if ( !$result = $this->db->query($sql) ) {
+			if (!$result = $this->db->query($sql)) {
 				return $group;
 			}
 			$numrows = $this->db->getRowsNum($result);
-			if ( $numrows == 1 ) {
+			if ($numrows == 1) {
 				$group = new icms_member_group_Object();
 				$group->assignVars($this->db->fetchArray($result));
 			}
@@ -73,19 +73,19 @@ class icms_member_group_Handler extends icms_core_ObjectHandler {
 	 */
 	public function insert(&$group) {
 		/* As of PHP5.3.0, is_a()is no longer deprecated, so there is no reason to replace it */
-		if ( !is_a($group, 'icms_member_group_Object') ) {
+		if (!is_a($group, 'icms_member_group_Object')) {
 			return false;
 		}
-		if ( !$group->isDirty() ) {
+		if (!$group->isDirty()) {
 			return true;
 		}
-		if ( !$group->cleanVars() ) {
+		if (!$group->cleanVars()) {
 			return false;
 		}
-		foreach ( $group->cleanVars as $k => $v ) {
+		foreach ( $group->cleanVars as $k => $v) {
 			${$k} = $v;
 		}
-		if ( $group->isNew() ) {
+		if ($group->isNew()) {
 			$groupid = $this->db->genId('group_groupid_seq');
 			$sql = sprintf("INSERT INTO %s (groupid, name, description, group_type)
 				VALUES ('%u', %s, %s, %s)",
@@ -105,10 +105,10 @@ class icms_member_group_Handler extends icms_core_ObjectHandler {
 				(int) $groupid
 			);
 		}
-		if ( !$result = $this->db->query($sql) ) {
+		if (!$result = $this->db->query($sql)) {
 			return false;
 		}
-		if ( empty($groupid) ) {
+		if (empty($groupid)) {
 			$groupid = $this->db->getInsertId();
 		}
 		$group->assignVar('groupid', $groupid);
@@ -124,7 +124,7 @@ class icms_member_group_Handler extends icms_core_ObjectHandler {
 	 */
 	public function delete(&$group) {
 		/* As of PHP5.3.0, is_a() is no longer deprecated and there is no need to replace it */
-		if ( !is_a($group, 'icms_member_group_Object') ) {
+		if (!is_a($group, 'icms_member_group_Object')) {
 			return false;
 		}
 		$sql = sprintf(
@@ -132,7 +132,7 @@ class icms_member_group_Handler extends icms_core_ObjectHandler {
 			$this->db->prefix('groups'),
 			(int) $group->getVar('groupid')
 		);
-		if ( !$result = $this->db->query($sql) ) {
+		if (!$result = $this->db->query($sql)) {
 			return false;
 		}
 		return true;
@@ -149,19 +149,19 @@ class icms_member_group_Handler extends icms_core_ObjectHandler {
 		$ret = array();
 		$limit = $start = 0;
 		$sql = "SELECT * FROM " . $this->db->prefix('groups');
-		if ( isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element') ) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
 			$sql .= " " . $criteria->renderWhere();
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
 		}
 		$result = $this->db->query($sql, $limit, $start);
-		if ( !$result ) {
+		if (!$result) {
 			return $ret;
 		}
-		while ( $myrow = $this->db->fetchArray($result) ) {
+		while ($myrow = $this->db->fetchArray($result)) {
 			$group = new icms_member_group_Object();
 			$group->assignVars($myrow);
-			if ( !$id_as_key ) {
+			if (!$id_as_key) {
 				$ret[] =& $group;
 			} else {
 				$ret[$myrow['groupid']] =& $group;

@@ -63,13 +63,13 @@ class icms_core_Debug {
 		array_shift($trace);
 		$level = $msg = $message = '';
 		$pre = _CORE_DEPRECATED;
-		if ( $trace[0]['function'] != 'include' && $trace[0]['function'] != 'include_once' && $trace[0]['function'] != 'require' && $trace[0]['function'] != 'require_once') {
+		if ($trace[0]['function'] != 'include' && $trace[0]['function'] != 'include_once' && $trace[0]['function'] != 'require' && $trace[0]['function'] != 'require_once') {
 			$pre .= $trace[0]['function'] . ': ';
 		}
 
-		foreach ( $trace as $step ) {
+		foreach ( $trace as $step) {
 		    $level .= '-';
-			if ( isset($step['file'])) {
+			if (isset($step['file'])) {
 			    	$message .= $level . $msg
 						. (isset( $step['class'] ) ? $step['class'] : '')
 						. (isset( $step['type'] ) ? $step['type'] : '' )

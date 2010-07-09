@@ -42,28 +42,28 @@ class icms_view_theme_Factory {
 	 */
 	public function &createInstance($options = array(), $initArgs = array()) {
 		// Grab the theme folder from request vars if present
-		if ( @empty($options['folderName']) ) {
+		if (@empty($options['folderName'])) {
 			// xoops_theme_select still exists to keep compatibilitie ...
-			if ( ($req = @$_REQUEST['xoops_theme_select']) && $this->isThemeAllowed($req) ) {
+			if (($req = @$_REQUEST['xoops_theme_select']) && $this->isThemeAllowed($req)) {
 				$options['folderName'] = $req;
-				if ( isset($_SESSION) && $this->allowUserSelection ) {
+				if (isset($_SESSION) && $this->allowUserSelection) {
 					$_SESSION[$this->xoBundleIdentifier]['defaultTheme'] = $req;
 				}
-			} elseif ( ($req = @$_REQUEST['theme_select']) && $this->isThemeAllowed($req) ) {
+			} elseif (($req = @$_REQUEST['theme_select']) && $this->isThemeAllowed($req)) {
 				$options['folderName'] = $req;
-				if ( isset($_SESSION) && $this->allowUserSelection ) {
+				if (isset($_SESSION) && $this->allowUserSelection) {
 					$_SESSION[$this->xoBundleIdentifier]['defaultTheme'] = $req;
 				}
-			} elseif ( isset($_SESSION[$this->xoBundleIdentifier]['defaultTheme']) ) {
+			} elseif (isset($_SESSION[$this->xoBundleIdentifier]['defaultTheme'])) {
 				$options['folderName'] = $_SESSION[$this->xoBundleIdentifier]['defaultTheme'];
-			} elseif ( @empty($options['folderName'] ) || ! $this->isThemeAllowed($options ['folderName']) ) {
+			} elseif (@empty($options['folderName'] ) || ! $this->isThemeAllowed($options ['folderName'])) {
 				$options['folderName'] = $this->defaultTheme;
 			}
 			$GLOBALS['xoopsConfig']['theme_set'] = $options['folderName'];
 		}
 		$options['path'] = ( is_dir(ICMS_MODULES_PATH . '/system/themes/' . $options['folderName']) ) ? ICMS_MODULES_PATH . '/system/themes/' . $options['folderName'] : ICMS_THEME_PATH . '/' . $options['folderName'];
 		$inst = new icms_view_theme_Object();
-		foreach ( $options as $k => $v ) {
+		foreach ( $options as $k => $v) {
 			$inst->$k = $v;
 		}
 		$inst->xoInit();

@@ -161,7 +161,7 @@ class icms_view_theme_Object {
 			'xoops_banner' => $this->template->get_template_vars('icms_banner'),
 			'xoops_pagetitle' => $this->template->get_template_vars('icms_pagetitle')
 		));
-		if ( isset($icmsUser) && is_object($icmsUser) ) {
+		if (isset($icmsUser) && is_object($icmsUser)) {
 			$this->template->assign(array(
 	        	'icms_isuser' => true,
 	        	'icms_userid' => $icmsUser->getVar('uid'),
@@ -184,11 +184,11 @@ class icms_view_theme_Object {
 		}
 		// Meta tags
 		foreach ($icmsConfigMetaFooter as $name => $value) {
-			if ( substr($name, 0, 5) == 'meta_') {
+			if (substr($name, 0, 5) == 'meta_') {
 				$this->addMeta('meta', substr($name, 5), $value);
-			} elseif ( substr($name, 0, 6) == 'footer' ) {
+			} elseif (substr($name, 0, 6) == 'footer') {
 				$values = $value;
-				if ($icmsConfigMetaFooter['use_google_analytics'] == true && isset($icmsConfigMetaFooter['google_analytics']) && $icmsConfigMetaFooter['google_analytics'] != ''){
+				if ($icmsConfigMetaFooter['use_google_analytics'] == true && isset($icmsConfigMetaFooter['google_analytics']) && $icmsConfigMetaFooter['google_analytics'] != '') {
 					$values = $value.'<script type="text/javascript">
                     var pageTracker = _gat._getTracker("UA-'.$icmsConfigMetaFooter['google_analytics'].'"); pageTracker._trackPageview();
                     </script>';
@@ -202,14 +202,14 @@ class icms_view_theme_Object {
 			}
 		}
 
-		if ( $this->bufferOutput ) {
+		if ($this->bufferOutput) {
 			ob_start();
 		}
 		$GLOBALS['xoTheme'] =& $this;
 		$GLOBALS['xoopsTpl'] =& $this->template;
 		// Instanciate and initialize all the theme plugins
-		foreach ( $this->plugins as $k => $bundleId ) {
-			if ( !is_object($bundleId) ) {
+		foreach ( $this->plugins as $k => $bundleId) {
+			if (!is_object($bundleId)) {
 				$this->plugins[$bundleId] = new $bundleId();
 				$this->plugins[$bundleId]->theme =& $this;
 				$this->plugins[$bundleId]->xoInit();
@@ -233,19 +233,19 @@ class icms_view_theme_Object {
 	public function generateCacheId($cache_id, $extraString = '') {
 		static $extra_string;
 
-		if ( !$this->use_extra_cache_id ) {
+		if (!$this->use_extra_cache_id) {
 			return $cache_id;
 		}
 
-		if ( empty($extraString) ) {
-			if ( empty($extra_string) ) {
+		if (empty($extraString)) {
+			if (empty($extra_string)) {
 				global $icmsUser, $icmsConfig;
 
 				// Generate language section
 				$extra_string = $icmsConfig['language'];
 
 				// Generate group section
-				if ( !@is_object($icmsUser) ) {
+				if (!@is_object($icmsUser)) {
 					$extra_string .= '|' . ICMS_GROUP_ANONYMOUS;
 				} else {
 					$groups = $icmsUser->getGroups();
@@ -270,7 +270,7 @@ class icms_view_theme_Object {
 	public function checkCache() {
 		global $xoopsModule, $icmsModule, $xoopsLogger;
 
-		if ( $_SERVER['REQUEST_METHOD'] != 'POST' && $this->contentCacheLifetime ) {
+		if ($_SERVER['REQUEST_METHOD'] != 'POST' && $this->contentCacheLifetime) {
 			$template = $this->contentTemplate ? $this->contentTemplate : 'db:system_dummy.html';
 			$dirname = $icmsModule->getVar('dirname', 'n');
 
@@ -283,7 +283,7 @@ class icms_view_theme_Object {
 			}
 			$this->contentCacheId = $this->generateCacheId($dirname . '|' . $uri);
 
-			if ( $this->template->is_cached( $template, $this->contentCacheId ) ) {
+			if ($this->template->is_cached( $template, $this->contentCacheId )) {
 				$xoopsLogger->addExtra( $template, sprintf(_REGENERATES, $this->contentCacheLifetime));
 				$this->render(null, null, $template);
 				return true;
@@ -309,31 +309,31 @@ class icms_view_theme_Object {
 	public function render($canvasTpl = null, $pageTpl = null, $contentTpl = null, $vars = array()) {
 		global $xoops, $xoopsLogger, $xoopsOption;
 
-		if ( $this->renderCount ) {
+		if ($this->renderCount) {
 			return false;
 		}
 		$xoopsLogger->startTime('Page rendering');
 
 		// @internal: Lame fix to ensure the metas specified in the xoops config page don't appear twice
 		$old = array('robots', 'keywords', 'description', 'rating', 'author', 'copyright');
-		foreach ( $this->metas['meta'] as $name => $value ) {
-			if ( in_array($name, $old) ) {
+		foreach ( $this->metas['meta'] as $name => $value) {
+			if (in_array($name, $old)) {
 				$this->template->assign("xoops_meta_$name", htmlspecialchars($value, ENT_QUOTES));
 				$this->template->assign("icms_meta_$name", htmlspecialchars($value, ENT_QUOTES));
 				unset($this->metas['meta'][$name]);
 			}
 		}
 
-		if ( $canvasTpl )		$this->canvasTemplate	= $canvasTpl;
-		if ( $contentTpl )		$this->contentTemplate	= $contentTpl;
+		if ($canvasTpl )		$this->canvasTemplate	= $canvasTpl;
+		if ($contentTpl )		$this->contentTemplate	= $contentTpl;
 
-		if ( !empty($vars) ) {
+		if (!empty($vars)) {
 			$this->template->assign($vars);
 		}
-		if ( $this->contentTemplate ) {
+		if ($this->contentTemplate) {
 			$this->content = $this->template->fetch($this->contentTemplate, $this->contentCacheId);
 		}
-		if ( $this->bufferOutput ) {
+		if ($this->bufferOutput) {
 			$this->content .= ob_get_contents();
 			ob_end_clean();
 		}
@@ -346,7 +346,7 @@ class icms_view_theme_Object {
 		$this->template->assign('xoops_module_header', $header . "\n" . $this->renderMetas(null, true));
 		$this->template->assign('icms_module_header', $header . "\n" . $this->renderMetas(null, true));
 
-		if ( !empty($xoopsOption['xoops_pagetitle']) ) {
+		if (!empty($xoopsOption['xoops_pagetitle'])) {
 			$this->template->assign('xoops_pagetitle', $xoopsOption['xoops_pagetitle']);
 			$this->template->assign('icms_pagetitle', $xoopsOption['xoops_pagetitle']);
 		}
@@ -389,10 +389,10 @@ class icms_view_theme_Object {
 	 **/
 	public function addScript($src = '', $attributes = array(), $content = '') {
 		global $xoops;
-		if ( empty($attributes) )     		$attributes = array();
-		if ( !empty($src) ) 				$attributes['src'] = $xoops->url($this->resourcePath($src));
-		if ( !empty($content) )				$attributes['_'] = $content;
-		if ( !isset($attributes['type']) ) 	$attributes['type'] = 'text/javascript';
+		if (empty($attributes) )     		$attributes = array();
+		if (!empty($src) ) 				$attributes['src'] = $xoops->url($this->resourcePath($src));
+		if (!empty($content) )				$attributes['_'] = $content;
+		if (!isset($attributes['type']) ) 	$attributes['type'] = 'text/javascript';
 		$this->addMeta('script', $src, $attributes);
 	}
 
@@ -406,10 +406,10 @@ class icms_view_theme_Object {
 	 **/
 	public function addStylesheet($src = '', $attributes = array(), $content = '') {
 		global $xoops;
-		if ( empty($attributes) )     		$attributes = array();
-		if ( !empty($src) ) 				$attributes['href'] = $xoops->url($this->resourcePath($src));
-		if ( !isset($attributes['type']) ) 	$attributes['type'] = 'text/css';
-		if ( !empty($content) ) 			$attributes['_'] = $content;
+		if (empty($attributes) )     		$attributes = array();
+		if (!empty($src) ) 				$attributes['href'] = $xoops->url($this->resourcePath($src));
+		if (!isset($attributes['type']) ) 	$attributes['type'] = 'text/css';
+		if (!empty($content) ) 			$attributes['_'] = $content;
 		$this->addMeta('stylesheet', $src, $attributes);
 	}
 
@@ -419,11 +419,11 @@ class icms_view_theme_Object {
 	 * @param string	$href		URI of the anchored document
 	 * @param array		$attributes	Additional attributes to add to the <link> element
 	 */
-	public function addLink( $rel, $href = '', $attributes = array() ) {
+	public function addLink( $rel, $href = '', $attributes = array()) {
 		global $xoops;
 
-		if ( empty($attributes) ) $attributes = array();
-		if ( !empty($href) ) 		$attributes['href'] = $href;
+		if (empty($attributes) ) $attributes = array();
+		if (!empty($href) ) 		$attributes['href'] = $href;
 		$this->addMeta('link', $rel, $attributes);
 	}
 
@@ -431,7 +431,7 @@ class icms_view_theme_Object {
 	 * Set a meta http-equiv value
 	 */
 	public function addHttpMeta($name, $value = null) {
-		if ( isset($value) ) {
+		if (isset($value)) {
 			return $this->addMeta('http', $name, $value);
 		}
 		unset($this->metas['http'][$name]);
@@ -441,11 +441,11 @@ class icms_view_theme_Object {
 	 * Change output page meta-information
 	 */
 	function addMeta($type = 'meta', $name = '', $value = '') {
-		if ( !isset($this->metas[$type]) ) {
+		if (!isset($this->metas[$type])) {
 			$this->metas[$type] = array();
 		}
 
-		if ( !empty($name) ) {
+		if (!empty($name)) {
 			$this->metas[$type][$name] = $value;
 		} else {
 			$this->metas[$type][] = 	$value;
@@ -462,7 +462,7 @@ class icms_view_theme_Object {
 	 * @param   string  &$repeat
 	 */
 	public function headContent($params, $content, &$smarty, &$repeat) {
-		if ( !$repeat ) {
+		if (!$repeat) {
 			$this->htmlHeadStrings[] = $content;
 		}
 	}
@@ -476,17 +476,17 @@ class icms_view_theme_Object {
 	 */
 	public function renderMetas($type = null, $return = false) {
 		$str = '';
-		if ( !isset($type) ) {
-			foreach ( array_keys($this->metas) as $type ) {
+		if (!isset($type)) {
+			foreach ( array_keys($this->metas) as $type) {
 				$str .= $this->renderMetas($type, true);
 			}
 			$str .= implode("\n", $this->htmlHeadStrings);
 		} else {
 			switch($type) {
 				case 'script':
-					foreach ( $this->metas[$type] as $attrs ) {
+					foreach ( $this->metas[$type] as $attrs) {
 						$str .= '<script' . $this->renderAttributes($attrs) . ">\n";
-						if ( @$attrs['_'] ) {
+						if (@$attrs['_']) {
 							$str .= "\n\n" . $attrs['_'] . "\n";
 						}
 						$str .= "</script>\n";
@@ -494,14 +494,14 @@ class icms_view_theme_Object {
 					break;
 
 				case 'link':
-					foreach ( $this->metas[$type] as $rel => $attrs ) {
+					foreach ( $this->metas[$type] as $rel => $attrs) {
 						$str .= '<link rel="' . $rel . '"' . $this->renderAttributes( $attrs ) . " />\n";
 					}
 					break;
 
 				case 'stylesheet':
-					foreach ( $this->metas[$type] as $attrs ) {
-						if ( @$attrs['_'] ) {
+					foreach ( $this->metas[$type] as $attrs) {
+						if (@$attrs['_']) {
 							$str .= '<style' . $this->renderAttributes($attrs) . ">\n" . $attrs['_'] . "\n</style>";
 						} else {
 							$str .= '<link rel="stylesheet"' . $this->renderAttributes($attrs) . " />\n";
@@ -510,19 +510,19 @@ class icms_view_theme_Object {
 					break;
 
 				case 'http':
-					foreach ( $this->metas[$type] as $name => $content ) {
+					foreach ( $this->metas[$type] as $name => $content) {
 						$str .= '<meta http-equiv="' . htmlspecialchars($name, ENT_QUOTES) . '" content="' . htmlspecialchars( $content, ENT_QUOTES) . "\" />\n";
 					}
 					break;
 
 				default:
-					foreach ( $this->metas[$type] as $name => $content ) {
+					foreach ( $this->metas[$type] as $name => $content) {
 						$str .= '<meta name="' . htmlspecialchars($name, ENT_QUOTES) . '" content="' . htmlspecialchars($content, ENT_QUOTES) . "\" />\n";
 					}
 					break;
 			}
 		}
-		if ( $return ) {
+		if ($return) {
 			return $str;
 		}
 		echo $str;
@@ -534,9 +534,9 @@ class icms_view_theme_Object {
 	 * @param string $tagName
 	 * @return string
 	 */
-	public function genElementId( $tagName = 'xos' ) {
+	public function genElementId( $tagName = 'xos') {
 		static $cache = array();
-		if ( !isset($cache[$tagName]) ) {
+		if (!isset($cache[$tagName])) {
 			$cache[$tagName] = 1;
 		}
 		return $tagName . '-' . $cache[$tagName]++;
@@ -547,10 +547,10 @@ class icms_view_theme_Object {
 	 * @param array $coll
 	 * @return string
 	 */
-	public function renderAttributes( $coll ) {
+	public function renderAttributes( $coll) {
 		$str = '';
-		foreach ( $coll as $name => $val ) {
-			if ( $name != '_' ) {
+		foreach ( $coll as $name => $val) {
+			if ($name != '_') {
 				$str .= ' ' . $name . '="' . htmlspecialchars($val, ENT_QUOTES) . '"';
 			}
 		}
@@ -563,12 +563,12 @@ class icms_view_theme_Object {
 	 * @param string $path
 	 * @return string
 	 */
-	public function resourcePath( $path ) {
+	public function resourcePath( $path) {
 		global $xoops;
-		if ( substr($path, 0, 1) == '/' ) {
+		if (substr($path, 0, 1) == '/') {
 			$path = substr($path, 1);
 		}
-		if ( file_exists("$this->path/$path") ) {
+		if (file_exists("$this->path/$path")) {
 			return "themes/$this->folderName/$path";
 		}
 		return $path;

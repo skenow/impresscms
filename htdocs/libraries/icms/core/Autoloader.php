@@ -23,7 +23,7 @@ class icms_core_Autoloader {
 	 * Locates and loads the appropriate file, based on a class name
 	 * @param $class
 	 */
-	static public function autoload( $class ) {
+	static public function autoload( $class) {
 		if (self::$debug) echo '== class: ' . $class . '<br />';
 
 		if (substr($class, 0, 4) == 'mod_') {
@@ -54,7 +54,7 @@ class icms_core_Autoloader {
 	 */
 	static public function register() {
 		static $reg = false;
-		if ( !$reg ) {
+		if (!$reg) {
 			spl_autoload_register( array( 'icms_core_Autoloader', 'autoload' ) );
 			$reg = true;
 		}

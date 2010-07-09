@@ -345,9 +345,9 @@ class icms_member_Handler {
 	 $table = new IcmsDatabasetable('users');
 	 if ($table->fieldExists('loginname')) {
 	 $criteria = new icms_criteria_Compo(new icms_criteria_Item('loginname', $uname));
-	 }elseif ($table->fieldExists('login_name')) {
+	 } elseif ($table->fieldExists('login_name')) {
 	 $criteria = new icms_criteria_Compo(new icms_criteria_Item('login_name', $uname));
-	 }else{
+	 } else {
 	 $criteria = new icms_criteria_Compo(new icms_criteria_Item('uname', $uname));
 	 }
 	 $criteria->add(new icms_criteria_Item('pass', $md5pwd));

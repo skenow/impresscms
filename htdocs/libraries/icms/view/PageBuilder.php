@@ -17,7 +17,7 @@
 /**
  * This file cannot be requested directly
  */
-if ( !defined('ICMS_ROOT_PATH')) exit ();
+if (!defined('ICMS_ROOT_PATH')) exit ();
 
 /**
  * icms_view_PageBuilder main class
@@ -44,7 +44,7 @@ class icms_view_PageBuilder {
 	 */
 	public function xoInit($options = array()) {
 		$this->retrieveBlocks();
-		if ( $this->theme ) {
+		if ($this->theme) {
 			$this->theme->template->assign_by_ref('xoBlocks', $this->blocks);
 		}
 		return true;
@@ -74,7 +74,7 @@ class icms_view_PageBuilder {
 		$groups = @is_object($icmsUser) ? $icmsUser->getGroups () : array(XOOPS_GROUP_ANONYMOUS);
 
 		//Getting the start module and page configured in the admin panel
-		if ( is_array($icmsConfig['startpage'])) {
+		if (is_array($icmsConfig['startpage'])) {
 			$member_handler = & xoops_gethandler('member');
 			$group = $member_handler->getUserBestGroup((@is_object($icmsUser) ? $icmsUser->uid() : 0));
 			$icmsConfig['startpage'] = $icmsConfig['startpage'][$group];
@@ -110,7 +110,7 @@ class icms_view_PageBuilder {
 			$dirname = $module->getVar('dirname');
 			$isStart = ($startMod == $mid.'-'.$pid);
 		} else { //Don't have a sym-link for this page
-			if ( @is_object($icmsModule)) {
+			if (@is_object($icmsModule)) {
 				list($mid, $dirname) = array($icmsModule->getVar('mid'), $icmsModule->getVar('dirname'));
 				$isStart = ( substr($_SERVER['PHP_SELF'], - 9) == 'index.php' && $startMod == $dirname );
 			} else {
@@ -120,22 +120,22 @@ class icms_view_PageBuilder {
 			$pid = 0;
 		}
 
-		if ( $isStart ) {
+		if ($isStart) {
 			$modid = '0-1';
 		} else {
 			$criteria = new icms_criteria_Compo(new icms_criteria_Item('page_status', 1));
 			$pages = $icms_page_handler->getObjects($criteria);
 			$pid = 0;
-			foreach ( $pages as $page ) {
+			foreach ( $pages as $page) {
 				$purl = $page->getVar('page_url');
-				if ( substr($purl, - 1) == '*' ) {
+				if (substr($purl, - 1) == '*') {
 					$purl = substr($purl, 0, - 1);
-					if ( substr($url, 0, strlen($purl)) == $purl || substr($fullurl, 0, strlen($purl)) == $purl ) {
+					if (substr($url, 0, strlen($purl)) == $purl || substr($fullurl, 0, strlen($purl)) == $purl) {
 						$pid = $page->getVar('page_id');
 						break;
 					}
 				} else {
-					if ( $purl == $url || $purl == $fullurl ) {
+					if ($purl == $url || $purl == $fullurl) {
 						$pid = $page->getVar('page_id');
 						break;
 					}
@@ -147,10 +147,10 @@ class icms_view_PageBuilder {
 		$icms_block_handler = xoops_gethandler('block');
 		$oldzones = $icms_block_handler->getBlockPositions();
 
-		foreach ( $oldzones as $zone ) {
+		foreach ( $oldzones as $zone) {
 			$this->blocks[$zone] = array();
 		}
-		if ( $this->theme ) {
+		if ($this->theme) {
 			$template =& $this->theme->template;
 			$backup = array($template->caching, $template->cache_lifetime);
 		} else {
@@ -165,19 +165,19 @@ class icms_view_PageBuilder {
 		/** End of snippet */
 
 		$block_arr = $icms_block_handler->getAllByGroupModule($groups, $modid, $isStart, XOOPS_BLOCK_VISIBLE);
-		foreach ( $block_arr as $block ) {
+		foreach ( $block_arr as $block) {
 			$side = $oldzones[$block->getVar('side', 'n')];
 			if ($var = $this->buildBlock($block, $template)) {
 				$this->blocks[$side][$var["id"]] = $var;
 			}
 		}
-		if ( $this->theme ) {
+		if ($this->theme) {
 			list($template->caching, $template->cache_lifetime) = $backup;
 		}
 	}
 
 	public function generateCacheId($cache_id) {
-		if ( $this->theme ) {
+		if ($this->theme) {
 			$cache_id = $this->theme->generateCacheId($cache_id);
 		}
 		return $cache_id;
@@ -195,7 +195,7 @@ class icms_view_PageBuilder {
 		global $icmsUser, $icmsConfigPersona;
 
 		if ($icmsConfigPersona['editre_block'] == true) {
-			if ( $icmsUser && count($this->uagroups) > 0 ) {
+			if ($icmsUser && count($this->uagroups) > 0) {
 				$url = base64_encode(str_replace(ICMS_URL, '', "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']) );
 				$titlebtns = '&nbsp;<a href="#" onclick="$(\'#ed_block_' . $xobject->getVar ( 'bid' ) . '\').dialog(\'open\'); return false;"><img src="' . ICMS_IMAGES_SET_URL . '/actions/configure.png" title="' . _EDIT . '" alt="' . _EDIT . '"  /></a>';
 				$titlebtns .= '<button style="display: none;"><div id="ed_block_' . $xobject->getVar ( 'bid' ) . '">';
@@ -204,7 +204,7 @@ class icms_view_PageBuilder {
 				$titlebtns .= "<a href='" . ICMS_URL . "/modules/system/admin.php?fct=blocksadmin&amp;op=mod&amp;bid=" . $xobject->getVar('bid') . "'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/edit.png' alt='" . _EDIT . "'  /> " . _EDIT . "</a><br />";
 				$titlebtns .= "<a href='" . ICMS_URL . "/modules/system/admin.php?fct=blocksadmin&amp;op=up&amp;bid=" . $xobject->getVar('bid') . "&amp;rtn=$url'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/up.png' alt='" . _UP . "'  /> " . _UP . "</a><br />";
 				$titlebtns .= "<a href='" . ICMS_URL . "/modules/system/admin.php?fct=blocksadmin&amp;op=down&amp;bid=" . $xobject->getVar('bid') . "&amp;rtn=$url'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/down.png' alt='" . _DOWN . "'  /> " . _DOWN . "</a>";
-				if ( $xobject->getVar('dirname') == '' ) {
+				if ($xobject->getVar('dirname') == '') {
 					$titlebtns .= "<br /><a href='" . ICMS_URL . "/modules/system/admin.php?fct=blocksadmin&amp;op=del&amp;bid=" . $xobject->getVar('bid') . "'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/editdelete.png' alt='" . _DELETE . "'  /> " . _DELETE . "</a>";
 				}
 				$titlebtns .= '</div></button>';
@@ -239,7 +239,7 @@ class icms_view_PageBuilder {
 
 		$bcachetime = (int) ( $xobject->getVar('bcachetime') );
 		//$template = new icms_view_Tpl();
-		if ( empty($bcachetime) ) {
+		if (empty($bcachetime)) {
 			$template->caching = 0;
 		} else {
 			$template->caching = 2;
@@ -248,9 +248,9 @@ class icms_view_PageBuilder {
 		$tplName = ( $tplName = $xobject->getVar('template') ) ? "db:$tplName" : "db:system_block_dummy.html";
 		$cacheid = $this->generateCacheId('blk_' . $xobject->getVar('dirname', 'n') . '_' . $xobject->getVar('bid')/*, $xobject->getVar( 'show_func', 'n' )*/ );
 
-		if ( ! $bcachetime || ! $template->is_cached($tplName, $cacheid) ) {
+		if (! $bcachetime || ! $template->is_cached($tplName, $cacheid)) {
 			$xoopsLogger->addBlock($xobject->getVar('name'));
-			if ( ! ($bresult = $xobject->buildBlock()) ) {
+			if (! ($bresult = $xobject->buildBlock())) {
 				return false;
 			}
 			$template->assign('block', $bresult);

@@ -78,7 +78,7 @@ class icms_ipf_view_Tree extends icms_ipf_view_Table {
 			}
 
 			$space = '';
-			if($column->getKeyName() == $this->_objectHandler->identifierName){
+			if ($column->getKeyName() == $this->_objectHandler->identifierName) {
 				for ($i = 0; $i < $level; $i++) {
 					$space = $space . '--';
 				}

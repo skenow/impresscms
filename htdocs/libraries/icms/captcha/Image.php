@@ -32,7 +32,7 @@ class icms_captcha_Image {
 	function &instance()
 	{
 		static $instance;
-		if(!isset($instance)) {
+		if (!isset($instance)) {
 			$instance = new icms_captcha_Image();
 		}
 		return $instance;
@@ -57,7 +57,7 @@ class icms_captcha_Image {
 		global $icmsConfigCaptcha;
 		$form = "<input type='text' name='".$this->config["name"]."' id='".$this->config["name"]."' size='" . $icmsConfigCaptcha['captcha_num_chars'] . "' maxlength='" . $icmsConfigCaptcha['captcha_num_chars'] . "' value='' /> &nbsp; ". $this->loadImage();
 		$rule = htmlspecialchars(ICMS_CAPTCHA_REFRESH, ENT_QUOTES);
-		if($icmsConfigCaptcha['captcha_maxattempt']) {
+		if ($icmsConfigCaptcha['captcha_maxattempt']) {
 			$rule .=  " | ". sprintf( constant("ICMS_CAPTCHA_MAXATTEMPTS"), $icmsConfigCaptcha['captcha_maxattempt'] );
 		}
 		$form .= "&nbsp;&nbsp;<small>{$rule}</small>";

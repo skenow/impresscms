@@ -43,32 +43,32 @@ class icms_ipf_Controller {
 	 * @param	obj		$icmsObj
 	 */
 	public function postDataToObject(&$icmsObj) {
-		foreach ( array_keys($icmsObj->vars) as $key ) {
-			switch ( $icmsObj->vars[$key]['data_type'] ) {
+		foreach ( array_keys($icmsObj->vars) as $key) {
+			switch ( $icmsObj->vars[$key]['data_type']) {
 				case XOBJ_DTYPE_IMAGE:
-					if ( isset($_POST['url_' . $key]) && $_POST['url_' . $key] !='' ) {
+					if (isset($_POST['url_' . $key]) && $_POST['url_' . $key] !='') {
 						$eventResult = $this->handler->executeEvent('beforeFileUnlink', $icmsObj);
-						if ( !$eventResult ) {
+						if (!$eventResult) {
 							$icmsObj->setErrors("An error occured during the beforeFileUnlink event");
 						}
 						$oldFile = $icmsObj->getUploadDir(true) . $icmsObj->getVar($key, 'e');
 						$icmsObj->setVar($key, $_POST['url_' . $key]);
-						if ( is_file($oldFile) ) unlink($oldFile);
+						if (is_file($oldFile) ) unlink($oldFile);
 						$eventResult = $this->handler->executeEvent('afterFileUnlink', $icmsObj);
-						if ( !$eventResult ) {
+						if (!$eventResult) {
 							$icmsObj->setErrors("An error occured during the afterFileUnlink event");
 						}
 					}
-					if ( isset($_POST['delete_' . $key]) && $_POST['delete_' . $key] == '1' ) {
+					if (isset($_POST['delete_' . $key]) && $_POST['delete_' . $key] == '1') {
 						$eventResult = $this->handler->executeEvent('beforeFileUnlink', $icmsObj);
-						if ( !$eventResult ) {
+						if (!$eventResult) {
 							$icmsObj->setErrors("An error occured during the beforeFileUnlink event");
 						}
 						$oldFile = $icmsObj->getUploadDir(true) . $icmsObj->getVar($key, 'e');
 						$icmsObj->setVar($key, '');
-						if ( is_file($oldFile) ) unlink($oldFile);
+						if (is_file($oldFile) ) unlink($oldFile);
 						$eventResult = $this->handler->executeEvent('afterFileUnlink', $icmsObj);
-						if ( !$eventResult ) {
+						if (!$eventResult) {
 							$icmsObj->setErrors("An error occured during the afterFileUnlink event");
 						}
 					}
@@ -80,7 +80,7 @@ class icms_ipf_Controller {
 					$linkObj->setVar('description', $_POST['desc_' . $key]);
 					$linkObj->setVar('target', $_POST['target_' . $key]);
 					$linkObj->setVar('url', $_POST['url_' . $key]);
-					if ( $linkObj->getVar('url') != '' ) {
+					if ($linkObj->getVar('url') != '') {
 						$icmsObj->storeUrlLinkObj($linkObj);
 					}
 					//@todo: catch errors
@@ -88,14 +88,14 @@ class icms_ipf_Controller {
 					break;
 
 				case XOBJ_DTYPE_FILE:
-					if ( !isset($_FILES['upload_' . $key]['name']) || $_FILES['upload_' . $key]['name'] == '' ) {
+					if (!isset($_FILES['upload_' . $key]['name']) || $_FILES['upload_' . $key]['name'] == '') {
 						$fileObj = $icmsObj->getFileObj($key);
 						$fileObj->setVar('caption', $_POST['caption_' . $key]);
 						$fileObj->setVar('description', $_POST['desc_' . $key]);
 						$fileObj->setVar('url', $_POST['url_' . $key]);
-						if ( !($fileObj->getVar('url') == '' && $fileObj->getVar('url') == '' && $fileObj->getVar('url') == '') ) {
+						if (!($fileObj->getVar('url') == '' && $fileObj->getVar('url') == '' && $fileObj->getVar('url') == '')) {
 							$res = $icmsObj->storeFileObj($fileObj);
-							if ( $res ) {
+							if ($res) {
 								$icmsObj->setVar($key, $fileObj->getVar('fileid'));
 							} else {
 								//error setted, but no error message (to be improved)
@@ -109,7 +109,7 @@ class icms_ipf_Controller {
 				case XOBJ_DTYPE_MTIME:
 				case XOBJ_DTYPE_LTIME:
 					// check if this field's value is available in the POST array
-					if ( is_array($_POST[$key]) && isset($_POST[$key]['date']) ) {
+					if (is_array($_POST[$key]) && isset($_POST[$key]['date'])) {
 						$value = strtotime($_POST[$key]['date']) + $_POST[$key]['time'];
 					} else {
 						$value = strtotime($_POST[$key]);
@@ -137,7 +137,7 @@ class icms_ipf_Controller {
 		global $impresscms;
 		$this->postDataToObject($icmsObj);
 
-		if ( $icmsObj->isNew() ) {
+		if ($icmsObj->isNew()) {
 			$redirect_msg = $created_success_msg;
 		} else {
 			$redirect_msg = $modified_success_msg;
@@ -145,20 +145,20 @@ class icms_ipf_Controller {
 
 		// Check if there were uploaded files
 		$uploaderResult = true;
-		if ( isset($_POST['icms_upload_image']) || isset($_POST['icms_upload_file']) ) {
+		if (isset($_POST['icms_upload_image']) || isset($_POST['icms_upload_file'])) {
 			include_once ICMS_ROOT_PATH.'/class/uploader.php';
 			$uploaderObj = new IcmsMediaUploader($icmsObj->getImageDir(true), $this->handler->_allowedMimeTypes, $this->handler->_maxFileSize, $this->handler->_maxWidth, $this->handler->_maxHeight);
-			foreach ( $_FILES as $name=>$file_array ) {
-				if ( isset ($file_array['name']) && $file_array['name'] != "" && in_array(str_replace('upload_', '', $name), array_keys($icmsObj->vars)) ) {
-					if ( $uploaderObj->fetchMedia($name) ) {
+			foreach ( $_FILES as $name=>$file_array) {
+				if (isset ($file_array['name']) && $file_array['name'] != "" && in_array(str_replace('upload_', '', $name), array_keys($icmsObj->vars))) {
+					if ($uploaderObj->fetchMedia($name)) {
 						$uploaderObj->setTargetFileName(time() . "_" . $uploaderObj->getMediaName());
-						if ( $uploaderObj->upload() ) {
+						if ($uploaderObj->upload()) {
 							$uploaderResult = $uploaderResult && true;
 							// Find the related field in the icms_ipf_Object
 							$related_field = str_replace('upload_', '', $name);
 							$uploadedArray[] = $related_field;
 							//si c'est un fichier Rich
-							if ( $icmsObj->vars[$related_field]['data_type'] == XOBJ_DTYPE_FILE ) {
+							if ($icmsObj->vars[$related_field]['data_type'] == XOBJ_DTYPE_FILE) {
 								$object_fileurl = $icmsObj->getUploadDir();
 								$fileObj = $icmsObj->getFileObj($related_field);
 								$fileObj->setVar('url', $object_fileurl . $uploaderObj->getSavedFileName());
@@ -170,17 +170,17 @@ class icms_ipf_Controller {
 
 							} else {
 								$eventResult = $this->handler->executeEvent('beforeFileUnlink', $icmsObj);
-								if ( !$eventResult ) {
+								if (!$eventResult) {
 									$icmsObj->setErrors("An error occured during the beforeFileUnlink event");
 									$uploaderResult = $uploaderResult && false;
 								}
 
 								$old_file = $icmsObj->getUploadDir(true) . $icmsObj->getVar($related_field);
-								if ( is_file($old_file) ) unlink($old_file);
+								if (is_file($old_file) ) unlink($old_file);
 								$icmsObj->setVar($related_field, $uploaderObj->getSavedFileName());
 
 								$eventResult = $this->handler->executeEvent('afterFileUnlink', $icmsObj);
-								if ( !$eventResult ) {
+								if (!$eventResult) {
 									$icmsObj->setErrors("An error occured during the afterFileUnlink event");
 									$uploaderResult = $uploaderResult && false;
 								}
@@ -198,8 +198,8 @@ class icms_ipf_Controller {
 			}
 		}
 
-		if ( $uploaderResult ) {
-			if ( $debug ) {
+		if ($uploaderResult) {
+			if ($debug) {
 				$storeResult = $this->handler->insertD($icmsObj);
 			} else {
 				$storeResult = $this->handler->insert($icmsObj);
@@ -208,17 +208,17 @@ class icms_ipf_Controller {
 			$storeResult = false;
 		}
 
-		if ( $storeResult ) {
-			if ( $this->handler->getPermissions() ) {
+		if ($storeResult) {
+			if ($this->handler->getPermissions()) {
 				$icmspermissions_handler = new icms_ipf_permission_Handler($this->handler);
 				$icmspermissions_handler->storeAllPermissionsForId($icmsObj->id());
 			}
 		}
 
-		if ( $redirect_page === null ) {
+		if ($redirect_page === null) {
 			return $icmsObj;
 		} else {
-			if ( !$storeResult ) {
+			if (!$storeResult) {
 				redirect_header($impresscms->urls['previouspage'], 3, _CO_ICMS_SAVE_ERROR . $icmsObj->getHtmlErrors());
 			} else {
 				$redirect_page = $redirect_page ? $redirect_page : icms_get_page_before_form();
@@ -242,15 +242,15 @@ class icms_ipf_Controller {
 		$objectid = ( isset($_POST[$this->handler->keyName]) )
 				? (int) $_POST[$this->handler->keyName]
 				: 0;
-		if ( $debug ) {
-			if ( $x_param ) {
+		if ($debug) {
+			if ($x_param) {
 				$icmsObj = $this->handler->getD($objectid, true,  $x_param);
 			} else {
 				$icmsObj = $this->handler->getD($objectid);
 			}
 
 		} else {
-			if ( $x_param ) {
+			if ($x_param) {
 				$icmsObj = $this->handler->get($objectid, true, false, false, $x_param);
 			} else {
 				$icmsObj = $this->handler->get($objectid);
@@ -262,9 +262,9 @@ class icms_ipf_Controller {
 		 */
 
 		// if handler is the Multilanguage handler, we will need to treat this for multilanguage
-		if ( is_subclass_of($this->handler, 'icmspersistablemlobjecthandler') ) {
+		if (is_subclass_of($this->handler, 'icmspersistablemlobjecthandler')) {
 
-			if ( $icmsObj->isNew() ) {
+			if ($icmsObj->isNew()) {
 				// This is a new object. We need to store the meta data and then the language data
 				// First, we will get rid of the multilanguage data to only store the meta data
 				$icmsObj->stripMultilanguageFields();
@@ -321,14 +321,14 @@ class icms_ipf_Controller {
 		$objectid = (isset($_REQUEST[$this->handler->keyName])) ? (int) $_REQUEST[$this->handler->keyName] : 0;
 		$icmsObj = $this->handler->get($objectid);
 
-		if ( $icmsObj->isNew() ) {
+		if ($icmsObj->isNew()) {
 			redirect_header("javascript:history.go(-1)", 3, _CO_ICMS_NOT_SELECTED);
 			exit();
 		}
 
 		$confirm = ( isset($_POST['confirm']) ) ? $_POST['confirm'] : 0;
-		if ( $confirm ) {
-			if ( !$this->handler->delete($icmsObj) ) {
+		if ($confirm) {
+			if (!$this->handler->delete($icmsObj)) {
 				redirect_header($_POST['redirect_page'], 3, _CO_ICMS_DELETE_ERROR . $icmsObj->getHtmlErrors());
 				exit;
 			}
@@ -340,7 +340,7 @@ class icms_ipf_Controller {
 
 			icms_cp_header();
 
-			if ( !$confirm_msg ) {
+			if (!$confirm_msg) {
 				$confirm_msg = _CO_ICMS_DELETE_CONFIRM;
 			}
 
@@ -350,7 +350,7 @@ class icms_ipf_Controller {
 						'confirm' => 1,
 						'redirect_page' => $impresscms->urls['previouspage']
 			);
-			if ( $this->handler->_moduleName == 'system' ) {
+			if ($this->handler->_moduleName == 'system') {
 				$hiddens['fct'] = isset($_GET['fct']) ? $_GET['fct'] : false;
 			}
 			xoops_confirm($hiddens, xoops_getenv('PHP_SELF'), sprintf($confirm_msg , $icmsObj->getVar($this->handler->identifierName)), _CO_ICMS_DELETE);
@@ -372,14 +372,14 @@ class icms_ipf_Controller {
 		$objectid = ( isset($_REQUEST[$this->handler->keyName]) ) ? (int) ($_REQUEST[$this->handler->keyName]) : 0;
 		$icmsObj = $this->handler->get($objectid);
 
-		if ( $icmsObj->isNew() ) {
+		if ($icmsObj->isNew()) {
 			redirect_header("javascript:history.go(-1)", 3, _CO_ICMS_NOT_SELECTED);
 			exit();
 		}
 
 		$confirm = ( isset($_POST['confirm']) ) ? $_POST['confirm'] : 0;
-		if ( $confirm ) {
-			if ( !$this->handler->delete($icmsObj) ) {
+		if ($confirm) {
+			if (!$this->handler->delete($icmsObj)) {
 				redirect_header($_POST['redirect_page'], 3, _CO_ICMS_DELETE_ERROR . $icmsObj->getHtmlErrors());
 				exit;
 			}
@@ -388,7 +388,7 @@ class icms_ipf_Controller {
 			exit();
 		} else {
 			// no confirm: show deletion condition
-			if ( !$confirm_msg ) {
+			if (!$confirm_msg) {
 				$confirm_msg = _CO_ICMS_DELETE_CONFIRM;
 			}
 
@@ -421,9 +421,9 @@ class icms_ipf_Controller {
 			. $this->handler->_page . "?op=view&amp;"
 			. $this->handler->keyName . "="
 			. $icmsObj->getVar($this->handler->keyName);
-		if ( $onlyUrl ) {
+		if ($onlyUrl) {
 			return $ret;
-		} elseif ( $withimage ) {
+		} elseif ($withimage) {
 			return "<a href='" . $ret . "'>
 					<img src='" . ICMS_IMAGES_SET_URL
 					. "/actions/viewmag.png' style='vertical-align: middle;' alt='"
@@ -464,7 +464,7 @@ class icms_ipf_Controller {
 			*/	$ret = $this->handler->_moduleUrl . $this->handler->_page . "?" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
 		//}
 
-		if ( !$onlyUrl ) {
+		if (!$onlyUrl) {
 			$ret = "<a href='" . $ret . "'>" . $icmsObj->getVar($this->handler->identifierName) . "</a>";
 		}
 		return $ret;
@@ -480,7 +480,7 @@ class icms_ipf_Controller {
 	 * @return string
 	 */
 	public function getViewItemLink($icmsObj, $onlyUrl=false, $withimage=true, $userSide=false) {
-		if ( $this->handler->_moduleName != 'system' ) {
+		if ($this->handler->_moduleName != 'system') {
 			$admin_side = $userSide ? '' : 'admin/';
 			$ret = $this->handler->_moduleUrl . $admin_side . $this->handler->_page . "?" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
 		} else {
@@ -490,9 +490,9 @@ class icms_ipf_Controller {
 				. $this->handler->keyName . "="
 				. $icmsObj->getVar($this->handler->keyName);
 		}
-		if ( $onlyUrl ) {
+		if ($onlyUrl) {
 			return $ret;
-		} elseif ( $withimage ) {
+		} elseif ($withimage) {
 			return "<a href='" . $ret . "'>
 				<img src='" . ICMS_IMAGES_SET_URL . "/actions/viewmag.png' style='vertical-align: middle;' alt='"
 				. _PREVIEW . "'  title='" . _PREVIEW . "'/></a>";
@@ -512,9 +512,9 @@ class icms_ipf_Controller {
 			. $this->handler->_page
 			. "?op=mod&amp;" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName)
 			. "&amp;language=" . $icmsObj->getVar('language');
-		if ( $onlyUrl ) {
+		if ($onlyUrl) {
 			return $ret;
-		} elseif ( $withimage ) {
+		} elseif ($withimage) {
 			return "<a href='" . $ret . "'>
 				<img src='" . ICMS_IMAGES_SET_URL . "/actions/wizard.png' style='vertical-align: middle;' alt='"
 				. _CO_ICMS_LANGUAGE_MODIFY . "'  title='" . _CO_ICMS_LANGUAGE_MODIFY . "'/></a>";
@@ -531,7 +531,7 @@ class icms_ipf_Controller {
 	 * @param	bool	$userSide
 	 */
 	public function getEditItemLink($icmsObj, $onlyUrl=false, $withimage=true, $userSide=false) {
-		if ( $this->handler->_moduleName != 'system' ) {
+		if ($this->handler->_moduleName != 'system') {
 			$admin_side = $userSide ? '' : 'admin/';
 			$ret = $this->handler->_moduleUrl . $admin_side . $this->handler->_page
 				. "?op=mod&amp;" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
@@ -545,9 +545,9 @@ class icms_ipf_Controller {
 				. 'admin.php?fct=' . $this->handler->_itemname
 				. "&amp;op=mod&amp;" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
 		}
-		if ( $onlyUrl ) {
+		if ($onlyUrl) {
 			return $ret;
-		} elseif ( $withimage ) {
+		} elseif ($withimage) {
 			return "<a href='" . $ret . "'>
 				<img src='" . ICMS_IMAGES_SET_URL . "/actions/edit.png' style='vertical-align: middle;' alt='"
 				. _CO_ICMS_MODIFY . "'  title='" . _CO_ICMS_MODIFY . "'/></a>";
@@ -564,7 +564,7 @@ class icms_ipf_Controller {
 	 * @param	bool	$userSide
 	 */
 	public function getDeleteItemLink($icmsObj, $onlyUrl=false, $withimage=true, $userSide=false) {
-		if ( $this->handler->_moduleName != 'system' ) {
+		if ($this->handler->_moduleName != 'system') {
 			$admin_side = $userSide ? '' : 'admin/';
 			$ret = $this->handler->_moduleUrl . $admin_side . $this->handler->_page
 				. "?op=del&amp;" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
@@ -578,9 +578,9 @@ class icms_ipf_Controller {
 				. 'admin.php?fct=' . $this->handler->_itemname
 				. "&amp;op=del&amp;" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
 		}
-		if ( $onlyUrl ) {
+		if ($onlyUrl) {
 			return $ret;
-		} elseif ( $withimage ) {
+		} elseif ($withimage) {
 			return "<a href='" . $ret . "'>
 				<img src='" . ICMS_IMAGES_SET_URL . "/actions/editdelete.png' style='vertical-align: middle;' alt='"
 				. _CO_ICMS_DELETE . "'  title='" . _CO_ICMS_DELETE . "'/></a>";

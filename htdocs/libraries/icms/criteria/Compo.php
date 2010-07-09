@@ -9,7 +9,7 @@
  * @version		SVN: $Id$
  */
 
-if( !defined("ICMS_ROOT_PATH") ) die("ImpressCMS root path not defined");
+if (!defined("ICMS_ROOT_PATH") ) die("ImpressCMS root path not defined");
 
 /**
  * Collection of multiple {@link icms_criteria_Element}s

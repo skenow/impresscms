@@ -34,9 +34,9 @@ require_once ICMS_ROOT_PATH."/class/xoopsform/formelement.php";
  * 2 Add form element where proper: $xoopsform->addElement(new icms_form_elements_Captcha($caption, $name, $skipmember, ...);
  *
  * For verification:
- *   if(@include_once ICMS_ROOT_PATH."/class/captcha/captcha.php") {
+ *   if (@include_once ICMS_ROOT_PATH."/class/captcha/captcha.php") {
  *	    $icmsCaptcha = icms_captcha_Object::instance();
- *	    if(! $icmsCaptcha->verify() ) {
+ *	    if (! $icmsCaptcha->verify()) {
  *		    echo $icmsCaptcha->getMessage();
  *		    ...
  *	    }
@@ -62,9 +62,9 @@ class icms_form_elements_Captcha extends XoopsFormElement {
 	function icms_form_elements_Captcha($caption = '', $name = 'icmscaptcha', $skipmember = null, $numchar = null, $minfontsize = null, $maxfontsize = null, $backgroundtype = null, $backgroundnum = null) {
 		$this->_captchaHandler =& icms_captcha_Object::instance();
 		$this->_captchaHandler->init($name, $skipmember, $numchar, $minfontsize, $maxfontsize, $backgroundtype, $backgroundnum);
-		if(!$this->_captchaHandler->active) {
+		if (!$this->_captchaHandler->active) {
 			$this->setHidden();
-		}else{
+		} else {
 			$caption = !empty($caption) ? $caption : $this->_captchaHandler->getCaption();
 			$this->setCaption($caption);
 		}
@@ -83,7 +83,7 @@ class icms_form_elements_Captcha extends XoopsFormElement {
 
 	function render()
 	{
-		if(!$this->isHidden()) {
+		if (!$this->isHidden()) {
 			return $this->_captchaHandler->render();
 		}
 	}

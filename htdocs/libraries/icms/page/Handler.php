@@ -22,7 +22,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  */
 class icms_page_Handler extends icms_ipf_Handler {
 
-	public function __construct(& $db){
+	public function __construct(& $db) {
 		parent::__construct($db, 'page', 'page_id', 'page_title', '', 'icms');
 		$this->table = $db->prefix('icmspage');
 	}
@@ -37,7 +37,7 @@ class icms_page_Handler extends icms_ipf_Handler {
 	}
 
 	public function getPageSelOptions($value = null) {
-		if (!is_array($value)){
+		if (!is_array($value)) {
 			$value = array($value);
 		}
 		$module_handler =& xoops_gethandler('module');
@@ -73,7 +73,7 @@ class icms_page_Handler extends icms_ipf_Handler {
 		$criteria->add(new icms_criteria_Item('page_status', 1));
 		$pages =& $this->getObjects($criteria);
 		$cont = '';
-		if (count($pages) > 0){
+		if (count($pages) > 0) {
 			$cont = '<optgroup label="' . $module->getVar('name') . '">';
 			$sel = '';
 			if (in_array($module->getVar('mid') . '-0', $value)) {

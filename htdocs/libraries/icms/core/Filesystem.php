@@ -48,8 +48,8 @@ class icms_core_Filesystem {
 	 */
 	static public function mkdir($target, $mode = 0777, $base = ICMS_ROOT_PATH, $metachars = array()) {
 
-		if( is_dir( $target )) return TRUE;
-		if ( !isset($metachars) ) {
+		if (is_dir( $target )) return TRUE;
+		if (!isset($metachars)) {
 			$metachars = array('[', '?', '"', '.', '<', '>', '|', ' ', ':' );
 		}
 
@@ -61,14 +61,14 @@ class icms_core_Filesystem {
 		} else {
 			$target = str_replace($metachars , '_', $target);
 		}
-		if ( mkdir($target, $mode, TRUE) ) {
+		if (mkdir($target, $mode, TRUE)) {
 			// create an index.html file in this directory
 			if ($fh = @fopen($target.'/index.html', 'w')) {
 				fwrite($fh, '<script>history.go(-1);</script>');
 				@fclose($fh);
 			}
 
-			if ( substr(decoct(fileperms($target)), 2) != $mode ) {
+			if (substr(decoct(fileperms($target)), 2) != $mode) {
 				chmod($target, $mode);
 			}
 		}
@@ -90,7 +90,7 @@ class icms_core_Filesystem {
 		global $icmsConfig;
 		foreach ($dir as $d) {
 			$dd = opendir($d);
-			while($file = readdir($dd)) {
+			while ($file = readdir($dd)) {
 				$files_array = $remove_admin_cache
 						? ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess'
 							&& $file != '.svn')
@@ -141,7 +141,7 @@ class icms_core_Filesystem {
 
 		// Loop through the folder
 		$dir = dir($source);
-		while(false !== $entry = $dir->read()) {
+		while (false !== $entry = $dir->read()) {
 			// Skip pointers
 			if ($entry == '.' || $entry == '..') {continue;}
 			// Deep copy directories
@@ -184,7 +184,7 @@ class icms_core_Filesystem {
 	 */
 	static public function copyStream($src, $dest) {
 		$len = false;
-		if(@ini_get('allow_url_fopen')){
+		if (@ini_get('allow_url_fopen')) {
 			$fsrc = fopen($src, 'r');
 			$fdest = fopen($dest, 'w+');
 			$len = stream_copy_to_stream($fsrc, $fdest);
@@ -312,7 +312,7 @@ class icms_core_Filesystem {
 			}
 			echo _CORE_CHECKSUM_CHECKFILE . $checkfile . '<br />';
 			$validHash = $validPerms = array();
-			while (! $validationFile->eof() ) {
+			while (! $validationFile->eof()) {
 				list($filename, $checksum, $filePermissions) = $validationFile->fgetcsv(';');
 				$validHash[$filename] = $checksum;
 				$validPerms[$filename] = $filePermissions;
@@ -330,7 +330,7 @@ class icms_core_Filesystem {
 				echo $file . '<br />';
 			}
 			echo '<br /><strong>' . count($missingFiles) . _CORE_CHECKSUM_FILES_REMOVED . '</strong><br />';
-			foreach($missingFiles as $file=>$hash){
+			foreach ($missingFiles as $file=>$hash) {
 				echo $file . '<br />';
 			}
 			echo '<br /><strong>' . count($permVariations) . _CORE_CHECKSUM_PERMISSIONS_ALTERED . '</strong><br />';

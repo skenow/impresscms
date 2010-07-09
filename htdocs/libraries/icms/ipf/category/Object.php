@@ -64,7 +64,7 @@ class icms_ipf_category_Object extends icms_ipf_seo_Object {
 	 * @return mixed formatted value of the variable
 	 */
 	public function getVar($key, $format = 's') {
-		if ( $format == 's' && in_array($key, array('description', 'image')) ) {
+		if ($format == 's' && in_array($key, array('description', 'image'))) {
 			return call_user_func(array($this,$key));
 		}
 		return parent::getVar($key, $format);
@@ -84,7 +84,7 @@ class icms_ipf_category_Object extends icms_ipf_seo_Object {
 	 */
 	public function image() {
 		$ret = $this->getVar('image', 'e');
-		if ( $ret == '-1' ) {
+		if ($ret == '-1') {
 			return false;
 		} else {
 			return $ret;
@@ -99,7 +99,7 @@ class icms_ipf_category_Object extends icms_ipf_seo_Object {
 		$this->setVar('doxcode', true);
 		global $myts;
 		$objectArray = parent::toArray();
-		if ( $objectArray['image'] ) {
+		if ($objectArray['image']) {
 			$objectArray['image'] = $this->getImageDir() . $objectArray['image'];
 		}
 		return $objectArray;
@@ -115,17 +115,17 @@ class icms_ipf_category_Object extends icms_ipf_seo_Object {
 
 		$controller = new icms_ipf_ObjectController($this->handler);
 
-		if ( !$this->_categoryPath ) {
-			if ( $withAllLink && !$currentCategory ) {
+		if (!$this->_categoryPath) {
+			if ($withAllLink && !$currentCategory) {
 				$ret = $controller->getItemLink($this);
 			} else {
 				$currentCategory = false;
 				$ret = $this->getVar('name');
 			}
 			$parentid = $this->getVar('parentid');
-			if ( $parentid != 0 ) {
+			if ($parentid != 0) {
 				$parentObj =& $this->handler->get($parentid);
-				if ( $parentObj->isNew() ) {
+				if ($parentObj->isNew()) {
 					exit;
 				}
 				$parentid = $parentObj->getVar('parentid');

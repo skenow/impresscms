@@ -111,13 +111,13 @@ class icms_ipf_member_Handler extends icms_member_Handler{
 		$userObj->setVar('notify_method', 2);
 		$userObj->setVar('level', $userObj);
 
-		if ($this->insertUser($userObj)){
+		if ($this->insertUser($userObj)) {
 
 		// if $groups=false, Add the user to Registered Users group
 		if (!$groups) {
 		$this->addUserToGroup(ICMS_GROUP_USERS, $userObj->getVar('uid'));
 		} else {
-		foreach($groups as $groupid) {
+		foreach ($groups as $groupid) {
 		$this->addUserToGroup($groupid, $userObj->getVar('uid'));
 		}
 		}

@@ -118,7 +118,7 @@ class icms_core_Message {
 			<form method="post" action="' . $action . '">';
 	foreach ($hiddens as $name => $value) {
 		if (is_array($value)) {
-			foreach($value as $caption => $newvalue) {
+			foreach ($value as $caption => $newvalue) {
 				echo '<input type="radio" name="' . $name . '" value="'
 					. htmlspecialchars($newvalue) . '" /> ' . $caption;
 			}

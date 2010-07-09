@@ -48,10 +48,10 @@ class icms_core_Kernel extends icms_core_Object {
 	public function path($url, $virtual = false) {
 		$path = '';
 		@list($root, $path) = explode('/', $url, 2);
-		if ( !isset($this->paths[$root]) ) {
+		if (!isset($this->paths[$root])) {
 			list($root, $path) = array('www', $url);
 		}
-		if ( !$virtual ) {
+		if (!$virtual) {
 			// Returns a physical path
 			return $this->paths[$root][0] . '/' . $path;
 		}
@@ -72,17 +72,17 @@ class icms_core_Kernel extends icms_core_Object {
 	 * @return 	string
 	 */
 	public function buildUrl($url, $params = array()) {
-		if ( $url == '.' ) {
+		if ($url == '.') {
 			$url = $_SERVER['REQUEST_URI'];
 		}
 		$split = explode('?', $url);
-		if ( count($split) > 1 ) {
+		if (count($split) > 1) {
 			list($url, $query) = $split;
 			parse_str($query, $query);
 			$params = array_merge($query, $params);
 		}
-		if ( !empty($params) ) {
-			foreach ( $params as $k => $v ) {
+		if (!empty($params)) {
+			foreach ( $params as $k => $v) {
 				$params[$k] = $k . '=' . rawurlencode($v);
 			}
 			$url .= '?' . implode('&', $params);
@@ -96,14 +96,14 @@ class icms_core_Kernel extends icms_core_Object {
 	 */
 	public function _buildRelevantUrls() {
 
-		if ( !$this->urls ) {
+		if (!$this->urls) {
 			$http = strpos(ICMS_URL, "https://") === false
 				? "http://"
 				: "https://";
 			$phpself = $_SERVER['PHP_SELF'];
 			$httphost = $_SERVER['HTTP_HOST'];
 			$querystring = $_SERVER['QUERY_STRING'];
-			if ( $querystring != '' ) {
+			if ($querystring != '') {
 				$querystring = '?' . $querystring;
 			}
 			$currenturl = $http . $httphost . $phpself . $querystring;
@@ -116,7 +116,7 @@ class icms_core_Kernel extends icms_core_Object {
 			$this->urls['full'] = $currenturl;
 
 			$previouspage = '';
-			if ( array_key_exists('HTTP_REFERER', $_SERVER) && isset($_SERVER['HTTP_REFERER']) ) {
+			if (array_key_exists('HTTP_REFERER', $_SERVER) && isset($_SERVER['HTTP_REFERER'])) {
 				$this->urls['previouspage'] = $_SERVER['HTTP_REFERER'];
 			}
 			//$this->urls['isHomePage'] = (ICMS_URL . "/index.php") == ($http . $httphost . $phpself);

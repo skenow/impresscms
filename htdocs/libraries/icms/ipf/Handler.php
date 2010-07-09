@@ -313,7 +313,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 		} else {
 			$obj_array = $this->getObjects($criteria, false, $as_object);
 			//patch : weird bug of indexing by id even if id_as_key = false;
-			if(count($obj_array) && !isset($obj_array[0]) && is_object($obj_array[$id])){
+			if (count($obj_array) && !isset($obj_array[0]) && is_object($obj_array[$id])) {
 				$obj_array[0] = $obj_array[$id];
 				unset($obj_array[$id]);
 				$obj_array[0]->unsetNew();
@@ -354,7 +354,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 
 		if ($this->generalSQL) {
 			$sql = $this->generalSQL;
-		} elseif(!$sql) {
+		} elseif (!$sql) {
 			$sql = 'SELECT * FROM ' . $this->table . " AS " . $this->_itemname;
 		}
 
@@ -661,7 +661,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	 */
 	public function getIdsFromObjectsAsArray($objectsAsArray) {
 		$ret = array();
-		foreach($objectsAsArray as $array) {
+		foreach ($objectsAsArray as $array) {
 			$ret[] = $array[$this->keyName];
 		}
 		return $ret;
@@ -749,7 +749,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 		foreach ($obj->cleanVars as $k => $v) {
 			if ($obj->vars[$k]['data_type'] == XOBJ_DTYPE_INT) {
 				$cleanvars[$k] = (int) ($v);
-			} elseif (is_array($v) ) {
+			} elseif (is_array($v)) {
 				$cleanvars[ $k ] = $this->db->quoteString( implode( ',', $v ) );
 			} else {
 				$cleanvars[$k] = $this->db->quoteString($v);
@@ -777,7 +777,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 					|| (is_array($this->keyName) && in_array($key, $this->keyName))) {
 					continue;
 				}
-				if (isset($notfirst) ) {
+				if (isset($notfirst)) {
 					$sql .= ',';
 				}
 				$sql .= ' ' . $key . ' = ' . $value;

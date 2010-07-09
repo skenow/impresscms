@@ -32,7 +32,7 @@ class icms_image_category_Handler extends icms_core_ObjectHandler {
 	 **/
 	public function &create($isNew = true) {
 		$imgcat = new icms_image_category_Object();
-		if ( $isNew ) {
+		if ($isNew) {
 			$imgcat->setNew();
 		}
 		return $imgcat;
@@ -48,13 +48,13 @@ class icms_image_category_Handler extends icms_core_ObjectHandler {
 	public function &get($id) {
 		$id = (int) ($id);
 		$imgcat = false;
-		if ( $id > 0 ) {
+		if ($id > 0) {
 			$sql = "SELECT * FROM ".$this->db->prefix('imagecategory') . " WHERE imgcat_id='" . $id . "'";
-			if ( !$result = $this->db->query($sql) ) {
+			if (!$result = $this->db->query($sql)) {
 				return $imgcat;
 			}
 			$numrows = $this->db->getRowsNum($result);
-			if ( $numrows == 1 ) {
+			if ($numrows == 1) {
 				$imgcat = new icms_image_category_Object();
 				$imgcat->assignVars($this->db->fetchArray($result));
 			}
@@ -72,20 +72,20 @@ class icms_image_category_Handler extends icms_core_ObjectHandler {
 		/* As of PHP 5.3, is_a is no longer deprecated, this is an acceptable usage
 		 * and is compatible with more versions of PHP.  http://us2.php.net/manual/en/language.operators.type.php
 		 */
-		if ( !is_a($imgcat, 'icms_image_category_Object') ) {
+		if (!is_a($imgcat, 'icms_image_category_Object')) {
 			return false;
 		}
 
-		if ( !$imgcat->isDirty() ) {
+		if (!$imgcat->isDirty()) {
 			return true;
 		}
-		if ( !$imgcat->cleanVars() ) {
+		if (!$imgcat->cleanVars()) {
 			return false;
 		}
-		foreach ( $imgcat->cleanVars as $k => $v ) {
+		foreach ( $imgcat->cleanVars as $k => $v) {
 			${$k} = $v;
 		}
-		if ( $imgcat->isNew() ) {
+		if ($imgcat->isNew()) {
 			$imgcat_id = $this->db->genId('imgcat_imgcat_id_seq');
 			$sql = sprintf("INSERT INTO %s (imgcat_id, imgcat_pid, imgcat_name, imgcat_foldername, imgcat_display, imgcat_weight, imgcat_maxsize, imgcat_maxwidth, imgcat_maxheight, imgcat_type, imgcat_storetype) VALUES ('%u', '%u', %s, %s, '%u', '%u', '%u', '%u', '%u', %s, %s)",
 				$this->db->prefix('imagecategory'),
@@ -116,10 +116,10 @@ class icms_image_category_Handler extends icms_core_ObjectHandler {
 				(int) $imgcat_id
 			);
 		}
-		if ( !$result = $this->db->query($sql) ) {
+		if (!$result = $this->db->query($sql)) {
 			return false;
 		}
-		if ( empty($imgcat_id) ) {
+		if (empty($imgcat_id)) {
 			$imgcat_id = $this->db->getInsertId();
 		}
 		$imgcat->assignVar('imgcat_id', $imgcat_id);
@@ -136,7 +136,7 @@ class icms_image_category_Handler extends icms_core_ObjectHandler {
 		/* As of PHP 5.3, is_a is no longer deprecated, this is an acceptable usage
 		 * and is compatible with more versions of PHP. http://us2.php.net/manual/en/language.operators.type.php
 		 */
-		if ( !is_a($imgcat, 'icms_image_category_Object') ) {
+		if (!is_a($imgcat, 'icms_image_category_Object')) {
 			return false;
 		}
 
@@ -158,7 +158,7 @@ class icms_image_category_Handler extends icms_core_ObjectHandler {
 		$limit = $start = 0;
 		$sql = 'SELECT DISTINCT c.* FROM ' . $this->db->prefix('imagecategory') . ' c LEFT JOIN '
 			. $this->db->prefix('group_permission') . " l ON l.gperm_itemid=c.imgcat_id WHERE (l.gperm_name = 'imgcat_read' OR l.gperm_name = 'imgcat_write')";
-		if ( isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element') ) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
 			$where = $criteria->render();
 			$sql .= ($where != '') ? ' AND ' . $where : '';
 			$limit = $criteria->getLimit();
@@ -166,13 +166,13 @@ class icms_image_category_Handler extends icms_core_ObjectHandler {
 		}
 		$sql .= ' ORDER BY imgcat_weight, imgcat_id ASC';
 		$result = $this->db->query($sql, $limit, $start);
-		if ( !$result ) {
+		if (!$result) {
 			return $ret;
 		}
-		while ( $myrow = $this->db->fetchArray($result) ) {
+		while ($myrow = $this->db->fetchArray($result)) {
 			$imgcat = new icms_image_category_Object();
 			$imgcat->assignVars($myrow);
-			if ( !$id_as_key ) {
+			if (!$id_as_key) {
 				$ret[] = &$imgcat;
 			} else {
 				$ret[$myrow['imgcat_id']] = &$imgcat;
@@ -191,11 +191,11 @@ class icms_image_category_Handler extends icms_core_ObjectHandler {
 	public function getCount($criteria = null) {
 		$sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('imagecategory') . ' i LEFT JOIN '
 			. $this->db->prefix('group_permission') . " l ON l.gperm_itemid=i.imgcat_id WHERE (l.gperm_name = 'imgcat_read' OR l.gperm_name = 'imgcat_write')";
-		if ( isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element') ) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
 			$where = $criteria->render();
 			$sql .= ($where != '') ? ' AND ' . $where : '';
 		}
-		if ( !$result = &$this->db->query($sql) ) {
+		if (!$result = &$this->db->query($sql)) {
 			return 0;
 		}
 		list($count) = $this->db->fetchRow($result);
@@ -209,21 +209,21 @@ class icms_image_category_Handler extends icms_core_ObjectHandler {
 	 **/
 	public function getList($groups = array(), $perm = 'imgcat_read', $display = null, $storetype = null) {
 		$criteria = new icms_criteria_Compo();
-		if ( is_array($groups) && !empty($groups) ) {
+		if (is_array($groups) && !empty($groups)) {
 			$criteriaTray = new icms_criteria_Compo();
-			foreach ( $groups as $gid ) {
+			foreach ( $groups as $gid) {
 				$criteriaTray->add(new icms_criteria_Item('gperm_groupid', $gid), 'OR');
 			}
 			$criteria->add($criteriaTray);
-			if ( $perm == 'imgcat_read' || $perm == 'imgcat_write' ) {
+			if ($perm == 'imgcat_read' || $perm == 'imgcat_write') {
 				$criteria->add(new icms_criteria_Item('gperm_name', $perm));
 				$criteria->add(new icms_criteria_Item('gperm_modid', 1));
 			}
 		}
-		if ( isset($display) ) {
+		if (isset($display)) {
 			$criteria->add(new icms_criteria_Item('imgcat_display', (int) ($display)));
 		}
-		if ( isset($storetype) ) {
+		if (isset($storetype)) {
 			$criteria->add(new icms_criteria_Item('imgcat_storetype', $storetype));
 		}
 		$categories = &$this->getObjects($criteria, true);
@@ -247,31 +247,31 @@ class icms_image_category_Handler extends icms_core_ObjectHandler {
 		*/
 	public function getCategList($groups = array(), $perm = 'imgcat_read', $display = null, $storetype = null, $imgcat_id=null) {
 		$criteria = new icms_criteria_Compo();
-		if ( is_array($groups) && !empty($groups) ) {
+		if (is_array($groups) && !empty($groups)) {
 			$criteriaTray = new icms_criteria_Compo();
-			foreach ( $groups as $gid ) {
+			foreach ( $groups as $gid) {
 				$criteriaTray->add(new icms_criteria_Item('gperm_groupid', $gid), 'OR');
 			}
 			$criteria->add($criteriaTray);
-			if ( $perm == 'imgcat_read' || $perm == 'imgcat_write' ) {
+			if ($perm == 'imgcat_read' || $perm == 'imgcat_write') {
 				$criteria->add(new icms_criteria_Item('gperm_name', $perm));
 				$criteria->add(new icms_criteria_Item('gperm_modid', 1));
 			}
 		}
-		if ( isset($display) ) {
+		if (isset($display)) {
 			$criteria->add(new icms_criteria_Item('imgcat_display', (int) ($display)));
 		}
-		if ( isset($storetype) ) {
+		if (isset($storetype)) {
 			$criteria->add(new icms_criteria_Item('imgcat_storetype', $storetype));
 		}
-		if ( $imgcat_id === NULL ) $imgcat_id = 0;
+		if ($imgcat_id === NULL ) $imgcat_id = 0;
 		$criteria->add(new icms_criteria_Item('imgcat_pid', $imgcat_id));
 		$categories = &$this->getObjects($criteria, true);
 		$ret = array();
-		foreach ( array_keys($categories) as $i ) {
+		foreach ( array_keys($categories) as $i) {
 			$ret[$i] = $categories[$i]->getVar('imgcat_name');
 			$subcategories = $this->getCategList($groups, $perm, $display, $storetype, $categories[$i]->getVar('imgcat_id'));
-			foreach ( array_keys($subcategories) as $j ) {
+			foreach ( array_keys($subcategories) as $j) {
 				$ret[$j] = '-' . $subcategories[$j];
 			}
 		}
@@ -292,17 +292,17 @@ class icms_image_category_Handler extends icms_core_ObjectHandler {
 		/* As of PHP 5.3, is_a is no longer deprecated, this is an acceptable usage
 		 * and is compatible with more versions of PHP. http://us2.php.net/manual/en/language.operators.type.php
 		 */
-		if ( !is_a($imgcat, 'icms_image_category_Object') ) {
+		if (!is_a($imgcat, 'icms_image_category_Object')) {
 			return false;
 		}
-		if ( $imgcat->getVar('imgcat_pid') != 0 ){
+		if ($imgcat->getVar('imgcat_pid') != 0) {
 			$sup = $this->get($imgcat->getVar('imgcat_pid'));
 			$supcateg = $this->getCategFolder($sup, false, $type);
 		} else {
 			$supcateg = 0;
 		}
 		$folder = ($supcateg) ? $supcateg . '/' : '';
-		if ( $full ){
+		if ($full) {
 			$folder = ( $type == 'path' )
 					? ICMS_IMANAGER_FOLDER_PATH . '/' . $folder
 					: ICMS_IMANAGER_FOLDER_URL . '/' . $folder;

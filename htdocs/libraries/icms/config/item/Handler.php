@@ -57,7 +57,7 @@ class icms_config_Item_Handler extends icms_core_ObjectHandler {
 	 */
 	public function &create($isNew = true) {
 		$config = new icms_config_Item_Object();
-		if ( $isNew ) {
+		if ($isNew) {
 			$config->setNew();
 		}
 		return $config;
@@ -72,13 +72,13 @@ class icms_config_Item_Handler extends icms_core_ObjectHandler {
 	public function &get($id) {
 		$config = false;
 		$id = (int) $id;
-		if ( $id > 0 ) {
+		if ($id > 0) {
 			$sql = "SELECT * FROM " . $this->db->prefix('config') . " WHERE conf_id='" . $id . "'";
-			if ( !$result = $this->db->query($sql) ) {
+			if (!$result = $this->db->query($sql)) {
 				return $config;
 			}
 			$numrows = $this->db->getRowsNum($result);
-			if ( $numrows == 1 ) {
+			if ($numrows == 1) {
 				$myrow = $this->db->fetchArray($result);
 				$config = new icms_config_Item_Object();
 				$config->assignVars($myrow);
@@ -95,19 +95,19 @@ class icms_config_Item_Handler extends icms_core_ObjectHandler {
 	 */
 	public function insert(&$config) {
 		/* As of PHP5.3.0, is_a() is no longer deprecated, no need to replace this */
-		if ( !is_a($config, 'icms_config_Item_Object') ) {
+		if (!is_a($config, 'icms_config_Item_Object')) {
 			return false;
 		}
-		if ( !$config->isDirty() ) {
+		if (!$config->isDirty()) {
 			return true;
 		}
-		if ( !$config->cleanVars() ) {
+		if (!$config->cleanVars()) {
 			return false;
 		}
-		foreach ( $config->cleanVars as $k => $v ) {
+		foreach ( $config->cleanVars as $k => $v) {
 			${$k} = $v;
 		}
-		if ( $config->isNew() ) {
+		if ($config->isNew()) {
 			$conf_id = $this->db->genId('config_conf_id_seq');
 			$sql = sprintf(
 				"INSERT INTO %s (
@@ -159,10 +159,10 @@ class icms_config_Item_Handler extends icms_core_ObjectHandler {
 				(int) $conf_id
 			);
 		}
-		if ( !$result = $this->db->query($sql) ) {
+		if (!$result = $this->db->query($sql)) {
 			return false;
 		}
-		if ( empty($conf_id) ) {
+		if (empty($conf_id)) {
 			$conf_id = $this->db->getInsertId();
 		}
 		$config->assignVar('conf_id', $conf_id);
@@ -177,14 +177,14 @@ class icms_config_Item_Handler extends icms_core_ObjectHandler {
 	 */
 	public function delete(&$config) {
 		/* As of PHP5.3.0, is_as() is no longer deprecated, there is no need to replace it */
-		if ( !is_a($config, 'icms_config_Item_Object') ) {
+		if (!is_a($config, 'icms_config_Item_Object')) {
 			return false;
 		}
 		$sql = sprintf(
 			"DELETE FROM %s WHERE conf_id = '%u'",
 			$this->db->prefix('config'), (int) $config->getVar('conf_id')
 		);
-		if ( !$result = $this->db->query($sql) ) {
+		if (!$result = $this->db->query($sql)) {
 			return false;
 		}
 		return true;
@@ -201,20 +201,20 @@ class icms_config_Item_Handler extends icms_core_ObjectHandler {
 		$ret = array();
 		$limit = $start = 0;
 		$sql = 'SELECT * FROM ' . $this->db->prefix('config');
-		if ( isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element') ) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
 			$sql .= ' ' . $criteria->renderWhere();
 			$sql .= ' ORDER BY conf_order ASC';
 			$limit = $criteria->getLimit();
 			$start = $criteria->getStart();
 		}
 		$result = $this->db->query($sql, $limit, $start);
-		if ( !$result ) {
+		if (!$result) {
 			return false;
 		}
-		while ( $myrow = $this->db->fetchArray($result) ) {
+		while ($myrow = $this->db->fetchArray($result)) {
 			$config = new icms_config_item_Object();
 			$config->assignVars($myrow);
-			if ( !$id_as_key ) {
+			if (!$id_as_key) {
 				$ret[] =& $config;
 			} else {
 				$ret[$myrow['conf_id']] =& $config;
@@ -234,11 +234,11 @@ class icms_config_Item_Handler extends icms_core_ObjectHandler {
 		$ret = array();
 		$limit = $start = 0;
 		$sql = 'SELECT * FROM ' . $this->db->prefix('config');
-		if ( isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element') ) {
+		if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
 			$sql .= ' ' . $criteria->renderWhere();
 		}
 		$result =& $this->db->query($sql);
-		if ( !$result ) {
+		if (!$result) {
 			return false;
 		}
 		list($count) = $this->db->fetchRow($result);

@@ -545,19 +545,17 @@ class icms_core_Textsanitizer {
 	 */
 	function sanitizeForDisplay($text, $allowhtml = 0, $smiley = 1, $bbcode = 1) {
 		icms_deprecated('icms_core_Textsanitizer->displayTarea', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		if($allowhtml == 0)
+		if ($allowhtml == 0)
 		{
 			$text = $this->htmlSpecialChars($text);
-		}
-		else
-		{
+		} else {
 			$text = $this->makeClickable($text);
 		}
-		if($smiley == 1)
+		if ($smiley == 1)
 		{
 			$text = $this->smiley($text);
 		}
-		if($bbcode == 1)
+		if ($bbcode == 1)
 		{
 			$text = $this->xoopsCodeDecode($text);
 		}
@@ -577,19 +575,17 @@ class icms_core_Textsanitizer {
 	function sanitizeForPreview($text, $allowhtml = 0, $smiley = 1, $bbcode = 1) {
 		icms_deprecated('icms_core_Textsanitizer->displayTarea', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		$text = $this->oopsStripSlashesGPC($text);
-		if($allowhtml == 0)
+		if ($allowhtml == 0)
 		{
 			$text = $this->htmlSpecialChars($text);
-		}
-		else
-		{
+		} else {
 			$text = $this->makeClickable($text);
 		}
-		if($smiley == 1)
+		if ($smiley == 1)
 		{
 			$text = $this->smiley($text);
 		}
-		if($bbcode == 1)
+		if ($bbcode == 1)
 		{
 			$text = $this->xoopsCodeDecode($text);
 		}
@@ -765,7 +761,7 @@ class icms_core_Textsanitizer {
 	function oopsStripSlashesRT($text)
 	{
 		icms_deprecated('icms_core_Textsanitizer->stripSlashesGPC', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		if(get_magic_quotes_runtime())
+		if (get_magic_quotes_runtime())
 		{
 			$text = stripslashes($text);
 		}
@@ -833,7 +829,7 @@ class icms_core_Textsanitizer {
 	 * @return	bool
 	 */
 	public function icmsloadExtension($name) {
-		if(empty($name) || !include_once ICMS_ROOT_PATH . "/plugins/textsanitizer/{$name}/{$name}.php") {
+		if (empty($name) || !include_once ICMS_ROOT_PATH . "/plugins/textsanitizer/{$name}/{$name}.php") {
 			return false;
 		}
 	}
@@ -863,10 +859,10 @@ class icms_core_Textsanitizer {
 	 */
 	public function textsanitizer_syntaxhighlight(&$text) {
 		global $icmsConfigPlugins;
-		if ( $icmsConfigPlugins['code_sanitizer'] == 'php' ) {
+		if ($icmsConfigPlugins['code_sanitizer'] == 'php') {
 			$text = $this->undoHtmlSpecialChars($text);
 			$text = $this->textsanitizer_php_highlight($text);
-		} elseif ($icmsConfigPlugins['code_sanitizer'] == 'geshi' ) {
+		} elseif ($icmsConfigPlugins['code_sanitizer'] == 'geshi') {
 			$text = $this->undoHtmlSpecialChars($text);
 			$text = '<code>' . $this->textsanitizer_geshi_highlight($text) . '</code>';
 		} else {

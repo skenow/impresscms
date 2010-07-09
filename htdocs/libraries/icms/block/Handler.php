@@ -60,7 +60,7 @@ class icms_block_Handler extends icms_ipf_Handler {
 			}
 		}
 		if (!$full) {
-			foreach($this->block_positions as $k => $block_position) {
+			foreach ($this->block_positions as $k => $block_position) {
 				$rtn[ $k ] = $block_position['pname'];
 			}
 		} else {
@@ -228,7 +228,7 @@ class icms_block_Handler extends icms_ipf_Handler {
 				if ($page_id == 0) {
 					//All pages of this module
 					$sql .= " AND ((m.module_id='0' AND m.page_id=0) OR (m.module_id='$module_id' AND m.page_id=0))";
-				}else{
+				} else {
 					//Specific Page of this module
 					$sql .= " AND ((m.module_id='0' AND m.page_id=0) OR (m.module_id='$module_id' AND m.page_id=0) OR (m.module_id='$module_id' AND m.page_id=$page_id))";
 				}

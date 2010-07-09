@@ -29,7 +29,7 @@ class icms_database_Factory{
 	 *
 	 * Makes nothing.
 	 */
-	protected function __construct(){ /* Empty! */ }
+	protected function __construct() { /* Empty! */ }
 
 	/**
 	 * Get a reference to the only instance of database class and connects to DB
@@ -41,13 +41,13 @@ class icms_database_Factory{
 	 * @staticvar   object  The only instance of database class
 	 * @return      object  Reference to the only instance of database class
 	 */
-	static public function &getDatabaseConnection(){
+	static public function &getDatabaseConnection() {
 		static $instance;
 		if (!isset($instance)) {
 			$file = ICMS_ROOT_PATH.'/class/database/drivers/'.XOOPS_DB_TYPE.'/database.php';
 			require_once $file;
 			/* begin DB Layer Trapping patch */
-			if ( defined('XOOPS_DB_ALTERNATIVE') && class_exists( XOOPS_DB_ALTERNATIVE ) ) {
+			if (defined('XOOPS_DB_ALTERNATIVE') && class_exists( XOOPS_DB_ALTERNATIVE )) {
 				$class = XOOPS_DB_ALTERNATIVE ;
 			} else /* end DB Layer Trapping patch */if (!defined('XOOPS_DB_PROXY')) {
 				$class = 'Xoops'.ucfirst(XOOPS_DB_TYPE).'DatabaseSafe';
@@ -73,7 +73,7 @@ class icms_database_Factory{
 	 * @staticvar   object  The only instance of database class
 	 * @return      object  Reference to the only instance of database class
 	 */
-	static public function &getDatabase(){
+	static public function &getDatabase() {
 		static $database;
 		if (!isset($database)) {
 			$file = ICMS_ROOT_PATH.'/class/database/drivers/'.XOOPS_DB_TYPE.'/database.php';
@@ -94,7 +94,7 @@ class icms_database_Factory{
 	 * @return	object  @link IcmsDatabaseUpdater
 	 * @static
 	 */
-	static public function getDatabaseUpdater(){
+	static public function getDatabaseUpdater() {
 		$file = ICMS_ROOT_PATH.'/class/database/drivers/'.XOOPS_DB_TYPE.'/databaseupdater.php';
 		require_once $file;
 		$class = 'Icms'.ucfirst(XOOPS_DB_TYPE).'Databaseupdater';

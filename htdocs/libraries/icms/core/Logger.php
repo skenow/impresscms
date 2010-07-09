@@ -39,7 +39,7 @@ class icms_core_Logger {
 	/**
 	 * Constructor
 	 */
-	private function __construct(){ /* Empty! */ }
+	private function __construct() { /* Empty! */ }
 
 	/**
 	 * Get a reference to the only instance of this class
@@ -49,7 +49,7 @@ class icms_core_Logger {
 	 */
 	static public function &instance() {
 		static $instance;
-		if ( !isset( $instance ) ) {
+		if (!isset( $instance )) {
 			$instance = new icms_core_Logger();
 			// Always catch errors, for security reasons
 			set_error_handler( array( $instance, "handleError" ) );
@@ -64,7 +64,7 @@ class icms_core_Logger {
 	 * replace it, otherwise it will be inserted after all the page output.
 	 */
 	public function enableRendering() {
-		if ( !$this->renderingEnabled ) {
+		if (!$this->renderingEnabled) {
 			ob_start(array(&$this, 'render'));
 			$this->renderingEnabled = true;
 		}
@@ -74,7 +74,7 @@ class icms_core_Logger {
 	 * Disable logger output rendering.
 	 */
 	public function disableRendering() {
-		if ( $this->renderingEnabled ) {
+		if ($this->renderingEnabled) {
 			$this->renderingEnabled = false;
 		}
 	}
@@ -121,7 +121,7 @@ class icms_core_Logger {
 	 * @param   int     $errno  error number (if any)
 	 */
 	public function addQuery($sql, $error=null, $errno=null) {
-		if ( $this->activated )		$this->queries[] = array('sql' => $sql, 'error' => $error, 'errno' => $errno);
+		if ($this->activated )		$this->queries[] = array('sql' => $sql, 'error' => $error, 'errno' => $errno);
 		if (defined('ICMS_LOGGING_HOOK') and ICMS_LOGGING_HOOK != '') {
 			include ICMS_LOGGING_HOOK;
 		}
@@ -134,7 +134,7 @@ class icms_core_Logger {
 	 * @param   int     $cachetime  cachetime of the block
 	 */
 	public function addBlock($name, $cached = false, $cachetime = 0) {
-		if ( $this->activated )
+		if ($this->activated )
 		$this->blocks[] = array('name' => $name, 'cached' => $cached, 'cachetime' => $cachetime);
 	}
 
@@ -144,7 +144,7 @@ class icms_core_Logger {
 	 * @param   int     $msg  text message for the entry
 	 */
 	public function addExtra($name, $msg) {
-		if ( $this->activated ) {
+		if ($this->activated) {
 			$this->extra[] = array('name' => $name, 'msg' => $msg);
 		}
 	}
@@ -159,14 +159,14 @@ class icms_core_Logger {
 	public function handleError($errno, $errstr, $errfile, $errline) {
 		$errstr = $this->sanitizePath($errstr);
 		$errfile = $this->sanitizePath($errfile);
-		if ( $this->activated && ( $errno & error_reporting() ) ) {
+		if ($this->activated && ( $errno & error_reporting() )) {
 			// NOTE: we only store relative pathnames
 			$this->errors[] = compact('errno', 'errstr', 'errfile', 'errline');
 		}
 
-		if ( $errno == E_USER_ERROR ) {
+		if ($errno == E_USER_ERROR) {
 			$trace = true;
-			if ( substr($errstr, 0, '8') == 'notrace:' ) {
+			if (substr($errstr, 0, '8') == 'notrace:') {
 				$trace = false;
 				$errstr = substr($errstr, 8);
 			}
@@ -175,12 +175,12 @@ class icms_core_Logger {
 
 			$errortext = sprintf(_CORE_PAGENOTDISPLAYED, $errstr);
 			echo $errortext;
-			if ( $trace && function_exists('debug_backtrace') ) {
+			if ($trace && function_exists('debug_backtrace')) {
 				echo "<div style='color:#ffffff;background-color:#ffffff'>Backtrace:<br />";
 				$trace = debug_backtrace();
 				array_shift( $trace );
-				foreach ( $trace as $step ) {
-					if ( isset($step['file']) ) {
+				foreach ( $trace as $step) {
+					if (isset($step['file'])) {
 						echo $this->sanitizePath($step['file']);
 						echo ' (' . $step['line'] . ")\n<br />";
 					}
@@ -197,7 +197,7 @@ class icms_core_Logger {
 	 * @return string  $path   sanitized path
 	 * @access protected
 	 */
-	function sanitizePath( $path ) {
+	function sanitizePath( $path) {
 		$path = str_replace(
 			array('\\', ICMS_ROOT_PATH, str_replace( '\\', '/', realpath(ICMS_ROOT_PATH))),
 			array('/', '', ''),
@@ -219,14 +219,14 @@ class icms_core_Logger {
 		$groups   = (is_object($icmsUser)) ? $icmsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
 		$moduleid = (isset($icmsModule) && is_object($icmsModule)) ? $icmsModule->mid() : 1;
 		$gperm_handler =& xoops_gethandler('member_groupperm');
-		if ( !$this->renderingEnabled || !$this->activated || !$gperm_handler->checkRight('enable_debug', $moduleid, $groups) ) {
+		if (!$this->renderingEnabled || !$this->activated || !$gperm_handler->checkRight('enable_debug', $moduleid, $groups)) {
 			return $output;
 		}
 		$this->renderingEnabled = $this->activated = false;
 		$log = $this->dump( $this->usePopup ? 'popup' : '' );
 		$pattern = '<!--{xo-logger-output}-->';
 		$pos = strpos( $output, $pattern );
-		if ( $pos !== false ) {
+		if ($pos !== false) {
 			return substr($output, 0, $pos) . $log . substr($output, $pos + strlen($pattern));
 		} else {
 			return $output . $log;
@@ -252,7 +252,7 @@ class icms_core_Logger {
 	 * @return  float   current execution time of the counter
 	 */
 	public function dumpTime($name = 'ICMS') {
-		if ( !isset($this->logstart[$name]) ) {
+		if (!isset($this->logstart[$name])) {
 			return 0;
 		}
 		$stop = isset($this->logend[$name]) ? $this->logend[$name] : $this->microtime();
@@ -278,7 +278,7 @@ class icms_core_Logger {
 	 * @deprecated	Use dump('blocks'), instead
 	 * @todo	Remove in version 1.4
 	 */
-	public function dumpBlocks(){
+	public function dumpBlocks() {
 		icms_deprecated('$this->dump("blocks")', 'This method will be removed in version 1.4');
 		return $this->dump('blocks');
 	}

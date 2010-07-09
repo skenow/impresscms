@@ -63,17 +63,17 @@ class icms_ipf_export_Handler {
 		$rows = array();
 		$columnsHeaders = array();
 		$firstObject = true;
-		foreach ( $objects as $object ) {
+		foreach ( $objects as $object) {
 			$row = array();
-			foreach ( $object->vars as $key=>$var ) {
-				if ( (!$this->fields || in_array($key, $this->fields)) && !in_array($key, $this->notDisplayFields) ) {
-					if ( $this->outputMethods && (isset($this->outputMethods[$key])) && (method_exists($object, $this->outputMethods[$key])) ) {
+			foreach ( $object->vars as $key=>$var) {
+				if ((!$this->fields || in_array($key, $this->fields)) && !in_array($key, $this->notDisplayFields)) {
+					if ($this->outputMethods && (isset($this->outputMethods[$key])) && (method_exists($object, $this->outputMethods[$key]))) {
 						$method = $this->outputMethods[$key];
 						$row[$key] = $object->$method();
 					} else {
 						$row[$key] = $object->getVar($key);
 					}
-					if ( $firstObject ) {
+					if ($firstObject) {
 						// then set the columnsHeaders array as well
 						$columnsHeaders[$key] = $var['form_caption'];
 					}

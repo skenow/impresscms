@@ -35,7 +35,7 @@ class icms_config_option_Handler extends icms_core_ObjectHandler {
 	 */
 	public function &create($isNew = true) {
 		$confoption = new icms_config_option_Object();
-		if ( $isNew ) {
+		if ($isNew) {
 			$confoption->setNew();
 		}
 		return $confoption;
@@ -51,13 +51,13 @@ class icms_config_option_Handler extends icms_core_ObjectHandler {
 	public function &get($id) {
 		$confoption = false;
 		$id = (int) $id;
-		if ( $id > 0 ) {
+		if ($id > 0) {
 			$sql = "SELECT * FROM " . $this->db->prefix('configoption') . " WHERE confop_id='" . $id . "'";
-			if ( !$result = $this->db->query($sql) ) {
+			if (!$result = $this->db->query($sql)) {
 				return $confoption;
 			}
 			$numrows = $this->db->getRowsNum($result);
-			if ( $numrows == 1 ) {
+			if ($numrows == 1) {
 				$confoption = new icms_config_option_Object();
 				$confoption->assignVars($this->db->fetchArray($result));
 			}
@@ -73,19 +73,19 @@ class icms_config_option_Handler extends icms_core_ObjectHandler {
 	 */
 	public function insert(&$confoption) {
 		/* As of PHP5.3.0, is_a() is no longer deprecated, no need to replace it */
-		if ( !is_a($confoption, 'icms_config_option_Object') ) {
+		if (!is_a($confoption, 'icms_config_option_Object')) {
 			return false;
 		}
-		if ( !$confoption->isDirty() ) {
+		if (!$confoption->isDirty()) {
 			return true;
 		}
-		if ( !$confoption->cleanVars() ) {
+		if (!$confoption->cleanVars()) {
 			return false;
 		}
-		foreach ( $confoption->cleanVars as $k => $v ) {
+		foreach ( $confoption->cleanVars as $k => $v) {
 			${$k} = $v;
 		}
-		if ( $confoption->isNew() ) {
+		if ($confoption->isNew()) {
 			$confop_id = $this->db->genId('configoption_confop_id_seq');
 			$sql = sprintf(
 				"INSERT INTO %s (confop_id, confop_name, confop_value, conf_id)
@@ -106,10 +106,10 @@ class icms_config_option_Handler extends icms_core_ObjectHandler {
 			(int) ($confop_id)
 			);
 		}
-		if ( !$result = $this->db->query($sql) ) {
+		if (!$result = $this->db->query($sql)) {
 			return false;
 		}
-		if ( empty($confop_id) ) {
+		if (empty($confop_id)) {
 			$confop_id = $this->db->getInsertId();
 		}
 		$confoption->assignVar('confop_id', $confop_id);
@@ -124,7 +124,7 @@ class icms_config_option_Handler extends icms_core_ObjectHandler {
 	 */
 	public function delete(&$confoption) {
 		/* As of PHP5.3.0, is_a() is no longer deprecated, no need to replace it */
-		if ( !is_a($confoption, 'icms_config_option_Object') ) {
+		if (!is_a($confoption, 'icms_config_option_Object')) {
 			return false;
 		}
 		$sql = sprintf(
@@ -132,7 +132,7 @@ class icms_config_option_Handler extends icms_core_ObjectHandler {
 			$this->db->prefix('configoption'),
 			(int) ($confoption->getVar('confop_id'))
 			);
-		if ( !$result = $this->db->query($sql) ) {
+		if (!$result = $this->db->query($sql)) {
 			return false;
 		}
 		return true;
@@ -156,13 +156,13 @@ class icms_config_option_Handler extends icms_core_ObjectHandler {
 			$start = $criteria->getStart();
 		}
 		$result = $this->db->query($sql, $limit, $start);
-		if ( !$result ) {
+		if (!$result) {
 			return $ret;
 		}
-		while ( $myrow = $this->db->fetchArray($result) ) {
+		while ($myrow = $this->db->fetchArray($result)) {
 			$confoption = new icms_config_option_Object();
 			$confoption->assignVars($myrow);
-			if ( !$id_as_key ) {
+			if (!$id_as_key) {
 				$ret[] =& $confoption;
 			} else {
 				$ret[$myrow['confop_id']] =& $confoption;

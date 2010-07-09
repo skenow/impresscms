@@ -61,7 +61,7 @@ class icms_ipf_Metagen {
 		$this->setTitle($title);
 		$this->setDescription($description);
 
-		if ( !$keywords ) {
+		if (!$keywords) {
 			$keywords = $this->createMetaKeywords();
 		}
 
@@ -117,8 +117,8 @@ class icms_ipf_Metagen {
 		$tableau = array_filter($tableau, array($this, "emptyString")); // Supprime les chaines vides du tableau
 		$title   = implode("-", $tableau); // Transforme un tableau en chaine de caract�res s�par� par un tiret
 
-		if ( sizeof($title) > 0 ) {
-			if ( $withExt ) {
+		if (sizeof($title) > 0) {
+			if ($withExt) {
 				$title .= '.html';
 			}
 			return $title;
@@ -155,28 +155,28 @@ class icms_ipf_Metagen {
 				? $icmsModuleConfig['show_mod_name_breadcrumb']
 				: true;
 
-		if ( $moduleName && $show_mod_name_breadcrumb ) {
+		if ($moduleName && $show_mod_name_breadcrumb) {
 			$titleTag['module'] = $moduleName;
 		}
 
-		if ( isset($this->_title) && ($this->_title != '') && (strtoupper($this->_title) != strtoupper($moduleName)) ) {
+		if (isset($this->_title) && ($this->_title != '') && (strtoupper($this->_title) != strtoupper($moduleName))) {
 			$titleTag['title'] = $this->_title;
 		}
 
-		if ( isset($this->_categoryPath) && ($this->_categoryPath != '') ) {
+		if (isset($this->_categoryPath) && ($this->_categoryPath != '')) {
 			$titleTag['category'] = $this->_categoryPath;
 		}
 
 		$ret = isset($titleTag['title']) ? $titleTag['title'] : '';
 
-		if ( isset($titleTag['category']) && $titleTag['category'] != '' ) {
-			if ( $ret != '' ) {
+		if (isset($titleTag['category']) && $titleTag['category'] != '') {
+			if ($ret != '') {
 				$ret .= ' - ';
 			}
 			$ret .= $titleTag['category'];
 		}
-		if ( isset($titleTag['module']) && $titleTag['module'] != '' ) {
-			if ( $ret != '' ) {
+		if (isset($titleTag['module']) && $titleTag['module'] != '') {
+			if ($ret != '') {
 				$ret .= ' - ';
 			}
 			$ret .= $titleTag['module'];
@@ -211,9 +211,9 @@ class icms_ipf_Metagen {
 	 *
 	 */
 	public function setDescription($description) {
-		if ( !$description ) {
+		if (!$description) {
 			global $icmsModuleConfig;
-			if ( isset($icmsModuleConfig['module_meta_description']) ) {
+			if (isset($icmsModuleConfig['module_meta_description'])) {
 				$description = $icmsModuleConfig['module_meta_description'];
 			}
 		}
@@ -263,7 +263,7 @@ class icms_ipf_Metagen {
 		$newWords = array();
 		$i = 0;
 
-		while ( $i < $maxWords-1 && $i < count($words) ) {
+		while ($i < $maxWords-1 && $i < count($words)) {
 			$newWords[] = $words[$i];
 			$i++;
 		}
@@ -291,11 +291,11 @@ class icms_ipf_Metagen {
 
 		$originalKeywords = preg_split ('/[^a-zA-Z\'"-]+/', $text, -1, PREG_SPLIT_NO_EMPTY);
 
-		foreach ( $originalKeywords as $originalKeyword ) {
+		foreach ( $originalKeywords as $originalKeyword) {
 			$secondRoundKeywords = explode("'", $originalKeyword);
-			foreach ( $secondRoundKeywords as $secondRoundKeyword ) {
-				if ( strlen($secondRoundKeyword) >= $minChar ) {
-					if ( !in_array($secondRoundKeyword, $keywords) ) {
+			foreach ( $secondRoundKeywords as $secondRoundKeyword) {
+				if (strlen($secondRoundKeyword) >= $minChar) {
+					if (!in_array($secondRoundKeyword, $keywords)) {
 						$keywords[] = trim($secondRoundKeyword);
 					}
 				}
@@ -311,7 +311,7 @@ class icms_ipf_Metagen {
 	public function createMetaKeywords() {
 		global $icmsModuleConfig;
 		$keywords = $this->findMetaKeywords($this->_original_title . " " . $this->_description, $this->_minChar);
-		if ( isset($icmsModuleConfig) && isset($icmsModuleConfig['moduleMetaKeywords']) && $icmsModuleConfig['moduleMetaKeywords'] != '' ) {
+		if (isset($icmsModuleConfig) && isset($icmsModuleConfig['moduleMetaKeywords']) && $icmsModuleConfig['moduleMetaKeywords'] != '') {
 			$moduleKeywords = explode(",", $icmsModuleConfig['moduleMetaKeywords']);
 			$keywords = array_merge($keywords, $moduleKeywords);
 		}
@@ -329,7 +329,7 @@ class icms_ipf_Metagen {
 		// Only take the first 90 keywords
 		$newKeywords = array();
 		$i = 0;
-		while ( $i < 90 - 1 && isset($keywords[$i]) ) {
+		while ($i < 90 - 1 && isset($keywords[$i])) {
 			$newKeywords[] = $keywords[$i];
 			$i++;
 		}
@@ -366,7 +366,7 @@ class icms_ipf_Metagen {
 	public function createMetaTags() {
 		global $xoopsTpl, $xoTheme;
 
-		if ( is_object($xoTheme) ) {
+		if (is_object($xoTheme)) {
 			$xoTheme->addMeta('meta', 'keywords', $this->_keywords);
 			$xoTheme->addMeta('meta', 'description', $this->_description);
 			$xoTheme->addMeta('meta', 'title', $this->_title);
