@@ -265,7 +265,7 @@ $modversion['blocks'][] = array(
 
 $modversion['blocks'][] = array(
 	'file' => 'system_admin_blocks.php',
-	'name' => '	New Control Panel', //_MI_SYSTEM_BLOCK_CP_NEW,
+	'name' => _MI_SYSTEM_BLOCK_CP_NEW,
 	'description' => '',
 	'show_func' => 'b_system_admin_cp_new_show',
 	'template' => 'system_admin_block_cp_new.html');
