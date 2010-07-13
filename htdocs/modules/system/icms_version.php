@@ -18,7 +18,7 @@ if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
 /**  General Information  */
 $modversion = array(
 	'name'=> _MI_SYSTEM_NAME,
-	'version'=> 1.21,
+	'version'=> 1.22,
 	'description'=> _MI_SYSTEM_DESC,
 	'author'=> "",
 	'credits'=> "The ImpressCMS Project",

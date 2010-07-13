@@ -1,7 +1,8 @@
-ImpressCMS 1.2.1 Final release notes
+ImpressCMS 1.2.2 Final release notes
 ==================================
 
-The ImpressCMS Project is very proud to announce the final version of its 1.2.1 release! ImpressCMS 1.2.1 Final is a bugfix release and as final, can be used on production sites.
+The ImpressCMS Project is very proud to announce the final version of its 1.2.2 release! 
+ImpressCMS 1.2.2 Final is a bugfix release and as final, can be used on production sites.
 
 Please see the full [[Change Log]] for details in docs/changelog.txt.
 

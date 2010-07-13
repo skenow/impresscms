@@ -1,5 +1,10 @@
 ImpressCMS ChangeLog
 
+=== ImpressCMS 1.2.2 Final ===
+Release date: 
+Revision:
+DB Version: 39
+Build Version: 36
 
 === ImpressCMS 1.2.1 Final ===
 Release date: 
