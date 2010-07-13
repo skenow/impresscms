@@ -6,6 +6,8 @@ Revision:
 DB Version: 39
 Build Version: 36
 
+Addresses http://secunia.com/advisories/40522
+
 === ImpressCMS 1.2.1 Final ===
 Release date: 
 Revision:
