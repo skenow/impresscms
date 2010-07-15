@@ -1171,6 +1171,23 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
 	}
 
+	/* 1.2.2 release */
+
+	if (!$abortUpdate) $newDbVersion = 40;
+	if ($dbVersion < $newDbVersion) {
+		$file = ICMS_PLUGINS_PATH . '/csstidy/css_optimiser.php';
+		if (file_exists($file)) {
+			if(unlink($file)) {
+				echo sprintf(_FILE_DELETED, $file) . '<br />';
+			} else {
+				icms_error_msg(sprintf(_CSSTIDY_VULN, $file));
+			}
+		}
+
+		$icmsDatabaseUpdater->updateModuleDBVersion ( $newDbVersion, 'system' );
+		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
+	}
+
 	echo "</code>";
     if( $abortUpdate ) {
         icms_error_msg( sprintf( _DATABASEUPDATER_UPDATE_ERR, icms_conv_nr2local( $newDbVersion ) ), _DATABASEUPDATER_UPDATE_DB, TRUE);

@@ -60,6 +60,9 @@ function b_system_admin_warnings_show(){
 		array_push($block['msg'], icms_error_msg(_PROTECTOR_NOT_FOUND, '', false));
 		echo '<br />';
 	}
+	if (file_exists(ICMS_PLUGINS_PATH . '/csstidy/css_optimiser.php')) {
+		array_push($block['msg'], icms_error_msg(sprintf(_CSSTIDY_VULN, ICMS_PLUGINS_PATH . '/csstidy/css_optimiser.php'), FALSE));
+	}
 
 	// ###### Output warn messages for correct functionality  ######
 	if(!is_writable(ICMS_CACHE_PATH))

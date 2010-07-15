@@ -3,14 +3,14 @@ ImpressCMS ChangeLog
 === ImpressCMS 1.2.2 Final ===
 Release date: 
 Revision:
-DB Version: 39
+DB Version: 40
 Build Version: 36
 
 Addresses http://secunia.com/advisories/40522
 
 === ImpressCMS 1.2.1 Final ===
-Release date: 
-Revision:
+Release date: 14 Mar 2010
+Revision: 19094
 DB Version: 39
 Build Version: 35
 

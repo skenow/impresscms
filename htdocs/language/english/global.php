@@ -287,7 +287,7 @@ define('_ENTERYOUTUBEURL', 'Enter YouTube url:');
 define('_ENTERHEIGHT', 'Enter frame\'s height');
 define('_ENTERWIDTH', 'Enter frame\'s width');
 define('_ENTERMEDIAURL', 'Enter media url:');
-// !!IMPORTANT!! insert '\' before any char among reserved chars: "a", "A", "B", "c", "d", "D", "F", "g", "G", "h", "H", "i", "I", "j", "l", "L", "m", "M", "n", "O", "r", "s", "S", "t", "T", "U", "w", "W", "Y", "y", "z", "Z"	
+// !!IMPORTANT!! insert '\' before any char among reserved chars: "a", "A", "B", "c", "d", "D", "F", "g", "G", "h", "H", "i", "I", "j", "l", "L", "m", "M", "n", "O", "r", "s", "S", "t", "T", "U", "w", "W", "Y", "y", "z", "Z"
 // insert double '\' before 't', 'r', 'n'
 define("_TODAY", "\T\o\d\a\y G:i");
 define("_YESTERDAY", "\Y\e\s\\t\e\\r\d\a\y G:i");
@@ -298,4 +298,8 @@ define('_VISIBLE', 'Visible');
 define('_UP', 'Up');
 define('_DOWN', 'Down');
 define('_CONFIGURE', 'Configure');
+
+// Added in 1.2.2
+define('_CSSTIDY_VULN', 'WARNING: File %s exists on your server. <br />Please remove this file manually');
+define('_FILE_DELETED', 'File %s was deleted successfully');
 ?>
