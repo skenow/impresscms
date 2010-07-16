@@ -18,7 +18,7 @@ Please see the full [[Change Log]] for details in docs/changelog.txt.
 
 ==Downloading ImpressCMS==
 
-This release can be downloaded from the [https://sourceforge.net/projects/impresscms/files/ImpressCMS%20Official%20Releases/ImpressCMS%201.2%20Final/ ImpressCMS SourceForge project page].
+This release can be downloaded from the [https://sourceforge.net/projects/impresscms/files/ImpressCMS%20Official%20Releases/ ImpressCMS SourceForge project page].
 
 ==Checking out ImpressCMS from the SVN==
 
