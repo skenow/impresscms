@@ -1071,34 +1071,61 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	/* moving the images of the image manager from uploads to the new folder
 	 */
 	if ($dbVersion < $newDbVersion) {
-		if (is_writable ( ICMS_IMANAGER_FOLDER_PATH )) {
+		if (is_writable(ICMS_IMANAGER_FOLDER_PATH)) {
 
-			$result = $icmsDB->query ( 'SELECT * FROM `' . $icmsDB->prefix ( 'imagecategory' ) . '`' );
-			while ( $row = $icmsDB->fetchArray ( $result ) ) {
-				if (empty ( $row ['imgcat_foldername'] ) && $row[ 'imgcat_storetype' ] = 'file' ) {
-					$new_folder =  preg_replace( '/[:?".<>\/\\\|\s]/', '_', strtolower ( $row[ 'imgcat_name' ] ));
+			$result = $icmsDB->query('SELECT * FROM `' . $icmsDB->prefix('imagecategory') . '`');
+			while ($row = $icmsDB->fetchArray($result)) {
+				if (empty($row['imgcat_foldername']) && $row['imgcat_storetype'] = 'file') {
+					$new_folder =  preg_replace('/[:?".<>\/\\\|\s]/', '_', strtolower($row['imgcat_name']));
 				} else {
-					$new_folder = $row ['imgcat_foldername '];
+					$new_folder = $row['imgcat_foldername '];
 				}
-				if( icms_mkdir ( ICMS_IMANAGER_FOLDER_PATH . '/' . $new_folder ) ) {
+				/* attempt to create the new folder for the image category */
+				if (FALSE === icms_mkdir(ICMS_IMANAGER_FOLDER_PATH . '/' . $new_folder)) {
+					$newDbVersion = 36;
+					echo '<br />' . sprintf('Unable to create category folder - %s', $new_folder);
+					$abortUpdate = true;
 
-					$result1 = $icmsDB->query ( 'SELECT * FROM `' . $icmsDB->prefix ( 'image' ) . '` WHERE imgcat_id=' . $row ['imgcat_id'] );
-					while( ( $row1 = $icmsDB->fetchArray ( $result1 ) ) && ! $abortUpdate ) {
-						if( ! file_exists ( ICMS_IMANAGER_FOLDER_PATH . '/' . $new_folder . '/' . $row1 ['image_name'] ) && file_exists ( ICMS_UPLOAD_PATH . '/' . $row1 ['image_name'] )) {
-							if( icms_copyr ( ICMS_UPLOAD_PATH . '/' . $row1 ['image_name'], ICMS_IMANAGER_FOLDER_PATH . '/' . $new_folder . '/' . $row1 ['image_name'] ) ) {
-								@unlink ( ICMS_UPLOAD_PATH . '/' . $row1 ['image_name'] );
-                                $icmsDB->queryF ( 'UPDATE `' . $icmsDB->prefix ( 'imagecategory' ) . '` SET imgcat_foldername="' . $new_folder . '" WHERE imgcat_id=' . $row ['imgcat_id'] );
-							} else {
+				} else {
+					$moved = array();
+					/* Get all the images in the category */
+					$result1 = $icmsDB->query(
+						'SELECT * FROM `' . $icmsDB->prefix('image')
+						. '` WHERE imgcat_id=' . $row['imgcat_id']
+					);
+					/* copy all the images in the category to the new folder */
+					while (($row1 = $icmsDB->fetchArray($result1)) && ! $abortUpdate) {
+						if (! file_exists(ICMS_IMANAGER_FOLDER_PATH . '/' . $new_folder . '/' . $row1 ['image_name'])
+							&& file_exists(ICMS_UPLOAD_PATH . '/' . $row1['image_name'])
+						) {
+							if (icms_copyr(
+								ICMS_UPLOAD_PATH . '/' . $row1['image_name'],
+								ICMS_IMANAGER_FOLDER_PATH . '/' . $new_folder . '/' . $row1['image_name'])
+							) {
+								$moved[] = $row1['image_name'];
+ 							} else {
 								$newDbVersion = 36;
-								echo '<br />'.sprintf('Unable to copy image - %s', $row1['image_name']);
+								echo '<br />' . sprintf('Unable to copy image - %s', $row1['image_name']);
 								$abortUpdate = true;
 							}
 						}
 					}
-				} else {
-					$newDbVersion = 36;
-					echo '<br />'.sprintf('Unable to create category folder - %s', $new_folder);
-					$abortUpdate = true;
+					/* if all the images were successfully copied for this category - update the category folder and
+					 * Do NOT delete the old images - it affects existing content
+					 */
+					if (FALSE === $abortUpdate) {
+						$icmsDB->queryF(
+							'UPDATE `' . $icmsDB->prefix('imagecategory')
+							. '` SET imgcat_foldername="' . $new_folder
+							. '" WHERE imgcat_id=' . $row['imgcat_id']
+						);
+						/* This would delete the images from the uploads folder after they are moved
+						 * do not do this - it will affect any existing content
+						foreach ($moved as $image) {
+							@unlink(ICMS_UPLOAD_PATH . '/' . $image);
+						}
+						*/
+					}
 				}
 			}
 			/**
