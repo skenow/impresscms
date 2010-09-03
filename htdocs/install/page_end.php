@@ -16,7 +16,7 @@
 */
 /**
  *
- */ 
+ */
 require_once 'common.inc.php';
 if ( !defined( 'XOOPS_INSTALL' ) )	exit();
 
@@ -28,10 +28,18 @@ if ($success){
 	}
 }
 
-	$wizard->setPage( 'end' );
-	$pageHasForm = false;
-	$content = "";
-	include "./language/$wizard->language/finish.php";
-	
-	include 'install_tpl.php';
+$wizard->setPage( 'end' );
+$pageHasForm = false;
+$content = "";
+include "./language/$wizard->language/finish.php";
+
+// destroy all the installation session
+unset($_SESSION);
+if(isset($_COOKIE[session_name()])) {
+	setcookie(session_name(), '', time() - 60);
+}
+session_unset();
+session_destroy();
+
+include 'install_tpl.php';
 ?>
