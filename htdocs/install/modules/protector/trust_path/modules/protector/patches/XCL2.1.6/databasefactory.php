@@ -59,7 +59,7 @@ class XoopsDatabaseFactory
 			} else {
 				$class = 'Xoops'.ucfirst(XOOPS_DB_TYPE).'DatabaseProxy';
 			}
-			$database =& new $class();
+			$database = new $class();
 		}
 		return $database;
 	}

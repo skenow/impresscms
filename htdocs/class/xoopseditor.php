@@ -171,7 +171,7 @@ class XoopsEditorHandler
       return null;
     }
     require_once $config['file'];
-    $editor =& new $config['class']($options);
+    $editor = new $config['class']($options);
     return $editor;
   }
 }

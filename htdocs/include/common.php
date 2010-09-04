@@ -72,7 +72,7 @@ $icmsPreloadHandler->triggerEvent('startCoreBoot');
 include_once(ICMS_ROOT_PATH . '/kernel/icmskernel.php');
 
 global $impresscms, $xoops;
-$impresscms =& new IcmsKernel();
+$impresscms = new IcmsKernel();
 $xoops =& $impresscms;
 // ################# Creation of the ImpressCMS Kernel object ##############
 

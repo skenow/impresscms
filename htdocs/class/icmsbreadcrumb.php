@@ -29,7 +29,7 @@ class IcmsBreadcrumb {
 	{
 		include_once XOOPS_ROOT_PATH . '/class/template.php';
 
-		$this->_tpl =& new XoopsTpl();
+		$this->_tpl = new XoopsTpl();
 		$this->_tpl->assign('icms_breadcrumb_items', $this->items);
 
 		if ($fetchOnly) {

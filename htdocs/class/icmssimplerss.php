@@ -40,7 +40,7 @@ class IcmsSimpleRss extends SimplePie {
 	function IcmsSimpleRss($feed_url = null, $cache_duration = null)
 	{
 		// Other objects, instances created here so we can set options on them
-		$this->sanitize =& new SimplePie_Sanitize;
+		$this->sanitize = new SimplePie_Sanitize;
 
 		$this->set_cache_location(ICMS_CACHE_PATH);
 

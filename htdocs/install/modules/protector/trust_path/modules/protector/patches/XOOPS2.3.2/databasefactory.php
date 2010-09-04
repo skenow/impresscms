@@ -30,7 +30,7 @@ class XoopsDatabaseFactory
 			} else {
 				$class = 'Xoops'.ucfirst(XOOPS_DB_TYPE).'DatabaseProxy';
 			}
-			$instance =& new $class();
+			$instance = new $class();
 			$instance->setLogger(XoopsLogger::instance());
 			$instance->setPrefix(XOOPS_DB_PREFIX);
 			if (!$instance->connect()) {
@@ -59,7 +59,7 @@ class XoopsDatabaseFactory
 			} else {
 				$class = 'Xoops'.ucfirst(XOOPS_DB_TYPE).'DatabaseProxy';
 			}
-			$database =& new $class();
+			$database = new $class();
 		}
 		return $database;
 	}

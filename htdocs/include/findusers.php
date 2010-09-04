@@ -84,7 +84,7 @@ class XoopsRankHandler extends XoopsObjectHandler
 	* @return  object	reference to the (@link XoopsRank) object
 	**/
 	function &create($isNew = true) {
-		$obj =& new XoopsRank();
+		$obj = new XoopsRank();
 		if ($isNew === true) {
 			$obj->setNew();
 		}
@@ -202,7 +202,7 @@ class XoUserHandler extends XoopsObjectHandler
 	* @return  object	reference to the (@link XoopsUser) object
 	**/
 	function &create($isNew = true) {
-		$obj =& new XoUser();
+		$obj = new XoUser();
 		if ($isNew === true) {
 		$obj->setNew();
 		}

@@ -55,7 +55,7 @@ class XoopsDatabaseFactory{
 			} else {
 				$class = 'Xoops'.ucfirst(XOOPS_DB_TYPE).'DatabaseProxy';
 			}
-			$instance =& new $class();
+			$instance = new $class();
 			$instance->setLogger(XoopsLogger::instance());
 			$instance->setPrefix(XOOPS_DB_PREFIX);
 			if (!$instance->connect()) {
@@ -84,7 +84,7 @@ class XoopsDatabaseFactory{
 			} else {
 				$class = 'Xoops'.ucfirst(XOOPS_DB_TYPE).'DatabaseProxy';
 			}
-			$database =& new $class();
+			$database = new $class();
 		}
 		return $database;
 	}
@@ -99,7 +99,7 @@ class XoopsDatabaseFactory{
 		$file = XOOPS_ROOT_PATH.'/class/database/drivers/'.XOOPS_DB_TYPE.'/databaseupdater.php';
 		require_once $file;
 		$class = 'Icms'.ucfirst(XOOPS_DB_TYPE).'Databaseupdater';
-		$databaseUpdater =& new $class();
+		$databaseUpdater = new $class();
 		return $databaseUpdater;
 	}
 }

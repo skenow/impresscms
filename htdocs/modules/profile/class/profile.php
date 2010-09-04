@@ -72,7 +72,7 @@ class ProfileProfileHandler extends IcmsPersistableObjectHandler {
 	 */
 	function &create($isNew = true) {
 
-		$obj =& new $this->className($this->loadFields());
+		$obj = new $this->className($this->loadFields());
 
 		$obj->handler =& $this;
 		if ($isNew === true) {

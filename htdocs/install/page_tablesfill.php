@@ -26,7 +26,7 @@ if ( !defined( 'XOOPS_INSTALL' ) )	exit();
 	
     include_once "../mainfile.php";
     include_once './class/dbmanager.php';
-    $dbm =& new db_manager();
+    $dbm = new db_manager();
 
     if ( !$dbm->isConnectable() ) {
     	$wizard->redirectToPage( 'dbsettings' );

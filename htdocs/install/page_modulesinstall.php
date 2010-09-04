@@ -33,7 +33,7 @@ include_once "../include/cp_functions.php";
 include_once './class/dbmanager.php';
 require_once "../class/xoopslists.php";
 include "modulesadmin.php";
-$dbm =& new db_manager();
+$dbm = new db_manager();
 
 if ( !$dbm->isConnectable() ) {
 	$wizard->redirectToPage( '-3' );

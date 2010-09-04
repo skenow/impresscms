@@ -35,7 +35,7 @@ class IcmsCaptchaImage {
 	{
 		static $instance;
 		if(!isset($instance)) {
-			$instance =& new IcmsCaptchaImage();
+			$instance = new IcmsCaptchaImage();
 		}
 		return $instance;
 	}
