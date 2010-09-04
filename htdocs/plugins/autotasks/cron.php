@@ -54,7 +54,7 @@ class IcmsAutoTasksCron
 			   $crons = @implode("\r\n", $crons);
 			   $canRun = (strpos($crons, 'not allowed to use this program (crontab)') === false);
 		   }
-	   }   	
+	   }
 	   return $canRun;
    }
 
@@ -79,7 +79,7 @@ class IcmsAutoTasksCron
 	   $id = $this->getProcessId();
 	   if ($id < 0) {
 			$this->_line_id = count($this->_lines);
-	   } else {			
+	   } else {
 			//if ($this->getInterval() == $interval) return false;
 	   }
 	   $arx = &$this->getIntervalArray($interval);
@@ -180,7 +180,7 @@ class IcmsAutoTasksCron
 	 *
 	 * @return int
 	 */
-	function getProcessId() {	
+	function getProcessId() {
 		$this->_lines = array();
 		$this->readCronTab();
 		$cmd = $this->getCommandLine();
@@ -233,7 +233,7 @@ class IcmsAutoTasksCron
 				continue;
             }
             // Checking if this is an assignment
-            if ( ereg( "(.*)=(.*)", $line, $assign ) ) {
+            if (preg_match( "/(.*)=(.*)/", $line, $assign )) {
 				$this->_lines[] = array(array( "name" => $assign[1], "value" => $assign[2] ),2);
                 continue;
             }

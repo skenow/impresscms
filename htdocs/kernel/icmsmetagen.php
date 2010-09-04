@@ -18,7 +18,7 @@ die("ImpressCMS root path not defined");
 
 /**
  * Generates META tags
- * 
+ *
  * @package IcmsPersistableObject
  */
 class IcmsMetagen
@@ -39,10 +39,10 @@ class IcmsMetagen
 	var $_description;
 	/** @var int */
 	var $_minChar = 4;
-	
+
 	/**
 	 * Constructor for IcmsMetagen
-	 * 
+	 *
 	 * @param string $title Page title
 	 * @param string $keywords List of meta keywords
 	 * @param string $description Meta description
@@ -75,7 +75,7 @@ class IcmsMetagen
  	*
  	* @author psylove
  	*
- 	* @var string String to test 
+ 	* @var string String to test
 	* @return boolean
  	*/
 	function emptyString($var)
@@ -125,7 +125,7 @@ class IcmsMetagen
 	}
 
 	/**
-	 * 
+	 *
 	 * @param $document
 	 * @return string Converted text
 	 */
@@ -183,9 +183,9 @@ class IcmsMetagen
 
 	/**
 	 * Sets the keyword property
-	 * 
+	 *
 	 * @param string $keywords
-	 * 
+	 *
 	 */
 	function setKeywords($keywords)
 	{
@@ -194,7 +194,7 @@ class IcmsMetagen
 
 	/**
 	 * Sets the categoryPath property
-	 * 
+	 *
 	 * @param string $categoryPath
 	 *
 	 */
@@ -207,7 +207,7 @@ class IcmsMetagen
 	/**
 	 * Sets the description property
 	 * @param string $description
-	 * 
+	 *
 	 */
 	function setDescription($description)
 	{
@@ -221,9 +221,9 @@ class IcmsMetagen
 		$description = $this->html2text($description);
 		$description = $this->purifyText($description);
 
-		$description = ereg_replace("([^\r\n])\r\n([^\r\n])", "\\1 \\2", $description);
-		$description = ereg_replace("[\r\n]*\r\n[\r\n]*", "\r\n\r\n", $description);
-		$description = ereg_replace("[ ]* [ ]*", ' ', $description);
+		$description = preg_replace("/([^\r\n])\r\n([^\r\n])/", "\\1 \\2", $description);
+		$description = preg_replace("/[\r\n]*\r\n[\r\n]*/", "\r\n\r\n", $description);
+		$description = preg_replace("/[ ]* [ ]*/", ' ', $description);
 		$description = StripSlashes($description);
 
 		$this->_description = $description;
@@ -233,7 +233,7 @@ class IcmsMetagen
 
 	/**
 	 * An empty function
-	 * 
+	 *
 	 */
 	function createTitleTag()
 	{
@@ -288,9 +288,9 @@ class IcmsMetagen
 		$text = $this->purifyText($text);
 		$text = $this->html2text($text);
 
-		$text = ereg_replace("([^\r\n])\r\n([^\r\n])", "\\1 \\2", $text);
-		$text = ereg_replace("[\r\n]*\r\n[\r\n]*", "\r\n\r\n", $text);
-		$text = ereg_replace("[ ]* [ ]*", ' ', $text);
+		$text = preg_replace("/([^\r\n])\r\n([^\r\n])/", "\\1 \\2", $text);
+		$text = preg_replace("/[\r\n]*\r\n[\r\n]*/", "\r\n\r\n", $text);
+		$text = preg_replace("/[ ]* [ ]*/", ' ', $text);
 		$text = StripSlashes($text);
 		$text =
 
@@ -346,7 +346,7 @@ class IcmsMetagen
 
 	/**
 	 * An empty function
-	 * 
+	 *
 	 */
 	function autoBuildMeta_keywords()
 	{
@@ -355,7 +355,7 @@ class IcmsMetagen
 
 	/**
 	 * Generates keywords, description and title, setting the associated properties
-	 * 
+	 *
 	 */
 	function buildAutoMetaTags()
 	{
