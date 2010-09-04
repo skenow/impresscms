@@ -191,18 +191,18 @@ class ProfileVcard {
 					}
 					return $contact->save();
 				}
-				$keyvalue = split(':', $line);
+				$keyvalue = explode(':', $line);
 				if (sizeof($keyvalue) == 2) {
 					$value = $keyvalue[1];
 					for ($newindex = $index +1; $newindex < sizeof($lines), substr_count($lines[$newindex], ':') == 0; $newindex++) {
 						$value .= $lines[$newindex];
 						$index = $newindex;
 					}
-					$values = split(';', $value);
+					$values = explode(';', $value);
 					$key = strtoupper($keyvalue[0]);
 					$key = strtr($key, '=', '');
 					$key = strtr($key, ',', ';');
-					$keys = split(';', $key);
+					$keys = explode(';', $key);
 					if ($keys[0] == 'TEL') {
 						if (substr_count($key, 'WORK') > 0) {
 							if (substr_count($key, 'FAX') > 0) {
