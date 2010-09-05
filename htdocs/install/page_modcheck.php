@@ -73,10 +73,7 @@ function xoDiagIfWritable( $path ) {
     <div class="clear">&nbsp;</div>
      <h4><?php echo _PHP_VERSION; ?>:&nbsp;
         <?php
-            if ( version_compare( phpversion(), '5.3', '>=') ) {
-            	echo xoDiag( -1, phpversion() );
-				$php_version_error = true;
-			} elseif ( version_compare( phpversion(), '5.2', '>=') ) {
+            if ( version_compare( phpversion(), '5.2', '>=') ) {
             	echo xoDiag( 1, phpversion() );
             } elseif ( version_compare( phpversion(), '5.1', '>=') ) {
             	echo xoDiag( 0, phpversion() );
@@ -113,7 +110,7 @@ function xoDiagIfWritable( $path ) {
   <h3><?php echo RECOMMENDED_EXTENSIONS; ?></h3>
     <p><?php echo RECOMMENDED_EXTENSIONS_MSG; ?></p>
     <div class="clear">&nbsp;</div>
-   
+
     <h4><?php printf( PHP_EXTENSION, CHAR_ENCODING ); ?>:&nbsp;
         <?php
 		$ext = array();
