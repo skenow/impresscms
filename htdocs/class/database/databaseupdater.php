@@ -134,7 +134,7 @@ class IcmsDatabasetable {
 		$table = $this->_name;
 		$bRetVal = false;
 		$realname = $this->_db->prefix($table);
-		$ret = $this->_db->queryF("SHOW TABLES FROM " . $this->name() . " = " . $realname);
+		$ret = $this->_db->queryF("SHOW TABLES FROM " . $this->name() . " LIKE '" . $realname . "'");
 		list($m_table) = $this->_db->fetchRow($ret);
 		if ($m_table == $realname) $bRetVal = true;
 
