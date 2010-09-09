@@ -78,7 +78,7 @@ if (is_object($icmsUser) && $uid == $icmsUser->getVar('uid')) {
 // adding profile stylesheet
 $dirname = basename( dirname( __FILE__ ) );
 $xoTheme->addStylesheet(ICMS_URL.'/modules/'.$dirname.'/assets/css/profile'.(@_ADM_USE_RTL == 1 ? '_rtl':'').'.css');
-if(ereg('msie', strtolower($_SERVER['HTTP_USER_AGENT']))) {$xoTheme->addStylesheet(ICMS_URL.'/modules/'.$dirname.'/assets/css/tabs-ie.css');}
+if(preg_match('/msie/', strtolower($_SERVER['HTTP_USER_AGENT']))) {$xoTheme->addStylesheet(ICMS_URL.'/modules/'.$dirname.'/assets/css/tabs-ie.css');}
 
 if ( is_object($icmsUser) && $icmsUser->isAdmin() ) {
     $xoopsTpl->assign('lang_editprofile', _PROFILE_MA_EDITPROFILE);

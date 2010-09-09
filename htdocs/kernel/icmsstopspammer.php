@@ -47,7 +47,7 @@ class IcmsStopSpammer {
 			$output .=curl_exec($ch);
 			curl_close($ch);
 
-			if (eregi("<appears>(.*)</appears>", $output, $out)) {
+			if (preg_match("#<appears>(.*)</appears>#i", $output, $out)) {
 				$spam = $out[1];
 			}
 		} else {
@@ -58,7 +58,7 @@ class IcmsStopSpammer {
 			}
 			while (!feof($file)) {
 				$line = fgets($file, 1024);
-				if (eregi("<appears>(.*)</appears>", $line, $out)) {
+				if (preg_match("#<appears>(.*)</appears>#i", $line, $out)) {
 					$spam = $out[1];
 					break;
 				}

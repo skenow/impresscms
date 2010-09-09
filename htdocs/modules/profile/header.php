@@ -93,7 +93,7 @@ icms_loadLanguageFile('core', 'user');
 $myts =& MyTextSanitizer::getInstance();
 $module_name = $icmsModule->getVar('name');
 $xoTheme->addStylesheet(ICMS_URL.'/modules/'.$dirname.'/assets/css/profile'.(@_ADM_USE_RTL == 1 ? '_rtl':'').'.css');
-if(ereg('msie', strtolower($_SERVER['HTTP_USER_AGENT']))) {$xoTheme->addStylesheet(ICMS_URL.'/modules/'.$dirname.'/assets/css/tabs-ie.css');}
+if(preg_match('/msie/', strtolower($_SERVER['HTTP_USER_AGENT']))) {$xoTheme->addStylesheet(ICMS_URL.'/modules/'.$dirname.'/assets/css/tabs-ie.css');}
 
 icms_makeSmarty(array(
 	'module_name'          => $module_name,
