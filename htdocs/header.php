@@ -1,12 +1,12 @@
 <?php
 /**
-* @copyright	The XOOPS Project <http://www.xoops.org/> 
+* @copyright	The XOOPS Project <http://www.xoops.org/>
 * @copyright	XOOPS_copyrights.txt
 * @copyright	The ImpressCMS Project <http://www.impresscms.org/>
 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
 * @package		core
 * @since		XOOPS
-* @author		The XOOPS Project Community <http://www.xoops.org> 
+* @author		The XOOPS Project Community <http://www.xoops.org>
 * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
 * @version		$Id$
 */
@@ -29,7 +29,7 @@ else
 {
 	global $xoopsOption, $icmsConfig, $icmsModule;
 	$xoopsOption['theme_use_smarty'] = 1;
-	
+
 	/**  include Smarty template engine and initialize it*/
 	require_once ICMS_ROOT_PATH.'/class/template.php';
 	require_once ICMS_ROOT_PATH.'/class/theme.php';
@@ -70,7 +70,7 @@ else
 
 	$xoTheme->addScript(ICMS_URL.'/include/xoops.js', array('type' => 'text/javascript'));
 	$xoTheme->addScript(ICMS_URL.'/include/linkexternal.js', array('type' => 'text/javascript'));
-	/** 
+	/**
 	 * Now system first checks for RTL, if it is enabled it'll just load it, otherwise it will load the normal (LTR) styles
 	 */
 	$xoTheme->addStylesheet(ICMS_URL.'/icms'.(@_ADM_USE_RTL == true?'_rtl':'').'.css', array('media' => 'screen'));
@@ -80,8 +80,8 @@ else
 	 *
 	 * $xoopsTpl->assign('xoops_js', '//--></script><script type="text/javascript" src="'.ICMS_URL.'/include/xoops.js"></script><script type="text/javascript"><!--');
 	 * $xoopsTpl->assign('linkexternal_js', '//--></script><script type="text/javascript" src="'.ICMS_URL.'/include/linkexternal.js"></script><script type="text/javascript"><!--');
-	 * 
-	 * Weird, but we need to bring plugins java information in header because doing it form elsewhere will drop system required Java Script files!! 
+	 *
+	 * Weird, but we need to bring plugins java information in header because doing it form elsewhere will drop system required Java Script files!!
 	 */
 
 /*	$jscript = '';
@@ -139,7 +139,7 @@ else
 		if (!window.console || !console.firebug) {
 			var names = ["log", "debug", "info", "warn", "error", "assert", "dir", "dirxml", "group", "groupEnd", "time", "timeEnd", "count", "trace", "profile", "profileEnd"];
 			window.console = {};
-			
+
 			for (var i = 0; i < names.length; ++i) window.console[names[i]] = function() {};
 		}
 
@@ -158,10 +158,10 @@ else
 
 	$xoTheme->addStylesheet(ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox.css');
 	$xoTheme->addStylesheet(ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox-custom.css');
-	if(ereg('msie', strtolower($_SERVER['HTTP_USER_AGENT']))) {$xoTheme->addStylesheet(ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox-custom-ie.css');}
+	if(eregpreg_match('/msie/', strtolower($_SERVER['HTTP_USER_AGENT']))) {$xoTheme->addStylesheet(ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox-custom-ie.css');}
 	$xoTheme->addScript(ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox.js');
 	$xoTheme->addScript(ICMS_LIBRARIES_URL.'/jquery/colorbox/lightbox.js');
-	
+
 	if(@is_object($xoTheme->plugins['xos_logos_PageBuilder'])) {
 		$aggreg =& $xoTheme->plugins['xos_logos_PageBuilder'];
 		$xoopsTpl->assign_by_ref('xoBlocks', $aggreg->blocks);
@@ -172,13 +172,13 @@ else
 		$xoopsTpl->assign_by_ref('xoops_ccblocks', $aggreg->blocks['page_topcenter']);
 		$xoopsTpl->assign_by_ref('xoops_clblocks', $aggreg->blocks['page_topleft']);
 		$xoopsTpl->assign_by_ref('xoops_crblocks', $aggreg->blocks['page_topright']);
-		
+
 		$xoopsTpl->assign('xoops_showlblock', !empty($aggreg->blocks['canvas_left']));
 		$xoopsTpl->assign('xoops_showrblock', !empty($aggreg->blocks['canvas_right']));
 		$xoopsTpl->assign('xoops_showcblock', !empty($aggreg->blocks['page_topcenter']) || !empty($aggreg->blocks['page_topleft']) || !empty($aggreg->blocks['page_topright']));
 	}
 
-	if( $icmsModule ) 
+	if( $icmsModule )
 		$xoTheme->contentCacheLifetime = @$icmsConfig['module_cache'][$icmsModule->getVar('mid', 'n')];
 
 	if( $xoTheme->checkCache() )
