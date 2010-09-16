@@ -7,6 +7,7 @@ DB Version: 40
 Build Version: 37
 
 Maintenance release, addresses #462, #480 and #482
+Security Fix: Blind SQLi & Path disclosure in search.php & settingmanager (if install folder left on server)
 
 === ImpressCMS 1.2.2 Final ===
 Release date: 16 Jul 2010
