@@ -25,18 +25,18 @@ $search_limiter = (($icmsConfigSearch['enable_deep_search'] == true) ? $icmsConf
 $xoopsOption['template_main'] = 'system_search.html';
 include ICMS_ROOT_PATH.'/header.php';
 
-$action = (isset($_GET['action'])) ? trim(filter_input(INPUT_GET, $_GET['action'], FILTER_SANITIZE_STRING))
-	: ((isset($_POST['action'])) ? trim(filter_input(INPUT_POST, $_POST['action'], FILTER_SANITIZE_STRING)) : 'search');
-$query = (isset($_GET['query'])) ? trim(filter_input(INPUT_GET, $_GET['query'], FILTER_SANITIZE_STRING))
-	: ((isset($_POST['query'])) ? trim(filter_input(INPUT_POST, $_POST['query'], FILTER_SANITIZE_STRING)) : '');
-$andor = (isset($_GET['andor'])) ? trim(filter_input(INPUT_GET, $_GET['andor'], FILTER_SANITIZE_STRING))
-	: ((isset($_POST['andor'])) ? trim(filter_input(INPUT_POST, $_POST['andor'], FILTER_SANITIZE_STRING)) : 'AND');
-$mid = (isset($_GET['mid'])) ? trim(filter_input(INPUT_GET, $_GET['mid'], FILTER_VALIDATE_INT))
-	: ((isset($_POST['mid'])) ? trim(filter_input(INPUT_POST, $_POST['mid'], FILTER_VALIDATE_INT)) : 0);
-$uid = (isset($_GET['uid'])) ? trim(filter_input(INPUT_GET, $_GET['uid'], FILTER_VALIDATE_INT))
-	: ((isset($_POST['uid'])) ? trim(filter_input(INPUT_POST, $_POST['uid'], FILTER_VALIDATE_INT)) : 0);
-$start = (isset($_GET['start'])) ? trim(filter_input(INPUT_GET, $_GET['start'], FILTER_VALIDATE_INT))
-	: ((isset($_POST['start'])) ? trim(filter_input(INPUT_POST, $_POST['start'], FILTER_VALIDATE_INT)) : 0);
+$action = (isset($_GET['action'])) ? trim(filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING))
+	: ((isset($_POST['action'])) ? trim(filter_input(INPUT_POST, 'action', FILTER_SANITIZE_STRING)) : 'search');
+$query = (isset($_GET['query'])) ? trim(filter_input(INPUT_GET, 'query', FILTER_SANITIZE_STRING))
+	: ((isset($_POST['query'])) ? trim(filter_input(INPUT_POST, 'query', FILTER_SANITIZE_STRING)) : '');
+$andor = (isset($_GET['andor'])) ? trim(filter_input(INPUT_GET, 'andor', FILTER_SANITIZE_STRING))
+	: ((isset($_POST['andor'])) ? trim(filter_input(INPUT_POST, 'andor', FILTER_SANITIZE_STRING)) : 'AND');
+$mid = (isset($_GET['mid'])) ? trim(filter_input(INPUT_GET, 'mid', FILTER_VALIDATE_INT))
+	: ((isset($_POST['mid'])) ? trim(filter_input(INPUT_POST, 'mid', FILTER_VALIDATE_INT)) : 0);
+$uid = (isset($_GET['uid'])) ? trim(filter_input(INPUT_GET, 'uid', FILTER_VALIDATE_INT))
+	: ((isset($_POST['uid'])) ? trim(filter_input(INPUT_POST, 'uid', FILTER_VALIDATE_INT)) : 0);
+$start = (isset($_GET['start'])) ? trim(filter_input(INPUT_GET, 'start', FILTER_VALIDATE_INT))
+	: ((isset($_POST['start'])) ? trim(filter_input(INPUT_POST, 'start', FILTER_VALIDATE_INT)) : 0);
 
 $xoopsTpl->assign("start", $start + 1);
 
