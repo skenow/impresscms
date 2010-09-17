@@ -14,6 +14,8 @@
 */
 include_once './class/textsanitizer.php';
 
+error_reporting(0); // prevents path disclosure from null arrays when accessing class directly, comment to allow.
+
 /**
 * setting manager for XOOPS installer
 *

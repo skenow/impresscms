@@ -18,6 +18,8 @@ include_once XOOPS_ROOT_PATH.'/class/database/databasefactory.php';
 include_once XOOPS_ROOT_PATH.'/class/database/drivers/'.XOOPS_DB_TYPE.'/database.php';
 include_once XOOPS_ROOT_PATH.'/class/database/drivers/'.XOOPS_DB_TYPE.'/sqlutility.php';
 
+error_reporting(0); // prevents path disclosure from null arrays when accessing class directly, comment to allow.
+
 /**
 * database manager for XOOPS installer
 *

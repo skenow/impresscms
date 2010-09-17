@@ -20,6 +20,9 @@
 * @version $Id$
 * @access public
 **/
+
+error_reporting(0); // prevents path disclosure from null arrays when accessing class directly, comment to allow.
+
 class cache_manager {
 
     var $s_files = array();
