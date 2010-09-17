@@ -49,6 +49,7 @@ if (empty($modules)) {
 	$mods_checkbox->addOptionArray($module_handler->getList($criteria));
 }
 else {
+	unset($module);
 	foreach ($modules as $mid => $module) {
 		$module_array[$mid] = $module->getVar('name');
 	}
