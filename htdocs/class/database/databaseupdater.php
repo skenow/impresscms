@@ -800,7 +800,7 @@ class IcmsDatabaseupdater {
 	 * @return string default value
 	 */
 	function getFieldDefaultFromVar($var, $key = false) {
-		if ($var['data_type'] == XOBJ_DTYPE_TXTAREA) {
+		if ($var['data_type'] == XOBJ_DTYPE_TXTAREA || $var['data_type'] == XOBJ_DTYPE_SOURCE) {
 			return 'nodefault';
 		} elseif ($var['value']) {
 			return $var['value'];
@@ -821,12 +821,13 @@ class IcmsDatabaseupdater {
 		}
 	}
 
-
-
-   /*
-   * Upgrades the object
-   * @param string $dirname
-   */
+   /**
+    * Upgrades the object
+    *
+    * @param string $dirname
+    * @param string $item
+	* @return bool
+    */
 	function upgradeObjectItem($dirname, $item) {
 		$module_handler = xoops_getModuleHandler($item, $dirname);
 		if (!$module_handler) {
@@ -835,6 +836,17 @@ class IcmsDatabaseupdater {
 
 		$table = new IcmsDatabasetable($dirname . '_' . $item);
 		$object = $module_handler->create();
+
+
+
+
+
+
+
+
+
+
+
 		$objectVars = $object->getVars();
 
 		if (!$table->exists()) {
