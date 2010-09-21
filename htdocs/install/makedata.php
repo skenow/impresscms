@@ -984,7 +984,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
     // Data for Config Category 13 (AutoTasks)
 	$c=13;
 	$i++;
-	$p++;
+	$p=0;
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'autotasks_system', '_MD_AM_AUTOTASKS_SYSTEM', 'internal', '_MD_AM_AUTOTASKS_SYSTEMDSC', 'autotasksystem', 'text', $p)");
 	$i++;
     $p++;
