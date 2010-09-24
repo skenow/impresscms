@@ -1,8 +1,14 @@
 ImpressCMS ChangeLog
 
-=== ImpressCMS 1.2.3 Beta ===
-Release date:
+=== ImpressCMS 1.2.3 RC ===
+Release date:  Sep 2010
 Revision:
+DB Version: 40
+Build Version: 38
+
+=== ImpressCMS 1.2.3 Beta ===
+Release date: 17 Sep 2010
+Revision: 20154
 DB Version: 40
 Build Version: 37
 
