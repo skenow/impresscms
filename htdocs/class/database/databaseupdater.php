@@ -131,12 +131,10 @@ class IcmsDatabasetable {
 	 * @author xhelp development team
 	 */
 	function exists() {
-		$table = $this->_name;
 		$bRetVal = false;
-		$realname = $this->_db->prefix($table);
-		$ret = $this->_db->queryF("SHOW TABLES FROM " . $this->name() . " LIKE '" . $realname . "'");
+		$ret = $this->_db->queryF("SHOW TABLES FROM " . XOOPS_DB_NAME . " LIKE '" . $this->name() . "'");
 		list($m_table) = $this->_db->fetchRow($ret);
-		if ($m_table == $realname) $bRetVal = true;
+		if ($m_table == $this->name()) $bRetVal = true;
 
 		return $bRetVal;
 	}
