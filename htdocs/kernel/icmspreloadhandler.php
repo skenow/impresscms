@@ -113,7 +113,7 @@ class IcmsPreloadHandler {
      * @return	object
      *
      */
-	function &getInstance()
+	static function &getInstance()
 	{
 		static $instance;
 		if (!isset($instance)) {
