@@ -47,13 +47,11 @@ if (!isset($_POST['submit'])) {
           include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
           $icmspass = new icms_Password();
           $salt = $icmspass->icms_createSalt();
-          $pass = $icmspass->icms_encryptPass($_POST['password'], $salt);
+          $pass = $icmspass->icms_encryptPass($_POST['password'], $salt, $icmsConfigUser['enc_type']);
           $icmsUser->setVar('pass', $pass);
           $icmsUser->setVar('enc_type', $icmsConfigUser['enc_type']);
           $icmsUser->setVar('pass_expired', 0);
           $icmsUser->setVar('salt', $salt);
-          // Now we are using salt so this is not required!!
-        //$icmsUser->setVar('pass', md5($_POST['newpass']));
 
         $member_handler =& xoops_gethandler('member');
         if ($member_handler->insertUser($icmsUser)) {

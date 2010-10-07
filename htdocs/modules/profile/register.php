@@ -98,7 +98,7 @@ switch ( $op ) {
 			$vpass = isset($_POST['vpass']) ? $myts->stripSlashesGPC($_POST['vpass']) : '';
 			$agree_disc = (isset($_POST['agree_disc']) && intval($_POST['agree_disc'])) ? 1 : 0;
 			$salt = $icmspass->icms_createSalt();
-			$pass = $icmspass->icms_encryptPass(trim($_POST['pass']), $salt);
+			$pass = $icmspass->icms_encryptPass(trim($_POST['pass']), $salt, $icmsConfigUser['enc_type']);
 			$newuser->setVar('pass', isset($_POST['pass']) ? $pass : '');
 			$newuser->setVar('enc_type', $icmsConfigUser['enc_type']);
 			$newuser->setVar('salt', $salt);

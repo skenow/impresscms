@@ -225,7 +225,7 @@ $errors[] .= _US_NICKNAMENOSPACES."<br />";
                         $salt = $icmspass->icms_createSalt();
                         $edituser->setVar('salt', $salt, true);
 			$edituser->setVar('enc_type', $icmsConfigUser['enc_type'], true);
-			$pass = $icmspass->icms_encryptPass($password, $salt);
+			$pass = $icmspass->icms_encryptPass($password, $salt, $icmsConfigUser['enc_type']);
 			$edituser->setVar('pass', $pass, true);
 		}
 

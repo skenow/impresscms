@@ -100,6 +100,46 @@ final class icms_Password
     }
 
     /**
+    * This Private Function returns the User Encryption Type belonging to username.
+    * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
+    * @since    1.2.3
+    * @param    string  $uname      Username to find Enc_type for.
+    * @return   string  returns the Encryption type of the user.
+    */
+    private function icms_getUserEncType($uname)
+    {
+        $db = Database::getInstance();
+        if($uname !== '')
+        {
+            include_once ICMS_ROOT_PATH.'/class/database/databaseupdater.php';
+            $table = new IcmsDatabasetable('users');
+            if($table->fieldExists('loginname'))
+            {
+                $sql = $db->query("SELECT loginname, enc_type FROM ".$db->prefix('users')." WHERE
+                    loginname = '".@htmlspecialchars($uname, ENT_QUOTES, _CHARSET)."'");
+                list($loginname, $enc_type) = $db->fetchRow($sql);
+            }
+            elseif($table->fieldExists('login_name'))
+            {
+                $sql = $db->query("SELECT login_name, enc_type FROM ".$db->prefix('users')." WHERE
+                    login_name = '".@htmlspecialchars($uname, ENT_QUOTES, _CHARSET)."'");
+                list($login_name, $enc_type) = $db->fetchRow($sql);
+            }
+            else
+            {
+                $sql = $db->query("SELECT uname, enc_type FROM ".$db->prefix('users')." WHERE
+                    uname = '".@htmlspecialchars($uname, ENT_QUOTES, _CHARSET)."'");
+                list($uname, $enc_type) = $db->fetchRow($sql);
+            }
+        }
+        else
+        {
+            redirect_header('user.php',2,_US_SORRYNOTFOUND);
+        }
+        return (int) $enc_type;
+    }
+
+	/**
     * This Private Function is used to Encrypt User Passwords
     * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
     * @since    1.1
@@ -235,6 +275,18 @@ final class icms_Password
     }
 
     /**
+    * This Public Function returns the User Encryption Type belonging to username.
+    * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
+    * @since    1.1
+    * @param    string  $uname      Username to find Encryption Type for.
+    * @return   string  returns the Encryption Type of the user.
+    */
+    final public function icms_getUserSaltFromUname($uname = '')
+    {
+        return $this->icms_getUserEncType($uname);
+    }
+
+	/**
     * This Public Function is used to Encrypt User Passwords
     * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
     * @since    1.1

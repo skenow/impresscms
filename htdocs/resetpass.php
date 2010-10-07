@@ -55,7 +55,7 @@ else
 		if($c_pass !== $current_pass) {redirect_header('user.php',2,_US_SORRYINCORRECTPASS);}
 
 		$salt = $icmspass->icms_createSalt();
-		$pass = $icmspass->icms_encryptPass($password, $salt);
+		$pass = $icmspass->icms_encryptPass($password, $salt, $icmsConfigUser['enc_type']);
 		$xoopsMailer =& getMailer();
 		$xoopsMailer->useMail();
 		$xoopsMailer->setTemplate('resetpass2.tpl');

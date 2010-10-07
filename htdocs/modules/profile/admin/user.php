@@ -120,7 +120,7 @@ switch($op) {
 				include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
 				$icmspass = new icms_Password();
 				$salt = $icmspass->icms_createSalt();
-				$pass = $icmspass->icms_encryptPass($password, $salt);
+				$pass = $icmspass->icms_encryptPass($password, $salt, $icmsConfigUser['enc_type']);
 				$user->setVar('pass', $pass);
 				$user->setVar('pass_expired', 0);
 				$user->setVar('enc_type', $icmsConfigUser['enc_type']);

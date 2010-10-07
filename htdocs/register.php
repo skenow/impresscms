@@ -153,7 +153,7 @@ case 'finish':
 
 		$salt = $icmspass->icms_createSalt();
 		$newuser->setVar('salt', $salt, true);
-		$pass1 = $icmspass->icms_encryptPass($pass, $salt);
+		$pass1 = $icmspass->icms_encryptPass($pass, $salt, $enc_type);
 		$newuser->setVar('pass', $pass1, true);
 		$newuser->setVar('timezone_offset', $timezone_offset, true);
 		$newuser->setVar('user_regdate', time(), true);
