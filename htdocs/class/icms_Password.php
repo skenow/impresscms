@@ -281,7 +281,7 @@ final class icms_Password
     * @param    string  $uname      Username to find Encryption Type for.
     * @return   string  returns the Encryption Type of the user.
     */
-    final public function icms_getUserSaltFromUname($uname = '')
+    final public function icms_getUserEncTypeFromUname($uname = '')
     {
         return $this->icms_getUserEncType($uname);
     }
