@@ -33,7 +33,7 @@ class IcmsStopSpammer {
 	function checkForField($field, $value) {
 		$spam = false;
 
-		$url = $this->api_url . $field . '=' . $value;
+		$url = $this->api_url . $field . '=' . urlencode($value);
 		if (!ini_get('allow_url_fopen')) {
 			$output = '';
 			$ch=curl_init();
