@@ -10,7 +10,7 @@
 * @version		$Id$
 */
 
-define('ICMS_VERSION_NAME','ImpressCMS 1.2.3 RC');
+define('ICMS_VERSION_NAME','ImpressCMS 1.2.3 RC2');
 /**
  * To developers:
  * if you want to get the version number of the core, please use something like:
@@ -38,8 +38,8 @@ define('ICMS_VERSION_STATUS', 3);
  *
  * Every release has its own build number, incrementable by 1 everytime we make a release
  */
-// impresscms_1.2.3 Beta = 37
-define('ICMS_VERSION_BUILD', 38);
+// impresscms_1.2.3 RC = 38
+define('ICMS_VERSION_BUILD', 39);
 
 /**
  * Latest dbversion of the System Module

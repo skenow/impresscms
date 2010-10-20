@@ -1,15 +1,15 @@
-ImpressCMS 1.2.3 Beta release notes
+ImpressCMS 1.2.3 RC2 release notes
 ==================================
 
-The ImpressCMS Project is very proud to announce a beta version of its 1.2.3 release! 
-ImpressCMS 1.2.3 is a maintenance release and as a beta release, should not be used on production sites.
+The ImpressCMS Project is very proud to announce an RC version of its 1.2.3 release! 
+ImpressCMS 1.2.3 RC2 is a maintenance release and as such, should not be used on production sites.
 
 Please see the full [[Change Log]] for details in docs/changelog.txt.
 
 ==System requirements==
 
 *PHP
-    ** PHP 5.1 or higher (5.2 or higher recommended, 5.3 is be in this version)
+    ** PHP 5.2.0 or higher (5.2.8 + is recommended, 5.3 is supported by this version)
     ** 16MB memory
 *MySQL
     ** MySQL 4.1.0 or higher
@@ -25,7 +25,7 @@ This release can be downloaded from the [https://sourceforge.net/projects/impres
 You can easily get ImpressCMS using SVN. Instructions about this can be found here: [[Install_and_update_using_SVN]].
 
 The path for this release is the following:
-https://impresscms.svn.sourceforge.net/svnroot/impresscms/core/releases/impresscms_1.2.3_beta/
+https://impresscms.svn.sourceforge.net/svnroot/impresscms/core/releases/impresscms_1.2.3_rc2/
 
 If you feel like getting the latest "edge" version, you can checkout the core trunk at :
 

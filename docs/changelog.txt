@@ -1,8 +1,16 @@
 ImpressCMS ChangeLog
 
-=== ImpressCMS 1.2.3 RC ===
-Release date:  Sep 2010
+=== ImpressCMS 1.2.3 RC2 ===
+Release date:  Oct 2010
 Revision:
+DB Version: 40
+Build Version: 39
+
+http://sourceforge.net/apps/trac/impresscms/query?status=closed&group=component&order=priority&col=id&col=summary&col=milestone&col=status&col=type&col=priority&col=component&milestone=ImpressCMS+1.2.3
+
+=== ImpressCMS 1.2.3 RC ===
+Release date: 24 Sep 2010
+Revision: 20198
 DB Version: 40
 Build Version: 38
 
@@ -12,6 +20,7 @@ Revision: 20154
 DB Version: 40
 Build Version: 37
 
+Adding support for PHP 5.3
 Maintenance release, addresses #462, #480 and #482, #493
 Security Fix: Blind SQLi & Path disclosure in search.php & settingmanager (if install folder left on server)
 
