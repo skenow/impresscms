@@ -48,7 +48,7 @@ if ($action == "results") {
 		exit();
 	}
 } elseif ($action == "showall") {
-	if (!query || $query == "" || empty($mid)) {
+	if (!$query || $query == "" || empty($mid)) {
 		redirect_header("search.php",1,_SR_PLZENTER);
 		exit();
 	}
