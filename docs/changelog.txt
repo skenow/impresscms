@@ -1,12 +1,18 @@
 ImpressCMS ChangeLog
 
-=== ImpressCMS 1.2.3 RC2 ===
-Release date:  Oct 2010
+=== ImpressCMS 1.2.3 Final ===
+Release date: 17 Nov 2010
 Revision:
 DB Version: 40
-Build Version: 39
+Build Version: 40
 
 http://sourceforge.net/apps/trac/impresscms/query?status=closed&group=component&order=priority&col=id&col=summary&col=milestone&col=status&col=type&col=priority&col=component&milestone=ImpressCMS+1.2.3
+
+=== ImpressCMS 1.2.3 RC2 ===
+Release date: 7 Nov 2010
+Revision: 20305
+DB Version: 40
+Build Version: 39
 
 === ImpressCMS 1.2.3 RC ===
 Release date: 24 Sep 2010
