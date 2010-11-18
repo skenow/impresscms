@@ -468,9 +468,10 @@ class XoopsModuleHandler extends XoopsObjectHandler
 			{
 				$cleanvars[$k] = $this->db->quoteString($v);
 			}
-			if ($k != 'mid') 
+			if ($k != 'mid') {
 				$fieldsForInsert[$k] = $cleanvars[$k];
-			$fieldsUpdate[$k] = $cleanvars[$k];
+				$fieldsForUpdate[$k] = $cleanvars[$k];
+			}
 		}
 		
 		if($module->isNew())
