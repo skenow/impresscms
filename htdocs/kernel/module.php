@@ -453,7 +453,6 @@ class XoopsModuleHandler extends XoopsObjectHandler
 		* Editing the insert and update methods
 		* this is temporaray as will soon be based on a persistableObjectHandler
 		**/
-		$fieldsToStoreInDB = array();
 		foreach($module->cleanVars as $k => $v)
 		{
 			if($k == 'last_update') {$v = time();}
@@ -469,17 +468,20 @@ class XoopsModuleHandler extends XoopsObjectHandler
 			{
 				$cleanvars[$k] = $this->db->quoteString($v);
 			}
-			$fieldsToStoreInDB[$k] = $cleanvars[$k];
+			if ($k != 'mid') 
+				$fieldsForInsert[$k] = $cleanvars[$k];
+			$fieldsUpdate[$k] = $cleanvars[$k];
 		}
 		
 		if($module->isNew())
 		{
-			$sql = "INSERT INTO ".$this->db->prefix('modules')." (".implode(',', array_keys($fieldsToStoreInDB)).") VALUES (".implode(',', array_values($fieldsToStoreInDB)).")";
+			icms_debug(111);
+			$sql = "INSERT INTO ".$this->db->prefix('modules')." (".implode(',', array_keys($fieldsForInsert)).") VALUES (".implode(',', array_values($fieldsForInsert)).")";
 		}
 		else
 		{
 			$sql = "UPDATE ".$this->db->prefix('modules')." SET";
-			foreach($fieldsToStoreInDB as $key => $value)
+			foreach($fieldsForUpdate as $key => $value)
 			{
 				if(isset($notfirst)) {$sql .= ",";}
 				$sql .= " ".$key." = ".$value;
