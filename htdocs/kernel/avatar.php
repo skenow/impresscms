@@ -138,7 +138,7 @@ class XoopsAvatarHandler extends XoopsObjectHandler
         }
         if ($avatar->isNew()) {
             $avatar_id = $this->db->genId('avatar_avatar_id_seq');
-            $sql = sprintf("INSERT INTO %s (avatar_id, avatar_file, avatar_name, avatar_created, avatar_mimetype, avatar_display, avatar_weight, avatar_type) VALUES ('%u', %s, %s, '%u', %s, '%u', '%u', %s)", $this->db->prefix('avatar'), intval($avatar_id), $this->db->quoteString($avatar_file), $this->db->quoteString($avatar_name), time(), $this->db->quoteString($avatar_mimetype), intval($avatar_display), intval($avatar_weight), $this->db->quoteString($avatar_type));
+            $sql = sprintf("INSERT INTO %s (avatar_file, avatar_name, avatar_created, avatar_mimetype, avatar_display, avatar_weight, avatar_type) VALUES (%s, %s, '%u', %s, '%u', '%u', %s)", $this->db->prefix('avatar'), $this->db->quoteString($avatar_file), $this->db->quoteString($avatar_name), time(), $this->db->quoteString($avatar_mimetype), intval($avatar_display), intval($avatar_weight), $this->db->quoteString($avatar_type));
         } else {
             $sql = sprintf("UPDATE %s SET avatar_file = %s, avatar_name = %s, avatar_created = '%u', avatar_mimetype= %s, avatar_display = '%u', avatar_weight = '%u', avatar_type = %s WHERE avatar_id = '%u'", $this->db->prefix('avatar'), $this->db->quoteString($avatar_file), $this->db->quoteString($avatar_name), intval($avatar_created), $this->db->quoteString($avatar_mimetype), intval($avatar_display), intval($avatar_weight), $this->db->quoteString($avatar_type), intval($avatar_id));
         }
@@ -187,10 +187,11 @@ class XoopsAvatarHandler extends XoopsObjectHandler
     {
         $ret = array();
         $limit = $start = 0;
-        $sql = "SELECT a.*, COUNT(u.user_id) AS count FROM ".$this->db->prefix('avatar')." a LEFT JOIN ".$this->db->prefix('avatar_user_link')." u ON u.avatar_id=a.avatar_id";
+        
+        $sql = "SELECT a.avatar_id, a.avatar_file, a.avatar_name, a.avatar_mimetype, a.avatar_created, a.avatar_display, a.avatar_type, a.avatar_weight, COUNT(u.user_id) AS count FROM ".$this->db->prefix('avatar')." a LEFT JOIN ".$this->db->prefix('avatar_user_link')." u ON u.avatar_id=a.avatar_id";
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= " ".$criteria->renderWhere();
-            $sql .= " GROUP BY a.avatar_id ORDER BY avatar_weight, avatar_id";
+            $sql .= " GROUP BY a.avatar_id, a.avatar_file, a.avatar_name, a.avatar_mimetype, a.avatar_created, a.avatar_display, a.avatar_type, a.avatar_weight ORDER BY avatar_weight, avatar_id";
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();
         }
