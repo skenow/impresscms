@@ -694,7 +694,8 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
         	$obj->setErrors('Variables were not cleaned properly.');
             return false;
         }
-		$fieldsToStoreInDB = array();
+		$fieldsForInsert = array();
+		$fieldsForUpdate = array();
         foreach ($obj->cleanVars as $k => $v) {
             if ($obj->vars[$k]['data_type'] == XOBJ_DTYPE_INT) {
                 $cleanvars[$k] = intval($v);
@@ -704,7 +705,9 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
                 $cleanvars[$k] = $this->db->quoteString($v);
             }
             if ($obj->vars[$k]['persistent']) {
-            	$fieldsToStoreInDB[$k] = $cleanvars[$k];
+            	if ($this->keyName != $k)
+            		$fieldsForInsert[$k] = $cleanvars[$k];
+            	$fieldsForUpdate[$k] = $cleanvars[$k];
             }
 
         }
@@ -715,12 +718,12 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
                 }
             }
 
-            $sql = "INSERT INTO ".$this->table." (".implode(',', array_keys($fieldsToStoreInDB)).") VALUES (".implode(',', array_values($fieldsToStoreInDB)) .")";
+            $sql = "INSERT INTO ".$this->table." (".implode(',', array_keys($fieldsForInsert)).") VALUES (".implode(',', array_values($fieldsForInsert)) .")";
 
         } else {
 
             $sql = "UPDATE ".$this->table." SET";
-            foreach ($fieldsToStoreInDB as $key => $value) {
+            foreach ($fieldsForUpdate as $key => $value) {
                 if ((!is_array($this->keyName) && $key == $this->keyName) || (is_array($this->keyName) && in_array($key, $this->keyName))) {
                     continue;
                 }
