@@ -69,14 +69,14 @@ class XoopsPDODatabase extends XoopsDatabase {
 			$sql = $this->convertToSQLServerSyntax($sql);
 			$pdoStatement = $this->conn->prepare("$sql", array(PDO::ATTR_CURSOR=>PDO::CURSOR_SCROLL)); // should now return a $result for which the rowCount will be accurate
 			if(!$pdoStatement) {
-			    print "Prepare failed for this SQL:<br>$sql<br>SQL Server reports: ".$this->error()."<br>";
+			    $this->logger->addQuery($sql, $this->error(), $this->errno());
+				//print "Prepare failed for this SQL:<br>$sql<br>SQL Server reports: ".$this->error()."<br>";
 			}
 			$result = $pdoStatement->execute();
-			//$result = $this->conn->query($sql);
 			if(!$result) {
-			    print "Error in this SQL:<br>$sql<br>SQL Server reports: ";
-			    print_r($pdoStatement->errorInfo());
-			    print "<br>";
+			   $this->logger->addQuery($sql, $this->error(), $this->errno());
+			} else {
+				$this->logger->addQuery($sql);
 			}
 			$this->rowCount = $pdoStatement->rowCount(); // the cursor needs to be set to always return the full result in order for the rowcount to be a valid number
 		} catch (Exception $e) {
