@@ -231,7 +231,9 @@ class CriteriaCompo extends CriteriaElement
     if ($count > 0) {
       $ret = '('. $this->criteriaElements[0]->render();
       for ($i = 1; $i < $count; $i++) {
-        $ret .= ' '.$this->conditions[$i].' '.$this->criteriaElements[$i]->render();
+        if($value = $this->criteriaElements[$i]->render()) {
+	  $ret .= ' '.$this->conditions[$i].' '.$value;
+	}
       }
       $ret .= ')';
     }
