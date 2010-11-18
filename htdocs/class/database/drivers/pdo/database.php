@@ -123,8 +123,6 @@ class XoopsPDODatabase extends XoopsDatabase {
 
 	private function convertToSQLServerSyntax($sql) {
 		// change SHOW COLUMNS to the SQL Server equivalent
-	  
-		icms_debug($sql);
 		if(substr($sql, 0, 12)=="SHOW COLUMNS") {
 			// need to get the table name and then insert it as appropriate in the replacement SQL syntax
 			// need to get the LIKE param and handle that too
@@ -154,7 +152,7 @@ class XoopsPDODatabase extends XoopsDatabase {
 			// verify it's at the end
 			// check for comma
 			// if one value, then it's the limit, if two, second is limit, first is offset
-			if($limitPos >= strlen($sql) - 10) {// if the limit is pretty much at the end of the sql....
+			if($limitPos >= strlen($sql) - 20) {// if the limit is pretty much at the end of the sql....
 				$limitClause = substr($sql, $limitPos);
 				$sql = substr($sql, 0, $limitPos);
 				if($commaPos = strpos($limitClause, ",")) {
