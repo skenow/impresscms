@@ -23,8 +23,8 @@ class XoopsPDODatabase extends XoopsDatabase {
 
 	public function connect($selectdb = true) {
 		$this->conn = new PDO("sqlsrv:Server=(local)\\sqlexpress;Database=".XOOPS_DB_NAME.";quotedid=0", XOOPS_DB_USER, XOOPS_DB_PASS); // each driver has a specific connection string structure of its own
+		$this->conn->setAttribute(PDO::SQLSRV_ATTR_DIRECT_QUERY,1); // makes the query method run without implicitly preparing first
 		// these lines should be unnecessary thanks to quotedid=0 which sets this value on the connection itself
-		//$this->conn->setAttribute(PDO::SQLSRV_ATTR_DIRECT_QUERY,1);
 		//$this->conn->query("SET QUOTED_IDENTIFIER OFF;");
 		return true;
 	}
@@ -130,14 +130,59 @@ class XoopsPDODatabase extends XoopsDatabase {
 			$tableName = substr($sql, $fromPos+5);
 			$sql = "SELECT column_name FROM information_schema.columns WHERE table_name='" . trim($tableName) . "'";
 			if($likePos = strpos($tableName, "LIKE")) {
-				$likeName = substr($tableName, $likePos+5);
-				$sql .= " AND column_name = '".trim($likeName)."'";
+				$likeName = substr($tableName, 0, 69+$likePos+5);
+				$sql .= "' AND column_name = ".trim($likeName);
 			}
 		}
 		if(trim($sql) == "SHOW TABLES") {
 			// convert to get table names from the information schema
 			$sql = "SELECT table_name FROM information_schema.tables";
 		}
+
+		if(strstr($sql,"CREATE TABLE")) {
+			// auto_increment changes to IDENTITY(1,1)
+			// strip  TYPE=MyISAM;
+			// varchar becomes nvarchar
+			// char becomes nchar
+			// text converts to nvarchar(max)
+			// tinyint goes to smallint
+			// Datetime goes to datetime2
+			
+			// remove the (num) from after int
+			while($intPos = strpos($sql, "int(", $intPos+3)) {
+			    $secondParenPos = strpos($sql,")",$intPos);
+			    $sql = substr_replace($sql, "int", $intPos,$secondParenPos-$intPos+1);
+			}	
+			$sql = str_replace(" TYPE=MyISAM;", "", $sql);
+			$sql = str_replace("unsigned", "", $sql);
+			$sql = str_replace("NOT NULL auto_increment", "IDENTITY(1,1) NOT NULL", $sql);
+			$sql = str_replace("NULL auto_increment", "IDENTITY(1,1) NULL", $sql);
+			$sql = str_replace("varchar", "nvarchar", $sql);
+			$sql = str_replace("char", "nchar", $sql);
+			$sql = str_replace("text", "nvarchar(max)", $sql);
+			$sql = str_replace("mediumint", "bigint", $sql); // no medium ints 
+			$sql = str_replace("int", "bigint", $sql); // no unsigned ints so need to go up to a bigger size
+			$sql = str_replace("tinyint", "int", $sql); 
+			$sql = str_replace("Datetime", "datetime2", $sql);
+			$sql = str_replace("INDEX", "; CREATE NONCLUSTERED INDEX", $sql);
+			// get table name:
+			$firstParenPos = strpos($sql, "(");
+			$tableName = substr($sql, 13, $firstParenPos-14); // CREATE TABLE is 14 chars long
+			// Index syntax: CREATE NONCLUSTERED INDEX NameOfIndex ON Table/View (col, col, col);
+			while($indexPos = strpos($sql, "INDEX",$indexPos+25)) {
+			    // find the next (
+			    $parenPos = strpos($sql,"(",$indexPos);
+			    $sql = substr_replace($sql, "ON $tableName (",$parenPos,1);
+			}
+			// remove the final )
+			$lastParenPos = strrpos($sql, ")");
+			$sql = substr_replace($sql, ";",$lastParenPos);
+			// put a closing ) before the first CREATE for the first index
+			$firstCreatePos = strpos($sql, ",; CREATE"); 
+			$sql = substr_replace($sql, ")", $firstCreatePos,1);
+		}
+
+
 		// replace backticks with [ ]
 		$replacement = "[";
 		$backtickPos = 0;
