@@ -293,7 +293,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
 		}
 		if ($mship->isNew()) {
 			$linkid = $this->db->genId('groups_users_link_linkid_seq');
-			$sql = sprintf("INSERT INTO %s (linkid, groupid, uid) VALUES ('%u', '%u', '%u')", $this->db->prefix('groups_users_link'), intval($linkid), intval($groupid), intval($uid));
+			$sql = sprintf("INSERT INTO %s (groupid, uid) VALUES ('%u', '%u')", $this->db->prefix('groups_users_link'), intval($groupid), intval($uid));
 		} else {
 			$sql = sprintf("UPDATE %s SET groupid = '%u', uid = '%u' WHERE linkid = '%u'", $this->db->prefix('groups_users_link'), intval($groupid), intval($uid), intval($linkid));
 		}
