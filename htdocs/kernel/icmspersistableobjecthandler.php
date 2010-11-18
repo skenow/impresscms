@@ -705,9 +705,10 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
                 $cleanvars[$k] = $this->db->quoteString($v);
             }
             if ($obj->vars[$k]['persistent']) {
-            	if ($this->keyName != $k)
+            	if ($this->keyName != $k) {
             		$fieldsForInsert[$k] = $cleanvars[$k];
-            	$fieldsForUpdate[$k] = $cleanvars[$k];
+            		$fieldsForUpdate[$k] = $cleanvars[$k];
+            	}
             }
 
         }
