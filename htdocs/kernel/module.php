@@ -476,7 +476,6 @@ class XoopsModuleHandler extends XoopsObjectHandler
 		
 		if($module->isNew())
 		{
-			icms_debug(111);
 			$sql = "INSERT INTO ".$this->db->prefix('modules')." (".implode(',', array_keys($fieldsForInsert)).") VALUES (".implode(',', array_values($fieldsForInsert)).")";
 		}
 		else
