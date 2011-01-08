@@ -35,13 +35,11 @@ class icms_securityconfig_Handler {
 		$instance = icms::handler('icms_securityconfig');
 		$configs = $instance->getConfigsByCat(
 			array(
-				ICMS_SEC_CONF, ICMS_SEC_CONF_USER, ICMS_SEC_CONF_AUTH, ICMS_SEC_CONF_CAPTCHA, ICMS_SEC_CONF_HTMLFILTER
+				ICMS_SEC_CONF, ICMS_SEC_CONF_USER, ICMS_SEC_CONF_HTMLFILTER
 			)
 		);
 		$GLOBALS['icmsSecurityConfig']					= $configs[ICMS_SEC_CONF];
 		$GLOBALS['icmsSecurityConfigUser']				= $configs[ICMS_SEC_CONF_USER];
-		$GLOBALS['icmsSecurityConfigAuth']				= $configs[ICMS_SEC_CONF_AUTH];
-		$GLOBALS['icmsSecurityConfigCaptcha']			= $configs[ICMS_SEC_CONF_CAPTCHA];
 		$GLOBALS['icmsSecurityConfigHTMLFilter']		= $configs[ICMS_SEC_CONF_HTMLFILTER];
 		return self::$instance = $instance;
 	}

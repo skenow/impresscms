@@ -32,7 +32,6 @@ define('ICMS_CONF_PERSONA', 10);
 define('ICMS_CONF_CAPTCHA', 11);
 define('ICMS_CONF_PLUGINS', 12);
 define('ICMS_CONF_AUTOTASKS', 13);
-define('ICMS_CONF_PURIFIER', 14);
 /**#@-*/
 
 /**
