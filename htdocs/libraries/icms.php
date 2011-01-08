@@ -56,6 +56,11 @@ abstract class icms {
 	 */
 	static public $config;
 	/**
+	 * Security Configuration service
+	 * @var icms_securityconfig_Handler
+	 */
+	static public $securityconfig;
+	/**
 	 * Session service
 	 * @var icms_core_Session
 	 */
@@ -76,12 +81,13 @@ abstract class icms {
 	 */
 	static public $services = array(
 		"boot" => array(
-			'security'	=> array(array('icms_core_Security', 'service'), array()),
-			"logger"	=> array(array("icms_core_Logger", 'instance'), array()),
-			"db"		=> array(array('icms_db_Factory', 'pdoInstance'), array()),
-			"xoopsDB"	=> array(array('icms_db_Factory', 'instance'), array()),
-			'config'	=> array(array('icms_config_Handler', 'service'), array()),
-			'session'	=> array(array('icms_core_Session', 'service'), array()),
+			'security'			=> array(array('icms_core_Security', 'service'), array()),
+			"logger"			=> array(array("icms_core_Logger", 'instance'), array()),
+			"db"				=> array(array('icms_db_Factory', 'pdoInstance'), array()),
+			"xoopsDB"			=> array(array('icms_db_Factory', 'instance'), array()),
+			'config'			=> array(array('icms_config_Handler', 'service'), array()),
+			'securityconfig'	=> array(array('icms_securityconfig_Handler', 'service'), array()),
+			'session'			=> array(array('icms_core_Session', 'service'), array()),
 		),
 		"optional" => array(),
 	);
