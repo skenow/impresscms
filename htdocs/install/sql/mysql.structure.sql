@@ -714,3 +714,49 @@ CREATE TABLE icms_data_file (
   PRIMARY KEY (fileid),
   KEY mid (mid)
 );
+
+#
+# Table structure for table `SecurityConfig`
+#
+
+CREATE TABLE SecurityConfig (
+  sec_id smallint(5) unsigned NOT NULL auto_increment,
+  sec_modid smallint(5) unsigned NOT NULL default '0',
+  sec_catid smallint(5) unsigned NOT NULL default '0',
+  sec_name varchar(75) NOT NULL default '',
+  sec_title varchar(255) NOT NULL default '',
+  sec_value text NOT NULL,
+  sec_desc varchar(255) NOT NULL default '',
+  sec_formtype varchar(15) NOT NULL default '',
+  sec_valuetype varchar(10) NOT NULL default '',
+  sec_order smallint(5) unsigned NOT NULL default '0',
+  PRIMARY KEY  (sec_id),
+  KEY mod_cat_order(sec_modid, sec_catid, sec_order)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+
+#
+# Table structure for table `SecurityConfigCat`
+#
+
+CREATE TABLE SecurityConfigCategory (
+  sec_cat_id smallint(5) unsigned NOT NULL auto_increment,
+  sec_cat_name varchar(255) NOT NULL default '',
+  sec_cat_order smallint(5) unsigned NOT NULL default '0',
+  PRIMARY KEY  (sec_cat_id)
+) TYPE=MyISAM;
+# --------------------------------------------------------
+
+#
+# Table structure for table `SecurityConfigOption`
+#
+
+CREATE TABLE SecurityConfigOption (
+  sec_op_id mediumint(8) unsigned NOT NULL auto_increment,
+  sec_op_name varchar(255) NOT NULL default '',
+  sec_op_value varchar(255) NOT NULL default '',
+  sec_id smallint(5) unsigned NOT NULL default '0',
+  PRIMARY KEY  (sec_op_id),
+  KEY sec_id (sec_id)
+) TYPE=MyISAM;
+# --------------------------------------------------------
