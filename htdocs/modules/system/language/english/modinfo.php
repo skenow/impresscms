@@ -71,3 +71,6 @@ define('_MI_SYSTEM_REMOVEUSERS','Inactivating users');
 
 // Added in 1.3
 define('_MI_SYSTEM_BLOCK_CP_NEW', 'New Control Panel');
+
+// added in 1.4
+define("_MI_SYSTEM_ADMENU8","Security Preferences");
