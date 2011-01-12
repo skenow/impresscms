@@ -14,11 +14,12 @@
  * @version	$Id$
  */
 
-if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {exit('Access Denied');}
-
+if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin($icmsModule->getVar('mid'))) {
+	exit('Access Denied');
+}
 
 function displayUsers() {
-	global $xoopsConfig, $icmsModule, $icmsConfigUser;
+	global $xoopsConfig, $icmsModule, $icmsConfigUser, $icmsSecurityConfigUser;
 	$userstart = isset($_GET['userstart']) ? (int) ($_GET['userstart']) : 0;
 
 	icms_cp_header();
@@ -107,7 +108,7 @@ function displayUsers() {
 	$rank_value = 0;
 	$mailok_value = 0;
 	$pass_expired_value = 0;
-	$enc_type_value = $icmsConfigUser['enc_type'];
+	$enc_type_value = $icmsSecurityConfigUser['enc_type'];
 	$op_value = 'addUser';
 	$form_title = _AM_ADDUSER;
 	$form_isedit = false;
@@ -117,18 +118,18 @@ function displayUsers() {
 	icms_cp_footer();
 }
 
-function modifyUser($user)
-{
+function modifyUser($user) {
 	global $xoopsConfig, $icmsModule;
 	icms_cp_header();
 	echo '<div class="CPbigTitle" style="background-image: url('.ICMS_URL.'/modules/system/admin/users/images/users_big.png)">'._MD_AM_USER.'</div><br />';
 	$member_handler = icms::handler('icms_member');
 	$user =& $member_handler->getUser($user);
-	if (is_object($user))
-	{
-		if (!$user->isActive())
-		{
-			icms_core_Message::confirm(array('fct' => 'users', 'op' => 'reactivate', 'uid' => $user->getVar('uid')), 'admin.php', _AM_NOTACTIVE);
+	if (is_object($user)) {
+		if (!$user->isActive()) {
+			icms_core_Message::confirm(array('fct' => 'users',
+												'op' => 'reactivate',
+												'uid' => $user->getVar('uid')
+											), 'admin.php', _AM_NOTACTIVE);
 			icms_cp_footer();
 			exit();
 		}
@@ -193,20 +194,25 @@ function modifyUser($user)
 }
 
 // RMV-NOTIFY
-function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $user_aim, $user_yim, $user_msnm, $user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar, $user_sig, $attachsig, $theme, $pass, $pass2, $rank, $bio, $uorder, $umode, $notify_method, $notify_mode, $timezone_offset, $user_mailok, $language, $openid, $salt, $user_viewoid, $pass_expired, $enc_type, $groups = array())
-{
-	global $xoopsConfig, $icmsModule, $icmsConfigUser;
+function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $user_aim, $user_yim, $user_msnm,
+					$user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar, $user_sig, $attachsig,
+					$theme, $pass, $pass2, $rank, $bio, $uorder, $umode, $notify_method, $notify_mode,
+					$timezone_offset, $user_mailok, $language, $openid, $salt, $user_viewoid, $pass_expired,
+					$enc_type, $groups = array()) {
+
+	global $xoopsConfig, $icmsModule, $icmsConfigUser, $icmsSecurityConfigUser;
 	$member_handler = icms::handler('icms_member');
 	$edituser =& $member_handler->getUser($uid);
-	if ($edituser->getVar('uname') != $uname && $member_handler->getUserCount(new icms_db_criteria_Item('uname', $uname)) > 0 || $edituser->getVar('login_name') != $login_name && $member_handler->getUserCount(new icms_db_criteria_Item('login_name', $login_name)) > 0)
-	{
+	if ($edituser->getVar('uname') != $uname 
+		&& $member_handler->getUserCount(new icms_db_criteria_Item('uname', $uname)) > 0
+		|| $edituser->getVar('login_name') != $login_name
+		&& $member_handler->getUserCount(new icms_db_criteria_Item('login_name', $login_name)) > 0) {
+
 		icms_cp_header();
 		echo '<div class="CPbigTitle" style="background-image: url('.ICMS_URL.'/modules/system/admin/users/images/users_big.png)">'._MD_AM_USER.'</div><br />';
 		echo 'User name '.$uname.' already exists';
 		icms_cp_footer();
 	} else {
-		$myts =& icms_core_Textsanitizer::getInstance();
-
 		$edituser->setVar('name', $name);
 		$edituser->setVar('uname', $uname);
 		$edituser->setVar('login_name', $login_name);
@@ -219,12 +225,11 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 		//$edituser->setVar('user_avatar', $user_avatar);
 		$edituser->setVar('user_icq', $user_icq);
 		$edituser->setVar('user_from', $user_from);
-		if ($icmsConfigUser['allow_htsig'] == 0)
-		{
-			$signature = strip_tags($myts->xoopsCodeDecode($user_sig, 1));
+		if ($icmsConfigUser['allow_htsig'] == 0) {
+			$signature = strip_tags(icms_core_DataFilter::codeDecode($user_sig, 1));
 			$edituser->setVar('user_sig', icms_core_DataFilter::icms_substr($signature, 0, (int) ($icmsConfigUser['sig_max_length'])));
 		} else {
-			$signature = $myts->displayTarea($user_sig, 1, 1, 1, 1, 1, 'display');
+			$signature = icms_core_DataFilter::filterHTMLInput($user_sig, 1, 1, 1);
 			$edituser->setVar('user_sig', icms_core_DataFilter::icms_substr($signature, 0, (int) ($icmsConfigUser['sig_max_length'])));
 		}
 		$user_viewemail = (isset($user_viewemail) && $user_viewemail == 1) ? 1 : 0;
@@ -247,10 +252,8 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 		$edituser->setVar('user_intrest', $user_intrest);
 		$edituser->setVar('user_mailok', $user_mailok);
 		$edituser->setVar('language', $language);
-		if ($pass2 != '')
-		{
-			if ($pass != $pass2)
-			{
+		if ($pass2 != '') {
+			if ($pass != $pass2) {
 				icms_cp_header();
 				echo "<b>"._AM_STNPDNM."</b>";
 				icms_cp_footer();
@@ -264,24 +267,28 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 			$pass = $icmspass->encryptPass($pass, $salt, $enc_type);
 			$edituser->setVar('pass', $pass);
 		}
-		if (!$member_handler->insertUser($edituser))
-		{
+		if (!$member_handler->insertUser($edituser)) {
 			icms_cp_header();
 			echo $edituser->getHtmlErrors();
 			icms_cp_footer();
 		} else {
-			if ($groups != array())
-			{
+			if ($groups != array()) {
 				$oldgroups = $edituser->getGroups();
 				//If the edited user is the current user and the current user WAS in the webmaster's group and is NOT in the new groups array
-				if ($edituser->getVar('uid') == icms::$user->getVar('uid') && (in_array(XOOPS_GROUP_ADMIN, $oldgroups)) && !(in_array(XOOPS_GROUP_ADMIN, $groups)))
-				{
+				if ($edituser->getVar('uid') == icms::$user->getVar('uid')
+					&& (in_array(XOOPS_GROUP_ADMIN, $oldgroups))
+					&& !(in_array(XOOPS_GROUP_ADMIN, $groups))) {
+
 					//Add the webmaster's group to the groups array to prevent accidentally removing oneself from the webmaster's group
 					$groups[] = XOOPS_GROUP_ADMIN;
 				}
 				$member_handler = icms::handler('icms_member');
-				foreach ($oldgroups as $groupid) {$member_handler->removeUsersFromGroup($groupid, array($edituser->getVar('uid')));}
-				foreach ($groups as $groupid) {$member_handler->addUserToGroup($groupid, $edituser->getVar('uid'));}
+				foreach ($oldgroups as $groupid) {
+					$member_handler->removeUsersFromGroup($groupid, array($edituser->getVar('uid')));
+				}
+				foreach ($groups as $groupid) {
+					$member_handler->addUserToGroup($groupid, $edituser->getVar('uid'));
+				}
 			}
 			redirect_header('admin.php?fct=users',1,_AM_DBUPDATED);
 		}
@@ -290,38 +297,43 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 }
 
 function synchronize($id, $type) {
-	switch($type)
-	{
+	switch($type) {
 		case 'user':
 			// Array of tables from which to count 'posts'
 			$tables = array();
 			// Count comments (approved only: com_status == XOOPS_COMMENT_ACTIVE)
 			include_once ICMS_ROOT_PATH.'/include/comment_constants.php';
-			$tables[] = array ('table_name' => 'xoopscomments', 'uid_column' => 'com_uid', 'criteria' => new icms_db_criteria_Item('com_status', XOOPS_COMMENT_ACTIVE));
+			$tables[] = array('table_name' => 'xoopscomments',
+								'uid_column' => 'com_uid',
+								'criteria' => new icms_db_criteria_Item('com_status', XOOPS_COMMENT_ACTIVE)
+							);
 			// Count forum posts
 			$tables[] = array ('table_name' => 'bb_posts', 'uid_column' => 'uid');
 			$total_posts = 0;
-			foreach ($tables as $table)
-			{
+			foreach ($tables as $table) {
 				$criteria = new icms_db_criteria_Compo();
 				$criteria->add (new icms_db_criteria_Item($table['uid_column'], $id));
 				if (!empty($table['criteria'])) {$criteria->add ($table['criteria']);}
 				$sql = "SELECT COUNT(*) AS total FROM ".icms::$xoopsDB->prefix($table['table_name']).' '.$criteria->renderWhere();
-				if ($result = icms::$xoopsDB->query($sql))
-				{
-					if ($row = icms::$xoopsDB->fetchArray($result)) {$total_posts = $total_posts + $row['total'];}
+				if ($result = icms::$xoopsDB->query($sql)) {
+					if ($row = icms::$xoopsDB->fetchArray($result)) {
+						$total_posts = $total_posts + $row['total'];
+					}
 				}
 			}
 			$sql = "UPDATE ".icms::$xoopsDB->prefix("users")." SET posts = '". (int) ($total_posts)."' WHERE uid = '". (int) ($id)."'";
-			if (!$result = icms::$xoopsDB->query($sql)) {exit(sprintf(_AM_CNUUSER %s ,$id));}
+			if (!$result = icms::$xoopsDB->query($sql)) {
+				exit(sprintf(_AM_CNUUSER %s ,$id));
+			}
 			break;
 
 		case 'all users':
 			$sql = "SELECT uid FROM ".icms::$xoopsDB->prefix('users')."";
-			if (!$result = icms::$xoopsDB->query($sql)) {exit(_AM_CNGUSERID);}
-			while ($row = icms::$xoopsDB->fetchArray($result))
-			{
-				$id = $row['uid'];
+			if (!$result = icms::$xoopsDB->query($sql)) {
+				exit(_AM_CNGUSERID);
+			}
+			while ($row = icms::$xoopsDB->fetchArray($result)) {
+				$id = (int) $row['uid'];
 				synchronize($id, "user");
 			}
 			break;
@@ -329,8 +341,6 @@ function synchronize($id, $type) {
 		default:
 			break;
 	}
-	redirect_header('admin.php?fct=users&amp;op=modifyUser&amp;uid='.$id,1,_AM_DBUPDATED);
+	redirect_header('admin.php?fct=users&amp;op=modifyUser&amp;uid='. (int) $id,1,_AM_DBUPDATED);
 	exit();
 }
-
-?>

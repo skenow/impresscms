@@ -27,10 +27,9 @@ $email = (isset($_GET['email']))?trim(StopXSS($_GET['email'])):((isset($_POST['e
 
 if ($email == '') {redirect_header('user.php',2,_US_SORRYNOTFOUND);}
 
-$myts =& icms_core_Textsanitizer::getInstance();
 $member_handler = icms::handler('icms_member');
 $criteria = new icms_db_criteria_Compo();
-$criteria->add(new icms_db_criteria_Item('email', $myts->addSlashes($email)));
+$criteria->add(new icms_db_criteria_Item('email', icms_core_DataFilter::addSlashes($email)));
 $criteria->add(new icms_db_criteria_Item('level', '-1', '!='));
 $getuser =& $member_handler->getUsers($criteria);
 
@@ -41,14 +40,14 @@ if (empty($getuser))
 } else {
 	$icmspass = new icms_core_Password();
 
-	$code = isset($_GET['code']) ? trim(StopXSS($_GET['code'])) : '';
+	$code = isset($_GET['code']) ? trim(filter_input(INPUT_GET, 'code')) : '';
 	$areyou = substr($getuser[0]->getVar('pass'), 0, 5);
-	$enc_type = (int) ($icmsConfigUser['enc_type']);
+	$enc_type = (int) ($icmsSecurityConfigUser['enc_type']);
 	if ($code != '' && $areyou == $code)
 	{
 		$newpass = $icmspass->createSalt(8);
 		$salt = $icmspass->createSalt();
-		$pass = $icmspass->encryptPass($newpass, $salt, $icmsConfigUser['enc_type']);
+		$pass = $icmspass->encryptPass($newpass, $salt, $icmsSecurityConfigUser['enc_type']);
 		$xoopsMailer = new icms_messaging_Handler();
 		$xoopsMailer->useMail();
 		$xoopsMailer->setTemplate('lostpass2.tpl');
@@ -64,7 +63,14 @@ if (empty($getuser))
 		if (!$xoopsMailer->send()) {echo $xoopsMailer->getErrors();}
 
 		// Next step: add the new password to the database
-		$sql = sprintf("UPDATE %s SET pass = '%s', salt = '%s', enc_type = '%u', pass_expired = '%u' WHERE uid = '%u'", icms::$xoopsDB->prefix('users'), $pass, $salt, $enc_type, 0, (int) ($getuser[0]->getVar('uid')));
+		$sql = sprintf("UPDATE %s SET pass = '%s', salt = '%s', enc_type = '%u', pass_expired = '%u' WHERE uid = '%u'",
+				icms::$xoopsDB->prefix('users'),
+				$pass,
+				$salt,
+				$enc_type,
+				0,
+				(int) ($getuser[0]->getVar('uid'))
+			);
 		if (!icms::$xoopsDB->queryF($sql))
 		{
 			/** Include header.php to start page rendering */
@@ -99,5 +105,3 @@ if (empty($getuser))
 		include 'footer.php';
 	}
 }
-
-?>

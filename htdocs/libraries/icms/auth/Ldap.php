@@ -69,9 +69,9 @@ class icms_auth_Ldap extends icms_auth_Object {
 	public function __construct(&$dao) {
 		$this->_dao = $dao;
 		//The config handler object allows us to look at the configuration options that are stored in the database
-		global $icmsConfigAuth;
-		$confcount = count($icmsConfigAuth);
-		foreach ($icmsConfigAuth as $key => $val) {$this->$key = $val;}
+		global $icmsSecurityConfigAuth;
+		$confcount = count($icmsSecurityConfigAuth);
+		foreach ($icmsSecurityConfigAuth as $key => $val) {$this->$key = $val;}
 	}
 
 	public function cp1252_to_utf8($str) {

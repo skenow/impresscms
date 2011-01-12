@@ -39,7 +39,7 @@ if ($op == 'main') {
 			}
 		}
 		icms_makeSmarty(array(
-            'usercookie' => isset($_COOKIE[$icmsConfig['usercookie']]) ? $_COOKIE[$icmsConfig['usercookie']] : false,
+            'usercookie' => isset($_COOKIE[$icmsSecurityConfig['usercookie']]) ? $_COOKIE[$icmsSecurityConfig['usercookie']] : false,
             'lang_login' => _LOGIN,
             'lang_username' => _USERNAME,
             'redirect_page' => $redirect,
@@ -56,7 +56,7 @@ if ($op == 'main') {
             'mailpasswd_token' => icms::$security->createToken(),
             'allow_registration' => $icmsConfigUser['allow_register'],
             'rememberme' => $icmsConfigUser['remember_me'],
-            'auth_openid' => $icmsConfigAuth['auth_openid'],
+            'auth_openid' => $icmsSecurityConfigAuth['auth_openid'],
             'icms_pagetitle' => _LOGIN
 		));
 		include 'footer.php';

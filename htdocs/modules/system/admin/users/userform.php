@@ -13,7 +13,7 @@
  * @version	$Id$
  */
 
-global $icmsConfigUser, $icmsConfigAuth;
+global $icmsConfigUser, $icmsSecurityConfigAuth, $icmsSecurityConfigUser;
 
 $uid_label = new icms_form_elements_Label(_AM_USERID, $uid_value);
 $uname_text = new icms_form_elements_Text(_AM_NICKNAME, "username", 25, 25, $uname_value);
@@ -25,7 +25,7 @@ $email_tray->addElement($email_text, true);
 $email_cbox = new icms_form_elements_Checkbox("", "user_viewemail", $email_cbox_value);
 $email_cbox->addOption(1, _AM_AOUTVTEAD);
 $email_tray->addElement($email_cbox);
-if ($icmsConfigAuth['auth_openid'] == 1) {
+if ($icmsSecurityConfigAuth['auth_openid'] == 1) {
 	$openid_tray = new icms_form_elements_Tray(_AM_OPENID, "<br />");
 	$openid_text = new icms_form_elements_Text("", "openid", 30, 255, $openid_value);
 	$openid_tray->addElement($openid_text);
@@ -34,40 +34,7 @@ if ($icmsConfigAuth['auth_openid'] == 1) {
 	$openid_tray->addElement($openid_cbox);
 }
 $url_text = new icms_form_elements_Text(_AM_URL, "url", 30, 100, $url_value);
-//  $avatar_select = new icms_form_elements_Select("", "user_avatar", $avatar_value);
-//  $avatar_array = icms_core_Filesystem::getImgList(XOOPS_ROOT_PATH."/images/avatar/");
-//  $avatar_select->addOptionArray($avatar_array);
-//  $a_dirlist = icms_core_Filesystem::getDirList(XOOPS_ROOT_PATH."/images/avatar/");
-//  $a_dir_labels = array();
-//  $a_count = 0;
-//  $a_dir_link = "<a href=\"javascript:openWithSelfMain('".XOOPS_URL."/misc.php?action=showpopups&amp;type=avatars&amp;start=".$a_count."','avatars',600,400);\">XOOPS</a>";
-//  $a_count = $a_count + count($avatar_array);
-//  $a_dir_labels[] = new icms_form_elements_Label("", $a_dir_link);
-//  foreach ($a_dirlist as $a_dir) {
-//	  if ($a_dir == "users") {
-//		  continue;
-//	  }
-//	  $avatars_array = icms_core_Filesystem::getImgList(XOOPS_ROOT_PATH."/images/avatar/".$a_dir."/", $a_dir."/");
-//	  $avatar_select->addOptionArray($avatars_array);
-//	  $a_dir_link = "<a href=\"javascript:openWithSelfMain('".XOOPS_URL."/misc.php?action=showpopups&amp;type=avatars&amp;subdir=".$a_dir."&amp;start=".$a_count."','avatars',600,400);\">".$a_dir."</a>";
-//	  $a_dir_labels[] = new icms_form_elements_Label("", $a_dir_link);
-//	  $a_count = $a_count + count($avatars_array);
-//  }
-//  if (!empty($uid_value)) {
-//	  $myavatar = avatarExists($uid_value);
-//	  if ($myavatar != false) {
-//		  $avatar_select->addOption($myavatar, _US_MYAVATAR);
-//	  }
-//  }
-//  $avatar_select->setExtra("onchange='showImgSelected(\"avatar\", \"user_avatar\", \"images/avatar\", \"\", \"".XOOPS_URL."\")'");
-//  $avatar_label = new icms_form_elements_Label("", "<img src='".XOOPS_URL."/images/avatar/".$avatar_value."' name='avatar' id='avatar' alt='' />");
-//  $avatar_tray = new icms_form_elements_Tray(_AM_AVATAR, "&nbsp;");
-//  $avatar_tray->addElement($avatar_select);
-//  $avatar_tray->addElement($avatar_label);
-//  foreach ($a_dir_labels as $a_dir_label) {
-//	  $avatar_tray->addElement($a_dir_label);
-//  }
-//  $theme_select = new icms_form_elements_select_Theme(_AM_THEME, "theme", $theme_value);
+
 $timezone_select = new icms_form_elements_select_Timezone(_US_TIMEZONE, "timezone_offset", $timezone_value);
 $icq_text = new icms_form_elements_Text(_AM_ICQ, "user_icq", 15, 15, $icq_value);
 $aim_text = new icms_form_elements_Text(_AM_AIM, "user_aim", 18, 18, $aim_value);
@@ -92,9 +59,15 @@ $uorder_select->addOptionArray(array("0"=>_OLDESTFIRST, "1"=>_NEWESTFIRST));
 icms_loadLanguageFile('core', 'notification');
 include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
 $notify_method_select = new icms_form_elements_Select(_NOT_NOTIFYMETHOD, 'notify_method', $notify_method_value);
-$notify_method_select->addOptionArray(array(XOOPS_NOTIFICATION_METHOD_DISABLE=>_NOT_METHOD_DISABLE, XOOPS_NOTIFICATION_METHOD_PM=>_NOT_METHOD_PM, XOOPS_NOTIFICATION_METHOD_EMAIL=>_NOT_METHOD_EMAIL));
+$notify_method_select->addOptionArray(array(XOOPS_NOTIFICATION_METHOD_DISABLE => _NOT_METHOD_DISABLE,
+											XOOPS_NOTIFICATION_METHOD_PM => _NOT_METHOD_PM,
+											XOOPS_NOTIFICATION_METHOD_EMAIL => _NOT_METHOD_EMAIL
+											));
 $notify_mode_select = new icms_form_elements_Select(_NOT_NOTIFYMODE, 'notify_mode', $notify_mode_value);
-$notify_mode_select->addOptionArray(array(XOOPS_NOTIFICATION_MODE_SENDALWAYS=>_NOT_MODE_SENDALWAYS, XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE=>_NOT_MODE_SENDONCE, XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT=>_NOT_MODE_SENDONCEPERLOGIN));
+$notify_mode_select->addOptionArray(array(XOOPS_NOTIFICATION_MODE_SENDALWAYS => _NOT_MODE_SENDALWAYS,
+											XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE => _NOT_MODE_SENDONCE,
+											XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT => _NOT_MODE_SENDONCEPERLOGIN
+											));
 $bio_tarea = new icms_form_elements_Textarea(_US_EXTRAINFO, "bio", $bio_value);
 $rank_select = new icms_form_elements_Select(_AM_RANK, "rank", $rank_value);
 $ranklist = icms_getModuleHandler("userrank", "system")->getList(icms_buildCriteria(array('rank_special' => '1')));
@@ -104,8 +77,10 @@ if (count($ranklist) > 0) {
 } else {
 	$rank_select->addOption(0, _AM_NSRID);
 }
-global $icmsConfigUser;
-$pwd_text = new icms_form_elements_Password(_AM_PASSWORD, "password", 10, 255, '', false, ($icmsConfigUser['pass_level']?'password_adv':''));
+global $icmsConfigUser, $icmsSecurityConfigUser;
+$pwd_text = new icms_form_elements_Password(_AM_PASSWORD, "password", 10, 255, '', false, 
+											($icmsSecurityConfigUser['pass_level']?'password_adv':'')
+											);
 $pwd_text2 = new icms_form_elements_Password(_AM_RETYPEPD, "pass2", 10, 255);
 $mailok_radio = new icms_form_elements_Radioyn(_US_MAILOK, 'user_mailok', (int) ($mailok_value));
 
@@ -119,7 +94,10 @@ if ($gperm_handler->checkRight("system_admin", XOOPS_SYSTEM_GROUP, icms::$user->
 	if (in_array(XOOPS_GROUP_ADMIN, icms::$user->getGroups())) {
 		$group_select = array(new icms_form_elements_select_Group(_US_GROUPS, 'groups', false, $groups, 5, true));
 	} else {
-		$group_manager_value = array_intersect_key(icms::handler('icms_member')->getGroupList(), array_flip($gperm_handler->getItemIds('group_manager', icms::$user->getGroups()))) ;
+		$group_manager_value = array_intersect_key(icms::handler('icms_member')->getGroupList(),
+													array_flip($gperm_handler->getItemIds('group_manager',
+																icms::$user->getGroups())
+													)) ;
 		$group_array = new icms_form_elements_Select(_US_GROUPS, 'groups',$groups, 5, true);
 		$group_array->addOptionArray($group_manager_value);
 		$group_select = array ($group_array);
@@ -139,7 +117,7 @@ else {
 
 $salt_hidden = new icms_form_elements_Hidden('salt', icms_core_Password::createSalt());
 
-$enc_type_hidden = new icms_form_elements_Hidden('enc_type', $icmsConfigUser['enc_type']);
+$enc_type_hidden = new icms_form_elements_Hidden('enc_type', $icmsSecurityConfigUser['enc_type']);
 $pass_expired_hidden = new icms_form_elements_Hidden('pass_expired', 0);
 $fct_hidden = new icms_form_elements_Hidden("fct", "users");
 $op_hidden = new icms_form_elements_Hidden("op", $op_value);
@@ -210,8 +188,4 @@ if (!empty($uid_value)) {
 	$form->addElement($uid_hidden);
 }
 
-//$form->setRequired($uname_text);
-//$form->setRequired($email_text);
 $form->display();
-
-?>

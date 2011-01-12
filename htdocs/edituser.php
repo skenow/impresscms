@@ -121,8 +121,8 @@ if ($op == 'saveuser') {
 			$errors[] = _US_BADPWD;
 		}
 
-		if (strlen($password) < $icmsConfigUser['minpass']) {
-			$errors[] = sprintf(_US_PWDTOOSHORT,$icmsConfigUser['minpass']);
+		if (strlen($password) < $icmsSecurityConfigUser['minpass']) {
+			$errors[] = sprintf(_US_PWDTOOSHORT,$icmsSecurityConfigUser['minpass']);
 		}
 
 		$vpass = '';
@@ -186,8 +186,8 @@ if ($op == 'saveuser') {
 			$icmspass = new icms_core_Password();
 			$salt = $icmspass->createSalt();
 			$edituser->setVar('salt', $salt, true);
-			$edituser->setVar('enc_type', $icmsConfigUser['enc_type'], true);
-			$pass = $icmspass->encryptPass($password, $salt, $icmsConfigUser['enc_type']);
+			$edituser->setVar('enc_type', $icmsSecurityConfigUser['enc_type'], true);
+			$pass = $icmspass->encryptPass($password, $salt, $icmsSecurityConfigUser['enc_type']);
 			$edituser->setVar('pass', $pass, true);
 		}
 
@@ -211,9 +211,9 @@ if ($op == 'saveuser') {
 		}
 
 		if (!empty($_POST['usecookie'])) {
-			setcookie($icmsConfig['usercookie'], icms::$user->getVar('login_name'), time()+ 31536000);
+			setcookie($icmsSecurityConfig['usercookie'], icms::$user->getVar('login_name'), time()+ 31536000);
 		} else {
-			setcookie($icmsConfig['usercookie']);
+			setcookie($icmsSecurityConfig['usercookie']);
 		}
 
 		if (!$member_handler->insertUser($edituser)) {
@@ -233,7 +233,7 @@ if ($op == 'editprofile') {
 	/** Include the header that starts page rendering */
 	include_once ICMS_ROOT_PATH.'/header.php';
 	include_once ICMS_ROOT_PATH.'/include/comment_constants.php';
-	if ($icmsConfigUser['pass_level']>20) {
+	if ($icmsSecurityConfigUser['pass_level']>20) {
 		icms_PasswordMeter();
 	}
 
@@ -255,7 +255,7 @@ if ($op == 'editprofile') {
 	$email_tray->addElement($email_cbox);
 	$form->addElement($email_tray);
 
-	if ($icmsConfigAuth['auth_openid'] == 1) {
+	if ($icmsSecurityConfigAuth['auth_openid'] == 1) {
 		$openid_tray = new icms_form_elements_Tray(_US_OPENID_FORM_CAPTION, '<br />');
 		$openid_text = new icms_form_elements_Text('', 'openid', 30, 255, icms::$user->getVar('openid'));
 		$openid_tray->setDescription(_US_OPENID_FORM_DSC);
@@ -332,9 +332,9 @@ if ($op == 'editprofile') {
 	$notify_mode_select = new icms_form_elements_Select(_NOT_NOTIFYMODE, 'notify_mode', icms::$user->getVar('notify_mode'));
 	$notify_mode_select->addOptionArray(array(XOOPS_NOTIFICATION_MODE_SENDALWAYS=>_NOT_MODE_SENDALWAYS, XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE=>_NOT_MODE_SENDONCE, XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT=>_NOT_MODE_SENDONCEPERLOGIN));
 	$bio_tarea = new icms_form_elements_Textarea(_US_EXTRAINFO, 'bio', icms::$user->getVar('bio', 'E'));
-	$cookie_radio_value = empty($_COOKIE[$icmsConfig['usercookie']]) ? 0 : 1;
+	$cookie_radio_value = empty($_COOKIE[$icmsSecurityConfig['usercookie']]) ? 0 : 1;
 	$cookie_radio = new icms_form_elements_Radioyn(_US_USECOOKIE, 'usecookie', $cookie_radio_value, _YES, _NO);
-	$pwd_text = new icms_form_elements_Password('', 'password', 10, 255, "", false, ($icmsConfigUser['pass_level']?'password_adv':''));
+	$pwd_text = new icms_form_elements_Password('', 'password', 10, 255, "", false, ($icmsSecurityConfigUser['pass_level']?'password_adv':''));
 	$pwd_text2 = new icms_form_elements_Password('', 'vpass', 10, 255);
 	$pwd_tray = new icms_form_elements_Tray(_US_PASSWORD.'<br />'._US_TYPEPASSTWICE);
 	$pwd_tray->addElement($pwd_text);

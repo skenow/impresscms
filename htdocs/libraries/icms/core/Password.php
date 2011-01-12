@@ -150,10 +150,10 @@ final class icms_core_Password {
 	 * @return   Hash of users password.
 	 */
 	private function priv_encryptPass($pass, $salt, $enc_type, $reset) {
-		global $icmsConfigUser;
+		global $icmsSecurityConfigUser;
 
 		if ($reset !== 1) {
-			$enc_type = (int) ($icmsConfigUser['enc_type']);
+			$enc_type = (int) ($icmsSecurityConfigUser['enc_type']);
 		}
 		if ($enc_type == 0) {
 			return md5($pass);

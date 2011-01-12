@@ -212,11 +212,12 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 	 *  @param string $vpass Password verification entered by the user
 	 *  @param int $uid user id (only applicable if the user already exists)
 	 *  @global array $icmsConfigUser user configuration
+	 *  @global array $icmsSecurityConfigUser user security configuration
 	 *  @return string of errors encountered while validating the user information, will be blank if successful
 	 */
 	function userCheck($login_name, $uname, $email, $pass, $vpass, $uid = 0)
 	{
-		global $icmsConfigUser;
+		global $icmsConfigUser, $icmsSecurityConfigUser;
 
 		// initializations
 		$myts = icms_core_Textsanitizer::getInstance();
@@ -272,8 +273,8 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 			if (!isset($pass) || $pass == '' || !isset($vpass) || $vpass == '') $stop .= _US_ENTERPWD.'<br />';
 			if ((isset($pass)) && ($pass != $vpass)) {
 				$stop .= _US_PASSNOTSAME.'<br />';
-			} elseif (($pass != '') && (strlen($pass) < $icmsConfigUser['minpass'])) {
-				$stop .= sprintf(_US_PWDTOOSHORT,$icmsConfigUser['minpass']).'<br />';
+			} elseif (($pass != '') && (strlen($pass) < $icmsSecurityConfigUser['minpass'])) {
+				$stop .= sprintf(_US_PWDTOOSHORT,$icmsSecurityConfigUser['minpass']).'<br />';
 			}
 			if (isset($pass) && isset($login_name) && ($pass == $login_name || $pass == icms_core_DataFilter::utf8_strrev($login_name, true) || strripos($pass, $login_name) === true)) $stop .= _US_BADPWD.'<br />';
 		}

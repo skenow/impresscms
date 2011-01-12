@@ -23,4 +23,4 @@ $modversion = array(
 	'hasAdmin' => 1,
 	'adminpath' => "admin.php?fct=security",
 	'category' => ICMS_SYSTEM_SEC_PREF,
-	'group' => _MD_AM_GROUPS_SEC_CONFIGURATION);
+	'group' => _MD_AM_GROUPS_SECURITY);

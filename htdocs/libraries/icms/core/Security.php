@@ -66,7 +66,7 @@ class icms_core_Security {
 	public function createToken($timeout = 0, $name = _CORE_TOKEN) {
 		$this->garbageCollection($name);
 		if ($timeout == 0) {
-			$timeout = $GLOBALS['xoopsConfig']['session_expire'] * 60; //session_expire is in minutes, we need seconds
+			$timeout = $GLOBALS['xoopsSecurityConfig']['session_expire'] * 60; //session_expire is in minutes, we need seconds
 		}
 		$token_id = md5(uniqid(rand(), true));
 		// save token data on the server
@@ -177,7 +177,7 @@ class icms_core_Security {
 	 * @return void
 	 **/
 	public function checkSuperglobals() {
-		foreach (array('GLOBALS', '_SESSION', 'HTTP_SESSION_VARS', '_GET', 'HTTP_GET_VARS', '_POST', 'HTTP_POST_VARS', '_COOKIE', 'HTTP_COOKIE_VARS', '_REQUEST', '_SERVER', 'HTTP_SERVER_VARS', '_ENV', 'HTTP_ENV_VARS', '_FILES', 'HTTP_POST_FILES', 'xoopsDB', 'xoopsUser', 'xoopsUserId', 'xoopsUserGroups', 'xoopsUserIsAdmin', 'xoopsConfig', 'xoopsOption', 'xoopsModule', 'xoopsModuleConfig', 'xoopsRequestUri') as $bad_global) {
+		foreach (array('GLOBALS', '_SESSION', 'HTTP_SESSION_VARS', '_GET', 'HTTP_GET_VARS', '_POST', 'HTTP_POST_VARS', '_COOKIE', 'HTTP_COOKIE_VARS', '_REQUEST', '_SERVER', 'HTTP_SERVER_VARS', '_ENV', 'HTTP_ENV_VARS', '_FILES', 'HTTP_POST_FILES', 'xoopsDB', 'xoopsUser', 'xoopsUserId', 'xoopsUserGroups', 'xoopsUserIsAdmin', 'xoopsConfig', 'xoopsOption', 'xoopsModule', 'xoopsModuleConfig', 'xoopsRequestUri', 'icmsConfig', 'icmsSecurityConfig') as $bad_global) {
 			if (isset($_REQUEST[$bad_global])) {
 				header('Location: '.ICMS_URL.'/');
 				exit();
@@ -192,9 +192,9 @@ class icms_core_Security {
 	 * @return void
 	 **/
 	public function checkBadips() {
-		global $icmsConfig;
-		if ($icmsConfig['enable_badips'] == 1 && isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] != '') {
-			foreach ($icmsConfig['bad_ips'] as $bi) {
+		global $icmsSecurityConfig;
+		if ($icmsSecurityConfig['enable_badips'] == 1 && isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] != '') {
+			foreach ($icmsSecurityConfig['bad_ips'] as $bi) {
 				if (!empty($bi) && preg_match("/".$bi."/", $_SERVER['REMOTE_ADDR'])) {
 					exit();
 				}
@@ -202,7 +202,7 @@ class icms_core_Security {
 		}
 		unset($bi);
 		unset($bad_ips);
-		unset($icmsConfig['badips']);
+		unset($icmsSecurityConfig['badips']);
 	}
 
 	/**

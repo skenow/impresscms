@@ -40,8 +40,8 @@ class icms_auth_Provisionning {
 	 **/
 	public function __construct(&$auth_instance) {
 		$this->_auth_instance = &$auth_instance;
-		global $icmsConfig, $icmsConfigAuth;
-		foreach ($icmsConfigAuth as $key => $val) {
+		global $icmsConfig, $icmsSecurityConfigAuth;
+		foreach ($icmsSecurityConfigAuth as $key => $val) {
 			$this->$key = $val;
 		}
 		$this->default_TZ = $icmsConfig['default_TZ'];

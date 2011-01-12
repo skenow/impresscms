@@ -45,14 +45,22 @@ switch ($op)
 		if (@is_array($groups_hidden)) {
 			$groups = array_unique(array_merge($groups, $groups_hidden)) ;
 		}
-		updateUser($uid, $username, $login_name, $name, $url, $email, $user_icq, $user_aim, $user_yim, $user_msnm, $user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar, $user_sig, $attachsig, $theme, $password, $pass2, $rank, $bio, $uorder, $umode, $notify_method, $notify_mode, $timezone_offset, $user_mailok, $language, $openid, $salt, $user_viewoid, $pass_expired, $enc_type, $groups);
+		updateUser($uid, $username, $login_name, $name, $url, $email, $user_icq, $user_aim, $user_yim, $user_msnm,
+					$user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar, $user_sig, $attachsig,
+					$theme, $password, $pass2, $rank, $bio, $uorder, $umode, $notify_method, $notify_mode,
+					$timezone_offset, $user_mailok, $language, $openid, $salt, $user_viewoid, $pass_expired,
+					$enc_type, $groups
+					);
 		break;
 
 	case 'delUser':
 		icms_cp_header();
 		$member_handler = icms::handler('icms_member');
 		$userdata =& $member_handler->getUser($uid);
-		icms_core_Message::confirm(array('fct' => 'users', 'op' => 'delUserConf', 'del_uid' => $userdata->getVar('uid')), 'admin.php', sprintf(_AM_AYSYWTDU,$userdata->getVar('uname')));
+		icms_core_Message::confirm(array('fct' => 'users',
+											'op' => 'delUserConf',
+											'del_uid' => $userdata->getVar('uid')
+										), 'admin.php', sprintf(_AM_AYSYWTDU, $userdata->getVar('uname')));
 		icms_cp_footer();
 		break;
 
@@ -61,11 +69,13 @@ switch ($op)
 		$count = count($memberslist_id);
 		if ($count > 0)
 		{
-			$list = "<a href='".ICMS_URL."/userinfo.php?uid=".$memberslist_id[0]."' rel='external'>".$memberslist_uname[$memberslist_id[0]]."</a>";
+			$list = "<a href='".ICMS_URL."/userinfo.php?uid=".$memberslist_id[0]."' rel='external'>" 
+				. $memberslist_uname[$memberslist_id[0]] . "</a>";
 			$hidden = "<input type='hidden' name='memberslist_id[]' value='".$memberslist_id[0]."' />\n";
 			for ($i = 1; $i < $count; $i++)
 			{
-				$list .= ", <a href='".ICMS_URL."/userinfo.php?uid=".$memberslist_id[$i]."' rel='external'>".$memberslist_uname[$memberslist_id[$i]]."</a>";
+				$list .= ", <a href='".ICMS_URL."/userinfo.php?uid=".$memberslist_id[$i]."' rel='external'>"
+					. $memberslist_uname[$memberslist_id[$i]] . "</a>";
 				$hidden .= "<input type='hidden' name='memberslist_id[]' value='".$memberslist_id[$i]."' />\n";
 			}
 			echo "<div><h4>".sprintf(_AM_AYSYWTDU," ".$list." ")."</h4>";
@@ -83,20 +93,23 @@ switch ($op)
 		break;
 
 	case 'delete_many_ok':
-		if (!icms::$security->check()) {redirect_header('admin.php?fct=users', 3, implode('<br />', icms::$security->getErrors()));}
+		if (!icms::$security->check()) {
+			redirect_header('admin.php?fct=users', 3, implode('<br />', icms::$security->getErrors()));
+		}
 		$count = count($memberslist_id);
 		$output = '';
 		$member_handler = icms::handler('icms_member');
-		for ($i = 0; $i < $count; $i++)
-		{
+		for ($i = 0; $i < $count; $i++) {
 			$deluser =& $member_handler->getUser($memberslist_id[$i]);
 			$delgroups = $deluser->getGroups();
-			if (in_array(XOOPS_GROUP_ADMIN, $delgroups))
-			{
+			if (in_array(XOOPS_GROUP_ADMIN, $delgroups)) {
 				$output .= sprintf(_AM_ADMIN_CAN_NOT_BE_DELETEED.' ('._AM_NICKNAME.': %s)', $deluser->getVar('uname')).'<br />';
 			} else {
-				if (!$member_handler->deleteUser($deluser)) {$output .= _AM_COULD_NOT_DELETE.' '.$deluser->getVar('uname').'<br />';}
-				else {$output .= $deluser->getVar('uname').' '._AM_USERS_DELETEED.'<br />';}
+				if (!$member_handler->deleteUser($deluser)) {
+					$output .= _AM_COULD_NOT_DELETE.' '.$deluser->getVar('uname').'<br />';
+				} else {
+					$output .= $deluser->getVar('uname').' '._AM_USERS_DELETEED.'<br />';
+				}
 				// RMV-NOTIFY
 				xoops_notification_deletebyuser($deluser->getVar('uid'));
 			}
@@ -107,18 +120,18 @@ switch ($op)
 		break;
 
 	case 'delUserConf':
-		if (!icms::$security->check()) {redirect_header('admin.php?fct=users', 3, implode('<br />', icms::$security->getErrors()));}
+		if (!icms::$security->check()) {
+			redirect_header('admin.php?fct=users', 3, implode('<br />', icms::$security->getErrors()));
+		}
 		$member_handler = icms::handler('icms_member');
 		$user =& $member_handler->getUser($del_uid);
 		$groups = $user->getGroups();
-		if (in_array(XOOPS_GROUP_ADMIN, $groups))
-		{
+		if (in_array(XOOPS_GROUP_ADMIN, $groups)) {
 			icms_cp_header();
 			echo sprintf(_AM_ADMIN_CAN_NOT_BE_DELETEED.'. ('._AM_NICKNAME.': %s)', $user->getVar('uname'));
 			icms_cp_footer();
 		}
-		elseif (!$member_handler->deleteUser($user))
-		{
+		elseif (!$member_handler->deleteUser($user)) {
 			icms_cp_header();
 			echo _AM_ADMIN_CAN_NOT_BE_DELETEED.$deluser->getVar('uname');
 			icms_cp_footer();
@@ -132,15 +145,17 @@ switch ($op)
 		break;
 
 	case 'addUser':
-		if (!icms::$security->check()) {redirect_header('admin.php?fct=users', 3, implode('<br />', icms::$security->getErrors()));}
-		if (!$username || !$email || !$password || !$login_name)
-		{
+		if (!icms::$security->check()) {
+			redirect_header('admin.php?fct=users', 3, implode('<br />', icms::$security->getErrors()));
+		}
+		if (!$username || !$email || !$password || !$login_name) {
 			$adduser_errormsg = _AM_YMCACF;
 		} else {
 			$member_handler = icms::handler('icms_member');
 			// make sure the username doesnt exist yet
-			if ($member_handler->getUserCount(new icms_db_criteria_Item('uname', $username)) > 0 || $member_handler->getUserCount(new icms_db_criteria_Item('login_name', $login_name)) > 0 )
-			{
+			if ($member_handler->getUserCount(new icms_db_criteria_Item('uname', $username)) > 0 
+				|| $member_handler->getUserCount(new icms_db_criteria_Item('login_name', $login_name)) > 0 ) {
+
 				$adduser_errormsg = _AM_NICKNAME.' '.$username.' '._AM_ALREADY_EXISTS;
 			} elseif ($member_handler->getUserCount(new icms_db_criteria_Item('email', $email)) > 0) {
 				$adduser_errormsg = _AM_A_USER_WITH_THIS_EMAIL_ADDRESS.' "'.$email.'" '._AM_ALREADY_EXISTS;
@@ -161,17 +176,20 @@ switch ($op)
 				$newuser->setVar('user_aim', $user_aim);
 				$newuser->setVar('user_yim', $user_yim);
 				$newuser->setVar('user_msnm', $user_msnm);
-				if ($pass2 != '')
-				{
-					if ($password != $pass2)
-					{
+				if ($pass2 != '') {
+					if ($password != $pass2) {
 						icms_cp_header();
 						echo '<b>'._AM_STNPDNM.'</b>';
 						icms_cp_footer();
 						exit();
 					}
-					if ($password == $username || $password == icms_utf8_strrev($username, true) || strripos($password, $username) === true || $password == $login_name || $password == icms_utf8_strrev($login_name, true) || strripos($password, $login_name) === true)
-					{
+					if ($password == $username 
+						|| $password == icms_core_DataFilter::icms_utf8_strrev($username, true)
+						|| strripos($password, $username) === true
+						|| $password == $login_name
+						|| $password == icms_core_DataFilter::icms_utf8_strrev($login_name, true)
+						|| strripos($password, $login_name) === true) {
+
 						icms_cp_header();
 						echo '<b>'._AM_BADPWD.'</b>';
 						icms_cp_footer();
@@ -199,20 +217,24 @@ switch ($op)
 				$newuser->setVar('language', $language);
 
 				if ($icmsConfigAuth['auth_openid'] == 1) {
-					$newuser->setVar('openid', $openid);}
-					if (!$member_handler->insertUser($newuser))
-					{
+					$newuser->setVar('openid', $openid);
+				}
+					if (!$member_handler->insertUser($newuser)) {
 						$adduser_errormsg = _AM_CNRNU;
 					} else {
 						$groups_failed = array();
-						if (!isset($_POST['groups'])) $groups = array(XOOPS_GROUP_ANONYMOUS);
-						foreach ($groups as $group)
-						{
-							if (!$member_handler->addUserToGroup($group, $newuser->getVar('uid'))) {$groups_failed[] = $group;}
+						if (!isset($_POST['groups'])) {
+							$groups = array(XOOPS_GROUP_ANONYMOUS);
 						}
-						if (!empty($groups_failed))
-						{
-							$group_names = $member_handler->getGroupList(new icms_db_criteria_Item('groupid', "(".implode(", ", $groups_failed).")", 'IN'));
+						foreach ($groups as $group) {
+							if (!$member_handler->addUserToGroup($group, $newuser->getVar('uid'))) {
+								$groups_failed[] = $group;
+							}
+						}
+						if (!empty($groups_failed)) {
+							$group_names = $member_handler->getGroupList(new icms_db_criteria_Item(
+											'groupid', "(".implode(", ", $groups_failed).")", 'IN')
+											);
 							$adduser_errormsg = sprintf(_AM_CNRNU2, implode(", ", $group_names));
 						} else {
 							/* Hack by marcan <INBOX>
@@ -264,5 +286,3 @@ switch ($op)
 		displayUsers();
 		break;
 }
-
-?>

@@ -26,13 +26,13 @@ class icms_core_Session {
 	 * @return icms_core_Session
 	 */
 	static public function service() {
-		global $icmsConfig;
+		global $icmsSecurityConfig;
 		$instance = new icms_core_Session(icms::$xoopsDB);
 		session_set_save_handler(
 			array($instance, 'open'), array($instance, 'close'), array($instance, 'read'),
 			array($instance, 'write'), array($instance, 'destroy'), array($instance, 'gc')
 		);
-		$sslpost_name = isset($_POST[$icmsConfig['sslpost_name']]) ? $_POST[$icmsConfig['sslpost_name']] : "";
+		$sslpost_name = isset($_POST[$icmsSecurityConfig['sslpost_name']]) ? $_POST[$icmsSecurityConfig['sslpost_name']] : "";
 		$instance->sessionStart($sslpost_name);
 
 		if (!empty($_SESSION['xoopsUserId'])) {
@@ -43,12 +43,12 @@ class icms_core_Session {
 				$_SESSION = array();
 			} else {
 				icms::$user = $user;
-				if ($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '') {
+				if ($icmsSecurityConfig['use_mysession'] && $icmsSecurityConfig['session_name'] != '') {
 					// we need to secure cookie when using SSL
 					$secure = substr(ICMS_URL, 0, 5) == 'https' ? 1 : 0;
 					setcookie(
-						$icmsConfig['session_name'], session_id(),
-						time()+(60*$icmsConfig['session_expire']), '/', '', $secure, 1
+						$icmsSecurityConfig['session_name'], session_id(),
+						time()+(60*$icmsSecurityConfig['session_expire']), '/', '', $secure, 1
 					);
 				}
 				$user->setGroups($_SESSION['xoopsUserGroups']);
@@ -179,9 +179,9 @@ class icms_core_Session {
 	 **/
 	public function gc_force() {
 		if (rand(1, 100) < 11) {
-			$expiration = empty($GLOBALS['icmsConfig']['session_expire'])
+			$expiration = empty($GLOBALS['icmsSecurityConfig']['session_expire'])
 						? @ini_get('session.gc_maxlifetime')
-						: $GLOBALS['icmsConfig']['session_expire'] * 60;
+						: $GLOBALS['icmsSecurityConfig']['session_expire'] * 60;
 			$this->gc($expiration);
 		}
 	}
@@ -216,13 +216,13 @@ class icms_core_Session {
 	 * @return  bool
 	 **/
 	public function update_cookie($sess_id = null, $expire = null) {
-		global $icmsConfig;
+		global $icmsSecurityConfig;
 		$secure = substr(ICMS_URL, 0, 5) == 'https' ? 1 : 0; // we need to secure cookie when using SSL
-		$session_name = ($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '')
-				? $icmsConfig['session_name'] : session_name();
+		$session_name = ($icmsSecurityConfig['use_mysession'] && $icmsSecurityConfig['session_name'] != '')
+				? $icmsSecurityConfig['session_name'] : session_name();
 		$session_expire = $expire !== NULL ? (int) $expire
-				: (($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '')
-					? $icmsConfig['session_expire'] * 60 : ini_get('session.cookie_lifetime'));
+				: (($icmsSecurityConfig['use_mysession'] && $icmsSecurityConfig['session_name'] != '')
+					? $icmsSecurityConfig['session_expire'] * 60 : ini_get('session.cookie_lifetime'));
 		$session_id = empty($sess_id) ? session_id() : $sess_id;
 		setcookie($session_name, $session_id, $session_expire ? time() + $session_expire : 0, '/',  '', $secure, 0);
 	}
@@ -267,9 +267,9 @@ class icms_core_Session {
 	}
 
 	public function removeExpiredCustomSession($sess) {
-		global $icmsConfig;
-		if ($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != ''
-				&& !isset($_COOKIE[$icmsConfig['session_name']]) && !empty($_SESSION[$sess]))
+		global $icmsSecurityConfig;
+		if ($icmsSecurityConfig['use_mysession'] && $icmsSecurityConfig['session_name'] != ''
+				&& !isset($_COOKIE[$icmsSecurityConfig['session_name']]) && !empty($_SESSION[$sess]))
 		{
 			unset($_SESSION[$sess]);
 		}
@@ -282,13 +282,13 @@ class icms_core_Session {
 	 * @return
 	 **/
 	public function sessionClose($uid) {
-		global $icmsConfig;
+		global $icmsSecurityConfig;
 
 		$uid = (int)$uid;
 		session_regenerate_id(true);
 		$_SESSION = array();
-		if ($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '') {
-			setcookie($icmsConfig['session_name'], '', time()- 3600, '/',  '', 0, 0);
+		if ($icmsSecurityConfig['use_mysession'] && $icmsSecurityConfig['session_name'] != '') {
+			setcookie($icmsSecurityConfig['session_name'], '', time()- 3600, '/',  '', 0, 0);
 		}
 		// clear entry from online users table
 		if ($uid > 0) {
@@ -306,24 +306,24 @@ class icms_core_Session {
 	 * @return
 	 **/
 	public function sessionStart($sslpost_name = '') {
-		global $icmsConfig;
+		global $icmsSecurityConfig;
 
-		if ($icmsConfig['use_ssl'] && isset($sslpost_name) && $sslpost_name != '') {
+		if ($icmsSecurityConfig['use_ssl'] && isset($sslpost_name) && $sslpost_name != '') {
 			session_id($sslpost_name);
-		} elseif ($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != ''
-			&& $icmsConfig['session_expire'] > 0)
+		} elseif ($icmsSecurityConfig['use_mysession'] && $icmsSecurityConfig['session_name'] != ''
+			&& $icmsSecurityConfig['session_expire'] > 0)
 		{
-			if (isset($_COOKIE[$icmsConfig['session_name']])) {
-				session_id($_COOKIE[$icmsConfig['session_name']]);
+			if (isset($_COOKIE[$icmsSecurityConfig['session_name']])) {
+				session_id($_COOKIE[$icmsSecurityConfig['session_name']]);
 			}
 			if (function_exists('session_cache_expire')) {
-				session_cache_expire($icmsConfig['session_expire']);
+				session_cache_expire($icmsSecurityConfig['session_expire']);
 			}
-			@ini_set('session.gc_maxlifetime', $icmsConfig['session_expire'] * 60);
+			@ini_set('session.gc_maxlifetime', $icmsSecurityConfig['session_expire'] * 60);
 		}
 
-		if ($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '') {
-			session_name($icmsConfig['session_name']);
+		if ($icmsSecurityConfig['use_mysession'] && $icmsSecurityConfig['session_name'] != '') {
+			session_name($icmsSecurityConfig['session_name']);
 		} else {
 			session_name('ICMSSESSION');
 		}

@@ -48,7 +48,7 @@ $user_mailok = (isset($_POST['user_mailok']) && (int) ($_POST['user_mailok'])) ?
 $agree_disc = (isset($_POST['agree_disc']) && (int) ($_POST['agree_disc'])) ? 1 : 0;
 $actkey = isset($_POST['actkey']) ? trim(icms_core_DataFilter::stripSlashesGPC($_POST['actkey'])) : '';
 $salt = isset($_POST['salt']) ? trim(icms_core_DataFilter::stripSlashesGPC($_POST['salt'])) : '';
-$enc_type = $icmsConfigUser['enc_type'];
+$enc_type = $icmsSecurityConfigUser['enc_type'];
 
 $thisuser = icms::handler('icms_member_user');
 switch ($op) {

@@ -33,13 +33,13 @@ class icms_auth_Factory {
 		if (isset($auth_instance)) {
 			return $auth_instance;
 		} else {
-			global $icmsConfigAuth;
+			global $icmsSecurityConfigAuth;
 
-			if (empty($icmsConfigAuth['auth_method'])) {
+			if (empty($icmsSecurityConfigAuth['auth_method'])) {
 				// If there is a config error, we use xoops
 				$auth_method = 'xoops';
 			} else {
-				$auth_method = $icmsConfigAuth['auth_method'];
+				$auth_method = $icmsSecurityConfigAuth['auth_method'];
 
 				// However if auth_method is XOOPS, and openid login is activated and a user is trying to authenticate with his openid
 
@@ -48,12 +48,12 @@ class icms_auth_Factory {
 				 */
 				$config_to_enable_openid = true;
 
-				if ($icmsConfigAuth['auth_method'] == 'xoops' && $config_to_enable_openid && (isset($_REQUEST['openid_identity']) || isset($_SESSION['openid_response']))) {
+				if ($icmsSecurityConfigAuth['auth_method'] == 'xoops' && $config_to_enable_openid && (isset($_REQUEST['openid_identity']) || isset($_SESSION['openid_response']))) {
 					$auth_method = 'openid';
 				}
 			}
 			// Verify if uname allow to bypass LDAP auth
-			if (in_array($uname, $icmsConfigAuth['ldap_users_bypass'])) $auth_method = 'xoops';
+			if (in_array($uname, $icmsSecurityConfigAuth['ldap_users_bypass'])) $auth_method = 'xoops';
 			/* with autoloading in ImpressCMS 1.3, requiring the file is not necessary */
 			$class = 'icms_auth_' . ucfirst($auth_method);
 			switch ($auth_method) {

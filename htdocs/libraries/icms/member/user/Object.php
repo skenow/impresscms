@@ -169,8 +169,6 @@ class icms_member_user_Object extends icms_core_Object {
 	public function sendWelcomeMessage() {
 		global $icmsConfig, $icmsConfigUser;
 
-		$myts =& icms_core_Textsanitizer::getInstance();
-
 		if (!$icmsConfigUser['welcome_msg']) {return true;}
 
 		$xoopsMailer = new icms_messaging_Handler();
@@ -182,7 +180,7 @@ class icms_member_user_Object extends icms_core_Object {
 		$xoopsMailer->setToEmails($user_email);
 		$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
 		$xoopsMailer->setFromName($icmsConfig['sitename']);
-		$xoopsMailer->setSubject(sprintf(_US_YOURREGISTRATION, $myts->stripSlashesGPC($icmsConfig['sitename'])));
+		$xoopsMailer->setSubject(sprintf(_US_YOURREGISTRATION, icms_core_DataFilter::stripSlashesGPC($icmsConfig['sitename'])));
 		if (!$xoopsMailer->send(true)) {
 			$this->setErrors(_US_WELCOMEMSGFAILED);
 			return false;
