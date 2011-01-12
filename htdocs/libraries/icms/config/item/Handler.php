@@ -25,7 +25,6 @@ define('ICMS_CONF_METAFOOTER', 3);
 define('ICMS_CONF_CENSOR', 4);
 define('ICMS_CONF_SEARCH', 5);
 define('ICMS_CONF_MAILER', 6);
-define('ICMS_CONF_AUTH', 7);
 define('ICMS_CONF_MULILANGUAGE', 8);
 define('ICMS_CONF_CONTENT', 9);
 define('ICMS_CONF_PERSONA', 10);

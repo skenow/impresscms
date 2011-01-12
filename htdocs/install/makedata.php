@@ -395,8 +395,8 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$dbm->insert('config', " VALUES (" . ++$i . ",0,$c,'smtpauthport','_MD_AM_SMTPAUTHPORT','465','_MD_AM_SMTPAUTHPORTDESC','textbox','int', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ",0,$c,'sendmailpath','_MD_AM_SENDMAILPATH','/usr/sbin/sendmail','_MD_AM_SENDMAILPATHDESC','textbox','text', " . $p++ . ")");
 
-	// Data for Config Category 7 (Multi Language Settings)
-	$c=7; // sets config category id
+	// Data for Config Category 8 (Multi Language Settings)
+	$c=8; // sets config category id
 	$p=0; // reset position increment to 0 for new category id
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c,'ml_enable', '_MD_AM_ML_ENABLE', '0', '_MD_AM_ML_ENABLEDEC', 'yesno', 'int', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c,'ml_autoselect_enabled', '_MD_AM_ML_AUTOSELECT_ENABLED', '0', '_MD_AM_ML_AUTOSELECT_ENABLED_DESC', 'yesno', 'int', " . $p++ . ")");
@@ -406,7 +406,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c,'ml_charset', '_MD_AM_ML_CHARSET', 'UTF-8,UTF-8', '_MD_AM_ML_CHARSETDSC', 'textbox', 'text', " . $p++ . ")");
 
 	// Data for Config Category 9 (Content Manager Settings)
-	$c=8; // sets config category id
+	$c=9; // sets config category id
 	$p=0;
 	/* These have been deprecated in 1.2 and should not be inserted. They are part of the content module now
 		$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'default_page', '_MD_AM_DEFAULT_CONTPAGE', '0', '_MD_AM_DEFAULT_CONTPAGEDSC', 'select_pages', 'int', " . $p++ . ")");
@@ -418,7 +418,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 		*/
 
 	// Data for Config Category 10 (Personalization Settings)
-	$c=9; // sets config category id
+	$c=10; // sets config category id
 	$p=0;
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'adm_left_logo', '_MD_AM_LLOGOADM', '/uploads/imagemanager/logos/img482278e29e81c.png', '_MD_AM_LLOGOADM_DESC', 'select_image', 'text', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'adm_left_logo_url', '_MD_AM_LLOGOADM_URL', '".XOOPS_URL."/index.php', '_MD_AM_LLOGOADM_URL_DESC', 'textbox', 'text', " . $p++ . ")");
@@ -454,7 +454,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'pagstyle', '_MD_AM_PAGISTYLE', 'default', '_MD_AM_PAGISTYLE_DESC', 'select_paginati', 'text', " . $p++ . ")");
 
 	// Data for Config Category 11 (CAPTCHA Settings)
-	$c=10; // sets config category id
+	$c=11; // sets config category id
 	$p=0;
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'captcha_mode', '_MD_AM_CAPTCHA_MODE', 'image', '_MD_AM_CAPTCHA_MODEDSC', 'select', 'text', " . $p++ . ")");
 	// Insert data for Config Options in selection field. (must be placed before //$i++)

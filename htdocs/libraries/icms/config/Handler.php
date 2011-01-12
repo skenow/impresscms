@@ -36,7 +36,7 @@ class icms_config_Handler {
 		$configs = $instance->getConfigsByCat(
 			array(
 				ICMS_CONF, ICMS_CONF_USER, ICMS_CONF_METAFOOTER, ICMS_CONF_MAILER,
-				ICMS_CONF_AUTH, ICMS_CONF_MULILANGUAGE, ICMS_CONF_PERSONA, ICMS_CONF_PLUGINS,
+				ICMS_CONF_MULILANGUAGE, ICMS_CONF_PERSONA, ICMS_CONF_PLUGINS,
 				ICMS_CONF_CAPTCHA, ICMS_CONF_SEARCH
 			)
 		);
@@ -45,7 +45,6 @@ class icms_config_Handler {
 		$GLOBALS['icmsConfigUser']       = $configs[ICMS_CONF_USER];
 		$GLOBALS['icmsConfigMetaFooter'] = $configs[ICMS_CONF_METAFOOTER];
 		$GLOBALS['icmsConfigMailer']     = $configs[ICMS_CONF_MAILER];
-		$GLOBALS['icmsConfigAuth']       = $configs[ICMS_CONF_AUTH];
 		$GLOBALS['icmsConfigMultilang']  = $configs[ICMS_CONF_MULILANGUAGE];
 		$GLOBALS['icmsConfigPersona']    = $configs[ICMS_CONF_PERSONA];
 		$GLOBALS['icmsConfigPlugins']    = $configs[ICMS_CONF_PLUGINS];
