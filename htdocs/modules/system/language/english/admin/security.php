@@ -7,10 +7,6 @@ if (!defined('_AM_DBUPDATED')) {define("_AM_DBUPDATED","Database Updated Success
 define("_MD_AM_SEC_SITEPREF","Site Security Preferences");
 define("_MD_AM_SEC_NONE","None");
 define("_MD_AM_SEC_MINPASS","Minimum length of password required");
-define("_MD_AM_SEC_UNAMELVL","Select the level of strictness for username filtering");
-define("_MD_AM_SEC_STRICT","Strict (only alphabets and numbers)");
-define("_MD_AM_SEC_MEDIUM","Medium");
-define("_MD_AM_SEC_LIGHT","Light (recommended for multi-byte chars)");
 define("_MD_AM_SEC_USERCOOKIE","Name for user cookies.");
 define("_MD_AM_SEC_USERCOOKIEDSC","This cookie contains only a user name and is saved in a user pc for a year (if the user wishes). If a user has this cookie, username will be automatically inserted in the login box.");
 define("_MD_AM_SEC_USEMYSESS","Use custom session");
@@ -19,7 +15,6 @@ define("_MD_AM_SEC_SESSNAME","Session name");
 define("_MD_AM_SEC_SESSNAMEDSC","The name of session (Valid only when 'use custom session' is enabled)");
 define("_MD_AM_SEC_SESSEXPIRE","Session expiration");
 define("_MD_AM_SEC_SESSEXPIREDSC","Maximum duration of session idle time in minutes (Valid only when 'use custom session' is enabled. Works only when you are using PHP4.2.0 or later.)");
-define("_MD_AM_SEC_ALWDHTML","HTML tags allowed in all posts.");
 define("_MD_AM_SEC_INVLDMINPASS","Invalid value for minimum length of password.");
 define("_MD_AM_SEC_INVLDUCOOK","Invalid value for usercookie name.");
 define("_MD_AM_SEC_INVLDSCOOK","Invalid value for sessioncookie name.");
@@ -32,13 +27,9 @@ define('_MD_AM_SEC_USESSL', 'Use SSL for login?');
 define('_MD_AM_SEC_SSLPOST', 'SSL Post variable name');
 define('_MD_AM_SEC_SSLPOSTDSC', 'The name of variable used to transfer session value via POST. If you are unsure, set any name that is hard to guess.');
 
-define('_MD_AM_SEC_GENERAL', 'General Settings');
-define('_MD_AM_SEC_USERSETTINGS', 'User Settings');
+define('_MD_AM_SEC_GENERAL', 'General Security Settings');
+define('_MD_AM_SEC_USERSETTINGS', 'User Security Settings');
 define('_MD_AM_SEC_IPBAN', 'IP Banning');
-define('_MD_AM_SEC_BADEMAILS', 'Enter emails that should not be used in user profile');
-define('_MD_AM_SEC_BADEMAILSDSC', 'Separate each with a <b>|</b>, case insensitive, regex enabled.');
-define('_MD_AM_SEC_BADUNAMES', 'Enter names that should not be selected as username');
-define('_MD_AM_SEC_BADUNAMESDSC', 'Separate each with a <b>|</b>, case insensitive, regex enabled.');
 define('_MD_AM_SEC_DOBADIPS', 'Enable IP bans?');
 define('_MD_AM_SEC_DOBADIPSDSC', 'Users from specified IP addresses will not be able to view your site');
 define('_MD_AM_SEC_BADIPS', 'Enter IP addresses that should be banned from the site.<br />Separate each with a <b>|</b>, case insensitive, regex enabled.');
@@ -56,12 +47,6 @@ define("_MD_AM_SEC_PASSLEVEL3","Reasonable");
 define("_MD_AM_SEC_PASSLEVEL4","Strong");
 define("_MD_AM_SEC_PASSLEVEL5","Secure");
 define("_MD_AM_SEC_PASSLEVEL6","No classification");
-
-define("_MD_AM_SEC_REMEMBERME","Enable the 'Remember Me' feature in the login.");
-define("_MD_AM_SEC_REMEMBERMEDSC","The 'Remember Me' feature can represent a security issue. Use it under your own risk.");
-
-
-define("_MD_AM_SEC_ALLOW_ANONYMOUS_VIEW_PROFILE","Allow anonymous users to see user profiles.");
 
 define("_MD_AM_SEC_ENC_TYPE","Change Password Encryption (default is SHA256)");
 define("_MD_AM_SEC_ENC_TYPEDSC","Changes the Algorithm used for encrypting user passwords.<br />Changing this will render all passwords invalid! all users will need to reset their passwords after changing this preference");
@@ -241,7 +226,6 @@ define("_MD_AM_SEC_PURIFIER_LIVELEAK","LiveLeak Movies");
 
 define("_MD_AM_SEC_UNABLECSSTIDY", "CSSTidy Plugin is not found, Please copy the make sure you have CSSTidy located in your plugins folder.");
 
-// added in 1.3
 define("_MD_AM_SEC_PURIFIER_OUTPUT_FLASHCOMPAT","Enable IE Flash Compatibility");
 define("_MD_AM_SEC_PURIFIER_OUTPUT_FLASHCOMPATDSC","If true, HTML Purifier will generate Internet Explorer compatibility code for all object code. This is highly recommended if you enable HTML.SafeObject.");
 define("_MD_AM_SEC_PURIFIER_HTML_FLASHFULLSCRN","Allow FullScreen in Flash objects");
@@ -249,16 +233,19 @@ define("_MD_AM_SEC_PURIFIER_HTML_FLASHFULLSCRNDSC","If true, HTML Purifier will 
 define("_MD_AM_SEC_PURIFIER_CORE_NORMALNEWLINES","Normalize Newlines");
 define("_MD_AM_SEC_PURIFIER_CORE_NORMALNEWLINESDSC","Whether or not to normalize newlines to the operating system default. When false, HTML Purifier will attempt to preserve mixed newline files.");
 define('_MD_AM_SEC_AUTHENTICATION_DSC', 'Manage security settings related to accessibility. Settings that will effect how users accounts are handled.');
-define('_MD_AM_SEC_AUTOTASKS_PREF_DSC', 'Preferences for the Auto Tasks system.');
-define('_MD_AM_SEC_CAPTCHA_DSC', 'Manage the settings used by captcha throughout your site.');
-define('_MD_AM_SEC_GENERAL_DSC', 'The primary settings page for basic information needed by the system.');
+define('_MD_AM_SEC_GENERAL_DSC', 'The primary security settings page for basic information needed by the system.');
 define('_MD_AM_SEC_PURIFIER_DSC', 'HTMLPurifier is used to protect your site against common attack methods.');
-define('_MD_AM_SEC_MAILER_DSC', 'Configure how your site will handle mail.');
-define('_MD_AM_SEC_METAFOOTER_DSC', 'Manage your meta information and site footer as well as your crawler options.');
-define('_MD_AM_SEC_MULTILANGUAGE_DSC', 'Manage your sites Multi-language settings. Enable, and configure what languages are available and how they are triggered.');
-define('_MD_AM_SEC_PERSON_DSC', 'Personalize the system with custom logos and other settings.');
-define('_MD_AM_SEC_PLUGINS_DSC', 'Select which plugins are used and available to be used throughout your site.');
-define('_MD_AM_SEC_SEARCH_DSC', 'Manage how the search function operates for your users.');
-define('_MD_AM_SEC_USERSETTINGS_DSC', 'Manage how users register for your site. ser names length, formatting and password options.');
-define('_MD_AM_SEC_CENSOR_DSC', 'Manage the language that is not permitted on your site.');
+define('_MD_AM_SEC_USERSETTINGS_DSC', 'Manage password & SSL options.');
+
+define('_MD_AM_ACCOUNTLOCK', 'Enable Account Locking');
+define('_MD_AM_ACCOUNTLOCKDSC', 'Enable Locking of accounts after x amount of incorrect password attempts');
+define('_MD_AM_PASSATTEMPTS', 'Number of failed Password attempts');
+define('_MD_AM_PASSATTEMPTSDSC', 'the amount of times a user can enter an incorrect password before their account is locked');
+define('_MD_AM_LOCK_TYPE', 'Account Locking Method');
+define('_MD_AM_LOCK_TYPEDSC', "The method used to unlock the account.<br />
+	Select 'User' will send an email to the users registered email address asking them to click a link to unlock.<br />
+	Select 'Admin' will send an email to the administrator to unlock the account.");
+define('_MD_AM_LOCK_USER', 'User Unlock');
+define('_MD_AM_LOCK_ADMIN', 'Admin Unlock');
+
 ?>
