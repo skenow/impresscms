@@ -53,6 +53,15 @@ INSERT INTO configcategory VALUES (13, '_MD_AM_AUTOTASKS', 0);
 INSERT INTO configcategory VALUES (14, '_MD_AM_PURIFIER', 0);
 
 #
+# Dumping data for table `SecurityConfigCategory`
+#
+
+INSERT INTO SecurityConfigCategory VALUES (1, '_MD_AM_SEC_GENERAL', 0);
+INSERT INTO SecurityConfigCategory VALUES (2, '_MD_AM_SEC_USERSETTINGS', 0);
+INSERT INTO SecurityConfigCategory VALUES (3, '_MD_AM_SEC_AUTHENTICATION', 0);
+INSERT INTO SecurityConfigCategory VALUES (4, '_MD_AM_SEC_PURIFIER', 0);
+
+#
 # Dumping data for table `image`
 #
 
