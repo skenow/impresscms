@@ -19,6 +19,8 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 define('ICMS_SEC_CONF', 1);
 define('ICMS_SEC_CONF_USER', 2);
 define('ICMS_SEC_CONF_AUTH', 3);
+define('ICMS_SEC_CONF_PURIFIER', 4);
+
 /**#@-*/
 
 /**

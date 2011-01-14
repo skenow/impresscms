@@ -78,6 +78,37 @@ foreach ($dirlist as $file) {
 					'id'	=> $modversion['category']
 				);
 			}
+			if ($modversion['name'] == _MD_AM_SEC_PREF) {
+				//Getting categories of preferences to include in dropdownmenu
+				icms_loadLanguageFile('system', 'security', true);
+				$sec_cat_handler = icms::handler('icms_securityconfig_category');
+				$sec_cats = $sec_cat_handler->getObjects();
+				$sec_catcount = count($sec_cats);
+				if ($sec_catcount > 0) {
+					for ($x = 0; $x < $sec_catcount; $x++) {
+						$subs[$x]['title'] = constant($sec_cats[$x]->getVar('sec_cat_name'));
+						$subs[$x]['link'] = ICMS_URL.'/modules/system/admin.php?fct=security' .
+							'&amp;op=show&amp;sec_cat_id='.$sec_cats[$x]->getVar('sec_cat_id');
+					}
+					$adminmenu[$modversion['group']]['subs'][] = array(
+						'title'		=> $modversion['name'],
+						'link'		=> ICMS_URL . '/modules/system/admin.php?fct=' . $file,
+						'icon'		=> 'admin/' . $file . '/images/' . $file . '.png',
+						'small'		=> 'admin/' . $file . '/images/' . $file . '_small.png',
+						'id'		=> $modversion['category'],
+						'hassubs'	=> 1,
+						'subs'		=> $subs
+					);
+				}
+			} else {
+				$adminmenu[$modversion['group']]['subs'][] = array(
+					'title'	=> $modversion['name'],
+					'link'	=> ICMS_URL . '/modules/system/admin.php?fct=' . $file,
+					'icon'	=> 'admin/' . $file . '/images/' . $file . '.png',
+					'small'	=> 'admin/' . $file . '/images/' . $file . '_small.png',
+					'id'	=> $modversion['category']
+				);
+			}
 		}
 	}
 	unset($modversion);

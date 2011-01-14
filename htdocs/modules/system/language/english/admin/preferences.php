@@ -70,15 +70,12 @@ define('_MD_AM_GENERAL', 'General Settings');
 define('_MD_AM_USERSETTINGS', 'User Settings');
 define('_MD_AM_ALLWCHGMAIL', 'Allow users to change email address?');
 define('_MD_AM_ALLWCHGMAILDSC', '');
-define('_MD_AM_IPBAN', 'IP Banning');
+
 define('_MD_AM_BADEMAILS', 'Enter emails that should not be used in user profile');
 define('_MD_AM_BADEMAILSDSC', 'Separate each with a <b>|</b>, case insensitive, regex enabled.');
 define('_MD_AM_BADUNAMES', 'Enter names that should not be selected as username');
 define('_MD_AM_BADUNAMESDSC', 'Separate each with a <b>|</b>, case insensitive, regex enabled.');
-define('_MD_AM_DOBADIPS', 'Enable IP bans?');
-define('_MD_AM_DOBADIPSDSC', 'Users from specified IP addresses will not be able to view your site');
-define('_MD_AM_BADIPS', 'Enter IP addresses that should be banned from the site.<br />Separate each with a <b>|</b>, case insensitive, regex enabled.');
-define('_MD_AM_BADIPSDSC', '^aaa.bbb.ccc will disallow visitors with an IP that starts with aaa.bbb.ccc<br />aaa.bbb.ccc$ will disallow visitors with an IP that ends with aaa.bbb.ccc<br />aaa.bbb.ccc will disallow visitors with an IP that contains aaa.bbb.ccc');
+
 define('_MD_AM_PREFMAIN', 'Preferences Main');
 define('_MD_AM_METAKEY', 'Meta Keywords');
 define('_MD_AM_METAKEYDSC', 'The keywords meta tag is a series of keywords that represents the content of your site. Type in keywords with each separated by a comma or a space in between. (Ex. ImpressCMS, PHP, mySQL, portal system)');
@@ -292,9 +289,6 @@ define("_MD_AM_SIGMAXLENGTHDSC","Here you can choose the length of your users si
 
 define("_MD_AM_USE_GOOGLE_ANA"," Enable Google Analytics?");
 define("_MD_AM_USE_GOOGLE_ANA_DESC","");
-
-// added in 1.1.2
-define("_MD_AM_UNABLEENCCLOSED","Database Update Failed, You can't change password encryption whilst the site is closed");
 
 ######################## Added in 1.2 ###################################
 define("_MD_AM_CAPTCHA","Captcha Settings");

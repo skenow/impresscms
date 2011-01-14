@@ -669,6 +669,7 @@ CREATE TABLE system_rating (
 #
 # Table structure for table `system_autotasks`
 #
+
 CREATE TABLE system_autotasks (
   sat_id int(10) unsigned NOT NULL AUTO_INCREMENT,
   sat_name varchar(255) NOT NULL,

@@ -354,8 +354,8 @@ class icms_core_Textsanitizer {
 				$text = $this->xoopsCodeDecode($text, 0);
 			}
 		}
-		$config_handler = icms::handler('icms_config');
-		$icmsConfigPurifier = $config_handler->getConfigsByCat(ICMS_CONF_PURIFIER);
+		$securityconfig_handler = icms::handler('icms_securityconfig');
+		$icmsConfigPurifier = $securityconfig_handler->getConfigsByCat(ICMS_SEC_CONF_PURIFIER);
 		if ($br !== 0 || ($html !== 0 && $icmsConfigPurifier['enable_purifier'] !== 1)) {
 			$text = $this->nl2Br($text);
 		}
@@ -401,8 +401,8 @@ class icms_core_Textsanitizer {
 				$text = $this->xoopsCodeDecode($text, 0);
 			}
 		}
-		$config_handler = icms::handler('icms_config');
-		$icmsConfigPurifier = $config_handler->getConfigsByCat(ICMS_CONF_PURIFIER);
+		$securityconfig_handler = icms::handler('icms_securityconfig');
+		$icmsConfigPurifier = $securityconfig_handler->getConfigsByCat(ICMS_SEC_CONF_PURIFIER);
 		if ($br !== 0 || ($html !== 0 && $icmsConfigPurifier['enable_purifier'] !== 1)) {
 			$text = $this->nl2Br($text);
 		}

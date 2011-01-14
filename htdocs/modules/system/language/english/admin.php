@@ -68,4 +68,6 @@ define('_MD_AM_VRSN_DSC', 'Use this tool to check your system for updates.');
 
 // added in 1.4
 define('_MD_AM_SEC_PREF', 'Security Preferences');
+define("_MD_AM_GROUPS_SECURITY", "System Security Tools");
+define('_MD_AM_SECURITY', 'Security');
 ?>

@@ -22,5 +22,5 @@ $modversion = array(
 	'image' => "sec.gif",
 	'hasAdmin' => 1,
 	'adminpath' => "admin.php?fct=security",
-	'category' => ICMS_SYSTEM_SEC_PREF,
+	'category' => ICMS_SYSTEM_SECURITY,
 	'group' => _MD_AM_GROUPS_SECURITY);
