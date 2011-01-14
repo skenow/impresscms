@@ -76,7 +76,7 @@ if (! is_object(icms::$user)
 		if (! is_object($sec_cat)) {
 			redirect_header('admin.php?fct=security', 1);
 		}
-		global $icmsConfigUser;
+		global $icmsSecurityConfigUser;
 		$form = new icms_form_Theme(constant($sec_cat->getVar('sec_cat_name')), 'sec_form', 'admin.php?fct=security', 'post', true);
 		$sconfig_handler = icms::handler('icms_securityconfig');
 		$criteria = new icms_db_criteria_Compo();

@@ -92,7 +92,7 @@ class icms_securityconfig_Item_Handler extends icms_core_ObjectHandler {
 			${$k} = $v;
 		}
 		if ($config->isNew()) {
-			$sec_id = icms::$xoopsDB->genId('SecurityConfig_sec_id_seq');
+			$sec_id = icms::$xoopsDB->genId('securityconfig_sec_id_seq');
 			$sql = sprintf("INSERT INTO %s (
 				sec_id,
 				sec_modid,

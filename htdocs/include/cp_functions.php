@@ -34,7 +34,7 @@ define ('XOOPS_CPFUNC_LOADED', 1);
  */
 function icms_cp_header(){
 	global $icmsConfig, $xoopsConfig, $icmsConfigPlugins, $icmsConfigPersona, $icmsModule,
-		$xoopsModule, $xoopsTpl, $xoopsOption, $xoTheme,
+		$xoopsModule, $xoopsTpl, $xoopsOption, $xoTheme, $icmsSecurityConfig,
 		$icmsConfigMultilang, $icmsAdminTpl;
 
 	icms::$logger->stopTime('Module init');

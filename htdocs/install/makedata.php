@@ -264,8 +264,6 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_NEWESTFIRST', '1', $i)");
 	// ----------
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'use_captchaf', '_MD_AM_USECAPTCHAFORM', 1, '_MD_AM_USECAPTCHAFORMDSC', 'yesno', 'int', " . $p++ . ")");
-	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'enable_badips', '_MD_AM_DOBADIPS', '0', '_MD_AM_DOBADIPSDSC', 'yesno', 'int', " . $p++ . ")");
-	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'bad_ips', '_MD_AM_BADIPS', '".addslashes(serialize(array('127.0.0.1')))."', '_MD_AM_BADIPSDSC', 'textsarea', 'array', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'module_cache', '_MD_AM_MODCACHE', '', '_MD_AM_MODCACHEDSC', 'module_cache', 'array', " . $p++ . ")");
 
 	// Data for Config Category 2 (User Preferences)
@@ -521,6 +519,8 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$dbm->insert('SecurityConfig', " VALUES (" . ++$i . ", 0, $c, 'use_ssl', '_MD_AM_USESSL', '0', '_MD_AM_USESSLDSC', 'yesno', 'int', " . $p++ . ")");
 	$dbm->insert('SecurityConfig', " VALUES (" . ++$i . ", 0, $c, 'sslpost_name', '_MD_AM_SSLPOST', 'icms_ssl', '_MD_AM_SSLPOSTDSC', 'textbox', 'text', " . $p++ . ")");
 	$dbm->insert('SecurityConfig', " VALUES (" . ++$i . ", 0, $c, 'sslloginlink', '_MD_AM_SSLLINK', 'https://', '_MD_AM_SSLLINKDSC', 'textbox', 'text', " . $p++ . ")");
+	$dbm->insert('SecurityConfig', " VALUES (" . ++$i . ", 0, $c, 'enable_badips', '_MD_AM_DOBADIPS', '0', '_MD_AM_DOBADIPSDSC', 'yesno', 'int', " . $p++ . ")");
+	$dbm->insert('SecurityConfig', " VALUES (" . ++$i . ", 0, $c, 'bad_ips', '_MD_AM_BADIPS', '".addslashes(serialize(array('127.0.0.1')))."', '_MD_AM_BADIPSDSC', 'textsarea', 'array', " . $p++ . ")");
 
 	// Data for Security Config Category 2 (User Security)
 	$c=2; // sets security config category id
