@@ -107,6 +107,13 @@ class icms_ipf_Controller {
 					}
 					break;
 
+				case XOBJ_DTYPE_URL:
+					if (isset($_POST[$key])) {
+						$value = filter_var($_POST[$key], FILTER_SANITIZE_URL);
+						$icmsObj->setVar($key, $value);
+					}
+					break;
+
 				case XOBJ_DTYPE_STIME:
 				case XOBJ_DTYPE_MTIME:
 				case XOBJ_DTYPE_LTIME:
