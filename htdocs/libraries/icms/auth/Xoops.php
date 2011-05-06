@@ -71,21 +71,40 @@ class icms_auth_Xoops extends icms_auth_Object {
 			$YubikeyId = $member->getYubikeyId($email);
 			$YubikeySig = $member->getYubikeySig($email);
 
-			$token = new icms_auth_Yubikey($YubikeyId, $YubikeySig);
-
-			$token->setCurlTimeout(20);
-			$token->setTimestampTolerance(500);
-
-			if ($token->verify($otp)) {
+			if (self::verifyYubikey($YubikeyId, $YubikeySig, $otp)) {
 				unset($YubikeyId, $YubikeySig, $tokenId);
-				return self::authenticate($uname, $pwd);
+				if (isset($pwd) && $pwd !== '') {
+					return self::authenticate($uname, $pwd);
+				}
 			}
 		} else {
-			$this->setErrors(1, _US_INCORRECTYUBIKEY);
+			$this->setErrors(1, _US_INCORRECT_YUBIKEY);
 		}
 		unset($YubikeyId, $YubikeySig, $tokenId);
 
 		return false;
 	}
+
+	/**
+	 * Verify Yubikey
+	 * @param	int		$yubi_id
+	 * @param	string	$yubi_sig
+	 * @param	string	$yubi_otp
+	 * @return  bool
+	 */
+	public function verifyYubikey($yubi_id, $yubi_sig, $yubi_otp) {
+		$yubi_otp = strtolower($yubi_otp);
+
+		$token = new icms_auth_Yubikey($yubi_id, $yubi_sig);
+
+		$token->setCurlTimeout(20);
+		$token->setTimestampTolerance(500);
+
+		if ($token->verify($yubi_otp)) {
+			return true;
+		}
+		return false;
+	}
+
 }
 

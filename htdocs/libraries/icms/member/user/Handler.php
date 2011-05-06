@@ -414,7 +414,24 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 		return $uname;
 	}
 
-		/**
+	/**
+	 *
+	 *
+	 * @param int $uid User Id of User.
+	 */
+	static public function getEmailFromUid($uid = 0) {
+		$db = icms_db_Factory::instance();
+		if ($uid !== 0) {
+			$sql = $db->query("SELECT uid, email FROM " . $db->prefix('users')
+				. " WHERE uid = '" . (int) $uid	. "'");
+			list($uid, $email) = $db->fetchRow($sql);
+		} else {
+			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
+		}
+		return $email;
+	}
+
+	/**
 	 *
 	 *
 	 * @param string $email Email address for a user

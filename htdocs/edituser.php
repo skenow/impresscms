@@ -158,6 +158,33 @@ switch ($op) {
 				$errors[] = _US_BADPWD;
 			}
 		}
+
+		$yubikey_id = 0;
+		$yubikey_sig = '';
+		if (!empty($_POST['yubikey_id']) && $_POST['yubikey_id'] !== 0) {
+			if (!is_int($_POST['yubikey_id'])) {
+				$errors[] = _US_YUBIKEYID_INT;
+			} elseif (empty($_POST['yubikey_sig']) || (!empty($_POST['yubikey_sig']) && $_POST['yubikey_sig'] == '')) {
+				$errors[] = _US_ENTERYUBIKEY_SIG;
+			} else {
+				$yubikey_id = (int) $_POST['yubikey_id'];
+			}
+		}
+		if (!empty($_POST['yubikey_sig']) && $_POST['yubikey_sig'] !== '') {
+			if (empty($_POST['yubikey_id']) || (!empty($_POST['yubikey_id']) && $_POST['yubikey_id'] == 0)) {
+				$errors[] = _US_ENTERYUBIKEY_ID;
+			} else {
+				$yubikey_sig = icms_core_DataFilter::stripSlashesGPC(trim($_POST['yubikey_sig']));
+			}
+		}
+		if ($yubikey_id !== 0 && $yubikey_sig !== '') {
+			$yubi_otp = !empty($_POST['otp']) ? icms_core_DataFilter::stripSlashesGPC(trim($_POST['otp'])) : '';
+			$verify_key = icms_auth_Xoops::verifyYubikey($yubikey_id, $yubikey_sig, $yubi_otp);
+
+			if (!$verify_key) {
+				$errors[] = _US_INCORRECT_YUBIKEY;
+			}
+		}
 	
 		if (count($errors) > 0) {
 			/** Include the header that starts page rendering */
@@ -209,7 +236,15 @@ switch ($op) {
 				$pass = $icmspass->encryptPass($password, $salt, $icmsConfigUser['enc_type']);
 				$edituser->setVar('pass', $pass, TRUE);
 			}
-	
+
+			if ($yubikey_id !== 0 && $yubikey_sig !== '' && $yubi_otp !== '') {
+				$user_email = isset($email) ? $email : $member_handler->getEmailFromUid($uid);
+				$yubikey_token = $member_handler->createYubikeyToken($user_email, $yubi_otp);
+				$edituser->setVar('yubikey_token', $yubikey_token, TRUE);
+				$edituser->setVar('yubikey_id', $yubikey_id, TRUE);
+				$edituser->setVar('yubikey_sig', $yubikey_sig, TRUE);
+			}
+
 			$attachsig = !empty($_POST['attachsig']) ? 1 : 0;
 			$edituser->setVar('attachsig', $attachsig);
 			$edituser->setVar('timezone_offset', $_POST['timezone_offset']);
@@ -360,9 +395,19 @@ switch ($op) {
 		$pwd_tray->addElement($pwd_text);
 		$pwd_tray->addElement($pwd_text2);
 		$pwd_text_old = new icms_form_elements_Password(_US_OLD_PASSWORD, 'old_password', 10, 255);
+		
+		$yubikey_tray = new icms_form_elements_Tray(_US_YUBIKEY_FORM_CAPTION, '<br />');
+		$yubikey_idtext = new icms_form_elements_Text('', 'yubikey_id', 10, 10, icms::$user->getVar('yubikey_id'));
+		$yubikey_sigtext = new icms_form_elements_Text('', 'yubikey_sig', 25, 100, icms::$user->getVar('yubikey_sig'));
+		$yubikey_tray->setDescription(_US_YUBIKEY_FORM_DSC);
+		$yubikey_tray->addElement($yubikey_idtext);
+		$yubikey_tray->addElement($yubikey_sigtext);
+		$form->addElement($yubikey_tray);
+
 		$mailok_radio = new icms_form_elements_Radioyn(_US_MAILOK, 'user_mailok', (int) icms::$user->getVar('user_mailok'));
 		$salt_hidden = new icms_form_elements_Hidden('salt', icms_core_DataFilter::checkVar(icms::$user->getVar('salt'), 'str'));
 		$uid_hidden = new icms_form_elements_Hidden('uid', (int) icms::$user->getVar('uid'));
+		$yubitoken_hidden = new icms_form_elements_Hidden('yubikey_token', icms_core_DataFilter::checkVar(icms::$user->getVar('yubikey_token'), 'str'));
 		$op_hidden = new icms_form_elements_Hidden('op', 'saveuser');
 		$submit_button = new icms_form_elements_Button('', 'submit', _US_SAVECHANGES, 'submit');
 	
@@ -396,6 +441,8 @@ switch ($op) {
 		$form->addElement($mailok_radio);
 		$form->addElement($salt_hidden);
 		$form->addElement($uid_hidden);
+		$form->addElement($yubikey_tray);
+		$form->addElement($yubitoken_hidden);
 		$form->addElement($op_hidden);
 		$form->addElement($token_hidden);
 		$form->addElement($submit_button);
