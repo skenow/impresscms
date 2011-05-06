@@ -434,6 +434,23 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 	/**
 	 *
 	 *
+	 * @param int $uname Username of User.
+	 */
+	static public function getEmailFromUname($uname = '') {
+		$db = icms_db_Factory::instance();
+		if (isset($uname) && $uname !== '') {
+			$sql = $db->query("SELECT uname, email FROM " . $db->prefix('users')
+				. " WHERE uname = '" . @htmlspecialchars($uname, ENT_QUOTES, _CHARSET) . "'");
+			list($uname, $email) = $db->fetchRow($sql);
+		} else {
+			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
+		}
+		return $email;
+	}
+
+	/**
+	 *
+	 *
 	 * @param string $email Email address for a user
 	 */
 	public function getYubikeyId($email = '') {

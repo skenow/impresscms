@@ -19,6 +19,7 @@ if (!defined('ICMS_ROOT_PATH')) {
 icms_loadLanguageFile('core', 'user');
 $uname = !isset($_POST['uname']) ? '' : trim($_POST['uname']);
 $pass = !isset($_POST['pass']) ? '' : trim($_POST['pass']);
+$otp = !isset($_POST['otp']) ? '' : trim($_POST['otp']);
 /**
  * Commented out for OpenID , we need to change it to make a better validation if OpenID is used
  */
@@ -34,6 +35,7 @@ $icmsAuth =& icms_auth_Factory::getAuthConnection(icms_core_DataFilter::addSlash
 // uname&email hack GIJ
 $uname4sql = addslashes(icms_core_DataFilter::stripSlashesGPC($uname));
 $pass4sql = addslashes(icms_core_DataFilter::stripSlashesGPC($pass));
+$otp = addslashes(icms_core_DataFilter::stripSlashesGPC($otp));
 /*if (strstr( $uname , '@' )) {
  // check by email if uname includes '@'
  $criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('email', $uname4sql ));
@@ -45,7 +47,12 @@ $pass4sql = addslashes(icms_core_DataFilter::stripSlashesGPC($pass));
  unset( $users ) ;
  } */
 if (empty($user) || !is_object($user)) {
-	$user =& $icmsAuth->authenticate($uname4sql, $pass4sql);
+	if (isset($otp) && $otp !== '') {
+		$yubi_email = $member_handler->getEmailFromUname($uname4sql);
+		$user =& $icmsAuth->authenticateYubikey($yubi_email, $pass4sql, $otp);
+	} else {
+		$user =& $icmsAuth->authenticate($uname4sql, $pass4sql);
+	}
 }
 // end of uname&email hack GIJ
 

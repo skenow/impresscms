@@ -76,6 +76,8 @@ class icms_auth_Xoops extends icms_auth_Object {
 				if (isset($pwd) && $pwd !== '') {
 					return self::authenticate($uname, $pwd);
 				}
+			} else {
+				$this->setErrors(1, _US_INCORRECT_YUBIKEY);
 			}
 		} else {
 			$this->setErrors(1, _US_INCORRECT_YUBIKEY);
