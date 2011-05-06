@@ -582,6 +582,9 @@ CREATE TABLE users (
   pass_expired tinyint(1) unsigned NOT NULL default '0',
   enc_type tinyint(2) unsigned NOT NULL default '1',
   login_name varchar(255) NOT NULL default '',
+  yubikey_id int(10) unsigned NOT NULL default '0',
+  yubikey_sig varchar(100) NOT NULL default '',
+  yubikey_token varchar(255) NOT NULL default '',
   PRIMARY KEY  (uid),
   KEY uname (uname),
   UNIQUE KEY login_name (login_name)
