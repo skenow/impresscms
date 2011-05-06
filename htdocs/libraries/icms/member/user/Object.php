@@ -84,6 +84,10 @@ class icms_member_user_Object extends icms_core_Object {
 		$this->initVar('enc_type', XOBJ_DTYPE_INT, 0, false);
 		$this->initVar('login_name', XOBJ_DTYPE_TXTBOX, null, true, 255);
 
+		$this->initVar('yubikey_id', XOBJ_DTYPE_INT, 0, false);
+		$this->initVar('yubikey_sig', XOBJ_DTYPE_TXTBOX, null, false, 255);
+		$this->initVar('yubikey_token', XOBJ_DTYPE_TXTBOX, null, false, 255);
+
 		// for backward compatibility
 		if (isset($id)) {
 			if (is_array($id)) {

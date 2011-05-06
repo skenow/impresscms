@@ -80,10 +80,10 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 				user_from, user_sig, user_viewemail, actkey, user_aim, user_yim, user_msnm, pass, posts,
 				attachsig, rank, level, theme, timezone_offset, last_login, umode, uorder, notify_method,
 				notify_mode, user_occ, bio, user_intrest, user_mailok, language, openid, salt,
-				user_viewoid, pass_expired, enc_type, login_name) 
+				user_viewoid, pass_expired, enc_type, login_name, yubikey_id, yubikey_sig, yubikey_token)
 				VALUES ('%u', %s, %s, %s, %s, %s, '%u',
 				%s, %s, %s, '%u', %s, %s, %s, %s, %s, '%u', '%u', '%u', '%u', %s, %s, '%u', %s, '%u',
-				'%u', '%u', %s, %s, %s, '%u', %s, %s, %s, '%u', '%u', '%u', %s)",
+				'%u', '%u', %s, %s, %s, '%u', %s, %s, %s, '%u', '%u', '%u', %s, '%u', %s, %s)",
 				$this->db->prefix('users'), 
 				(int) ($uid), 
 				$this->db->quoteString($uname), 
@@ -122,7 +122,10 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 				(int) ($user_viewoid), 
 				(int) ($pass_expired), 
 				(int) ($enc_type), 
-				$this->db->quoteString($login_name)
+				$this->db->quoteString($login_name),
+				(int) $yubikey_id,
+				$this->db->quoteString($yubikey_sig),
+				$this->db->quoteString($yubikey_token)
 			);
 		} else {
 			$sql = sprintf(
@@ -132,7 +135,8 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 				level= '%s', theme = %s, timezone_offset = %s, umode = %s, last_login = '%u',
 				uorder = '%u', notify_method = '%u', notify_mode = '%u', user_occ = %s, bio = %s,
 				user_intrest = %s, user_mailok = '%u', language = %s, openid = %s, salt = %s,
-				user_viewoid = '%u', pass_expired = '%u', enc_type = '%u', login_name = %s WHERE uid = '%u'",
+				user_viewoid = '%u', pass_expired = '%u', enc_type = '%u', login_name = %s,
+				yubikey_id = '%u', yubikey_sig = %s, yubikey_token = %s WHERE uid = '%u'",
 				$this->db->prefix('users'), 
 				$this->db->quoteString($uname), 
 				$this->db->quoteString($name), 
@@ -169,6 +173,9 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 				(int) ($pass_expired), 
 				(int) ($enc_type), 
 				$this->db->quoteString($login_name), 
+				(int) $yubikey_id,
+				$this->db->quoteString($yubikey_sig),
+				$this->db->quoteString($yubikey_token),
 				(int) ($uid)
 			);
 		}
@@ -310,7 +317,7 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 	 *  @global array $icmsConfigUser user configuration
 	 *  @return string of errors encountered while validating the user information, will be blank if successful
 	 */
-	public function userCheck($login_name, $uname, $email, $pass, $vpass, $uid = 0) {
+	public function userCheck($login_name, $uname, $email, $pass, $vpass, $uid = 0, $yubikey_id, $yubikey_sig) {
 		global $icmsConfigUser;
 
 		// initializations
@@ -361,6 +368,17 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 			if ($count > 0) $stop .= _US_NICKNAMETAKEN.'<br />';
 		}
 
+		// check yubikey
+		if (isset($yubikey_id) || $yubikey_id !== 0) {
+			if (!is_int($yubikey_id)) {
+				$stop .= _US_YUBIKEYID_INT . '<br />';
+			} elseif (!isset($yubikey_sig) || $yubikey_sig == '') {
+				$stop .= _US_ENTERYUBIKEY_SIG . '<br />';
+			}
+		} elseif ((!isset($yubikey_id) || $yubikey_id == 0) && (isset($yubikey_sig) || $yubikey_sig !== '')) {
+			$stop .= _US_ENTERYUBIKEY_ID . '<br />';
+		}
+
 		// check password
 		if ($pass !== false) {
 			if (!isset($pass) || $pass == '' || !isset($vpass) || $vpass == '') $stop .= _US_ENTERPWD.'<br />';
@@ -395,5 +413,69 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 		}
 		return $uname;
 	}
+
+		/**
+	 *
+	 *
+	 * @param string $email Email address for a user
+	 */
+	public function getYubikeyId($email = '') {
+		$db = icms_db_Factory::instance();
+		if ($email !== '') {
+			$sql = $db->query("SELECT yubikey_id, email FROM " . $db->prefix('users')
+				. " WHERE email = '" . @htmlspecialchars($email, ENT_QUOTES, _CHARSET)
+				. "'");
+			list($yubikey_id, $email) = $db->fetchRow($sql);
+		} else {
+			redirect_header('user.php', 2, _US_SORRY_YUBIKEY_IDNOTFOUND);
+		}
+		return (int) $yubikey_id;
+	}
+	/**
+	 *
+	 *
+	 * @param string $email Email address for a user
+	 */
+	static public function getYubikeySig($email = '') {
+		$db = icms_db_Factory::instance();
+		if ($email !== '') {
+			$sql = $db->query("SELECT yubikey_sig, email FROM " . $db->prefix('users')
+				. " WHERE email = '" . @htmlspecialchars($email, ENT_QUOTES, _CHARSET)
+				. "'");
+			list($yubikey_sig, $email) = $db->fetchRow($sql);
+		} else {
+			redirect_header('user.php', 2, _US_SORRY_YUBIKEY_SIGNOTFOUND);
+		}
+		return $yubikey_sig;
+	}
+	/**
+	 *
+	 *
+	 * @param string $email Email address for a user
+	 */
+	static public function getYubikeyToken($email = '') {
+		$db = icms_db_Factory::instance();
+		if ($email !== '') {
+			$sql = $db->query("SELECT yubikey_token, email FROM " . $db->prefix('users')
+				. " WHERE email = '" . @htmlspecialchars($email, ENT_QUOTES, _CHARSET)
+				. "'");
+			list($yubikey_token, $email) = $db->fetchRow($sql);
+		} else {
+			redirect_header('user.php', 2, _US_SORRY_YUBIKEY_TOKNOTFOUND);
+		}
+		return $yubikey_token;
+	}
+
+	/**
+	 *
+	 *
+	 * @param string $email Email address of user
+	 * @param string $otp OTP from users Yubikey card
+	 */
+	static public function createYubikeyToken($email = '', $otp = '') {
+		$token = hash('sha256', substr($otp, 0, 12) . ":" . $email);
+		return $token;
+	}
+
 }
 

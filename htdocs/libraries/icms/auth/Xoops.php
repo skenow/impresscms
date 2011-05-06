@@ -50,5 +50,42 @@ class icms_auth_Xoops extends icms_auth_Object {
 		}
 		return ($user);
 	}
+
+	/**
+	 *  Authenticate Yubikey
+	 * @param string $email
+	 * @param string $pwd
+	 * @param string $otp
+	 * @return object {@link icms_member_user_Object} icms_member_user_Object object
+	 */
+	public function authenticateYubikey($email, $pwd = null, $otp = null) {
+		$otp = strtolower($otp);
+
+		$member = icms::handler('icms_member');
+		$uname = $member->getUnameFromEmail($email);
+
+		$tokenId = $member->getYubikeyToken($email);
+
+		if (hash('sha256', substr($otp, 0, 12) . ":" . $email) == $tokenId)
+		{
+			$YubikeyId = $member->getYubikeyId($email);
+			$YubikeySig = $member->getYubikeySig($email);
+
+			$token = new icms_auth_Yubikey($YubikeyId, $YubikeySig);
+
+			$token->setCurlTimeout(20);
+			$token->setTimestampTolerance(500);
+
+			if ($token->verify($otp)) {
+				unset($YubikeyId, $YubikeySig, $tokenId);
+				return self::authenticate($uname, $pwd);
+			}
+		} else {
+			$this->setErrors(1, _US_INCORRECTYUBIKEY);
+		}
+		unset($YubikeyId, $YubikeySig, $tokenId);
+
+		return false;
+	}
 }
 

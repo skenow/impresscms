@@ -31,6 +31,15 @@ if ($icmsConfigUser['pass_level']>20) {
 }
 $reg_form->addElement(new icms_form_elements_Password(_US_PASSWORD, "pass", 10, 255, icms_core_DataFilter::htmlSpecialChars($pass), false, ($icmsConfigUser['pass_level']?'password_adv':'')), true);
 $reg_form->addElement(new icms_form_elements_Password(_US_VERIFYPASS, "vpass", 10, 255, icms_core_DataFilter::htmlSpecialChars($vpass)), true);
+
+$yubikey_tray = new icms_form_elements_Tray(_US_YUBIKEY, "<br />");
+$yubikey_idtext = new icms_form_elements_Text("", "yubikey_id", 10, 10, (int) $yubikey_id);
+$yubikey_sigtext = new icms_form_elements_Text("", "yubikey_sig", 25, 60, icms_core_DataFilter::htmlSpecialChars($yubikey_sig));
+$yubikey_otptext = new icms_form_elements_Text("", "otp", 25, 60, icms_core_DataFilter::htmlSpecialChars($otp));
+$yubikey_tray->addElement($yubikey_idtext);
+$yubikey_tray->addElement($yubikey_sigtext);
+$yubikey_tray->addElement($yubikey_otptext);
+
 $reg_form->addElement(new icms_form_elements_Text(_US_WEBSITE, "url", 25, 255, icms_core_DataFilter::htmlSpecialChars($url)));
 $tzselected = ($timezone_offset != "") ? $timezone_offset : $icmsConfig['default_TZ'];
 $reg_form->addElement(new icms_form_elements_select_Timezone(_US_TIMEZONE, "timezone_offset", $tzselected));

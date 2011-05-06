@@ -39,6 +39,10 @@ $actkey = isset($_POST['actkey']) ? trim(icms_core_DataFilter::stripSlashesGPC($
 $salt = isset($_POST['salt']) ? trim(icms_core_DataFilter::stripSlashesGPC($_POST['salt'])) : '';
 $enc_type = $icmsConfigUser['enc_type'];
 
+$yubikey_id = isset($_POST['yubikey_id']) ? (int) $_POST['yubikey_id'] : 0;
+$yubikey_sig = isset($_POST['yubikey_sig']) ? trim(icms_core_DataFilter::stripSlashesGPC($_POST['yubikey_sig'])) : '';
+$otp = isset($_POST['otp']) ? trim(icms_core_DataFilter::stripSlashesGPC($_POST['otp'])) : '';
+
 $thisuser = icms::handler('icms_member_user');
 switch ($op) {
 	case 'newuser':
@@ -63,7 +67,7 @@ switch ($op) {
 				$stop .= _US_UNEEDAGREE . '<br />';
 			}
 		}
-		$stop .= $thisuser->userCheck($login_name, $uname, $email, $pass, $vpass);
+		$stop .= $thisuser->userCheck($login_name, $uname, $email, $pass, $vpass, $yubikey_id, $yubikey_sig);
 		if (empty($stop)) {
 			echo _US_LOGINNAME . ": " . icms_core_DataFilter::htmlSpecialChars($login_name) . "<br />"
 				. _US_NICKNAME . ": " . icms_core_DataFilter::htmlSpecialChars($uname) . "<br />"
@@ -83,6 +87,9 @@ switch ($op) {
 				. "' /><input type='hidden' name='url' value='" . icms_core_DataFilter::htmlSpecialChars($url) 
 				. "' /><input type='hidden' name='pass' value='" . icms_core_DataFilter::htmlSpecialChars($pass) 
 				. "' /><input type='hidden' name='vpass' value='" . icms_core_DataFilter::htmlSpecialChars($vpass) 
+				. "' /><input type='hidden' name='yubikey_id' value='" . (int) $yubikey_id
+				. "' /><input type='hidden' name='yubikey_sig' value='" . icms_core_DataFilter::htmlSpecialChars($yubikey_sig)
+				. "' /><input type='hidden' name='otp' value='" . icms_core_DataFilter::htmlSpecialChars($otp)
 				. "' /><input type='hidden' name='user_mailok' value='" . (int) $user_mailok 
 				. "' /><input type='hidden' name='actkey' value='" . icms_core_DataFilter::htmlSpecialChars($actkey) 
 				. "' /><input type='hidden' name='salt' value='" . icms_core_DataFilter::htmlSpecialChars($salt) 
@@ -101,7 +108,7 @@ switch ($op) {
 		
 	case 'finish':
 		include 'header.php';
-		$stop = $thisuser->userCheck($login_name, $uname, $email, $pass, $vpass);
+		$stop = $thisuser->userCheck($login_name, $uname, $email, $pass, $vpass, $yubikey_id, $yubikey_sig);
 		if (!icms::$security->check()) {
 			$stop .= implode('<br />', icms::$security->getErrors()) . "<br />";
 		}
@@ -140,6 +147,14 @@ switch ($op) {
 			$newuser->setVar('salt', $salt, TRUE);
 			$pass1 = $icmspass->encryptPass($pass, $salt, $enc_type);
 			$newuser->setVar('pass', $pass1, TRUE);
+
+			if ($yubikey_id !== 0 && $yubikey_sig !== '' && $otp !== '') {
+				$newuser->setVar('yubikey_id', $yubikey_id, FALSE);
+				$newuser->setVar('yubikey_sig', $yubikey_sig, FALSE);
+				$newuser->setVar('yubikey_token', $member_handler->createYubikeyToken($email, $otp), FALSE);
+			}
+
+
 			$newuser->setVar('timezone_offset', $timezone_offset, TRUE);
 			$newuser->setVar('user_regdate', time(), TRUE);
 			$newuser->setVar('uorder', $icmsConfig['com_order'], TRUE);
