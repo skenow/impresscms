@@ -503,6 +503,29 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 	/**
 	 *
 	 *
+	 * @param string $email Email address for a user
+	 */
+	static public function enableYubikey($uname = '') {
+		$db = icms_db_Factory::instance();
+		if ($uname !== '') {
+			$sql = $db->query("SELECT yubikey_token, uname FROM " . $db->prefix('users')
+				. " WHERE uname = '" . @htmlspecialchars($uname, ENT_QUOTES, _CHARSET)
+				. "'");
+			list($yubikey_token, $uname) = $db->fetchRow($sql);
+
+			if (isset($yubikey_token) && $yubikey_token !== '') {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 *
+	 *
 	 * @param string $email Email address of user
 	 * @param string $otp OTP from users Yubikey card
 	 */

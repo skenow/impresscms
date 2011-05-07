@@ -47,7 +47,8 @@ $otp = addslashes(icms_core_DataFilter::stripSlashesGPC($otp));
  unset( $users ) ;
  } */
 if (empty($user) || !is_object($user)) {
-	if (isset($otp) && $otp !== '') {
+	$yubikey_login = $member_handler->enableYubikey($uname4sql);
+	if ($yubikey_login) {
 		$yubi_email = $member_handler->getEmailFromUname($uname4sql);
 		$user =& $icmsAuth->authenticateYubikey($yubi_email, $pass4sql, $otp);
 	} else {
