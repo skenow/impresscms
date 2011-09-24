@@ -34,7 +34,7 @@ class IcmsBlock extends IcmsPersistableObject {
 		$this->quickInitVar('bid', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('mid', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('func_num', XOBJ_DTYPE_INT);
-		$this->quickInitVar('title', XOBJ_DTYPE_TXTBOX, true);
+		$this->quickInitVar('title', XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar('content', XOBJ_DTYPE_TXTAREA);
 		$this->quickInitVar('side', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('weight', XOBJ_DTYPE_INT, true, false, false, 0);
@@ -517,13 +517,26 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 	 * @deprecated
 	 */
 	function getAllByGroupModule($groupid, $module_id='0-0', $toponlyblock=false, $visible=null, $orderby='b.weight,b.bid', $isactive=1) {
+		// TODO: use $this->getObjects($criteria);
 
-		$isactive = (int) ($isactive);
-		$bid = array();
-		$icms_groupperm_handler = xoops_gethandler('groupperm');
-		$bid = $icms_groupperm_handler->getItemIds('block_read', $groupid);
+		$isactive = intval($isactive);
+		$ret = array();
+		$sql = "SELECT DISTINCT gperm_itemid FROM ".$this->db->prefix('group_permission')." WHERE gperm_name = 'block_read' AND gperm_modid = '1'";
+		if ( is_array($groupid) ) {
+			$gid = array_map(create_function('$a', '$r = "\'" . intval($a) . "\'"; return($r);'), $groupid);
+			$sql .= " AND gperm_groupid IN (".implode(',', $gid).")";
+		} else {
+			if (intval($groupid) > 0) {
+				$sql .= " AND gperm_groupid='".intval($groupid)."'";
+			}
+		}
+		$result = $this->db->query($sql);
+		$blockids = array();
+		while ( $myrow = $this->db->fetchArray($result) ) {
+			$blockids[] = $myrow['gperm_itemid'];
+		}
 
-		if (count($bid) > 0) {
+		if (!empty($blockids)) {
 			$sql = "SELECT b.* FROM ".$this->db->prefix('newblocks')." b, ".$this->db->prefix('block_module_link')." m WHERE m.block_id=b.bid";
 			$sql .= " AND b.isactive='".$isactive."'";
 			if (isset($visible)) {
@@ -547,16 +560,14 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 				}
 			}
 
-			$sql .= " AND b.bid IN (".implode(',', $bid).")";
+			$sql .= " AND b.bid IN (".implode(',', $blockids).")";
 			$sql .= " ORDER BY ".$orderby;
 			$result = $this->db->query($sql);
-			$bid = array();
 			while ( $myrow = $this->db->fetchArray($result) ) {
-				$bid[] =$myrow['bid'];
+				$block =& $this->get($myrow['bid']);
+				$ret[$myrow['bid']] =& $block;
+				unset($block);
 			}
-			$criteria = new CriteriaCompo();
-			$criteria->add(new Criteria('bid' , '('.implode(',', $bid).')', 'IN'));
-			$ret = $this->getObjects($criteria);
 		}
 		return $ret;
 
