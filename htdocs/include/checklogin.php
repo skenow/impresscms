@@ -32,8 +32,8 @@ icms_loadLanguageFile('core', 'auth');
 $icmsAuth =& icms_auth_Factory::getAuthConnection(icms_core_DataFilter::addSlashes($uname));
 
 // uname&email hack GIJ
-$uname4sql = addslashes(icms_core_DataFilter::stripSlashesGPC($uname));
-$pass4sql = addslashes(icms_core_DataFilter::stripSlashesGPC($pass));
+$uname4sql = icms_core_DataFilter::addSlashes(icms_core_DataFilter::stripSlashesGPC($uname));
+$pass4sql = icms_core_DataFilter::addSlashes(icms_core_DataFilter::stripSlashesGPC($pass));
 /*if (strstr( $uname , '@' )) {
  // check by email if uname includes '@'
  $criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('email', $uname4sql ));
