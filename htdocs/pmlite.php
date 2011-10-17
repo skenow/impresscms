@@ -53,8 +53,8 @@ if (icms::$user) {
 		} else {
 			$pm_handler = icms::handler('icms_data_privmessage');
 			$pm =& $pm_handler->create();
-			$pm->setVar("subject", $_POST['subject']);
-			$pm->setVar("msg_text", $_POST['message']);
+			$pm->setVar("subject", icms_core_DataFilter::filterTextareaInput($_POST['subject']));
+			$pm->setVar("msg_text", icms_core_DataFilter::filterHTMLinput($_POST['message'], TRUE, TRUE, TRUE));
 			$pm->setVar("to_userid", (int) ($_POST['to_userid']));
 			$pm->setVar("from_userid", (int) (icms::$user->getVar("uid")));
 			if (!$pm_handler->insert($pm)) {
