@@ -29,7 +29,7 @@ icms_loadLanguageFile('core', 'auth');
 $icmsAuth =& icms_auth_Factory::getAuthConnection(icms_core_DataFilter::addSlashes($uname));
 
 $uname4sql = addslashes(icms_core_DataFilter::stripSlashesGPC($uname));
-$pass4sql = addslashes(icms_core_DataFilter::stripSlashesGPC($pass));
+$pass4sql = icms_core_DataFilter::stripSlashesGPC($pass);
 
 if (empty($user) || !is_object($user)) {
 	$user =& $icmsAuth->authenticate($uname4sql, $pass4sql);

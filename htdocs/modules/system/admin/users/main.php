@@ -18,16 +18,25 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 }
 
 include_once ICMS_ROOT_PATH . "/modules/system/admin/users/users.php";
-$allowedHTML = array('user_sig', 'bio');
 
-if (!empty($_POST)) { foreach ($_POST as $k => $v) { if (!in_array($k, $allowedHTML)) {${$k} = StopXSS($v);} else {${$k} = $v;}}}
-if (!empty($_GET)) { foreach ($_GET as $k => $v) { if (!in_array($k, $allowedHTML)) {${$k} = StopXSS($v);} else {${$k} = $v;}}}
-$op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'mod_users');
-if (isset($_GET['op'])) {
-	if (isset($_GET['uid'])) {
-		$uid = (int) $_GET['uid'];
-	}
+$filter_post = array(
+    'user_sig' => 'html',
+    'bio'=> 'html',
+);
+
+$filter_get = array(
+    'uid' => 'int',
+);
+
+if (!empty($_POST)) {
+    $clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, FALSE);
+    extract($clean_POST);
 }
+if (!empty($_GET)) {
+    $clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, FALSE);
+    extract($clean_GET);
+}
+
 switch ($op) {
 	case 'modifyUser':
 		modifyUser($uid);
