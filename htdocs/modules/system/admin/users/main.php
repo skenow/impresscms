@@ -46,7 +46,6 @@ switch ($op) {
 		if (!icms::$security->check()) {
 			redirect_header('admin.php?fct=users', 3, implode('<br />', icms::$security->getErrors()));
 		}
-		// RMV-NOTIFY
 		$user_avatar = $theme = NULL;
 		if (!isset($attachsig)) {
 			$attachsig = NULL;
@@ -129,7 +128,6 @@ switch ($op) {
 				} else {
 					$output .= $deluser->getVar('uname') . ' ' . _AM_USERS_DELETEED . '<br />';
 				}
-				// RMV-NOTIFY
 				xoops_notification_deletebyuser($deluser->getVar('uid'));
 			}
 		}
@@ -202,7 +200,7 @@ switch ($op) {
 				if ($pass2 != '') {
 					if ($password != $pass2) {
 						icms_cp_header();
-						echo '<b>' . _AM_STNPDNM . '</b>';
+						echo '<strong>' . _AM_STNPDNM . '</strong>';
 						icms_cp_footer();
 						exit();
 					}
@@ -212,7 +210,7 @@ switch ($op) {
 						|| strripos($password, $login_name) === TRUE
 					) {
 						icms_cp_header();
-						echo '<b>' . _AM_BADPWD . '</b>';
+						echo '<strong>' . _AM_BADPWD . '</strong>';
 						icms_cp_footer();
 						exit();
 					}
