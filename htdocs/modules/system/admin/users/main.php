@@ -18,6 +18,7 @@ if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin(
 }
 
 include_once ICMS_ROOT_PATH . "/modules/system/admin/users/users.php";
+$op = '';
 
 $filter_post = array(
     'user_sig' => 'html',
