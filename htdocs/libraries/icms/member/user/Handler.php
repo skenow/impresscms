@@ -356,7 +356,6 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 
 		// check uname
 		if ((is_object($thisUser) && $thisUser->getVar('uname', 'e') != $uname && $uname !== FALSE) || !is_object($thisUser)) {
-			if ($icmsStopSpammers->badUsername($uname)) $stop .= _US_INVALIDNICKNAME . '<br />';
 			$count = $this->getCount(icms_buildCriteria(array('uname' => addslashes($uname))));
 			if ($count > 0) $stop .= _US_NICKNAMETAKEN . '<br />';
 		}
