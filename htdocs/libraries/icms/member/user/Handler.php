@@ -80,48 +80,48 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 				user_from, user_sig, user_viewemail, actkey, user_aim, user_yim, user_msnm, pass, posts,
 				attachsig, rank, level, theme, timezone_offset, last_login, umode, uorder, notify_method,
 				notify_mode, user_occ, bio, user_intrest, user_mailok, language, openid, salt,
-				user_viewoid, pass_expired, enc_type, login_name) 
+				user_viewoid, pass_expired, enc_type, login_name)
 				VALUES ('%u', %s, %s, %s, %s, %s, '%u',
 				%s, %s, %s, '%u', %s, %s, %s, %s, %s, '%u', '%u', '%u', '%u', %s, %s, '%u', %s, '%u',
 				'%u', '%u', %s, %s, %s, '%u', %s, %s, %s, '%u', '%u', '%u', %s)",
-				$this->db->prefix('users'), 
-				(int) ($uid), 
-				$this->db->quoteString($uname), 
-				$this->db->quoteString($name), 
-				$this->db->quoteString($email), 
-				$this->db->quoteString($url), 
-				$this->db->quoteString($user_avatar), 
-				time(), 
-				$this->db->quoteString($user_icq), 
-				$this->db->quoteString($user_from), 
-				$this->db->quoteString($user_sig), 
-				(int) ($user_viewemail), 
-				$this->db->quoteString($actkey), 
-				$this->db->quoteString($user_aim), 
-				$this->db->quoteString($user_yim), 
-				$this->db->quoteString($user_msnm), 
-				$this->db->quoteString($pass), 
-				(int) ($posts), 
-				(int) ($attachsig), 
-				(int) ($rank), 
-				(int) ($level), 
-				$this->db->quoteString($theme), 
-				$this->db->quoteString((float)($timezone_offset)), 
-				0, 
-				$this->db->quoteString($umode), 
-				(int) ($uorder), 
-				(int) ($notify_method), 
-				(int) ($notify_mode), 
-				$this->db->quoteString($user_occ), 
-				$this->db->quoteString($bio), 
-				$this->db->quoteString($user_intrest), 
-				(int) ($user_mailok), 
-				$this->db->quoteString($language), 
-				$this->db->quoteString($openid), 
-				$this->db->quoteString($salt), 
-				(int) ($user_viewoid), 
-				(int) ($pass_expired), 
-				(int) ($enc_type), 
+				$this->db->prefix('users'),
+				(int) $uid,
+				$this->db->quoteString($uname),
+				$this->db->quoteString($name),
+				$this->db->quoteString($email),
+				$this->db->quoteString($url),
+				$this->db->quoteString($user_avatar),
+				time(),
+				$this->db->quoteString($user_icq),
+				$this->db->quoteString($user_from),
+				$this->db->quoteString($user_sig),
+				(int) $user_viewemail,
+				$this->db->quoteString($actkey),
+				$this->db->quoteString($user_aim),
+				$this->db->quoteString($user_yim),
+				$this->db->quoteString($user_msnm),
+				$this->db->quoteString($pass),
+				(int) $posts,
+				(int) $attachsig,
+				(int) $rank,
+				(int) $level,
+				$this->db->quoteString($theme),
+				$this->db->quoteString((float) $timezone_offset),
+				0,
+				$this->db->quoteString($umode),
+				(int) $uorder,
+				(int) $notify_method,
+				(int) $notify_mode,
+				$this->db->quoteString($user_occ),
+				$this->db->quoteString($bio),
+				$this->db->quoteString($user_intrest),
+				(int) $user_mailok,
+				$this->db->quoteString($language),
+				$this->db->quoteString($openid),
+				$this->db->quoteString($salt),
+				(int) $user_viewoid,
+				(int) $pass_expired,
+				(int) $enc_type,
 				$this->db->quoteString($login_name)
 			);
 		} else {
@@ -133,43 +133,43 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 				uorder = '%u', notify_method = '%u', notify_mode = '%u', user_occ = %s, bio = %s,
 				user_intrest = %s, user_mailok = '%u', language = %s, openid = %s, salt = %s,
 				user_viewoid = '%u', pass_expired = '%u', enc_type = '%u', login_name = %s WHERE uid = '%u'",
-				$this->db->prefix('users'), 
-				$this->db->quoteString($uname), 
-				$this->db->quoteString($name), 
-				$this->db->quoteString($email), 
-				$this->db->quoteString($url), 
-				$this->db->quoteString($user_avatar), 
-				$this->db->quoteString($user_icq), 
-				$this->db->quoteString($user_from), 
-				$this->db->quoteString($user_sig), 
-				$user_viewemail, 
-				$this->db->quoteString($user_aim), 
-				$this->db->quoteString($user_yim), 
-				$this->db->quoteString($user_msnm), 
-				(int) ($posts), 
-				$this->db->quoteString($pass), 
-				(int) ($attachsig), 
-				(int) ($rank), 
-				(int) ($level), 
-				$this->db->quoteString($theme), 
-				$this->db->quoteString((float)($timezone_offset)), 
-				$this->db->quoteString($umode), 
-				(int) ($last_login), 
-				(int) ($uorder), 
-				(int) ($notify_method), 
-				(int) ($notify_mode), 
-				$this->db->quoteString($user_occ), 
-				$this->db->quoteString($bio), 
-				$this->db->quoteString($user_intrest), 
-				(int) ($user_mailok), 
-				$this->db->quoteString($language), 
-				$this->db->quoteString($openid), 
-				$this->db->quoteString($salt), 
-				(int) ($user_viewoid), 
-				(int) ($pass_expired), 
-				(int) ($enc_type), 
-				$this->db->quoteString($login_name), 
-				(int) ($uid)
+				$this->db->prefix('users'),
+				$this->db->quoteString($uname),
+				$this->db->quoteString($name),
+				$this->db->quoteString($email),
+				$this->db->quoteString($url),
+				$this->db->quoteString($user_avatar),
+				$this->db->quoteString($user_icq),
+				$this->db->quoteString($user_from),
+				$this->db->quoteString($user_sig),
+				$user_viewemail,
+				$this->db->quoteString($user_aim),
+				$this->db->quoteString($user_yim),
+				$this->db->quoteString($user_msnm),
+				(int) $posts,
+				$this->db->quoteString($pass),
+				(int) $attachsig,
+				(int) $rank,
+				(int) $level,
+				$this->db->quoteString($theme),
+				$this->db->quoteString((float) $timezone_offset),
+				$this->db->quoteString($umode),
+				(int) $last_login,
+				(int) $uorder,
+				(int) $notify_method,
+				(int) $notify_mode,
+				$this->db->quoteString($user_occ),
+				$this->db->quoteString($bio),
+				$this->db->quoteString($user_intrest),
+				(int) $user_mailok,
+				$this->db->quoteString($language),
+				$this->db->quoteString($openid),
+				$this->db->quoteString($salt),
+				(int) $user_viewoid,
+				(int) $pass_expired,
+				(int) $enc_type,
+				$this->db->quoteString($login_name),
+				(int) $uid
 			);
 		}
 		if (FALSE != $force) {
@@ -199,8 +199,8 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 		$pass = substr(md5(time()), 0, 8);
 		$salt = substr(md5(time() * 2), 0, 12);
 		$sql = sprintf(
-			"UPDATE %s SET level = '-1', pass = '%s', salt = '%s' WHERE uid = '%u'", 
-			$this->db->prefix('users'), $pass, $salt, (int) ($user->getVar('uid'))
+			"UPDATE %s SET level = '-1', pass = '%s', salt = '%s' WHERE uid = '%u'",
+			$this->db->prefix('users'), $pass, $salt, (int) $user->getVar('uid')
 		);
 		if (FALSE != $force) {
 			$result = $this->db->queryF($sql);
@@ -332,52 +332,52 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 
 		// check email
 		if ((is_object($thisUser) && $thisUser->getVar('email', 'e') != $email && $email !== FALSE) || !is_object($thisUser)) {
-			if (!icms_core_DataFilter::checkVar($email, 'email', 0, 1)) $stop .= _US_INVALIDMAIL.'<br />';
+			if (!icms_core_DataFilter::checkVar($email, 'email', 0, 1)) $stop .= _US_INVALIDMAIL . '<br />';
 			$count = $this->getCount(icms_buildCriteria(array('email' => addslashes($email))));
-			if ($count > 0) $stop .= _US_EMAILTAKEN.'<br />';
+			if ($count > 0) $stop .= _US_EMAILTAKEN . '<br />';
 		}
 
 		// check login_name
 		$login_name = icms_core_DataFilter::icms_trim($login_name);
 		if ((is_object($thisUser) && $thisUser->getVar('login_name', 'e') != $login_name && $login_name !== FALSE) || !is_object($thisUser)) {
-			if (empty($login_name) || preg_match($restriction, $login_name)) $stop .= _US_INVALIDNICKNAME.'<br />';
-			if (strlen($login_name) > $icmsConfigUser['maxuname']) $stop .= sprintf(_US_NICKNAMETOOLONG, $icmsConfigUser['maxuname']).'<br />';
-			if (strlen($login_name) < $icmsConfigUser['minuname']) $stop .= sprintf(_US_NICKNAMETOOSHORT, $icmsConfigUser['minuname']).'<br />';
+			if (empty($login_name) || preg_match($restriction, $login_name)) $stop .= _US_INVALIDNICKNAME . '<br />';
+			if (strlen($login_name) > $icmsConfigUser['maxuname']) $stop .= sprintf(_US_NICKNAMETOOLONG, $icmsConfigUser['maxuname']) . '<br />';
+			if (strlen($login_name) < $icmsConfigUser['minuname']) $stop .= sprintf(_US_NICKNAMETOOSHORT, $icmsConfigUser['minuname']) . '<br />';
 			foreach ($icmsConfigUser['bad_unames'] as $bu) {
-				if (!empty($bu) && preg_match('/'.$bu.'/i', $login_name)) {
-					$stop .= _US_NAMERESERVED.'<br />';
+				if (!empty($bu) && preg_match('/' . $bu . '/i', $login_name)) {
+					$stop .= _US_NAMERESERVED . '<br />';
 					break;
 				}
 			}
-			if (strrpos($login_name, ' ') > 0) $stop .= _US_NICKNAMENOSPACES.'<br />';
+			if (strrpos($login_name, ' ') > 0) $stop .= _US_NICKNAMENOSPACES . '<br />';
 			$count = $this->getCount(icms_buildCriteria(array('login_name' => addslashes($login_name))));
-			if ($count > 0) $stop .= _US_LOGINNAMETAKEN.'<br />';
+			if ($count > 0) $stop .= _US_LOGINNAMETAKEN . '<br />';
 		}
 
 		// check uname
 		if ((is_object($thisUser) && $thisUser->getVar('uname', 'e') != $uname && $uname !== FALSE) || !is_object($thisUser)) {
-			if ($icmsStopSpammers->badUsername($uname)) $stop .= _US_INVALIDNICKNAME.'<br />';
+			if ($icmsStopSpammers->badUsername($uname)) $stop .= _US_INVALIDNICKNAME . '<br />';
 			$count = $this->getCount(icms_buildCriteria(array('uname' => addslashes($uname))));
-			if ($count > 0) $stop .= _US_NICKNAMETAKEN.'<br />';
+			if ($count > 0) $stop .= _US_NICKNAMETAKEN . '<br />';
 		}
 
 		// check password
 		if ($pass !== FALSE) {
-			if (!isset($pass) || $pass == '' || !isset($vpass) || $vpass == '') $stop .= _US_ENTERPWD.'<br />';
+			if (!isset($pass) || $pass == '' || !isset($vpass) || $vpass == '') $stop .= _US_ENTERPWD . '<br />';
 			if ((isset($pass)) && ($pass != $vpass)) {
-				$stop .= _US_PASSNOTSAME.'<br />';
+				$stop .= _US_PASSNOTSAME . '<br />';
 			} elseif (($pass != '') && (strlen($pass) < $icmsConfigUser['minpass'])) {
-				$stop .= sprintf(_US_PWDTOOSHORT,$icmsConfigUser['minpass']).'<br />';
+				$stop .= sprintf(_US_PWDTOOSHORT,$icmsConfigUser['minpass']) . '<br />';
 			}
-			if (isset($pass) && isset($login_name) && ($pass == $login_name || $pass == icms_core_DataFilter::utf8_strrev($login_name, TRUE) || strripos($pass, $login_name) === TRUE)) $stop .= _US_BADPWD.'<br />';
+			if (isset($pass) && isset($login_name) && ($pass == $login_name || $pass == icms_core_DataFilter::utf8_strrev($login_name, TRUE) || strripos($pass, $login_name) === TRUE)) $stop .= _US_BADPWD . '<br />';
 		}
 
 		// check other things
-		if ($icmsStopSpammers->badIP($_SERVER['REMOTE_ADDR'])) $stop .= _US_INVALIDIP.'<br />';
+		if ($icmsStopSpammers->badIP($_SERVER['REMOTE_ADDR'])) $stop .= _US_INVALIDIP . '<br />';
 
 		return $stop;
 	}
-	
+
 	/**
 	 * Return a linked username or full name for a specific $userid
 	 *
@@ -391,7 +391,7 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 		global $icmsConfig;
 
 		if (!is_numeric($uid)) return $uid;
-		$uid = (int)$uid;
+		$uid = (int) $uid;
 		if ($uid > 0) {
 			if ($users == array()) {
 				$member_handler = icms::handler("icms_member");
@@ -410,13 +410,13 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 				if (($name) && !empty($fullname2)) $fullname = $user->getVar('name');
 				if (!empty($fullname)) $linkeduser = $fullname . "[";
 				$linkeduser .= "<a href='" . ICMS_URL . "/userinfo.php?uid=" . $uid . "'>";
-				$linkeduser .= icms_core_DataFilter::htmlSpecialChars($username)."</a>";
+				$linkeduser .= icms_core_DataFilter::htmlSpecialChars($username) . "</a>";
 				if (!empty($fullname)) $linkeduser .= "]";
 
 				if ($withContact) {
-					$linkeduser .= '<a href="mailto:'.$user->getVar('email').'">';
+					$linkeduser .= '<a href="mailto:' . $user->getVar('email') . '">';
 					$linkeduser .= '<img style="vertical-align: middle;" src="' . ICMS_IMAGES_URL
-						. '/icons/' . $icmsConfig["language"] . '/email.gif'.'" alt="'
+						. '/icons/' . $icmsConfig["language"] . '/email.gif' . '" alt="'
 						. _US_SEND_MAIL . '" title="' . _US_SEND_MAIL . '"/></a>';
 					$js = "javascript:openWithSelfMain('" . ICMS_URL . '/pmlite.php?send2=1&to_userid='
 						. $uid . "', 'pmlite', 450, 370);";
