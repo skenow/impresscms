@@ -998,20 +998,16 @@ class icms_core_DataFilter {
 			case "email": // returns False if email is invalid, returns $string if valid
 				global $icmsConfigUser;
 
-				$icmsStopSpammers = new icms_core_StopSpammer();
-
 				$data = filter_var($data, FILTER_SANITIZE_EMAIL);
 
 				if (filter_var($data, FILTER_VALIDATE_EMAIL)) {
 					if ($options2 == 1 && is_array($icmsConfigUser['bad_emails'])) {
 						foreach ($icmsConfigUser['bad_emails'] as $be) {
-							if ((!empty($be) && preg_match('/' . $be . '/i', $data))
-								|| $icmsStopSpammers->badEmail($data)
-							) {
-								return FALSE;
-							}
+							if ((!empty($be) && preg_match('/' . $be . '/i', $data))) return FALSE;
 						}
 					}
+					$icmsStopSpammers = new icms_core_StopSpammer();
+					if ($icmsStopSpammers->badEmail($data)) return FALSE;
 				} else {
 					return FALSE;
 				}
