@@ -141,7 +141,6 @@ switch ($op) {
 			}
 		}
 	
-		$username = xoops_getLinkedUnameFromId($uid);
 		if (!empty($password)) {
 			$password = icms_core_DataFilter::stripSlashesGPC(trim($password));
 			$oldpass = !empty($old_password) 
@@ -149,10 +148,11 @@ switch ($op) {
 				: '';
 		}
 	
-		if ($password !== '' && $change_pass == 1) {
+		if ($password !== '') {
 			$member_handler = icms::handler('icms_member');
-			if (!$member_handler->loginUser(addslashes($uname), addslashes($oldpass))) {
-				$errors[] = _US_BADPWD;
+			$username = $member_handler->getUser($uid)->getVar('login_name');
+			if (!$member_handler->loginUser(addslashes($username), $oldpass)) {
+				$errors[] = _US_SORRYINCORRECTPASS;
 			}
 	
 			if (strlen($password) < $icmsConfigUser['minpass']) {
@@ -184,6 +184,7 @@ switch ($op) {
 			}
 			echo '</div><br />';
 			$op = 'editprofile';
+			include ICMS_ROOT_PATH . '/footer.php';
 		} else {
 			$member_handler = icms::handler('icms_member');
 			$edituser =& $member_handler->getUser($uid);
