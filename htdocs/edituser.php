@@ -308,8 +308,6 @@ switch ($op) {
 		$location_text = new icms_form_elements_Text(_US_LOCATION, 'user_from', 30, 100, icms::$user->getVar('user_from', 'E'));
 		$occupation_text = new icms_form_elements_Text(_US_OCCUPATION, 'user_occ', 30, 100, icms::$user->getVar('user_occ', 'E'));
 		$interest_text = new icms_form_elements_Text(_US_INTEREST, 'user_intrest', 30, 150, icms::$user->getVar('user_intrest', 'E'));
-		/** include the file to display the xoopscodes and smilies */
-		include_once 'include/xoopscodes.php';
 		if ($icmsConfigUser['allwshow_sig'] == 1) {
 			if ($icmsConfigUser['allow_htsig'] == 0) {
 				$sig_tray = new icms_form_elements_Tray(_US_SIGNATURE, '<br />');
