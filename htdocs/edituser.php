@@ -178,12 +178,8 @@ switch ($op) {
 		if (count($errors) > 0) {
 			/** Include the header that starts page rendering */
 			include ICMS_ROOT_PATH . '/header.php';
-			echo '<div>';
-			foreach ($errors as $er) {
-				echo '<span style="color: #ff0000; font-weight: bold;">' . $er . '</span><br />';
-			}
-			echo '</div><br />';
-			$op = 'editprofile';
+			icms_core_Message::error($errors);
+			/* $op = 'editprofile';*/
 			include ICMS_ROOT_PATH . '/footer.php';
 		} else {
 			$member_handler = icms::handler('icms_member');
