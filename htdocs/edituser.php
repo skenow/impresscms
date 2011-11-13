@@ -276,7 +276,7 @@ switch ($op) {
 	case 'editprofile':
 		/** Include the header that starts page rendering */
 		include_once ICMS_ROOT_PATH . '/header.php';
-		include_once ICMS_ROOT_PATH . '/include/comment_constants.php';
+		include_once ICMS_INCLUDE_PATH . '/comment_constants.php';
 		if ($icmsConfigUser['pass_level'] > 20) {
 			icms_PasswordMeter();
 		}
@@ -368,7 +368,7 @@ switch ($op) {
 	
 		// TODO: add this to admin user-edit functions...
 		icms_loadLanguageFile('core', 'notification');
-		include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
+		include_once ICMS_INCLUDE_PATH . '/notification_constants.php';
 		$notify_method_select = new icms_form_elements_Select(_NOT_NOTIFYMETHOD, 'notify_method', icms::$user->getVar('notify_method'));
 		$notify_method_select->addOptionArray(array(XOOPS_NOTIFICATION_METHOD_DISABLE=>_NOT_METHOD_DISABLE, XOOPS_NOTIFICATION_METHOD_PM=>_NOT_METHOD_PM, XOOPS_NOTIFICATION_METHOD_EMAIL=>_NOT_METHOD_EMAIL));
 		$notify_mode_select = new icms_form_elements_Select(_NOT_NOTIFYMODE, 'notify_mode', icms::$user->getVar('notify_mode'));
