@@ -23,54 +23,65 @@ if (!is_object(icms::$user)) {
 }
 
 $op = '';
-
-$filter_post = array(
+/* The following are the form elements, passed through $_POST
     'user_sig' => 'html',
-    //'bio'=> 'html',
+    'bio'=> 'html',
 	'email' => array('email', 'options' => array(0, 1)),
 	'uid' => 'int',
-	//'uname' => 'str',
-	//'password' => 'str',
-	//'old_password'=> 'str',
+	'uname' => 'str',
+	'password' => 'str',
+	'old_password'=> 'str',
 	'change_pass' => 'int',
-	//'vpass'=> 'str',
-	//'name'=> 'str',
+	'vpass'=> 'str',
+	'name'=> 'str',
 	'url' => 'url',
-	//'user_icq'=> 'str',
-	//'user_from'=> 'str',
-	//'openid'=> 'str',
+	'user_icq'=> 'str',
+	'user_from'=> 'str',
+	'openid'=> 'str',
 	'user_viewemail' => 'int',
 	'user_viewoid' => 'int',
-	//'user_aim'=> 'str',
-	//'user_yim'=> 'str',
-	//'user_msnm'=> 'str',
+	'user_aim'=> 'str',
+	'user_yim'=> 'str',
+	'user_msnm'=> 'str',
 	'attachsig' => 'int',
-	//'timezone_offset'=> 'str',
-	//'uorder'=> 'str',
-	//'umode'=> 'str',
-	//'notify_method'=> 'str',
-	//'notify_mode'=> 'str',
-	//'user_occ'=> 'str',
-	//'user_intrest'=> 'str',
+	'timezone_offset'=> 'str',
+	'uorder'=> 'str',
+	'umode'=> 'str',
+	'notify_method'=> 'str',
+	'notify_mode'=> 'str',
+	'user_occ'=> 'str',
+	'user_intrest'=> 'str',
 	'user_mailok' => 'int',
-	//'theme_selected'=> 'str',
+	'theme_selected'=> 'str',
 	'usecookie' => 'int',
-	//'xoops_upload_file' => 'array'
-	//'user_avatar'=> 'str',
-	//'op' => 'str', 
+	'xoops_upload_file' => 'array'
+	'user_avatar'=> 'str',
+	'op' => 'str', 
+*/
+$filter_post = array(
+    'user_sig' => 'html',
+	'email' => array('email', 'options' => array(0, 1)),
+	'uid' => 'int',
+	'change_pass' => 'int',
+	'url' => 'url',
+	'user_viewemail' => 'int',
+	'user_viewoid' => 'int',
+	'attachsig' => 'int',
+	'user_mailok' => 'int',
+	'usecookie' => 'int',
 );
 
 $filter_get = array(
     'uid' => 'int',
 );
 
-if (!empty($_POST)) {
-    $clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, FALSE);
-    extract($clean_POST);
-}
 if (!empty($_GET)) {
     $clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, FALSE);
     extract($clean_GET);
+}
+if (!empty($_POST)) {
+    $clean_POST = icms_core_DataFilter::checkVarArray($_POST, $filter_post, FALSE);
+    extract($clean_POST);
 }
 	
 switch ($op) {
@@ -179,7 +190,7 @@ switch ($op) {
 			/** Include the header that starts page rendering */
 			include ICMS_ROOT_PATH . '/header.php';
 			icms_core_Message::error($errors);
-			/* $op = 'editprofile';*/
+			echo "<a href='edituser.php' title='" . _US_EDITPROFILE . "'>" . _US_EDITPROFILE . "</a>";
 			include ICMS_ROOT_PATH . '/footer.php';
 		} else {
 			$member_handler = icms::handler('icms_member');
