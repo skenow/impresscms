@@ -50,7 +50,7 @@ if (defined('ICMS_INCLUDE_OPENID')) {
 /* This address the strict compliance for PHP 5.3/5.4, but the rest of our timezone handling
  * can be improved beyond this. ~skenow
  */
-date_default_timezone_set(timezone_name_from_abbr("", $icmsConfig['default_TZ']));
+date_default_timezone_set(timezone_name_from_abbr("", $icmsConfig['default_TZ'] * 3600, 0));
 
 // -- Include site-wide lang file
 icms_loadLanguageFile('core', 'global');
