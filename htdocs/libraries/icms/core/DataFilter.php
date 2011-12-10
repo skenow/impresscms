@@ -1005,9 +1005,9 @@ class icms_core_DataFilter {
 						foreach ($icmsConfigUser['bad_emails'] as $be) {
 							if ((!empty($be) && preg_match('/' . $be . '/i', $data))) return FALSE;
 						}
+						$icmsStopSpammers = new icms_core_StopSpammer();
+						if ($icmsStopSpammers->badEmail($data)) return FALSE;
 					}
-					$icmsStopSpammers = new icms_core_StopSpammer();
-					if ($icmsStopSpammers->badEmail($data)) return FALSE;
 				} else {
 					return FALSE;
 				}
