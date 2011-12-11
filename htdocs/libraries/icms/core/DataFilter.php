@@ -369,12 +369,20 @@ class icms_core_DataFilter {
 			} else {
 				$filter = $filters[$key];
 			}
-			$output[$key] = self::checkVar($input[$key], $filter, $options[0], $options[1]);
+			if (is_array($input[$key])) {
+				$output[$key] = self::checkVarArray($input[$key], array($key => $filter), FALSE);
+			} else {
+				$output[$key] = self::checkVar($input[$key], $filter, $options[0], $options[1]);
+			}
 		}
 
 		if (!$strict) {
 			foreach ($diff = array_diff_key($input, $filters) as $key => $value) {
-				$output[$key] = self::checkVar($diff[$key], 'str');
+				if (is_array($diff[$key])) {
+					$output[$key] = self::checkVarArray($diff[$key], array($key => 'str'), FALSE);
+				} else {
+					$output[$key] = self::checkVar($diff[$key], 'str');
+				}
 			}
 		}
 		return $output;
