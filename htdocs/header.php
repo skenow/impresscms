@@ -60,7 +60,6 @@ if (!empty($icmsConfigPlugins['sanitizer_plugins'])) {
 	foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
 		if (empty($key))
 		continue;
-		$key = '';
 		if (file_exists(ICMS_PLUGINS_PATH . '/textsanitizer/' . $key . '/' . $key . '.css')) {
 			$xoTheme->addStylesheet(ICMS_PLUGINS_URL . '/textsanitizer/' . $key . '/' . $key . '.css', array('media' => 'screen'));
 		} else {
