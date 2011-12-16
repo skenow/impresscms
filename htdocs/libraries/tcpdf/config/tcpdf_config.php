@@ -37,8 +37,8 @@ if (!defined('K_TCPDF_EXTERNAL_CONFIG')) {
 		} elseif(isset($_SERVER['PATH_TRANSLATED'])) {
 			$_SERVER['DOCUMENT_ROOT'] = str_replace( '\\', '/', substr(str_replace('\\\\', '\\', $_SERVER['PATH_TRANSLATED']), 0, 0-strlen($_SERVER['PHP_SELF'])));
 		}	else {
-			// define here your DOCUMENT_ROOT path if the previous fails
-			$_SERVER['DOCUMENT_ROOT'] = '/var/www';
+			// define here your DOCUMENT_ROOT path if the previous fails (e.g. '/var/www')
+			$_SERVER['DOCUMENT_ROOT'] = '/';
 		}
 	}
 
@@ -96,7 +96,7 @@ if (!defined('K_TCPDF_EXTERNAL_CONFIG')) {
 	/**
 	 * blank image
 	 */
-	define ('K_BLANK_IMAGE', K_PATH_IMAGES.'blank.gif');
+	define ('K_BLANK_IMAGE', K_PATH_IMAGES.'_blank.png');
 
 	/**
 	 * page format
