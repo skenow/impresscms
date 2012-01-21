@@ -70,7 +70,7 @@ function xoopsSmilies($textarea_id)
 {
 	$smiles =& icms_core_DataFilter::getSmileys();
 	if (empty($smileys)) {
-		if ($result = icms::$xoopsDB->query("SELECT * FROM ".$db->prefix('smiles')." WHERE display='1'")) {
+		if ($result = icms::$xoopsDB->query("SELECT * FROM ".icms::$xoopsDB->prefix('smiles')." WHERE display='1'")) {
 			while ($smiles = icms::$xoopsDB->fetchArray($result)) {
 				//hack smilies move for the smilies !!
 				echo "<img src='".ICMS_UPLOAD_URL."/".htmlspecialchars($smiles['smile_url'])."' border='0' onmouseover='style.cursor=\"hand\"' alt='' onclick='xoopsCodeSmilie(\"".$textarea_id."_tarea\", \" ".$smiles['code']." \");' />";
