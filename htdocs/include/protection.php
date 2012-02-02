@@ -21,7 +21,7 @@ $emailAddress = urldecode(base64_decode($_GET['p']));
 Header( "Content-type: image/png");
 
 $emailAddressLength = strlen($emailAddress);
-$width = $emailAddressLength * ($fontSize-3.3);
+$width = $emailAddressLength * ($fontSize-2.5);
 
 $image = imagecreate($width,$height);
 
