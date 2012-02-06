@@ -4,7 +4,7 @@
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
- * @category	ICMS
+ * @category	icms
  * @package		Core
  * @version		SVN: $Id$
  */
