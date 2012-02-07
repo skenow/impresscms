@@ -13,7 +13,7 @@
         <td class="head">
         <label for='<{$element.name}>'><{$element.caption}> <{if $element.required}> <span style='color:#f00'>*</span><{/if}>
         <{if $element.description}>
-        	<img class="helptip" style="float:<{$smarty.const._GLOBAL_RIGHT}>;padding-top: 2px;" title="View help text" alt="View help text" src="<{$smarty.const.ICMS_IMAGES_SET_URL}>/actions/acp_help.png" alt="View help text">
+        	<img class="helptip" style="float:<{$smarty.const._GLOBAL_RIGHT}>;padding-top: 2px;" title="<{$smarty.const_MD_AM_HELP_TIP}>" alt="<{$smarty.const_MD_AM_HELP_TIP}>" src="<{$smarty.const.ICMS_IMAGES_SET_URL}>/actions/acp_help.png" alt="<{$smarty.const_MD_AM_HELP_TIP}>">
         	<span class="helptext" style="display: none;"><{$element.description}></span>
         <{/if}>
         </label>
