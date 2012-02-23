@@ -21,7 +21,7 @@ include 'mainfile.php';
  *	code
  */
 
-$filter_get = $filter_post = array('email' => array('email', 'options' => array(0, 1)));
+$filter_get = $filter_post = array('email' => array('email', 'options' => array(0, 0)));
 
 if (!empty($_GET)) {
     $clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, FALSE);
