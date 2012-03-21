@@ -28,8 +28,8 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 
 	$oldversion = $module->getVar('version');
 	if ($oldversion < 120) {
-		$result = icms::$xoopsDB->query("SELECT t1.tpl_id FROM " 
-				. icms::$xoopsDB->prefix('tplfile') . " t1, " 
+		$result = icms::$xoopsDB->query("SELECT t1.tpl_id FROM "
+				. icms::$xoopsDB->prefix('tplfile') . " t1, "
 				. icms::$xoopsDB->prefix('tplfile') . " t2 WHERE t1.tpl_module = t2.tpl_module AND t1.tpl_tplset=t2.tpl_tplset AND t1.tpl_file = t2.tpl_file AND t1.tpl_id > t2.tpl_id");
 
 		$tplids = array();
@@ -289,40 +289,40 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 			icms::$config->insertConfig($configs[0]);
 		}
 		unset($configs);
-		
+
 		/* New HTML Purifier options -
 		 * purifier_HTML_FlashAllowFullScreen, after purifier_HTML_AttrNameUseCDATA
 		 * purifier_Output_FlashCompat, after purifier_HTML_FlashAllowFullScreen
 		 * purifier_Filter_AllowCustom, after purifier_Filter_YouTube
 		 * purifier_Core_NormalizeNewlines, after purifier_Core_RemoveInvalidImg
 		 */
-		
+
 		$table = new icms_db_legacy_updater_Table("config");
 
-		// retrieve the value of the position before the config to be inserted. 
+		// retrieve the value of the position before the config to be inserted.
 		$configs = icms::$config->getConfigs(icms_buildCriteria(array("conf_name" => "purifier_HTML_AttrNameUseCDATA")));
 		$p = $configs[0]->getVar('conf_order') + 1;
 		//move all the other options down
 		$icmsDatabaseUpdater->runQuery($sql = "UPDATE `" . $table->name() . "` SET conf_order = conf_order + 2 WHERE conf_order >= " . $p . " AND conf_catid = " . ICMS_CONF_PURIFIER, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
 		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_HTML_FlashAllowFullScreen', '_MD_AM_PURIFIER_HTML_FLASHFULLSCRN', '0', '_MD_AM_PURIFIER_HTML_FLASHFULLSCRNDSC', 'yesno', 'int', $p);
 		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Output_FlashCompat', '_MD_AM_PURIFIER_OUTPUT_FLASHCOMPAT', '0', '_MD_AM_PURIFIER_OUTPUT_FLASHCOMPATDSC', 'yesno', 'int', $p++);
-				
-		// retrieve the value of the position before the config to be inserted. 
+
+		// retrieve the value of the position before the config to be inserted.
 		$configs = icms::$config->getConfigs(icms_buildCriteria(array("conf_name" => "purifier_Filter_YouTube")));
 		$p = $configs[0]->getVar('conf_order') + 1;
 		//move all the other options down
 		$icmsDatabaseUpdater->runQuery($sql = "UPDATE `" . $table->name() . "` SET conf_order = conf_order + 1 WHERE conf_order >= " . $p . " AND conf_catid = " . ICMS_CONF_PURIFIER, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
 		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Filter_AllowCustom', '_MD_AM_PURIFIER_FILTER_ALLOWCUSTOM', '0', '_MD_AM_PURIFIER_FILTER_ALLOWCUSTOMDSC', 'yesno', 'int', $p);
 
-		// retrieve the value of the position before the config to be inserted. 
+		// retrieve the value of the position before the config to be inserted.
 		$configs = icms::$config->getConfigs(icms_buildCriteria(array("conf_name" => "purifier_Core_RemoveInvalidImg")));
 		$p = $configs[0]->getVar('conf_order') + 1;
 		//move all the other options down
 		$icmsDatabaseUpdater->runQuery($sql = "UPDATE `" . $table->name() . "` SET conf_order = conf_order + 1 WHERE conf_order >= " . $p . " AND conf_catid = " . ICMS_CONF_PURIFIER, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
 		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Core_NormalizeNewlines', '_MD_AM_PURIFIER_CORE_NORMALNEWLINES', '1', '_MD_AM_PURIFIER_CORE_NORMALNEWLINESDSC', 'yesno', 'int', $p);
-		
+
 		unset($table);
-		
+
 		/* Finish up this portion of the db update */
 		if (!$abortUpdate) {
 			$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
@@ -330,19 +330,19 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 		}
 	}
 /*  1.3 beta|rc|final release  */
-	
-	
+
+
 	if (!$abortUpdate) $newDbVersion = 42;
 	/* 1.3.2 release - HTML Purifier 4.4.0 update */
-	
+
 	if ($dbVersion < $newDbVersion) {
 		/* New HTML Purifier options -
 		 * purifier_URI_SafeIframeRegexp. after purifier_URI_AllowedSchemes
 		 * purifier_HTML_SafeIframe, after purifier_HTML_SafeObject
 		 */
 		$table = new icms_db_legacy_updater_Table("config");
-		
-		// retrieve the value of the position before the config to be inserted. 
+
+		// retrieve the value of the position before the config to be inserted.
 		$configs = icms::$config->getConfigs(icms_buildCriteria(array("conf_name" => "purifier_URI_AllowedSchemes")));
 		$p = $configs[0]->getVar('conf_order') + 1;
 
@@ -350,14 +350,16 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 		$icmsDatabaseUpdater->runQuery($sql = "UPDATE `" . $table->name() . "` SET conf_order = conf_order + 2 WHERE conf_order >= " . $p . " AND conf_catid = " . ICMS_CONF_PURIFIER, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
 		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_URI_SafeIframeRegexp', '_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXP', '', '_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXPDSC', 'textsarea', 'array', $p);
 
-		// retrieve the value of the position before the config to be inserted. 
+		// retrieve the value of the position before the config to be inserted.
 		$configs = icms::$config->getConfigs(icms_buildCriteria(array("conf_name" => "purifier_HTML_SafeObject")));
 		$p = $configs[0]->getVar('conf_order') + 1;
 		//move all the other options down
 		$icmsDatabaseUpdater->runQuery($sql = "UPDATE `" . $table->name() . "` SET conf_order = conf_order + 2 WHERE conf_order >= " . $p . " AND conf_catid = " . ICMS_CONF_PURIFIER, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
-		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_HTML_SafeIframe', '_MD_AM_PURIFIER_HTML_SAFEIFRAME', '0', '_MD_AM_PURIFIER_HTML_SAFEIFRAMEDSC', 'yesno', 'int', $p);		
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_HTML_SafeIframe', '_MD_AM_PURIFIER_HTML_SAFEIFRAME', '0', '_MD_AM_PURIFIER_HTML_SAFEIFRAMEDSC', 'yesno', 'int', $p);
+
+		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
 	}
-	
+
 /*
  * This portion of the upgrade must remain as the last section of code to execute
  * Place all release upgrade steps above this point
@@ -381,6 +383,5 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 		echo $feedback;
 	}
 
-	$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
 	return icms_core_Filesystem::cleanFolders(array('templates_c' => ICMS_COMPILE_PATH . "/", 'cache' => ICMS_CACHE_PATH . "/"), $CleanWritingFolders);
 }
