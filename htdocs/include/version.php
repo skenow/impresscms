@@ -10,7 +10,7 @@
  * @version		$Id$
  */
 
-define('ICMS_VERSION_NAME', 'ImpressCMS 1.3.2 Beta');
+define('ICMS_VERSION_NAME', 'ImpressCMS 1.3.2 RC');
 
 // For backward compatibility with XOOPS
 define('XOOPS_VERSION', ICMS_VERSION_NAME);
