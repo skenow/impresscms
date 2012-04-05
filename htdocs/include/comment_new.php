@@ -17,7 +17,10 @@
 defined('ICMS_ROOT_PATH') || die("ImpressCMS root path not defined");
 
 include_once ICMS_INCLUDE_PATH . '/comment_constants.php';
-if (('system' != $icmsModule->getVar('dirname') && XOOPS_COMMENT_APPROVENONE == $icmsModuleConfig['com_rule']) || (!is_object(icms::$user) && !$icmsModuleConfig['com_anonpost']) || !is_object($icmsModule)) {
+if (('system' != $icmsModule->getVar('dirname') && XOOPS_COMMENT_APPROVENONE == $icmsModuleConfig['com_rule'])
+	|| (!is_object(icms::$user) && !$icmsModuleConfig['com_anonpost'])
+	|| !is_object($icmsModule)
+) {
 	redirect_header(ICMS_URL . '/user.php', 1, _NOPERM);
 }
 
