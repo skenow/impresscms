@@ -698,13 +698,13 @@ define("_MD_AM_HELP_TIP","View help text");
 
 define("_MD_AM_PURIFIER_HTML_SAFEIFRAME","Enable Safe Iframes");
 define("_MD_AM_PURIFIER_HTML_SAFEIFRAMEDSC","Whether or not to permit Iframes in documents, with a number of extra security features added to prevent script execution. You must define a Regex pattern with Safe Iframe RegEXP before enabling!.");
-define("_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXP","Safe Iframes RegEXP");
-define("_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXPDSC","A PCRE regular expression that will be matched against an iframe URI. This is a relatively inflexible scheme, but works well enough for the most common use-case of iframes: embedded video.<br /><br />
+define("_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXP","Safe Iframes URLs");
+define("_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXPDSC","A list of URLs that you want to allow to show iframe content on your site. This will be matched against an iframe URI. This is a relatively inflexible scheme, but works well enough for the most common use-case of iframes: embedded video. <br />Letting the site owner explicitly allow sites keeps unknown sites from showing iframes on your site with content you cannot control.<br /><br />
     Here are some example values:<br /><br />
 
-    %^http://www.youtube.com/embed/% - Allow YouTube videos<br />
-    %^http://player.vimeo.com/video/% - Allow Vimeo videos<br />
-    %^http://(www.youtube.com/embed/|player.vimeo.com/video/)% - Allow both<br /><br />
+    http://www.youtube.com/embed/ - Allow YouTube videos<br />
+    http://player.vimeo.com/video/ - Allow Vimeo videos<br />
+    http://www.youtube.com/embed/|http://player.vimeo.com/video/ - Allow both<br /><br />
 .<br /><br />HTML Safe Iframe must be enabled for this to work.");
 
 ?>
