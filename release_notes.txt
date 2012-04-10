@@ -1,7 +1,7 @@
-ImpressCMS 1.3.2 RC release notes
+ImpressCMS 1.3.2 RC2 release notes
 ================================================
 
-The ImpressCMS Project is very proud to announce a release candidate of its 1.3.2 release! 
+The ImpressCMS Project is very proud to announce a second release candidate of its 1.3.2 release! 
 ImpressCMS 1.3.2 is a bug-fix and security release of the 1.3 series. The release candidate is for final testing and
  is not intended for use on production sites.
 
@@ -33,7 +33,7 @@ wget http://www.impresscms.org/download/
 You can easily get ImpressCMS using SVN. Instructions about this can be found here: [[Install_and_update_using_SVN]].
 
 The path for this release is the following:
-http://subversion.assembla.com/svn/impresscms/releases/impresscms_1.3.2_rc/
+http://subversion.assembla.com/svn/impresscms/releases/impresscms_1.3.2_rc2/
 
 If you feel like getting the latest "edge" version of the 1.3 release, you can checkout the core impresscms_1.3 branch at :
 

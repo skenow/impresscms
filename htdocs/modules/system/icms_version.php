@@ -35,7 +35,7 @@ $modversion = array(
 /**  Development information */
 	'status_version'=> "RC",
 	'status'=> "RC",
-	'date'=> "18 Mar 2012",
+	'date'=> "April 2012",
 	'author_word'=> "",
 	'warning'=>_CO_ICMS_WARNING_RC,
 
