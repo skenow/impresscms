@@ -33,11 +33,11 @@ $modversion = array(
 	'image'=> "images/system_slogo.png", /* for backward compatibility */
 
 /**  Development information */
-	'status_version'=> "RC",
-	'status'=> "RC",
+	'status_version'=> "Final",
+	'status'=> "Final",
 	'date'=> "April 2012",
 	'author_word'=> "",
-	'warning'=>_CO_ICMS_WARNING_RC,
+	'warning'=>_CO_ICMS_WARNING_FINAL,
 
 /** Contributors */
 	'developer_website_url' => "http://www.impresscms.org",
@@ -64,7 +64,7 @@ $modversion['autotasks'][] = array(
 	'enabled' => TRUE,
 	'name' => _MI_SYSTEM_REMOVEUSERS,
 	'code' => 'autotask.php',
-	'interval' => 1
+	'interval' => 1440
 );
 
 /** Manual */
