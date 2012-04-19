@@ -157,7 +157,7 @@ class icms_view_theme_Object {
 			'xoops_slogan' => $this->template->get_template_vars('icms_slogan'),
 			'xoops_dirname' => $this->template->get_template_vars('icms_dirname'),
 			'xoops_banner' => $this->template->get_template_vars('icms_banner'),
-			'xoops_pagetitle' => $this->template->get_template_vars('icms_pagetitle')
+			//'xoops_pagetitle' => $this->template->get_template_vars('icms_pagetitle')
 		));
 		if (isset(icms::$user) && is_object(icms::$user)) {
 			$this->template->assign(array(
@@ -361,7 +361,7 @@ class icms_view_theme_Object {
 			? $this->template->get_template_vars('xoops_pagetitle')
 			: $xoopsOption['xoops_pagetitle'];
 		if ($xpagetitle != "") icms_core_Debug::setDeprecated('icms_pagetitle', sprintf(_CORE_REMOVE_IN_VERSION, "2.0"));
-		$pagetitle = ($pagetitle != "") ? $pagetitle : $xpagetitle;
+		$pagetitle = ($xpagetitle != "") ? $xpagetitle : $pagetitle;
 		$this->template->assign('xoops_pagetitle', $pagetitle);
 		$this->template->assign('icms_pagetitle', $pagetitle);
 		
