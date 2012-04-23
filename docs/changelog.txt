@@ -1,4 +1,13 @@
 ImpressCMS ChangeLog
+=== ImpressCMS 1.3.2.1 Final ===
+Release date: April 2012
+Revision: 
+DB Version: 42
+Build Version: 60
+
+Fixed
+* Saving a system avatar for your profile
+
 === ImpressCMS 1.3.2 Final ===
 Release date: April 2012
 Revision: 
