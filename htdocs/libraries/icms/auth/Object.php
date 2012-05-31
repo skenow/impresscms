@@ -78,17 +78,16 @@ class icms_auth_Object {
 			} else {
 				foreach ($this->_errors as $errno => $errstr) {
 					$ret .=  $errstr . '<br/>';
+				}
+				/**
+				 * Fix to replace the message "Incorrect Login using xoops authenticated method"
+				 * as this message don't say much to normal users...
+				 * This fix of course is temporary and will change in the future
+				 */
+				$auth_method_name = $this->auth_method == 'xoops' ? 'standard' : $this->auth_method;
+				$ret .= sprintf(_AUTH_MSG_AUTH_METHOD, $auth_method_name);
 			}
-			/**
-			 * Fix to replace the message "Incorrect Login using xoops authenticated method"
-			 * as this message don't say much to normal users...
-			 * This fix of course is temporary and will change in the future
-			 */
-			$auth_method_name = $this->auth_method == 'xoops' ? 'standard' : $this->auth_method;
-			$ret .= sprintf(_AUTH_MSG_AUTH_METHOD, $auth_method_name);
 		}
 		return $ret;
-		}
 	}
 }
-
