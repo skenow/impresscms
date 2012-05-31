@@ -112,8 +112,8 @@ class icms_auth_Ldap extends icms_auth_Object {
 				icms::$session->securityLevel = 3;
 				icms::$session->check_ip_blocks = 2;
 				icms::$session->salt_key = XOOPS_DB_SALT;
-				icms::$sesseion->enableRegenerateId = true;
-				icms::$session->icms_sessionOpen();
+				icms::$session->enableRegenerateId = true;
+				icms::$session->sessionOpen();
 				// We load the User database
 				return $this->loadicms_member_user_Object($userDN, $uname, $pwd);
 			} else {
