@@ -322,7 +322,7 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Core_NormalizeNewlines', '_MD_AM_PURIFIER_CORE_NORMALNEWLINES', '1', '_MD_AM_PURIFIER_CORE_NORMALNEWLINESDSC', 'yesno', 'int', $p);
 
         unset($table);
-       
+
         /* Finish up this portion of the db update */
 		if (!$abortUpdate) {
 			$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
@@ -330,7 +330,6 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 		}
 	}
 /*  1.3 beta|rc|final release  */
-
 
 	if (!$abortUpdate) $newDbVersion = 42;
 	/* 1.3.2 release - HTML Purifier 4.4.0 update */
@@ -371,10 +370,19 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 		$newAttributes = addslashes(serialize($attrValue));
 		$icmsDatabaseUpdater->runQuery($sql = "UPDATE `" . $table->name() . "` SET conf_value ='" . $newAttributes . "' WHERE conf_name = 'purifier_HTML_AllowedAttributes'", sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
 
-		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
-        
         unset($table);
-        
+
+
+        /* this should be the last step of the update */
+        $icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+
+	}
+
+	if (!$abortUpdate) $newDbVersion = 43;
+	/* 1.3.3 release - change in encryption methods */
+
+	if ($dbVersion < $newDbVersion) {
+
 		$table = new icms_db_legacy_updater_Table("configoption");
 
         /* Change enc_type options in preferences (+20) & expire passwords if values less than 20" */
@@ -386,7 +394,7 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
         }
 
         unset($table);
-        
+
 		$table = new icms_db_legacy_updater_Table("users");
 
         /* Set all user passwords as Expired (required due to password algorhythm update */
@@ -395,6 +403,8 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 
         unset($table);
 
+        /* this should be the last step of the update */
+        $icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
 	}
 
 /*
@@ -406,9 +416,6 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
         icms_core_Message::error(sprintf(_DATABASEUPDATER_UPDATE_ERR, icms_conv_nr2local($newDbVersion)), _DATABASEUPDATER_UPDATE_DB, TRUE);
     }
 	if ($from_112 && ! $abortUpdate) {
-		/**
-		 * @todo create a language constant for this text
-		 */
 		echo _DATABASEUPDATER_MSG_FROM_112;
 		echo '<script>setTimeout("window.location.href=\'' . ICMS_MODULES_URL . '/system/admin.php?fct=modulesadmin&op=install&module=content&from_112=1\'",20000);</script>';
 	}
