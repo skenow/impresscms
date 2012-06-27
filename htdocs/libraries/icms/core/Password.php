@@ -215,18 +215,17 @@ final class icms_core_Password {
 	 * This Private Function is used to Encrypt User Passwords
 	 * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
 	 * @since    1.3.3
-	 * @param    string  $pass       plaintext password to be encrypted
-	 * @param    string  $salt       unique user salt key used in encryption process
-	 * @param    int     $enc_type   encryption type to use.
+	 * @param    string  $pass          plaintext password to be encrypted
+	 * @param    string  $salt          unique user salt key used in encryption process
+	 * @param    int     $enc_type      encryption type to use.
+	 * @param    int     $iterations    Number of times to rehash(stretch).
 	 * @return   Hash of users password.
 	 **/
-	private function priv_encryptPassword($pass, $salt, $enc_type) {
-        $iterations = 500;
-
+	private function priv_encryptPassword($pass, $salt, $enc_type, $iterations) {
 		if ($enc_type == 20) {
-			return '$20$' . md5($pass); // this should never be used. should be removed???
+			return '$' . $enc_type . '$0$' . md5($pass); // this should never be used. should be removed???
 		} else {
-            $hash = '$' . $enc_type . '$' . $salt . '-' . self::priv_rehash(
+            $hash = '$' . $enc_type . '$' . $iterations . '$' . $salt . '-' . self::priv_rehash(
                                         self::priv_rehash($salt, $iterations) . 
                                         self::priv_rehash($pass, $iterations) . 
                                         self::priv_rehash($this->mainSalt, $iterations),
@@ -242,6 +241,7 @@ final class icms_core_Password {
 	 * @since    1.3.3
 	 * @param    string     $hash           hash to be re-hashed (stretched)
 	 * @param    int        $iterations     Number of times to re-hash
+	 * @param    int        $enc_type       encryption type to use
 	 * @return   Hash of users password.
 	 **/
     private function priv_rehash($hash, $iterations, $enc_type = 21) {
@@ -262,6 +262,10 @@ final class icms_core_Password {
                                     34 => 'haval192,5',
                                     35 => 'haval224,5',
                                     36 => 'haval256,5',
+                                    37 => 'ripemd256',
+                                    38 => 'ripemd320',
+                                    39 => 'snefru256',
+                                    40 => 'gost'            
                                 );
 
         for ($i = 0; $i < $iterations; ++$i) {
@@ -283,11 +287,12 @@ final class icms_core_Password {
         $userSalt = self::priv_getUserSalt($uname); // to be deprecated in future versions
         $userHash = self::priv_getUserHash($uname);
         
-        if(preg_match_all("/(\\$)(\\d+)(\\$)((?:[a-z0-9_]*))(-)((?:[a-z0-9_]*))/is", $userHash, $matches)) {
-            $encType = $matches[2][0];
-            $userSalt = $matches[4][0];
+        if(preg_match_all("/(\\$)(\\d+)(\\$)(\\d+)(\\$)((?:[a-z0-9_]*))(-)((?:[a-z0-9_]*))/is", $userHash, $matches)) {
+            $encType = (int) $matches[2][0];
+            $iterations = (int) $matches[4][0];
+            $userSalt = $matches[6][0];
             
-            if (self::priv_encryptPassword($pass, $userSalt, $encType) == $userHash) {
+            if (self::priv_encryptPassword($pass, $userSalt, $encType, $iterations) == $userHash) {
                 return $userHash;
             }
         } else { // to be removed in future versions
@@ -371,8 +376,10 @@ final class icms_core_Password {
         global $icmsConfigUser;
         
         $salt = self::createSalt();
+        $iterations = 500;
+        $enc_type = (int) $icmsConfigUser['enc_type'];
         
-        return self::priv_encryptPassword($pass, $salt, $icmsConfigUser['enc_type']);
+        return self::priv_encryptPassword($pass, $salt, $enc_type, $iterations);
 	}
     
     /**
