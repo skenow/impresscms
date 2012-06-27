@@ -313,9 +313,9 @@ define("_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE_DESC","If you select YES, all visito
 define("_MD_AM_ENC_TYPE","Change Password Encryption (default is SHA256)");
 define("_MD_AM_ENC_TYPEDSC","Changes the Algorithm used for encrypting user passwords.<br />Changing this will render all passwords invalid! all users will need to reset their passwords after changing this preference");
 define("_MD_AM_ENC_MD5","MD5 (not recommended)");
-define("_MD_AM_ENC_SHA256","SHA 256 (recommended)");
+define("_MD_AM_ENC_SHA256","SHA 256");
 define("_MD_AM_ENC_SHA384","SHA 384");
-define("_MD_AM_ENC_SHA512","SHA 512");
+define("_MD_AM_ENC_SHA512","SHA 512 (recommended)");
 define("_MD_AM_ENC_RIPEMD128","RIPEMD 128");
 define("_MD_AM_ENC_RIPEMD160","RIPEMD 160");
 define("_MD_AM_ENC_WHIRLPOOL","WHIRLPOOL");
