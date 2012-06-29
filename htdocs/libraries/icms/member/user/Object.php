@@ -78,10 +78,8 @@ class icms_member_user_Object extends icms_core_Object {
 
 		$this->initVar('language', XOBJ_DTYPE_OTHER, null, false);
 		$this->initVar('openid', XOBJ_DTYPE_TXTBOX, '', false, 255);
-		$this->initVar('salt', XOBJ_DTYPE_TXTBOX, null, false, 255);
 		$this->initVar('user_viewoid', XOBJ_DTYPE_INT, 0, false);
 		$this->initVar('pass_expired', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('enc_type', XOBJ_DTYPE_INT, 0, false);
 		$this->initVar('login_name', XOBJ_DTYPE_TXTBOX, null, true, 255);
 
 		// for backward compatibility
@@ -537,22 +535,10 @@ class icms_member_user_Object extends icms_core_Object {
 		return $this->getVar('openid');
 	}
 	/* no occurrences found in the core */
-	function salt()
-	{
-		icms_core_Debug::setDeprecated('$this->getVar("salt")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return $this->getVar('salt');
-	}
-	/* no occurrences found in the core */
 	function pass_expired()
 	{
 		icms_core_Debug::setDeprecated('$this->getVar("pass_expired")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $this->getVar('pass_expired');
-	}
-	/* no occurrences found in the core */
-	function enc_type()
-	{
-		icms_core_Debug::setDeprecated('$this->getVar("enc_type")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		return $this->getVar('enc_type');
 	}
 	/* all occurrences replaced in the core */
 	function user_viewoid()
