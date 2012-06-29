@@ -29,8 +29,8 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 	$oldversion = $module->getVar('version');
 	if ($oldversion < 120) {
 		$result = icms::$xoopsDB->query("SELECT t1.tpl_id FROM "
-				. icms::$xoopsDB->prefix('tplfile') . " t1, "
-				. icms::$xoopsDB->prefix('tplfile') . " t2 WHERE t1.tpl_module = t2.tpl_module AND t1.tpl_tplset=t2.tpl_tplset AND t1.tpl_file = t2.tpl_file AND t1.tpl_id > t2.tpl_id");
+		. icms::$xoopsDB->prefix('tplfile') . " t1, "
+		. icms::$xoopsDB->prefix('tplfile') . " t2 WHERE t1.tpl_module = t2.tpl_module AND t1.tpl_tplset=t2.tpl_tplset AND t1.tpl_file = t2.tpl_file AND t1.tpl_id > t2.tpl_id");
 
 		$tplids = array();
 		while (list($tplid) = icms::$xoopsDB->fetchRow($result)) {
@@ -74,11 +74,11 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 
 	if ($dbVersion < 40) include 'update-112-to-122.php';
 
-/*  Begin upgrade to version 1.3 */
+	/*  Begin upgrade to version 1.3 */
 	if (!$abortUpdate) $newDbVersion = 41;
 
 	if ($dbVersion < $newDbVersion) {
-	/* Add new tables and data for the help suggestions and quick search */
+		/* Add new tables and data for the help suggestions and quick search */
 		$table = new icms_db_legacy_updater_Table('autosearch_cat');
 		if (!$table->exists()) {
 			$table->setStructure(
@@ -86,14 +86,14 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 				 `cat_name` varchar(255) NOT NULL,
 				 `cat_url` text NOT NULL,
 				 PRIMARY KEY (`cid`)"
-			);
-			if (!$table->createTable()) {
-				$abortUpdate = TRUE;
-				$newDbVersion = 40;
-			}
-			if (!$abortUpdate) {
-				icms_loadLanguageFile('system', 'admin');
-				$search_cats = array(
+				 );
+				 if (!$table->createTable()) {
+				 	$abortUpdate = TRUE;
+				 	$newDbVersion = 40;
+				 }
+				 if (!$abortUpdate) {
+				 	icms_loadLanguageFile('system', 'admin');
+				 	$search_cats = array(
 					"NULL, '" . _MD_AM_ADSENSES . "', '/modules/system/admin.php?fct=adsense'",
 					"NULL, '" . _MD_AM_AUTOTASKS . "', '/modules/system/admin.php?fct=autotasks'",
 					"NULL, '" . _MD_AM_AVATARS . "', '/modules/system/admin.php?fct=avatars'",
@@ -116,12 +116,12 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 					"NULL, '" . _MD_AM_TPLSETS . "', '/modules/system/admin.php?fct=tplsets'",
 					"NULL, '" . _MD_AM_RANK . "', '/modules/system/admin.php?fct=userrank'",
 					"NULL, '" . _MD_AM_VERSION . "', '/modules/system/admin.php?fct=version'");
-				foreach ($search_cats as $cat) {
-					$table->setData($cat);
-				}
-				$table->addData();
-			}
-			unset($table);
+				 	foreach ($search_cats as $cat) {
+				 		$table->setData($cat);
+				 	}
+				 	$table->addData();
+				 }
+				 unset($table);
 		}
 
 		$table = new icms_db_legacy_updater_Table('autosearch_list');
@@ -134,15 +134,15 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 				 `desc` text NOT NULL,
 				 `url` text NOT NULL,
 				 PRIMARY KEY (`id`)"
-			);
-			if (!$table->createTable()) {
-				$abortUpdate = TRUE;
-				$newDbVersion = 40;
-			}
-			if (!$abortUpdate) {
-				icms_loadLanguageFile('system', 'admin');
-				icms_loadLanguageFile('system', 'preferences', TRUE);
-				$search_items = array(
+				 );
+				 if (!$table->createTable()) {
+				 	$abortUpdate = TRUE;
+				 	$newDbVersion = 40;
+				 }
+				 if (!$abortUpdate) {
+				 	icms_loadLanguageFile('system', 'admin');
+				 	icms_loadLanguageFile('system', 'preferences', TRUE);
+				 	$search_items = array(
 					"NULL, 1, '" . _MD_AM_ADSENSES . "', '/modules/system/admin/adsense/images/adsense_small.png', '" . _MD_AM_ADSENSES_DSC . "', '/modules/system/admin.php?fct=adsense'",
 					"NULL, 2, '" . _MD_AM_AUTOTASKS . "', '/modules/system/admin/autotasks/images/autotasks_small.png', '" . _MD_AM_AUTOTASKS_DSC . "', '/modules/system/admin.php?fct=autotasks'",
 					"NULL, 3, '" . _MD_AM_AVATARS . "', '/modules/system/admin/avatars/images/avatars_small.png', '" . _MD_AM_AVATARS_DSC . "', '/modules/system/admin.php?fct=avatars'",
@@ -177,13 +177,13 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 					"NULL, 20, '" . _MD_AM_TPLSETS . "', '/modules/system/admin/tplsets/images/tplsets_small.png', '" . _MD_AM_TPLSETS_DSC . "', '/modules/system/admin.php?fct=tplsets'",
 					"NULL, 21, '" . _MD_AM_RANK . "', '/modules/system/admin/userrank/images/userrank_small.png', '" . _MD_AM_RANK_DSC . "', '/modules/system/admin.php?fct=userrank'",
 					"NULL, 22, '" . _MD_AM_VRSN . "', '/modules/system/admin/version/images/version_small.png', '" . _MD_AM_VRSN_DSC . "', '/modules/system/admin.php?fct=version'"
-				);
-				foreach ($search_items as $item) {
-					$table->setData($item);
-				}
-				$table->addData();
-			}
-			unset($table);
+					);
+					foreach ($search_items as $item) {
+						$table->setData($item);
+					}
+					$table->addData();
+				 }
+				 unset($table);
 		}
 
 		/* Optimize old tables and fix data structures */
@@ -321,15 +321,15 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 		$icmsDatabaseUpdater->runQuery($sql = "UPDATE `" . $table->name() . "` SET conf_order = conf_order + 1 WHERE conf_order >= " . $p . " AND conf_catid = " . ICMS_CONF_PURIFIER, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
 		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Core_NormalizeNewlines', '_MD_AM_PURIFIER_CORE_NORMALNEWLINES', '1', '_MD_AM_PURIFIER_CORE_NORMALNEWLINESDSC', 'yesno', 'int', $p);
 
-        unset($table);
+		unset($table);
 
-        /* Finish up this portion of the db update */
+		/* Finish up this portion of the db update */
 		if (!$abortUpdate) {
 			$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
 			echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
 		}
 	}
-/*  1.3 beta|rc|final release  */
+	/*  1.3 beta|rc|final release  */
 
 	if (!$abortUpdate) $newDbVersion = 42;
 	/* 1.3.2 release - HTML Purifier 4.4.0 update */
@@ -370,11 +370,11 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 		$newAttributes = addslashes(serialize($attrValue));
 		$icmsDatabaseUpdater->runQuery($sql = "UPDATE `" . $table->name() . "` SET conf_value ='" . $newAttributes . "' WHERE conf_name = 'purifier_HTML_AllowedAttributes'", sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
 
-        unset($table);
+		unset($table);
 
 
-        /* this should be the last step of the update */
-        $icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+		/* this should be the last step of the update */
+		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
 
 	}
 
@@ -385,36 +385,32 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 
 		$table = new icms_db_legacy_updater_Table("configoption");
 
-        /* Change enc_type options in preferences (+20) & expire passwords if values less than 20" */
-		$val = "SELECT `confop_value` FROM `" . $table->name() . "` WHERE confop_name = '_MD_AM_ENC_MD5';";
-		$icmsDatabaseUpdater->runQuery($val, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $val), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $val));
-        if ($val < 20) {
-            $sql = "UPDATE `" . $table->name() . "` SET confop_value = confop_value + 20 WHERE confop_name LIKE '_MD_AM_ENC_%';";
-            $icmsDatabaseUpdater->runQuery($sql, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
-        }
+		/* Change enc_type options in preferences (+20) & expire passwords if values less than 20" */
+		$sql = "UPDATE `" . $table->name() . "` SET confop_value = confop_value + 20 WHERE confop_name LIKE '_MD_AM_ENC_%' AND confop_value < 20;";
+		$icmsDatabaseUpdater->runQuery($sql, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
 
-        unset($table);
+		unset($table);
 
 		$table = new icms_db_legacy_updater_Table("users");
 
-        /* Set all user passwords as Expired (required due to password algorhythm update */
-        $sql = "UPDATE `" . $table->name() . "` SET pass_expired = 1 WHERE pass_expired = 0;";
-        $icmsDatabaseUpdater->runQuery($sql, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
+		/* Set all user passwords as Expired (required due to password algorhythm update */
+		$sql = "UPDATE `" . $table->name() . "` SET pass_expired = 1 WHERE pass_expired = 0;";
+		$icmsDatabaseUpdater->runQuery($sql, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
 
-        unset($table);
+		unset($table);
 
-        /* this should be the last step of the update */
-        $icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+		/* this should be the last step of the update */
+		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
 	}
 
-/*
- * This portion of the upgrade must remain as the last section of code to execute
- * Place all release upgrade steps above this point
- */
+	/*
+	 * This portion of the upgrade must remain as the last section of code to execute
+	 * Place all release upgrade steps above this point
+	 */
 	echo "</code>";
-    if ($abortUpdate) {
-        icms_core_Message::error(sprintf(_DATABASEUPDATER_UPDATE_ERR, icms_conv_nr2local($newDbVersion)), _DATABASEUPDATER_UPDATE_DB, TRUE);
-    }
+	if ($abortUpdate) {
+		icms_core_Message::error(sprintf(_DATABASEUPDATER_UPDATE_ERR, icms_conv_nr2local($newDbVersion)), _DATABASEUPDATER_UPDATE_DB, TRUE);
+	}
 	if ($from_112 && ! $abortUpdate) {
 		echo _DATABASEUPDATER_MSG_FROM_112;
 		echo '<script>setTimeout("window.location.href=\'' . ICMS_MODULES_URL . '/system/admin.php?fct=modulesadmin&op=install&module=content&from_112=1\'",20000);</script>';
