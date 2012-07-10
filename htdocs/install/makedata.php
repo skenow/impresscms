@@ -37,7 +37,12 @@ function make_groups(&$dbm) {
 function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $adminmail, $language, $gruops) {
 	//$dbm = new db_manager;
 
-	$tables = array();
+    // Temporary hack to circumvent the timeout on some local installs (WAMPServer, XAMPP)
+    $exectime = ini_get("max_execution_time");
+    ini_set("max_execution_time", "120");
+
+
+    $tables = array();
 
 	// data for table 'groups_users_link'
 
@@ -663,6 +668,9 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	// <<<<< End of Purifier Category >>>>>
 
 	$dbm->insert('system_autotasks', " VALUES (0, 'Inactivating users', 'autotask.php', 0, 1440, 0, 1, ".time().", 'addon/system', 00)");
+
+    // reset execution time - part 2 of temporary hack to circumvent the timeout on some local installs (WAMPServer, XAMPP)
+    ini_set("max_execution_time", $exectime);
 
 	return $gruops;
 }
