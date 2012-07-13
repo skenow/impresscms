@@ -387,7 +387,7 @@ final class icms_core_Password {
 	public function encryptPass($pass) {
         global $icmsConfigUser;
         
-        $salt = self::createCryptoKey();
+        $salt = self::createSalt();
         $iterations = 500;
         $enc_type = (isset($icmsConfigUser['enc_type']) ? (int) $icmsConfigUser['enc_type'] : 23);
         
