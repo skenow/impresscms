@@ -320,14 +320,26 @@ final class icms_core_Password {
 		$salt = '';
 		$base = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 		$microtime = function_exists('microtime') ? microtime() : time();
-		srand((double)$microtime * 1000000);
+		mt_srand((double)$microtime * 1000000);
 		for ($i=0; $i<=$slength; $i++)
-		$salt.= substr($base, rand() % strlen($base), 1);
+		$salt.= substr($base, mt_rand(0, $slength) % strlen($base), 1);
         
 		return $salt;
 	}
 
-	/**
+    public function createCryptoKey($slength = 64) {
+        if (function_exists('openssl_random_pseudo_bytes')) {
+            $key = openssl_random_pseudo_bytes($slength, $strong);
+            if ($strong === TRUE) {
+                return $key;
+            } else {
+                return self::createCryptoKey($slength);
+            }
+        } else {
+            return self::createSalt($slength);
+        }
+    }
+    /**
 	 * This Public Function checks whether a users password has been expired
 	 * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
 	 * @since    1.1
@@ -375,7 +387,7 @@ final class icms_core_Password {
 	public function encryptPass($pass) {
         global $icmsConfigUser;
         
-        $salt = self::createSalt();
+        $salt = self::createCryptoKey();
         $iterations = 500;
         $enc_type = (isset($icmsConfigUser['enc_type']) ? (int) $icmsConfigUser['enc_type'] : 23);
         
