@@ -27,7 +27,7 @@ foreach ($dirlist as $file) {
 	} elseif (file_exists(ICMS_MODULES_PATH . '/system/admin/' . $file . '/xoops_version.php')) {
 		include ICMS_MODULES_PATH . '/system/admin/' . $file . '/xoops_version.php';
 	}
-	if (!empty($modversion['category']) 
+	if (!empty($modversion['category'])
 		&& (count(array_intersect($groups, $gperm->getGroupIds('system_admin', $modversion['category']))) > 0
 			|| in_array(ICMS_GROUP_ADMIN, $groups))
 	) {
@@ -123,7 +123,7 @@ $op_hidden = new icms_form_elements_Hidden("op", $op_value);
 $fct_hidden = new icms_form_elements_Hidden("fct", "groups");
 $submit_button = new icms_form_elements_Button("", "groupsubmit", $submit_value, "submit");
 $form = new icms_form_Theme($form_title, "groupform", "admin.php", "post", true);
-$form->addElement($name_text);
+$form->addElement($name_text, TRUE);
 $form->addElement($desc_text);
 $form->addElement($s_cat_checkbox);
 
@@ -150,4 +150,3 @@ if (!empty($g_id_value)) {
 $form->addElement($submit_button);
 $form->setRequired($name_text);
 $form->display(); // render() does not output the form, just contains the output
-
