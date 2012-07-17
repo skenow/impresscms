@@ -12,6 +12,35 @@
 
 icms_loadLanguageFile('core', 'databaseupdater');
 
+function installation_notify($versionstring, $icmsbase) {
+
+    // @todo: change the URL to an official ImpressCMS server
+    //set POST variables
+    $url = 'http://difdts.nebulagame.com/notify/notify.php'; // this is a TEMPORARY URL, for test purposes.
+    $fields = array(
+        'siteid'=>urlencode($icmsbase),
+        'version'=>urlencode($versionstring)
+    );
+
+//url-ify the data for the POST
+    foreach($fields as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
+    rtrim($fields_string,'&');
+
+//open connection
+    $ch = curl_init();
+
+//set the url, number of POST vars, POST data
+    curl_setopt($ch,CURLOPT_URL,$url);
+    curl_setopt($ch,CURLOPT_POST,count($fields));
+    curl_setopt($ch,CURLOPT_POSTFIELDS,$fields_string);
+
+//execute post
+    $result = curl_exec($ch);
+
+//close connection
+    curl_close($ch);
+}
+
 /**
  * Automatic update of the system module
  *
@@ -423,5 +452,9 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 		echo $feedback;
 	}
 
+    /**
+     * !! Notification of the installation to  - Temporary solution, opt-out or opt-in needed before final release.
+     */
+    installation_notify($newDbVersion, ICMS_URL );
 	return icms_core_Filesystem::cleanFolders(array('templates_c' => ICMS_COMPILE_PATH . "/", 'cache' => ICMS_CACHE_PATH . "/"), $CleanWritingFolders);
 }
