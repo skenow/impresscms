@@ -25,7 +25,9 @@ function installation_notify($versionstring, $icmsbase) {
 //url-ify the data for the POST
     foreach($fields as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
     rtrim($fields_string,'&');
+     icms_core_Message::error($url . $fields_string, 'Notifiction Sent to');
 
+try {
 //open connection
     $ch = curl_init();
 
@@ -39,6 +41,10 @@ function installation_notify($versionstring, $icmsbase) {
 
 //close connection
     curl_close($ch);
+}
+    catch(Exception $e){
+        icms_core_Message::error(sprintf($e->getMessage()));
+    }
 }
 
 /**
@@ -432,6 +438,9 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
 	}
 
+    echo "Notifying ImpressCMS";
+    installation_notify($newDbVersion, ICMS_URL );
+
 	/*
 	 * This portion of the upgrade must remain as the last section of code to execute
 	 * Place all release upgrade steps above this point
@@ -445,6 +454,7 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 		echo '<script>setTimeout("window.location.href=\'' . ICMS_MODULES_URL . '/system/admin.php?fct=modulesadmin&op=install&module=content&from_112=1\'",20000);</script>';
 	}
 
+
 	$feedback = ob_get_clean();
 	if (method_exists($module, "setMessage")) {
 		$module->messages = $module->setMessage($feedback);
@@ -455,6 +465,6 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
     /**
      * !! Notification of the installation to  - Temporary solution, opt-out or opt-in needed before final release.
      */
-    installation_notify($newDbVersion, ICMS_URL );
+
 	return icms_core_Filesystem::cleanFolders(array('templates_c' => ICMS_COMPILE_PATH . "/", 'cache' => ICMS_CACHE_PATH . "/"), $CleanWritingFolders);
 }
