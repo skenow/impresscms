@@ -14,37 +14,38 @@ icms_loadLanguageFile('core', 'databaseupdater');
 
 function installation_notify($versionstring, $icmsbase) {
 
-    // @todo: change the URL to an official ImpressCMS server
-    //set POST variables
-    $url = 'http://difdts.nebulagame.com/notify/notify.php'; // this is a TEMPORARY URL, for test purposes.
-    $fields = array(
-        'siteid'=>urlencode($icmsbase),
-        'version'=>urlencode($versionstring)
-    );
+	// @todo: change the URL to an official ImpressCMS server
+	//set POST variables
+	$url = 'http://difdts.nebulagame.com/notify/notify.php?'; // this is a TEMPORARY URL, for test purposes.
+	$fields = array(
+			'siteid' => hash('sha256', $icmsbase),
+			'version' => urlencode($versionstring)
+	);
 
-//url-ify the data for the POST
-    foreach($fields as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
-    rtrim($fields_string,'&');
-     icms_core_Message::error($url . $fields_string, 'Notifiction Sent to');
+	//url-ify the data for the POST
+	foreach($fields as $key=>$value) {
+		$fields_string .= $key . '=' . $value . '&';
+	}
+	rtrim($fields_string, '&');
+	icms_core_Message::error($url . $fields_string, 'Notifiction Sent to');
 
-try {
-//open connection
-    $ch = curl_init();
+	try {
+		//open connection
+		$ch = curl_init();
 
-//set the url, number of POST vars, POST data
-    curl_setopt($ch,CURLOPT_URL,$url);
-    curl_setopt($ch,CURLOPT_POST,count($fields));
-    curl_setopt($ch,CURLOPT_POSTFIELDS,$fields_string);
+		//set the url, number of POST vars, POST data
+		curl_setopt($ch,CURLOPT_URL,$url);
+		curl_setopt($ch,CURLOPT_POST,count($fields));
+		curl_setopt($ch,CURLOPT_POSTFIELDS,$fields_string);
 
-//execute post
-    $result = curl_exec($ch);
+		//execute post
+		$result = curl_exec($ch);
 
-//close connection
-    curl_close($ch);
-}
-    catch(Exception $e){
-        icms_core_Message::error(sprintf($e->getMessage()));
-    }
+		//close connection
+		curl_close($ch);
+	} catch(Exception $e) {
+		icms_core_Message::error(sprintf($e->getMessage()));
+	}
 }
 
 /**
@@ -64,8 +65,8 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 	$oldversion = $module->getVar('version');
 	if ($oldversion < 120) {
 		$result = icms::$xoopsDB->query("SELECT t1.tpl_id FROM "
-		. icms::$xoopsDB->prefix('tplfile') . " t1, "
-		. icms::$xoopsDB->prefix('tplfile') . " t2 WHERE t1.tpl_module = t2.tpl_module AND t1.tpl_tplset=t2.tpl_tplset AND t1.tpl_file = t2.tpl_file AND t1.tpl_id > t2.tpl_id");
+				. icms::$xoopsDB->prefix('tplfile') . " t1, "
+				. icms::$xoopsDB->prefix('tplfile') . " t2 WHERE t1.tpl_module = t2.tpl_module AND t1.tpl_tplset=t2.tpl_tplset AND t1.tpl_file = t2.tpl_file AND t1.tpl_id > t2.tpl_id");
 
 		$tplids = array();
 		while (list($tplid) = icms::$xoopsDB->fetchRow($result)) {
@@ -96,14 +97,14 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 
 	/*
 	 * DEVELOPER, PLEASE NOTE !!!
-	 *
-	 * Everytime we add a new upgrade block here, the dbversion of the System Module will get
-	 * incremented. It is very important to modify the ICMS_SYSTEM_DBVERSION accordingly
-	 * in htdocs/include/version.php
-	 *
-	 * When we start a new major release, move all the previous version's upgrade scripts to
-	 * a separate file, to minimize file size and memory usage
-	 */
+	*
+	* Everytime we add a new upgrade block here, the dbversion of the System Module will get
+	* incremented. It is very important to modify the ICMS_SYSTEM_DBVERSION accordingly
+	* in htdocs/include/version.php
+	*
+	* When we start a new major release, move all the previous version's upgrade scripts to
+	* a separate file, to minimize file size and memory usage
+	*/
 
 	$CleanWritingFolders = FALSE;
 
@@ -117,108 +118,108 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 		$table = new icms_db_legacy_updater_Table('autosearch_cat');
 		if (!$table->exists()) {
 			$table->setStructure(
-				"`cid` int(11) NOT NULL auto_increment,
+					"`cid` int(11) NOT NULL auto_increment,
 				 `cat_name` varchar(255) NOT NULL,
 				 `cat_url` text NOT NULL,
 				 PRIMARY KEY (`cid`)"
-				 );
-				 if (!$table->createTable()) {
-				 	$abortUpdate = TRUE;
-				 	$newDbVersion = 40;
-				 }
-				 if (!$abortUpdate) {
-				 	icms_loadLanguageFile('system', 'admin');
-				 	$search_cats = array(
-					"NULL, '" . _MD_AM_ADSENSES . "', '/modules/system/admin.php?fct=adsense'",
-					"NULL, '" . _MD_AM_AUTOTASKS . "', '/modules/system/admin.php?fct=autotasks'",
-					"NULL, '" . _MD_AM_AVATARS . "', '/modules/system/admin.php?fct=avatars'",
-					"NULL, '" . _MD_AM_BANS . "', '/modules/system/admin.php?fct=banners'",
-					"NULL, '" . _MD_AM_BKPOSAD . "', '/modules/system/admin.php?fct=blockspadmin'",
-					"NULL, '" . _MD_AM_BKAD . "', '/modules/system/admin.php?fct=blocksadmin'",
-					"NULL, '" . _MD_AM_COMMENTS . "', '/modules/system/admin.php?fct=comments'",
-					"NULL, '" . _MD_AM_CUSTOMTAGS . "', '/modules/system/admin.php?fct=customtag'",
-					"NULL, '" . _MD_AM_USER . "', '/modules/system/admin.php?fct=users'",
-					"NULL, '" . _MD_AM_FINDUSER . "', '/modules/system/admin.php?fct=finduser'",
-					"NULL, '" . _MD_AM_ADGS . "', '/modules/system/admin.php?fct=groups'",
-					"NULL, '" . _MD_AM_IMAGES . "', '/modules/system/admin.php?fct=images'",
-					"NULL, '" . _MD_AM_MLUS . "', '/modules/system/admin.php?fct=mailusers'",
-					"NULL, '" . _MD_AM_MIMETYPES . "', '/modules/system/admin.php?fct=mimetype'",
-					"NULL, '" . _MD_AM_MDAD . "', '/modules/system/admin.php?fct=modulesadmin'",
-					"NULL, '" . _MD_AM_PREF . "', '/modules/system/admin.php?fct=preferences'",
-					"NULL, '" . _MD_AM_RATINGS . "', '/modules/system/admin.php?fct=rating'",
-					"NULL, '" . _MD_AM_SMLS . "', '/modules/system/admin.php?fct=smilies'",
-					"NULL, '" . _MD_AM_PAGES . "', '/modules/system/admin.php?fct=pages'",
-					"NULL, '" . _MD_AM_TPLSETS . "', '/modules/system/admin.php?fct=tplsets'",
-					"NULL, '" . _MD_AM_RANK . "', '/modules/system/admin.php?fct=userrank'",
-					"NULL, '" . _MD_AM_VERSION . "', '/modules/system/admin.php?fct=version'");
-				 	foreach ($search_cats as $cat) {
-				 		$table->setData($cat);
-				 	}
-				 	$table->addData();
-				 }
-				 unset($table);
+			);
+			if (!$table->createTable()) {
+				$abortUpdate = TRUE;
+				$newDbVersion = 40;
+			}
+			if (!$abortUpdate) {
+				icms_loadLanguageFile('system', 'admin');
+				$search_cats = array(
+						"NULL, '" . _MD_AM_ADSENSES . "', '/modules/system/admin.php?fct=adsense'",
+						"NULL, '" . _MD_AM_AUTOTASKS . "', '/modules/system/admin.php?fct=autotasks'",
+						"NULL, '" . _MD_AM_AVATARS . "', '/modules/system/admin.php?fct=avatars'",
+						"NULL, '" . _MD_AM_BANS . "', '/modules/system/admin.php?fct=banners'",
+						"NULL, '" . _MD_AM_BKPOSAD . "', '/modules/system/admin.php?fct=blockspadmin'",
+						"NULL, '" . _MD_AM_BKAD . "', '/modules/system/admin.php?fct=blocksadmin'",
+						"NULL, '" . _MD_AM_COMMENTS . "', '/modules/system/admin.php?fct=comments'",
+						"NULL, '" . _MD_AM_CUSTOMTAGS . "', '/modules/system/admin.php?fct=customtag'",
+						"NULL, '" . _MD_AM_USER . "', '/modules/system/admin.php?fct=users'",
+						"NULL, '" . _MD_AM_FINDUSER . "', '/modules/system/admin.php?fct=finduser'",
+						"NULL, '" . _MD_AM_ADGS . "', '/modules/system/admin.php?fct=groups'",
+						"NULL, '" . _MD_AM_IMAGES . "', '/modules/system/admin.php?fct=images'",
+						"NULL, '" . _MD_AM_MLUS . "', '/modules/system/admin.php?fct=mailusers'",
+						"NULL, '" . _MD_AM_MIMETYPES . "', '/modules/system/admin.php?fct=mimetype'",
+						"NULL, '" . _MD_AM_MDAD . "', '/modules/system/admin.php?fct=modulesadmin'",
+						"NULL, '" . _MD_AM_PREF . "', '/modules/system/admin.php?fct=preferences'",
+						"NULL, '" . _MD_AM_RATINGS . "', '/modules/system/admin.php?fct=rating'",
+						"NULL, '" . _MD_AM_SMLS . "', '/modules/system/admin.php?fct=smilies'",
+						"NULL, '" . _MD_AM_PAGES . "', '/modules/system/admin.php?fct=pages'",
+						"NULL, '" . _MD_AM_TPLSETS . "', '/modules/system/admin.php?fct=tplsets'",
+						"NULL, '" . _MD_AM_RANK . "', '/modules/system/admin.php?fct=userrank'",
+						"NULL, '" . _MD_AM_VERSION . "', '/modules/system/admin.php?fct=version'");
+				foreach ($search_cats as $cat) {
+					$table->setData($cat);
+				}
+				$table->addData();
+			}
+			unset($table);
 		}
 
 		$table = new icms_db_legacy_updater_Table('autosearch_list');
 		if (!$table->exists() && !$abortUpdate) {
 			$table->setStructure(
-				"`id` int(11) NOT NULL auto_increment,
+					"`id` int(11) NOT NULL auto_increment,
 				 `cat_id` int(11) NOT NULL,
 				 `name` varchar(255) NOT NULL,
 				 `img` varchar(255) NOT NULL,
 				 `desc` text NOT NULL,
 				 `url` text NOT NULL,
 				 PRIMARY KEY (`id`)"
-				 );
-				 if (!$table->createTable()) {
-				 	$abortUpdate = TRUE;
-				 	$newDbVersion = 40;
-				 }
-				 if (!$abortUpdate) {
-				 	icms_loadLanguageFile('system', 'admin');
-				 	icms_loadLanguageFile('system', 'preferences', TRUE);
-				 	$search_items = array(
-					"NULL, 1, '" . _MD_AM_ADSENSES . "', '/modules/system/admin/adsense/images/adsense_small.png', '" . _MD_AM_ADSENSES_DSC . "', '/modules/system/admin.php?fct=adsense'",
-					"NULL, 2, '" . _MD_AM_AUTOTASKS . "', '/modules/system/admin/autotasks/images/autotasks_small.png', '" . _MD_AM_AUTOTASKS_DSC . "', '/modules/system/admin.php?fct=autotasks'",
-					"NULL, 3, '" . _MD_AM_AVATARS . "', '/modules/system/admin/avatars/images/avatars_small.png', '" . _MD_AM_AVATARS_DSC . "', '/modules/system/admin.php?fct=avatars'",
-					"NULL, 4, '" . _MD_AM_BANS . "', '/modules/system/admin/banners/images/banners_small.png', '" . _MD_AM_BANS_DSC . "', '/modules/system/admin.php?fct=banners'",
-					"NULL, 5, '" . _MD_AM_BKPOSAD . "', '/modules/system/admin/blockspadmin/images/blockspadmin_small.png', '" . _MD_AM_BKPOSAD_DSC . "', '/modules/system/admin.php?fct=blockspadmin'",
-					"NULL, 6, '" . _MD_AM_BKAD . "', '/modules/system/admin/blocksadmin/images/blocksadmin_small.png', '" . _MD_AM_BKAD_DSC . "', '/modules/system/admin.php?fct=blocksadmin'",
-					"NULL, 7, '" . _MD_AM_COMMENTS . "', '/modules/system/admin/comments/images/comments_small.png', '" . _MD_AM_COMMENTS_DSC . "', '/modules/system/admin.php?fct=comments'",
-					"NULL, 8, '" . _MD_AM_CUSTOMTAGS . "', '/modules/system/admin/customtag/images/customtag_small.png', '" . _MD_AM_CUSTOMTAGS_DSC . "', '/modules/system/admin.php?fct=customtag'",
-					"NULL, 9, '" . _MD_AM_USER . "', '/modules/system/admin/users/images/users_small.png', '" . _MD_AM_USER_DSC . "', '/modules/system/admin.php?fct=users'",
-					"NULL, 10, '" . _MD_AM_FINDUSER . "', '/modules/system/admin/findusers/images/findusers_small.png', '" . _MD_AM_FINDUSER_DSC . "', '/modules/system/admin.php?fct=findusers'",
-					"NULL, 11, '" . _MD_AM_ADGS . "', '/modules/system/admin/groups/images/groups_small.png', '" . _MD_AM_ADGS_DSC . "', '/modules/system/admin.php?fct=groups'",
-					"NULL, 12, '" . _MD_AM_IMAGES . "', '/modules/system/admin/images/images/images_small.png', '" . _MD_AM_IMAGES_DSC . "', '/modules/system/admin.php?fct=images'",
-					"NULL, 13, '" . _MD_AM_MLUS . "', '/modules/system/admin/mailusers/images/mailusers_small.png', '" . _MD_AM_MLUS_DSC . "', '/modules/system/admin.php?fct=mailusers'",
-					"NULL, 14, '" . _MD_AM_MIMETYPES . "', '/modules/system/admin/mimetype/images/mimetype_small.png', '" . _MD_AM_MIMETYPES_DSC . "', '/modules/system/admin.php?fct=mimetype'",
-					"NULL, 15, '" . _MD_AM_MDAD . "', '/modules/system/admin/modulesadmin/images/modulesadmin_small.png', '" . _MD_AM_MDAD_DSC . "', '/modules/system/admin.php?fct=modulesadmin'",
-					"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_AUTHENTICATION . "', '/modules/system/admin/preferences/images/preferences_small.png', '" . _MD_AM_AUTHENTICATION_DSC . "', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=7'",
-					"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_AUTOTASKS . "', '/modules/system/admin/preferences/images/preferences_small.png', '" . _MD_AM_AUTOTASKS_PREF_DSC . "', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=13'",
-					"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_CAPTCHA . "', '/modules/system/admin/preferences/images/preferences_small.png', '" . _MD_AM_CAPTCHA_DSC . "', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=11'",
-					"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_GENERAL . "', '/modules/system/admin/preferences/images/preferences_small.png', '" . _MD_AM_GENERAL_DSC . "', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=1'",
-					"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_PURIFIER . "', '/modules/system/admin/preferences/images/preferences_small.png', '" . _MD_AM_PURIFIER_DSC . "', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=14'",
-					"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_MAILER . "', '/modules/system/admin/preferences/images/preferences_small.png', '" . _MD_AM_MAILER_DSC . "', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=6'",
-					"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_METAFOOTER . "', '/modules/system/admin/preferences/images/preferences_small.png', '" . _MD_AM_METAFOOTER_DSC . "', '/modules/system/admin/preferences/images/preferences_small.png'",
-					"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_MULTILANGUAGE . "', '/modules/system/admin/preferences/images/preferences_small.png', '" . _MD_AM_MULTILANGUAGE_DSC . "', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=8'",
-					"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_PERSON . "', '/modules/system/admin/preferences/images/preferences_small.png', '" . _MD_AM_PERSON_DSC . "', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=10'",
-					"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_PLUGINS . "', '/modules/system/admin/preferences/images/preferences_small.png', '" . _MD_AM_PLUGINS_DSC . "', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=12'",
-					"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_SEARCH . "', '/modules/system/admin/preferences/images/preferences_small.png', '" . _MD_AM_SEARCH_DSC . "', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=5'",
-					"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_USERSETTINGS . "', '/modules/system/admin/preferences/images/preferences_small.png', '" . _MD_AM_USERSETTINGS_DSC . "', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=2'",
-					"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_CENSOR . "', '/modules/system/admin/preferences/images/preferences_small.png', '" . _MD_AM_CENSOR_DSC . "', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=4'",
-					"NULL, 17, '" . _MD_AM_RATINGS . "', '/modules/system/admin/rating/images/rating_small.png', '" . _MD_AM_RATINGS_DSC . "', '/modules/system/admin.php?fct=rating'",
-					"NULL, 18, '" . _MD_AM_SMLS . "', '/modules/system/admin/smilies/images/smilies_small.png', '" . _MD_AM_SMLS_DSC . "', '/modules/system/admin.php?fct=smilies'",
-					"NULL, 19, '" . _MD_AM_PAGES . "', '/modules/system/admin/pages/images/pages_small.png', '" . _MD_AM_PAGES_DSC . "', '/modules/system/admin.php?fct=pages'",
-					"NULL, 20, '" . _MD_AM_TPLSETS . "', '/modules/system/admin/tplsets/images/tplsets_small.png', '" . _MD_AM_TPLSETS_DSC . "', '/modules/system/admin.php?fct=tplsets'",
-					"NULL, 21, '" . _MD_AM_RANK . "', '/modules/system/admin/userrank/images/userrank_small.png', '" . _MD_AM_RANK_DSC . "', '/modules/system/admin.php?fct=userrank'",
-					"NULL, 22, '" . _MD_AM_VRSN . "', '/modules/system/admin/version/images/version_small.png', '" . _MD_AM_VRSN_DSC . "', '/modules/system/admin.php?fct=version'"
-					);
-					foreach ($search_items as $item) {
-						$table->setData($item);
-					}
-					$table->addData();
-				 }
-				 unset($table);
+			);
+			if (!$table->createTable()) {
+				$abortUpdate = TRUE;
+				$newDbVersion = 40;
+			}
+			if (!$abortUpdate) {
+				icms_loadLanguageFile('system', 'admin');
+				icms_loadLanguageFile('system', 'preferences', TRUE);
+				$search_items = array(
+						"NULL, 1, '" . _MD_AM_ADSENSES . "', '/modules/system/admin/adsense/images/adsense_small.png', '" . _MD_AM_ADSENSES_DSC . "', '/modules/system/admin.php?fct=adsense'",
+						"NULL, 2, '" . _MD_AM_AUTOTASKS . "', '/modules/system/admin/autotasks/images/autotasks_small.png', '" . _MD_AM_AUTOTASKS_DSC . "', '/modules/system/admin.php?fct=autotasks'",
+						"NULL, 3, '" . _MD_AM_AVATARS . "', '/modules/system/admin/avatars/images/avatars_small.png', '" . _MD_AM_AVATARS_DSC . "', '/modules/system/admin.php?fct=avatars'",
+						"NULL, 4, '" . _MD_AM_BANS . "', '/modules/system/admin/banners/images/banners_small.png', '" . _MD_AM_BANS_DSC . "', '/modules/system/admin.php?fct=banners'",
+						"NULL, 5, '" . _MD_AM_BKPOSAD . "', '/modules/system/admin/blockspadmin/images/blockspadmin_small.png', '" . _MD_AM_BKPOSAD_DSC . "', '/modules/system/admin.php?fct=blockspadmin'",
+						"NULL, 6, '" . _MD_AM_BKAD . "', '/modules/system/admin/blocksadmin/images/blocksadmin_small.png', '" . _MD_AM_BKAD_DSC . "', '/modules/system/admin.php?fct=blocksadmin'",
+						"NULL, 7, '" . _MD_AM_COMMENTS . "', '/modules/system/admin/comments/images/comments_small.png', '" . _MD_AM_COMMENTS_DSC . "', '/modules/system/admin.php?fct=comments'",
+						"NULL, 8, '" . _MD_AM_CUSTOMTAGS . "', '/modules/system/admin/customtag/images/customtag_small.png', '" . _MD_AM_CUSTOMTAGS_DSC . "', '/modules/system/admin.php?fct=customtag'",
+						"NULL, 9, '" . _MD_AM_USER . "', '/modules/system/admin/users/images/users_small.png', '" . _MD_AM_USER_DSC . "', '/modules/system/admin.php?fct=users'",
+						"NULL, 10, '" . _MD_AM_FINDUSER . "', '/modules/system/admin/findusers/images/findusers_small.png', '" . _MD_AM_FINDUSER_DSC . "', '/modules/system/admin.php?fct=findusers'",
+						"NULL, 11, '" . _MD_AM_ADGS . "', '/modules/system/admin/groups/images/groups_small.png', '" . _MD_AM_ADGS_DSC . "', '/modules/system/admin.php?fct=groups'",
+						"NULL, 12, '" . _MD_AM_IMAGES . "', '/modules/system/admin/images/images/images_small.png', '" . _MD_AM_IMAGES_DSC . "', '/modules/system/admin.php?fct=images'",
+						"NULL, 13, '" . _MD_AM_MLUS . "', '/modules/system/admin/mailusers/images/mailusers_small.png', '" . _MD_AM_MLUS_DSC . "', '/modules/system/admin.php?fct=mailusers'",
+						"NULL, 14, '" . _MD_AM_MIMETYPES . "', '/modules/system/admin/mimetype/images/mimetype_small.png', '" . _MD_AM_MIMETYPES_DSC . "', '/modules/system/admin.php?fct=mimetype'",
+						"NULL, 15, '" . _MD_AM_MDAD . "', '/modules/system/admin/modulesadmin/images/modulesadmin_small.png', '" . _MD_AM_MDAD_DSC . "', '/modules/system/admin.php?fct=modulesadmin'",
+						"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_AUTHENTICATION . "', '/modules/system/admin/preferences/images/preferences_small.png', '" . _MD_AM_AUTHENTICATION_DSC . "', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=7'",
+						"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_AUTOTASKS . "', '/modules/system/admin/preferences/images/preferences_small.png', '" . _MD_AM_AUTOTASKS_PREF_DSC . "', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=13'",
+						"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_CAPTCHA . "', '/modules/system/admin/preferences/images/preferences_small.png', '" . _MD_AM_CAPTCHA_DSC . "', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=11'",
+						"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_GENERAL . "', '/modules/system/admin/preferences/images/preferences_small.png', '" . _MD_AM_GENERAL_DSC . "', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=1'",
+						"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_PURIFIER . "', '/modules/system/admin/preferences/images/preferences_small.png', '" . _MD_AM_PURIFIER_DSC . "', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=14'",
+						"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_MAILER . "', '/modules/system/admin/preferences/images/preferences_small.png', '" . _MD_AM_MAILER_DSC . "', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=6'",
+						"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_METAFOOTER . "', '/modules/system/admin/preferences/images/preferences_small.png', '" . _MD_AM_METAFOOTER_DSC . "', '/modules/system/admin/preferences/images/preferences_small.png'",
+						"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_MULTILANGUAGE . "', '/modules/system/admin/preferences/images/preferences_small.png', '" . _MD_AM_MULTILANGUAGE_DSC . "', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=8'",
+						"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_PERSON . "', '/modules/system/admin/preferences/images/preferences_small.png', '" . _MD_AM_PERSON_DSC . "', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=10'",
+						"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_PLUGINS . "', '/modules/system/admin/preferences/images/preferences_small.png', '" . _MD_AM_PLUGINS_DSC . "', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=12'",
+						"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_SEARCH . "', '/modules/system/admin/preferences/images/preferences_small.png', '" . _MD_AM_SEARCH_DSC . "', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=5'",
+						"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_USERSETTINGS . "', '/modules/system/admin/preferences/images/preferences_small.png', '" . _MD_AM_USERSETTINGS_DSC . "', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=2'",
+						"NULL, 16, '" . _MD_AM_PREF . " - " . _MD_AM_CENSOR . "', '/modules/system/admin/preferences/images/preferences_small.png', '" . _MD_AM_CENSOR_DSC . "', '/modules/system/admin.php?fct=preferences&op=show&confcat_id=4'",
+						"NULL, 17, '" . _MD_AM_RATINGS . "', '/modules/system/admin/rating/images/rating_small.png', '" . _MD_AM_RATINGS_DSC . "', '/modules/system/admin.php?fct=rating'",
+						"NULL, 18, '" . _MD_AM_SMLS . "', '/modules/system/admin/smilies/images/smilies_small.png', '" . _MD_AM_SMLS_DSC . "', '/modules/system/admin.php?fct=smilies'",
+						"NULL, 19, '" . _MD_AM_PAGES . "', '/modules/system/admin/pages/images/pages_small.png', '" . _MD_AM_PAGES_DSC . "', '/modules/system/admin.php?fct=pages'",
+						"NULL, 20, '" . _MD_AM_TPLSETS . "', '/modules/system/admin/tplsets/images/tplsets_small.png', '" . _MD_AM_TPLSETS_DSC . "', '/modules/system/admin.php?fct=tplsets'",
+						"NULL, 21, '" . _MD_AM_RANK . "', '/modules/system/admin/userrank/images/userrank_small.png', '" . _MD_AM_RANK_DSC . "', '/modules/system/admin.php?fct=userrank'",
+						"NULL, 22, '" . _MD_AM_VRSN . "', '/modules/system/admin/version/images/version_small.png', '" . _MD_AM_VRSN_DSC . "', '/modules/system/admin.php?fct=version'"
+				);
+				foreach ($search_items as $item) {
+					$table->setData($item);
+				}
+				$table->addData();
+			}
+			unset($table);
 		}
 
 		/* Optimize old tables and fix data structures */
@@ -327,10 +328,10 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 
 		/* New HTML Purifier options -
 		 * purifier_HTML_FlashAllowFullScreen, after purifier_HTML_AttrNameUseCDATA
-		 * purifier_Output_FlashCompat, after purifier_HTML_FlashAllowFullScreen
-		 * purifier_Filter_AllowCustom, after purifier_Filter_YouTube
-		 * purifier_Core_NormalizeNewlines, after purifier_Core_RemoveInvalidImg
-		 */
+		* purifier_Output_FlashCompat, after purifier_HTML_FlashAllowFullScreen
+		* purifier_Filter_AllowCustom, after purifier_Filter_YouTube
+		* purifier_Core_NormalizeNewlines, after purifier_Core_RemoveInvalidImg
+		*/
 
 		$table = new icms_db_legacy_updater_Table("config");
 
@@ -372,8 +373,8 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 	if ($dbVersion < $newDbVersion) {
 		/* New HTML Purifier options -
 		 * purifier_URI_SafeIframeRegexp. after purifier_URI_AllowedSchemes
-		 * purifier_HTML_SafeIframe, after purifier_HTML_SafeObject
-		 */
+		* purifier_HTML_SafeIframe, after purifier_HTML_SafeObject
+		*/
 		$table = new icms_db_legacy_updater_Table("config");
 
 		// retrieve the value of the position before the config to be inserted.
@@ -436,15 +437,19 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 
 		/* this should be the last step of the update */
 		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+		
+		/* Add this as the last instruction of the last version update - outside of this and it will notify every time
+		 * they update the system module, even if there isn't an update being applied
+		 * 
+		 * !! Notification of the installation to  - Temporary solution, opt-out or opt-in needed before final release.*/
+		echo "Notifying ImpressCMS";
+		installation_notify($newDbVersion, ICMS_URL);
 	}
-
-    echo "Notifying ImpressCMS";
-    installation_notify($newDbVersion, ICMS_URL );
 
 	/*
 	 * This portion of the upgrade must remain as the last section of code to execute
-	 * Place all release upgrade steps above this point
-	 */
+	* Place all release upgrade steps above this point
+	*/
 	echo "</code>";
 	if ($abortUpdate) {
 		icms_core_Message::error(sprintf(_DATABASEUPDATER_UPDATE_ERR, icms_conv_nr2local($newDbVersion)), _DATABASEUPDATER_UPDATE_DB, TRUE);
@@ -462,9 +467,6 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 		echo $feedback;
 	}
 
-    /**
-     * !! Notification of the installation to  - Temporary solution, opt-out or opt-in needed before final release.
-     */
 
 	return icms_core_Filesystem::cleanFolders(array('templates_c' => ICMS_COMPILE_PATH . "/", 'cache' => ICMS_CACHE_PATH . "/"), $CleanWritingFolders);
 }
