@@ -1,7 +1,7 @@
 ImpressCMS ChangeLog
 === ImpressCMS 1.3.3 Beta ===
 Release date: July 2012
-Revision: 
+Revision: 11794
 DB Version: 43
 Build Version: 63
 
