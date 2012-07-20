@@ -16,7 +16,7 @@ function installation_notify($versionstring, $icmsbase) {
 
 	// @todo: change the URL to an official ImpressCMS server
 	//set POST variables
-	$url = 'http://difdts.nebulagame.com/notify/notify.php?'; // this is a TEMPORARY URL, for test purposes.
+	$url = 'http://qc.impresscms.org/notify/notify.php?'; // this may change as testing progresses.
 	$fields = array(
 			'siteid' => hash('sha256', $icmsbase),
 			'version' => urlencode($versionstring)
@@ -33,9 +33,9 @@ function installation_notify($versionstring, $icmsbase) {
 		$ch = curl_init();
 
 		//set the url, number of POST vars, POST data
-		curl_setopt($ch,CURLOPT_URL,$url);
-		curl_setopt($ch,CURLOPT_POST,count($fields));
-		curl_setopt($ch,CURLOPT_POSTFIELDS,$fields_string);
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_POST, count($fields));
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
 		curl_setopt($ch, CURLOPT_FAILONERROR, TRUE);
 
 		//execute post
