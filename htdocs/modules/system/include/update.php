@@ -27,7 +27,6 @@ function installation_notify($versionstring, $icmsbase) {
 		$fields_string .= $key . '=' . $value . '&';
 	}
 	rtrim($fields_string, '&');
-	icms_core_Message::error($url . $fields_string, 'Notifiction Sent to');
 
 	try {
 		//open connection
@@ -37,9 +36,14 @@ function installation_notify($versionstring, $icmsbase) {
 		curl_setopt($ch,CURLOPT_URL,$url);
 		curl_setopt($ch,CURLOPT_POST,count($fields));
 		curl_setopt($ch,CURLOPT_POSTFIELDS,$fields_string);
+		curl_setopt($ch, CURLOPT_FAILONERROR, TRUE);
 
 		//execute post
-		$result = curl_exec($ch);
+		if (curl_exec($ch)) {
+			icms_core_Message::error($url . $fields_string, 'Notification Sent to');
+		} else {
+			throw new Execption("Unable to contact update server");
+		}
 
 		//close connection
 		curl_close($ch);
