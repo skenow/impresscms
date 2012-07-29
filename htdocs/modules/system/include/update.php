@@ -18,19 +18,21 @@ function installation_notify($versionstring, $icmsbase) {
 	//set POST variables
 	$url = 'http://qc.impresscms.org/notify/notify.php?'; // this may change as testing progresses.
 	$fields = array(
-			'siteid' => hash('sha256', $icmsbase),
+			'siteid' => hash('sha256', $icmsroot),
 			'version' => urlencode($versionstring)
 	);
 
 	//url-ify the data for the POST
+	$fields_string = "";
 	foreach($fields as $key=>$value) {
 		$fields_string .= $key . '=' . $value . '&';
 	}
 	rtrim($fields_string, '&');
 
 	try {
-		//open connection
-		$ch = curl_init();
+		//open connection - this causes a fatal error if the extension is not loaded
+		if (!extension_loaded('curl')) throw new Exception("cURL extension not loaded");
+		$ch = @curl_init();
 
 		//set the url, number of POST vars, POST data
 		curl_setopt($ch, CURLOPT_URL, $url);
@@ -441,10 +443,10 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 
 		/* this should be the last step of the update */
 		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
-		
+
 		/* Add this as the last instruction of the last version update - outside of this and it will notify every time
 		 * they update the system module, even if there isn't an update being applied
-		 * 
+		 *
 		 * !! Notification of the installation to  - Temporary solution, opt-out or opt-in needed before final release.*/
 		echo "Notifying ImpressCMS";
 		installation_notify($newDbVersion, ICMS_URL);
