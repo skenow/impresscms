@@ -57,7 +57,7 @@ function smarty_function_resized_image($params, &$smarty)
 		$fit = 'inside';
 		$return = 'img';
     $path_prefix = '';
-    $server_vars = ($smarty->request_use_auto_globals) ? $_SERVER : $GLOBALS['HTTP_SERVER_VARS'];
+    $server_vars = ($smarty->request_use_auto_globals) ? $_SERVER : $GLOBALS['HTTP_SERVER_VARS']; // Really? HTTP_SERVER_VARS ?? WTF come on, it's been deprecated years!!!!!
     $basedir = isset($server_vars['DOCUMENT_ROOT']) ? $server_vars['DOCUMENT_ROOT'] : '';
     foreach($params as $_key => $_val) {
         switch($_key) {
@@ -117,11 +117,12 @@ function smarty_function_resized_image($params, &$smarty)
 	// Preparing paths
 	if (substr($file,0,1) == '/') {
 		$original['path'] = $basedir . $file;
+        $clean_file = str_replace($basedir, '', urldecode($clean_file)); // Clean file should not have Full Path
 		$resized['path'] = ICMS_ROOT_PATH.'/cache'.$clean_file;
 		$resized['url'] = ICMS_URL.'/cache'.$clean_file;
 	} elseif (strpos($file, ICMS_URL) === 0) {	// In case of full URL
 		$original['path'] = ICMS_ROOT_PATH. str_replace(ICMS_URL, '', $file);
-		$clean_file = str_replace(ICMS_URL, '', urldecode($clean_file)); // Clean file shouuld not have Full URL
+		$clean_file = str_replace(ICMS_URL, '', urldecode($clean_file)); // Clean file should not have Full URL
 		$resized['path'] = ICMS_ROOT_PATH.'/cache'.$clean_file;
 		$resized['url'] = ICMS_URL.'/cache'.$clean_file;
 	} else {
