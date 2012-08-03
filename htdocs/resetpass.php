@@ -56,7 +56,7 @@ $getuser =& $member_handler->getUsers(new icms_db_criteria_Item('email', icms_co
 if (empty($getuser)) {
 	redirect_header('user.php', 2, _US_SORRYNOTFOUND);
 } else {
-	if (strtolower($getuser[0]->getVar('uname')) !== strtolower($username)) {
+	if (strtolower($getuser[0]->getVar('login_name')) !== strtolower($username)) {
 		redirect_header('user.php', 2, _US_SORRYUNAMENOTMATCHEMAIL);
 	} else {
 		$icmspass = new icms_core_Password();
