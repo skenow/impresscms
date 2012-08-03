@@ -12,7 +12,15 @@
 
 icms_loadLanguageFile('core', 'databaseupdater');
 
-function installation_notify($versionstring, $icmsbase) {
+/**
+ * Posts a notification of an install or update of the system module
+ *
+ * @todo	Make this part of the icms_module_Handler, so it can be applied for every module
+ *
+ * @param	string	$versionstring	A string representing the version of the module
+ * @param	string	$icmsroot		A unique identifier for the site
+ */
+function installation_notify($versionstring, $icmsroot) {
 
 	// @todo: change the URL to an official ImpressCMS server
 	//set POST variables
@@ -32,7 +40,7 @@ function installation_notify($versionstring, $icmsbase) {
 	try {
 		//open connection - this causes a fatal error if the extension is not loaded
 		if (!extension_loaded('curl')) throw new Exception("cURL extension not loaded");
-		$ch = @curl_init();
+		$ch = curl_init();
 
 		//set the url, number of POST vars, POST data
 		curl_setopt($ch, CURLOPT_URL, $url);
