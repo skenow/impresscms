@@ -441,7 +441,15 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 
 		unset($table);
 
-		$table = new icms_db_legacy_updater_Table("users");
+		$table = new icms_db_legacy_updater_Table("config");
+
+		/* Change default encryption (+20) if values less than 20" */
+		$sql = "UPDATE `" . $table->name() . "` SET conf_value = conf_value + 20 WHERE conf_name = 'enc_type' AND conf_value < 20;";
+		$icmsDatabaseUpdater->runQuery($sql, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
+
+		unset($table);
+        
+        $table = new icms_db_legacy_updater_Table("users");
 
 		/* Set all user passwords as Expired (required due to password algorhythm update */
 		$sql = "UPDATE `" . $table->name() . "` SET pass_expired = 1 WHERE pass_expired = 0 AND pass NOT LIKE '$%';";
