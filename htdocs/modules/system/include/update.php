@@ -422,10 +422,11 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 
 		unset($table);
 
-
-		/* this should be the last step of the update */
-		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
-
+		/* Finish up this portion of the db update */
+		if (!$abortUpdate) {
+			$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+			echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
+		}
 	}
 
 	if (!$abortUpdate) $newDbVersion = 43;
@@ -448,7 +449,7 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 		$icmsDatabaseUpdater->runQuery($sql, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
 
 		unset($table);
-        
+
         $table = new icms_db_legacy_updater_Table("users");
 
 		/* Set all user passwords as Expired (required due to password algorhythm update */
@@ -457,8 +458,11 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 
 		unset($table);
 
-		/* this should be the last step of the update */
-		$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+		/* Finish up this portion of the db update */
+		if (!$abortUpdate) {
+			$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+			echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';
+		}
 
 		/* Add this as the last instruction of the last version update - outside of this and it will notify every time
 		 * they update the system module, even if there isn't an update being applied
@@ -481,14 +485,12 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 		echo '<script>setTimeout("window.location.href=\'' . ICMS_MODULES_URL . '/system/admin.php?fct=modulesadmin&op=install&module=content&from_112=1\'",20000);</script>';
 	}
 
-
 	$feedback = ob_get_clean();
 	if (method_exists($module, "setMessage")) {
 		$module->messages = $module->setMessage($feedback);
 	} else {
 		echo $feedback;
 	}
-
 
 	return icms_core_Filesystem::cleanFolders(array('templates_c' => ICMS_COMPILE_PATH . "/", 'cache' => ICMS_CACHE_PATH . "/"), $CleanWritingFolders);
 }
