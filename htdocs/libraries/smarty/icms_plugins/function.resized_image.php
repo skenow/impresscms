@@ -127,6 +127,7 @@ function smarty_function_resized_image($params, &$smarty)
 		$resized['url'] = ICMS_URL.'/cache'.$clean_file;
 	} else {
 		$original['path'] = $file;
+        $clean_file = str_replace(ICMS_ROOT_PATH, '', urldecode($clean_file));
 		$resized['path'] = ICMS_ROOT_PATH.'/cache/'.$clean_file;
 		$resized['url'] = ICMS_URL.'/cache/'.$clean_file;
 	}
