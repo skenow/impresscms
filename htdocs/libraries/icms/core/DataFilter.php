@@ -471,7 +471,6 @@ class icms_core_DataFilter {
 		$html = self::codeConv($html, $icode, $image);
 
 		$html = icms_core_HTMLFilter::filterHTML($html);
-        $html .= '<!-- input filtered -->';
 
 		icms::$preload->triggerEvent('afterFilterHTMLinput', array(&$html, $smiley, $icode, $image));
 		return $html;
@@ -489,10 +488,7 @@ class icms_core_DataFilter {
 	static public function filterHTMLdisplay($html, $icode = 1) {
 		icms::$preload->triggerEvent('beforeFilterHTMLdisplay', array(&$html, $icode));
         
-        // checks if already filtered with HTMLFilter.
-        // backward compatibility for existing content in the DB before INPUT filtering introduced.
-        $ifiltered = strpos($html, '<!-- input filtered -->');
-        if ($ifiltered === FALSE) {
+        if ($icode == 1) {
             if ($icode !== 0) {
                 $html = self::codePreConv($html, $icode);
                 $html = self::makeClickable($html);
@@ -501,8 +497,7 @@ class icms_core_DataFilter {
                 $html = self::codeConv($html, 1, 1);
             }
 
-            $html = icms_core_HTMLFilter::filterHTML($html);
-            $html .= '<!-- warning: cleaned on output only -->';
+            //$html = icms_core_HTMLFilter::filterHTML($html);
         }
 
 		icms::$preload->triggerEvent('afterFilterHTMLdisplay', array(&$html, $icode));
