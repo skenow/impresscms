@@ -458,8 +458,10 @@ class icms_core_Object {
 						}
 						if (!$v['not_gpc']) {
 							$cleanv = icms_core_DataFilter::stripSlashesGPC(icms_core_DataFilter::censorString($cleanv));
+                            $cleanv = icms_core_DataFilter::checkVar($cleanv, 'html', 'input');
 						} else {
 							$cleanv = icms_core_DataFilter::censorString($cleanv);
+                            $cleanv = icms_core_DataFilter::checkVar($cleanv, 'html', 'input');
 						}
 						break;
 
@@ -489,7 +491,7 @@ class icms_core_Object {
 							$this->setErrors(sprintf(_XOBJ_ERR_REQUIRED, $k));
 							continue;
 						}
-						if ($cleanv != '' && !preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i", $cleanv)) {
+						if ($cleanv != '' && !icms_core_DataFilter::checkVar($cleanv, 'email')) {
 							$this->setErrors(_CORE_DB_INVALIDEMAIL);
 							continue;
 						}
