@@ -64,11 +64,11 @@ switch ($op) {
 		if (@is_array($groups_hidden)) {
 			$groups = array_unique(array_merge($groups, $groups_hidden)) ;
 		}
-		updateUser($uid, $username, $login_name, $name, $url, $email, $user_icq, $user_aim, $user_yim, $user_msnm, 
-					$user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar, $user_sig, $attachsig,
-					$theme, $password, $pass2, $rank, $bio, $uorder, $umode, $notify_method, $notify_mode,
-					$timezone_offset, $user_mailok, $language, $openid, $salt, $user_viewoid, $pass_expired,
-					$enc_type, $groups
+		updateUser($uid, $username, $login_name, $name, $url, $email, $user_icq, $user_aim,
+					$user_yim, $user_msnm, $user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar, 
+					$user_sig, $attachsig, $theme, $password, $pass2, $rank, $bio, $uorder, $umode, $notify_method, 
+					$notify_mode, $timezone_offset, $user_mailok, $language, $openid, $user_viewoid, 
+					$pass_expired, $groups
 				);
 		break;
 
@@ -217,8 +217,6 @@ switch ($op) {
 					}
 					
 					$icmspass = new icms_core_Password();
-					$newuser->setVar('salt', $salt);
-					$newuser->setVar('enc_type', $enc_type);
 					$password = $icmspass->encryptPass($password, $salt, $enc_type);
 					$newuser->setVar('pass', $password);
 				}

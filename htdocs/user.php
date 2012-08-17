@@ -78,7 +78,7 @@ switch ($op) {
 		break;
 
 	case 'resetpass':
-		if (!icms::$user) {
+		if (icms::$user) {
 			$xoopsOption['template_main'] = 'system_userform.html';
 			include 'header.php';
 			$redirect = FALSE;
@@ -97,11 +97,11 @@ switch ($op) {
 			icms_makeSmarty(array(
 	            'redirect_page' => $redirect,
 	            'lang_reset' => 1,
-	            'lang_username' => _USERNAME,
-	            'lang_uname' => isset($_GET['uname']) ? filter_input(INPUT_GET, 'uname') : '',
+//	            'lang_username' => _USERNAME,
+//	            'lang_uname' => isset($_GET['uname']) ? filter_input(INPUT_GET, 'uname') : '',
 	            'lang_resetpassword' => _US_RESETPASSWORD,
 	            'lang_resetpassinfo' => _US_RESETPASSINFO,
-	            'lang_youremail' => _US_YOUREMAIL,
+//	            'lang_youremail' => _US_YOUREMAIL,
 	            'lang_sendpassword' => _US_SENDPASSWORD,
 	            'lang_subresetpassword' => _US_SUBRESETPASSWORD,
 	            'lang_currentpass' => _US_CURRENTPASS,

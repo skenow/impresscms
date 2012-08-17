@@ -194,7 +194,7 @@ class icms_member_user_Handler extends icms_core_ObjectHandler {
 		if (!is_a($user, 'icms_member_user_Object')) {return FALSE;}
 		$pass = substr(md5(time()), 0, 8);
 		$sql = sprintf(
-			"UPDATE %s SET level = '-1', pass = '%s', WHERE uid = '%u'",
+			"UPDATE %s SET level = '-1', pass = '%s' WHERE uid = '%u'",
 			$this->db->prefix('users'), $pass, (int) $user->getVar('uid')
 		);
 		if (FALSE != $force) {

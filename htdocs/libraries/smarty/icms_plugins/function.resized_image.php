@@ -59,6 +59,7 @@ function smarty_function_resized_image($params, &$smarty)
     $path_prefix = '';
     $server_vars = ($smarty->request_use_auto_globals) ? $_SERVER : $GLOBALS['HTTP_SERVER_VARS']; // Really? HTTP_SERVER_VARS ?? WTF come on, it's been deprecated years!!!!!
     $basedir = isset($server_vars['DOCUMENT_ROOT']) ? $server_vars['DOCUMENT_ROOT'] : '';
+    $subpath = str_replace($basedir, '', ICMS_ROOT_PATH);
     foreach($params as $_key => $_val) {
         switch($_key) {
             case 'file':
@@ -113,8 +114,9 @@ function smarty_function_resized_image($params, &$smarty)
 	$to   = explode(' ', 'A a E e e e E E I i O o U u N n C c');
 	$clean_file = str_replace($from, $to, strtolower($clean_file)); // removing special characters, convert to lowercase, encoding in URL the remaining for safe
 	$clean_file = str_replace('%2F', '/', urlencode($clean_file)); // URLencode the remaining, but taking into consideration the / char.
-		
-	// Preparing paths
+    $clean_file = str_replace($subpath, '', $clean_file); // strip off remnants of the document root (including subdir)
+
+    // Preparing paths
 	if (substr($file,0,1) == '/') {
 		$original['path'] = $basedir . $file;
         $clean_file = str_replace($basedir, '', urldecode($clean_file)); // Clean file should not have Full Path

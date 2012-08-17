@@ -20,8 +20,13 @@ include 'mainfile.php';
  *	$_GET parameters
  *	code
  */
+/* set default value for $code */
+$code = '';
 
 $filter_get = $filter_post = array('email' => array('email', 'options' => array(0, 0)));
+
+/* set default value for parameters */
+$code = '';
 
 if (!empty($_GET)) {
     $clean_GET = icms_core_DataFilter::checkVarArray($_GET, $filter_get, FALSE);
@@ -47,7 +52,6 @@ if (empty($getuser)) {
 } else {
 	$icmspass = new icms_core_Password();
 
-//	$code = isset($_GET['code']) ? trim(filter_input(INPUT_GET, 'code')) : '';
 	$areyou = substr($getuser[0]->getVar('pass'), 0, 5);
 	if ($code != '' && $areyou == $code) {
 		$newpass = $icmspass->createSalt(8);
