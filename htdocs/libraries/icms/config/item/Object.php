@@ -66,11 +66,11 @@ class icms_config_Item_Object extends icms_core_Object {
 				return (float) $value;
 				break;
 
-			case 'textsarea':
+			case 'textarea':
 				return icms_core_DataFilter::checkVar($this->getVar('conf_value'), 'text', 'output');
 				break;
 
-			case 'textarea':
+			case 'htmlarea':
 				return icms_core_DataFilter::checkVar($this->getVar('conf_value'), 'html', 'output');
 			default:
 				return $this->getVar('conf_value', 'N');
@@ -85,9 +85,9 @@ class icms_config_Item_Object extends icms_core_Object {
 	 * @param	bool    $force_slash
 	 */
 	public function setConfValueForInput($value, $force_slash = false) {
-		if ($this->getVar('conf_formtype') == 'textarea') {
+		if ($this->getVar('conf_formtype') == 'htmlarea') {
 			$value = icms_core_DataFilter::checkVar($value, 'html', 'input');
-		} elseif ($this->getVar('conf_formtype') == 'textsarea' && $this->getVar('conf_valuetype') !== 'array') {
+		} elseif ($this->getVar('conf_formtype') == 'textarea' && $this->getVar('conf_valuetype') !== 'array') {
 			$value = icms_core_DataFilter::checkVar($value, 'text', 'input');
 		} elseif ($this->getVar('conf_formtype') == 'password') {
 			$value = filter_var($value, FILTER_SANITIZE_URL);
@@ -158,6 +158,7 @@ class icms_config_Item_Object extends icms_core_Object {
 			'other' => XOBJ_DTYPE_OTHER,
 			'source' => XOBJ_DTYPE_SOURCE,
 			'float' => XOBJ_DTYPE_FLOAT,
+			'htmlarea' => XOBJ_DTYPE_HTMLAREA,
 		);
 
 		$this->vars['conf_value']['data_type'] = $types[$newType];

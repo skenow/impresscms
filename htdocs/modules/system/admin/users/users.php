@@ -274,7 +274,7 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 		$edituser->setVar('umode', $umode);
 		$edituser->setVar('notify_method', $notify_method);
 		$edituser->setVar('notify_mode', $notify_mode);
-		$edituser->setVar('bio', $bio);
+		$edituser->setVar('bio', icms_core_DataFilter::checkVar($bio, 'html', 'input'));
 		$edituser->setVar('rank', $rank);
 		$edituser->setVar('user_occ', $user_occ);
 		$edituser->setVar('user_intrest', $user_intrest);

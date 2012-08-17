@@ -52,7 +52,7 @@ class icms_member_user_Object extends icms_core_Object {
 		$this->initVar('user_regdate', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('user_icq', XOBJ_DTYPE_TXTBOX, null, false, 15);
 		$this->initVar('user_from', XOBJ_DTYPE_TXTBOX, null, false, 100);
-		$this->initVar('user_sig', XOBJ_DTYPE_TXTAREA, null, false, null);
+		$this->initVar('user_sig', XOBJ_DTYPE_HTMLAREA, null, false, null);
 		$this->initVar('user_viewemail', XOBJ_DTYPE_INT, 0, false);
 		$this->initVar('actkey', XOBJ_DTYPE_OTHER, null, false);
 		$this->initVar('user_aim', XOBJ_DTYPE_TXTBOX, null, false, 18);
@@ -72,7 +72,7 @@ class icms_member_user_Object extends icms_core_Object {
 		$this->initVar('notify_method', XOBJ_DTYPE_OTHER, 1, false);
 		$this->initVar('notify_mode', XOBJ_DTYPE_OTHER, 0, false);
 		$this->initVar('user_occ', XOBJ_DTYPE_TXTBOX, null, false, 100);
-		$this->initVar('bio', XOBJ_DTYPE_TXTAREA, null, false, null);
+		$this->initVar('bio', XOBJ_DTYPE_HTMLAREA, null, false, null);
 		$this->initVar('user_intrest', XOBJ_DTYPE_TXTBOX, null, false, 150);
 		$this->initVar('user_mailok', XOBJ_DTYPE_INT, 1, false);
 

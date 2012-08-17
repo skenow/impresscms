@@ -85,7 +85,7 @@ switch ($op) {
 		for ($i = 0; $i < $confcount; $i++) {
 			$title =(! defined($config[$i]->getVar('conf_desc')) || constant($config[$i]->getVar('conf_desc')) == '') ? constant($config[$i]->getVar('conf_title')) : constant($config[$i]->getVar('conf_title')) . '<img class="helptip" src="'. ICMS_IMAGES_SET_URL . '/actions/acp_help.png" alt="' . _MD_AM_HELP_TIP . '" title="' . _MD_AM_HELP_TIP . '" /><span class="helptext">' . constant($config[$i]->getVar('conf_desc')) . '</span>';
 			switch ($config[$i]->getVar('conf_formtype')) {
-				case 'textsarea' :
+				case 'textarea' :
 					if ($config[$i]->getVar('conf_valuetype') == 'array') {
 						// this is exceptional.. only when value type is array, need a smarter way for this
 						$ele =($config[$i]->getVar('conf_value') != '')
@@ -96,15 +96,8 @@ switch ($op) {
 					}
 					break;
 						
-				case 'textarea' :
-					if ($config[$i]->getVar('conf_valuetype') == 'array') {
-						// this is exceptional.. only when value type is array, need a smarter way for this
-						$ele =($config[$i]->getVar('conf_value') != '')
-							? new icms_form_elements_Textarea($title, $config[$i]->getVar('conf_name'), icms_core_DataFilter::htmlSpecialChars(implode('|', $config[$i]->getConfValueForOutput())), 5, 50)
-							: new icms_form_elements_Textarea($title, $config[$i]->getVar('conf_name'), '', 5, 50);
-					} else {
-						$ele = new icms_form_elements_Dhtmltextarea($title, $config[$i]->getVar('conf_name'), icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
-					}
+				case 'htmlarea' :
+					$ele = new icms_form_elements_Dhtmltextarea($title, $config[$i]->getVar('conf_name'), icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
 					break;
 						
 				case 'autotasksystem':
@@ -399,7 +392,7 @@ switch ($op) {
 		for ($i = 0; $i < $count; $i++) {
 			$title =(! defined($config[$i]->getVar('conf_desc')) || constant($config[$i]->getVar('conf_desc')) == '') ? constant($config[$i]->getVar('conf_title')) : constant($config[$i]->getVar('conf_title')) . '<img class="helptip" src="'. ICMS_IMAGES_SET_URL . '/actions/acp_help.png" alt="' . _MD_AM_HELP_TIP . '" title="' . _MD_AM_HELP_TIP . '" /><span class="helptext">' . constant($config[$i]->getVar('conf_desc')) . '</span>';
 			switch ($config[$i]->getVar('conf_formtype')) {
-				case 'textsarea' :
+				case 'textarea' :
 					if ($config[$i]->getVar('conf_valuetype') == 'array') {
 						// this is exceptional.. only when value type is arrayneed a smarter way for this
 						$ele =($config[$i]->getVar('conf_value') != '') ? new icms_form_elements_Textarea($title, $config[$i]->getVar('conf_name'), icms_core_DataFilter::htmlSpecialChars(implode('|', $config[$i]->getConfValueForOutput())), 5, 50) : new icms_form_elements_Textarea($title, $config[$i]->getVar('conf_name'), '', 5, 50);
@@ -408,13 +401,8 @@ switch ($op) {
 					}
 					break;
 						
-				case 'textarea' :
-					if ($config[$i]->getVar('conf_valuetype') == 'array') {
-						// this is exceptional.. only when value type is array need a smarter way for this
-						$ele =($config[$i]->getVar('conf_value') != '') ? new icms_form_elements_Textarea($title, $config[$i]->getVar('conf_name'), icms_core_DataFilter::htmlSpecialChars(implode('|', $config[$i]->getConfValueForOutput())), 5, 50) : new icms_form_elements_Textarea($title, $config[$i]->getVar('conf_name'), '', 5, 50);
-					} else {
-						$ele = new icms_form_elements_Dhtmltextarea($title, $config[$i]->getVar('conf_name'), icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()), 5, 50);
-					}
+				case 'htmlarea' :
+					$ele = new icms_form_elements_Dhtmltextarea($title, $config[$i]->getVar('conf_name'), icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()), 5, 50);
 					break;
 						
 				case 'select' :

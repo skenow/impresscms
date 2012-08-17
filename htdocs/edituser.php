@@ -236,7 +236,7 @@ switch ($op) {
 			$edituser->setVar('umode', $umode);
 			$edituser->setVar('notify_method', $notify_method);
 			$edituser->setVar('notify_mode', $notify_mode);
-			$edituser->setVar('bio', icms_core_DataFilter::icms_substr($bio, 0, 255));
+			$edituser->setVar('bio', icms_core_DataFilter::checkVar($bio, 'html', 'input'));
 			$edituser->setVar('user_occ', $user_occ);
 			$edituser->setVar('user_intrest', $user_intrest);
 			$edituser->setVar('user_mailok', $user_mailok);
@@ -368,7 +368,7 @@ switch ($op) {
 		$notify_method_select->addOptionArray(array(XOOPS_NOTIFICATION_METHOD_DISABLE=>_NOT_METHOD_DISABLE, XOOPS_NOTIFICATION_METHOD_PM=>_NOT_METHOD_PM, XOOPS_NOTIFICATION_METHOD_EMAIL=>_NOT_METHOD_EMAIL));
 		$notify_mode_select = new icms_form_elements_Select(_NOT_NOTIFYMODE, 'notify_mode', icms::$user->getVar('notify_mode'));
 		$notify_mode_select->addOptionArray(array(XOOPS_NOTIFICATION_MODE_SENDALWAYS=>_NOT_MODE_SENDALWAYS, XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE=>_NOT_MODE_SENDONCE, XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT=>_NOT_MODE_SENDONCEPERLOGIN));
-		$bio_tarea = new icms_form_elements_Textarea(_US_EXTRAINFO, 'bio', icms::$user->getVar('bio', 'E'));
+		$bio_tarea = new icms_form_elements_Dhtmltextarea(_US_EXTRAINFO, 'bio', icms::$user->getVar('bio', 'E'));
 		$cookie_radio_value = empty($_COOKIE[$icmsConfig['usercookie']]) ? 0 : 1;
 		$cookie_radio = new icms_form_elements_Radioyn(_US_USECOOKIE, 'usecookie', $cookie_radio_value, _YES, _NO);
 		$pwd_text = new icms_form_elements_Password('', 'password', 10, 255, "", FALSE, ($icmsConfigUser['pass_level']?'password_adv':''));

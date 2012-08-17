@@ -457,8 +457,26 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 		$icmsDatabaseUpdater->runQuery($sql, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
 
 		unset($table);
+        
+        // Part of task #621 in put filtering - changing textarea to htmlarea & textsarea to textarea in config tables
 
-		/* Finish up this portion of the db update */
+		$table = new icms_db_legacy_updater_Table("config");
+
+		/* Change textarea to htmlarea */
+		$sql = "UPDATE `" . $table->name() . "` SET conf_formtype = 'htmlarea' WHERE conf_formtype = 'textarea';";
+		$icmsDatabaseUpdater->runQuery($sql, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
+
+		unset($table);
+
+		$table = new icms_db_legacy_updater_Table("config");
+
+		/* Change textsarea to textarea */
+		$sql = "UPDATE `" . $table->name() . "` SET conf_formtype = 'textarea' WHERE conf_formtype = 'textsarea';";
+		$icmsDatabaseUpdater->runQuery($sql, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
+
+		unset($table);
+
+        /* Finish up this portion of the db update */
 		if (!$abortUpdate) {
 			$icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
 			echo sprintf(_DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local($newDbVersion)) . '<br />';

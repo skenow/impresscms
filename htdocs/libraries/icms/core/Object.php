@@ -34,6 +34,8 @@ define('XOBJ_DTYPE_FILE', 204);
 define('XOBJ_DTYPE_IMAGE', 205);
 define('XOBJ_DTYPE_FORM_SECTION', 210);
 define('XOBJ_DTYPE_FORM_SECTION_CLOSE', 211);
+
+define('XOBJ_DTYPE_HTMLAREA', 300);
 /**#@-*/
 
 /**
@@ -308,20 +310,36 @@ class icms_core_Object {
 				switch (strtolower($format)) {
 					case 's':
 					case 'show':
-						$html = !empty($this->vars['dohtml']['value']) ? 1 : 0;
-						$xcode = (!isset($this->vars['doxcode']['value']) || $this->vars['doxcode']['value'] == 1) ? 1 : 0;
-						$smiley = (!isset($this->vars['dosmiley']['value']) || $this->vars['dosmiley']['value'] == 1) ? 1 : 0;
-						$image = (!isset($this->vars['doimage']['value']) || $this->vars['doimage']['value'] == 1) ? 1 : 0;
-						$br = (!isset($this->vars['dobr']['value']) || $this->vars['dobr']['value'] == 1) ? 1 : 0;
-						if ($html) {
-                            if ($br) { // have to use this whilst ever there's a zillion editors in the core
-                                return icms_core_DataFilter::filterHTMLdisplay($ret, $xcode, $br);
-                            } else {
-                                return icms_core_DataFilter::checkVar($ret, 'html', 'output');
-                            }
-						} else {
-							return icms_core_DataFilter::checkVar($ret, 'text', 'output');
-						}
+						return icms_core_DataFilter::checkVar($ret, 'text', 'output');
+						break 1;
+
+					case 'e':
+					case 'edit':
+						return htmlspecialchars($ret, ENT_QUOTES);
+						break 1;
+
+					case 'p':
+					case 'preview':
+                        return icms_core_DataFilter::checkVar($ret, 'text', 'output');
+						break 1;
+
+					case 'f':
+					case 'formpreview':
+                        return htmlspecialchars(icms_core_DataFilter::stripSlashesGPC($ret), ENT_QUOTES);
+						break 1;
+
+					case 'n':
+					case 'none':
+					default:
+						break 1;
+				}
+				break;
+
+			case XOBJ_DTYPE_HTMLAREA:
+				switch (strtolower($format)) {
+					case 's':
+					case 'show':
+                        return icms_core_DataFilter::checkVar($ret, 'html', 'output');
 						break 1;
 
 					case 'e':
@@ -337,16 +355,7 @@ class icms_core_Object {
 
 					case 'p':
 					case 'preview':
-						$html = !empty($this->vars['dohtml']['value']) ? 1 : 0;
-						$xcode = (!isset($this->vars['doxcode']['value']) || $this->vars['doxcode']['value'] == 1) ? 1 : 0;
-						$smiley = (!isset($this->vars['dosmiley']['value']) || $this->vars['dosmiley']['value'] == 1) ? 1 : 0;
-						$image = (!isset($this->vars['doimage']['value']) || $this->vars['doimage']['value'] == 1) ? 1 : 0;
-						$br = (!isset($this->vars['dobr']['value']) || $this->vars['dobr']['value'] == 1) ? 1 : 0;
-						if ($html) {
-                            return icms_core_DataFilter::checkVar($ret, 'html', 'input');
-						} else {
-							return icms_core_DataFilter::checkVar($ret, 'text', 'input');
-						}
+                        return icms_core_DataFilter::checkVar($ret, 'html', 'input');
 						break 1;
 
 					case 'f':
@@ -367,7 +376,7 @@ class icms_core_Object {
 				}
 				break;
 
-			case XOBJ_DTYPE_ARRAY:
+            case XOBJ_DTYPE_ARRAY:
 				$ret =& unserialize($ret);
 				break;
 
@@ -473,6 +482,20 @@ class icms_core_Object {
 						}
 						if (!$v['not_gpc']) {
 							$cleanv = icms_core_DataFilter::stripSlashesGPC(icms_core_DataFilter::censorString($cleanv));
+                            $cleanv = icms_core_DataFilter::checkVar($cleanv, 'text', 'input');
+						} else {
+							$cleanv = icms_core_DataFilter::censorString($cleanv);
+                            $cleanv = icms_core_DataFilter::checkVar($cleanv, 'text', 'input');
+						}
+						break;
+
+					case XOBJ_DTYPE_HTMLAREA:
+						if ($v['required'] && $cleanv != '0' && $cleanv == '') {
+							$this->setErrors(sprintf(_XOBJ_ERR_REQUIRED, $k));
+							continue;
+						}
+						if (!$v['not_gpc']) {
+							$cleanv = icms_core_DataFilter::stripSlashesGPC(icms_core_DataFilter::censorString($cleanv));
                             $cleanv = icms_core_DataFilter::checkVar($cleanv, 'html', 'input');
 						} else {
 							$cleanv = icms_core_DataFilter::censorString($cleanv);
@@ -480,7 +503,7 @@ class icms_core_Object {
 						}
 						break;
 
-					case XOBJ_DTYPE_SOURCE:
+                    case XOBJ_DTYPE_SOURCE:
 						if (!$v['not_gpc']) {
 							$cleanv = icms_core_DataFilter::stripSlashesGPC($cleanv);
 						} else {
