@@ -29,7 +29,7 @@ if (!@include_once($root_path."/language/".$icmsConfig['language'].".php")) {
 
 return $config = array(
 		//"name"	=>	"htmlarea",
-		"class"	=>	"FormDhtmlTextArea",
+		"class"	=>	"FormHtmlArea",
 		"file"	=>	$root_path."/htmlarea.php",
 		"title"	=>	_XOOPS_EDITOR_DHTMLTEXTAREA,
 		"order"	=>	1,

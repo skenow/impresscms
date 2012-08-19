@@ -26,7 +26,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @package	 kernel
  * @subpackage  form
  */
-class XoopsFormDhtmlTextArea extends icms_form_elements_Htmlarea {
+class XoopsFormHtmlArea extends icms_form_elements_Htmlarea {
 	private $_deprecated;
 	public function __construct($caption, $name, $value, $rows=5, $cols=50, $hiddentext="xoopsHiddenText", $options = array()) {
 		parent::__construct($caption, $name, $value, $rows, $cols, $hiddentext, $options);

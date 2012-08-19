@@ -17,7 +17,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @author	    phppp (D.J.)
  * @copyright	copyright (c) 2005 XOOPS.org
  */
-class FormDhtmlTextArea extends icms_form_elements_Htmlarea
+class FormHtmlArea extends icms_form_elements_Htmlarea
 {
 	/**
 	 * Constructor
@@ -25,7 +25,7 @@ class FormDhtmlTextArea extends icms_form_elements_Htmlarea
    * @param	array   $configs  Editor Options
    * @param	binary 	$checkCompatible  true - return false on failure
 	 */
-	function FormDhtmlTextArea($configs, $checkCompatible = false)
+	function FormHtmlArea($configs, $checkCompatible = false)
 	{
 		if (!empty($configs)) {
 			foreach ($configs as $key => $val) {
