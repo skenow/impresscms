@@ -130,7 +130,7 @@ if (! empty( $_SESSION['redirect_message'] )) {
 	$xoTheme->addScript(ICMS_LIBRARIES_URL.'/jquery/colorbox/jquery.colorbox-min.js');
 
 	/*	$jscript = '';
-	 if(class_exists('icms_form_elements_Dhtmltextarea')){
+	 if(class_exists('icms_form_elements_Htmlarea')){
 		foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
 		if( empty( $key ) )
 		continue;

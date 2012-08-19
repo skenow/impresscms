@@ -310,11 +310,6 @@ class icms_member_Handler {
 			$uname = self::icms_getLoginFromUserEmail($uname);
 		}
 
-/*		$is_expired = $icmspass->passExpired($uname);
-		if ($is_expired == 1) {
-			redirect_header(ICMS_URL . '/user.php?op=resetpass&uname=' . $uname, 5, _US_PASSEXPIRED, false);
-		} */
-
         $pwd = $icmspass->verifyPass($pwd, $uname);
 		
 		$table = new icms_db_legacy_updater_Table('users');
@@ -333,31 +328,6 @@ class icms_member_Handler {
 		}
 		return $user[0];
 	}
-
-	/**
-	 * logs in a user with an md5 encrypted password
-	 *
-	 * @param string $uname username
-	 * @param string $md5pwd password encrypted with md5
-	 * @return object icms_member_user_Object {@link icms_member_user_Object} reference to the logged in user. FALSE if failed to log in
-	 */
-	/*	function &loginUserMd5($uname, $md5pwd) {
-	 $table = new icms_db_legacy_updater_Table('users');
-	 if ($table->fieldExists('loginname')) {
-	 $criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('loginname', $uname));
-	 } elseif ($table->fieldExists('login_name')) {
-	 $criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('login_name', $uname));
-	 } else {
-	 $criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('uname', $uname));
-	 }
-	 $criteria->add(new icms_db_criteria_Item('pass', $md5pwd));
-	 $user = $this->_uHandler->getObjects($criteria, false);
-	 if (! $user || count($user) != 1) {
-	 $user = false;
-	 return $user;
-	 }
-	 return $user [0];
-	 } */
 
 	/**
 	 * count users matching certain conditions

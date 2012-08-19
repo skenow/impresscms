@@ -25,7 +25,7 @@ class icms_ipf_form_elements_Signature extends icms_form_elements_Tray {
 		parent::__construct($var['form_caption'], '<br /><br />', $key . '_signature_tray');
 
 		icms_loadLanguageFile('core', 'user');
-		$signature_textarea = new icms_form_elements_Dhtmltextarea('', $key, $object->getVar($key, 'e'));
+		$signature_textarea = new icms_form_elements_Htmlarea('', $key, $object->getVar($key, 'e'));
 		$this->addElement($signature_textarea);
 		$attach_checkbox = new icms_form_elements_Checkbox('', 'attachsig', $object->getVar('attachsig', 'e'));
 		$attach_checkbox->addOption(1, _US_SHOWSIG);

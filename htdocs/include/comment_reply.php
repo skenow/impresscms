@@ -58,7 +58,7 @@ $com_id = 0;
 $dosmiley = 1;
 $groups   = (is_object(icms::$user)) ? icms::$user->getGroups() : ICMS_GROUP_ANONYMOUS;
 $gperm_handler = icms::handler('icms_member_groupperm');
-if ($icmsConfig ['editor_default'] != 'dhtmltextarea' && $gperm_handler->checkRight('use_wysiwygeditor', 1, $groups, 1, false)) {
+if ($icmsConfig ['editor_default'] != 'htmlarea' && $gperm_handler->checkRight('use_wysiwygeditor', 1, $groups, 1, false)) {
 	$dohtml = 1;
 	$dobr = 0;
 } else {

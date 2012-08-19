@@ -97,7 +97,7 @@ switch ($op) {
 					break;
 						
 				case 'htmlarea' :
-					$ele = new icms_form_elements_Dhtmltextarea($title, $config[$i]->getVar('conf_name'), icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
+					$ele = new icms_form_elements_Htmlarea($title, $config[$i]->getVar('conf_name'), icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()));
 					break;
 						
 				case 'autotasksystem':
@@ -402,7 +402,7 @@ switch ($op) {
 					break;
 						
 				case 'htmlarea' :
-					$ele = new icms_form_elements_Dhtmltextarea($title, $config[$i]->getVar('conf_name'), icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()), 5, 50);
+					$ele = new icms_form_elements_Htmlarea($title, $config[$i]->getVar('conf_name'), icms_core_DataFilter::htmlSpecialChars($config[$i]->getConfValueForOutput()), 5, 50);
 					break;
 						
 				case 'select' :

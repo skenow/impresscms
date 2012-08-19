@@ -213,7 +213,7 @@ class icms_Autoloader {
 			"xoopsformselectmatchoption"	=> "/class/xoopsform/formselectmatchoption.php",
 			"xoopsformtext"					=> "/class/xoopsform/formtext.php",
 			"xoopsformtextarea"				=> "/class/xoopsform/formtextarea.php",
-			"xoopsformdhtmltextarea"		=> "/class/xoopsform/formdhtmltextarea.php",
+			"xoopsformhtmlarea"		=> "/class/xoopsform/formhtmlarea.php",
 			"xoopsformelementtray"			=> "/class/xoopsform/formelementtray.php",
 			"xoopsthemeform"				=> "/class/xoopsform/themeform.php",
 			"xoopssimpleform"				=> "/class/xoopsform/simpleform.php",

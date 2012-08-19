@@ -348,7 +348,7 @@ class icms_ipf_Object extends icms_core_Object {
 	 *
 	 * Here is a list of supported editor :
 	 * 		- tiny : TinyEditor
-	 * 		- dhtmltextarea : ImpressCMS DHTML Area
+	 * 		- htmlarea : ImpressCMS DHTML Area
 	 * 		- fckeditor	: FCKEditor
 	 * 		- inbetween : InBetween
 	 * 		- koivi : Koivi
@@ -753,7 +753,7 @@ class icms_ipf_Object extends icms_core_Object {
 		}
 
 		if ($editor) {
-			if (defined('XOOPS_EDITOR_IS_HTML') && !(in_array($form_editor, array('formtextarea', 'textarea', 'dhtmltextarea')))) {
+			if (defined('XOOPS_EDITOR_IS_HTML') && !(in_array($form_editor, array('formtextarea', 'textarea', 'htmlarea')))) {
 				$br = false;
 				$formatML = !$editor;
 			} else {

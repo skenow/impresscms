@@ -6,7 +6,7 @@
  * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since		4.00
- * @version		$Id: dhtmltextarea.php 1686 2008-04-19 14:33:00Z malanciault $
+ * @version		$Id: htmlarea.php 1686 2008-04-19 14:33:00Z malanciault $
  * @package		xoopseditor
  */
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
@@ -17,7 +17,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @author	    phppp (D.J.)
  * @copyright	copyright (c) 2005 XOOPS.org
  */
-class FormDhtmlTextArea extends icms_form_elements_Dhtmltextarea
+class FormDhtmlTextArea extends icms_form_elements_Htmlarea
 {
 	/**
 	 * Constructor

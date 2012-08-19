@@ -370,8 +370,8 @@ class icms_ipf_form_Base extends icms_form_Theme {
 				return $editor;
 				break;
 
-			case 'dhtmltextarea' :
-				$editor = new icms_form_elements_Dhtmltextarea($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getVar($key, 'e'), 15, 50);
+			case 'htmlarea' :
+				$editor = new icms_form_elements_Htmlarea($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getVar($key, 'e'), 15, 50);
 				if ($this->targetObject->vars[$key]['form_dsc']) {
 					$editor->setDescription($this->targetObject->vars[$key]['form_dsc']);
 				}

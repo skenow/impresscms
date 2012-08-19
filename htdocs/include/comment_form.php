@@ -44,7 +44,7 @@ foreach ($subject_icons as $iconfile) {
 	$icons_radio->addOption($iconfile, '<img src="' . ICMS_URL . '/images/subject/' . $iconfile . '" alt="" />');
 }
 $cform->addElement($icons_radio);
-$cform->addElement(new icms_form_elements_Dhtmltextarea(_CM_MESSAGE, 'com_text', $com_text, 10, 50), TRUE);
+$cform->addElement(new icms_form_elements_Htmlarea(_CM_MESSAGE, 'com_text', $com_text, 10, 50), TRUE);
 $option_tray = new icms_form_elements_Tray(_OPTIONS, '<br />');
 
 $button_tray = new icms_form_elements_Tray('' , '&nbsp;');

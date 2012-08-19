@@ -144,9 +144,9 @@ if (icms::$user) {
 				unset($pm);
 				$reply = $send2 = 0;
 			}
-			$textarea = new icms_form_elements_Dhtmltextarea(_PM_MESSAGEC, 'message', $message);
+			$textarea = new icms_form_elements_Htmlarea(_PM_MESSAGEC, 'message', $message);
 		} else {
-			$textarea = new icms_form_elements_Dhtmltextarea(_PM_MESSAGEC, 'message', '');
+			$textarea = new icms_form_elements_Htmlarea(_PM_MESSAGEC, 'message', '');
 		}
 		echo $textarea->render()
 			. "</td></tr>"

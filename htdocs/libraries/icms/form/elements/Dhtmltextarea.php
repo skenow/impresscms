@@ -20,11 +20,11 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @package		Form
  * @subpackage	Elements
  */
-class icms_form_elements_Dhtmltextarea extends icms_form_elements_Textarea {
+class icms_form_elements_Htmlarea extends icms_form_elements_Textarea {
 	/**
 	 * Extended HTML editor definition
 	 *
-	 * Note: the PM window doesn't use icms_form_elements_Dhtmltextarea, so no need to report it doesn't work here
+	 * Note: the PM window doesn't use icms_form_elements_Htmlarea, so no need to report it doesn't work here
 	 *
 	 * array('className', 'classPath'):  To create an instance of "className", declared in the file ICMS_ROOT_PATH . $classPath
 	 *

@@ -28,9 +28,9 @@ if (!@include_once($root_path."/language/".$icmsConfig['language'].".php")) {
 }
 
 return $config = array(
-		//"name"	=>	"dhtmltextarea",
+		//"name"	=>	"htmlarea",
 		"class"	=>	"FormDhtmlTextArea",
-		"file"	=>	$root_path."/dhtmltextarea.php",
+		"file"	=>	$root_path."/htmlarea.php",
 		"title"	=>	_XOOPS_EDITOR_DHTMLTEXTAREA,
 		"order"	=>	1,
 		"nohtml"=>	1

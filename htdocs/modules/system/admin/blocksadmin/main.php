@@ -38,7 +38,7 @@ function editblock($bid = 0, $clone = FALSE) {
 	} elseif ($blockObj->getVar("c_type") == "P") {
 		$blockObj->setControl("content", array("name" => "source", "syntax" => "php"));
 	} else {
-		$blockObj->setControl("content", "dhtmltextarea");
+		$blockObj->setControl("content", "htmlarea");
 	}
 
 	if (!$blockObj->isNew() && $blockObj->getVar('edit_func') != '') $blockObj->showFieldOnForm('options');

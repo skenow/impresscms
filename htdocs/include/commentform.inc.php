@@ -27,7 +27,7 @@ foreach ($subject_icons as $iconfile) {
 	$icons_radio->addOption($iconfile, '<img src="' . ICMS_IMAGES_URL . '/subject/' . $iconfile . '" alt="" />');
 }
 $cform->addElement($icons_radio);
-$cform->addElement(new icms_form_elements_Dhtmltextarea(_CM_MESSAGE, 'message', $message, 10, 50), true);
+$cform->addElement(new icms_form_elements_Htmlarea(_CM_MESSAGE, 'message', $message, 10, 50), true);
 $option_tray = new icms_form_elements_Tray(_OPTIONS,'<br />');
 if (icms::$user) {
 	if ($icmsConfig['anonpost'] == true) {
