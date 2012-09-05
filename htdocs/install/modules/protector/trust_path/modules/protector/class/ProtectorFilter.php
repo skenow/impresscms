@@ -43,7 +43,7 @@ class ProtectorFilterHandler {
 		$this->filters_byconfig = dirname(dirname(__FILE__)).'/filters_byconfig' ;
 	}
 
-	function &getInstance()
+	public static function &getInstance()
 	{
 		static $instance ;
 		if( ! isset( $instance ) ) {
@@ -85,7 +85,7 @@ class ProtectorFilterHandler {
 				$ret |= call_user_func( $plugin_name ) ;
 			} else if( class_exists( $plugin_name ) ) {
 				// newer way
-				$plugin_obj =& new $plugin_name() ;
+				$plugin_obj = new $plugin_name() ;
 				$ret |= $plugin_obj->execute() ;
 			}
 		}

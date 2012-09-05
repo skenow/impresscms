@@ -16,13 +16,13 @@
 include_once "../../../../mainfile.php";
 
 if (!icms::$user) {
-	redirect_header(ICMS_URL . '/index.php', 6, _NOPERM);
+	redirect_header(ICMS_URL . '/', 6, _NOPERM);
 }
 
 $icmsTpl = new icms_view_Tpl();
 /*
  * GET variables
- * (str) op:		list, listimg, addcat, 
+ * (str) op:		list, listimg, addcat,
  * 					addfile, save, delfile, delfileok, cloneimg
  * 					save_edit_ok
  * (int) limit
@@ -32,7 +32,7 @@ $icmsTpl = new icms_view_Tpl();
  * (str) type
  * (str) target
  * (str) msg
- * 
+ *
  * POST variables
  * (str) op
  * (int) limit

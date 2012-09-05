@@ -224,6 +224,7 @@ class icms_core_DataFilter {
 	*					'input' = Filters HTML for input to DB
 	*					'output' = Filters HTML for rendering output
 	*					'print' = Filters HTML for output to Printer
+    *                   'edit' = used for edit content forms 
 	*				TEXT:
 	*					'input' = Filters plain text for input to DB
 	*					'output' = Filters plain text for rendering output
@@ -324,7 +325,7 @@ class icms_core_DataFilter {
 				break;
 
 				case 'html':
-					$valid_options1 = array('input', 'output', 'print');
+					$valid_options1 = array('input', 'output', 'print', 'edit');
 					$options2 = '';
 					if (!isset($options1) || $options1 == '' || !in_array($options1, $valid_options1)) {
 						$options1 = 'input';
@@ -458,7 +459,6 @@ class icms_core_DataFilter {
         $html = str_replace('<!-- input filtered -->', '', $html);
         
 		$html = self::codePreConv($html, 1);
-		$html = self::makeClickable($html);
 		$html = self::smiley($html);
 		$html = self::codeDecode($html);
 		$html = self::codeConv($html, 1, 1);
@@ -491,7 +491,6 @@ class icms_core_DataFilter {
         $ifiltered = strpos($html, '<!-- input filtered -->');
         if ($ifiltered === FALSE) {
             $html = self::codePreConv($html, 1);
-            $html = self::makeClickable($html);
             $html = self::smiley($html);
             $html = self::codeDecode($html);
             $html = self::codeConv($html, 1, 1);
@@ -505,6 +504,9 @@ class icms_core_DataFilter {
             	$html = self::nl2Br($html);
             }
         }
+        
+        $html = self::makeClickable($html);
+        $html = self::censorString($html);
 
 		icms::$preload->triggerEvent('afterFilterHTMLdisplay', array(&$html, 1, $br));
 		return $html;
@@ -1138,7 +1140,16 @@ class icms_core_DataFilter {
 						return self::filterHTMLdisplay($data);
 					break;
 
-					case 'print':
+					case 'edit':
+                        $filtered = strpos($data, '<!-- input filtered -->');
+                        if ($filtered !== FALSE) {
+                            $data = str_replace('<!-- input filtered -->', '', $data);
+                            $data = str_replace('<!-- filtered with htmlpurifier -->', '', $data);
+                        }
+						return htmlspecialchars($data, ENT_QUOTES, _CHARSET);
+					break;
+
+                    case 'print':
 						// do nothing yet
 					break;
 				}

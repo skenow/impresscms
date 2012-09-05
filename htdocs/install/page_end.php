@@ -24,7 +24,7 @@ $success = isset($_GET['success'])?trim($_GET['success']):false;
 if ($success) {
 	if (is_dir(ICMS_ROOT_PATH.'/install')) {
 		icms_core_Filesystem::deleteRecursive(ICMS_ROOT_PATH.'/install', true);
-		header('Location: '.ICMS_URL.'/index.php');
+		header('Location: '.ICMS_URL.'/');
 	}
 	$_SESSION = array();
 }

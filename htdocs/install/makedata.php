@@ -246,7 +246,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'banners', '_MD_AM_BANNERS', '1', '_MD_AM_BANNERSDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'closesite', '_MD_AM_CLOSESITE', '0', '_MD_AM_CLOSESITEDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'closesite_okgrp', '_MD_AM_CLOSESITEOK', '".addslashes(serialize(array('1')))."', '_MD_AM_CLOSESITEOKDSC', 'group_multi', 'array', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'closesite_text', '_MD_AM_CLOSESITETXT', '"._INSTALL_L165."', '_MD_AM_CLOSESITETXTDSC', 'textarea', 'text', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'closesite_text', '_MD_AM_CLOSESITETXT', '"._INSTALL_L165."', '_MD_AM_CLOSESITETXTDSC', 'textsarea', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'my_ip', '_MD_AM_MYIP', '127.0.0.1', '_MD_AM_MYIPDSC', 'textbox', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'use_ssl', '_MD_AM_USESSL', '0', '_MD_AM_USESSLDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'sslpost_name', '_MD_AM_SSLPOST', 'icms_ssl', '_MD_AM_SSLPOSTDSC', 'textbox', 'text', " . $p++ . ")"
@@ -263,7 +263,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	// ----------
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'use_captchaf', '_MD_AM_USECAPTCHAFORM', 1, '_MD_AM_USECAPTCHAFORMDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'enable_badips', '_MD_AM_DOBADIPS', '0', '_MD_AM_DOBADIPSDSC', 'yesno', 'int', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'bad_ips', '_MD_AM_BADIPS', '".addslashes(serialize(array('127.0.0.1')))."', '_MD_AM_BADIPSDSC', 'textarea', 'array', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'bad_ips', '_MD_AM_BADIPS', '".addslashes(serialize(array('127.0.0.1')))."', '_MD_AM_BADIPSDSC', 'textsarea', 'array', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'module_cache', '_MD_AM_MODCACHE', '', '_MD_AM_MODCACHEDSC', 'module_cache', 'array', " . $p++ . ")");
 
 	// Data for Config Category 2 (User Preferences)
@@ -284,7 +284,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 		. ", (" . ++$i . ", 0, $c, 'delusers', '_MD_AM_DELUSRES', '30', '_MD_AM_DELUSRESDSC', 'textbox', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'use_captcha', '_MD_AM_USECAPTCHA', 1, '_MD_AM_USECAPTCHADSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'welcome_msg', '_MD_AM_WELCOMEMSG', '0', '_MD_AM_WELCOMEMSGDSC', 'yesno', 'int', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'welcome_msg_content', '_MD_AM_WELCOMEMSG_CONTENT', '".addslashes(_WELCOME_MSG_CONTENT)."', '_MD_AM_WELCOMEMSG_CONTENTDSC', 'textarea', 'text', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'welcome_msg_content', '_MD_AM_WELCOMEMSG_CONTENT', '".addslashes(_WELCOME_MSG_CONTENT)."', '_MD_AM_WELCOMEMSG_CONTENTDSC', 'textsarea', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'allow_chgmail', '_MD_AM_ALLWCHGMAIL', '0', '_MD_AM_ALLWCHGMAILDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'allow_chguname', '_MD_AM_ALLWCHGUNAME', '0', '_MD_AM_ALLWCHGUNAMEDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'allwshow_sig', '_MD_AM_ALLWSHOWSIG', '1', '_MD_AM_ALLWSHOWSIGDSC', 'yesno', 'int', " . $p++ . ")"
@@ -319,13 +319,13 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 		. ", (" . ++$i . ", 0, $c, 'rank_width', '_MD_AM_RANKW', '120', '_MD_AM_RANKWDSC', 'textbox', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'rank_height', '_MD_AM_RANKH', '120', '_MD_AM_RANKHDSC', 'textbox', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'rank_maxsize', '_MD_AM_RANKMAX', '35000', '_MD_AM_RANKMAXDSC', 'textbox', 'int', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'bad_unames', '_MD_AM_BADUNAMES', '".addslashes(serialize(array('webmaster', '^impresscms', '^admin')))."', '_MD_AM_BADUNAMESDSC', 'textarea', 'array', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'bad_emails', '_MD_AM_BADEMAILS', '".addslashes(serialize(array('impresscms.org$')))."', '_MD_AM_BADEMAILSDSC', 'textarea', 'array', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'bad_unames', '_MD_AM_BADUNAMES', '".addslashes(serialize(array('webmaster', '^impresscms', '^admin')))."', '_MD_AM_BADUNAMESDSC', 'textsarea', 'array', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'bad_emails', '_MD_AM_BADEMAILS', '".addslashes(serialize(array('impresscms.org$')))."', '_MD_AM_BADEMAILSDSC', 'textsarea', 'array', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'remember_me', '_MD_AM_REMEMBERME', '0', '_MD_AM_REMEMBERMEDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'reg_dispdsclmr', '_MD_AM_DSPDSCLMR', 1, '_MD_AM_DSPDSCLMRDSC', 'yesno', 'int', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'reg_disclaimer', '_MD_AM_REGDSCLMR', '".addslashes(_INSTALL_DISCLMR)."', '_MD_AM_REGDSCLMRDSC', 'textarea', 'text', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'reg_disclaimer', '_MD_AM_REGDSCLMR', '".addslashes(_INSTALL_DISCLMR)."', '_MD_AM_REGDSCLMRDSC', 'textsarea', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'priv_dpolicy', '_MD_AM_PRIVDPOLICY', 0, '_MD_AM_PRIVDPOLICYDSC', 'yesno', 'int', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'priv_policy', '_MD_AM_PRIVPOLICY', '".addslashes(_INSTALL_PRIVPOLICY)."', '_MD_AM_PRIVPOLICYDSC', 'htmlarea', 'text', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'priv_policy', '_MD_AM_PRIVPOLICY', '".addslashes(_INSTALL_PRIVPOLICY)."', '_MD_AM_PRIVPOLICYDSC', 'textsarea', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'allow_annon_view_prof', '_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE', '0', '_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE_DESC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'enc_type', '_MD_AM_ENC_TYPE', '23', '_MD_AM_ENC_TYPEDSC', 'select', 'int', " . $p++ . ")");
 	// Insert data for Config Options in selection field. (must be placed before //$i++)
@@ -351,8 +351,8 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	// Data for Config Category 3 (Meta & Footer Preferences)
 	$c=3; // sets config category id
 	$p=0; // reset position increment to 0 for new category id
-	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'meta_keywords', '_MD_AM_METAKEY', 'community management system, CMS, content management, social networking, community, blog, support, modules, add-ons, themes', '_MD_AM_METAKEYDSC', 'textarea', 'text', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'meta_description', '_MD_AM_METADESC', 'ImpressCMS is a dynamic Object Oriented based open source portal script written in PHP.', '_MD_AM_METADESCDSC', 'textarea', 'text', " . $p++ . ")"
+	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'meta_keywords', '_MD_AM_METAKEY', 'community management system, CMS, content management, social networking, community, blog, support, modules, add-ons, themes', '_MD_AM_METAKEYDSC', 'textsarea', 'text', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'meta_description', '_MD_AM_METADESC', 'ImpressCMS is a dynamic Object Oriented based open source portal script written in PHP.', '_MD_AM_METADESCDSC', 'textsarea', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'meta_robots', '_MD_AM_METAROBOTS', 'index,follow', '_MD_AM_METAROBOTSDSC', 'select', 'text', " . $p++ . ")");
 	// Insert data for Config Options in selection field. (must be placed before //$i++)
 		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_INDEXFOLLOW', 'index,follow', $i)"
@@ -379,7 +379,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$c=4; // sets config category id
 	$p=0; // reset position increment to 0 for new category id
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'censor_enable', '_MD_AM_DOCENSOR', '0', '_MD_AM_DOCENSORDSC', 'yesno', 'int', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'censor_words', '_MD_AM_CENSORWRD', '".addslashes(serialize(array('fuck', 'shit', 'cunt', 'wanker', 'bastard')))."', '_MD_AM_CENSORWRDDSC', 'textarea', 'array', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'censor_words', '_MD_AM_CENSORWRD', '".addslashes(serialize(array('fuck', 'shit', 'cunt', 'wanker', 'bastard')))."', '_MD_AM_CENSORWRDDSC', 'textsarea', 'array', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'censor_replace', '_MD_AM_CENSORRPLC', '"._LOCAL_SENSORTXT."', '_MD_AM_CENSORRPLCDSC', 'textbox', 'text', " . $p++ . ")");
 
 	// Data for Config Category 5 (Search Preferences)
@@ -407,7 +407,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 			. ", (" . $ci++ . ", 'SMTP','smtp', $i)"
 			. ", (" . $ci++ . ", 'SMTPAuth','smtpauth', $i)");
 	// ----------
-	$dbm->insert('config', " VALUES (" . ++$i . ",0,$c,'smtphost','_MD_AM_SMTPHOST','a:1:{i:0;s:0:\"\";}', '_MD_AM_SMTPHOSTDESC','textarea','array', " . $p++ . ")"
+	$dbm->insert('config', " VALUES (" . ++$i . ",0,$c,'smtphost','_MD_AM_SMTPHOST','a:1:{i:0;s:0:\"\";}', '_MD_AM_SMTPHOSTDESC','textsarea','array', " . $p++ . ")"
 		. ", (" . ++$i . ",0,$c,'smtpuser','_MD_AM_SMTPUSER','','_MD_AM_SMTPUSERDESC','textbox','text', " . $p++ . ")"
 		. ", (" . ++$i . ",0,$c,'smtppass','_MD_AM_SMTPPASS','','_MD_AM_SMTPPASSDESC','password','text', " . $p++ . ")"
 		. ", (" . ++$i . ",0,$c,'smtpsecure','_MD_AM_SMTPSECURE','ssl','_MD_AM_SMTPSECUREDESC','select','text', " . $p++ . ")");
@@ -435,7 +435,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 		. ", (" . ++$i . ",0,$c,'ldap_manager_dn','_MD_AM_LDAP_MANAGER_DN','manager_dn','_MD_AM_LDAP_MANAGER_DN_DESC','textbox','text', " . $p++ . ")"
 		. ", (" . ++$i . ",0,$c,'ldap_manager_pass','_MD_AM_LDAP_MANAGER_PASS','manager_pass','_MD_AM_LDAP_MANAGER_PASS_DESC','password','text', " . $p++ . ")"
 		. ", (" . ++$i . ",0,$c,'ldap_version','_MD_AM_LDAP_VERSION','3','_MD_AM_LDAP_VERSION_DESC','textbox','text', " . $p++ . ")"
-		. ", (" . ++$i . ",0,$c,'ldap_users_bypass','_MD_AM_LDAP_USERS_BYPASS','".serialize(array('admin'))."','_MD_AM_LDAP_USERS_BYPASS_DESC','textarea','array', " . $p++ . ")"
+		. ", (" . ++$i . ",0,$c,'ldap_users_bypass','_MD_AM_LDAP_USERS_BYPASS','".serialize(array('admin'))."','_MD_AM_LDAP_USERS_BYPASS_DESC','textsarea','array', " . $p++ . ")"
 		. ", (" . ++$i . ",0,$c,'ldap_loginname_asdn','_MD_AM_LDAP_LOGINNAME_ASDN','uid_asdn','_MD_AM_LDAP_LOGINNAME_ASDN_D','yesno','int', " . $p++ . ")"
 		. ", (" . ++$i . ",0,$c,'ldap_loginldap_attr', '_MD_AM_LDAP_LOGINLDAP_ATTR', 'uid', '_MD_AM_LDAP_LOGINLDAP_ATTR_D', 'textbox', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ",0,$c,'ldap_filter_person','_MD_AM_LDAP_FILTER_PERSON','','_MD_AM_LDAP_FILTER_PERSON_DESC','textbox','text', " . $p++ . ")"
@@ -445,7 +445,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 		. ", (" . ++$i . ",0,$c,'ldap_mail_attr','_MD_AM_LDAP_MAIL_ATTR','mail','_MD_AM_LDAP_MAIL_ATTR_DESC','textbox','text', " . $p++ . ")"
 		. ", (" . ++$i . ",0,$c,'ldap_givenname_attr','_MD_AM_LDAP_GIVENNAME_ATTR','givenname','_MD_AM_LDAP_GIVENNAME_ATTR_DSC','textbox','text', " . $p++ . ")"
 		. ", (" . ++$i . ",0,$c,'ldap_surname_attr','_MD_AM_LDAP_SURNAME_ATTR','sn','_MD_AM_LDAP_SURNAME_ATTR_DESC','textbox','text', " . $p++ . ")"
-		. ", (" . ++$i . ",0,$c,'ldap_field_mapping','_MD_AM_LDAP_FIELD_MAPPING_ATTR','email=mail|name=displayname','_MD_AM_LDAP_FIELD_MAPPING_DESC','textarea','text', " . $p++ . ")"
+		. ", (" . ++$i . ",0,$c,'ldap_field_mapping','_MD_AM_LDAP_FIELD_MAPPING_ATTR','email=mail|name=displayname','_MD_AM_LDAP_FIELD_MAPPING_DESC','textsarea','text', " . $p++ . ")"
 		. ", (" . ++$i . ",0,$c,'ldap_provisionning_upd', '_MD_AM_LDAP_PROVIS_UPD', '1', '_MD_AM_LDAP_PROVIS_UPD_DESC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ",0,$c,'ldap_use_TLS','_MD_AM_LDAP_USETLS','0','_MD_AM_LDAP_USETLS_DESC','yesno','int', " . $p++ . ")");
 
@@ -468,7 +468,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$c=10; // sets config category id
 	$p=0;
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'adm_left_logo', '_MD_AM_LLOGOADM', '/uploads/imagemanager/logos/img482278e29e81c.png', '_MD_AM_LLOGOADM_DESC', 'select_image', 'text', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'adm_left_logo_url', '_MD_AM_LLOGOADM_URL', '".XOOPS_URL."/index.php', '_MD_AM_LLOGOADM_URL_DESC', 'textbox', 'text', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'adm_left_logo_url', '_MD_AM_LLOGOADM_URL', '".XOOPS_URL."/', '_MD_AM_LLOGOADM_URL_DESC', 'textbox', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'adm_left_logo_alt', '_MD_AM_LLOGOADM_ALT', 'ImpressCMS', '_MD_AM_LLOGOADM_ALT_DESC', 'textbox', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'adm_right_logo', '_MD_AM_RLOGOADM', '', '_MD_AM_RLOGOADM_DESC', 'select_image', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'adm_right_logo_url', '_MD_AM_RLOGOADM_URL', '', '_MD_AM_RLOGOADM_URL_DESC', 'textbox', 'text', " . $p++ . ")"
@@ -511,7 +511,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	// ----------
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'captcha_skipmember', '_MD_AM_CAPTCHA_SKIPMEMBER', '".addslashes(serialize(array('2')))."', '_MD_AM_CAPTCHA_SKIPMEMBERDSC', 'group_multi', 'array', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'captcha_casesensitive', '_MD_AM_CAPTCHA_CASESENS', '0', '_MD_AM_CAPTCHA_CASESENSDSC', 'yesno', 'int', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'captcha_skip_characters', '_MD_AM_CAPTCHA_SKIPCHAR', '".addslashes(serialize(array('o', '0', 'i', 'l', '1')))."', '_MD_AM_CAPTCHA_SKIPCHARDSC', 'textarea', 'array', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'captcha_skip_characters', '_MD_AM_CAPTCHA_SKIPCHAR', '".addslashes(serialize(array('o', '0', 'i', 'l', '1')))."', '_MD_AM_CAPTCHA_SKIPCHARDSC', 'textsarea', 'array', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'captcha_maxattempt', '_MD_AM_CAPTCHA_MAXATTEMP', '8', '_MD_AM_CAPTCHA_MAXATTEMPDSC', 'textbox', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'captcha_num_chars', '_MD_AM_CAPTCHA_NUMCHARS', '4', '_MD_AM_CAPTCHA_NUMCHARSDSC', 'textbox', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'captcha_fontsize_min', '_MD_AM_CAPTCHA_FONTMIN', '10', '_MD_AM_CAPTCHA_FONTMINDSC', 'textbox', 'int', " . $p++ . ")"
@@ -569,9 +569,9 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 		. ", (" . ++$i . ", 0, $c, 'purifier_URI_DisableExternalResources', '_MD_AM_PURIFIER_URI_DISABLEEXTRES', '0', '_MD_AM_PURIFIER_URI_DISABLEEXTRESDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_URI_DisableResources', '_MD_AM_PURIFIER_URI_DISABLERES', '0', '_MD_AM_PURIFIER_URI_DISABLERESDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_URI_MakeAbsolute', '_MD_AM_PURIFIER_URI_MAKEABS', '0', '_MD_AM_PURIFIER_URI_MAKEABSDSC', 'yesno', 'int', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'purifier_URI_HostBlacklist', '_MD_AM_PURIFIER_URI_BLACKLIST', '', '_MD_AM_PURIFIER_URI_BLACKLISTDSC', 'textarea', 'array', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'purifier_URI_HostBlacklist', '_MD_AM_PURIFIER_URI_BLACKLIST', '', '_MD_AM_PURIFIER_URI_BLACKLISTDSC', 'textsarea', 'array', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_URI_AllowedSchemes', '_MD_AM_PURIFIER_URI_ALLOWSCHEME', '".addslashes(serialize(array('http','https','mailto','ftp','nntp','news')))."', '_MD_AM_PURIFIER_URI_ALLOWSCHEMEDSC', 'textsarea', 'array', " . $p++ . ")"
-    //$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'purifier_URI_SafeIframeRegexp', '_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXP', '', '_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXPDSC', 'textarea', 'array', " . $p++ . ")");
+    //$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'purifier_URI_SafeIframeRegexp', '_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXP', '', '_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXPDSC', 'textsarea', 'array', " . $p++ . ")");
 		. ", (" . ++$i . ", 0, $c, 'purifier_HTML_DefinitionID', '_MD_AM_PURIFIER_HTML_DEFID', 'system', '_MD_AM_PURIFIER_HTML_DEFIDDSC', 'textbox', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_HTML_DefinitionRev', '_MD_AM_PURIFIER_HTML_DEFREV', '1', '_MD_AM_PURIFIER_HTML_DEFREVDSC', 'textbox', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_HTML_Doctype', '_MD_AM_PURIFIER_HTML_DOCTYPE', 'XHTML 1.0 Transitional', '_MD_AM_PURIFIER_HTML_DOCTYPEDSC', 'select', 'text', " . $p++ . ")");
@@ -593,13 +593,13 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
      '".addslashes(serialize(array('a', 'abbr', 'acronym', 'b', 'blockquote', 'br', 'caption', 'cite', 'code', 'dd', 'del', 'dfn', 'div', 'dl',
                                    'dt', 'em', 'font', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'i', 'img', 'ins', 'kbd', 'li', 'ol', 'p', 'pre', 's',
                                    'span', 'strike', 'strong', 'sub', 'sup', 'table', 'tbody', 'td', 'tfoot', 'th', 'thead', 'tr', 'tt', 'u', 'ul', 'var')))."',
-     '_MD_AM_PURIFIER_HTML_ALLOWELEDSC', 'textarea', 'array', " . $p++ . ")");
+     '_MD_AM_PURIFIER_HTML_ALLOWELEDSC', 'textsarea', 'array', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'purifier_HTML_AllowedAttributes', '_MD_AM_PURIFIER_HTML_ALLOWATTR',
      '".addslashes(serialize(array('a.class', 'a.href', 'a.id', 'a.name', 'a.rev', 'a.style', 'a.title', 'a.target', 'a.rel', 'abbr.title', 'acronym.title',
                                    'blockquote.cite', 'div.align', 'div.style', 'div.class', 'div.id', 'font.size', 'font.color', 'h1.style', 'h2.style', 'h3.style', 'h4.style', 'h5.style', 'h6.style', 'img.src', 'img.alt', 'img.title', 'img.class', 'img.align', 'img.style', 'img.height', 'img.width', 'li.style', 'ol.style', 'p.style', 'span.style', 'span.class', 'span.id', 'table.class', 'table.id', 'table.border', 'table.cellpadding', 'table.cellspacing', 'table.style', 'table.width', 'td.abbr', 'td.align', 'td.class', 'td.id', 'td.colspan', 'td.rowspan', 'td.style', 'td.valign', 'tr.align', 'tr.class', 'tr.id', 'tr.style', 'tr.valign', 'th.abbr', 'th.align', 'th.class', 'th.id', 'th.colspan', 'th.rowspan', 'th.style', 'th.valign', 'ul.style')))."',
-     '_MD_AM_PURIFIER_HTML_ALLOWATTRDSC', 'textarea', 'array', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'purifier_HTML_ForbiddenElements', '_MD_AM_PURIFIER_HTML_FORBIDELE', '', '_MD_AM_PURIFIER_HTML_FORBIDELEDSC', 'textarea', 'array', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'purifier_HTML_ForbiddenAttributes', '_MD_AM_PURIFIER_HTML_FORBIDATTR', '', '_MD_AM_PURIFIER_HTML_FORBIDATTRDSC', 'textarea', 'array', " . $p++ . ")"
+     '_MD_AM_PURIFIER_HTML_ALLOWATTRDSC', 'textsarea', 'array', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'purifier_HTML_ForbiddenElements', '_MD_AM_PURIFIER_HTML_FORBIDELE', '', '_MD_AM_PURIFIER_HTML_FORBIDELEDSC', 'textsarea', 'array', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'purifier_HTML_ForbiddenAttributes', '_MD_AM_PURIFIER_HTML_FORBIDATTR', '', '_MD_AM_PURIFIER_HTML_FORBIDATTRDSC', 'textsarea', 'array', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_HTML_MaxImgLength', '_MD_AM_PURIFIER_HTML_MAXIMGLENGTH', '1200', '_MD_AM_PURIFIER_HTML_MAXIMGLENGTHDSC', 'textbox', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_HTML_SafeEmbed', '_MD_AM_PURIFIER_HTML_SAFEEMBED', '0', '_MD_AM_PURIFIER_HTML_SAFEEMBEDDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_HTML_SafeObject', '_MD_AM_PURIFIER_HTML_SAFEOBJECT', '0', '_MD_AM_PURIFIER_HTML_SAFEOBJECTDSC', 'yesno', 'int', " . $p++ . ")"
@@ -607,23 +607,23 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 
 		. ", (" . ++$i . ", 0, $c, 'purifier_Filter_ExtractStyleBlocks', '_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLK', '1', '_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLKDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_Filter_ExtractStyleBlocks_Escaping', '_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEESC', '1', '_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEESCDSC', 'yesno', 'int', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'purifier_Filter_ExtractStyleBlocks_Scope', '_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLKSCOPE', '', '_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLKSCOPEDSC', 'textarea', 'text', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'purifier_Filter_ExtractStyleBlocks_Scope', '_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLKSCOPE', '', '_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLKSCOPEDSC', 'textsarea', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_Filter_YouTube', '_MD_AM_PURIFIER_FILTER_ENABLEYOUTUBE', '1', '_MD_AM_PURIFIER_FILTER_ENABLEYOUTUBEDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_Core_EscapeNonASCIICharacters', '_MD_AM_PURIFIER_CORE_ESCNONASCIICHARS', '1', '_MD_AM_PURIFIER_CORE_ESCNONASCIICHARSDSC', 'yesno', 'int', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'purifier_Core_HiddenElements', '_MD_AM_PURIFIER_CORE_HIDDENELE', '".addslashes(serialize(array('script','style')))."', '_MD_AM_PURIFIER_CORE_HIDDENELEDSC', 'textarea', 'array', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'purifier_Core_HiddenElements', '_MD_AM_PURIFIER_CORE_HIDDENELE', '".addslashes(serialize(array('script','style')))."', '_MD_AM_PURIFIER_CORE_HIDDENELEDSC', 'textsarea', 'array', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_Core_RemoveInvalidImg', '_MD_AM_PURIFIER_CORE_REMINVIMG', '1', '_MD_AM_PURIFIER_CORE_REMINVIMGDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_AutoFormat_AutoParagraph', '_MD_AM_PURIFIER_AUTO_AUTOPARA', '0', '_MD_AM_PURIFIER_AUTO_AUTOPARADSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_AutoFormat_DisplayLinkURI', '_MD_AM_PURIFIER_AUTO_DISPLINKURI', '0', '_MD_AM_PURIFIER_AUTO_DISPLINKURIDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_AutoFormat_Linkify', '_MD_AM_PURIFIER_AUTO_LINKIFY', '1', '_MD_AM_PURIFIER_AUTO_LINKIFYDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_AutoFormat_PurifierLinkify', '_MD_AM_PURIFIER_AUTO_PURILINKIFY', '0', '_MD_AM_PURIFIER_AUTO_PURILINKIFYDSC', 'yesno', 'int', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'purifier_AutoFormat_Custom', '_MD_AM_PURIFIER_AUTO_CUSTOM', '', '_MD_AM_PURIFIER_AUTO_CUSTOMDSC', 'textarea', 'array', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'purifier_AutoFormat_Custom', '_MD_AM_PURIFIER_AUTO_CUSTOM', '', '_MD_AM_PURIFIER_AUTO_CUSTOMDSC', 'textsarea', 'array', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_AutoFormat_RemoveEmpty', '_MD_AM_PURIFIER_AUTO_REMOVEEMPTY', '0', '_MD_AM_PURIFIER_AUTO_REMOVEEMPTYDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_AutoFormat_RemoveEmptyNbsp', '_MD_AM_PURIFIER_AUTO_REMOVEEMPTYNBSP', '0', '_MD_AM_PURIFIER_AUTO_REMOVEEMPTYNBSPDSC', 'yesno', 'int', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'purifier_AutoFormat_RemoveEmptyNbspExceptions', '_MD_AM_PURIFIER_AUTO_REMOVEEMPTYNBSPEXCEPT', '".addslashes(serialize(array('td','th')))."', '_MD_AM_PURIFIER_AUTO_REMOVEEMPTYNBSPEXCEPTDSC', 'textarea', 'array', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'purifier_Attr_AllowedFrameTargets', '_MD_AM_PURIFIER_ATTR_ALLOWFRAMETARGET', '".addslashes(serialize(array('_blank','_parent','_self','_top')))."', '_MD_AM_PURIFIER_ATTR_ALLOWFRAMETARGETDSC', 'textarea', 'array', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'purifier_Attr_AllowedRel', '_MD_AM_PURIFIER_ATTR_ALLOWREL', '".addslashes(serialize(array('external','nofollow','external nofollow','lightbox')))."', '_MD_AM_PURIFIER_ATTR_ALLOWRELDSC', 'textarea', 'array', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'purifier_Attr_AllowedClasses', '_MD_AM_PURIFIER_ATTR_ALLOWCLASSES', '', '_MD_AM_PURIFIER_ATTR_ALLOWCLASSESDSC', 'textarea', 'array', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'purifier_Attr_ForbiddenClasses', '_MD_AM_PURIFIER_ATTR_FORBIDDENCLASSES', '', '_MD_AM_PURIFIER_ATTR_FORBIDDENCLASSESDSC', 'textarea', 'array', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'purifier_AutoFormat_RemoveEmptyNbspExceptions', '_MD_AM_PURIFIER_AUTO_REMOVEEMPTYNBSPEXCEPT', '".addslashes(serialize(array('td','th')))."', '_MD_AM_PURIFIER_AUTO_REMOVEEMPTYNBSPEXCEPTDSC', 'textsarea', 'array', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'purifier_Attr_AllowedFrameTargets', '_MD_AM_PURIFIER_ATTR_ALLOWFRAMETARGET', '".addslashes(serialize(array('_blank','_parent','_self','_top')))."', '_MD_AM_PURIFIER_ATTR_ALLOWFRAMETARGETDSC', 'textsarea', 'array', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'purifier_Attr_AllowedRel', '_MD_AM_PURIFIER_ATTR_ALLOWREL', '".addslashes(serialize(array('external','nofollow','external nofollow','lightbox')))."', '_MD_AM_PURIFIER_ATTR_ALLOWRELDSC', 'textsarea', 'array', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'purifier_Attr_AllowedClasses', '_MD_AM_PURIFIER_ATTR_ALLOWCLASSES', '', '_MD_AM_PURIFIER_ATTR_ALLOWCLASSESDSC', 'textsarea', 'array', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'purifier_Attr_ForbiddenClasses', '_MD_AM_PURIFIER_ATTR_FORBIDDENCLASSES', '', '_MD_AM_PURIFIER_ATTR_FORBIDDENCLASSESDSC', 'textsarea', 'array', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_Attr_DefaultInvalidImage', '_MD_AM_PURIFIER_ATTR_DEFINVIMG', '', '_MD_AM_PURIFIER_ATTR_DEFINVIMGDSC', 'textbox', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_Attr_DefaultInvalidImageAlt', '_MD_AM_PURIFIER_ATTR_DEFINVIMGALT', '', '_MD_AM_PURIFIER_ATTR_DEFINVIMGALTDSC', 'textbox', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_Attr_DefaultImageAlt', '_MD_AM_PURIFIER_ATTR_DEFIMGALT', '', '_MD_AM_PURIFIER_ATTR_DEFIMGALTDSC', 'textbox', 'text', " . $p++ . ")"
@@ -631,11 +631,11 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 		. ", (" . ++$i . ", 0, $c, 'purifier_Attr_EnableID', '_MD_AM_PURIFIER_ATTR_ENABLEID', '1', '_MD_AM_PURIFIER_ATTR_ENABLEIDDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_Attr_IDPrefix', '_MD_AM_PURIFIER_ATTR_IDPREFIX', '', '_MD_AM_PURIFIER_ATTR_IDPREFIXDSC', 'textbox', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_Attr_IDPrefixLocal', '_MD_AM_PURIFIER_ATTR_IDPREFIXLOCAL', '', '_MD_AM_PURIFIER_ATTR_IDPREFIXLOCALDSC', 'textbox', 'text', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'purifier_Attr_IDBlacklist', '_MD_AM_PURIFIER_ATTR_IDBLACKLIST', '', '_MD_AM_PURIFIER_ATTR_IDBLACKLISTDSC', 'textarea', 'array', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'purifier_Attr_IDBlacklist', '_MD_AM_PURIFIER_ATTR_IDBLACKLIST', '', '_MD_AM_PURIFIER_ATTR_IDBLACKLISTDSC', 'textsarea', 'array', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_CSS_DefinitionRev', '_MD_AM_PURIFIER_CSS_DEFREV', '1', '_MD_AM_PURIFIER_CSS_DEFREVDSC', 'textbox', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_CSS_AllowImportant', '_MD_AM_PURIFIER_CSS_ALLOWIMPORTANT', '1', '_MD_AM_PURIFIER_CSS_ALLOWIMPORTANTDSC', 'yesno', 'int', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_CSS_AllowTricky', '_MD_AM_PURIFIER_CSS_ALLOWTRICKY', '1', '_MD_AM_PURIFIER_CSS_ALLOWTRICKYDSC', 'yesno', 'int', " . $p++ . ")"
-		. ", (" . ++$i . ", 0, $c, 'purifier_CSS_AllowedProperties', '_MD_AM_PURIFIER_CSS_ALLOWPROP', '', '_MD_AM_PURIFIER_CSS_ALLOWPROPDSC', 'textarea', 'array', " . $p++ . ")"
+		. ", (" . ++$i . ", 0, $c, 'purifier_CSS_AllowedProperties', '_MD_AM_PURIFIER_CSS_ALLOWPROP', '', '_MD_AM_PURIFIER_CSS_ALLOWPROPDSC', 'textsarea', 'array', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_CSS_MaxImgLength', '_MD_AM_PURIFIER_CSS_MAXIMGLEN', '1200px', '_MD_AM_PURIFIER_CSS_MAXIMGLENDSC', 'textbox', 'text', " . $p++ . ")"
 		. ", (" . ++$i . ", 0, $c, 'purifier_CSS_Proprietary', '_MD_AM_PURIFIER_CSS_PROPRIETARY', '1', '_MD_AM_PURIFIER_CSS_PROPRIETARYDSC', 'yesno', 'int', " . $p++ . ")");
 	// <<<<< End of Purifier Category >>>>>

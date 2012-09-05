@@ -369,6 +369,7 @@ class icms_core_Filesystem {
 				}
 			}
 		}
+		asort($dirList);
 		return array_diff($dirList, $ignore);
 	}
 
@@ -413,7 +414,7 @@ class icms_core_Filesystem {
 		asort($fileList);
 		return $fileList;
 	}
-	
+
 	static public function writeFile($contents, $filename, $extension = '', $location = ICMS_TRUST_PATH) {
 		if ($extension == '') $extension = 'php';
 		if (DIRECTORY_SEPARATOR !== "/") $location = str_replace(DIRECTORY_SEPARATOR, "/", $location);
@@ -426,7 +427,7 @@ class icms_core_Filesystem {
 			fclose($fp);
 		}
 	}
-	
+
 /* These will not be in the final release, but are only placeholders while the refactoring
  * is being completed
  */

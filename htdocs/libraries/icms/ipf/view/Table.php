@@ -351,7 +351,7 @@ class icms_ipf_view_Table {
 						if ($column->getKeyName() == $this->_objectHandler->identifierName) {
 							$value = $object->getViewItemLink(false, false, $this->_userSide);
 						} else {
-							$value = $object->getVar($column->getKeyName());
+							$value = $object->getVar($column->getKeyName(), 'e');
 						}
 					}
 

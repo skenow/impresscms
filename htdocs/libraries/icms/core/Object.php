@@ -73,6 +73,14 @@ class icms_core_Object {
 	private $_isNew = false;
 
 	/**
+	 * is it a newly created config object?
+	 *
+	 * @var bool
+	 * @access protected
+	 */
+	protected $_isNewConfig = false;
+
+    /**
 	 * has any of the values been modified?
 	 *
 	 * @var bool
@@ -121,6 +129,22 @@ class icms_core_Object {
 	/**#@-*/
 
 	/**#@+
+	 * used for new config objects when installing/updating module(s)
+	 *
+	 * @access public
+	 */
+	public function setNewConfig() {
+		$this->_isNewConfig = true;
+	}
+	public function unsetNewConfig() {
+		$this->_isNewConfig = false;
+	}
+	public function isNewConfig() {
+		return $this->_isNewConfig;
+	}
+	/**#@-*/
+
+    /**#@+
 	 * mark modified objects as dirty
 	 *
 	 * used for modified objects only
@@ -344,13 +368,7 @@ class icms_core_Object {
 
 					case 'e':
 					case 'edit':
-                        $filtered = strpos($ret, '<!-- input filtered -->');
-                        if ($filtered !== FALSE) {
-                            $ret = str_replace('<!-- input filtered -->', '', $ret);
-                            $ret = str_replace('<!-- filtered with htmlpurifier -->', '', $ret);
-                        }
-
-						return htmlspecialchars($ret, ENT_QUOTES);
+						return icms_core_DataFilter::checkVar($ret, 'html', 'edit');
 						break 1;
 
 					case 'p':
@@ -376,7 +394,7 @@ class icms_core_Object {
 				}
 				break;
 
-            case XOBJ_DTYPE_ARRAY:
+			case XOBJ_DTYPE_ARRAY:
 				$ret =& unserialize($ret);
 				break;
 
@@ -388,7 +406,7 @@ class icms_core_Object {
 
 					case 'e':
 					case 'edit':
-						return htmlspecialchars($ret, ENT_QUOTES);
+						return icms_core_DataFilter::checkVar($ret, 'html', 'edit');
 						break 1;
 
 					case 'p':
@@ -453,9 +471,10 @@ class icms_core_Object {
 	public function cleanVars() {
 		$existing_errors = $this->getErrors();
 		$this->_errors = array();
+
 		foreach ($this->vars as $k => $v) {
 			$cleanv = $v['value'];
-			if (!$v['changed']) {
+			if (!$v['changed'] || $this->_isNewConfig) {
 			} else {
 				$cleanv = is_string($cleanv) ? trim($cleanv) : $cleanv;
 				switch ($v['data_type']) {
@@ -498,12 +517,12 @@ class icms_core_Object {
 							$cleanv = icms_core_DataFilter::stripSlashesGPC(icms_core_DataFilter::censorString($cleanv));
                             $cleanv = icms_core_DataFilter::checkVar($cleanv, 'html', 'input');
 						} else {
-							$cleanv = icms_core_DataFilter::censorString($cleanv);
+							//$cleanv = icms_core_DataFilter::censorString($cleanv);
                             $cleanv = icms_core_DataFilter::checkVar($cleanv, 'html', 'input');
 						}
 						break;
 
-                    case XOBJ_DTYPE_SOURCE:
+					case XOBJ_DTYPE_SOURCE:
 						if (!$v['not_gpc']) {
 							$cleanv = icms_core_DataFilter::stripSlashesGPC($cleanv);
 						} else {
@@ -556,7 +575,7 @@ class icms_core_Object {
 						break;
 
 					case XOBJ_DTYPE_ARRAY:
-						$cleanv = serialize($cleanv);
+						$cleanv = is_array($cleanv) ? serialize($cleanv) : $cleanv;
 						break;
 
 					case XOBJ_DTYPE_STIME:

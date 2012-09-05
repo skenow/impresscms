@@ -310,6 +310,11 @@ class icms_member_Handler {
 			$uname = self::icms_getLoginFromUserEmail($uname);
 		}
 
+/*		$is_expired = $icmspass->passExpired($uname);
+		if ($is_expired == 1) {
+			redirect_header(ICMS_URL . '/user.php?op=resetpass&uname=' . $uname, 5, _US_PASSEXPIRED, false);
+		} */
+
         $pwd = $icmspass->verifyPass($pwd, $uname);
 		
 		$table = new icms_db_legacy_updater_Table('users');

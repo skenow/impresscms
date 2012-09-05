@@ -139,7 +139,7 @@ switch ($op) {
 	case $op == 'logout':
 		$sessHandler = icms::$session;
 		$sessHandler->sessionClose(icms::$user->getVar('uid'));
-		redirect_header(ICMS_URL . '/index.php', 3, _US_LOGGEDOUT . '<br />' . _US_THANKYOUFORVISIT);
+		redirect_header(ICMS_URL . '/', 3, _US_LOGGEDOUT . '<br />' . _US_THANKYOUFORVISIT);
 		break;
 
 	case 'actv':
@@ -189,7 +189,7 @@ switch ($op) {
 		}
 		exit();
 		break;
-		
+
 	case 'delete':
 		if (!icms::$user || $icmsConfigUser['self_delete'] != 1) {
 			redirect_header('index.php',5,_US_NOPERMISS);

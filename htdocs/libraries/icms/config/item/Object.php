@@ -58,7 +58,7 @@ class icms_config_Item_Object extends icms_core_Object {
 				break;
 
 			case 'array':
-				$value = @ unserialize($this->getVar('conf_value', 'N'));
+				$value = @ $this->getVar('conf_value', 'N');
 				return $value ? $value : array();
 
 			case 'float':
@@ -66,7 +66,7 @@ class icms_config_Item_Object extends icms_core_Object {
 				return (float) $value;
 				break;
 
-			case 'textarea':
+			case 'textsarea':
 				return icms_core_DataFilter::checkVar($this->getVar('conf_value'), 'text', 'output');
 				break;
 
@@ -85,9 +85,9 @@ class icms_config_Item_Object extends icms_core_Object {
 	 * @param	bool    $force_slash
 	 */
 	public function setConfValueForInput($value, $force_slash = false) {
-		if ($this->getVar('conf_formtype') == 'htmlarea') {
+		if ($this->getVar('conf_formtype') == 'textarea' && $this->getVar('conf_valuetype') !== 'array') {
 			$value = icms_core_DataFilter::checkVar($value, 'html', 'input');
-		} elseif ($this->getVar('conf_formtype') == 'textarea' && $this->getVar('conf_valuetype') !== 'array') {
+		} elseif ($this->getVar('conf_formtype') == 'textsarea' && $this->getVar('conf_valuetype') !== 'array') {
 			$value = icms_core_DataFilter::checkVar($value, 'text', 'input');
 		} elseif ($this->getVar('conf_formtype') == 'password') {
 			$value = filter_var($value, FILTER_SANITIZE_URL);

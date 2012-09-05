@@ -88,7 +88,6 @@ class icms_view_block_Object extends icms_ipf_Object {
                     $content = str_replace('{X_SITEURL}', ICMS_URL . '/', $content);
                     $content = str_replace(XOOPS_DB_SALT, '', $content);
                     $content = str_replace(ICMS_DB_SALT, '', $content);
-                    
 					return $content;
 				} elseif ($c_type == 'S') {
 					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $this->getVar('content', 'n'));
@@ -96,7 +95,6 @@ class icms_view_block_Object extends icms_ipf_Object {
 					return icms_core_DataFilter::checkVar($content, 'html', 'output');
 				} else {
 					$content = str_replace('{X_SITEURL}', ICMS_URL . '/', $this->getVar('content', 'n'));
-                    
 					return icms_core_DataFilter::checkVar($content, 'text', 'output');
 				}
 				break;
@@ -129,7 +127,6 @@ class icms_view_block_Object extends icms_ipf_Object {
 			if (!$edit_form) {
 				return FALSE;
 			}
-            
 			return $edit_form;
 		} else {
 			return FALSE;
@@ -146,7 +143,6 @@ class icms_view_block_Object extends icms_ipf_Object {
 		if ($this->getVar("block_type") == "C" || $this->getVar("block_type") == "E") {
 			return TRUE;
 		}
-        
 		return FALSE;
 	}
 
@@ -191,7 +187,6 @@ class icms_view_block_Object extends icms_ipf_Object {
 				}
 			}
 		}
-        
 		return $block;
 	}
 
@@ -210,7 +205,6 @@ class icms_view_block_Object extends icms_ipf_Object {
 		} elseif ($position == 1) {
 			$ret = $content . $contentdb;
 		}
-        
 		return $ret;
 	}
 
@@ -229,7 +223,6 @@ class icms_view_block_Object extends icms_ipf_Object {
 		} else {
 			$ret = $originaltitle;
 		}
-        
 		return $ret;
 	}
 

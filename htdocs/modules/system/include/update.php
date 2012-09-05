@@ -13,56 +13,6 @@
 icms_loadLanguageFile('core', 'databaseupdater');
 
 /**
- * Posts a notification of an install or update of the system module
- *
- * @todo	Make this part of the icms_module_Handler, so it can be applied for every module
- *
- * @param	string	$versionstring	A string representing the version of the module
- * @param	string	$icmsroot		A unique identifier for the site
- */
-function installation_notify($versionstring, $icmsroot) {
-
-	// @todo: change the URL to an official ImpressCMS server
-	//set POST variables
-	$url = 'http://qc.impresscms.org/notify/notify.php?'; // this may change as testing progresses.
-	$fields = array(
-			'siteid' => hash('sha256', $icmsroot),
-			'version' => urlencode($versionstring)
-	);
-
-	//url-ify the data for the POST
-	$fields_string = "";
-	foreach($fields as $key=>$value) {
-		$fields_string .= $key . '=' . $value . '&';
-	}
-	rtrim($fields_string, '&');
-
-	try {
-		//open connection - this causes a fatal error if the extension is not loaded
-		if (!extension_loaded('curl')) throw new Exception("cURL extension not loaded");
-		$ch = curl_init();
-
-		//set the url, number of POST vars, POST data
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_POST, count($fields));
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
-		curl_setopt($ch, CURLOPT_FAILONERROR, TRUE);
-
-		//execute post
-		if (curl_exec($ch)) {
-			icms_core_Message::error($url . $fields_string, 'Notification Sent to');
-		} else {
-			throw new Execption("Unable to contact update server");
-		}
-
-		//close connection
-		curl_close($ch);
-	} catch(Exception $e) {
-		icms_core_Message::error(sprintf($e->getMessage()));
-	}
-}
-
-/**
  * Automatic update of the system module
  *
  * @param object $module reference to the module object
@@ -448,20 +398,29 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 		$sql = "UPDATE `" . $table->name() . "` SET conf_value = conf_value + 20 WHERE conf_name = 'enc_type' AND conf_value < 20;";
 		$icmsDatabaseUpdater->runQuery($sql, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
 
-		unset($table);
-
-        $table = new icms_db_legacy_updater_Table("users");
-
-		/* Set all user passwords as Expired (required due to password algorhythm update */
-		$sql = "UPDATE `" . $table->name() . "` SET pass_expired = 1 WHERE pass_expired = 0 AND pass NOT LIKE '$%';";
+		/* Change formtype to textarea for Privacy policy */
+		$sql = "UPDATE `" . $table->name() . "` SET conf_formtype = 'textarea' WHERE conf_name = 'priv_policy';";
 		$icmsDatabaseUpdater->runQuery($sql, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
 
-		unset($table);
+		/* Change formtype to textarea for Footer */
+		$sql = "UPDATE `" . $table->name() . "` SET conf_formtype = 'textarea' WHERE conf_name = 'footer';";
+		$icmsDatabaseUpdater->runQuery($sql, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
+
+		/* Change formtype to textarea for Admin Footer */
+		$sql = "UPDATE `" . $table->name() . "` SET conf_formtype = 'textarea' WHERE conf_name = 'footadm';";
+		$icmsDatabaseUpdater->runQuery($sql, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
+
+		/* Change formtype to textsarea for Protector values */
+		$sql = "UPDATE `" . $table->name() . "` SET conf_formtype = 'textsarea' WHERE conf_formtype = 'textarea' AND conf_title LIKE '_MI_PROTECTOR%';";
+		$icmsDatabaseUpdater->runQuery($sql, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
+
+		/* Change formtype to textbox for Protector values */
+		$sql = "UPDATE `" . $table->name() . "` SET conf_formtype = 'textbox' WHERE conf_formtype = 'text' AND conf_title LIKE '_MI_PROTECTOR%';";
+		$icmsDatabaseUpdater->runQuery($sql, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
         
-        // Part of task #621 in put filtering - changing textarea to htmlarea & textsarea to textarea in config tables
-
+        
 		$table = new icms_db_legacy_updater_Table("config");
-
+        
 		/* Change textarea to htmlarea */
 		$sql = "UPDATE `" . $table->name() . "` SET conf_formtype = 'htmlarea' WHERE conf_formtype = 'textarea';";
 		$icmsDatabaseUpdater->runQuery($sql, sprintf(_DATABASEUPDATER_MSG_QUERY_SUCCESSFUL, $sql), sprintf(_DATABASEUPDATER_MSG_QUERY_FAILED, $sql));
@@ -486,8 +445,7 @@ function xoops_module_update_system(&$module, $oldversion = NULL, $dbVersion = N
 		 * they update the system module, even if there isn't an update being applied
 		 *
 		 * !! Notification of the installation to  - Temporary solution, opt-out or opt-in needed before final release.*/
-		echo "Notifying ImpressCMS";
-		installation_notify($newDbVersion, ICMS_URL);
+		icms_module_Handler::installation_notify($newDbVersion, ICMS_URL);
 	}
 
 	/*

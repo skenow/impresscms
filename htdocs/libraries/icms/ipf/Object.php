@@ -794,6 +794,7 @@ class icms_ipf_Object extends icms_core_Object {
 		$ret = $this->vars[$key]['value'];
 
 		switch ($this->vars[$key]['data_type']) {
+
 			case XOBJ_DTYPE_TXTBOX:
 				switch (strtolower($format)) {
 					case 's':
@@ -806,7 +807,7 @@ class icms_ipf_Object extends icms_core_Object {
 						} else {
 							return $ret;
 						}
-					break 1;
+						break 1;
 
 						// End of ML Hack by marcan
 
@@ -815,27 +816,27 @@ class icms_ipf_Object extends icms_core_Object {
 						$ret = icms_purifyText($ret);
 
 						return $ret;
-					break 1;
+						break 1;
 						// End of ML Hack by marcan
 
 					case 'e':
 					case 'edit':
 						return icms_core_DataFilter::htmlSpecialChars($ret);
-					break 1;
+						break 1;
 
 					case 'p':
 					case 'preview':
 					case 'f':
 					case 'formpreview':
 						return icms_core_DataFilter::htmlSpecialChars(icms_core_DataFilter::stripSlashesGPC($ret));
-					break 1;
+						break 1;
 
 					case 'n':
 					case 'none':
 					default:
-					break 1;
+						break 1;
 				}
-			break;
+				break;
 
 			case XOBJ_DTYPE_LTIME:
 				switch (strtolower($format)) {
@@ -846,20 +847,19 @@ class icms_ipf_Object extends icms_core_Object {
 					case 'f':
 					case 'formpreview':
 						$ret = formatTimestamp($ret, _DATESTRING);
-                        
 						return $ret;
-					break 1;
+						break 1;
 
 					case 'n':
 					case 'none':
 					case 'e':
 					case 'edit':
-					break 1;
+						break 1;
 
 					default:
-					break 1;
+						break 1;
 				}
-			break;
+				break;
 
 			case XOBJ_DTYPE_STIME:
 				switch (strtolower($format)) {
@@ -870,20 +870,19 @@ class icms_ipf_Object extends icms_core_Object {
 					case 'f':
 					case 'formpreview':
 						$ret = formatTimestamp($ret, _SHORTDATESTRING);
-                        
 						return $ret;
-					break 1;
+						break 1;
 
 					case 'n':
 					case 'none':
 					case 'e':
 					case 'edit':
-					break 1;
+						break 1;
 
 					default:
-					break 1;
+						break 1;
 				}
-			break;
+				break;
 
 			case XOBJ_DTYPE_TIME_ONLY:
 				switch (strtolower($format)) {
@@ -895,18 +894,18 @@ class icms_ipf_Object extends icms_core_Object {
 					case 'formpreview':
 						$ret = formatTimestamp($ret, 'G:i');
 						return $ret;
-					break 1;
+						break 1;
 
 					case 'n':
 					case 'none':
 					case 'e':
 					case 'edit':
-					break 1;
+						break 1;
 
 					default:
-					break 1;
+						break 1;
 				}
-			break;
+				break;
 
 			case XOBJ_DTYPE_CURRENCY:
 				$decimal_section_original = strstr($ret, '.');
@@ -921,35 +920,14 @@ class icms_ipf_Object extends icms_core_Object {
 				} else {
 					$ret = $ret . '.00';
 				}
-			break;
+				break;
 
 			case XOBJ_DTYPE_TXTAREA:
 				switch (strtolower($format)) {
 					case 's':
 					case 'show':
-						return icms_core_DataFilter::checkVar($ret, 'text', 'output');
-					break 1;
-
-					case 'e':
-					case 'edit':
-						return htmlspecialchars($ret, ENT_QUOTES);
-					break 1;
-
-					case 'p':
-					case 'preview':
-						return icms_core_DataFilter::checkVar($ret, 'text', 'output');
-					break 1;
-
-					case 'f':
-					case 'formpreview':
-						return htmlspecialchars(icms_core_DataFilter::stripSlashesGPC($ret), ENT_QUOTES);
-					break 1;
-
-					case 'n':
-					case 'none':
-					default:
-					break 1;
-				}
+							return icms_core_DataFilter::checkVar($ret, 'text', 'output');
+						}
 			break;
 
 			case XOBJ_DTYPE_HTMLAREA:
@@ -957,71 +935,65 @@ class icms_ipf_Object extends icms_core_Object {
 					case 's':
 					case 'show':
                         return icms_core_DataFilter::checkVar($ret, 'html', 'output');
-					break 1;
+						break 1;
 
 					case 'e':
 					case 'edit':
-                        $filtered = strpos($ret, '<!-- input filtered -->');
-                        if ($filtered !== FALSE) {
-                            $ret = str_replace('<!-- input filtered -->', '', $ret);
-                            $ret = str_replace('<!-- filtered with htmlpurifier -->', '', $ret);
-                        }
-                        
-						return htmlspecialchars($ret, ENT_QUOTES);
-					break 1;
+                        return icms_core_DataFilter::checkVar($ret, 'html', 'edit');
+						break 1;
 
 					case 'p':
 					case 'preview':
 						return icms_core_DataFilter::checkVar($ret, 'html', 'input');
-					break 1;
+						break 1;
 
 					case 'f':
 					case 'formpreview':
 						return htmlspecialchars(icms_core_DataFilter::stripSlashesGPC($ret), ENT_QUOTES);
-					break 1;
+						break 1;
 
 					case 'n':
 					case 'none':
 					default:
-					break 1;
+						break 1;
 				}
-			break;
+				break;
 
-            case XOBJ_DTYPE_SIMPLE_ARRAY:
+			case XOBJ_DTYPE_SIMPLE_ARRAY:
 				$ret =& explode('|', $ret);
-			break;
+				break;
 
 			case XOBJ_DTYPE_ARRAY:
 				$ret =& unserialize($ret);
-			break;
+				break;
 
 			case XOBJ_DTYPE_SOURCE:
 				switch (strtolower($format)) {
 					case 's':
 					case 'show':
-					break 1;
+						break 1;
 
 					case 'e':
 					case 'edit':
 						return htmlspecialchars($ret, ENT_QUOTES);
-					break 1;
+						break 1;
 
 					case 'p':
 					case 'preview':
 						return icms_core_DataFilter::stripSlashesGPC($ret);
-					break 1;
+						break 1;
 
 					case 'f':
 					case 'formpreview':
 						return htmlspecialchars(icms_core_DataFilter::stripSlashesGPC($ret), ENT_QUOTES);
-					break 1;
+						break 1;
 
 					case 'n':
 					case 'none':
 					default:
-					break 1;
+						break 1;
 				}
-			break;
+				break;
 
 			default:
 				if ($this->vars[$key]['options'] != '' && $ret != '') {
@@ -1038,19 +1010,19 @@ class icms_ipf_Object extends icms_core_Object {
 								}
 								$i++;
 							}
-                            
 							return implode(', ', $ret);
 
 						case 'e':
 						case 'edit':
 							$ret = explode('|', $ret);
-						break 1;
+							break 1;
 
 						default:
-						break 1;
+							break 1;
 					}
+
 				}
-			break;
+				break;
 		}
 		return $ret;
 	}

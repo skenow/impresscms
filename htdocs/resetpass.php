@@ -75,7 +75,7 @@ if (!icms::$user) {
 					icms::$xoopsDB->prefix('users'),
 					$pass,
 					0,
-					(int) icms::$user->getVar('uname')
+					(int) icms::$user->getVar('uid')
 	);
 	if (!icms::$xoopsDB->query($sql)) {
 		include 'header.php';
