@@ -19,6 +19,7 @@ class icms_action_Handler {
     const PARAM_CONTROL = 'icms_control';
     const PARAM_MODULE = 'icms_module';
     const PARAM_DUMMY = 'icms_dummy_value';
+    const PARAM_BASE_CONTROLS = 'icms_base_controls';
     
     public function __get($name) {
         switch ($name) {
@@ -142,7 +143,7 @@ class icms_action_Handler {
             for($i = 0; $i < $count; $i++) {
                 $cparams = array();
                 foreach ($keys as $key)
-                    if (isset($params[$key][$i]))
+                    if (is_array($params[$key]) && isset($params[$key][$i]))
                         $cparams[$key] = $params[$key][$i];
                 $this->execActionFromArray($cparams);
             }

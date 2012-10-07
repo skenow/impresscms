@@ -1,5 +1,5 @@
 <?php
-// $Id: user.php 11293 2011-06-30 08:08:52Z blauer-fisch $
+// $Id: user.php 11965 2012-08-26 03:14:41Z skenow $
 //%%%%%%		File Name user.php 		%%%%%
 define('_US_NOTREGISTERED','Not registered?  Click <a href="register.php">here</a>.');
 define('_US_LOSTPASSWORD','Lost your password?');
@@ -13,9 +13,9 @@ define('_US_LOGGINGU','Thank you for logging in, %s.');
 define('_US_RESETPASSWORD','Reset your password');
 define('_US_SUBRESETPASSWORD','Reset Password');
 define('_US_RESETPASSTITLE','Your password has expired!');
-define('_US_RESETPASSINFO','Please complete the following form in order to reset your password. If your email, username and current password all match our record, your password will be changed instantly and you will be able to log back in!');
+define('_US_RESETPASSINFO','Please complete the following form in order to reset your password. If your email, login name and current password all match our record, your password will be changed instantly and you will be able to log back in!');
 define('_US_PASSEXPIRED','Your password has expired.<br />You will now be redirected to a form where you will be able to reset your password.');
-define('_US_SORRYUNAMENOTMATCHEMAIL','The username entered is not associated with the given Email address!');
+define('_US_SORRYUNAMENOTMATCHEMAIL','The login name entered is not associated with the given Email address!');
 define('_US_PWDRESET','Your password has been reset successfully!');
 define('_US_SORRYINCORRECTPASS','You have entered your current password incorrectly!');
 
@@ -60,16 +60,16 @@ define('_US_NEWUSERREGAT','New user registration at %s');
 // %s is a username
 define('_US_HASJUSTREG','%s has just registered!');
 
-define('_US_INVALIDMAIL','Invalid email');
-define('_US_INVALIDNICKNAME','Invalid Loginname, please try an other Loginname.');
+define('_US_INVALIDMAIL','ERROR: Invalid email');
+define('_US_INVALIDNICKNAME','ERROR: Invalid Loginname, please try an other Loginname.');
 define('_US_NICKNAMETOOLONG','Username is too long. It must be less than %s characters.');
 define('_US_NICKNAMETOOSHORT','Username is too short. It must be more than %s characters.');
-define('_US_NAMERESERVED','Name is reserved.');
+define('_US_NAMERESERVED','ERROR: Name is reserved.');
 define('_US_NICKNAMENOSPACES','There cannot be any spaces in the Username.');
-define('_US_LOGINNAMETAKEN','Username taken.');
-define('_US_NICKNAMETAKEN','Display Name taken.');
-define('_US_EMAILTAKEN','Email address already registered.');
-define('_US_ENTERPWD','You must provide a password.');
+define('_US_LOGINNAMETAKEN','ERROR: Username taken.');
+define('_US_NICKNAMETAKEN','ERROR: Display Name taken.');
+define('_US_EMAILTAKEN','ERROR: Email address already registered.');
+define('_US_ENTERPWD','ERROR: You must provide a password.');
 define('_US_SORRYNOTFOUND','Sorry, no corresponding user info was found.');
 
 define('_US_USERINVITE', 'Membership invitation');
@@ -195,7 +195,7 @@ define('_US_SERVER_PROBLEM_OCCURRED','There was an issue while checking for spam
 define('_US_INVALIDIP','ERROR: This IP adress is not allowed to register');
 
 ######################## Added in 1.2 ###################################
-define('_US_LOGIN_NAME', "Loginname");
+define('_US_LOGIN_NAME', "Login Name");
 define('_US_OLD_PASSWORD', "Old Password");
 define('_US_NICKNAME','Display Name');
 define('_US_MULTLOGIN', 'It was not possible to login on the site!! <br />

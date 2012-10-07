@@ -91,7 +91,7 @@ class icms_module_Object extends icms_core_Object {
 	 */
 	public function registerClassPath($isactive = NULL) {
 		//if ($this->getVar("dirname") == "system") return;
-		$class_path = ICMS_MODULES_PATH . "/" . $this->getVar("dirname") . "/class";                        
+		$class_path = ICMS_MODULES_PATH . "/" . $this->getVar("dirname") . "/class";
 
 		// check if class path exists
 		if (!is_dir($class_path)) return;

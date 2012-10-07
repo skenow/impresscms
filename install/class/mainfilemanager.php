@@ -10,14 +10,14 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: mainfilemanager.php 10326 2010-07-11 18:54:25Z malanciault $
+ * @version	$Id: mainfilemanager.php 11965 2012-08-26 03:14:41Z skenow $
  */
 
 /**
  * mainfile manager for XOOPS installer
  *
  * @author Haruki Setoyama  <haruki@planewave.org>
- * @version $Id: mainfilemanager.php 10326 2010-07-11 18:54:25Z malanciault $
+ * @version $Id: mainfilemanager.php 11965 2012-08-26 03:14:41Z skenow $
  * @access public
  **/
 class mainfile_manager {
@@ -72,7 +72,7 @@ class mainfile_manager {
 				if ($key == 'PROTECTOR1' || $key == 'PROTECTOR2') {
 					$content = preg_replace("/(define\()([\"'])(".$key.")\\2,\s*([\"'])(.*?)\\4\s*\)/", $val, $content);
 					$this->report .= _OKIMG.sprintf(_INSTALL_L121, "<b>$key</b>", $val)."<br />\n";
-					ontinue;
+					continue;
 				}
 				$content = preg_replace("/(define\()([\"'])(".$key.")\\2,\s*([\"'])(.*?)\\4\s*\)/"
 				, "define('".$key."', '". str_replace( '$', '\$', addslashes( $val ) ) ."')"

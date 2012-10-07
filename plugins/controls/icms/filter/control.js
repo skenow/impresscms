@@ -41,7 +41,7 @@ m = {
                 csel.insertAfter(this);
                 csel.focus();
                 var finput;
-                switch (types[sindex]) {			
+                switch (types[sindex]) {
                     case window.ImpressCMS.config.var_type.datetime:
                         finput = jQuery('<input class="ivalue" type="datetime" maxlength="255" name="input" />');
                         finput.val((new Date()).toString());

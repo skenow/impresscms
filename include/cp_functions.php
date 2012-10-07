@@ -11,7 +11,7 @@
  *
  * @package		core
  * @since		XOOPS
- * @version		$Id: cp_functions.php 11385 2011-09-21 23:22:05Z skenow $
+ * @version		$Id: cp_functions.php 11957 2012-08-25 23:36:05Z skenow $
  *
  * @author		The XOOPS Project <http://www.xoops.org>
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
@@ -27,7 +27,7 @@ define ('XOOPS_CPFUNC_LOADED', 1);
  * Function icms_cp_header
  *
  * @since ImpressCMS 1.2
- * @version $Id: cp_functions.php 11385 2011-09-21 23:22:05Z skenow $
+ * @version $Id: cp_functions.php 11957 2012-08-25 23:36:05Z skenow $
  *
  * @author rowd (from the XOOPS Community)
  * @author nekro (aka Gustavo Pilla)<nekro@impresscms.org>
@@ -40,6 +40,7 @@ function icms_cp_header(){
 	icms::$logger->stopTime('Module init');
 	icms::$logger->startTime('ImpressCMS CP Output Init');
 
+	/** @todo	Move to a separate class::method - HTTP */
 	if (!headers_sent()) {
 		header('Content-Type:text/html; charset='._CHARSET);
 		header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
@@ -47,6 +48,7 @@ function icms_cp_header(){
 		header('Cache-Control: no-store, no-cache, must-revalidate');
 		header("Cache-Control: post-check=0, pre-check=0", false);
 		header("Pragma: no-cache");
+		header('X-Powered-By: ImpressCMS');
 	}
 
 	$icmsAdminTpl = new icms_view_Tpl();
@@ -98,7 +100,8 @@ function icms_cp_header(){
 						}
 					}
 					window.onload=startList;');
-
+	/** @todo	Remove icms.css in 2.0 */
+	icms_core_Debug::setDeprecated("Elements from icms.css need to be moved to your theme", sprintf(_CORE_REMOVE_IN_VERSION, '2.0'));
 	$xoTheme->addStylesheet(ICMS_URL . '/icms' . (( defined('_ADM_USE_RTL') && _ADM_USE_RTL ) ? '_rtl' : '') . '.css', array('media' => 'screen'));
 
 	// JQuery UI Dialog
@@ -371,7 +374,7 @@ if (! empty( $_SESSION['redirect_message'] )) {
  * Function icms_cp_footer
  *
  * @since ImpressCMS 1.2
- * @version $Id: cp_functions.php 11385 2011-09-21 23:22:05Z skenow $
+ * @version $Id: cp_functions.php 11957 2012-08-25 23:36:05Z skenow $
  * @author rowd (from XOOPS Community)
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
@@ -384,6 +387,7 @@ function icms_cp_footer() {
 		header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 		header('Cache-Control: private, no-cache');
 		header('Pragma: no-cache');
+		header("X-Powered-By: ImpressCMS");
 	}
 	if ( isset($xoopsOption['template_main']) && $xoopsOption['template_main'] != $xoTheme->contentTemplate ) {
 		trigger_error("xoopsOption[template_main] should be defined before including header.php", E_USER_WARNING);
@@ -528,7 +532,7 @@ function impresscms_get_adminmenu() {
 	$admin_menu[] = array(
 		'id' => 'modules',
 		'text' => _MODULES,
-		'link' => ICMS_URL . '/modules/system/admin.php?fct=modulesadmin',
+		'link' => ICMS_URL . '/modules/system/admin.php?fct=modules',
 		'menu' => $modules_menu,
 	);
 

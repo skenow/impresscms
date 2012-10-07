@@ -5,8 +5,8 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
  * @package		System
- * @subpackage	Template Sets
- * @version		SVN: $Id: icms_version.php 11610 2012-02-28 03:53:55Z skenow $
+ * @subpackage	Templates
+ * @version		SVN: $Id: icms_version.php 11719 2012-05-22 00:40:10Z skenow $
  */
 
 $modversion = array(

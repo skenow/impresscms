@@ -10,9 +10,10 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: textsanitizer.php 11358 2011-09-02 19:55:40Z phoenyx $
+ * @version	$Id: textsanitizer.php 11987 2012-08-30 03:29:30Z skenow $
  */
 // This is subset and modified version of module.textsanitizer.php
+/** @todo This funtion has been deprecated in PHP 5.3.0. In PHP 5.4 raises an E_CORE_ERROR level error. - need to adjust in 2.0 ~skenow */
 @set_magic_quotes_runtime(0);
 
 class TextSanitizer
@@ -50,6 +51,7 @@ class TextSanitizer
 		return preg_replace("/(\015\012)|(\015)|(\012)/","<br />",$text);
 	}
 
+	/** @todo	get_magic_quotes_gpc is removed in PHP 5.4 */
 	function &addSlashes($text, $force=false)
 	{
 		if ($force) {
@@ -63,6 +65,7 @@ class TextSanitizer
 
 	/*
 	 * if magic_quotes_gpc is on, stirip back slashes
+	 * @todo	get_magic_quotes_gpc is removed in PHP 5.4
 	 */
 	function &stripSlashesGPC($text)
 	{
@@ -212,6 +215,7 @@ class TextSanitizer
 		return $this->stripSlashesGPC($text);
 	}
 
+	/** @todo	get_magic_quotes_runtime is deprecated in PHP 5.4 and will always return FALSE */
 	function &oopsStripSlashesRT($text)
 	{
 		if (get_magic_quotes_runtime()) {

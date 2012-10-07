@@ -8,7 +8,7 @@
  * @subpackage	Ratings
  * @since		1.2
  * @todo		Complete this feature? You cannot add a rating and there are no ratings to modify
- * @version		SVN: $Id: rating.php 11610 2012-02-28 03:53:55Z skenow $
+ * @version		SVN: $Id: rating.php 11686 2012-04-10 02:50:48Z skenow $
  */
 
 /* set get and post filters before including admin_header */
@@ -20,7 +20,7 @@ $changedField = "";
 include "admin_header.php";
 
 function editrating($showmenu = FALSE, $ratingid = 0) {
-	global $icms_admin_handler, $icmsAdminTpl;
+	global $icms_admin_handler, $icmsAdminTpl, $op, $changedField;
 
 	icms_cp_header();
 

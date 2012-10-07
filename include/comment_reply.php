@@ -10,7 +10,7 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: comment_reply.php 11306 2011-07-15 13:02:29Z mcdonald3072 $
+ * @version	$Id: comment_reply.php 11686 2012-04-10 02:50:48Z skenow $
  */
 
 if (!defined('ICMS_ROOT_PATH') || !is_object($icmsModule)) {
@@ -71,6 +71,7 @@ $com_icon = '';
 $com_rootid = $comment->getVar('com_rootid');
 $com_itemid = $comment->getVar('com_itemid');
 include ICMS_ROOT_PATH . '/header.php';
-themecenterposts($comment->getVar('com_title'), $r_text);
+//themecenterposts($comment->getVar('com_title'), $r_text);
+echo '<table cellpadding="4" cellspacing="1" width="98%" class="outer"><tr><td class="head">'.$comment->getVar('com_title').'</td></tr><tr><td><br />'.$r_text.'<br /></td></tr></table>';
 include ICMS_INCLUDE_PATH . '/comment_form.php';
 include ICMS_ROOT_PATH . '/footer.php';

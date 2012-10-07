@@ -8,7 +8,7 @@
  * @package		Database
  * @subpackage	Criteria
  * @author		modified by UnderDog <underdog@impresscms.org>
- * @version		SVN: $Id: Element.php 10614 2010-09-08 15:39:19Z malanciault $
+ * @version		SVN: $Id: Element.php 11992 2012-08-30 13:20:17Z skenow $
  */
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 
@@ -57,7 +57,7 @@ abstract class icms_db_criteria_Element {
 	/**
 	 * Constructor
 	 **/
-	abstract public function __construct();
+	public function __construct(){}
 
 	/**
 	 * Render the criteria element

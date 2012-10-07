@@ -19,9 +19,9 @@ class Control
     public function __construct($params) {       
         
         $this->initVar('href', self::DTYPE_STRING, '', false, self::RENDER_TYPE_ATTRIBUTE);
-        $this->initVar('hreflang', self::DTYPE_INTEGER, '', false, self::RENDER_TYPE_ATTRIBUTE);        
-        $this->initVar('media', self::DTYPE_INTEGER, '', true, self::RENDER_TYPE_ATTRIBUTE);
-        $this->initVar('rel', self::DTYPE_INTEGER, '', true, self::RENDER_TYPE_ATTRIBUTE, array(
+        $this->initVar('hreflang', self::DTYPE_STRING, '', false, self::RENDER_TYPE_ATTRIBUTE);        
+        $this->initVar('media', self::DTYPE_STRING, '', false, self::RENDER_TYPE_ATTRIBUTE);
+        $this->initVar('rel', self::DTYPE_STRING, '', false, self::RENDER_TYPE_ATTRIBUTE, array(
                                                                                                 self::VARCFG_POSSIBLE_OPTIONS => array(
                                                                                                     'author',
                                                                                                     'bookmark',
@@ -36,9 +36,10 @@ class Control
                                                                                                     'tag'
                                                                                                 )
                                                                                           ));
-        $this->initVar('target', self::DTYPE_INTEGER, '', true, self::RENDER_TYPE_ATTRIBUTE);
-        $this->initVar('type', self::DTYPE_INTEGER, 'text/html', true, self::RENDER_TYPE_ATTRIBUTE);
+        $this->initVar('target', self::DTYPE_STRING, '_self', false, self::RENDER_TYPE_ATTRIBUTE);
+        $this->initVar('type', self::DTYPE_STRING, 'text/html', true, self::RENDER_TYPE_ATTRIBUTE);
         $this->initVar('enabled', self::DTYPE_BOOLEAN, true, false, self::RENDER_TYPE_DATA);
+        $this->initVar('question', self::DTYPE_STRING, false, false, self::RENDER_TYPE_DATA);
         
         parent::__construct($params);       
         
@@ -48,5 +49,17 @@ class Control
             $this->html = $this->href;
         
     }
+    
+    public function getAttributes() {
+        $ret = parent::getAttributes();
+        if ($ret['href']) {
+            $scheme = parse_url($ret['href'], PHP_URL_SCHEME);
+            if ($scheme == 'control' || $scheme == 'module') {
+                $ret['data-href'] = $ret['href'];
+                $ret['href'] = 'javascript:window.close();';
+            }
+        }
+        return $ret;
+    } 
     
 }

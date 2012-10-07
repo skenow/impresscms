@@ -6,7 +6,7 @@
  * @license		LICENSE.txt
  * @category	ICMS
  * @package		Module
- * @version	$Id: Handler.php 11111 2011-03-24 22:31:18Z m0nty_ $
+ * @version	$Id: Handler.php 11955 2012-08-25 23:27:43Z skenow $
  */
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path is not defined");
 
@@ -274,7 +274,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 *
 	 * @param   object  $criteria   {@link icms_db_criteria_Element}
 	 * @param   boolean $id_as_key  Use the ID as key into the array
-	 * @return  array	Array of objects - installed module 
+	 * @return  array	Array of objects - installed module
 	 */
 	public function getObjects($criteria = NULL, $id_as_key = FALSE) {
 		$ret = array();
@@ -382,25 +382,12 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 * @param bool $inAdmin Whether we are on the admin side or not
 	 */
 	static public function service($inAdmin = FALSE) {
-        $module = null;
-        if (isset($_REQUEST['module'])) {
-            $path = ICMS_MODULES_PATH . '/' . $_REQUEST['module'] . '/';
-            if (file_exists($path) && is_dir($path)) {
-                $module = $_REQUEST['module'];
-            } else {
-                $path = './';
-            }
-		} else {
-            $path = './';
-		}
-		if ($inAdmin || file_exists($path . 'xoops_version.php') || file_exists($path . 'icms_version.php')) {
-			if (!isset($module)) {
-				$url_arr = explode('/', strstr($_SERVER['PHP_SELF'], '/modules/'));
-				$module = $url_arr[2];
-			}
-			if (isset($module)) {
+		$module = NULL;
+		if ($inAdmin || file_exists('./xoops_version.php') || file_exists('./icms_version.php')) {
+			$url_arr = explode('/', strstr($_SERVER['PHP_SELF'], '/modules/'));
+			if (isset($url_arr[2])) {
 				/* @var $module icms_module_Object */
-				$module = icms::handler("icms_module")->getByDirname($module, TRUE);
+				$module = icms::handler("icms_module")->getByDirname($url_arr[2], TRUE);
 				if (!$inAdmin && (!$module || !$module->getVar('isactive'))) {
 					include_once ICMS_ROOT_PATH . '/header.php';
 					echo "<h4>" . _MODULENOEXIST . "</h4>";
@@ -408,7 +395,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 					exit();
 				}
 			}
-		} 
+		}
 		if (!self::checkModuleAccess($module, $inAdmin)) {
 			redirect_header(ICMS_URL . "/user.php", 3, _NOPERM, FALSE);
 		}
@@ -439,4 +426,125 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 		// We are in /something.php: let the page handle permissions
 		return TRUE;
 	}
-}
+
+	/**
+	 * Function and rendering for installation of a module
+	 *
+	 * @param 	string	$dirname
+	 * @return	string	Results of the installation process
+	 */
+	public function install($dirname) {
+
+	}
+	/**
+	 * Logic for uninstalling a module
+	 *
+	 * @param unknown_type $dirname
+	 * @return	string	Result messages for uninstallation
+	 */
+	public function uninstall($dirname) {
+
+	}
+	/**
+	 * Logic for updating a module
+	 *
+	 * @param 	str $dirname
+	 * @return	str	Result messages from the module update
+	 */
+	public function update($dirname) {
+
+	}
+	/**
+	 * Logic for activating a module
+	 *
+	 * @param	int	$mid
+	 * @return	string	Result message for activating the module
+	 */
+	public function activate($mid) {
+
+	 }
+
+	/**
+	 * Logic for deactivating a module
+	 *
+	 * @param	int	$mid
+	 * @return	string	Result message for deactivating the module
+	 */
+	 public function deactivate($mid) {
+
+	 }
+
+	/**
+	 * Logic for changing the weight (order) and name of modules
+	 *
+	 * @param int $mid		Unique ID for the module to change
+	 * @param int $weight	Integer value of the weight to be applied to the module
+	 * @param str $name		Name to be applied to the module
+	 */
+	 public function change($mid, $weight, $name) {
+
+	 }
+
+	/**
+	 *
+	 * @param	string	$dirname	Directory name of the module
+	 * @param	string	$template	Name of the template file
+	 * @param	boolean	$block		Are you trying to retrieve the template for a block?
+	 */
+	 public function getTemplate($dirname, $template, $block = FALSE) {
+
+	 }
+	 
+	 /**
+	  * Posts a notification of an install or update of the system module
+	  *
+	  * @todo	Add a parameter for the module being updated/installed
+	  * @todo	Add a parameter for the action - install, uninstall, activate, deactivate, update
+	  * @todo	Add language constants
+	  *
+	  * @param	string	$versionstring	A string representing the version of the module
+	  * @param	string	$icmsroot		A unique identifier for the site
+	  */
+	 public static function installation_notify($versionstring, $icmsroot) {
+	 
+	 	// @todo: change the URL to an official ImpressCMS server
+	 	//set POST variables
+	 	$url = 'http://qc.impresscms.org/notify/notify.php?'; // this may change as testing progresses.
+	 	$fields = array(
+	 			'siteid' => hash('sha256', $icmsroot),
+	 			'version' => urlencode($versionstring)
+	 	);
+	 
+	 	//url-ify the data for the POST
+	 	$fields_string = "";
+	 	foreach($fields as $key=>$value) {
+	 		$fields_string .= $key . '=' . $value . '&';
+	 	}
+	 	rtrim($fields_string, '&');
+	 
+	 	try {
+	 		//open connection - this causes a fatal error if the extension is not loaded
+	 		if (!extension_loaded('curl')) throw new Exception("cURL extension not loaded");
+	 		$ch = curl_init();
+	 
+	 		//set the url, number of POST vars, POST data
+	 		curl_setopt($ch, CURLOPT_URL, $url);
+	 		curl_setopt($ch, CURLOPT_POST, count($fields));
+	 		curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+	 		curl_setopt($ch, CURLOPT_FAILONERROR, TRUE);
+	 
+	 		//execute post
+	 		if (curl_exec($ch)) {
+	 			icms_core_Message::error($url . $fields_string, 'Notification Sent to');
+	 		} else {
+	 			throw new Execption("Unable to contact update server");
+	 		}
+	 
+	 		//close connection
+	 		curl_close($ch);
+	 	} catch(Exception $e) {
+	 		icms_core_Message::error(sprintf($e->getMessage()));
+	 	}
+	 }
+ }
+	 

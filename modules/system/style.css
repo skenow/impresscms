@@ -201,19 +201,15 @@ div#navbarCP ul {list-style:none;padding:0;margin:0;}
 div#navbarCP ul li {list-style:none;padding:0;float:left;margin:0;margin-left:3px;position:relative;}
 div#navbarCP ul li a {padding:4px;display:block;color:#4d4d4d;font-weight:normal;font-size:14px;padding-right:20px;}
 div#navbarCP ul li a:hover {border-color:#ADD8E6;color:#000;text-decoration:none;}
-/*div#navbarCP ul li ul {display:none;position:relative;top:1em;margin-left:15px;background:#FFFFFF;border:1px solid #000000;padding:0;z-index:1;} /* new */
-div#navbarCP ul li ul {display:none;position:absolute;top:1em;margin-left:15px;background:#FFFFFF;border:1px solid #000000;padding:0;z-index:1;} /* old */
+div#navbarCP ul li ul {display:none;position:absolute;top:1em;margin-left:15px;background:#FFFFFF;border:1px solid #000000;padding:0;z-index:1;}
 div#navbarCP ul li ul a {color:#666666;font-weight:normal;background:url(images/item.png) no-repeat left;padding-left:20px;margin:0;font-size:11px;border:1px solid #FFFFFF;}
 div#navbarCP ul li ul a:hover {color:#000000;background-color:#E7F4F7;border-color:#ADD8E6;border:1px solid #ffffff;}
-/*div#navbarCP ul li ul li {margin:0;}*/ /* new */
-div#navbarCP ul li ul li {width:150px;margin:0;} /* old */
+div#navbarCP ul li ul li {width:150px;margin:0;}
 div#navbarCP ul li > ul {top:auto;left:auto;}
 div#navbarCP ul li:hover > ul, div#navbarCP li.over ul {display:block;}
 div#navbarCP ul li ul li {float: none;}
-/*div#navbarCP ul li ul li ul {display:block;margin-left:15px;margin-top:0;border:0;background:none;}*/ /* new */
-div#navbarCP ul li ul li ul {margin-left:150px;margin-top:-25px;} /* old */
-/*div#navbarCP ul li ul li ul li {display:block;}*/ /* new */
-div#navbarCP ul li ul li ul li {display:none;} /* old */
+div#navbarCP ul li ul li ul {margin-left:150px;margin-top:-25px;}
+div#navbarCP ul li ul li ul li {display:none;}
 div#navbarCP ul li ul li:hover ul li {display:block;}
 
 div#bodyCP{
@@ -466,11 +462,11 @@ tr.blocked td {background-color: #FF0000;}
 /* Tooltip box */
 .caption-text img {float: right; padding-top: 2px;}
 span.helptext {position: absolute; right: 50px; z-index: 9000; background-color:#000; outline:1px solid #669; border:2px solid #fff; padding:10px 15px; width:200px; display:none; color:#fff; text-align:left; font-size:12px; font-weight:normal;
-/* outline radius for mozilla/firefox only */
-outline-radius:4px;
--moz-outline-radius:4px;
+/* outline radius for mozilla/firefox only */ 
+outline-radius:4px; 
+-moz-outline-radius:4px; 
 -webkit-outline-radius:4px;
-/* opacity for tooltip box */
+/* opacity for tooltip box */ 
 filter:alpha(opacity=70);
 -moz-opacity:0.75;
 -khtml-opacity: 0.75;

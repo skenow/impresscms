@@ -27,8 +27,8 @@ class Control
         $this->baseTag = 'input';
     }
     
-    public function getAttributes() {
-        $ret = parent::getAttributes();
+    public function getAttributes($skipFalse = true) {
+        $ret = parent::getAttributes($skipFalse);
         $ret['type'] = 'range';
         return $ret;
     }   

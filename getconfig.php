@@ -49,6 +49,10 @@ if (file_exists($filename)) {
         'icms_action_base_Control' =>
             array(
                   'response_special_key' => 'RESPONSE_KEY_'
+            ),
+        'icms_controls_Base' => 
+            array(
+                'url_type' => 'URL_TYPE_'
             )
      ) as $class => $fields) {
         $refl = new ReflectionClass($class);

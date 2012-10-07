@@ -7,7 +7,7 @@
  * @category	ICMS
  * @package		Member
  * @author		modified by UnderDog <underdog@impresscms.org>
- * @version		SVN: $Id: Handler.php 11085 2011-03-19 00:39:26Z m0nty_ $
+ * @version		SVN: $Id: Handler.php 11965 2012-08-26 03:14:41Z skenow $
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -187,7 +187,9 @@ class icms_member_Handler {
 
 	/**
 	 * get a list of usernames and their IDs
-	 *
+	 * 
+	 * @deprecated	This isn't really a membership method, but for the user handler
+	 * 
 	 * @param object $criteria {@link icms_db_criteria_Element} object
 	 * @return array associative array of user-IDs and names
 	 */
@@ -304,35 +306,34 @@ class icms_member_Handler {
 	 */
 	public function loginUser($uname, $pwd) {
 
-                $criteria = new icms_db_criteria_Compo();
+		$icmspass = new icms_core_Password();
+
 		if (strstr($uname, '@')) {
-                       $criteria->add(new icms_db_criteria_Item('email', $uname));
+			$uname = self::icms_getLoginFromUserEmail($uname);
+		}
+
+/*		$is_expired = $icmspass->passExpired($uname);
+		if ($is_expired == 1) {
+			redirect_header(ICMS_URL . '/user.php?op=resetpass&uname=' . $uname, 5, _US_PASSEXPIRED, false);
+		} */
+
+        $pwd = $icmspass->verifyPass($pwd, $uname);
+		
+		$table = new icms_db_legacy_updater_Table('users');
+		if ($table->fieldExists('loginname')) {
+			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('loginname', $uname));
+		} elseif ($table->fieldExists('login_name')) {
+			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('login_name', $uname));
 		} else {
-                       $criteria->add(new icms_db_criteria_Item('login_name', $uname));
-                }                                
-                $criteria->setLimit(1);             
-                
-                $user = $this->_uHandler->getObjects($criteria, false);
-                if (!isset($user[0])) {
-                    $user = false;
-                    return $user;
-                }
-                
-                if ($user[0]->getVar('pass_expired') == 1)
-                    redirect_header(ICMS_URL . '/user.php?op=resetpass&uname=' . $uname, 5, _US_PASSEXPIRED, false);
-                
-		$salt = $user[0]->getVar('salt');
-		$enc_type = $user[0]->getVar('enc_type');
-                
-                $icmspass = new icms_core_Password();
-		$pwd = $icmspass->encryptPass($pwd, $salt, $enc_type);
-                
-                if ($pwd != $user[0]->getVar('pass')) {
-                    $user = false;
-                    return $user;
-                } 
-                
-                return $user[0];
+			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('uname', $uname));
+		}
+		$criteria->add(new icms_db_criteria_Item('pass', $pwd));
+		$user = $this->_uHandler->getObjects($criteria, false);
+		if (!$user || count($user) != 1) {
+			$user = false;
+			return $user;
+		}
+		return $user[0];
 	}
 
 	/**

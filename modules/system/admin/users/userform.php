@@ -10,7 +10,7 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: userform.php 10912 2010-12-21 13:54:35Z phoenyx $
+ * @version	$Id: userform.php 11959 2012-08-26 00:00:22Z skenow $
  */
 
 global $icmsConfigUser, $icmsConfigAuth;
@@ -18,6 +18,9 @@ global $icmsConfigUser, $icmsConfigAuth;
 $uid_label = new icms_form_elements_Label(_AM_USERID, $uid_value);
 $uname_text = new icms_form_elements_Text(_AM_NICKNAME, "username", 25, 25, $uname_value);
 $login_name_text = new icms_form_elements_Text(_AM_LOGINNAME, "login_name", 25, 25, $login_name_value);
+if ($icmsConfigUser['pass_level'] > 20) {
+	icms_PasswordMeter("password_adv", "login_name");
+}
 $name_text = new icms_form_elements_Text(_AM_NAME, "name", 30, 60, $name_value);
 $email_tray = new icms_form_elements_Tray(_AM_EMAIL, "<br />");
 $email_text = new icms_form_elements_Text("", "email", 30, 60, $email_value);
@@ -137,9 +140,6 @@ else {
 	}
 }
 
-$salt_hidden = new icms_form_elements_Hidden('salt', icms_core_Password::createSalt());
-
-$enc_type_hidden = new icms_form_elements_Hidden('enc_type', $icmsConfigUser['enc_type']);
 $pass_expired_hidden = new icms_form_elements_Hidden('pass_expired', 0);
 $fct_hidden = new icms_form_elements_Hidden("fct", "users");
 $op_hidden = new icms_form_elements_Hidden("op", $op_value);
@@ -152,8 +152,6 @@ $form->addElement($name_text);
 $form->addElement($email_tray, true);
 $form->addElement($openid_tray, true);
 $form->addElement($url_text);
-//  $form->addElement($avatar_tray);
-//  $form->addElement($theme_select);
 $form->addElement($timezone_select);
 $form->addElement($icq_text);
 $form->addElement($aim_text);
@@ -175,14 +173,10 @@ $form->addElement($rank_select);
 if (!$form_isedit) {
 	$form->addElement($pwd_text, true);
 	$form->addElement($pwd_text2, true);
-	$form->addElement($salt_hidden, true);
-	$form->addElement($enc_type_hidden, true);
 	$form->addElement($pass_expired_hidden, true);
 } else {
 	$form->addElement($pwd_text);
 	$form->addElement($pwd_text2);
-	$form->addElement($salt_hidden);
-	$form->addElement($enc_type_hidden);
 	$form->addElement($pass_expired_hidden);
 }
 

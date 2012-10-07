@@ -8,7 +8,7 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		Member
  * @subpackage	Users
- * @version		SVN: $Id: lostpass.php 11604 2012-02-27 03:12:10Z skenow $
+ * @version		SVN: $Id: lostpass.php 11908 2012-08-12 04:25:34Z skenow $
  */
 
 $xoopsOption['pagetype'] = 'user';
@@ -20,6 +20,8 @@ include 'mainfile.php';
  *	$_GET parameters
  *	code
  */
+/* set default value for $code */
+$code = '';
 
 $filter_get = $filter_post = array('email' => array('email', 'options' => array(0, 0)));
 
@@ -47,13 +49,10 @@ if (empty($getuser)) {
 } else {
 	$icmspass = new icms_core_Password();
 
-//	$code = isset($_GET['code']) ? trim(filter_input(INPUT_GET, 'code')) : '';
 	$areyou = substr($getuser[0]->getVar('pass'), 0, 5);
-	$enc_type = (int) $icmsConfigUser['enc_type'];
 	if ($code != '' && $areyou == $code) {
 		$newpass = $icmspass->createSalt(8);
-		$salt = $icmspass->createSalt();
-		$pass = $icmspass->encryptPass($newpass, $salt, $icmsConfigUser['enc_type']);
+		$pass = $icmspass->encryptPass($newpass);
 		$xoopsMailer = new icms_messaging_Handler();
 		$xoopsMailer->useMail();
 		$xoopsMailer->setTemplate('lostpass2.tpl');
@@ -71,8 +70,8 @@ if (empty($getuser)) {
 		}
 
 		// Next step: add the new password to the database
-		$sql = sprintf("UPDATE %s SET pass = '%s', salt = '%s', enc_type = '%u', pass_expired = '%u' WHERE uid = '%u'",
-						icms::$xoopsDB->prefix('users'), $pass, $salt, $enc_type, 0, (int) $getuser[0]->getVar('uid'));
+		$sql = sprintf("UPDATE %s SET pass = '%s', pass_expired = '%u' WHERE uid = '%u'",
+						icms::$xoopsDB->prefix('users'), $pass, 1, (int) $getuser[0]->getVar('uid'));
 		if (!icms::$xoopsDB->queryF($sql)) {
 			/** Include header.php to start page rendering */
 			include 'header.php';

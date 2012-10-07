@@ -7,7 +7,7 @@
  * @author		phppp (infomax@gmail.com)
  * @since		Xoops 2.0.17
  * @package 	core
- * @version		SVN: $Id: site-closed.php 11396 2011-09-23 18:44:58Z phoenyx $
+ * @version		SVN: $Id: site-closed.php 11650 2012-03-20 03:26:26Z skenow $
  */
 
 defined("ICMS_ROOT_PATH") || die("ImpressCMS root path not defined");
@@ -33,7 +33,9 @@ if (!$allowed) {
 	$themeFactory->defaultTheme = $icmsConfig['theme_set'];
 	$icmsTheme =& $themeFactory->createInstance(array("plugins" => array()));
 	$icmsTheme->addScript('/include/xoops.js', array('type' => 'text/javascript'));
-	$icmsTheme->addStylesheet(ICMS_URL . "/icms" 
+	/** @todo	Remove icms.css in 2.0 */
+	icms_core_Debug::setDeprecated("Elements from icms.css need to be moved to your theme", sprintf(_CORE_REMOVE_IN_VERSION, '2.0'));
+	$icmsTheme->addStylesheet(ICMS_URL . "/icms"
 		. ((defined('_ADM_USE_RTL') && _ADM_USE_RTL) ? "_rtl" : "") . ".css", array("media" => "screen"));
 	$icmsTpl =& $icmsTheme->template;
 
@@ -45,8 +47,8 @@ if (!$allowed) {
 		'icms_sitename' => htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES),
 		'icms_slogan' => htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES),
 		'icms_dirname' => @$icmsModule ? $icmsModule->getVar('dirname') : 'system',
-		'icms_pagetitle' => isset($icmsModule) && is_object($icmsModule) 
-			? $icmsModule->getVar('name') 
+		'icms_pagetitle' => isset($icmsModule) && is_object($icmsModule)
+			? $icmsModule->getVar('name')
 			: htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES),
 		'lang_login' => _LOGIN,
 		'lang_username' => _USERNAME,
@@ -65,15 +67,16 @@ if (!$allowed) {
 	$icmsTpl->debugging_ctrl = 'NONE';
 	$icmsTpl->caching = 0;
 
-	/*icms_loadLanguageFile("system", "customtag", TRUE);
-	$icms_customtag_handler = icms::handler('customtag');
+	icms_loadLanguageFile("system", "customtag", TRUE);
+	icms_Autoloader::register(ICMS_MODULES_PATH . "/system/class", "mod_system");
+	$icms_customtag_handler = icms_getModuleHandler("customtag", "system");
 	$customtags_array = array();
 	if (is_object($icmsTpl)) {
 		foreach ($icms_customtag_handler->getCustomtagsByName() as $k => $v) {
 			$customtags_array[$k] = $v->render();
 		}
 		$icmsTpl->assign('icmsCustomtags', $customtags_array);
-	}*/
+	}
 
 	$icmsTpl->display('db:system_siteclosed.html');
 	exit();

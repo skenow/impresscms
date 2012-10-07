@@ -3,6 +3,8 @@
 class icms_controls_Handler {
 
 	public static $state = null;
+    
+    public static $renderedControlTypes = array();
 
 	public function __construct() {
 		if (!is_array(self::$state))

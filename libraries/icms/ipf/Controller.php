@@ -11,7 +11,7 @@
  * @since		1.1
  * @author		Original idea by Jan Keller Pedersen <mithrandir@xoops.org> - IDG Danmark A/S <www.idg.dk>
  * @author		marcan <marcan@impresscms.org>
- * @version		SVN: $Id: Controller.php 11512 2011-12-28 04:19:27Z skenow $
+ * @version		SVN: $Id: Controller.php 11973 2012-08-26 18:02:55Z skenow $
  * @todo		Use language constants for messages
  */
 
@@ -129,10 +129,16 @@ class icms_ipf_Controller {
 					}
 					$icmsObj->setVar($key, $value);
 					break;
-					
+
 				case XOBJ_DTYPE_URL:
 					if (isset($_POST[$key])) {
 						$icmsObj->setVar($key, filter_var($_POST[$key], FILTER_SANITIZE_URL));
+					}
+					break;
+
+				case XOBJ_DTYPE_ARRAY:
+					if (is_array($_POST[$key])) {
+						$icmsObj->setVar($key, serialize($_POST[$key]));
 					}
 					break;
 
@@ -154,9 +160,7 @@ class icms_ipf_Controller {
 	 */
 	public function &doStoreFromDefaultForm(&$icmsObj, $objectid, $created_success_msg, $modified_success_msg, $redirect_page=false, $debug=false) {
 		global $impresscms;
-        
-              
-		$this->postDataToObject($icmsObj);       
+		$this->postDataToObject($icmsObj);
 
 		if ($icmsObj->isNew()) {
 			$redirect_msg = $created_success_msg;
@@ -172,7 +176,7 @@ class icms_ipf_Controller {
 				if (isset ($file_array['name']) && $file_array['name'] != "" && in_array(str_replace('upload_', '', $name), array_keys($icmsObj->getVars()))) {
 					if ($uploaderObj->fetchMedia($name)) {                        
 						$uploaderObj->setTargetFileName(time() . "_" . $uploaderObj->getMediaName());
-						if ($uploaderObj->upload()) {                            
+						if ($uploaderObj->upload()) {
 							$uploaderResult = $uploaderResult && true;
 							// Find the related field in the icms_ipf_Object
 							$related_field = str_replace('upload_', '', $name);
@@ -188,8 +192,8 @@ class icms_ipf_Controller {
 								$fileObj->setVar('mid', $_POST['mid_' . $related_field]);
 								$fileObj->setVar('caption', $_POST['caption_' . $related_field]);
 								$fileObj->setVar('description', $_POST['desc_' . $related_field]);
-                                $icmsObj->storeFileObj($fileObj);								
-								$icmsObj->setVar($related_field, $fileObj->getVar('fileid'));                                
+								$icmsObj->storeFileObj($fileObj);
+								$icmsObj->setVar($related_field, $fileObj->getVar('fileid'));
 							} else {
 								$eventResult = $this->handler->executeEvent('beforeFileUnlink', $icmsObj);
 								if (!$eventResult) {
@@ -207,7 +211,7 @@ class icms_ipf_Controller {
 									$uploaderResult = $uploaderResult && false;
 								}
 							}
-						} else {                                                    
+						} else {
 							$icmsObj->setErrors($uploaderObj->getErrors(false));
 							$uploaderResult = $uploaderResult && false;
 						}
@@ -236,7 +240,7 @@ class icms_ipf_Controller {
 				$icmspermissions_handler = new icms_ipf_permission_Handler($this->handler);
 				$icmspermissions_handler->storeAllPermissionsForId($icmsObj->id());
 			}
-		}        
+		}
 
 		if ($redirect_page === null) {
 			return $icmsObj;

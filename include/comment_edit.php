@@ -10,16 +10,19 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: comment_edit.php 11011 2011-02-06 00:02:25Z skenow $
+ * @version	$Id: comment_edit.php 11686 2012-04-10 02:50:48Z skenow $
  */
 
 defined('ICMS_ROOT_PATH') || die("ImpressCMS root path not defined");
 
 include_once ICMS_ROOT_PATH . '/include/comment_constants.php';
+$ph = icms::handler('icms_member_groupperm');
+
 if (('system' != $icmsModule->getVar('dirname')
-	&& XOOPS_COMMENT_APPROVENONE == $icmsModuleConfig['com_rule'])
-	|| (!is_object(icms::$user) && !$icmsModuleConfig['com_anonpost'])
-	|| !is_object($icmsModule)) {
+		&& XOOPS_COMMENT_APPROVENONE == $icmsModuleConfig['com_rule'])
+	|| (!is_object(icms::$user) && !$ph->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, array(ICMS_GROUP_ANONYMOUS)))
+	|| !is_object($icmsModule)
+) {
 	redirect_header(ICMS_URL . '/user.php', 1, _NOPERM);
 }
 

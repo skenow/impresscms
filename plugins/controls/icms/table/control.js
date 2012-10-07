@@ -26,12 +26,12 @@ m = {
             function () {
                 var columns = self.getVar('columns');
                 var index = self.head.index(this);
-                if (columns[index] == self.getVar('order_by')) {                    
+                if (columns[index] == self.getVar('order_by')) {
                     self.setVar('asc_sorting', !self.getVar('asc_sorting'));
                 } else {
                     self.setVar('order_by', columns[index]);
                     self.setVar('asc_sorting', true);
-                }                
+                }
                 self.update();
                 window.ImpressCMS.URLHandler.updateCurrentURL();
             }
@@ -131,12 +131,12 @@ m = {
         var oldHTML = this.html();
         var self = this;
         this.exec('update');
-        var func = function (event, data) {            
-            self.makeActionsAlive();
+        var func = function (event, data) {
+           // self.makeActionsAlive();
             if (self.html() == oldHTML)
-                return;           
-            self.pager.setVar('records_count', data.recordsCount);            
-            self.trigger('change');            
+                return;
+            self.pager.setVar('records_count', data.recordsCount);
+            self.trigger('change');
         };
         this.bind('execFinished', func);
     },
@@ -164,7 +164,7 @@ m = {
         var func = function (event, data) {
             self.makeActionsAlive();
             self.pager.setVar('records_count', data.recordsCount);
-            self.trigger('change');           
+            self.trigger('change');
         };
         this.bind('execFinished', func);
     }

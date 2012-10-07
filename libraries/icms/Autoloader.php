@@ -116,7 +116,7 @@ class icms_Autoloader {
 	 * @return bool
 	 */
 	static public function autoload($class) {
-		if ($path = self::classPath($class)) {            
+		if ($path = self::classPath($class)) {
 			list($ns, $local) = self::split($class);
 			include_once "$path.php";
 			return TRUE;

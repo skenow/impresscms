@@ -12,7 +12,7 @@ jQuery.fn.getControl = function() {
      
      var hData = {};
 
-     if (!window.ImpressCMS.controls[id]) {                  
+     if (!window.ImpressCMS.controls[id]) {
          
          if (!window.ImpressCMS.baseControls[type] || !window.ImpressCMS.baseControls[type].configuration) {
              window.ImpressCMS.console.log("init", window.ImpressCMS.language.controls.undefined_control_error.format(type));
@@ -21,8 +21,16 @@ jQuery.fn.getControl = function() {
          
          jQuery.extend(true, obj, window.ImpressCMS.baseControls[type], {
 			 getControlType: function() {
-					return this.attr('data-icms-control');
-			 },             
+				return this.attr('data-icms-control');
+			 },
+			 getOwnerControl: function () {
+				 var ret = obj;
+				 while(ret = ret.parent()) {
+					if (window.ImpressCMS.core.controls.isKnownControl(ret))
+						break;
+				 }
+				 return ret;
+			 },
              toActionParams: function () {
                  var vars = this.toArray();
                  for(var name in vars)
@@ -50,7 +58,7 @@ jQuery.fn.getControl = function() {
                         params = action.params;
                         action = action.action;
                     }
-                }                
+                }
                  
                 if (!noAnimation)
                     this.showGlobalAnimation(window.ImpressCMS.core.animations.predefined.loading);
@@ -60,16 +68,16 @@ jQuery.fn.getControl = function() {
                 if (!objName)
                     objName = this.getControlType();
                 
-                var f2 = function (data) {
-                    obj.trigger('execFinished', data, {action:action, params:params, objName:objName, type:type});
-                };
-                
-                if (type == window.ImpressCMS.core.controls.actionType.control) {                    
-                    window.ImpressCMS.actionQueue.control.addAction(objName, action, params, this.toActionParams(), f2);
+                var act = null;
+                if (type == window.ImpressCMS.core.controls.actionType.control) {
+                    act = window.ImpressCMS.actionQueue.control.addAction(objName, action, params, this.toActionParams());
                 } else {
-                    window.ImpressCMS.actionQueue.module.addAction(objName, action, params, f2);
+                    act = window.ImpressCMS.actionQueue.module.addAction(objName, action, params);
                 }
-             },             
+                act.then(function (data) {
+                    obj.trigger('execFinished', data, {action:action, params:params, objName:objName, type:type});
+                });
+             },
              getChildren: function () {
                  var bad = [];
                  var current = jQuery(window.ImpressCMS.core.controls.getSelector(), obj);
@@ -79,7 +87,7 @@ jQuery.fn.getControl = function() {
                             function () {
                                 bad.push(jQuery(this).attr('id'));
                             }
-                        );                        
+                        );
                     }
                  );
                  return current.filter(
@@ -97,7 +105,7 @@ jQuery.fn.getControl = function() {
 					if (value == undefined)
 						value = "";
 					switch (this.configuration.fields[name][window.ImpressCMS.config.var_param.type]) {
-						case window.ImpressCMS.config.var_type.string:						
+						case window.ImpressCMS.config.var_type.string:
 						case window.ImpressCMS.config.var_type.criteria:
 							return value.toString();
                         case window.ImpressCMS.config.var_type.data_source:
@@ -217,7 +225,7 @@ jQuery.fn.getControl = function() {
                         //throw "Undefined file type";
                     break;
                     case window.ImpressCMS.config.var_type.datetime:
-                        return value.toString();                        
+                        return value.toString();
                     case window.ImpressCMS.config.var_type.array:
                         if (typeof value != 'object')
                             value = [value];
@@ -244,13 +252,13 @@ jQuery.fn.getControl = function() {
                                             for (var x in data)
                                                 ret.push('"' + x + '":' + toJSON(data[x]));
                                             return '{' + ret.join(',') + '}';
-                                        }                                            
+                                        }
                                     default:
                                         window.ImpressCMS.language.controls.unknown_data_in_core_error.format(typeof data);
                                 } 
                             }
                             return toJSON(value);
-                        }                        
+                        }
                     break;
                     case window.ImpressCMS.config.var_type.list:
                         return value.join(';');
@@ -342,7 +350,7 @@ jQuery.fn.getControl = function() {
                     switch (this.configuration.fields[x][window.ImpressCMS.config.var_param.type]) {
                         case window.ImpressCMS.config.var_type.list:
                             rez[x] = rez[x].join(';');
-                        break;                        
+                        break;
                     }
                 }
                 return rez;
@@ -358,12 +366,12 @@ jQuery.fn.getControl = function() {
                     if (!data[x])
                         this.setVar(x, this.configuration.baseValues[x]);
                     else 
-                        this.setVar(x, data[x]);                    
+                        this.setVar(x, data[x]);
                 }
             },
             showGlobalAnimation: function (animation) {
                 if (!jQuery.isFunction(animation))
-                    animation = window.ImpressCMS.core.animations.predefined.loading;                
+                    animation = window.ImpressCMS.core.animations.predefined.loading;
                 
                 if (hData.animation)
                     hData.animation.stop();
@@ -372,7 +380,7 @@ jQuery.fn.getControl = function() {
             },
             hideGlobalAnimation: function () {
                 if (hData.animation && hData.animation.stop) {
-                    hData.animation.stop();     
+                    hData.animation.stop();
                     delete hData.animation;
                 }
             }
@@ -381,24 +389,6 @@ jQuery.fn.getControl = function() {
          if (obj.configuration.parentType) {
              obj.parentControl = jQuery.extend(true, {}, obj, obj.parentControl);
          }
-         
-        /* for(var x in obj.configuration.fields) {   
-             switch (obj.configuration.fields[x].renderType) {
-                 case window.ImpressCMS.core.controls.renderType.style:
-                     if (obj.css(x).length < 1)
-                        obj.css(x, obj.configuration.baseValues[x]);
-                 break;
-                 case window.ImpressCMS.core.controls.renderType.state:
-                     // do nothing
-                 break;
-                 case window.ImpressCMS.core.controls.renderType.data:
-                     x = 'data-' + x;
-                 case window.ImpressCMS.core.controls.renderType.attribute:
-                     //if (obj.attr(x) === undefined)
-                     //   obj.attr(x, obj.configuration.baseValues[x]);
-                 break;
-             }
-         }*/
          
          obj.bind({
             ajaxError: function (e, x, settings, exception) {
@@ -418,7 +408,7 @@ jQuery.fn.getControl = function() {
                     message=window.ImpressCMS.language.request.unknown_error;
                 }               
                 window.ImpressCMS.message.show(message, window.ImpressCMS.language.controls.error, window.ImpressCMS.message.type.error);
-                window.ImpressCMS.controls[id].hideGlobalAnimation();                
+                window.ImpressCMS.controls[id].hideGlobalAnimation();
             },
             DOMAttrModified: function (event) {
                 var obj = jQuery(event.target);
@@ -436,7 +426,7 @@ jQuery.fn.getControl = function() {
                         if (event.attrName == 'id')
                             event.preventDefault();
                         else
-                            obj.trigger('removedAttr', [event.attrName, event.prevValue]);                        
+                            obj.trigger('removedAttr', [event.attrName, event.prevValue]);
                     break;
                }
             },
@@ -480,7 +470,7 @@ jQuery.fn.getControl = function() {
                         window.ImpressCMS.ActionQueue.module.addAction(ctl.attr('id'), 'propertyChanged', {name:name, oldValue:'', newValue:newValue});
                 }
             },
-            execFinished: function (event, data) {                
+            execFinished: function (event, data) {
                 if (data.error) {
                     window.ImpressCMS.message.show(data.error, window.ImpressCMS.language.controls.error, window.ImpressCMS.message.type.error);
                 } else if (data.errors) {
@@ -489,9 +479,45 @@ jQuery.fn.getControl = function() {
                 } else {
                     if (data[window.ImpressCMS.config.response_special_key.inner_html] != undefined) {
                         var ctl = obj;
-                        if (data[window.ImpressCMS.config.response_special_key.selector])
-                            ctl = jQuery(data[window.ImpressCMS.config.response_special_key.selector], ctl);
-                        ctl.html(data[window.ImpressCMS.config.response_special_key.inner_html]);                                        
+                        if (data[window.ImpressCMS.config.response_special_key.selector]) {
+                            var n_ctl = jQuery(data[window.ImpressCMS.config.response_special_key.selector], ctl);
+							if (n_ctl.length == 0) {
+								n_ctl = obj.getOwnerControl();
+								if (n_ctl)	
+									n_ctl = jQuery(data[window.ImpressCMS.config.response_special_key.selector], n_ctl);
+								if (!n_ctl) {
+									window.ImpressCMS.console.log('IMControls', 'ERROR: Wrong selector in response');
+									return;
+								} else
+									ctl = n_ctl;
+							} else
+								ctl = n_ctl;
+						} 
+                        var tagName = ctl.get(0).tagName;
+                        jQuery(window.ImpressCMS.core.controls.getSelector(), ctl.children()).each(
+                            function () {
+                                var obj = jQuery(this);
+                                if (!window.ImpressCMS.core.controls.isKnownControl(obj))
+                                    return;
+                                var id = obj.attr('id');
+                                delete window.ImpressCMS.controls[id];
+                                window.ImpressCMS.console.log('IMControls', '#' + id + ' removed');
+                            }
+                        );
+                        var new_obj = jQuery('<' + tagName + '>' + data[window.ImpressCMS.config.response_special_key.inner_html] + '</' + tagName + '>');
+                        ctl.empty();
+                        var nchildren = new_obj.children();
+                        ctl.append(nchildren);
+                        jQuery(window.ImpressCMS.core.controls.getSelector(), nchildren).each(
+                            function () {
+                                var obj = jQuery(this);
+                                var id = obj.attr('id');
+                                if (!window.ImpressCMS.core.controls.isKnownControl(obj))
+                                    return;
+                                window.ImpressCMS.console.log('IMControls', '#' + id + ' added');
+                                obj.getControl();
+                            }
+                        );
                     }
                     
                     if (data[window.ImpressCMS.config.response_special_key.changed_properties] != undefined) {
@@ -499,15 +525,15 @@ jQuery.fn.getControl = function() {
                             var sel_obj = window.ImpressCMS.core.controls.getControl(x);
                             for (var y in data[window.ImpressCMS.config.response_special_key.changed_properties][x])
                                 sel_obj.setVar(y, data[window.ImpressCMS.config.response_special_key.changed_properties][x][y]);
-                        }                                                        
+                        }
                     }
                     if (data.message)
                         window.ImpressCMS.message.show(data.message, window.ImpressCMS.language.controls.info, window.ImpressCMS.message.type.info);
                     
-                    var self = this;
+                    /*var self = this;
                     setTimeout(function() {
                         window.ImpressCMS.core.controls.update(self);
-                    }, 500);
+                    }, 500);*/
                 }
                 window.ImpressCMS.controls[id].hideGlobalAnimation();
             },
@@ -515,15 +541,14 @@ jQuery.fn.getControl = function() {
                 e.stopPropagation();
                 if (typeof(obj.controlInitialized) == 'function')
                     obj.controlInitialized();
-                         
             }
-         });         
+         });
          
-         window.ImpressCMS.controls[id] = obj;         
+         window.ImpressCMS.controls[id] = obj;
          window.ImpressCMS.controls[id].trigger('controlInitialized');
          
      }
      return window.ImpressCMS.controls[id];
-  });  
+  });
 
 };

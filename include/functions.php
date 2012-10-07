@@ -10,7 +10,7 @@
  * @since		XOOPS
  * @author		http://www.xoops.org The XOOPS Project
  * @author		modified by marcan <marcan@impresscms.org>
- * @version	$Id: functions.php 11396 2011-09-23 18:44:58Z phoenyx $
+ * @version	$Id: functions.php 11965 2012-08-26 03:14:41Z skenow $
  */
 /**
  * The header
@@ -25,6 +25,7 @@ function xoops_header($closehead=true) {
 	global $icmsConfig, $xoopsTheme, $icmsConfigPlugins, $icmsConfigMetaFooter;
 	$myts =& icms_core_Textsanitizer::getInstance();
 
+	/** @todo	Move to a separate class::method - HTTP */
 	if(!headers_sent())
 	{
 		header('Content-Type:text/html; charset='._CHARSET);
@@ -32,6 +33,7 @@ function xoops_header($closehead=true) {
 		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 		header('Cache-Control: no-store, no-cache, max-age=1, s-maxage=1, must-revalidate, post-check=0, pre-check=0');
 		header("Pragma: no-cache");
+		header('X-Powered-By: ImpressCMS');
 	}
 	echo "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>";
 	echo '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="'._LANGCODE.'" lang="'._LANGCODE.'">
@@ -882,11 +884,19 @@ function icms_sanitizeAdsenses_callback($matches) {
  * @return array of tables used in the module
  * @todo Move to a static class method - Module
  */
-function icms_getTablesArray($moduleName, $items)
-{
+function icms_getTablesArray($moduleName, $items) {
 	$ret = array();
-	if (is_array($items))
-	foreach($items as $item) {$ret[] = $moduleName.'_'.$item;}
+	if (is_array($items)) {
+		foreach($items as $item) {
+			//$table = icms::handler('mod_' . $moduleName . '_' . ucfirst($item))->table;
+			$table = icms_getModuleHandler($item, $moduleName, NULL, TRUE)->table;
+			if (empty($table)) {
+				$ret[] = $moduleName . '_' . $item;
+			} else {
+				$ret[] = $table;
+			}
+		}
+	}
 	return $ret;
 }
 
@@ -1158,6 +1168,7 @@ function getDbValue(&$db, $table, $field, $condition = '')
  * @param string $value - $variable that is being escaped for query.
  * @return string
  * @todo Move to a static class method - Database or Filter
+ * @todo	get_magic_quotes_gpc is removed in PHP 5.4
  */
 function icms_escapeValue($value, $quotes = true)
 {
@@ -1576,11 +1587,7 @@ function &icms_getModuleHandler($name = null, $module_dir = null, $module_basena
 		if (class_exists($class)) {
 			$handlers[$module_dir][$name] = new $class(icms::$xoopsDB);
 		} else {
-			if($module_dir != 'system') {
-				$hnd_file = ICMS_ROOT_PATH . "/modules/{$module_dir}/class/{$name}.php";
-			} else {
-				$hnd_file = ICMS_ROOT_PATH . "/modules/{$module_dir}/admin/{$name}/class/{$name}.php";
-			}
+			$hnd_file = ICMS_ROOT_PATH . "/modules/{$module_dir}/class/{$name}.php";
 			if (file_exists($hnd_file)) {include_once $hnd_file;}
 			$class = ucfirst(strtolower($module_basename)) . ucfirst($name) . 'Handler';
 			if (class_exists($class)) {
@@ -1924,29 +1931,35 @@ function one_wordwrap($string,$width=false){
 }
 /**
  * Adds required jQuery files to header for Password meter.
+ *
+ * @param	string	$password_fieldclass	element id for the password field
+ * @param	string	$username_fieldid	element id for the username field
+ *
+ * @param	string	$password_fieldclass	element id for the password field
+ * @param	string	$username_fieldid	element id for the username field
  * @todo Move to a static class method - Password
  */
-function icms_PasswordMeter(){
+function icms_PasswordMeter($password_fieldclass = "password_adv", $username_fieldid = "uname"){
 	global $xoTheme, $icmsConfigUser;
 	$xoTheme->addScript(ICMS_URL.'/libraries/jquery/jquery.js', array('type' => 'text/javascript'));
 	$xoTheme->addScript(ICMS_URL.'/libraries/jquery/password_strength_plugin.js', array('type' => 'text/javascript'));
-	$xoTheme->addScript('', array('type' => ''), '
+	$xoTheme->addScript('', array('type' => 'text/javascript'), '
 				$(document).ready( function() {
-					$.fn.shortPass = "'._CORE_PASSLEVEL1.'";
-					$.fn.badPass = "'._CORE_PASSLEVEL2.'";
-					$.fn.goodPass = "'._CORE_PASSLEVEL3.'";
-					$.fn.strongPass = "'._CORE_PASSLEVEL4.'";
-					$.fn.samePassword = "'._CORE_UNAMEPASS_IDENTIC.'";
+					$.fn.shortPass = "' . _CORE_PASSLEVEL1 . '";
+					$.fn.badPass = "' . _CORE_PASSLEVEL2 . '";
+					$.fn.goodPass = "' . _CORE_PASSLEVEL3 . '";
+					$.fn.strongPass = "' . _CORE_PASSLEVEL4 . '";
+					$.fn.samePassword = "' . _CORE_UNAMEPASS_IDENTIC . '";
 					$.fn.resultStyle = "";
-				$(".password_adv").passStrength({
-					minPass: '.$icmsConfigUser['minpass'].',
-					strongnessPass: '.$icmsConfigUser['pass_level'].',
+				$(".' . $password_fieldclass . '").passStrength({
+					minPass: ' . $icmsConfigUser['minpass'] . ',
+					strongnessPass: ' . $icmsConfigUser['pass_level'] . ',
 					shortPass: 		"top_shortPass",
 					badPass:		"top_badPass",
 					goodPass:		"top_goodPass",
 					strongPass:		"top_strongPass",
 					baseStyle:		"top_testresult",
-					userid:			"#uname",
+					userid:			"#' . $username_fieldid . '",
 					messageloc:		0
 				});
 			});
@@ -2019,7 +2032,7 @@ function icms_moduleAction($dirname = 'system')
 	('update_ok' == $_POST['op'] || 'install_ok' == $_POST['op'] || 'uninstall_ok' == $_POST['op'])
 	&&
 	// current action
-		'modulesadmin' == $_POST['fct']
+		'modules' == $_POST['fct']
 	);
 	return $ret;
 }

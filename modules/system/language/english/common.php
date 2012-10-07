@@ -1,7 +1,7 @@
 <?php
 
 /**
- * $Id: common.php 10836 2010-12-04 22:23:11Z phoenyx $
+ * $Id: common.php 12000 2012-08-31 22:27:38Z skenow $
  */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
@@ -186,4 +186,6 @@ define('_CO_ICMS_ON', "On");
 define('_CO_ICMS_OFF', "Off");
 define('_CO_ICMS_WARNING_ALPHA', "This module comes as is, without any guarantees whatsoever. This module is ALPHA, meaning it is still under active development. This release is meant for <b>development and testing purposes only</b>, and we <b>strongly</b> recommend that you do not use it on a live website or in a production environment.");
 define('_CO_ICMS_UPDATE_NEEDED','Your system module needs updating');
-?>
+
+// moved in 1.3.3
+define("_MD_AM_HELP_TIP","View help text");

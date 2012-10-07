@@ -67,7 +67,7 @@ abstract class icms_controls_Base
      *
      * @var int 
      */
-	private static $ctl = 0;
+	private static $ctl = 0;    
         
     /**
      * Generates new control name
@@ -119,8 +119,9 @@ abstract class icms_controls_Base
 
         $handler = icms::handler('icms_controls');
         $type = $this->getType();
-        if (isset($handler::$state[$type][$params['id']]))
-            $params = array_merge($params, $handler::$state[$type][$params['id']]);        
+        if (isset($handler::$state[$type][$params['id']])) {
+            $params = array_merge($params, $handler::$state[$type][$params['id']]);
+        }
         
         parent::load($params);
     }
@@ -314,8 +315,12 @@ abstract class icms_controls_Base
      */
 	final public function render($mode = null) {
         
-        $log_msg = 'Render control ' . $this->getType() . '#' . $this->id;
+        $type = $this->getType();
+        $log_msg = 'Render control ' . $type . '#' . $this->id;
         icms::$logger->startTime($log_msg);
+        
+        if (!in_array($type, icms_controls_Handler::$renderedControlTypes))
+            icms_controls_Handler::$renderedControlTypes[] = $type;
         
         $pvars = $this->getProblematicVars();
         if (!empty($pvars))
@@ -353,9 +358,9 @@ abstract class icms_controls_Base
         }
         
         if (!$mode && !$short_tag)
-            $ret .= '</' . $this->baseTag . '>';  
+            $ret .= '</' . $this->baseTag . '>';        
         
-        icms::$logger->stopTime('Render control "' . $this->getType() . '#' . $this->id);
+        icms::$logger->stopTime('Render control "' . $type . '#' . $this->id);
         
         return $ret;
                 
@@ -365,8 +370,12 @@ abstract class icms_controls_Base
         $all_ctl = array();
         if (preg_match_all('/<{control:([^}]+)}>/ui', $content, $all_ctl, PREG_SET_ORDER)) 
             foreach ($all_ctl as $rct) {
-                if (isset($this->controls[$rct[1]]) && ($this->controls[$rct[1]] instanceof icms_controls_Base))
+                if (isset($this->controls[$rct[1]]) && ($this->controls[$rct[1]] instanceof icms_controls_Base)) {
                     $content = str_replace($rct[0], $this->controls[$rct[1]]->render(), $content);
+                    $type = $this->controls[$rct[1]]->getType();
+                    if (!in_array($type, icms_controls_Handler::$renderedControlTypes))
+                         icms_controls_Handler::$renderedControlTypes[]  = $type;
+                }
             }
         return $content;
     }

@@ -10,14 +10,14 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: dbmanager.php 10864 2010-12-08 00:27:17Z skenow $
+ * @version	$Id: dbmanager.php 11965 2012-08-26 03:14:41Z skenow $
  */
 
 /**
  * database manager for XOOPS installer
  *
  * @author Haruki Setoyama  <haruki@planewave.org>
- * @version $Id: dbmanager.php 10864 2010-12-08 00:27:17Z skenow $
+ * @version $Id: dbmanager.php 11965 2012-08-26 03:14:41Z skenow $
  * @access public
  **/
 class db_manager {
@@ -66,9 +66,9 @@ class db_manager {
 				elseif ($prefixed_query[1] == 'INSERT INTO') {
 					if ($this->db->query($prefixed_query[0]) != false) {
 						if (! isset($this->s_tables['insert'][$table])) {
-							$this->s_tables['insert'][$table] = 1;
+							$this->s_tables['insert'][$table] = $this->db->getAffectedRows();
 						} else {
-							$this->s_tables['insert'][$table]++;
+							$this->s_tables['insert'][$table] += $this->db->getAffectedRows();
 						}
 					} else {
 						if (! isset($this->f_tables['insert'][$table])) {
@@ -172,9 +172,9 @@ class db_manager {
 			return false;
 		} else {
 			if (!isset($this->s_tables['insert'][$table])) {
-				$this->s_tables['insert'][$table] = 1;
+				$this->s_tables['insert'][$table] = $this->db->getAffectedRows();
 			} else {
-				$this->s_tables['insert'][$table]++;
+				$this->s_tables['insert'][$table] += $this->db->getAffectedRows();
 			}
 			return $this->db->getInsertId();
 		}
@@ -195,5 +195,3 @@ class db_manager {
 		return $ret;
 	}
 }
-
-?>

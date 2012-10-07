@@ -7,7 +7,7 @@
  * @package		System
  * @subpackage	Blocks
  * @since		ImpressCMS 1.2
- * @version		SVN: $Id: system_admin_blocks.php 11152 2011-03-30 16:45:08Z m0nty_ $
+ * @version		SVN: $Id: system_admin_blocks.php 11686 2012-04-10 02:50:48Z skenow $
  */
 
 /**
@@ -27,7 +27,7 @@ function b_system_admin_warnings_show() {
 	}
 	/** @todo make this dynamic, so the value is updated automatically */
 	if (getDbValue(icms::$xoopsDB, 'modules', 'version', 'version="120" AND mid="1"') !== FALSE) {
-		array_push($block['msg'], icms_core_Message::error('<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=system">' . _WARNINGUPDATESYSTEM . '</a>'));
+		array_push($block['msg'], icms_core_Message::error('<a href="' . ICMS_MODULES_URL . '/system/admin.php?fct=modules&amp;op=update&amp;module=system">' . _WARNINGUPDATESYSTEM . '</a>'));
 	}
 	if (is_writable(ICMS_ROOT_PATH . '/mainfile.php')) {
 		array_push($block['msg'], icms_core_Message::error(sprintf(_WARNINWRITEABLE, ICMS_ROOT_PATH . '/mainfile.php'), '', FALSE));

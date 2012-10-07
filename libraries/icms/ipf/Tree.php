@@ -69,8 +69,7 @@ class icms_ipf_Tree {
 			if (isset ($this->_rootId)) {
 				$this->_tree[$key1]['root'] = $this->_objects[$i]->getVar($this->_rootId);
 			}
-                        
-		}       
+		}
 	}
 
 	/**

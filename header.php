@@ -4,7 +4,7 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		core
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		svn: $Id: header.php 11512 2011-12-28 04:19:27Z skenow $
+ * @version		svn: $Id: header.php 11650 2012-03-20 03:26:26Z skenow $
  */
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
@@ -51,8 +51,10 @@ icms::$preload->triggerEvent('startOutputInit');
 $xoTheme->addScript(ICMS_URL . '/include/xoops.js', array('type' => 'text/javascript'));
 $xoTheme->addScript(ICMS_URL . '/include/linkexternal.js', array('type' => 'text/javascript'));
 /**
+ * @todo	Remove icms.css in 2.0
  * Now system first checks for RTL, if it is enabled it'll just load it, otherwise it will load the normal (LTR) styles
  */
+icms_core_Debug::setDeprecated("Elements from icms.css need to be moved to your theme", sprintf(_CORE_REMOVE_IN_VERSION, '2.0'));
 $xoTheme->addStylesheet(ICMS_URL . '/icms' . (@_ADM_USE_RTL === TRUE?'_rtl':'') . '.css', array('media' => 'screen'));
 
 $style_info = '';
@@ -81,7 +83,7 @@ if (!empty($icmsConfigPlugins['sanitizer_plugins'])) {
 
 $xoTheme->addScript(ICMS_LIBRARIES_URL . '/jquery/jquery.js', array('type' => 'text/javascript'));
 $xoTheme->addScript(ICMS_LIBRARIES_URL . '/jquery/ui/ui.min.js', array('type' => 'text/javascript'));
-$xoTheme->addScript(ICMS_URL . '/libraries/jquery/helptip.js', array( 'type' => 'text/javascript'));
+$xoTheme->addScript(ICMS_LIBRARIES_URL . '/jquery/helptip.js', array( 'type' => 'text/javascript'));
 $xoTheme->addStylesheet(ICMS_LIBRARIES_URL . '/jquery/ui/css/ui-smoothness/ui.css', array('media' => 'screen'));
 $xoTheme->addStylesheet(ICMS_LIBRARIES_URL . '/jquery/jgrowl'
 	. (( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'') . '.css', array('media' => 'screen'));
@@ -129,16 +131,6 @@ if (@is_object($xoTheme->plugins['icms_view_PageBuilder'])) {
 
 if ($icmsModule )
 $xoTheme->contentCacheLifetime = @$icmsConfig['module_cache'][$icmsModule->getVar('mid', 'n')];
-
-if ($xoTheme->checkCache()) exit();
-
-if (!isset($xoopsOption['template_main']) && $icmsModule) {
-	// new themes using Smarty does not have old functions that are required in old modules, so include them now
-	include ICMS_INCLUDE_PATH . '/old_theme_functions.php';
-	// Need this also
-	$xoopsTheme['thename'] = $icmsConfig['theme_set'];
-	ob_start();
-}
 
 // Assigning the selected language as a smarty var
 $xoopsTpl->assign('icmsLang', $icmsConfig['language']);

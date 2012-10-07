@@ -12,12 +12,12 @@
  * @author		Kazumi Ono (AKA onokazu)
  * @author		RpLima
  * @author		Martijn Hertog (AKA wtravel) <martin@efqconsultancy.com>
- * @version		$Id: modulesadmin.php 11396 2011-09-23 18:44:58Z phoenyx $
+ * @version		$Id: modulesadmin.php 11686 2012-04-10 02:50:48Z skenow $
  */
 /**
  *
  */
-icms_loadLanguageFile('system', 'modulesadmin', true);
+icms_loadLanguageFile('system', 'modules', true);
 
 function xoops_module_install($dirname) {
 	$dirname = trim($dirname);
@@ -27,7 +27,7 @@ function xoops_module_install($dirname) {
 	if ($module_handler->getCount(new icms_db_criteria_Item('dirname', $dirname)) == 0) {
 		$module =& $module_handler->create();
 		$module->loadInfoAsVar($dirname);
-		$module->registerClassPath();		
+		$module->registerClassPath();
 		$module->setVar('weight', 1);
 		$error = false;
 		$errs = array();
@@ -481,7 +481,7 @@ function icms_module_update($dirname) {
 	$module->setVar('name', $temp_name);
 	if (!$module_handler->insert($module)) {
 		echo '<p>Could not update '.$module->getVar('name').'</p>';
-		echo "<br /><a href='admin.php?fct=modulesadmin'>"._MD_AM_BTOMADMIN."</a>";
+		echo "<br /><a href='admin.php?fct=modules'>"._MD_AM_BTOMADMIN."</a>";
 	} else {
 		$newmid = $module->getVar('mid');
 		$msgs = array();
@@ -576,8 +576,8 @@ function icms_module_update($dirname) {
 						if (!$result) {
 							$msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_UPDATE_FAIL,$fblock['name']);
 						} else {
-							$msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_BLOCK_UPDATED, 
-								'<strong>' . $fblock['name'] . '</strong>', 
+							$msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_BLOCK_UPDATED,
+								'<strong>' . $fblock['name'] . '</strong>',
 								'<strong>' . icms_conv_nr2local($fblock['bid']) . '</strong>');
 							if ($template != '') {
 								$tplfile =& $tplfile_handler->find('default', 'block', $fblock['bid']);

@@ -10,7 +10,7 @@
  * @since		ImpressCMS 1.1
  * @author		Vaughan Montgomery <vaughan@impresscms.org>
  * @author		The ImpressCMS Project
- * @version		SVN: $Id: resetpass.php 11450 2011-11-21 23:27:25Z skenow $
+ * @version		SVN: $Id: resetpass.php 11738 2012-06-24 02:20:38Z m0nty $
  */
 
 $xoopsOption['pagetype'] = 'user';
@@ -59,20 +59,13 @@ if (empty($getuser)) {
 	if (strtolower($getuser[0]->getVar('uname')) !== strtolower($username)) {
 		redirect_header('user.php', 2, _US_SORRYUNAMENOTMATCHEMAIL);
 	} else {
-		$current_pass = $getuser[0]->getVar('pass');
-		$current_salt = $getuser[0]->getVar('salt');
-		$enc_type = $getuser[0]->getVar('enc_type');
-
 		$icmspass = new icms_core_Password();
 
-		$c_pass = $icmspass->encryptPass($c_password, $current_salt, $enc_type, 1);
-
-		if ($c_pass !== $current_pass) {
+		if (!$icmspass->verifyPass($c_password, $username)) {
 			redirect_header('user.php', 2, _US_SORRYINCORRECTPASS);
 		}
 
-		$salt = $icmspass->createSalt();
-		$pass = $icmspass->encryptPass($password, $salt, $icmsConfigUser['enc_type']);
+		$pass = $icmspass->encryptPass($password);
 		$xoopsMailer = new icms_messaging_Handler();
 		$xoopsMailer->useMail();
 		$xoopsMailer->setTemplate('resetpass2.tpl');
@@ -88,12 +81,10 @@ if (empty($getuser)) {
 			echo $xoopsMailer->getErrors();
 		}
 
-		$sql = sprintf("UPDATE %s SET pass = '%s', salt = '%s', pass_expired = '%u', enc_type = '%u' WHERE uid = '%u'",
+		$sql = sprintf("UPDATE %s SET pass = '%s', pass_expired = '%u' WHERE uid = '%u'",
 						icms::$xoopsDB->prefix('users'),
 						$pass,
-						$salt,
 						0,
-						(int) $icmsConfigUser['enc_type'],
 						(int) $getuser[0]->getVar('uid')
 					);
 		if (!icms::$xoopsDB->queryF($sql)) {
@@ -102,7 +93,7 @@ if (empty($getuser)) {
 			include 'footer.php';
 			exit();
 		}
-		unset($salt, $pass);
+		unset($pass);
 		redirect_header('user.php', 3, sprintf(_US_PWDRESET, $getuser[0]->getVar('uname')), FALSE);
 	}
 }

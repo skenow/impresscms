@@ -24,7 +24,7 @@ if (!empty($_SERVER['QUERY_STRING']) && substr($_SERVER['QUERY_STRING'], 0, 5) =
                     if ($k_count < 2) {
                         $_REQUEST[$key] = $value;
                     } else {
-                        $key = $k_parts[0];
+                        $key = $k_parts[0];                        
                         if (!isset($_REQUEST[$key]))
                             $_REQUEST[$key] = array();
                         $var = &$_REQUEST[$key];
@@ -57,7 +57,11 @@ if (isset($_REQUEST['icms'])) {
         $action_handler->includeHeadersInResponse();
 }
 
-if ($action_handler->hasActions($_REQUEST)) {        
+if ($action_handler->hasActions($_REQUEST)) { 
+    if (isset($_REQUEST[$action_handler::PARAM_BASE_CONTROLS])) {
+            $base_controls = explode(';', $_REQUEST[$action_handler::PARAM_BASE_CONTROLS]);
+            unset($_REQUEST[$action_handler::PARAM_BASE_CONTROLS]);           
+    }
     $member_handler = icms::handler('icms_member');
     $group = $member_handler->getUserBestGroup((icms::$user instanceof icms_member_user_Object) ? icms::$user->getVar('uid') : 0);
     $rq = $_REQUEST;
@@ -67,6 +71,28 @@ if ($action_handler->hasActions($_REQUEST)) {
     if (isset($rq['icms']))
         unset($rq['icms']);
     $action_handler->execActionFromArray($rq);
+    if (isset($base_controls)) {
+         $controls_handler = icms::handler('icms_controls');
+         $required = array();         
+         $diff = array_diff($controls_handler::$renderedControlTypes, $base_controls);
+                          
+         if (is_array($diff) && !empty($diff)) {
+            foreach ($diff as $m_type) {
+                $ctl = $controls_handler->make($m_type);
+                foreach ($ctl->getRequiredURLs() as $type => $urls)
+                    if (isset($required[$type]))
+                        $required[$type] = array_merge($required[$type], $urls);
+                    else
+                        $required[$type] = $urls;
+            }
+            unset($m_type, $urls);
+         }         
+         
+		 if (!empty($required))
+			$action_handler->response->add('load_files', $required);
+         unset($diff, $required);
+    }
+    unset($base_controls);
 } else {
     $action_handler->response->error('Unknown request!');
 }

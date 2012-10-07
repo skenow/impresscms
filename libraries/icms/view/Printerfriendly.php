@@ -10,7 +10,7 @@
  * @since		1.2
  * @author		ImpressCMS
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id: Printerfriendly.php 10764 2010-11-15 22:06:37Z skenow $
+ * @version		$Id: Printerfriendly.php 11765 2012-07-01 03:11:53Z skenow $
  */
 
 defined("ICMS_ROOT_PATH") or die("ICMS root path not defined");
@@ -64,7 +64,7 @@ class icms_view_Printerfriendly {
 		$this->_tpl->assign('icms_print_content', $this->_content);
 		$this->_tpl->assign('icms_print_width', $this->_width);
 
-		$current_urls = smart_getCurrentUrls();
+		$current_urls = icms_getCurrentUrls();
 		$current_url = $current_urls['full'];
 
 		$this->_tpl->assign('icms_print_currenturl', $current_url);

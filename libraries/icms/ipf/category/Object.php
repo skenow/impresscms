@@ -10,7 +10,7 @@
  * @since		1.2
  * @author		marcan <marcan@impresscms.org>
  * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id: Object.php 10326 2010-07-11 18:54:25Z malanciault $
+ * @version		SVN: $Id: Object.php 11767 2012-07-01 22:36:00Z skenow $
  *
  * @todo		Properly set visibility of variables - in version 1.4
  */
@@ -113,7 +113,7 @@ class icms_ipf_category_Object extends icms_ipf_seo_Object {
 	 */
 	public function getCategoryPath($withAllLink=true, $currentCategory=false)	{
 
-		$controller = new icms_ipf_ObjectController($this->handler);
+		$controller = new icms_ipf_Controller($this->handler);
 
 		if (!$this->_categoryPath) {
 			if ($withAllLink && !$currentCategory) {

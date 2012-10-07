@@ -126,7 +126,7 @@ abstract class icms_ipf_Properties
             if ($this->_vars[$name][self::VARCFG_LOCKED])
                 return trigger_error('Variable '.get_class($this).'::$'.$name.' locked', E_USER_WARNING);
             if (isset($this->_vars[$name][self::VARCFG_POSSIBLE_OPTIONS]) && !in_array($value, $this->_vars[$name][self::VARCFG_POSSIBLE_OPTIONS]))
-                return trigger_error('Option not in array for variable '.get_class($this).'::$'.$name.' not found', E_USER_WARNING);            
+                return trigger_error('Option not in array for variable '.get_class($this).'::$'.$name.' not found', E_USER_WARNING);
             $clean = $this->cleanVar($name, $this->_vars[$name][self::VARCFG_TYPE], $value);
             if ($clean == $this->_vars[$name][self::VARCFG_VALUE])
                 return;
@@ -174,7 +174,7 @@ abstract class icms_ipf_Properties
             switch ($this->_vars[$name][self::VARCFG_TYPE]) {
                 case self::DTYPE_STRING:
                     if (!isset($this->_vars[$name][self::VARCFG_AF_DISABLED]) || !$this->_vars[$name][self::VARCFG_AF_DISABLED]) {
-                        $ts =& icms_core_Textsanitizer::getInstance();
+                        $ts = icms_core_Textsanitizer::getInstance();
 						$html = !empty($this->_vars['dohtml']) ? 1 : 0;
 						$xcode = (!isset($this->_vars['doxcode']) || $this->_vars['doxcode'][self::VARCFG_VALUE] == 1) ? 1 : 0;
 						$smiley = (!isset($this->_vars['dosmiley']) || $this->_vars['dosmiley'][self::VARCFG_VALUE] == 1) ? 1 : 0;
@@ -252,7 +252,7 @@ abstract class icms_ipf_Properties
         
         public function getVarForEdit($name) {
             switch ($this->_vars[$name][self::VARCFG_TYPE]) {
-                case self::DTYPE_STRING:                    
+                case self::DTYPE_STRING:
                 case self::DTYPE_INTEGER: // XOBJ_DTYPE_INT
                 case self::DTYPE_FLOAT: // XOBJ_DTYPE_FLOAT
                 case self::DTYPE_BOOLEAN:
@@ -267,7 +267,7 @@ abstract class icms_ipf_Properties
                 default:
                     return null;
             }
-        }        
+        }
         
         public function getVarForForm($name) {
             switch ($this->_vars[$name][self::VARCFG_TYPE]) {
@@ -286,7 +286,7 @@ abstract class icms_ipf_Properties
                 default:
                     return null;
             }
-        }          
+        }
         
         public function setVar($name, $value, $options = null) {
             if ($options !== null) {
@@ -296,7 +296,7 @@ abstract class icms_ipf_Properties
                     foreach ($options as $k2 => $v2)
                         $this->setVarInfo($name, $k2, $v2);
                 }
-            }            
+            }
             return $this->__set($name, $value);
         }
         
@@ -311,7 +311,7 @@ abstract class icms_ipf_Properties
             if (isset($value) && isset($this->_vars[$key])) {
                 $this->_vars[$key][self::VARCFG_VALUE] =& $value;
             }
-        }       
+        }
         
         public function getChangedVars() {
             $changed = array();
@@ -319,7 +319,7 @@ abstract class icms_ipf_Properties
                 if (isset($format[self::VARCFG_CHANGED]) && $format[self::VARCFG_CHANGED])
                     $changed[] = $key;
             return $changed;
-        }        
+        }
         
         private function isVarSet($type, $key) {
             switch ($type) {
@@ -338,7 +338,7 @@ abstract class icms_ipf_Properties
                     return strlen($this->_vars[$key][self::VARCFG_VALUE]) > 0;
                 case self::DTYPE_DATETIME:
                     return is_int($this->_vars[$key][self::VARCFG_VALUE]) && ($this->_vars[$key][self::VARCFG_VALUE] > 0);
-            }   
+            }
         }
         
         public function getProblematicVars() {
@@ -364,14 +364,14 @@ abstract class icms_ipf_Properties
                 }
             } else {
                 $this->_vars[$key] = array();
-            }        
+            }
             switch ($dataType) {
                 case self::DTYPE_DEP_CURRENCY:
                     $this->_vars[$key][self::VARCFG_FORMAT] = '%01.2f';
                     $this->_vars[$key][self::VARCFG_DEP_DATA_TYPE] = $dataType;
                     $dataType = self::DTYPE_FLOAT;
                 break;
-                case self::DTYPE_DEP_MTIME:                    
+                case self::DTYPE_DEP_MTIME:
                     $this->_vars[$key][self::VARCFG_FORMAT] = _MEDIUMDATESTRING;
                     $this->_vars[$key][self::VARCFG_DEP_DATA_TYPE] = $dataType;
                     $dataType = self::DTYPE_DATETIME;
@@ -459,7 +459,7 @@ abstract class icms_ipf_Properties
                 break;
                 case self::DTYPE_LIST:
                     if (!isset($this->_vars[$key][self::VARCFG_SEPARATOR]))
-                        $this->_vars[$key][self::VARCFG_SEPARATOR] = ';';                        
+                        $this->_vars[$key][self::VARCFG_SEPARATOR] = ';';
                 break;
             }
             if (!isset($this->_vars[$key][self::VARCFG_LOCKED]))
@@ -488,7 +488,7 @@ abstract class icms_ipf_Properties
             return 'unknown/unknown';
         }
         
-        protected function cleanVar($key, $type, $value) {                                            
+        protected function cleanVar($key, $type, $value) {
             switch ($type) {
                 case self::DTYPE_CRITERIA:
                     if ($value instanceof icms_db_criteria_Element)
@@ -500,7 +500,7 @@ abstract class icms_ipf_Properties
                     return new icms_db_criteria_Compo();
                 case self::DTYPE_DATA_SOURCE:
                     if (is_null($value))
-                        return null;                    
+                        return null;
                     if (is_string($value) && class_exists($value, true)) {
                         if (!class_exists($value, true)) {
                             $value = base64_decode($value);
@@ -517,8 +517,8 @@ abstract class icms_ipf_Properties
                         $refl = new ReflectionClass($value);
                         if (!$refl->isInstantiable())
                             return null;
-                        $value = $refl->newInstance(icms::$xoopsDB);                        
-                    }                    
+                        $value = $refl->newInstance(icms::$xoopsDB);
+                    }
                     return (is_object($value) && ($value instanceOf icms_core_ObjectHandler))?$value:null;
                 break;
                 case self::DTYPE_BOOLEAN:     
@@ -533,26 +533,25 @@ abstract class icms_ipf_Properties
                 break;
                 case self::DTYPE_LIST:
                     if (is_array($value))
-                        return $value;                    
+                        return $value;
                     return explode($this->_vars[$key][self::VARCFG_SEPARATOR], strval($value));
                 case self::DTYPE_FLOAT:
                     return floatval($value);
                 case self::DTYPE_INTEGER:
                     return intval($value);
-                case self::DTYPE_ARRAY:         
+                case self::DTYPE_ARRAY:
                     if (is_array($value)) 
                         return $value;
-                    elseif (is_string($value) && !empty($value)) {                        
+                    elseif (is_string($value) && !empty($value)) {
                         if (in_array(substr($value, 0, 1), array('{', '[')) ) {
                             $ret = json_decode($value, true);
                             if (is_array($ret))
                                 return $ret;
                         } elseif (substr($value, 0, 2) == 'a:') {
-                            $ret = unserialize($ret);
+                            $ret = unserialize($value);
                             if (is_array($ret))
                                 return $ret;
-                        }                        
-                        //die('aaa');
+                        }
                         return array($value); 
                     } elseif (is_null($value) && empty($value))
                         return array();
@@ -571,7 +570,7 @@ abstract class icms_ipf_Properties
                         return (array)$value;
                     }
                 case self::DTYPE_FILE:
-                    if (isset($_FILES[$key])) {                        
+                    if (isset($_FILES[$key])) {
                         $uploader = new icms_file_MediaUploadHandler($this->_vars[$key]['path'],  $this->_vars[$key]['allowedMimeTypes'], $this->_vars[$key]['maxFileSize'], $this->_vars[$key]['maxWidth'], $this->_vars[$key]['maxHeight']);
                         if ($uploader->fetchMedia($key)) {  
                             if (!empty($this->_vars[$key][self::VARCFG_FILENAME_FUNCTION])) {
@@ -581,7 +580,7 @@ abstract class icms_ipf_Properties
                                 $uploader->setTargetFileName($filename);
                             } elseif (!empty($this->_vars[$key]['prefix'])) {
                                 $uploader->setPrefix($this->_vars[$key]['prefix']);
-                            }                            
+                            }
                             if ($uploader->upload()) {
                                 return array(
                                     'filename' => $uploader->getSavedFileName(),
@@ -590,7 +589,7 @@ abstract class icms_ipf_Properties
                             }
                             return null;
                         }
-                    } elseif (is_string($value)) {                        
+                    } elseif (is_string($value)) {
                         if (file_exists($value)) {
                             return array(
                                 'filename' => $value,
@@ -606,13 +605,13 @@ abstract class icms_ipf_Properties
                                 $uploader->setTargetFileName($filename);
                             } elseif (!empty($this->_vars[$key]['prefix'])) {
                                 $uploader->setPrefix($this->_vars[$key]['prefix']);
-                            }                            
+                            }
                             if ($uploader->upload()) {
                                 return array(
                                     'filename' => $uploader->getSavedFileName(),
                                     'mimetype' => $uploader->getMediaType(),
                                 );
-                            }       
+                            }
                             trigger_error(strip_tags($uploader->getErrors()), E_USER_NOTICE);
                             return null;
                         }
@@ -647,7 +646,7 @@ abstract class icms_ipf_Properties
                         icms_loadLanguageFile('core', 'global');
                         trigger_error(sprintf(_XOBJ_ERR_SHORTERTHAN, $key, (int)$this->_vars[$key][self::VARCFG_MAX_LENGTH]), E_USER_WARNING);
                         $value = mb_substr($value, 0, $this->_vars[$key][self::VARCFG_MAX_LENGTH]);
-                    }                      
+                    }
                     return $value;
             }
         }        

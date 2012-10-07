@@ -1,5 +1,5 @@
 <?php
-// $Id: preferences.php 11627 2012-03-04 13:12:13Z m0nty $
+// $Id: preferences.php 12000 2012-08-31 22:27:38Z skenow $
 //%%%%%%	Admin Module Name  AdminGroup 	%%%%%
 // dont change
 if (!defined('_AM_DBUPDATED')) {define("_AM_DBUPDATED","Database Updated Successfully!");}
@@ -37,6 +37,8 @@ define("_MD_AM_SESSNAME","Session name");
 define("_MD_AM_SESSNAMEDSC","The name of session (Valid only when 'use custom session' is enabled)");
 define("_MD_AM_SESSEXPIRE","Session expiration");
 define("_MD_AM_SESSEXPIREDSC","Maximum duration of session idle time in minutes (Valid only when 'use custom session' is enabled. Works only when you are using PHP4.2.0 or later.)");
+define("_MD_AM_MYIP","Your IP address");
+define("_MD_AM_MYIPDSC","");
 define("_MD_AM_ALWDHTML","HTML tags allowed in all posts.");
 define("_MD_AM_INVLDMINPASS","Invalid value for minimum length of password.");
 define("_MD_AM_INVLDUCOOK","Invalid value for usercookie name.");
@@ -691,15 +693,18 @@ define("_MD_AM_PURIFIER_FILTER_ALLOWCUSTOM","Allow Custom Filters");
 define("_MD_AM_PURIFIER_FILTER_ALLOWCUSTOMDSC","Allow Custom Filters?<br /><br />if enabled this will allow you to use custom filters located in;<br />'libraries/htmlpurifier/standalone/HTMLPurifier/Filter'");
 
 // added in 1.3.2
-define("_MD_AM_HELP_TIP","View help text");
+define("_MD_AM_PURIFIER_HTML_SAFEIFRAME","Enable Safe Iframes");
+define("_MD_AM_PURIFIER_HTML_SAFEIFRAMEDSC","Whether or not to permit Iframes in documents, with a number of extra security features added to prevent script execution. You must add safe domains in Safe Iframes URLs before enabling!.");
+define("_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXP","Safe Iframes URLs");
+define("_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXPDSC","A list of URLs that you want to allow to show iframe content on your site. This will be matched against an iframe URI. This is a relatively inflexible scheme, but works well enough for the most common use-case of iframes: embedded video. <br />Letting the site owner explicitly allow sites keeps unknown sites from showing iframes on your site with content you cannot control.<br /><br />
+    Here are some example values:<br /><br />
+
+    http://www.youtube.com/embed/ - Allow YouTube videos<br />
+    http://player.vimeo.com/video/ - Allow Vimeo videos<br />
+    http://www.youtube.com/embed/|http://player.vimeo.com/video/ - Allow both<br /><br />HTML Safe Iframe must be enabled for this to work.");
 
 // added in 1.3.3
-define("_MD_AM_PURIFIER_HTML_SAFEIFRAME","Enable Safe Iframes");
-define("_MD_AM_PURIFIER_HTML_SAFEIFRAMEDSC","Whether or not to permit Iframes in documents, with a number of extra security features added to prevent script execution. You must define a Regex pattern with Safe Iframe RegEXP before enabling!.");
-define("_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXP","Safe Iframe Domain(s)");
-define("_MD_AM_PURIFIER_URI_SAFEIFRAMEREGEXPDSC","Enter the domains that are allowed in Iframes. Seperate with pipe char. |.<br /><br />
-    Example:<br /><br />
-    www.youtube.com/embed/|player.vimeo.com/video/<br /><br />
-    HTML Safe Iframe must be enabled for this to work.");
-
-?>
+define("_MD_AM_ENC_RIPEMD256","RIPEMD 256");
+define("_MD_AM_ENC_RIPEMD320","RIPEMD 320");
+define("_MD_AM_ENC_SNEFRU256","Snefru 256");
+define("_MD_AM_ENC_GOST","Gost");

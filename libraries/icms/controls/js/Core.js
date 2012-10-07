@@ -92,16 +92,6 @@ window.ImpressCMS.core.controls = {
             };
             exist();
         },
-        update: function (context) {
-            this.replaceMagicLinks(context);
-            
-            var sel = window.ImpressCMS.core.controls.getSelector();
-            for(var x in window.ImpressCMS.controls)
-                if ((jQuery('#' + x).length == 0) || (jQuery('#' + x).data('events') == undefined))
-                    delete window.ImpressCMS.controls[x];
-            var obj = (context)?jQuery(sel, jQuery(context)):jQuery(sel);
-            obj.getControl();
-        },
         replaceMagicLinks: function (context) {
             var prot = [];            
             jQuery.each(window.ImpressCMS.URLHandler.specialProtocols, 

@@ -12,7 +12,7 @@
  * @author		Haruki Setoyama  <haruki@planewave.org>
  * @author 		Kazumi Ono <webmaster@myweb.ne.jp>
  * @author		Skalpa Keo <skalpa@xoops.org>
- * @version		$Id: page_tablesfill.php 10326 2010-07-11 18:54:25Z malanciault $
+ * @version		$Id: page_tablesfill.php 11751 2012-06-28 15:39:08Z m0nty $
  */
 
 require_once 'common.inc.php';
@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$result = $dbm->queryFromFile('./sql/'.XOOPS_DB_TYPE.'.data.sql');
 	$result = $dbm->queryFromFile('./language/'.$language.'/'.XOOPS_DB_TYPE.'.lang.data.sql');
 	$group = make_groups( $dbm );
-	$result = make_data( $dbm, $cm, $adminname, $adminlogin_name, $adminpass, $adminmail, $language, $adminsalt, $group );
+	$result = make_data( $dbm, $cm, $adminname, $adminlogin_name, $adminpass, $adminmail, $language, $group );
 	$content = $dbm->report();
 } else {
 	$msg = $process ? READY_INSERT_DATA : DATA_ALREADY_INSERTED;

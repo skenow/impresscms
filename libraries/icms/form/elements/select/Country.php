@@ -7,7 +7,7 @@
  * @category	ICMS
  * @package		Form
  * @subpackage	Elements
- * @version		$Id: Country.php 11375 2011-09-07 18:42:59Z mcdonald3072 $
+ * @version		$Id: Country.php 11927 2012-08-17 06:04:23Z mcdonald3072 $
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -52,7 +52,7 @@ class icms_form_elements_select_Country extends icms_form_elements_Select {
 			"AI" => _COUNTRY_AI,
 			"AL" => _COUNTRY_AL,
 			"AM" => _COUNTRY_AM,
-			"AN" => _COUNTRY_AN,
+		//	"AN" => _COUNTRY_AN,	transitionally reserved
 			"AO" => _COUNTRY_AO,
 			"AQ" => _COUNTRY_AQ,
 			"AR" => _COUNTRY_AR,

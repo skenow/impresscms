@@ -6,13 +6,13 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		core
- * @version		$Id: common.php 11604 2012-02-27 03:12:10Z skenow $
+ * @version		$Id: common.php 11987 2012-08-30 03:29:30Z skenow $
  */
 
 /** make sure mainfile is included, for security and functionality */
 defined("XOOPS_MAINFILE_INCLUDED") or die();
 
-/** @todo This funtion has been deprecated in PHP 5.3.0 - need to adjust in 1.4 ~skenow */
+/** @todo This funtion has been deprecated in PHP 5.3.0 - need to adjust in 2.0 ~skenow */
 @set_magic_quotes_runtime(0);
 
 // -- Include common functions and constants file
@@ -82,6 +82,10 @@ if (!empty($_POST['xoops_theme_select']) && in_array($_POST['xoops_theme_select'
 } elseif (!empty($_SESSION['xoopsUserTheme'])
 		&& in_array($_SESSION['xoopsUserTheme'], $icmsConfig['theme_set_allowed'])) {
 	$icmsConfig['theme_set'] = $_SESSION['xoopsUserTheme'];
+}
+
+if ($icmsConfig['closesite'] == 1) {
+	include ICMS_INCLUDE_PATH . '/site-closed.php';
 }
 
 icms::launchModule();

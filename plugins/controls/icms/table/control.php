@@ -146,31 +146,25 @@ class Control
                     case 'delete':
                     case 'del':
                         $title = _DELETE;                        
-                        $action_url = '#';
+                        $id = $record->id();
+                        $action_url = 'control://' . $this->id . '/delete?item_id=' . $id;
                         $icon_url = ICMS_URL . '/images/delete.gif';                        
-                        $question = sprintf(_CO_ICMS_DELETE_CONFIRM, $record->id());
-                        $action_name = 'delete';
+                        $question = sprintf(_CO_ICMS_DELETE_CONFIRM, $id);
                     break;
                     default:
                         continue;
                 }
-           $title = htmlentities($title);           
-           $ret .= '<a href="' . $action_url . '"';
-           if (!empty($question))
-               $ret .= ' data-question="' . htmlentities($question) . '"';
-           if (!empty($title))
-               $ret .= ' title="' . $title . '"';
-           if (!empty($action_name)) 
-               $ret .= ' data-action="' . htmlentities($action_name) . '"';
-           $ret .= '>';
-           if (!empty($icon_url)) {
-                $ret .= '<img src="' . $icon_url . '" alt="' . $title .'" />';
-           } else {
-               $ret .= $title;
-           }
-           $ret .= '</a>';
+           $crl = $this->makeControl('link', array(
+               'href'           => $action_url,
+               'title'          => $title,
+               'question'       => $question,
+               'id'             => $this->id . '_link_' . $record->id()
+           ));
+           $crl->html = (!empty($icon_url))?'<img src="' . $icon_url . '" alt="' . $title .'" />':$title;
+           $this->controls[$crl->id] = $crl;
+           $ret .= '<{control:'.$crl->id.'}> ';
         }
-        return $ret;
+        return trim($ret);
     }
     
     protected function renderExtCell($record, $column, &$class) {

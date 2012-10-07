@@ -281,7 +281,8 @@ class icms_file_MediaUploadHandler {
             fwrite($fp, $content);
             fclose($fp);
             if (strrpos($this->mediaName, '.') === false) {
-                $ext = next(explode('/', $this->mediaType));
+				$ext = explode('/', $this->mediaType);
+                $ext = next($ext);
                 $this->mediaName .= '.' . $ext;
             } else {
                 $ext = strtolower(substr($this->mediaName, strrpos($this->mediaName, '.') + 1));
@@ -307,6 +308,7 @@ class icms_file_MediaUploadHandler {
 
 	/**
 	 * Fetch the uploaded file
+	 * @todo	Remote get_magic_quotes_gpd - is is deprecated and will always return FALSE in PHP 5.4
 	 * @param   string  $media_name Name of the file field
 	 * @param   int     $index      Index of the file (if more than one uploaded under that name)
 	 * @return  bool
@@ -315,7 +317,7 @@ class icms_file_MediaUploadHandler {
 		if (empty($this->extensionToMime)) {
 			self::setErrors(_ER_UP_MIMETYPELOAD);
 			return false;
-		}                            
+		}
 		if (!isset($_FILES[$media_name])) {
 			self::setErrors(_ER_UP_FILENOTFOUND);
 			return false;
@@ -325,7 +327,7 @@ class icms_file_MediaUploadHandler {
 			$this->mediaType = $_FILES[$media_name]['type'][$index];
 			$this->mediaSize = $_FILES[$media_name]['size'][$index];
 			$this->mediaTmpName = $_FILES[$media_name]['tmp_name'][$index];
-			$this->mediaError = !empty($_FILES[$media_name]['error'][$index]) ? $_FILES[$media_name]['error'][$index] : 0;            
+			$this->mediaError = !empty($_FILES[$media_name]['error'][$index]) ? $_FILES[$media_name]['error'][$index] : 0;
 		} else {
 			$media_name = & $_FILES[$media_name];
 			$this->mediaName = (get_magic_quotes_gpc()) ? stripslashes($media_name['name']) : $media_name['name'];
@@ -341,29 +343,26 @@ class icms_file_MediaUploadHandler {
 				$this->mediaRealType = $this->extensionToMime[$ext];
 			}
 		}
-        
 		$this->errors = array();
-                if ( (int) ($this->mediaSize) < 0) {
-                    self::setErrors(_ER_UP_INVALIDFILESIZE);
-                    return false;
-                }
-                if ($this->mediaName == '') {
-                    self::setErrors(_ER_UP_FILENAMEEMPTY);
-                    return false;
-                }
-                if ($this->mediaTmpName == 'none' || !is_uploaded_file($this->mediaTmpName)) {
-                    self::setErrors($this->getUploadErrorText($media_name['error']));
-                    return false;
-                }
-                if ($this->mediaError > 0) {
-                    self::setErrors(sprintf(_ER_UP_ERROROCCURRED, $this->mediaError));
-                    return false;
-                }
-                
-                return true;
+		if ( (int) ($this->mediaSize) < 0) {
+			self::setErrors(_ER_UP_INVALIDFILESIZE);
+			return false;
+		}
+		if ($this->mediaName == '') {
+			self::setErrors(_ER_UP_FILENAMEEMPTY);
+			return false;
+		}
+		if ($this->mediaTmpName == 'none' || !is_uploaded_file($this->mediaTmpName)) {
+			self::setErrors($this->getUploadErrorText($media_name['error']));
+			return false;
+		}
+		if ($this->mediaError > 0) {
+			self::setErrors(sprintf(_ER_UP_ERROROCCURRED, $this->mediaError));
+			return false;
+		}
+		return true;
 	}
-        
-
+	
 	/**
 	 * Get Text messages for POST upload errors
 	 *
@@ -489,8 +488,8 @@ class icms_file_MediaUploadHandler {
 			self::setErrors(sprintf(_ER_UP_FAILEDOPENDIRWRITE, $this->uploadDir));
 			return false;
 		}
-		self::sanitizeMultipleExtensions();       
-        
+		self::sanitizeMultipleExtensions();
+
 		if (!self::checkMaxFileSize()) {
 			return false;
 		}
@@ -500,7 +499,7 @@ class icms_file_MediaUploadHandler {
 		if (!self::checkImageType()) {
 			return false;
 		}
-		if (!self::checkMaxWidth()) {            
+		if (!self::checkMaxWidth()) {
 			return false;
 		}
 		if (!self::checkMaxHeight()) {
@@ -530,17 +529,10 @@ class icms_file_MediaUploadHandler {
 			$this->savedFileName = strtolower($this->mediaName);
 		}
 		$this->savedDestination = $this->uploadDir . '/' . $this->savedFileName;
-                if (is_uploaded_file($this->mediaTmpName)) {
-                    if (!move_uploaded_file($this->mediaTmpName, $this->savedDestination)) {
+		if (!move_uploaded_file($this->mediaTmpName, $this->savedDestination)) {
 			self::setErrors(sprintf(_ER_UP_FAILEDSAVEFILE, $this->savedDestination));
 			return false;
-                    }
-                } else {
-                    if (!rename($this->mediaTmpName, $this->savedDestination)) {
-                        self::setErrors(sprintf(_ER_UP_FAILEDSAVEFILE, $this->savedDestination));
-			return false;
-                    }
-                }		
+		}
 		// Check IE XSS before returning success
 		$ext = strtolower(substr(strrchr($this->savedDestination, '.'), 1));
 		if (in_array($ext, $this->imageExtensions)) {
