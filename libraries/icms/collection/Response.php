@@ -44,16 +44,16 @@ class icms_collection_Response
                 else
                     $module = 'system';
             
-            $handler = icms::handler('icms_action');
-            $instance = $handler->getModuleAction($module, $action, $params);
+            $handler = icms::handler('icms_action');            
+            $instance = $handler->getModuleAction($module, $action, $params);            
             if (!$instance)
-                return $this->error(sprintf('Action "%s" for "%s" module doesn\'t exists', $action, serialize($module)));
+                return $this->error(sprintf('Action "%s" for "%s" module doesn\'t exists', $action, $module));
             
             try {
                 $instance->exec($this);
             } catch (Exception $e) {
                 $this->error($e->getMessage());
-            }       
+            }                   
             
         }
         

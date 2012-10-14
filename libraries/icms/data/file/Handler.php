@@ -44,6 +44,8 @@ class icms_data_file_Handler extends icms_ipf_Handler {
     protected function beforeSave(&$obj) {
         $url = $obj->getVar('url', 'n');        
         if (!strstr($url, ICMS_URL)) {
+            if (!defined('ICMS_UPLOAD_PATH'))
+                include ICMS_ROOT_PATH . '/include/constants.php';
             if (!is_dir(ICMS_UPLOAD_PATH . '/fetched'))
                     @mkdir(ICMS_UPLOAD_PATH . '/fetched', 0777);
             $downloader_handler = new icms_file_MediaUploadHandler(ICMS_UPLOAD_PATH . '/fetched/', icms_Utils::mimetypes(), 1000000);

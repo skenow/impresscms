@@ -24,8 +24,10 @@ class IcmsPreloadWideimage extends icms_preload_Item {
 	 * @return	void
 	 */
 	function eventStartOutputInit() {
-		// just including the file... more to come
-		include_once  ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php' ;
+        if (extension_loaded('gd')) {
+            // just including the file... more to come
+            include_once  ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php' ;
+        }		
 	}
 
 	/**
@@ -33,6 +35,8 @@ class IcmsPreloadWideimage extends icms_preload_Item {
 	 * Events to be triggered at the start of the admin pages loading
 	 */
 	function eventAdminHeader() {
-		include_once  ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php' ;
+        if (extension_loaded('gd')) { 
+            include_once  ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php' ;
+        }		
 	}
 }

@@ -509,7 +509,7 @@ class icms_file_MediaUploadHandler {
 			return false;
 		}
 		return self::_copyFile($chmod);
-	}
+	}   
 
 	/**
 	 * Copy the file to its destination
@@ -529,10 +529,17 @@ class icms_file_MediaUploadHandler {
 			$this->savedFileName = strtolower($this->mediaName);
 		}
 		$this->savedDestination = $this->uploadDir . '/' . $this->savedFileName;
-		if (!move_uploaded_file($this->mediaTmpName, $this->savedDestination)) {
-			self::setErrors(sprintf(_ER_UP_FAILEDSAVEFILE, $this->savedDestination));
-			return false;
-		}
+        if (is_uploaded_file($this->mediaTmpName)) {
+            if (!move_uploaded_file($this->mediaTmpName, $this->savedDestination)) {
+                self::setErrors(sprintf(_ER_UP_FAILEDSAVEFILE, $this->savedDestination));
+                return false;
+            }
+        } else {
+            if (!rename($this->mediaTmpName, $this->savedDestination)) {
+                self::setErrors(sprintf(_ER_UP_FAILEDSAVEFILE, $this->savedDestination));
+                return false;
+            }
+        }
 		// Check IE XSS before returning success
 		$ext = strtolower(substr(strrchr($this->savedDestination, '.'), 1));
 		if (in_array($ext, $this->imageExtensions)) {

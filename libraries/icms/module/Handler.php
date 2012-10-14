@@ -383,11 +383,24 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 */
 	static public function service($inAdmin = FALSE) {
 		$module = NULL;
-		if ($inAdmin || file_exists('./xoops_version.php') || file_exists('./icms_version.php')) {
-			$url_arr = explode('/', strstr($_SERVER['PHP_SELF'], '/modules/'));
-			if (isset($url_arr[2])) {
+        if (isset($_REQUEST['module'])) {
+            $path = ICMS_MODULES_PATH . '/' . $_REQUEST['module'] . '/';
+            if (file_exists($path) && is_dir($path)) {
+                $module = $_REQUEST['module'];
+            } else {
+                $path = './';
+            }
+        } else {
+            $path = './';
+        }        
+		if ($inAdmin || file_exists($path . 'xoops_version.php') || file_exists($path . 'icms_version.php')) {
+			if (!isset($module)) {
+                $url_arr = explode('/', strstr($_SERVER['PHP_SELF'], '/modules/'));
+                $module = $url_arr[2];
+            }
+			if (isset($module)) {
 				/* @var $module icms_module_Object */
-				$module = icms::handler("icms_module")->getByDirname($url_arr[2], TRUE);
+				$module = icms::handler("icms_module")->getByDirname($module, TRUE);
 				if (!$inAdmin && (!$module || !$module->getVar('isactive'))) {
 					include_once ICMS_ROOT_PATH . '/header.php';
 					echo "<h4>" . _MODULENOEXIST . "</h4>";
