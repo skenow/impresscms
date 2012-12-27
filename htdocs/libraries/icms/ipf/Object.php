@@ -1245,7 +1245,6 @@ class icms_ipf_Object extends icms_core_Object {
 	 */
 	public function getUrlLinkObj($key) {
 		$urllink_handler = icms::handler("icms_data_urllink");
-                
 		$urllinkid = $this->getVar($key, 'n');
 		if ($urllinkid != 0) {
 			return  $urllink_handler->get($urllinkid);
@@ -1317,6 +1316,4 @@ class icms_ipf_Object extends icms_core_Object {
 		$file_handler = icms::handler("icms_data_file");
 		return $file_handler->insert($fileObj);
 	}
-        
-    
 }

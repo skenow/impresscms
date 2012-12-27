@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Manage Objects
  *
@@ -8,11 +9,10 @@
  * @package		Core
  * @version		SVN: $Id: Object.php 12112 2012-11-09 02:15:50Z skenow $
  */
-
-/**#@+
+/* * #@+
  * Object datatype
  *
- **/
+ * */
 define('XOBJ_DTYPE_TXTBOX', icms_ipf_Properties::DTYPE_DEP_TXTBOX);
 define('XOBJ_DTYPE_TXTAREA', icms_ipf_Properties::DTYPE_STRING);
 define('XOBJ_DTYPE_INT', icms_ipf_Properties::DTYPE_INTEGER);
@@ -34,7 +34,8 @@ define('XOBJ_DTYPE_FILE', icms_ipf_Properties::DTYPE_DEP_FILE);
 define('XOBJ_DTYPE_IMAGE', icms_ipf_Properties::DTYPE_DEP_IMAGE);
 define('XOBJ_DTYPE_FORM_SECTION', icms_ipf_Properties::DTYPE_DEP_FORM_SECTION);
 define('XOBJ_DTYPE_FORM_SECTION_CLOSE', icms_ipf_Properties::DTYPE_DEP_FORM_SECTION_CLOSE);
-/**#@-*/
+
+/* * #@- */
 
 /**
  * Base class for all objects in the kernel (and beyond)
@@ -46,131 +47,142 @@ define('XOBJ_DTYPE_FORM_SECTION_CLOSE', icms_ipf_Properties::DTYPE_DEP_FORM_SECT
  * @package	Core
  * @since		XOOPS
  * @author		Kazumi Ono (AKA onokazu)
- **/
-class icms_core_Object
-    extends icms_ipf_Properties {
+ * */
+class icms_core_Object extends icms_ipf_Properties {
 
-	/**
-	 * is it a newly created object?
-	 *
-	 * @var bool
-	 * @access private
-	 */
-	private $_isNew = false;
+    /**
+     * is it a newly created object?
+     *
+     * @var bool
+     * @access private
+     */
+    private $_isNew = false;
 
-	/**
-	 * errors
-	 *
-	 * @var array
-	 * @access private
-	 */
-	private $_errors = array();
+    /**
+     * errors
+     *
+     * @var array
+     * @access private
+     */
+    private $_errors = array();
 
-	/**
-	 * additional filters registered dynamically by a child class object
-	 *
-	 * @access private
-	 */
-	private $_filters = array();
+    /**
+     * additional filters registered dynamically by a child class object
+     *
+     * @access private
+     */
+    private $_filters = array();
 
-	/**
-	 * constructor
-	 *
-	 * normally, this is called from child classes only
-	 * @access public
-	 */
-	public function __construct() {
-	}
-
-	/**#@+
-	 * used for new/clone objects
-	 *
-	 * @access public
-	 */
-	public function setNew() {
-		$this->_isNew = true;
-	}
-	public function unsetNew() {
-		$this->_isNew = false;
-	}
-	public function isNew() {
-		return $this->_isNew;
-	}
-	/**#@-*/
-
-	/**#@+
-	 * mark modified objects as dirty
-	 *
-	 * used for modified objects only
-	 * @access public
-	 */
-	public function setDirty() {
-		$this->setVarInfo(null, parent::VARCFG_CHANGED, true);
-	}
-	public function unsetDirty() {
-		$this->setVarInfo(null, parent::VARCFG_CHANGED, false);
-	}
-	public function isDirty() {
-		return count($this->getChangedVars()) > 0;
-	}
-	/**#@-*/
-
-	/**
-	 * initialize variables for the object
-	 *
-	 * @access public
-	 * @param string $key
-	 * @param int $data_type  set to one of XOBJ_DTYPE_XXX constants (set to XOBJ_DTYPE_OTHER if no data type ckecking nor text sanitizing is required)
-	 * @param mixed
-	 * @param bool $required  require html form input?
-	 * @param int $maxlength  for XOBJ_DTYPE_TXTBOX type only
-	 * @param string $option  does this data have any select options?
-	 */
-	public function initVar($key, $data_type, $value = null, $required = false, $maxlength = null, $options = '') {
-        parent::initVar($key, $data_type, $value, $required, array(
-                                                                     parent::VARCFG_MAX_LENGTH => $maxlength,
-                                                                     'options' => $options
-                                                             )
-                       );
-	}
-
-	/**
-	 * Assign values to multiple variables in a batch
-	 *
-	 * Meant for a CGI context:
-	 * - prefixed CGI args are considered safe
-	 * - avoids polluting of namespace with CGI args
-	 *
-	 * @access public
-	 * @param array $var_arr associative array of values to assign
-	 * @param string $pref prefix (only keys starting with the prefix will be set)
-	 */
-	public function setFormVars($var_arr=null, $pref='xo_', $not_gpc=false) {
-		$len = strlen($pref);
-		foreach ($var_arr as $key => $value) {
-			if ($pref == substr($key, 0, $len)) {
-				$this->setVar(substr($key, $len), $value, $not_gpc);
-			}
-		}
+    /**
+     * constructor
+     *
+     * normally, this is called from child classes only
+     * @access public
+     */
+    public function __construct() {
+        
     }
 
-	/**
-	 * dynamically register additional filter for the object
-	 *
-	 * @param string $filtername name of the filter
-	 * @access public
-	 */
-	public function registerFilter($filtername) {
-		$this->_filters[] = $filtername;
-	}
+    /*     * #@+
+     * used for new/clone objects
+     *
+     * @access public
+     */
 
-	/**
-	 * load all additional filters that have been registered to the object
-	 *
-	 * @access private
-	 */
-	private function _loadFilters() {}
-    
+    public function setNew() {
+        $this->_isNew = true;
+    }
+
+    public function unsetNew() {
+        $this->_isNew = false;
+    }
+
+    public function isNew() {
+        return $this->_isNew;
+    }
+
+    /*     * #@- */
+
+    /*     * #@+
+
+     * mark modified objects as dirty
+     *
+     * used for modified objects only
+     * @access public
+     */
+
+    public function setDirty() {
+        $this->setVarInfo(null, parent::VARCFG_CHANGED, true);
+    }
+
+    public function unsetDirty() {
+        $this->setVarInfo(null, parent::VARCFG_CHANGED, false);
+    }
+
+    public function isDirty() {
+        return count($this->getChangedVars()) > 0;
+    }
+
+    /*     * #@- */
+
+    /**
+     * initialize variables for the object
+     *
+     * @access public
+     * @param string $key
+     * @param int $data_type  set to one of XOBJ_DTYPE_XXX constants (set to XOBJ_DTYPE_OTHER if no data type ckecking nor text sanitizing is required)
+     * @param mixed
+     * @param bool $required  require html form input?
+     * @param int $maxlength  for XOBJ_DTYPE_TXTBOX type only
+     * @param string $option  does this data have any select options?
+     */
+    public function initVar($key, $data_type, $value = null, $required = false, $maxlength = null, $options = '') {
+        parent::initVar($key, $data_type, $value, $required, array(
+            parent::VARCFG_MAX_LENGTH => $maxlength,
+            'options' => $options
+                )
+        );
+    }
+
+    /**
+     * Assign values to multiple variables in a batch
+     *
+     * Meant for a CGI context:
+     * - prefixed CGI args are considered safe
+     * - avoids polluting of namespace with CGI args
+     *
+     * @access public
+     * @param array $var_arr associative array of values to assign
+     * @param string $pref prefix (only keys starting with the prefix will be set)
+     */
+    public function setFormVars($var_arr = null, $pref = 'xo_', $not_gpc = false) {
+        $len = strlen($pref);
+        foreach ($var_arr as $key => $value) {
+            if ($pref == substr($key, 0, $len)) {
+                $this->setVar(substr($key, $len), $value, $not_gpc);
+            }
+        }
+    }
+
+    /**
+     * dynamically register additional filter for the object
+     *
+     * @param string $filtername name of the filter
+     * @access public
+     */
+    public function registerFilter($filtername) {
+        $this->_filters[] = $filtername;
+    }
+
+    /**
+     * load all additional filters that have been registered to the object
+     *
+     * @access private
+     */
+    private function _loadFilters() {
+        
+    }
+
     public function __call($name, $arguments) {
         switch ($name) {
             case 'xoopsClone':
@@ -179,63 +191,63 @@ class icms_core_Object
         }
         parent::__call($name, $arguments);
     }
-    
+
     /**
      * Create cloned copy of current object
      */
-    public function __clone() {        
+    public function __clone() {
         $this->setNew();
     }
-    
+
     /**
-	 * add an error
-	 *
-	 * @param string $value error to add
-	 * @access public
-	 */
-	public function setErrors($err_str, $prefix = false) {
-		if (is_array($err_str)) {
-			foreach ($err_str as $str) {
-				$this->setErrors($str, $prefix);
-			}
-		} else {
-			if ($prefix) {
-				$err_str = "[" . $prefix . "] " . $err_str;
-			}
-			$this->_errors[] = trim($err_str);
-		}
-	}
+     * add an error
+     *
+     * @param string $value error to add
+     * @access public
+     */
+    public function setErrors($err_str, $prefix = false) {
+        if (is_array($err_str)) {
+            foreach ($err_str as $str) {
+                $this->setErrors($str, $prefix);
+            }
+        } else {
+            if ($prefix) {
+                $err_str = "[" . $prefix . "] " . $err_str;
+            }
+            $this->_errors[] = trim($err_str);
+        }
+    }
 
-	/**
-	 * return the errors for this object as an array
-	 *
-	 * @return array an array of errors
-	 * @access public
-	 */
-	public function getErrors() {
-		return $this->_errors;
-	}
+    /**
+     * return the errors for this object as an array
+     *
+     * @return array an array of errors
+     * @access public
+     */
+    public function getErrors() {
+        return $this->_errors;
+    }
 
-	/**
-	 * return the errors for this object as html
-	 *
-	 * @return string html listing the errors
-	 * @access public
-	 */
-	public function getHtmlErrors() {
-		$ret = '<h4>' . _ERROR . '</h4>';
-        if (empty($this->_errors)) 
+    /**
+     * return the errors for this object as html
+     *
+     * @return string html listing the errors
+     * @access public
+     */
+    public function getHtmlErrors() {
+        $ret = '<h4>' . _ERROR . '</h4>';
+        if (empty($this->_errors))
             $ret .= _NONE . '<br />';
         else
-            $ret .= implode('<br />', $this->_errors);		
-		return $ret;
-	}
-    
+            $ret .= implode('<br />', $this->_errors);
+        return $ret;
+    }
+
     /**
-	 *
-	 */
-	public function hasError() {
-		return count($this->_errors) > 0;
-	}
-    
+     *
+     */
+    public function hasError() {
+        return count($this->_errors) > 0;
+    }
+
 }
