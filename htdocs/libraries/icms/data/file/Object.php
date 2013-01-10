@@ -23,7 +23,7 @@ class icms_data_file_Object extends icms_ipf_Object {
 		$this->quickInitVar("mid", XOBJ_DTYPE_INT, TRUE);
 		$this->quickInitVar("caption", XOBJ_DTYPE_TXTBOX, FALSE);
 		$this->quickInitVar("description", XOBJ_DTYPE_TXTBOX, FALSE);
-		$this->quickInitVar("url", XOBJ_DTYPE_TXTBOX, FALSE);
+		$this->quickInitVar("url", XOBJ_DTYPE_TXTAREA, FALSE);
 	}
 
 	/**

@@ -48,7 +48,11 @@ class icms_ipf_Controller {
 			$control = $icmsObj->getControl($key);
 			if (is_array($control) && isset($control['name']) && $control['name'] == "label") continue;
 
-			switch ($icmsObj->vars[$key]['data_type']) {
+            $data_type = $icmsObj->getVarInfo($key, icms_ipf_Properties::VARCFG_DEP_DATA_TYPE);
+            if (!$data_type)
+                $data_type = $icmsObj->getVarInfo($key, icms_ipf_Properties::VARCFG_TYPE);
+            
+			switch ($data_type) {
 				case XOBJ_DTYPE_IMAGE:
 					if (isset($_POST['url_' . $key]) && $_POST['url_' . $key] !='') {
 						$eventResult = $this->handler->executeEvent('beforeFileUnlink', $icmsObj);
@@ -133,7 +137,7 @@ class icms_ipf_Controller {
 					break;
 
 				default:
-					$icmsObj->setVar($key, $_POST[$key]);
+                        $icmsObj->setVar($key, isset($_POST[$key])?$_POST[$key]:null);
 					break;
 			}
 		}
@@ -172,7 +176,10 @@ class icms_ipf_Controller {
 							$related_field = str_replace('upload_', '', $name);
 							$uploadedArray[] = $related_field;
 							// if it's a richfile
-							if ($icmsObj->vars[$related_field]['data_type'] == XOBJ_DTYPE_FILE) {
+                            $var_type = $icmsObj->getVarInfo($related_field, icms_ipf_Properties::VARCFG_DEP_DATA_TYPE);
+                            if (!$var_type)
+                                $var_type = $icmsObj->getVarInfo($related_field, icms_ipf_Properties::VARCFG_TYPE);
+							if ($var_type == XOBJ_DTYPE_FILE) {
 								$object_fileurl = $icmsObj->getUploadDir();
 								$fileObj = $icmsObj->getFileObj($related_field);
 								$fileObj->setVar('url', $object_fileurl . $uploaderObj->getSavedFileName());
@@ -210,6 +217,7 @@ class icms_ipf_Controller {
 
 			}
 		}
+        $ret = $icmsObj->toArray();        
 
 		if ($uploaderResult) {
 			if ($debug) {

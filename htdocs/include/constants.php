@@ -38,6 +38,8 @@ define('ICMS_PURIFIER_CACHE', ICMS_TRUST_PATH . '/cache/htmlpurifier');
 // ImpressCMS Modules path & url
 define('ICMS_MODULES_PATH', ICMS_ROOT_PATH . '/modules');
 define('ICMS_MODULES_URL', ICMS_URL . '/modules');
+define('ICMS_CONTROLS_PATH', ICMS_PLUGINS_PATH . '/controls');
+define('ICMS_CONTROLS_URL', ICMS_PLUGINS_URL . '/controls' );
 /**#@-*/
 
 // ################# Creation of the ImpressCMS Libraries ##############

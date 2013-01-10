@@ -462,3 +462,8 @@ $modversion['templates'][] = array(
 	'file' => 'admin/autotasks/system_adm_autotasks.html',
 	'description' => ''
 	);
+
+$modversion['templates'][] = array(
+	'file' => 'admin/alternatives/system_adm_alternatives.html',
+	'description' => ''
+);
