@@ -29,17 +29,11 @@ class icms_ipf_form_elements_Source extends icms_form_elements_Textarea {
 		global $icmsConfig;
 
 		parent::__construct($object->vars[$key]['form_caption'], $key, $object->getVar($key, 'e'));
-
-		$control = $object->getControl($key);
-
-		$editor_handler = icms_plugins_EditorHandler::getInstance('source');
-		$this->_editor = &$editor_handler->get($icmsConfig['sourceeditor_default'],
-			array('name' => $key,
-				'value' => $object->getVar($key, 'e'),
-				'language' => isset($control['language']) ? $control['language'] : _LANGCODE,
-				'width' => isset($control['width']) ? $control['width'] : '100%',
-				'height' => isset($control['height']) ? $control['height'] : '400px',
-				'syntax' => isset($control['syntax']) ? $control['syntax'] : 'php'));
+                
+                $vars = $object->getControl($key);
+                
+                $handler = icms::handler('icms_controls');
+                $this->_editor = $handler->make('sourceedit', $vars);                
 	}
 
 	/**
@@ -47,10 +41,6 @@ class icms_ipf_form_elements_Source extends icms_form_elements_Textarea {
 	 * @return	string  the constructed html string for the editor
 	 */
 	public function render() {
-		if ($this->_editor) {
-			return $this->_editor->render();
-		} else {
-			return parent::render();
-		}
+		return $this->_editor->render();
 	}
 }

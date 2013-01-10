@@ -23,13 +23,14 @@ class icms_controls_Handler {
     public function make($name, $options = array()) {
         $i = strpos($name, '/');
         if (!$i) {
-            $author = 'icms';
+            $alternative_handler = icms::handler('alternative');
+            $author = $alternative_handler->get(icms_alternative_Object::ALT_TYPE_CONTROL, $name);
             $control = $name;
         } else {
             $author = substr($name, 0, $i);
             $control = substr($name, $i+1);
-        }        
-        $class = $this->getClassName($control, $author);       
+        }
+        $class = $this->getClassName($control, $author);
         if (!$this->loadClass($class)) {
             $class = $this->getClassName('Missing');
             if (!$this->loadClass($class)) {
@@ -39,7 +40,7 @@ class icms_controls_Handler {
         }
         $obj = new $class($options);
         return $obj;
-    }
+    }     
 
     /**
      * @todo move this function to global loader

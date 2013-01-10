@@ -139,5 +139,26 @@ abstract class icms_db_criteria_Element {
 		return ' GROUP BY ' . $this->groupby;
 	}
 	/**#@-*/
+        
+        /**
+         * Converts criteria to array
+         * 
+         * @return array
+         */
+        public function toArray() {
+            $sql = 'SELECt * FROM x WHERE ' . $this->render();
+            if (!empty($this->groupby))
+                $sql .= ' ' . $this->getGroupby();
+            if (!empty($this->sort))
+                $sql .= ' ORDER BY ' . $this->sort . ' ' . $this->order;
+            if ($this->limit > 0)
+                $sql .= ' LIMIT ' . (int)$this->start . ', ' . (int)$this->limit;
+            
+            require_once ICMS_LIBRARIES_PATH . '/PHP-SQL-Parser/php-sql-parser.php';
+            $parser = new PHPSQLParser($sql, true);
+            $ret = $parser->parsed;            
+            return $ret;
+        }
+        
 }
 

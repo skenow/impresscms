@@ -759,6 +759,7 @@ abstract class icms_ipf_Properties
 	 * @param bool $not_gpc
 	 */
 	public function setVars($var_arr, $not_gpc = false) {
+            if (is_array($var_arr))
 		foreach ($var_arr as $key => $value)
 			$this->setVar($key, $value, $not_gpc);
 	}
