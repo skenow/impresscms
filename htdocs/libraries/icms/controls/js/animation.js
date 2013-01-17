@@ -45,7 +45,7 @@ define(function(require) {
     , predefined: {
       loading: function (canvas) {
         var id = app.prepareForAnimation(canvas)
-        , obj = jQuery(canvas)
+        , obj = $(canvas)
         , i, c, current;
       
         current[id].colors = ['black'];
@@ -89,7 +89,7 @@ define(function(require) {
     }
 
     , getCanvasID: function (canvas) {
-      var obj = jQuery(canvas)
+      var obj = $(canvas)
       , id = obj.attr('id')
       , dt;
       
@@ -120,8 +120,8 @@ define(function(require) {
         if (!$.isFunction(animation)) {
           animation = app.predefined.loading;
         }
-        var obj = jQuery(baseObj)
-        , canvas = jQuery('<canvas></canvas>');
+        var obj = $(baseObj)
+        , canvas = $('<canvas></canvas>');
         
         canvas.attr({
           width: obj.width(),
