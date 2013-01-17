@@ -36,7 +36,8 @@ abstract class icms_controls_Base
     const URL_TYPE_UNKNOWN = 0;
     const URL_TYPE_CSS = 1;
     const URL_TYPE_JS = 2;        
-    
+    const URL_TYPE_JS_INLINE = 3;
+
     /**
      * Property must be rendered as data for tag
      */
@@ -505,6 +506,7 @@ abstract class icms_controls_Base
     public function getRequiredURLs() {
         $ret = array(
             self::URL_TYPE_JS => array(),
+            self::URL_TYPE_JS_INLINE => array(),
             self::URL_TYPE_CSS => array()
         );
         foreach ($this->getInherintedTypes() as $type) {
@@ -520,6 +522,10 @@ abstract class icms_controls_Base
             $ret[self::URL_TYPE_CSS][] = ICMS_CONTROLS_URL . $file;
         if (empty($ret[self::URL_TYPE_CSS]))
             unset($ret[self::URL_TYPE_CSS]);
+        if (empty($ret[self::URL_TYPE_JS]) || !empty($ret[self::URL_TYPE_JS_INLINE]))
+            unset($ret[self::URL_TYPE_JS]);
+        if (empty($ret[self::URL_TYPE_JS_INLINE]))
+            unset($ret[self::URL_TYPE_JS_INLINE]);
         if (isset($this->controls) && is_array($this->controls))
             foreach ($this->controls as $control)
                 if ($control instanceof icms_controls_Base)

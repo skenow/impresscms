@@ -21,6 +21,14 @@ function smarty_postfilter_control($source, &$smarty) {
                         }
                         $manifest->add($url);
                     }
+                    if (isset($load['.icms_controls_Base::URL_TYPE_JS_INLINE.'])) {
+                        echo \'<script type="text/javascript">\';
+                        foreach ($load['.icms_controls_Base::URL_TYPE_JS_INLINE.'] as $url) {
+                           echo $url;
+                        }
+                        echo \'</script>\';
+                        $manifest->add($url);
+                    }                    
                     unset($load, $manifest);
                 }
             ?></body>
