@@ -82,6 +82,13 @@ class icms_core_Versionchecker {
 	 */
 	public $latest_changelog;
 
+    /*
+     * Server location where the upgrade file should be stored
+     * @private $upgrade_storage_location string
+     */
+    private $upgrade_storage_location;
+    private $upgrade_enabled = false;
+
 	/**
 	 * Constructor
 	 *
@@ -90,6 +97,11 @@ class icms_core_Versionchecker {
 	 */
 	public function __construct() {
 		$this->installed_version_name = ICMS_VERSION_NAME;
+
+        // check if the download cache is writable, if not, the upgrade option will not be available
+        $target_file = new SplFileObject(ICMS_TRUST_PATH."/download_cache", "wb");
+        if($target_file->isWritable()){$upgrade_enabled = true; $upgrade_storage_location = ICMS_TRUST_PATH."/download_cache";}
+        else {$upgrade_enabled = false; }
 	}
 
 	/**
@@ -155,6 +167,31 @@ class icms_core_Versionchecker {
 		}
 		return false;
 	}
+
+    private function UpgradeFetch($filename) {
+        //Fetch archive from remote host (Requires CURL)
+        $fp = fopen($filename, 'wb');
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_FILE, $fp);
+        $data = curl_exec($ch);
+        curl_close($ch);
+        fclose($fp);
+    }
+
+    public function upgradeAvailableCheck(){
+        if($upgrade_enabled)
+        {
+
+        }
+
+    }
+
+    public function PerformUpgrade() {
+        //UpgradeFetch();
+
+    }
+
+
 
 	/**
 	 * Gets all the error messages
