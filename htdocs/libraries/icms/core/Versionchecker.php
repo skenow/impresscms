@@ -168,8 +168,8 @@ class icms_core_Versionchecker {
 		return false;
 	}
 
-    private function UpgradeFetch($filename) {
-        //Fetch archive from remote host (Requires CURL)
+    public function getRemoteFile($filename) {
+        //Fetch a file from remote host (Requires CURL)
         $fp = fopen($filename, 'wb');
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_FILE, $fp);
@@ -177,19 +177,18 @@ class icms_core_Versionchecker {
         curl_close($ch);
         fclose($fp);
     }
-
-    public function upgradeAvailableCheck(){
-        if($upgrade_enabled)
-        {
-
-        }
-
+/*
+ * Check for an upgrade to the core
+ */
+    public function checkForUpgrade($url ){
+        $ch = curl_init($url);
+        curl_setopt();
     }
 
-    public function PerformUpgrade() {
-        //UpgradeFetch();
+    public function doCoreUpgrade() {
+        getRemoteFile();
 
-    }
+    };
 
 
 

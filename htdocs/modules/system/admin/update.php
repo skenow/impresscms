@@ -13,5 +13,6 @@
 $icmsVersionUpdate = icms_core_Versionchecker::getInstance();
 icms_cp_header();
 
+echo "text comes here...";
 
 icms_cp_footer();
