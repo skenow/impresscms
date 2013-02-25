@@ -12,7 +12,9 @@
 	        <{$smarty.const._AM_VERSION_MOREINFO}><br />
 	        <h2><a href="<{$latest_url}>" rel="external"><{$latest_version}></a></h2>
 		<{if $not_a_final_comment}> 	 
-			<div><strong><{$smarty.const._AM_VERSION_WARNING}></strong>: <{$smarty.const._AM_VERSION_WARNING_NOT_A_FINAL}></div> 	 
+			<div><strong><{$smarty.const._AM_VERSION_WARNING}></strong>: <{$smarty.const._AM_VERSION_WARNING_NOT_A_FINAL}></div>
+        <{else}>
+            <div><strong><a href="<{$icms_url}>/modules/system/admin.php?fct=update">Online Update (experimental)</a></div>
 		<{/if}>
 	    </div>
     </div>
