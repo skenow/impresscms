@@ -18,7 +18,7 @@ $modversion = array(
     'help' => "",
     'license' => "GPL see LICENSE",
     'official' => 1,
-    'image' => "version.gif",
+    'image' => "smiles.gif",
     'hasAdmin' => 1,
     'adminpath' => "admin.php?fct=update",
     'category' => XOOPS_SYSTEM_VERSION,
