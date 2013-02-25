@@ -13,5 +13,7 @@
 $icmsVersionUpdate = icms_core_Versionchecker::getInstance();
 icms_cp_header();
 
+echo "this is the update checker";
+
 
 icms_cp_footer();
