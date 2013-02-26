@@ -7,7 +7,7 @@
  * @package		libraries
  * @since		1.1
  * @author		TheRplima <therplima@impresscms.org>
- * @version		$Id: userinfo.php 10807 2010-11-20 19:16:00Z phoenyx $
+ * @version		$Id$
  */
 /**
  *
@@ -24,7 +24,7 @@ class IcmsPreloadUserInfo extends icms_preload_Item {
 	function eventStartOutputInit() {
 		global $xoopsTpl;
 		if (is_object(icms::$user)) {
-			foreach (icms::$user->vars as $key => $value) {
+			foreach (icms::$user->getVars() as $key => $value) {
 				$user[$key] = $value;
 			}
 			foreach ($user as $key => $value) {

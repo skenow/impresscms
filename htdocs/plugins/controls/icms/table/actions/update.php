@@ -10,7 +10,7 @@ namespace ImpressCMS\Controls\icms\Table\Actions;
 class Update
     extends \icms_action_base_Control {
     
-     public function exec(\icms_collection_Response &$response) {  
+     public function exec(icms_action_Response &$response) {  
          if (!$this->control->source)
              return $response->error('Bad source specified!');
          

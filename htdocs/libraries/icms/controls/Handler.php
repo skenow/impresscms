@@ -2,14 +2,14 @@
 
 class icms_controls_Handler {
 
-    public static $state = null;
+	public static $state = null;
     
     public static $renderedControlTypes = array();
 
-    public function __construct() {
-        if (!is_array(self::$state))
-            $this->loadState();
-    }
+	public function __construct() {
+		if (!is_array(self::$state))
+			$this->loadState();
+	}
 
     /**
      * Create instance of control
@@ -23,8 +23,10 @@ class icms_controls_Handler {
     public function make($name, $options = array()) {
         $i = strpos($name, '/');
         if (!$i) {
-            $alternative_handler = icms::handler('alternative');
-            $author = $alternative_handler->get(icms_alternative_Object::ALT_TYPE_CONTROL, $name);
+            $alternative_handler = icms::handler('icms_alternative');
+            $author = $alternative_handler->find(icms_alternative_Object::ALT_TYPE_CONTROL, $name);
+            if ($author === null)
+                $author = 'icms';
             $control = $name;
         } else {
             $author = substr($name, 0, $i);

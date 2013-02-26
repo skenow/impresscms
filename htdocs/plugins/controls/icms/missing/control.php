@@ -20,7 +20,7 @@ class Control
     }
 
     public function getContent() {
-        return sprintf('Control %s by %s author is missing on server', $this->control, $this->author);
+        return sprintf('Control "%s" by "%s" author is missing on server', $this->control, $this->author);
     }        
     
 }

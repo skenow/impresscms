@@ -7,7 +7,7 @@
  * @subpackage	System
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
- * @version		$Id: admin_header.php 11731 2012-06-17 01:25:04Z skenow $
+ * @version		$Id$
  */
 
 if (!is_object(icms::$user)
@@ -51,7 +51,7 @@ if (!empty($_POST)) {
     extract($clean_POST);
 }
 
-if ($fct) {        
+if ($fct !== "") {
 	$icms_admin_handler = icms_getModuleHandler($fct, $module_dir);
 	icms_loadLanguageFile($module_dir, $fct, TRUE);
 }

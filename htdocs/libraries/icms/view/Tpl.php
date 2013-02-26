@@ -12,7 +12,7 @@
  * @version		SVN: $Id$
  */
 if (!defined('SMARTY_DIR')) {
-    exit();
+	exit();
 }
 /**
  * Base class: Smarty template engine

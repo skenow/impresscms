@@ -66,6 +66,7 @@ class icms_view_block_Object extends icms_ipf_Object {
 		$this->quickInitVar('bcachetime', XOBJ_DTYPE_INT);
 		$this->quickInitVar('last_modified', XOBJ_DTYPE_INT);
 		$this->quickInitVar('options', XOBJ_DTYPE_TXTBOX);
+                $this->quickInitVar('visiblein', self::DTYPE_ARRAY);
 	}
 
 	// The next Methods are for backward Compatibility
@@ -80,7 +81,7 @@ class icms_view_block_Object extends icms_ipf_Object {
 					return $content;
 				} elseif ($c_type == 'P') {
 					ob_start();
-					echo eval($this->getVar('content', 'n'));
+					echo eval(icms_core_DataFilter::undoHtmlSpecialChars($this->getVar('content', 'e')));
 					$content = ob_get_contents();
 					ob_end_clean();
                     $content = str_replace('{X_SITEURL}', ICMS_URL . '/', $content);

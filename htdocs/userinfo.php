@@ -4,7 +4,7 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		Member
  * @subpackage	User
- * @version		SVN: $Id: userinfo.php 11072 2011-03-14 15:52:14Z m0nty_ $
+ * @version		SVN: $Id$
  */
 
 $xoopsOption['pagetype'] = 'user';
@@ -48,6 +48,7 @@ if (is_object(icms::$user)) {
             'user_ownpage' => TRUE,
             'lang_editprofile' => _US_EDITPROFILE,
             'lang_avatar' => _US_AVATAR,
+            'lang_notifications' => _US_NOTIFICATIONS,
             'lang_inbox' => _US_INBOX,
             'lang_logout' => _US_LOGOUT,
             'user_candelete' => $icmsConfigUser['self_delete'] ? TRUE : FALSE,
@@ -91,11 +92,10 @@ icms_makeSmarty(array(
 	'lang_website' => _US_WEBSITE,
 	'user_realname' => $thisUser->getVar('name'),
 	'lang_realname' => _US_REALNAME,
-  'lang_activity' => _US_ACTIVITY,
 	'lang_avatar' => _US_AVATAR,
 	'lang_allaboutuser' => sprintf(_US_ALLABOUT, $thisUser->getVar('uname')),
 	'user_alwopenid' => $icmsConfigAuth['auth_openid'],
-	'lang_openid', _US_OPENID_FORM_CAPTION,
+	'lang_openid', $icmsConfigAuth['auth_openid'] == TRUE ? _US_OPENID_FORM_CAPTION : '',
 	'lang_email' => _US_EMAIL,
 	'lang_privmsg' => _US_PM,
 	'lang_icq' => _US_ICQ,
@@ -190,8 +190,7 @@ foreach ($mids as $mid) {
         	}
         	$icmsTpl->append('modules', array('name' => $module->getVar('name'),
 												'results' => $results,
-												'showall_link' => $showall_link,
-                        'id' => $mid
+												'showall_link' => $showall_link
 												));
         }
         unset ($module);

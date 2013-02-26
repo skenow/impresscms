@@ -9,7 +9,7 @@
  * @package		core
  * @since		XOOPS
  * @author		http://www.xoops.org The XOOPS Project
- * @version		$Id: pmlite.php 11407 2011-10-17 03:39:15Z skenow $
+ * @version		$Id$
  */
 
 $xoopsOption['pagetype'] = "pmsg";

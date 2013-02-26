@@ -10,7 +10,7 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: userform.php 11741 2012-06-25 13:18:54Z m0nty $
+ * @version	$Id$
  */
 
 global $icmsConfigUser, $icmsConfigAuth;
@@ -18,6 +18,9 @@ global $icmsConfigUser, $icmsConfigAuth;
 $uid_label = new icms_form_elements_Label(_AM_USERID, $uid_value);
 $uname_text = new icms_form_elements_Text(_AM_NICKNAME, "username", 25, 25, $uname_value);
 $login_name_text = new icms_form_elements_Text(_AM_LOGINNAME, "login_name", 25, 25, $login_name_value);
+if ($icmsConfigUser['pass_level'] > 20) {
+	icms_PasswordMeter("password_adv", "login_name");
+}
 $name_text = new icms_form_elements_Text(_AM_NAME, "name", 30, 60, $name_value);
 $email_tray = new icms_form_elements_Tray(_AM_EMAIL, "<br />");
 $email_text = new icms_form_elements_Text("", "email", 30, 60, $email_value);

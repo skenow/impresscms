@@ -5,7 +5,13 @@
  * @author mekdrop
  */
 abstract class icms_action_base_Module
-    extends icms_ipf_Properties {
+    extends icms_properties_Handler {
+    
+    const SR_NOTHING = 0;
+    const SR_LOGIN = 1;
+    const SR_NOLOGIN = 2;
+    
+    protected $special_requirements = self::SR_NOTHING;
     
     /**
      * Constructor
@@ -13,15 +19,29 @@ abstract class icms_action_base_Module
      * @param array $params Array with keys used to set current action properties
      */
     public function __construct($params = array()) {
-        $this->load($params);
         foreach ($params as $key => $value)
-            if (isset($this->$key))
-                $this->setVarInfo($key, 'changed', true);
+            if (isset($this->_vars[$key])) {
+                $this->_values[$key] = $this->cleanVar($key, $this->_vars[$key][parent::VARCFG_TYPE], $value);
+                $this->_vars[$key][parent::VARCFG_CHANGED] = true;
+            }
     }
     
     /**
      * This is called when action is executed
      */
-    abstract function exec(icms_collection_Response &$response);
+    abstract function exec(icms_action_Response &$response);
+    
+    /**
+     * Check if this action has any special requirement
+     * 
+     * @param mixed $requirement
+     * 
+     * @return bool
+     */
+    public function checkSR($requirement) {
+        if (!is_int($requirement)) 
+            $requirement = constant('icms_action_base_Module::SR_' . strtoupper($requirement));
+        return $this->special_requirements && $requirement == $requirement;
+    }       
     
 }

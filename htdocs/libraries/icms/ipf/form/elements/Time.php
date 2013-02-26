@@ -9,7 +9,7 @@
  * @subpackage	form
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id: Time.php 10711 2010-10-10 17:11:29Z phoenyx $
+ * @version		$Id$
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -21,7 +21,7 @@ class icms_ipf_form_elements_Time extends icms_form_elements_Select {
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {
-		$var = $object->vars[$key];
+		$var = $object->getVarInfo($key);
 		$timearray = array();
 		for ($i = 0; $i < 24; $i++) {
 			for ($j = 0; $j < 60; $j = $j + 10) {

@@ -6,7 +6,7 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		Member
  * @subpackage	Users
- * @version		SVN: $Id: edituser.php 11738 2012-06-24 02:20:38Z m0nty $
+ * @version		SVN: $Id$
  */
 
 $xoopsOption['pagetype'] = 'user';
@@ -281,6 +281,7 @@ switch ($op) {
 		$form = new icms_form_Theme(_US_EDITPROFILE, 'userinfo', 'edituser.php', 'post', TRUE);
 		$login_name_label = new icms_form_elements_Label(_US_LOGINNAME, icms::$user->getVar('login_name'));
 		$form->addElement($login_name_label);
+		$form->addElement(new icms_form_elements_Hidden("uname", icms::$user->getVar('login_name')));
 		$email_tray = new icms_form_elements_Tray(_US_EMAIL, '<br />');
 		if ($icmsConfigUser['allow_chgmail'] == 1) {
 			$email_text = new icms_form_elements_Text('', 'email', 30, 60, icms::$user->getVar('email'));
@@ -425,8 +426,9 @@ switch ($op) {
 	case 'avatarform':
 		/** Include the header that starts page rendering */
 		include ICMS_ROOT_PATH . '/header.php';
-		echo '<a href="userinfo.php?uid=' . (int) icms::$user->getVar('uid') . '">' . _US_PROFILE . '</a>&nbsp;
-			<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . _US_UPLOADMYAVATAR . '<br /><br />';
+		echo "<h4>" . _US_AVATAR . "</h4>";
+		echo '<p><a href="userinfo.php?uid=' . (int) icms::$user->getVar('uid') . '">' . _US_PROFILE . '</a>
+			<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . _US_UPLOADMYAVATAR . '</p>';
 		$oldavatar = icms::$user->getVar('user_avatar');
 		if (!empty($oldavatar) && $oldavatar != 'blank.gif') {
 			echo '<div style="text-align:center;"><h4 style="color:#ff0000; font-weight:bold;">' . _US_OLDDELETED . '</h4>';

@@ -7,7 +7,7 @@
  * @package		icms_ipf_Object
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id: Base.php 11644 2012-03-15 15:23:23Z skenow $
+ * @version		$Id$
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -644,7 +644,7 @@ class icms_ipf_form_Base extends icms_form_Theme {
 		if ($withtags) {
 			$js .= "//--></script>\n<!-- End Form Vaidation JavaScript //-->\n";
 		}
-		// return $js;
+		return $js;
 	}
 
 	/**

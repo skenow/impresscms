@@ -39,16 +39,16 @@ $icmsJsConfigData = array(
 
 $icmsJsUserData = array(
   'isUser' => (!icms::$user) ? 0 : 1,
-  'uid' => (!icms::$user) ? 0 : icms::$user->vars['uid']['value'],
-  'name' => (!icms::$user) ? 0 : icms::$user->vars['name']['value'],
-  'uname' => (!icms::$user) ? 0 : icms::$user->vars['uname']['value'],
-  'email' => (!icms::$user) ? 0 : icms::$user->vars['email']['value'],
-  'user_avatar' => (!icms::$user) ? 0 : icms::$user->vars['user_avatar']['value'],
-  'user_regdate' => (!icms::$user) ? 0 : icms::$user->vars['user_regdate']['value'],
-  'posts' => (!icms::$user) ? 0 : icms::$user->vars['posts']['value'],
-  'timezone_offset' => (!icms::$user) ? 0 : icms::$user->vars['timezone_offset']['value'],
-  'last_login' => (!icms::$user) ? 0 : icms::$user->vars['last_login']['value'],
-  'language' => (!icms::$user) ? 0 : icms::$user->vars['language']['value']
+  'uid' => (!icms::$user) ? 0 : icms::$user->getVar('uid', 'n'),
+  'name' => (!icms::$user) ? 0 : icms::$user->getVar('name','n'),
+  'uname' => (!icms::$user) ? 0 : icms::$user->getVar('uname','n'),
+  'email' => (!icms::$user) ? 0 : icms::$user->getVar('email','n'),
+  'user_avatar' => (!icms::$user) ? 0 : icms::$user->getVar('user_avatar','n'),
+  'user_regdate' => (!icms::$user) ? 0 : icms::$user->getVar('user_regdate','n'),
+  'posts' => (!icms::$user) ? 0 : icms::$user->getVar('posts','n'),
+  'timezone_offset' => (!icms::$user) ? 0 : icms::$user->getVar('timezone_offset','n'),
+  'last_login' => (!icms::$user) ? 0 : icms::$user->getVar('last_login','n'),
+  'language' => (!icms::$user) ? 0 : icms::$user->getVar('language','n')
 );
 
 

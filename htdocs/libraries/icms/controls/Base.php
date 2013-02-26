@@ -22,7 +22,7 @@
  * @property bool  $hidden          Is thsi control hidden?
  */
 abstract class icms_controls_Base
-    extends icms_ipf_Properties {
+    extends icms_properties_Handler {
     
     /**
      * Static var with list all HTML short tags
@@ -124,7 +124,8 @@ abstract class icms_controls_Base
             $params = array_merge($params, $handler::$state[$type][$params['id']]);
         }
         
-        parent::load($params);
+        parent::setVars($params);
+        //parent::load($params);
     }
     
     /**
@@ -325,7 +326,7 @@ abstract class icms_controls_Base
         
         $pvars = $this->getProblematicVars();
         if (!empty($pvars))
-            Throw new Exception(sprintf('%s required but are not set for %s', implode(', ', $pvars), get_class($this)));
+            trigger_error(sprintf('%s required but are not set for %s', implode(', ', $pvars), get_class($this)));
         unset($pvars);
         
         $short_tag = in_array($this->baseTag, self::$ShortHTMLTags);

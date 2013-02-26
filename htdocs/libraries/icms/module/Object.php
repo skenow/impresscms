@@ -19,7 +19,8 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path is not defined');
  * @package		Module
  * @author		Kazumi Ono 	<onokazu@xoops.org>
  **/
-class icms_module_Object extends icms_core_Object {
+class icms_module_Object 
+    extends icms_ipf_Object {
 	/**
 	 * Module configuration
 	 * @var array

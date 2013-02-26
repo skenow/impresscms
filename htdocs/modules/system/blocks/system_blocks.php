@@ -6,7 +6,7 @@
  * @license		LICENSE.txt
  * @package		System
  * @subpackage	Blocks
- * @version		SVN: $Id: system_blocks.php 11152 2011-03-30 16:45:08Z m0nty_ $
+ * @version		SVN: $Id$
  */
 
 /**
@@ -42,8 +42,8 @@ function b_system_online_show() {
 		$members = '';
 		for ($i = 0; $i < $total; $i++) {
 			if ($onlines[$i]['online_uid'] > 0) {
-				$members .= ' <a href="' . ICMS_URL . '/userinfo.php?uid=' . $onlines[$i]['online_uid'] 
-					. '" title="' . $onlines[$i]['online_uname'] . '\'s ' . _PROFILE . '">' 
+				$members .= ' <a href="' . ICMS_URL . '/userinfo.php?uid=' . $onlines[$i]['online_uid']
+					. '" title="' . $onlines[$i]['online_uname'] . '\'s ' . _PROFILE . '">'
 					. $onlines[$i]['online_uname'] . '</a>, ';
 			} else {
 				$guests++;
@@ -89,7 +89,7 @@ function b_system_login_show() {
 		$block['lang_login_oid'] = _MB_SYSTEM_OPENID_LOGIN;
 		$block['lang_back2normoid'] = _MB_SYSTEM_OPENID_NORMAL_LOGIN;
 		if ($icmsConfig['use_ssl'] == 1 && $icmsConfig['sslloginlink'] != '') {
-			$block['sslloginlink'] = "<a href=\"javascript:openWithSelfMain('" 
+			$block['sslloginlink'] = "<a href=\"javascript:openWithSelfMain('"
 				. $icmsConfig['sslloginlink'] . "', 'ssllogin', 300, 200);\">" . _MB_SYSTEM_SECURE . "</a>";
 		}
 
@@ -139,7 +139,7 @@ function b_system_main_show() {
 			if ((count($sublinks) > 0) && (!empty($icmsModule)) && ($i == $icmsModule->getVar('mid'))) {
 				foreach ($sublinks as $sublink) {
 					$block['modules'][$i]['sublinks'][] = array(
-						'name' => $sublink['name'], 
+						'name' => $sublink['name'],
 						'url' => ICMS_MODULES_URL . '/' . $modules[$i]->getVar('dirname') . '/' . $sublink['url']);
 				}
 			} else {

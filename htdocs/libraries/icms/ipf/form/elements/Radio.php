@@ -9,7 +9,7 @@
  * @subpackage	form
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id: Radio.php 10721 2010-10-11 19:40:51Z phoenyx $
+ * @version		$Id$
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -24,7 +24,7 @@ class icms_ipf_form_elements_Radio extends icms_form_elements_Radio {
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {
-		$var = $object->vars[$key];
+		$var = $object->getVarInfo($key);
 		
 		$control = $object->getControl($key);
 		if(isset($control['delimeter'])) {

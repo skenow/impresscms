@@ -7,7 +7,7 @@
  * @package		Administration
  * @author		Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/
  * @author		modified by UnderDog <underdog@impresscms.org>
- * @version		SVN: $Id: groupform.php 11785 2012-07-16 23:38:09Z skenow $
+ * @version		SVN: $Id$
  */
 
 $name_text = new icms_form_elements_Text(_AM_NAME, "name", 30, 50, $name_value);
@@ -119,7 +119,7 @@ foreach ($posarr as $k=>$v) {
 	$block_checkbox[$i]->addOptionArray($new_blocks_array);
 	$i++;
 }
-$r_block_tray = new icms_form_elements_Tray(_AM_BLOCKRIGHTS, "<div class=\"clear\"></div>");
+$r_block_tray = new icms_form_elements_Tray(_AM_BLOCKRIGHTS, "<br /><br />");
 foreach ($block_checkbox as $k=>$v) {
 	$r_block_tray->addElement($block_checkbox[$k]);
 }

@@ -7,7 +7,7 @@
  * @category	ICMS
  * @package		Form
  * @subpackage	Elements
- * @version		$Id: Password.php 10439 2010-07-24 01:49:03Z skenow $
+ * @version		$Id$
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -147,4 +147,3 @@ class icms_form_elements_Password extends icms_form_Element {
 			. "/>";
 	}
 }
-

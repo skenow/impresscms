@@ -9,7 +9,7 @@
  * @subpackage	form
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id: Select.php 11112 2011-03-24 23:43:48Z m0nty_ $
+ * @version		$Id$
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -23,7 +23,7 @@ class icms_ipf_form_elements_Select extends icms_form_elements_Select {
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {
-		$var = $object->vars[$key];
+		$var = $object->getVarInfo($key);
 		$size = isset($var['size']) ? $var['size'] : ($this->_multiple ? 5 : 1);
 
 		// Adding the options inside this SelectBox

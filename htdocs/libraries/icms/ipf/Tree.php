@@ -177,38 +177,6 @@ class icms_ipf_Tree {
 			}
 		}
 	}
-        
-        private function _makeArray($fieldName, $key, & $ret, $prefix_orig, $prefix_curr = '') {
-                if ($key > 0) {
-			$value = $this->_tree[$key]['obj']->getVar($this->_myId);
-                        $ret[$value] = trim($prefix_curr . ' ' . $this->_tree[$key]['obj']->getVar($fieldName));
-			$prefix_curr .= $prefix_orig;
-  
-		}
-		if (isset ($this->_tree[$key]['child']) && !empty ($this->_tree[$key]['child'])) {
-			foreach ($this->_tree[$key]['child'] as $childkey) {
-                            $this->_makeArray($fieldName, $childkey, $ret, $prefix_orig, $prefix_curr);
-			}
-		}
-        }
-        
-        /**
-	 * Make tree as array
-	 *
-	 * @param   string  $fieldName       Name of the member variable from the
-	 *  node objects that should be used as the title for the options.
-	 * @param   string  $prefix          String to indent deeper levels
-	 * @param   bool    $addEmptyOption  Set TRUE to add an empty option with value "0" at the top of the hierarchy
-	 * @param   integer $key             ID of the object to display as the root of select options
-	 * @return  array
-	 **/
-        public function makeArray($fieldName, $prefix = '-', $addEmptyOption = false, $key = 0) {
-            $ret = array();
-            if (false != $addEmptyOption)
-                $ret[0] = '(none)';
-            $this->_makeArray($fieldName, $key, $ret, $prefix);
-            return $ret;
-        }
 
 	/**
 	 * Make a select box with options from the tree

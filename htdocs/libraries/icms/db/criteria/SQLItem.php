@@ -10,7 +10,7 @@
  */
 class icms_db_criteria_SQLItem extends icms_db_criteria_Element {
     
-        protected $sql, $params;
+        protected $sql, $params, $pcount, $n;
 
 	/**
 	 * Constructor
@@ -21,32 +21,39 @@ class icms_db_criteria_SQLItem extends icms_db_criteria_Element {
 	 **/
 	public function __construct($sql) {
             $this->sql = $sql;
-            $this->params = array_slice(func_get_args(), 1);
+            $this->pcount = func_num_args() - 1;
+	    if ($this->pcount == 1)
+		$this->params = array(func_get_arg(1));
+            elseif ($this->pcount > 1)
+                $this->params = array_slice(func_get_args(), 1);
+	}	
+	
+	public function doReplace($m) {
+	    if ($this->n >= $this->pcount)
+		return icms::$xoopsDB->quote('');
+	    switch ($m[1]) {
+		case 'd':
+		    return (int)$this->params[$this->n++];
+		case 'a':
+		    if (!is_array($this->params[$this->n]))
+			$this->params[$this->n] = array($this->params[$this->n]);
+		    return implode(',', array_map(array(icms::$xoopsDB, 'quote'), $this->params[$this->n++]));
+		case 't':
+		    return  '`' . $this->params[$this->n++] . '`';
+		case 's':
+		    return icms::$xoopsDB->quote($this->params[$this->n++]);
+		case 'F':
+		    return (float)$this->params[$this->n++];
+		case 'x':
+		    return icms::$xoopsDB->quote(dechex($this->params[$this->n++]));
+		case 'X':
+		    return icms::$xoopsDB->quote(strtoupper(dechex($this->params[$this->n++])));
+		case 'o':
+		    return decoct($this->params[$this->n++]);
+		default:
+		    return sprintf($m[0], $this->params[$this->n++]);
+	    }
 	}
-        
-        /**
-         * @author MelTraX from PHP.net
-         * @link http://lt.php.net/manual/en/function.sprintf.php#86835
-         */
-        protected function parsePrintfParameters($string) { 
-            $valid = '/^(?:%%|%(?:[0-9]+\$)?[+-]?(?:[ 0]|\'.)?-?[0-9]*(?:\.[0-9]+)?[bcdeufFosxXat])/'; 
-            $originalString = $string; 
-
-            $result = array(); 
-            while(strlen($string)) { 
-                if(!$string = preg_replace('/^[^%]*/', '', $string)) 
-                    break; 
-
-                if(preg_match($valid, $string, $matches)) { 
-                    $result[] = $matches[0]; 
-                    $string = substr($string, strlen($matches[0])); 
-                } else { 
-                    Throw new Exception(sprintf('"%s" has an error near "%s".', $originalString, $string));
-                    return NULL; 
-                } 
-            } 
-            return $result; 
-        }
 
 	/**
 	 * Make a sql condition string
@@ -55,42 +62,17 @@ class icms_db_criteria_SQLItem extends icms_db_criteria_Element {
 	 **/
 	public function render() {
             $sql = $this->sql;
+            if ($this->pcount == 0)
+                return $sql;
+	    $this->n = 0;
 
-            $params = $this->parsePrintfParameters($sql);            
-            $true_params = $this->params;
-            $tp_count = count($true_params);
-            if (count($params) > 0) {
-                $db = method_exists(icms::$db, 'quote')?icms::$db:icms::$xoopsDB;
-                foreach ($params as $n => $param) {
-                    $l = strpos($param, '$');
-                    $i = (!$l)?$n:(intval(substr($param, 1, $l)) - 1);
-                    $c = substr($param, -1);
-                    if ($c == '%')
-                        continue;
-                    if (!in_array($c, array('s', 'a', 't'))) {
-                        if (!$l) {
-                            $nr = '%' . strval($n + 1) . '$' . $c;
-                            $sql = preg_replace('/'.$param.'/', $nr, $sql, 1);
-                        }
-                        continue;
-                    }                       
-                    $nr = '%' . ($tp_count + 1) . '$s';
-                    $sql = preg_replace('/'.$param.'/', $nr, $sql, 1);
-                    switch ($c) {
-                        case 's':
-                            $true_params[$tp_count++] = $db->quote($this->params[$i]);
-                        break;
-                        case 'a':                            
-                            $true_params[$tp_count++] = implode(',', array_map(array($db, 'quote'), $this->params[$i]));
-                        break;
-                        case 't':
-                            $true_params[$tp_count++] = '`' . $this->params[$i] . '`';
-                        break;
-                    }
-                }
-            } 
-
-            return vsprintf($sql, $true_params);
+	    /*var_dump(array(
+		$this->params,
+		$sql,*/
+		$sql = preg_replace_callback('/%([bcdeufFosxXat])/', array($this, 'doReplace'), $sql)
+	    /*))*/;
+	    
+	    return $sql;
 	}
 
 	/**

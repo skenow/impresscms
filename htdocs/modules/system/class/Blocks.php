@@ -10,7 +10,7 @@
  * @subpackage	Blocks
  * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  * @author		Rodrigo Pereira Lima (aka therplima) <therplima@impresscms.org>
- * @version		SVN: $Id: Blocks.php 11686 2012-04-10 02:50:48Z skenow $
+ * @version		SVN: $Id$
  */
 
 /**
@@ -175,7 +175,7 @@ class mod_system_Blocks extends icms_view_block_Object {
 	 * Overrides parent method
 	 * @see htdocs/libraries/icms/ipf/icms_ipf_Object::getAdminViewItemLink()
 	 */
-	public function getAdminViewItemLink() {
+	public function getAdminViewItemLink($onlyUrl = FALSE) {
 		$rtn = $this->getVar('title');
 		return $rtn;
 	}

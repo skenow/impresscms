@@ -7,7 +7,7 @@
  * @category	ICMS
  * @package		Form
  * @subpackage	Element
- * @version	$Id: Element.php 11450 2011-11-21 23:27:25Z skenow $
+ * @version	$Id$
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -284,7 +284,7 @@ abstract class icms_form_Element {
 	 */
 	public function getExtra($encode = false) {
 		if (!$encode) {
-			return implode(' ', $this->_extra);
+			return " " . implode(' ', $this->_extra);
 		}
 		$value = array();
 		foreach ($this->_extra as $val) {

@@ -12,7 +12,7 @@ namespace ImpressCMS\Controls\icms\Form;
  * @property int $page
  */
 class Control
-    extends \icms_controls_Base {       
+    extends \icms_controls_Base {
     
     public function __construct($params) {       
         
@@ -24,12 +24,13 @@ class Control
         //$this->initVar('accept-charset', self::DTYPE_STRING, false, false, self::RENDER_TYPE_ATTRIBUTE);
         $this->initVar('target', self::DTYPE_STRING, '_self', false, self::RENDER_TYPE_ATTRIBUTE);
         $this->initVar('novalidate', self::DTYPE_BOOLEAN, false, false, self::RENDER_TYPE_STATE);
-        $this->initVar('autocomplete', self::DTYPE_BOOLEAN, false, false, self::RENDER_TYPE_STATE);
+        $this->initVar('autocomplete', self::DTYPE_BOOLEAN, false, false, self::RENDER_TYPE_STATE);        
         
         parent::__construct($params);
         
         $this->baseTag = 'form';
         
-    }    
+    }
+    
     
 }

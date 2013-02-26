@@ -9,7 +9,7 @@
  * @since		ImpressCMS 1.2
  * @package		Administration
  * @subpackage	Blocks
- * @version		$Id: blocks.php 11686 2012-04-10 02:50:48Z skenow $
+ * @version		$Id$
  * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 
@@ -22,11 +22,12 @@ $filter_get = array(
 
 /* set default values for variables. $op and $fct are handled in the header */
 $bid = 0;
-$clean_bid = $bid;
-$clean_op = $op;
 
 /** common header for the admin functions */
 include "admin_header.php";
+
+$clean_bid = $bid;
+$clean_op = $op;
 
 /**
  * Edit a block

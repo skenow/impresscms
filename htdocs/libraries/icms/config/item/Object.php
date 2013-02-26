@@ -8,7 +8,7 @@
  * @package		Config
  * @subpackage	Item
  * @author		Kazumi Ono (aka onokazo)
- * @version		SVN: $Id: Object.php 11686 2012-04-10 02:50:48Z skenow $
+ * @version		SVN: $Id$
  */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
@@ -27,9 +27,19 @@ class icms_config_Item_Object extends icms_core_Object {
 	 * @access	private
 	 */
 	public $_confOptions = array();
+        
+        /**
+        * is it a newly created config object?
+        *
+        * @var bool
+        * @access protected
+        */
+        protected $_isNewConfig = false;
 
 	/**
 	 * Constructor
+	 *
+	 * @todo	Cannot set the data type of the conf_value on instantiation - the data type must be retrieved from the db.
 	 */
 	public function __construct() {
 		$this->initVar('conf_id', XOBJ_DTYPE_INT, null, false);
@@ -44,11 +54,34 @@ class icms_config_Item_Object extends icms_core_Object {
 		$this->initVar('conf_order', XOBJ_DTYPE_INT);
 	}
 
-	/**
-	 * Get a config value in a format ready for output
-	 *
-	 * @return	string
-	 */
+        /**
+         * #@+
+         * used for new config objects when installing/updating module(s)
+         *
+         * @access public
+         */
+
+        public function setNewConfig() {
+            $this->_isNewConfig = true;
+        }
+
+        public function unsetNewConfig() {
+            $this->_isNewConfig = false;
+        }
+
+        public function isNewConfig() {
+            return $this->_isNewConfig;
+        }
+
+        /*     * #@- */
+
+        /*     * #@+
+
+          /**
+         * Get a config value in a format ready for output
+         *
+         * @return	string
+         */
 	public function getConfValueForOutput() {
 		switch($this->getVar('conf_valuetype')) {
 			case 'int':
@@ -83,7 +116,7 @@ class icms_config_Item_Object extends icms_core_Object {
 	 * @param	bool    $force_slash
 	 */
 	public function setConfValueForInput($value, $force_slash = false) {
-		if ($this->getVar('conf_formtype') == 'textarea') {
+		if ($this->getVar('conf_formtype') == 'textarea' && $this->getVar('conf_valuetype') !== 'array') {
 			$value = icms_core_DataFilter::checkVar($value, 'html', 'input');
 		} elseif ($this->getVar('conf_formtype') == 'textsarea' && $this->getVar('conf_valuetype') !== 'array') {
 			$value = icms_core_DataFilter::checkVar($value, 'text', 'input');

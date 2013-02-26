@@ -1,5 +1,5 @@
 <?php
-// $Id: global.php 11705 2012-04-24 22:02:56Z debianus $
+// $Id$
 //%%%%%%	File Name mainfile.php 	%%%%%
 define('_PLEASEWAIT','Please Wait');
 define('_FETCHING','Loading...');
@@ -310,6 +310,8 @@ define('_AUTHOR', 'Author');
 define("_CREDITS", "Credits");
 define("_LICENSE", "License");
 define("_LOCAL_FOOTER",'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) . ' <a href=\"http://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a>');
+define("_BLOCK_ID", "Block ID");
+define('_IMPRESSCMS_PROJECT','Project Development');
 
 // added in 2.0
 define('_ENTER_MENTION', 'Enter the user name to mention:');

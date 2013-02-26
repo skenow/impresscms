@@ -18,7 +18,7 @@ class StoreField
          parent::__construct($params);
      }
     
-     public function exec(\icms_collection_Response &$response) {
+     public function exec(icms_action_Response &$response) {
          $handler = $this->control->source;
          if (!($handler instanceof \icms_core_ObjectHandler))
              return $response->error('Problem with handler');

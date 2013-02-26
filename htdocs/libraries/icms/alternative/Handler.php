@@ -12,7 +12,7 @@ class icms_alternative_Handler extends icms_ipf_Handler {
         parent::__construct($db, 'alternative', 'alt_id', 'name', 'default', 'icms');
     }
 
-    public function find($type, $name, $area ) {
+    public function find($type, $name, $area = 'default') {
         if (!isset(self::$alts[$type])) {
             $file_cache = new icms_cache_File('system', 'alternative', $type);
             self::$alts[$type] = $file_cache->read(array(), false);
@@ -62,7 +62,7 @@ class icms_alternative_Handler extends icms_ipf_Handler {
             if (isset($package[0])) {
                 $package = $package[0]->getVar('name');
             } else {
-                $packages_handler->update($type, self::UPDATE_LOCAL);
+                $packages_handler->update($type, icms_package_Handler::UPDATE_LOCAL);
                 $package = $packages_handler->getObjects($criteria);
                 if (isset($package[0]))
                     $package = $package[0]->getVar('name');

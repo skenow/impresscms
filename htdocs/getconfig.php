@@ -41,7 +41,7 @@ if (file_exists($filename)) {
             array(
                  'special_param' => 'PARAM_'
             ),
-        'icms_ipf_Properties' => 
+        'icms_properties_Handler' => 
             array(
                   'var_type' => 'DTYPE_',
                   'var_param' => 'VARCFG_'

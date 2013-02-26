@@ -10,7 +10,7 @@
  * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since		Xoops 1.00
  * @package core
- * @version		$Id: findusers.php 11604 2012-02-27 03:12:10Z skenow $
+ * @version		$Id$
  */
 
 include "../mainfile.php";
@@ -40,7 +40,7 @@ $rank_handler = icms_getModuleHandler("userrank", "system");
 $user_handler = icms::handler("icms_member");
 $unsets = array("actkey", "pass", "theme", "umode", "uorder", "notify_mode");
 foreach ($unsets as $var) {
-	unset($user_handler->vars[$var]);
+	unset($user_handler->_vars[$var]);
 }
 
 $items_match = array(

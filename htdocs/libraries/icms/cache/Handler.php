@@ -11,8 +11,9 @@ abstract class icms_cache_Handler extends icms_ipf_Handler {
     
         protected $cachePath = '';
     
-        public function __construct() {
+        public function __construct($db, $itemname, $keyname, $idenfierName, $summaryName, $modulename, $table = null) {
             $this->cachePath = ICMS_CACHE_PATH . '/objects/' . get_class($this) . '/'; 
+            parent::__construct($db, $itemname, $keyname, $idenfierName, $summaryName, $modulename, $table);
         }
 
 	/**
@@ -76,7 +77,7 @@ abstract class icms_cache_Handler extends icms_ipf_Handler {
         protected function cacheData($filename, &$data) {
             if (!file_exists($this->cachePath))
                mkdir($this->cachePath, 0777, true);
-            file_put_contents($filename, 'return ' . var_export($data, true) . ';');
+            file_put_contents($filename, '<?php return ' . var_export($data, true) . ';');
         }
         
         protected function clearCache() {
@@ -108,9 +109,9 @@ abstract class icms_cache_Handler extends icms_ipf_Handler {
                 if (file_exists($filename)) {
                     $ret = include($filename);
                 } else {
-                    $ret = parent::getObjects($criteria, false, false, $sql, $debug);
+                    $ret = parent::getObjects($criteria, false, null, $sql, $debug);
                     $this->cacheData($filename, $ret);
-                }
+                }                
                 
                 if ($id_as_key) {
                     $ret2 = array();
@@ -122,9 +123,8 @@ abstract class icms_cache_Handler extends icms_ipf_Handler {
                 
                 if ($as_object) {
                     foreach ($ret as $k => $v) {
-                        $obj = $this->create(false);
-			$obj->assignVars($v);
-                        $ret[$k] = $v;
+                        $obj = & new $this->className($this, $v);
+                        $ret[$k] = &$obj;
                     }
                 }                
                 

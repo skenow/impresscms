@@ -20,7 +20,8 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path is not defined");
  * @package		Module
  * @author	Kazumi Ono 	<onokazu@xoops.org>
  */
-class icms_module_Handler extends icms_core_ObjectHandler {
+class icms_module_Handler 
+    extends icms_ipf_Handler {
 	/**
 	 * holds an array of cached module references, indexed by module dirname
 	 *
@@ -37,17 +38,14 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 */
 	private $_cachedModule_lookup = array();
 
-	/**
-	 * Create a new {@link icms_module_Object} object
-	 *
-	 * @param   boolean     $isNew   Flag the new object as "new"
-	 * @return  object      {@link icms_module_Object}
-	 */
-	public function &create($isNew = TRUE) {
-		$module = new icms_module_Object();
-		if ($isNew) $module->setNew();
-		return $module;
-	}
+        /**
+         * Constructor
+         * 
+         * @param object $db
+         */
+        public function __construct(&$db) {
+            parent::__construct($db, 'module', 'mid', 'dirname', 'name', 'system', 'modules');
+        }
 
 	/**
 	 * Load a module from the database
@@ -57,31 +55,11 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 * @return	object  {@link icms_module_Object} FALSE on fail
 	 */
 	public function &get($id, $loadConfig = FALSE) {
-		$id = (int) $id;
-		$module = FALSE;
-		if ($id > 0) {
-			if (!empty($this->_cachedModule_lookup[$id]) &&
-					!empty($this->_cachedModule[$this->_cachedModule_lookup[$id]])
-			) {
-				if ($loadConfig) $this->loadConfig($this->_cachedModule[$this->_cachedModule_lookup[$id]]);
-				return $this->_cachedModule[$this->_cachedModule_lookup[$id]];
-			} else {
-				$sql = "SELECT * FROM " . $this->db->prefix('modules') . " WHERE mid = '" . $id . "'";
-				if (!$result = $this->db->query($sql)) return $module;
-				$numrows = $this->db->getRowsNum($result);
-				if ($numrows == 1) {
-					$module = new icms_module_Object();
-					$myrow = $this->db->fetchArray($result);
-					$module->assignVars($myrow);
-					// load module config
-					if ($loadConfig) $this->loadConfig($module);
-					// cache module
-					$this->_cachedModule_lookup[$id] = $module->getVar("dirname");
-					$this->_cachedModule[$module->getVar('dirname')] = $module;
-					return $module;
-				}
-			}
-		}
+                $module = parent::get($id);
+                if ($loadConfig)
+                    $this->loadConfig($module);               
+                $this->_cachedModule_lookup[intval($id)] = $module->getVar("dirname");
+                $this->_cachedModule[$module->getVar('dirname')] = $module;                
 		return $module;
 	}
 
@@ -134,66 +112,10 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 		}
 		return TRUE;
 	}
-
-	/**
-	 * Inserts a module into the database
-	 *
-	 * @param   object  &$module reference to a {@link icms_module_Object}
-	 * @return  bool
-	 */
-	public function insert(&$module) {
-		if (get_class($module) != 'icms_module_Object') return FALSE;
-		if (!$module->isDirty()) return TRUE;
-		if (!$module->cleanVars()) return FALSE;
-
-		/**
-		 * Editing the insert and update methods
-		 * this is temporaray as will soon be based on a persistableObjectHandler
-		 */
-		$fieldsToStoreInDB = array();
-		foreach ($module->cleanVars as $k => $v) {
-			if ($k == 'last_update') {
-				$v = time();
-			}
-			if ($module->vars[$k]['data_type'] == XOBJ_DTYPE_INT) {
-				$cleanvars[$k] = (int) $v;
-			} elseif (is_array($v)) {
-				$cleanvars[$k] = $this->db->quoteString(implode(',', $v));
-			} else {
-				$cleanvars[$k] = $this->db->quoteString($v);
-			}
-			$fieldsToStoreInDB[$k] = $cleanvars[$k];
-		}
-
-		if ($module->isNew()) {
-			$sql = "INSERT INTO " . $this->db->prefix('modules')
-			. " (" . implode(',', array_keys($fieldsToStoreInDB))
-			. ") VALUES (" . implode(',', array_values($fieldsToStoreInDB)) . ")";
-		} else {
-			$sql = "UPDATE " . $this->db->prefix('modules') . " SET";
-			foreach ($fieldsToStoreInDB as $key => $value) {
-				if (isset($notfirst)) {
-					$sql .= ",";
-				}
-				$sql .= " " . $key . " = " . $value;
-				$notfirst = TRUE;
-			}
-			$whereclause = 'mid' . " = " . $module->getVar('mid');
-			$sql .= " WHERE " . $whereclause;
-		}
-
-		if (!$result = $this->db->query($sql)) return FALSE;
-		if ($module->isNew()) {
-			$module->assignVar('mid', $this->db->getInsertId());
-		}
-		if (!empty($this->_cachedModule[$module->getVar('dirname')])) {
-			unset($this->_cachedModule[$module->getVar('dirname')]);
-		}
-		if (!empty($this->_cachedModule_lookup[$module->getVar('mid')])) {
-			unset($this->_cachedModule_loopup[$module->getVar('mid')]);
-		}
-		return TRUE;
-	}
+        
+        public function beforeSave(icms_module_Object &$module) {
+            $module->setVar('last_update', time());
+        }
 
 	/**
 	 * Delete a module from the database
@@ -202,15 +124,9 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 * @return  bool
 	 */
 	public function delete(&$module) {
-		if (get_class($module) != 'icms_module_Object') return FALSE;
-
-		$sql = sprintf(
-				"DELETE FROM %s WHERE mid = '%u'",
-				$this->db->prefix('modules'), (int) $module->getVar('mid')
-		);
-		if (!$result = $this->db->query($sql)) return FALSE;
-
-		// delete admin permissions assigned for this module
+            if (!parent::delete($module))
+                return false;
+            // delete admin permissions assigned for this module
 		$sql = sprintf(
 				"DELETE FROM %s WHERE gperm_name = 'module_admin' AND gperm_itemid = '%u'",
 				$this->db->prefix('group_permission'), (int) $module->getVar('mid')
@@ -265,15 +181,15 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 				}
 			}
 		}
-
-		if (!empty($this->_cachedModule[$module->getVar('dirname')])) {
+                if (!empty($this->_cachedModule[$module->getVar('dirname')])) {
 			unset($this->_cachedModule[$module->getVar('dirname')]);
 		}
 		if (!empty($this->_cachedModule_lookup[$module->getVar('mid')])) {
 			unset($this->_cachedModule_lookup[$module->getVar('mid')]);
 		}
-		return TRUE;
-	}
+                return true;
+        }
+
 
 	/**
 	 * Retrieve list of installed modules from the database
@@ -310,44 +226,6 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	}
 
 	/**
-	 * Count some modules
-	 *
-	 * @param   object  $criteria   {@link icms_db_criteria_Element}
-	 * @return  int
-	 */
-	public function getCount($criteria = NULL) {
-		$sql = "SELECT COUNT(*) FROM " . $this->db->prefix('modules');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
-			$sql .= " " . $criteria->renderWhere();
-		}
-		if (!$result = $this->db->query($sql)) return 0;
-		list($count) = $this->db->fetchRow($result);
-		return $count;
-	}
-
-	/**
-	 * returns an array of installed module names
-	 *
-	 * @param   bool    $criteria
-	 * @param   boolean $dirname_as_key
-	 *      if TRUE, array keys will be module directory names
-	 *      if FALSE, array keys will be module id
-	 * @return  array
-	 */
-	public function getList($criteria = NULL, $dirname_as_key = FALSE) {
-		$ret = array();
-		$modules = $this->getObjects($criteria, TRUE);
-		foreach (array_keys($modules) as $i) {
-			if (!$dirname_as_key) {
-				$ret[$i] = $modules[$i]->getVar('name');
-			} else {
-				$ret[$modules[$i]->getVar('dirname')] = $modules[$i]->getVar('name');
-			}
-		}
-		return $ret;
-	}
-
-	/**
 	 * Returns an array of all available modules, based on folders in the modules directory
 	 *
 	 * The getList method cannot be used for this, because uninstalled modules are not listed
@@ -379,7 +257,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 */
 	static public function getActive() {
 		$module_handler = new self(icms::$xoopsDB);
-		$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('isactive', 1));
+		$criteria = new icms_db_criteria_Item('isactive', 1);
 		return $module_handler->getList($criteria, TRUE);
 	}
 

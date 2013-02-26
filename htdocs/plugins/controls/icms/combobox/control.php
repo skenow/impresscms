@@ -24,18 +24,27 @@ class Control
         $this->initVar('multiple', self::DTYPE_BOOLEAN, false, false, self::RENDER_TYPE_STATE);
         
         $this->initVar('items', self::DTYPE_ARRAY, array(), false, self::RENDER_TYPE_DATA);
-        $this->initVar('values', self::DTYPE_LIST, array(), false, self::RENDER_TYPE_DATA);
+        $this->initVar('value', self::DTYPE_LIST, array(), false, self::RENDER_TYPE_DATA);
         
-        parent::__construct($params);       
+        $this->initVar('source', self::DTYPE_DATA_SOURCE, '', false, self::RENDER_TYPE_DATA);
+        $this->initVar('srules', self::DTYPE_CRITERIA, '', false, self::RENDER_TYPE_DATA);                
+        
+        parent::__construct($params);
         
         $this->baseTag = 'select';
         
     }
     
-    public function getContent() {
+    public function getContent() {        
+        
+        if ($this->source) {
+            $criteria = $this->srules?(new \icms_db_criteria_SQLItem($this->srules)):null;
+            $this->items = $this->source->getList($criteria);
+        }
+        
         $content = '';
         foreach ($this->items as $key => $value)
-            $content .= '<option value="' . $key . '"'.(in_array($key, $this->values)?' selected="selected"':'').'>' . $value . '</option>';
+            $content .= '<option value="' . $key . '"'.(in_array($key, $this->value)?' selected="selected"':'').'>' . $value . '</option>';
         return $content;
     }
     

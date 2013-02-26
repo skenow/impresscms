@@ -8,11 +8,26 @@
  */
 class icms_action_Handler {
     
+    /**
+     * Instance of legacy DB
+     *
+     * @var icms_db_legacy_Database 
+     */
     private $db;
     
-    public $output_format = icms_collection_Response::FORMAT_JSON;
+    /**
+     * In what format will be outputed results?
+     *
+     * @var string 
+     */
+    public $output_format = 'json';
     
-    protected $response;
+    /**
+     * Instance of response object
+     *
+     * @var icms_action_response
+     */
+    protected $response; 
     
     const PARAM_ACTION = 'icms_action';
     const PARAM_PARAMS = 'icms_params';
@@ -21,6 +36,13 @@ class icms_action_Handler {
     const PARAM_DUMMY = 'icms_dummy_value';
     const PARAM_BASE_CONTROLS = 'icms_base_controls';
     
+    /**
+     * Magic function used for accessing read only variables
+     * 
+     * @param string $name      Property name
+     * 
+     * @return mixed
+     */
     public function __get($name) {
         switch ($name) {
             case 'db':
@@ -30,13 +52,21 @@ class icms_action_Handler {
         }
     }
     
+    /**
+     * Constructor
+     * 
+     * @param icms_db_legacy_Database $db
+     */
     public function __construct(&$db) {
         $this->db = $db;
         $this->db->allowWebChanges = true;
         icms::$logger->disableRendering();
-        $this->response = new icms_collection_Response();// icms_collection_Response::getInstance();
+        $this->response = new icms_action_Response();
     }
     
+    /**
+     * Includes some headers information in response
+     */
     public function includeHeadersInResponse() {
         $this->response->add('system_headers', getallheaders());
         $this->response->add('$_GET', $_GET);
@@ -45,6 +75,9 @@ class icms_action_Handler {
         $this->response->add('$_SERVER', $_SERVER);
     }
     
+    /**
+     * Includes some logging information in response
+     */
     public function includeLoggingInfoInResponse() {
         $logger = icms_core_Logger::instance();
         $log_data = array();
@@ -60,18 +93,22 @@ class icms_action_Handler {
         $this->response->add('system_log', $log_data);
     }
     
+    /**
+     * Renders response
+     */
     public function render() {
-        switch ($this->output_format) {
-            case icms_collection_Response::FORMAT_JSON:
-            default:
-                //header('Content-Type: application/json');
-                header('Content-Type: text/plain');
-            break;
-        }
-        header('Content-Type: text/plain');
         echo $this->response->render($this->output_format);
     }
     
+    /**
+     * Gets instance if action for control
+     * 
+     * @param string $control       Control name
+     * @param string $action        Action name
+     * @param array $params         Assoc array with params 
+     * 
+     * @return icms_action_base_Control
+     */
     public function getControlAction($control, $action, $params = array()) {
         $file = ICMS_CONTROLS_PATH . '/' . $control . '/actions/' . $action . '.php';
         if (!file_exists($file))
@@ -109,6 +146,15 @@ class icms_action_Handler {
         return $instance;
     }
     
+    /**
+     * Gets instance if action for control
+     * 
+     * @param string $module        Module name
+     * @param string $action        Action name
+     * @param array $params         Assoc array with params 
+     * 
+     * @return icms_action_base_Module
+     */
     public function getModuleAction($module, $action, $params = array()) {
         $file = ICMS_MODULES_PATH . '/' . $module . '/actions/' . $action . '.php';
         if (!file_exists($file))
@@ -120,18 +166,68 @@ class icms_action_Handler {
             return null;
         $instance = new $class($params);
         return $instance;
-    }        
+    }
     
+    /**
+     * Gets system action
+     * 
+     * @param string $action        Action name
+     * @param array $params         Assoc array with params 
+     * 
+     * @return icms_action_base_Module
+     */
     public function getSystemAction($action, $params = array()) {
         return $this->getModuleAction('system', $action, $params);
     }
     
+    /**
+     * Gets all actions for module
+     * 
+     * @param string $module    Module name
+     * 
+     * @return array
+     */
+    public function getAllActionsForModule($module) {
+        $ret = array();
+        $path = ICMS_MODULES_PATH . '/' . $module . '/actions';
+        if (!file_exists($path) || !is_dir($path))
+            return array();        
+        foreach (new DirectoryIterator($path) as $file_info) {
+            if($file_info->isDot()) 
+                continue;
+            if ($file_info->getExtension() != 'php')
+                continue;
+            $action_name = $file_info->getBasename('.php');
+            if (is_object($this->getModuleAction($module, $action_name)))
+                  $ret[] = $action_name;
+        }
+        return $ret;
+    }
+    
+    /**
+     * Checks if request has actions
+     * 
+     * @param array $params         Actions array
+     * 
+     * @return bool
+     */
     public function hasActions($params) {
         return isset($params[self::PARAM_ACTION]);
     }
     
+    /**
+     * Counter for grouped response
+     *
+     * @var int 
+     */
     private static $i = 0;
     
+    /**
+     * Using when proccessing resuest params
+     * 
+     * @param array $params     Array of actions
+     * @throws Exception
+     */
     public function execActionFromArray($params) {
         if (!isset($params[self::PARAM_ACTION]))
             Throw new Exception('Unknown action!');
@@ -151,7 +247,7 @@ class icms_action_Handler {
         }
         $action = $params[self::PARAM_ACTION];
         unset($params[self::PARAM_ACTION]);
-        $tmp_response = new icms_collection_Response();
+        $tmp_response = new icms_action_Response();
         if (isset($params[self::PARAM_CONTROL])) {
             $control = $params[self::PARAM_CONTROL];            
             unset($params[self::PARAM_CONTROL]);  

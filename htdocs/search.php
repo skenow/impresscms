@@ -5,7 +5,7 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		core
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id: search.php 11604 2012-02-27 03:12:10Z skenow $
+ * @version		SVN: $Id$
  */
 
 $xoopsOption['pagetype'] = "search";
@@ -13,7 +13,7 @@ $xoopsOption['pagetype'] = "search";
 include 'mainfile.php';
 
 if ($icmsConfigSearch['enable_search'] == FALSE) {
-	header('Location: ' . ICMS_URL . '/index.php');
+	header('Location: ' . ICMS_URL . '/');
 	exit();
 }
 

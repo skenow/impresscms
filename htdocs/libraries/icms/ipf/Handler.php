@@ -14,7 +14,7 @@
  * @author		marcan <marcan@impresscms.org>
  * @author		This was inspired by Mithrandir PersistableObjectHanlder: Jan Keller Pedersen <mithrandir@xoops.org> - IDG Danmark A/S <www.idg.dk>
  * @author		Gustavo Alejandro Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
- * @version		SVN: $Id: Handler.php 11604 2012-02-27 03:12:10Z skenow $
+ * @version		SVN: $Id$
  * @todo		Use language constants for messages
  * @todo		Properly determine visibility for methods and vars (private, protected, public) and apply naming conventions
  */
@@ -147,32 +147,35 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
      * @param string $modulename Directory name of the module controlling this object
      * @return object
      */
-    public function __construct(&$db, $itemname, $keyname, $idenfierName, $summaryName, $modulename) {
+    public function __construct(&$db, $itemname, $keyname, $idenfierName, $summaryName, $modulename, $table = null) {
 
         parent::__construct($db);
 
         $this->_itemname = $itemname;
         // Todo: Autodect module
-        if ($modulename == '') {
-            $this->_moduleName = 'system';
-            $this->table = $db->prefix($itemname);
-        } else {
-            $this->_moduleName = $modulename;
-            $this->table = $db->prefix($modulename . "_" . $itemname);
-        }
+        $this->_moduleName = (!$modulename) ? 'system' : $modulename;       
+        
+        if ($table == null) {
+            if ($modulename == 'icms') 
+               $table = $itemname;
+            else 
+               $table = $this->_moduleName . '_' . $itemname;
+        }        
+        $this->table = $db->prefix($table);
+
         $this->keyName = $keyname;
 
-        if ($modulename == 'icms')
-            $classname = $modulename . '_' . $itemname . '_Object';
+        if ($this->_moduleName == 'icms')
+            $classname = $this->_moduleName . '_' . $itemname . '_Object';
         else
-            $classname = 'mod_' . $modulename . '_' . ucfirst($itemname);
+            $classname = 'mod_' . $this->_moduleName . '_' . ucfirst($itemname);
 
         /**
          * @todo this could probably be removed after refactopring is completed
          * to be evaluated...
          */
         if (!class_exists($classname))
-            $classname = ucfirst($modulename) . ucfirst($itemname);
+            $classname = ucfirst($this->_moduleName) . ucfirst($itemname);
 
         $this->className = $classname;
         $this->identifierName = $idenfierName;
@@ -234,14 +237,10 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
      * @return object {@link icms_ipf_Object}
      */
     public function &create($isNew = true) {
-        $obj = new $this->className($this);
-        if (!$obj->handler) {
-            $obj->handler = & $this;
-        }
+        $obj = new $this->className($this, true);
 
-        if ($isNew === true) {
+        if ($isNew)
             $obj->setNew();
-        }
 
         if ($this->uploadEnabled)
             $obj->setImageDir($this->getImageUrl(), $this->getImagePath());
@@ -275,10 +274,9 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
      * @return mixed reference to the {@link icms_ipf_Object}, FALSE if failed
      */
     public function &get($id, $as_object = true, $debug = false, $criteria = false) {
-        if (!$criteria) {
-            $criteria = new icms_db_criteria_Compo();
-        }
         if (is_array($this->keyName)) {
+            if (!$criteria)
+                $criteria = new icms_db_criteria_Compo();
             for ($i = 0; $i < count($this->keyName); $i++) {
                 /**
                  * In some situations, the $id is not an INTEGER. icms_ipf_ObjectTag is an example.
@@ -288,14 +286,21 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
                 $criteria->add(new icms_db_criteria_Item($this->keyName[$i], $id[$i], '=', $this->_itemname));
             }
         } else {
-            //$criteria = new icms_db_criteria_Item($this->keyName, intval($id), '=', $this->_itemname);
-            /**
-             * In some situations, the $id is not an INTEGER. icms_ipf_ObjectTag is an example.
-             * Is the fact that we removed the intval() represents a security risk ?
-             */
-            $criteria->add(new icms_db_criteria_Item($this->keyName, $id, '=', $this->_itemname));
+            if (!$criteria) {
+                $criteria = new icms_db_criteria_SQLItem($this->keyName . ' = %s', $id);
+            } else {
+                //$criteria = new icms_db_criteria_Item($this->keyName, intval($id), '=', $this->_itemname);
+                /**
+                 * In some situations, the $id is not an INTEGER. icms_ipf_ObjectTag is an example.
+                 * Is the fact that we removed the intval() represents a security risk ?
+                 */
+                $criteria->add(new icms_db_criteria_Item($this->keyName, $id, '=', $this->_itemname));                
+            }
         }
+
         $criteria->setLimit(1);
+        
+        
         if ($debug) {
             $obj_array = $this->getObjectsD($criteria, false, $as_object);
         } else {
@@ -336,8 +341,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
      *
      * @return array
      */
-    public function getObjects($criteria = null, $id_as_key = false, $as_object = true, $sql = false, $debug = false) {
-        $ret = array();
+    public function getObjects($criteria = null, $id_as_key = false, $as_object = true, $sql = false, $debug = false) {        
         $limit = $start = 0;
 
         if ($this->generalSQL) {
@@ -354,15 +358,16 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();
         }
+
         if ($debug) {
             icms_core_Debug::message($sql);
         }
 
         $result = $this->db->query($sql, $limit, $start);
-        if (!$result) {
-            return $ret;
-        }
-        return $this->convertResultSet($result, $id_as_key, $as_object);
+
+        $ret = (!$result) ? array() : $this->convertResultSet($result, $id_as_key, $as_object);
+        
+        return $ret;
     }
 
     /**
@@ -387,9 +392,8 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
                 $sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
             }
         }
-        if ($debug) {
+        if ($debug)
             icms_core_Debug::message($sql);
-        }
 
         if ($force) {
             $result = $this->db->queryF($sql);
@@ -401,9 +405,8 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
             return $ret;
         }
 
-        while ($myrow = $this->db->fetchArray($result)) {
+        while ($myrow = $this->db->fetchArray($result))
             $ret[] = $myrow;
-        }
 
         return $ret;
     }
@@ -448,31 +451,46 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
      */
     public function convertResultSet($result, $id_as_key = false, $as_object = true) {
         $ret = array();
-        while ($myrow = $this->db->fetchArray($result)) {
+        if ($as_object === null) {
 
-            $obj = & $this->create(false);
-            $obj->assignVars($myrow);
-            if (!$id_as_key) {
-                if ($as_object) {
-                    $ret[] = & $obj;
+            while ($myrow = $this->db->fetchArray($result)) {
+                if (!$id_as_key) {
+                    $ret[] = $myrow;
                 } else {
-                    $ret[] = $obj->toArray();
-                }
-            } else {
-                if ($as_object) {
-                    $value = & $obj;
-                } else {
-                    $value = $obj->toArray();
-                }
-                if ($id_as_key === 'parentid') {
-                    $ret[$obj->getVar($obj->handler->parentName, 'e')][$obj->getVar($this->keyName)] = & $value;
-                } else {
-                    $ret[$obj->getVar($this->keyName)] = $value;
+                    if ($id_as_key === 'parentid') {
+                        $ret[$myrow[$this->parentName]][$myrow[$this->keyName]] = $myrow;
+                    } else {
+                        $ret[$myrow[$this->keyName]] = $myrow;
+                    }
                 }
             }
-            unset($obj);
+        } else {
+            while ($myrow = $this->db->fetchArray($result)) {
+                $obj = new $this->className($this);
+                $obj->setVars($myrow);
+                //if (!$obj->handler)
+                //    $obj->handler = $this;
+                if ($this->uploadEnabled)
+                    $obj->setImageDir($this->getImageUrl(), $this->getImagePath());
+                if (!$id_as_key) {
+                    if ($as_object)
+                        $ret[] = $obj;
+                    else
+                        $ret[] = $obj->toArray();
+                } else {
+                    if ($as_object)
+                        $value = $obj;
+                    else
+                        $value = $obj->toArray();
+                    if ($id_as_key === 'parentid') {
+                        $ret[$obj->getVar($this->parentName, 'e')][$obj->getVar($this->keyName)] = $value;
+                    } else {
+                        $ret[$obj->getVar($this->keyName)] = $value;
+                    }
+                }
+                unset($obj);
+            }
         }
-
         return $ret;
     }
 
@@ -496,7 +514,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
      *
      * @return array
      */
-    public function getList($criteria = null, $limit = 0, $start = 0, $debug = false) {
+    public function getList($criteria = null, $limit = 0, $start = 0, $debug = false) {        
         $ret = array();
         if ($criteria == null) {
             $criteria = new icms_db_criteria_Compo();
@@ -533,6 +551,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
             //identifiers should be textboxes, so sanitize them like that
             $ret[$myrow[$this->keyName]] = empty($this->identifierName) ? 1 : icms_core_DataFilter::checkVar($myrow[$this->identifierName], 'text', 'output');
         }
+
         return $ret;
     }
 
@@ -542,7 +561,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
      * @param object $criteria {@link icms_db_criteria_Element} to match
      * @return int count of objects
      */
-    public function getCount($criteria = null) {
+    public function getCount($criteria = null) {        
         $field = "";
         $groupby = false;
         if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
@@ -573,15 +592,15 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
             return 0;
         }
         if ($groupby == false) {
-            list($count) = $this->db->fetchRow($result);
-            return $count;
+            list($ret) = $this->db->fetchRow($result);
         } else {
             $ret = array();
             while (list($id, $count) = $this->db->fetchRow($result)) {
                 $ret[$id] = $count;
             }
-            return $ret;
         }
+        
+        return $ret;
     }
 
     /**
@@ -617,7 +636,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
             return false;
         }
 
-        foreach ($obj->vars as $key => $var) {
+        foreach ($obj->_vars as $key => $var) {
             if ($var["data_type"] == XOBJ_DTYPE_URLLINK) {
                 $urllinkObj = $obj->getUrlLinkObj($key);
                 $urllinkObj->delete($force);
@@ -749,20 +768,20 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
         foreach ($obj->getChangedVars() as $k) {
             $persistent = $obj->getVarInfo($k, 'persistent');
             if ($persistent === true || $persistent === null)
-                switch ($obj->getVarInfo($k, icms_ipf_Properties::VARCFG_TYPE)) {
-                    case icms_ipf_Properties::DTYPE_FLOAT:
+                switch ($obj->getVarInfo($k, icms_properties_Handler::VARCFG_TYPE)) {
+                    case icms_properties_Handler::DTYPE_FLOAT:
                         $fieldsToStoreInDB[$k] = $obj->getVar($k, 'n');
                         break;
-                    case icms_ipf_Properties::DTYPE_INTEGER:
-                    case icms_ipf_Properties::DTYPE_BOOLEAN:
-                    case icms_ipf_Properties::DTYPE_DATETIME:
+                    case icms_properties_Handler::DTYPE_INTEGER:
+                    case icms_properties_Handler::DTYPE_BOOLEAN:
+                    case icms_properties_Handler::DTYPE_DATETIME:
                         $fieldsToStoreInDB[$k] = (int) $obj->getVar($k, 'n');
                         break;
-                    case icms_ipf_Properties::DTYPE_ARRAY:
+                    case icms_properties_Handler::DTYPE_ARRAY:
                         $value = json_encode($obj->getVar($k, 'n'));
                         $fieldsToStoreInDB[$k] = $this->db->quoteString($value);
                         break;
-                    case icms_ipf_Properties::DTYPE_CRITERIA:
+                    case icms_properties_Handler::DTYPE_CRITERIA:
                         $value = $obj->getVar($k, 'n');
                         if (is_object($value)) {
                             $value = $value->render();
@@ -771,7 +790,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
                         }
                         $fieldsToStoreInDB[$k] = $this->db->quoteString($value);
                         break;
-                    case icms_ipf_Properties::DTYPE_DATA_SOURCE:
+                    case icms_properties_Handler::DTYPE_DATA_SOURCE:
                         $value = $obj->getVar($k, 'n');
                         if (is_object($value)) {
                             $value = get_class($value);
@@ -780,9 +799,9 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
                         }
                         $fieldsToStoreInDB[$k] = $this->db->quoteString($value);
                         break;
-                    case icms_ipf_Properties::DTYPE_LIST:
+                    case icms_properties_Handler::DTYPE_LIST:
                         $value = json_encode($obj->getVar($k, 'n'));
-                        $value = implode($obj->getVarInfo($k, icms_ipf_Properties::VARCFG_SEPARATOR), $value);
+                        $value = implode($obj->getVarInfo($k, icms_properties_Handler::VARCFG_SEPARATOR), $value);
                         $fieldsToStoreInDB[$k] = $this->db->quoteString($value);
                         break;
                     default:
@@ -792,11 +811,11 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
         }
 
         if ($obj->isNew()) {
-            if (!is_array($this->keyName)) {
-                if ($fieldsToStoreInDB[$this->keyName] < 1) {
-                    $fieldsToStoreInDB[$this->keyName] = $this->db->genId($this->table . '_' . $this->keyName . '_seq');
-                }
-            }
+            /* if (!is_array($this->keyName)) {
+              if ($fieldsToStoreInDB[$this->keyName] < 1) {
+              $fieldsToStoreInDB[$this->keyName] = $this->db->genId($this->table.'_'.$this->keyName.'_seq');
+              }
+              } */
 
             $sql = 'INSERT INTO ' . $this->table . ' (' . implode(',', array_keys($fieldsToStoreInDB))
                     . ') VALUES (' . implode(',', array_values($fieldsToStoreInDB)) . ')';
@@ -844,7 +863,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
         }
 
         if ($obj->isNew() && !is_array($this->keyName)) {
-            $obj->assignVar($this->keyName, $this->db->getInsertId());
+            $obj->setVar($this->keyName, $this->db->getInsertId());
         }
         $eventResult = $this->executeEvent('afterSave', $obj);
         if (!$eventResult) {
