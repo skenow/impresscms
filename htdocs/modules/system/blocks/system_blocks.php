@@ -197,9 +197,9 @@ function b_system_info_show($options) {
 	$block = array();
 	if (!empty($options[3])) {
 		$block['showgroups'] = TRUE;
-		$result = icms::$xoopsDB->query("SELECT u.uid, u.uname, u.email, u.user_viewemail, u.user_avatar, g.name AS groupname FROM " 
-			. icms::$xoopsDB->prefix("groups_users_link") . " l LEFT JOIN " . icms::$xoopsDB->prefix("users") 
-			. " u ON l.uid=u.uid LEFT JOIN " . icms::$xoopsDB->prefix("groups") 
+		$result = icms::$xoopsDB->query("SELECT u.uid, u.uname, u.email, u.user_viewemail, u.user_avatar, g.name AS groupname FROM "
+			. icms::$xoopsDB->prefix("groups_users_link") . " l LEFT JOIN " . icms::$xoopsDB->prefix("users")
+			. " u ON l.uid=u.uid LEFT JOIN " . icms::$xoopsDB->prefix("groups")
 			. " g ON l.groupid=g.groupid WHERE g.group_type='Admin' ORDER BY l.groupid, u.uid");
 		if (icms::$xoopsDB->getRowsNum($result) > 0) {
 			$prev_caption = "";
@@ -225,8 +225,8 @@ function b_system_info_show($options) {
 		$block['showgroups'] = FALSE;
 	}
 	$block['logourl'] = ICMS_URL . '/images/' . $options[2];
-	$block['recommendlink'] = "<a href=\"javascript:openWithSelfMain('" 
-		. ICMS_URL . "/misc.php?action=showpopups&amp;type=friend&amp;op=sendform&amp;t=" . time() 
+	$block['recommendlink'] = "<a href=\"javascript:openWithSelfMain('"
+		. ICMS_URL . "/misc.php?action=showpopups&amp;type=friend&amp;op=sendform&amp;t=" . time()
 		. "','friend'," . $options[0] . "," . $options[1] . ")\">" . _MB_SYSTEM_RECO . "</a>";
 	return $block;
 }
@@ -298,7 +298,7 @@ function b_system_topposters_show($options) {
 	$criteria->setSort('posts');
 	$criteria->setLimit($limit);
 	$member_handler = icms::handler('icms_member');
-	$topposters =& $member_handler->getUsers($criteria);
+	$topposters = $member_handler->getUsers($criteria);
 	$count = count($topposters);
 	for ($i = 0; $i < $count; $i++) {
 		if ($options[1] == 1) {
