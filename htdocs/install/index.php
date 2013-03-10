@@ -2,12 +2,12 @@
 /**
  * Core installation for ImpressCMS
  *
- * @copyright
- * @license		GPL v3
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License (GPL) v3
  * @category	ICMS
  * @package		Administration
  * @subpackage	Installation
- * @since
+ * @since		2.0
  */
 
 /* needed from the core -
@@ -103,7 +103,7 @@ if (!empty($_POST)) {
 
 $valid_op = array(NULL, '', 'go', 'reload', 'finish');
 
-switch ($op) {	
+switch ($op) {
 	case 'reload' :
 	default:
 		/* do we need to reload the page? */
@@ -164,7 +164,7 @@ switch ($op) {
 		}
 		
 		if ($reload) {
-			// show reload button
+			// show reload button index.php?op=reload
 		} else {
 		/*  show form, provide some smart defaults - will need POST vars (or GET or both) */
 			$site_db_host = $site_db_host !== "" ? $site_db_host : 'localhost';
@@ -173,18 +173,20 @@ switch ($op) {
 			$site_db_name = 'gone-fishin';
 			$site_db_prefix = 'hellokitty';
 			
-		/* Advanced: set db persistan connection, character set and collation */
+		/* Advanced: set db persistant connection, character set and collation */
 			$site_db_persist = FALSE;
 			$site_db_charset = 'utf8';
 			$site_db_collation = '';
 			
-		/* set this, if not provided (reinstall) */	
+		/* set this, if not provided (reinstall) */
 			$site_pw_salt_key = '';
+			
+			// show 'Go' button index.php?op=go
 		}
 		break;
 	
 	case 'go':
-		/* User input - database credentials: dbserver, dbname, dbuser, dbpassword, table prefix
+		/* From user input - database credentials: dbserver, dbname, dbuser, dbpassword, table prefix
 		 * Advanced: character set, collation
 		 */
 		
