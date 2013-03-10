@@ -20,9 +20,13 @@
  * Cannot use: icms::boot() - it requires a connection to the database
  */
 
+/** language constants for installation */
 require 'languages/english/install.php';
+/** installation functions */
 require 'functions.php';
+/** installation class */
 require 'class/Install.php';
+/** current installation requirements */
 require 'requirements.inc.php';
 
 $installation = new Install();
@@ -41,13 +45,13 @@ define('ICMS_GROUP_ADMIN', '1');
 define('ICMS_GROUP_USERS', '2');
 define('ICMS_GROUP_ANONYMOUS', '3');
 
-/* constants for use in the functions and classes */
+/** constants for use in the functions and classes */
 require $siteRootPath . 'include/constants.php';
-/* common core functions */
+/** common core functions */
 require $siteRootPath . 'include/functions.php';
-/* current version information */
+/** current version information */
 require $siteRootPath . 'include/version.php';
-/* setup core autoloader */
+/** setup core autoloader */
 require $siteRootPath . 'libraries/icms.php';
 
 /* we can't use icms::boot(), because the database doesn't exist, yet */
