@@ -81,7 +81,7 @@ class Install {
 	 * @param	string	$required	the required version of PHP
 	 * @return	array	$messages	an array of messages if errors, an empty array if successful
 	 */
-	static public function checkPHPVersion($required){
+	public function checkPHPVersion($required){
 		$messages = array();
 		$phpOK = version_compare(phpversion(), $required, '>=');
 		if ($phpOK) return;
@@ -95,7 +95,7 @@ class Install {
 	 * @param	array	$phprequirements	required PHP extensions
 	 * @return	array	$messages			an array of messages if errors, an empty array if successful
 	 */
-	static public function checkPHPExtensions(array $phprequirements) {
+	public function checkPHPExtensions(array $phprequirements) {
 		$messages = array();
 		$availableExtenstions = get_loaded_extensions();
 		foreach ($phprequirements as $requirement) {
@@ -113,7 +113,7 @@ class Install {
 	 * @param	array	$phpSettings	PHP settings from the server
 	 * @return	array	$messages		an array of messages if errors, an empty array if successful
 	 */
-	static public function checkPHPSettings(array $settings, array $phpSettings) {
+	public function checkPHPSettings(array $settings, array $phpSettings) {
 		$messages = array();
 		foreach ($settings as $setting => $value) {
 			if (!compare_values($phpSettings[$setting]['local_value'], $value[0], $value[1])) {
@@ -130,7 +130,7 @@ class Install {
 	 * @param	array	$phpSettings	PHP settings from the server
 	 * @return	array	$messages		an array of messages if errors, an empty array if successful
 	 */
-	static public function checkFilePaths(array $paths, array $phpSettings) {
+	public function checkFilePaths(array $paths, array $phpSettings) {
 		$messages = array();
 		$mask = umask();
 		$openRestrictions = $phpSettings['open_basedir'];
@@ -150,7 +150,7 @@ class Install {
 	 *
 	 * @return	array	$messages	an array of messages if errors, an empty array if successful
 	 */
-	static public function checkICMSVersion() {
+	public function checkICMSVersion() {
 		$messages = array();
 		$versionChecker = icms_core_Versionchecker::getInstance();
 
@@ -170,7 +170,7 @@ class Install {
 	 * @param	string	$dbname		name of the database
 	 * @return	array	$messages	an array of messages if errors, an empty array if successful
 	 */
-	static public function checkDB($dbserver, $dbuser, $dbpassword, $dbname) {
+	public function checkDB($dbserver, $dbuser, $dbpassword, $dbname) {
 		$messages = array();
 		$dblink = mysql_connect($dbserver, $dbuser, $dbpassword, TRUE);
 		if (!$dblink) {
@@ -197,7 +197,7 @@ class Install {
 	 * @param	string	$sitesalt	site encryption salt
 	 * @return	array	$messages	an array of messages if errors, an empty array if successful
 	 */
-	static public function writeSecureData($installTrustPath, $dbserver, $dbuser, $dbpassword, $dbname, $dbprefix, $sitesalt = '') {
+	public function writeSecureData($installTrustPath, $dbserver, $dbuser, $dbpassword, $dbname, $dbprefix, $sitesalt = '') {
 
 		if ($sitesalt == '') $sitesalt = hash('sha1', time() . $installTrustPath);
 
@@ -219,7 +219,7 @@ class Install {
 	 * @param	string	$targetTrustPath	target location for the trust path
 	 * @return	array	$messages	an array of messages if errors, an empty array if successful
 	 */
-	static public function moveTrustPath($installTrustPath, $targetTrustPath) {
+	public function moveTrustPath($installTrustPath, $targetTrustPath) {
 		$messages = array();
 		return $messages;
 	}
@@ -227,11 +227,12 @@ class Install {
 	/**
 	 * Write the contents of the mainfile, so the configuration info can be located
 	 *
+	 * @param	string	$sitepath	path to site mainfile
 	 * @param	string	$trustpath	path for secure data
 	 * @param	string	$sdata		filename of the secure data file
 	 * @return	array	$messages	an array of messages if errors, an empty array if successful
 	 */
-	static public function writeMainfile($trustpath, $sdata) {
+	public function writeMainfile($sitepath, $trustpath, $sdata) {
 
 		$contents = "define('ICMS_URL', '". ICMS_URL . "');" . PHP_EOL;
 		$contents .= "define('ICMS_ROOT_PATH', dirname(dirname(__FILE__)));" . PHP_EOL;
@@ -239,7 +240,7 @@ class Install {
 		$contents .= "define('ICMS_SDATA', '$sdata');" . PHP_EOL;
 		$contents .= "require ICMS_TRUST_PATH . '/' . ICMS_SDATA;" . PHP_EOL;
 
-		$messages = icms_core_Filesystem::writeFile($contents, 'mainfile', 'php', $trustpath, FALSE);
+		$messages = icms_core_Filesystem::writeFile($contents, 'mainfile', 'php', $sitepath, FALSE);
 		return $messages;
 	}
 }

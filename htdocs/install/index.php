@@ -117,14 +117,14 @@ switch ($op) {
 		icms_core_Message::result("Welcome!");
 		
 		/* Check requirements */
-		$systemOK[] = Install::checkPHPVersion($requirements['phpversion']);
+		$systemOK[] = $installation->checkPHPVersion($requirements['phpversion']);
 		
 		/* check the required extensions against available extensions */
-		$systemOK[] = Install::checkPHPExtensions($requirements['phpextensions']);
+		$systemOK[] = $installation->checkPHPExtensions($requirements['phpextensions']);
 		
 		/* check the required settings against the available settings */
 		$phpSettings = ini_get_all();
-		$systemOK[] = Install::checkPHPSettings($requirements['phpsettings'], $phpSettings);
+		$systemOK[] = $installation->checkPHPSettings($requirements['phpsettings'], $phpSettings);
 		
 		if (count($systemOK) > 0) {
 			// show errors and reload
@@ -134,7 +134,7 @@ switch ($op) {
 		}
 		
 		/* Additional server/system information - file system */
-		$pathsOK[] = Install::checkFilePaths($requirements['paths'], $phpSettings);
+		$pathsOK[] = $installation->checkFilePaths($requirements['paths'], $phpSettings);
 		
 		if (count($pathsOK > 0)) {
 			//show errors and reload
@@ -158,7 +158,7 @@ switch ($op) {
 		}
 		
 		/* are you installing the latest version of ImpressCMS? */
-		$versionCheck = Install::checkICMSVersion();
+		$versionCheck = $installation->checkICMSVersion();
 		
 		if (count($versionCheck) > 0) {
 			// show errors and reload
@@ -194,7 +194,7 @@ switch ($op) {
 		 * Advanced: character set, collation
 		 */
 		
-		$dbready = Install::checkDB($site_db_host, $site_db_user, $site_db_pass, $site_db_name);
+		$dbready = $installation->checkDB($site_db_host, $site_db_user, $site_db_pass, $site_db_name);
 		
 		if (count($dbready) > 0) {
 			// show errors and reload
@@ -204,17 +204,17 @@ switch ($op) {
 		}
 		
 		/* Save credentials and path info to trustpath/sdata.php */
-			$sdataOK = Install::writeSecureData($installTrustPath, $site_db_host, $site_db_user, $site_db_pass, $site_db_name, $site_db_prefix, $site_pw_salt_key = '');
+			$sdataOK = $installation->writeSecureData($installTrustPath, $site_db_host, $site_db_user, $site_db_pass, $site_db_name, $site_db_prefix, $site_pw_salt_key = '');
 		
 		/* Relocate & rename trustpath/sdata.php */
 			$secureData = 'trustpath/sdata.php';
 			$targetSecureData = hash('sha1', time() . $siteURI) . ".php";
 			$renameSecureData = icms_core_Filesystem::copyRecursive($secureData, $installTrustPath . $targetSecureData);
 			if ($renameSecureData) icms_core_Filesystem::deleteFile($secureData);
-			$moveTrustPath = Install::moveTrustPath($installTrustPath, $targetTrustPath);
+			$moveTrustPath = $installation->moveTrustPath($installTrustPath, $targetTrustPath);
 		
 		/* Save sites/mainfile.php */
-			$mainfileResults = Install::writeMainfile($installTrustPath, $targetSecureData);
+			$mainfileResults = $installation->writeMainfile($siteRootPath, $installTrustPath, $targetSecureData);
 		
 		if (count($mainfileResults) > 0) {
 			// show errors and reload
