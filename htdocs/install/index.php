@@ -237,7 +237,13 @@ switch ($op) {
 			unset($messages);
 		}
 		
-		/* Populate database (install system module). Reinstall existing site profile? */
+		/* Populate database (install system module). Reinstall existing site profile?
+		 * Considerations
+		 *  - the db structure isn't the only thing added during install 
+		 *  - data records are added (blocks, groups, positions, configuration settings, for example)
+		 *  - there are installation-specific variables, like db name and table prefix to deal with
+		 *  - some of the data is language-specific
+		 */
 		
 		
 		$messages = array();
