@@ -48,7 +48,7 @@ class Install {
 		$installPath = dirname(__FILE__) . '/';
 		$siteRootPath = dirname(dirname(__FILE__)) . '/';
 		$installTrustPath = $installPath . 'trustpath/';
-		$targetTrustPath = dirname($siteRootPath);
+		$targetTrustPath = dirname($siteRootPath) . '/'; // @todo	implement _suggestTrustPath()
 		
 		if ($this->_isWindows) {
 			$installPath = str_replace('\\', '/', $installPath);
