@@ -19,7 +19,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @subpackage	Item
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  */
-class icms_config_Item_Object extends icms_core_Object {
+class icms_config_Item_Object extends icms_ipf_Object {
 	/**
 	 * Config options
 	 *
@@ -41,7 +41,7 @@ class icms_config_Item_Object extends icms_core_Object {
 	 *
 	 * @todo	Cannot set the data type of the conf_value on instantiation - the data type must be retrieved from the db.
 	 */
-	public function __construct() {
+	public function __construct(&$handler, $data = array()) {
 		$this->initVar('conf_id', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('conf_modid', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('conf_catid', XOBJ_DTYPE_INT, null, false);
@@ -52,6 +52,8 @@ class icms_config_Item_Object extends icms_core_Object {
 		$this->initVar('conf_formtype', XOBJ_DTYPE_OTHER);
 		$this->initVar('conf_valuetype', XOBJ_DTYPE_OTHER);
 		$this->initVar('conf_order', XOBJ_DTYPE_INT);
+                
+                parent::__construct($handler, $data);
 	}
 
         /**
