@@ -69,8 +69,8 @@ function smarty_resource_db_tplinfo( $tpl_name ) {
 
 	if ( !count( $tplobj ) ) {
 		return $cache[$tpl_name] = false;
-	}
-	$tplobj = $tplobj[0];
+	}        
+	$tplobj = current($tplobj);
 	$module = $tplobj->getVar( 'tpl_module', 'n' );
 	$type = $tplobj->getVar( 'tpl_type', 'n' );
 	$blockpath = ( $type == 'block' ) ? 'blocks/' : '';

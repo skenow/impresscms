@@ -36,7 +36,7 @@ $name_username = 'uname' . ( @$_REQUEST['multiple'] ? "[]" : "" );
 
 icms_loadLanguageFile('core', 'findusers');
 
-$rank_handler = icms_getModuleHandler("userrank", "system");
+$rank_handler = icms::handler('icms_member_rank');
 $user_handler = icms::handler("icms_member");
 $unsets = array("actkey", "pass", "theme", "umode", "uorder", "notify_mode");
 foreach ($unsets as $var) {

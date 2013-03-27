@@ -42,7 +42,7 @@ function xoops_module_list() {
 	$icmsAdminTpl->assign('lang_noninstall', _MD_AM_NONINSTALL);
 
 	$module_handler = icms::handler('icms_module');
-	$installed_mods =& $module_handler->getObjects();
+	$installed_mods = $module_handler->getObjects();
 	$listed_mods = array();
 	foreach ($installed_mods as $module) {
 		$module->registerClassPath(FALSE);
