@@ -128,8 +128,7 @@ switch ($xoopsAuth->step) {
 			redirect_header($redirect_url, 3, _US_OPENID_NEW_USER_AUTH_NOT_ACTIVATED);
 		}
 
-		$_SESSION['xoopsUserId'] = $newUser->getVar('uid');
-		$_SESSION['xoopsUserGroups'] = $newUser->getGroups();
+		$newUser->login();
 		$user_theme = $newUser->getVar('theme');
 
 		if (in_array($user_theme, $icmsConfig['theme_set_allowed'])) {
@@ -171,15 +170,13 @@ switch ($xoopsAuth->step) {
 		// This means the authentication succeeded.
 		$displayId = $xoopsAuth->response->getDisplayIdentifier();
 
-		$thisUser->setVar('last_login', time());
 		$thisUser->setVar('openid', $xoopsAuth->openid);
 
 		if (!$member_handler->insertUser($thisUser)) {
 			redirect_header($redirect_url, 3, _US_OPENID_LINKED_AUTH_CANNOT_SAVE);
 		}
 
-		$_SESSION['xoopsUserId'] = $thisUser->getVar('uid');
-		$_SESSION['xoopsUserGroups'] = $thisUser->getGroups();
+		$thisUser->login();
 		$user_theme = $thisUser->getVar('theme');
 
 		if (in_array($user_theme, $icmsConfig['theme_set_allowed'])) {

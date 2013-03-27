@@ -76,18 +76,12 @@ if (FALSE != $user) {
 		}
 	}
     
-	$user->setVar('last_login', time());
-	if (!$member_handler->insertUser($user)) {}
 	// Regenrate a new session id and destroy old session
 	session_regenerate_id(TRUE);
-	$_SESSION = array();
-	$_SESSION['xoopsUserId'] = $user->getVar('uid');
-	$_SESSION['xoopsUserGroups'] = $user->getGroups();
+	$user->login();
 	if ($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '') {
 		setcookie($icmsConfig['session_name'], session_id(), time()+(60 * $icmsConfig['session_expire']), '/',  '', 0);
 	}
-	$_SESSION['xoopsUserLastLogin'] = $user->getVar('last_login');
-	if (!$member_handler->updateUserByField($user, 'last_login', time())) {}
 	$user_theme = $user->getVar('theme');
 	if (in_array($user_theme, $icmsConfig['theme_set_allowed'])) {
 		$_SESSION['xoopsUserTheme'] = $user_theme;

@@ -8,7 +8,7 @@ class icms_AutologinEventHandler {
 	}
 	static public function onSessionStart() {
 		// Autologin if correct cookie present.
-		if (empty($_SESSION['xoopsUserId']) && isset($_COOKIE['autologin_uname']) && isset($_COOKIE['autologin_pass'])) {
+		if (empty($_SESSION['icmsUser']) && isset($_COOKIE['autologin_uname']) && isset($_COOKIE['autologin_pass'])) {
 			self::sessionAutologin($_COOKIE['autologin_uname'], $_COOKIE['autologin_pass']);
 		}
 	}
@@ -63,12 +63,7 @@ class icms_AutologinEventHandler {
 		}
 		if (false != $user && $user->getVar('level') > 0) {
 			// update time of last login
-			$user->setVar('last_login', time());
-			if (!icms::handler('icms_member')->insertUser($user, true)) {
-			}
-			//$_SESSION = array();
-			$_SESSION['xoopsUserId'] = $user->getVar('uid');
-			$_SESSION['xoopsUserGroups'] = $user->getGroups();
+			$user->login();
 
 			global $icmsConfig;
 			$user_theme = $user->getVar('theme');
