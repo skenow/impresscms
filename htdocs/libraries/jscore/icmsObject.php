@@ -34,8 +34,11 @@ $icmsJsConfigData = array(
     'fbAppId' => isset($icmsConfig['fbAppId']) ? $icmsConfig['fbAppId'] : false,
     'fbChannel' => isset($icmsConfig['fbChannel']) ? $icmsConfig['fbChannel'] : false,
   ),
-  'themeUrl' => $icmsConfig['xoops_url'] . '/themes/' . $icmsConfig['theme_set']
-);
+  'themeUrl' => $icmsConfig['xoops_url'] . '/themes/' . $icmsConfig['theme_set'],
+  'controls' => array(
+                    'class' => 'icms_control'
+                )
+);  
 
 $icmsJsUserData = array(
   'isUser' => (!icms::$user) ? 0 : 1,
@@ -101,12 +104,41 @@ if (is_object(icms::$user)) {
 $redirectMessage = (!empty($_SESSION['redirect_message'])) ? '"' . $_SESSION['redirect_message'] . '"' : 'false';
 unset( $_SESSION['redirect_message'] );
 
+$getConstants = function ($prefix, $class) {
+    $refl = new ReflectionClass($class);
+    $constants = $refl->getConstants();
+    $pcount = strlen($prefix);
+    $ret = array();
+    foreach ($constants as $constant => $value) {
+        if (substr($constant, 0, $pcount) == $prefix) {
+            $name = strtolower(substr($constant, $pcount));
+            $ret[$name] = $value;            
+        }
+    }
+    return $ret;
+};
+
+$icmsData = array(    
+    'consts' => array(
+        'var' => array(
+            'type' => $getConstants('DTYPE_', 'icms_properties_Handler'),
+            'param' => $getConstants('VARCFG_', 'icms_properties_Handler'),
+        ),
+        'special' => array(
+            'param' => $getConstants('PARAM_', 'icms_action_Handler'),
+            'response_key' => $getConstants('RESPONSE_KEY_', 'icms_action_base_Control'),
+        ),
+        'url' => array(
+            'type' => $getConstants('URL_TYPE_', 'icms_controls_Base'),
+        )
+    ),
+    'config'    => $icmsJsConfigData,
+    'user'      => $icmsJsUserData,
+    'redirectMessage' => $redirectMessage
+);
+
 $xoTheme->addScript(NULL, array('type' => 'text/javascript'),
-  'var icms = {' .
-    'config: ' . json_encode($icmsJsConfigData) .
-    ', user: ' . json_encode($icmsJsUserData) .
-    ', redirectMessage: ' . $redirectMessage .
-  '}' . 
+  'var icms = '  . json_encode($icmsData) .
   ', routeReady = {' .
     'isResolved: false' .
     ', callback : {}' .

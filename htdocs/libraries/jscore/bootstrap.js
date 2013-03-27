@@ -31,7 +31,9 @@ require(
     hoverIntent: 'lib/hoverIntent',
     use: 'util/require-utils/use',
     GA : '//www.google-analytics.com/ga',
-    themeBase : icms.config.themeUrl
+    themeBase : icms.config.themeUrl,
+    'icms/cache/controls': icms.config.url + '/cache/controls',
+    'icms/plugins/controls': icms.config.url + '/plugins/controls'
   },
   shim: {
     underscore: {
