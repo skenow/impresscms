@@ -22,21 +22,6 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path is not defined");
  */
 class icms_module_Handler 
     extends icms_ipf_Handler {
-	/**
-	 * holds an array of cached module references, indexed by module dirname
-	 *
-	 * @var    array
-	 * @access private
-	 */
-	private $_cachedModule = array();
-
-	/**
-	 * holds the lookup table for cache access by module id
-	 *
-	 * @var    array
-	 * @access private
-	 */
-	private $_cachedModule_lookup = array();
 
         /**
          * Constructor
@@ -44,7 +29,7 @@ class icms_module_Handler
          * @param object $db
          */
         public function __construct(&$db) {
-            parent::__construct($db, 'module', 'mid', 'dirname', 'name', 'system', 'modules');
+            parent::__construct($db, 'module', 'mid', 'dirname', 'name', 'icms', 'modules', array('mid', 'dirname'));
         }
 
 	/**
@@ -57,9 +42,7 @@ class icms_module_Handler
 	public function &get($id, $loadConfig = FALSE) {
                 $module = parent::get($id);
                 if ($loadConfig)
-                    $this->loadConfig($module);               
-                $this->_cachedModule_lookup[intval($id)] = $module->getVar("dirname");
-                $this->_cachedModule[$module->getVar('dirname')] = $module;                
+                    $this->loadConfig($module);        
 		return $module;
 	}
 
@@ -70,29 +53,18 @@ class icms_module_Handler
 	 * @param	bool	$loadConfig	set to TRUE in case you want to load the module config in addition
 	 * @return	object  {@link icms_module_Object} FALSE on fail
 	 */
-	public function &getByDirname($dirname, $loadConfig = FALSE) {
-		if (!empty($this->_cachedModule[$dirname]) &&
-				$this->_cachedModule[$dirname]->getVar('dirname') == $dirname
-		) {
-			if ($loadConfig) $this->loadConfig($this->_cachedModule[$dirname]);
-			return $this->_cachedModule[$dirname];
-		} else {
-			$module = FALSE;
-			$sql = "SELECT * FROM " . $this->db->prefix('modules') . " WHERE dirname = '" . trim($dirname) . "'";
-			if (!$result = $this->db->query($sql)) return $module;
-			$numrows = $this->db->getRowsNum($result);
-			if ($numrows == 1) {
-				$module = new icms_module_Object();
-				$myrow = $this->db->fetchArray($result);
-				$module->assignVars($myrow);
-				// load module config
-				if ($loadConfig) $this->loadConfig($module);
-				// cache module
-				$this->_cachedModule[$dirname] = $module;
-				$this->_cachedModule_lookup[$module->getVar('mid')] = $module->getVar("dirname");
-			}
-			return $module;
-		}
+	public function getByDirname($dirname, $loadConfig = FALSE) {
+                if (!($module = $this->getFromCache('dirname', $dirname))) {
+                    $criteria = new icms_db_criteria_Item('dirname', trim($dirname));
+                    $criteria->setLimit(1);
+                    $objs = $this->getObjects($criteria);
+                    if (isset($objs[0])) {
+                        $module = $objs[0];
+                    }
+                }
+                if ($module && $loadConfig)
+                    $this->loadConfig($module);
+                return $module;
 	}
 
 	/**
@@ -115,6 +87,7 @@ class icms_module_Handler
         
         public function beforeSave(icms_module_Object &$module) {
             $module->setVar('last_update', time());
+            return true;
         }
 
 	/**
@@ -189,41 +162,6 @@ class icms_module_Handler
 		}
                 return true;
         }
-
-
-	/**
-	 * Retrieve list of installed modules from the database
-	 *
-	 * @param   object  $criteria   {@link icms_db_criteria_Element}
-	 * @param   boolean $id_as_key  Use the ID as key into the array
-	 * @return  array	Array of objects - installed module
-	 */
-	public function &getObjects($criteria = NULL, $id_as_key = FALSE) {
-		$ret = array();
-		$limit = $start = 0;
-		$sql = "SELECT * FROM " . $this->db->prefix('modules');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
-			$sql .= " " . $criteria->renderWhere();
-			$sql .= " ORDER BY weight " . $criteria->getOrder() . ", mid ASC";
-			$limit = $criteria->getLimit();
-			$start = $criteria->getStart();
-		}
-		$result = $this->db->query($sql, $limit, $start);
-		if (!$result) return $ret;
-		while ($myrow = $this->db->fetchArray($result)) {
-			$module = new icms_module_Object();
-			$module->assignVars($myrow);
-			if (!$id_as_key) {
-				$ret[] = $module;
-			} else {
-				$ret[$myrow['mid']] = $module;
-			}
-			$this->_cachedModule_lookup[$myrow['mid']] = $module->getVar("dirname");
-			$this->_cachedModule[$myrow['dirname']] = $module;
-			unset($module);
-		}
-		return $ret;
-	}
 
 	/**
 	 * Returns an array of all available modules, based on folders in the modules directory

@@ -24,18 +24,20 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @subpackage	GroupPermission
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  */
-class icms_member_groupperm_Object extends icms_core_Object {
+class icms_member_groupperm_Object extends icms_ipf_Object {
 	/**
 	 * Constructor
 	 *
 	 */
-	function __construct() {
-		parent::__construct();
+	function __construct(&$handler, $data = array()) {
+		
 		$this->initVar('gperm_id', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('gperm_groupid', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('gperm_itemid', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('gperm_modid', XOBJ_DTYPE_INT, 0, false);
 		$this->initVar('gperm_name', XOBJ_DTYPE_OTHER, null, false);
+                
+                parent::__construct($handler, $data);
 	}
 }
 

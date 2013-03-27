@@ -247,6 +247,6 @@ class icms_member_user_Handler
                             return icms_core_DataFilter::htmlSpecialChars($name);			
 		}
 		return $GLOBALS['icmsConfig']['anonymous'];
-	}
+	}        
         
 }

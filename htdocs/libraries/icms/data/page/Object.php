@@ -22,9 +22,9 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
  */
 class icms_data_page_Object extends icms_ipf_Object {
 
-	public function __construct( & $handler) {
+	public function __construct( & $handler, $data = array()) {
 
-		parent::__construct( $handler );
+		parent::__construct( $handler , $data);
 
 		$this->quickInitVar('page_id', XOBJ_DTYPE_INT);
         $this->quickInitVar('page_moduleid', XOBJ_DTYPE_INT, true);

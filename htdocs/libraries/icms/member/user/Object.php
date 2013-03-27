@@ -93,17 +93,12 @@ class icms_member_user_Object
 		$this->initVar('pass_expired', self::DTYPE_BOOLEAN, 0, false, null, null, null, 'Pass Expired?');
 		$this->initVar('login_name', self::DTYPE_DEP_TXTBOX, null, true, 255, null, null, _US_LOGINNAME);                
                 
-                // for backward compatibility
-                if ($handler instanceof icms_member_user_Handler) {
-                    parent::__construct($handler, $data);
-                } elseif (is_numeric($handler)) {
-                    $handler = icms::handler('icms_member');
-                    $user = $handler->get($handler);
-                    $data = $user->toArray();
-                    parent::__construct($handler, $data);
-                } else {
-                    $this->assignVars($handler);
-                }                
+                if (isset($data['_rank']))
+                    $this->_rank = $data['_rank'];
+                if (isset($data['_groups']))
+                    $this->_groups = $data['_groups'];
+                
+                parent::__construct($handler, $data);                                
 	}
 
 	/**
@@ -147,8 +142,8 @@ class icms_member_user_Object
         $this->setControl('attachsig', 'yesno');
         $this->setControl('rank', array(
             'name' => 'select',
-            'itemHandler' => 'Userrank',
-            'module' => 'system',
+            'itemHandler' => 'member_rank',
+            'module' => 'icms',
             'method' => 'getList'
         ));
         $this->setControl('notify_method', array(
@@ -272,7 +267,7 @@ class icms_member_user_Object
 	public function &getGroups() {
 		if (empty($this->_groups)) {
 			$member_handler = icms::handler('icms_member');
-			$this->_groups =& $member_handler->getGroupsByUser($this->getVar('uid'));
+			$this->_groups = $member_handler->getGroupsByUser($this->getVar('uid'));
 		}
 		return $this->_groups;
 	}
@@ -307,7 +302,7 @@ class icms_member_user_Object
 	 */
 	public function rank() {
 		if (!isset($this->_rank)) {
-			$this->_rank = icms_getModuleHandler("userrank", "system")->getRank($this->getVar('rank'), $this->getVar('posts'));
+			$this->_rank = icms::handler('icms_member_rank')->getRank($this->getVar('rank'), $this->getVar('posts'));
 		}
 		return $this->_rank;
 	}
@@ -354,5 +349,34 @@ class icms_member_user_Object
                 $control_handler = icms::handler('icms_controls');
                 $control = $control_handler->make('gravatar/avatar', compact('rating', 'size', 'default', 'border'));
 		return $control->makeURL();
-	}
+	}      
+        
+        /**
+         * Logs in current user
+         */
+        public function login() {
+            $this->setVar('last_login', time());
+            $this->store();
+            $data = $this->toArray();
+            $data['_rank'] = $this->rank();
+            $data['_groups'] = $this->getGroups();
+            unset($data['itemLink'], $data['itemUrl'], $data['editItemLink'], $data['deleteItemLink'], $data['printAndMailLink']);
+            $_SESSION = array();
+            $_SESSION['icmsUser'] = $data;
+            $_SESSION['icmsUserHandler'] = get_class($this->handler);
+        }
+        
+        /**
+         * Logs out current user
+         * 
+         * @return boolean
+         */
+        public function logout() {
+            if (!isset($_SESSION['icmsUser']['uid'])) 
+                return false;
+            if ($_SESSION['icmsUser']['uid'] != $this->getVar('uid')) 
+                return false;
+            $_SESSION = array();            
+        }
+        
 }
