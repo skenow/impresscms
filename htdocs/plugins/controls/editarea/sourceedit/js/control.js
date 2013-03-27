@@ -1,4 +1,4 @@
-{
+define({
     controlInitialized: function () {
         var self = this;
         editAreaLoader.init({
@@ -13,4 +13,4 @@
             autocompletion: self.getVar('autocompletion')
         });
     }
-}
+});
