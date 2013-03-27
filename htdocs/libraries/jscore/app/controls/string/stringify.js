@@ -1,20 +1,6 @@
-String.prototype.format = function() {
-    var formatted = this;    
-    for (var i = 0; i < arguments.length; i++) {
-        var regexp = new RegExp('\\{'+i+'\\}', 'gi');
-        formatted = formatted.replace(regexp, arguments[i]);
-    }
-    return formatted;
-};
-
-if (!(JSON && JSON.stringify)) {
-    if (!JSON)
-        JSON = {};
-    if (jQuery.stringify)
-        JSON.stringify = jQuery.stringify;
-    else {
-        JSON.stringify = function (value) {
-            function toJSON(data) {
+define(['jquery', 'require'], function (jQuery, require){    
+    
+    var toJSON = function (data) {
                 switch (typeof data) {
                     case 'number':
                         return data;
@@ -34,10 +20,19 @@ if (!(JSON && JSON.stringify)) {
                             return '{' + ret.join(',') + '}';
                         }                                            
                     default:
-                        window.ImpressCMS.language.controls.unknown_data_in_core_error.format(typeof data);
+                        var language = require('locale/controls'),
+                            format = require('app/controls/string/format');
+                        return format(language.controls.unknown_data_in_core_error, typeof data);
                 } 
-            }
-            return toJSON(value);
-        }        
+            },
+        app = null;
+    
+    if (jQuery.stringify)
+        app = jQuery.stringify;
+    else {
+        app = toJSON;        
     }
-}
+    
+    return app;
+    
+});
