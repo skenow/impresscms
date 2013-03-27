@@ -78,12 +78,12 @@ class icms_controls_Handler {
      * @return array
      */
     public function getRequiredURLs($controls) {
-        global $icmsConfig;        
         $controls_js = ICMS_LIBRARIES_URL.'/icms/controls/js/';
         $ret = array(
             icms_controls_Base::URL_TYPE_JS_INLINE => array(
-                'var router = "' . $controls_js . 'main";',
-                'routeReady.resolve();'
+                '
+                    require([\'app/controls/main\']);
+                 '
             )
         );
         $ctypes = array();
@@ -105,6 +105,9 @@ class icms_controls_Handler {
         return $ret;
     }    
 
+    /**
+     * Sets controls state from request
+     */
     protected function loadState() {
         self::$state = array();
         if (!isset($_REQUEST['icms_page_state']))
