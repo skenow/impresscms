@@ -184,7 +184,7 @@ class icms_core_Security {
 						'icmsConfig', 'xoopsOption', 'xoopsModule', 'xoopsModuleConfig', 'xoopsRequestUri',
 						'xoopsConfig', 'icmsOption', 'icmsConfigUser', 'icmsConfigMetaFooter', 'icmsConfigMailer',
 						'icmsConfigAuth', 'icmsConfigMultilang', 'icmsConfigPersona', 'icmsConfigPlugins',
-						'icmsConfigCaptcha', 'icmsConfigSearch',
+						'icmsConfigCaptcha', 'icmsConfigSearch', 'icmsUser'
 		) as $bad_global) {
 			if (isset($_REQUEST[$bad_global])) {
 				header('Location: ' . ICMS_URL);

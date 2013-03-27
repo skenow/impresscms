@@ -43,7 +43,7 @@ class icms_ipf_Controller {
 	 * @param	obj		$icmsObj
 	 */
 	public function postDataToObject(&$icmsObj) {
-		foreach (array_keys($icmsObj->_vars) as $key) {
+		foreach ($icmsObj->getVarNames() as $key) {
 			// do not post data if control is a label
 			$control = $icmsObj->getControl($key);
 			if (is_array($control) && isset($control['name']) && $control['name'] == "label") continue;
@@ -173,7 +173,7 @@ class icms_ipf_Controller {
 		if (isset($_POST['icms_upload_image']) || isset($_POST['icms_upload_file'])) {
 			$uploaderObj = new icms_file_MediaUploadHandler($icmsObj->getImageDir(true), $this->handler->_allowedMimeTypes, $this->handler->_maxFileSize, $this->handler->_maxWidth, $this->handler->_maxHeight);
 			foreach ( $_FILES as $name=>$file_array) {
-				if (isset ($file_array['name']) && $file_array['name'] != "" && in_array(str_replace('upload_', '', $name), array_keys($icmsObj->_vars))) {
+				if (isset ($file_array['name']) && $file_array['name'] != "" && in_array(str_replace('upload_', '', $name), $icmsObj->getVarNames())) {
 					if ($uploaderObj->fetchMedia($name)) {
 						$uploaderObj->setTargetFileName(time() . "_" . $uploaderObj->getMediaName());
 						if ($uploaderObj->upload()) {
