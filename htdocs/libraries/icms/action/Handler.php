@@ -164,7 +164,10 @@ class icms_action_Handler {
         $class = 'action_' . $module . '_' . $action;
         if (!class_exists($class))
             return null;
-        $instance = new $class($params);
+        $class = new ReflectionClass($class);
+        if ($class->isAbstract())
+            return null;
+        $instance = $class->newInstance($params);
         return $instance;
     }
     
