@@ -45,8 +45,8 @@ class Install {
 		$requestURI = $_SERVER['REQUEST_URI'];
 				
 		/* define these with a trailing slash, as directories should be */
-		$installPath = dirname(__FILE__) . '/';
-		$siteRootPath = dirname(dirname(__FILE__)) . '/';
+		$installPath = dirname(dirname(__FILE__)) . '/';
+		$siteRootPath = dirname(dirname(dirname(__FILE__))) . '/';
 		$installTrustPath = $installPath . 'trustpath/';
 		$targetTrustPath = dirname($siteRootPath) . '/'; // @todo	implement _suggestTrustPath()
 		
@@ -84,8 +84,9 @@ class Install {
 	public function checkPHPVersion($required){
 		$messages = array();
 		$phpOK = version_compare(phpversion(), $required, '>=');
-		if ($phpOK) return;
-		$messages[] = sprintf(_PHP_VERSION_FAIL, phpversion(), $required);
+		if (!$phpOK) {
+			$messages[] = sprintf(_PHP_VERSION_FAIL, phpversion(), $required);
+		}
 		return $messages;
 	}
 
@@ -127,17 +128,17 @@ class Install {
 	 * Check if the necessary file paths are writable
 	 *
 	 * @param	array	$paths			system paths to check
+	 * @param	string	$basepath		root path for the installation
 	 * @param	array	$phpSettings	PHP settings from the server
 	 * @return	array	$messages		an array of messages if errors, an empty array if successful
 	 */
-	public function checkFilePaths(array $paths, array $phpSettings) {
+	public function checkFilePaths(array $paths, $basepath, array $phpSettings) {
 		$messages = array();
 		$mask = umask();
 		$openRestrictions = $phpSettings['open_basedir'];
 
-
 		foreach ($paths as $path){
-			if (!is_writable($path)) {
+			if (!is_writable($basepath . $path)) {
 				$messages[] = sprintf(_PATH_NOT_WRITABLE, $path);
 			}
 		}

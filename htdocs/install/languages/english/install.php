@@ -1,7 +1,7 @@
 <?php
 
-define('_INSTALL_REQUIRED_EXTENSION_FAILURE', 'Required extension %s is not loaded');
-define('_INSTALL_REQUIRED_SETTING_FAILURE', 'Required setting %s is not met');
+define('_INSTALL_REQUIRED_EXTENSION_FAILURE', 'Required extension "%s" is not loaded');
+define('_INSTALL_REQUIRED_SETTING_FAILURE', 'Required setting "%s" is not met');
 
 /* @todo this could be taken from the core: modules/system/language/admin/version.php */
 define('_INSTALL_NEWER_VERSION', 'A newer version of ImpressCMS is available - your version is : %s, the newer version is %s');
