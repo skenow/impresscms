@@ -15,7 +15,6 @@ $requirements = array(
 		'phpextensions' => array(
 				'session',
 				'pcre',
-				'fopen',
 				'gd',
 				'mysql',
 			),
