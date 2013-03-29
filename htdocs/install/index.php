@@ -23,7 +23,7 @@
 /* for developer testing */
 $debug = FALSE;
 
-/** language constants for installation */
+/** language constants for installation */ // @todo	allow to change languages for installation
 require 'languages/english/install.php';
 /** installation functions */
 require 'functions.php';
@@ -205,11 +205,10 @@ switch ($op) {
 			
 			$targetTrustPath = isset($site_trust) ? $site_trust : $targetTrustPath;
 			
+		/* include the page layout for the form */
 			require 'tpl/install.php';
 			
-			// show 'Go' button index.php?op=go
-			//echo "<button type='button'><a href='index.php?op=go'>Let's Go!</a></button>";
-					}
+		}
 		break;
 	
 	case 'go':
