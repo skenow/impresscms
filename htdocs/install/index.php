@@ -21,7 +21,7 @@
  */
 
 /* for developer testing */
-$debug = TRUE;
+$debug = FALSE;
 
 /** language constants for installation */
 require 'languages/english/install.php';
@@ -119,7 +119,7 @@ switch ($op) {
 		$reload = FALSE;
 		
 		/* Welcome */
-		icms_core_Message::result("Welcome!");
+		//icms_core_Message::result("Welcome!");
 		
 		/* Check requirements */
 		$phpVersionOK = $installation->checkPHPVersion($requirements['phpversion']);
@@ -186,24 +186,28 @@ switch ($op) {
 		
 		if ($reload) {
 			// show reload button index.php?op=reload
+			echo "<button type='button'><a href='index.php?op=reload'>Try again</a></button>";
 		} else {
 		/*  show form, provide some smart defaults - will need POST vars (or GET or both) */
-			$site_db_host = $site_db_host !== "" ? $site_db_host : 'localhost';
-			$site_db_user = 'root';
-			$site_db_pass = '';
-			$site_db_name = 'gone-fishin';
-			$site_db_prefix = 'hellokitty';
+			$site_db_host = isset($site_db_host) ? $site_db_host : 'localhost';
+			$site_db_user = isset($site_db_user) ? $site_db_user : 'root';
+			$site_db_pass = isset($site_db_pass) ? $site_db_pass : '';
+			$site_db_name = isset($site_db_name) ? $site_db_name : '';
+			$site_db_prefix = isset($site_db_prefix) ? $site_db_prefix : '';
 			
 		/* Advanced: set db persistant connection, character set and collation */
-			$site_db_persist = FALSE;
-			$site_db_charset = 'utf8';
-			$site_db_collation = '';
+			$site_db_persist = isset($site_db_persist) ? $site_db_persist : FALSE;
+			$site_db_charset = isset($site_db_charset) ? $site_db_charset : 'utf8';
+			$site_db_collation = isset($site_db_collation) ? $site_db_collation : '';
 			
 		/* set this, if not provided (reinstall) */
-			$site_pw_salt_key = '';
+			$site_pw_salt_key = isset($site_pw_salt_key) ? $site_pw_salt_key : '';
+			
+			require 'tpl/install.php';
 			
 			// show 'Go' button index.php?op=go
-		}
+			//echo "<button type='button'><a href='index.php?op=go'>Let's Go!</a></button>";
+					}
 		break;
 	
 	case 'go':
