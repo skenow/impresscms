@@ -203,6 +203,8 @@ switch ($op) {
 		/* set this, if not provided (reinstall) */
 			$site_pw_salt_key = isset($site_pw_salt_key) ? $site_pw_salt_key : '';
 			
+			$targetTrustPath = isset($site_trust) ? $site_trust : $targetTrustPath;
+			
 			require 'tpl/install.php';
 			
 			// show 'Go' button index.php?op=go
@@ -232,10 +234,10 @@ switch ($op) {
 			$targetSecureData = hash('sha1', time() . $siteURI) . ".php";
 			$renameSecureData = icms_core_Filesystem::copyRecursive($secureData, $installTrustPath . $targetSecureData);
 			if ($renameSecureData) icms_core_Filesystem::deleteFile($secureData);
-			$moveTrustPath = $installation->moveTrustPath($installTrustPath, $targetTrustPath);
+			$moveTrustPath = $installation->moveTrustPath($installTrustPath, $site_trust);
 		
 		/* Save sites/mainfile.php */
-			$mainfileResults = $installation->writeMainfile($siteRootPath, $installTrustPath, $targetSecureData);
+			$mainfileResults = $installation->writeMainfile($site_path, $installTrustPath, $targetSecureData);
 		
 		if (count($mainfileResults) > 0) {
 			// show errors and reload

@@ -70,9 +70,18 @@ class Install {
 	
 	/**
 	 * A method to suggest a trust path for the installation
+	 * 
+	 * @param	string	$installRoot	directory path to current site
 	 */
 	private function _suggestTrustPath($installRoot) {
-		return dirname($installRoot) . '/';
+		/* 1st, check outside the document root */
+		if (is_writable(dirname($_SERVER['DOCUMENT_ROOT']))) return dirname($_SERVER['DOCUMENT_ROOT']) . '/';
+		/* Next, check the document root */
+		if (is_writable($_SERVER['DOCUMENT_ROOT'])) return $_SERVER['DOCUMENT_ROOT'] . '/';
+		/* Next, check 1 level above the install root */
+		if (is_writable(dirname($installRoot))) return dirname($installRoot) . '/';
+		/* Finally, check the install root path */
+		if (is_writable($installRoot)) return $installRoot;
 		
 	}
 	
