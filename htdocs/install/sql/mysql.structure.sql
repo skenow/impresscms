@@ -468,21 +468,23 @@ CREATE TABLE tplfile (
   tpl_lastmodified int(10) unsigned NOT NULL default '0',
   tpl_lastimported int(10) unsigned NOT NULL default '0',
   tpl_type varchar(20) NOT NULL default '',
+  tpl_source mediumtext NOT NULL default '',
   PRIMARY KEY  (tpl_id),
   KEY tpl_refid (tpl_refid,tpl_type),
   KEY tpl_tplset (tpl_tplset,tpl_file(10))
 );
+
 # --------------------------------------------------------
 
 #
 # Table structure for table `tplsource`
 #
 
-CREATE TABLE tplsource (
-  tpl_id mediumint(7) unsigned NOT NULL default '0',
-  tpl_source mediumtext NOT NULL,
-  KEY tpl_id (tpl_id)
-);
+# CREATE TABLE tplsource (
+#  tpl_id mediumint(7) unsigned NOT NULL default '0',
+#  tpl_source mediumtext NOT NULL,
+#  KEY tpl_id (tpl_id)
+# );
 # --------------------------------------------------------
 
 # RMV-NOTIFY (added two columns)
