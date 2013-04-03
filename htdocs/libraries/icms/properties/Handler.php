@@ -797,7 +797,7 @@ abstract class icms_properties_Handler
         return $this->toArray();
     }
 
-	protected function setVarInfo($key, $info, $value) {
+	public function setVarInfo($key, $info, $value) {
         if ($key === null)
             $key = array_keys($this->_vars);
         if (is_array($key)) {
