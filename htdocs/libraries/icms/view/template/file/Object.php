@@ -7,7 +7,7 @@
  * @category	ICMS
  * @package		View
  * @subpackage	Template
- * @version		SVN: $Id: Object.php 10326 2010-07-11 18:54:25Z malanciault $
+ * @version		SVN: $Id$
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -20,13 +20,12 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @package		View
  * @subpackage	Template
  **/
-class icms_view_template_file_Object extends icms_core_Object {
+class icms_view_template_file_Object extends icms_ipf_Object {
 
 	/**
 	 * constructor
 	 */
-	public function __construct() {
-		parent::__construct();
+	public function __construct($handler, $data = array()) {		
 		$this->initVar('tpl_id', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('tpl_refid', XOBJ_DTYPE_INT, 0, false);
 		$this->initVar('tpl_tplset', XOBJ_DTYPE_OTHER, null, false);
@@ -37,6 +36,8 @@ class icms_view_template_file_Object extends icms_core_Object {
 		$this->initVar('tpl_module', XOBJ_DTYPE_OTHER, null, false);
 		$this->initVar('tpl_type', XOBJ_DTYPE_OTHER, null, false);
 		$this->initVar('tpl_source', XOBJ_DTYPE_SOURCE, null, false);
+                
+                parent::__construct($handler, $data);
 	}
 
 	/**
