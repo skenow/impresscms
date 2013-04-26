@@ -24,9 +24,7 @@ class IcmsPreloadUserInfo extends icms_preload_Item {
 	function eventStartOutputInit() {
 		global $xoopsTpl;
 		if (is_object(icms::$user)) {
-			foreach (icms::$user->vars as $key => $value) {
-				$user[$key] = $value;
-			}
+                        $user = icms::$user->getVars();
 			foreach ($user as $key => $value) {
 				foreach ($user [$key] as $key1 => $value1) {
 					if ($key1 == 'value') {
