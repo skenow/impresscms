@@ -9,7 +9,7 @@
  * @since		ImpressCMS 1.1
  * @author		modified by UnderDog <underdog@impresscms.org>
  * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
- * @version		SVN: $Id: Handler.php 10619 2010-09-08 17:59:13Z malanciault $
+ * @version		SVN: $Id$
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -30,7 +30,7 @@ class icms_data_page_Handler extends icms_ipf_Handler {
 
 	public function getList($criteria = null, $limit = 0, $start = 0, $debug = false) {
 		$rtn = array();
-		$pages =& $this->getObjects($criteria, true);
+		$pages = $this->getObjects($criteria, true);
 		foreach ($pages as $page) {
 			$rtn[$page->getVar('page_moduleid') . '-' . $page->getVar('page_id')] = $page->getVar('page_title');
 		}

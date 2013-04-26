@@ -7,7 +7,7 @@
 * @license		LICENSE.txt
 * @category		ICMS
 * @package		Form
-* @version		SVN: $Id: Groupperm.php 10749 2010-11-04 03:57:45Z skenow $
+* @version		SVN: $Id$
 */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');

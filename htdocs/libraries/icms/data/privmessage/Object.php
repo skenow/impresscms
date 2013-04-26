@@ -18,13 +18,12 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @package		Privmessage
  * @author		Kazumi Ono	<onokazu@xoops.org>
  */
-class icms_data_privmessage_Object extends icms_core_Object {
+class icms_data_privmessage_Object extends icms_ipf_Object {
 
 	/**
 	 * constructor
 	 **/
-	public function __construct() {
-		parent::__construct();
+	public function __construct(&$handler, $data = array()) {		
 		$this->initVar('msg_id', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('msg_image', XOBJ_DTYPE_OTHER, 'icon1.gif', false, 100);
 		$this->initVar('subject', XOBJ_DTYPE_TXTBOX, null, true, 255);
@@ -33,6 +32,8 @@ class icms_data_privmessage_Object extends icms_core_Object {
 		$this->initVar('msg_time', XOBJ_DTYPE_OTHER, null, false);
 		$this->initVar('msg_text', XOBJ_DTYPE_TXTAREA, null, true);
 		$this->initVar('read_msg', XOBJ_DTYPE_INT, 0, false);
+                
+                parent::__construct($handler, $data);
 	}
 }
 

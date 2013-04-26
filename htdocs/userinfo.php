@@ -4,7 +4,7 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		Member
  * @subpackage	User
- * @version		SVN: $Id: userinfo.php 12085 2012-10-23 14:23:54Z sato-san $
+ * @version		SVN: $Id$
  */
 
 $xoopsOption['pagetype'] = 'user';
@@ -126,10 +126,8 @@ icms_makeSmarty(array(
 	'lang_lastlogin' => _US_LASTLOGIN,
 	'lang_notregistered' => _US_NOTREGISTERED,
 	'user_pmlink' => is_object(icms::$user) 
-		? "<a href=\"javascript:openWithSelfMain('" . ICMS_URL . "/pmlite.php?send2=1&amp;to_userid="
-			. (int) $thisUser->getVar('uid') . "', 'pmlite', 800,680);\"><img src=\"" 
-			. ICMS_URL . "/images/icons/" . $icmsConfig['language'] . "/pm.gif\" alt=\""
-			. sprintf(_SENDPMTO, $thisUser->getVar('uname')) . "\" /></a>" 
+		? "<button type=\"button\" class=\"btn btn-mini btn-info\" href=\"javascript:openWithSelfMain('" . ICMS_URL . "/pmlite.php?send2=1&amp;to_userid="
+			. (int) $thisUser->getVar('uid') . "', 'pmlite', 800,680);\"><i class=\"icon-envelope\"></i> "._US_PM."</button>" 
 		: '',
 	'user_rankimage' => $userrank['image'] ?
 		'<img src="' . $userrank['image'] . '" alt="' . $userrank['title'] . '" />' : '',

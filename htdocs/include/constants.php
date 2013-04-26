@@ -6,7 +6,7 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		core
  * @since		1.3
- * @version		SVN: $Id: constants.php 11514 2011-12-29 02:16:36Z sato-san $
+ * @version		SVN: $Id$
  */
 
 if (!defined('ICMS_ROOT_PATH')) {
@@ -38,6 +38,9 @@ define('ICMS_PURIFIER_CACHE', ICMS_TRUST_PATH . '/cache/htmlpurifier');
 // ImpressCMS Modules path & url
 define('ICMS_MODULES_PATH', ICMS_ROOT_PATH . '/modules');
 define('ICMS_MODULES_URL', ICMS_URL . '/modules');
+// ICMS controls
+define('ICMS_CONTROLS_PATH', ICMS_PLUGINS_PATH . '/controls');
+define('ICMS_CONTROLS_URL', ICMS_PLUGINS_URL . '/controls' );
 /**#@-*/
 
 // ################# Creation of the ImpressCMS Libraries ##############
@@ -80,6 +83,7 @@ define('ICMS_THEME_PATH', ICMS_ROOT_PATH . '/themes');
 define('ICMS_THEME_URL', ICMS_URL . '/themes');
 define('ICMS_COMPILE_PATH', ICMS_ROOT_PATH . '/templates_c');
 define('ICMS_CACHE_PATH', ICMS_ROOT_PATH . '/cache');
+define('ICMS_CACHE_URL', ICMS_URL . '/cache');
 define('ICMS_IMAGES_URL', ICMS_URL . '/images');
 define('ICMS_EDITOR_PATH', ICMS_ROOT_PATH . '/editors');
 define('ICMS_EDITOR_URL', ICMS_URL . '/editors');

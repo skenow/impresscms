@@ -8,7 +8,7 @@
  * @package		Config
  * @subpackage	Item
  * @author		Kazumi Ono (aka onokazo)
- * @version		SVN: $Id: Object.php 11969 2012-08-26 10:47:21Z m0nty $
+ * @version		SVN: $Id$
  */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
@@ -19,7 +19,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @subpackage	Item
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  */
-class icms_config_Item_Object extends icms_core_Object {
+class icms_config_Item_Object extends icms_ipf_Object {
 	/**
 	 * Config options
 	 *
@@ -27,13 +27,21 @@ class icms_config_Item_Object extends icms_core_Object {
 	 * @access	private
 	 */
 	public $_confOptions = array();
+        
+        /**
+        * is it a newly created config object?
+        *
+        * @var bool
+        * @access protected
+        */
+        protected $_isNewConfig = false;
 
 	/**
 	 * Constructor
 	 *
 	 * @todo	Cannot set the data type of the conf_value on instantiation - the data type must be retrieved from the db.
 	 */
-	public function __construct() {
+	public function __construct(&$handler, $data = array()) {
 		$this->initVar('conf_id', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('conf_modid', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('conf_catid', XOBJ_DTYPE_INT, null, false);
@@ -44,13 +52,38 @@ class icms_config_Item_Object extends icms_core_Object {
 		$this->initVar('conf_formtype', XOBJ_DTYPE_OTHER);
 		$this->initVar('conf_valuetype', XOBJ_DTYPE_OTHER);
 		$this->initVar('conf_order', XOBJ_DTYPE_INT);
+                
+                parent::__construct($handler, $data);
 	}
 
-	/**
-	 * Get a config value in a format ready for output
-	 *
-	 * @return	string
-	 */
+        /**
+         * #@+
+         * used for new config objects when installing/updating module(s)
+         *
+         * @access public
+         */
+
+        public function setNewConfig() {
+            $this->_isNewConfig = true;
+        }
+
+        public function unsetNewConfig() {
+            $this->_isNewConfig = false;
+        }
+
+        public function isNewConfig() {
+            return $this->_isNewConfig;
+        }
+
+        /*     * #@- */
+
+        /*     * #@+
+
+          /**
+         * Get a config value in a format ready for output
+         *
+         * @return	string
+         */
 	public function getConfValueForOutput() {
 		switch($this->getVar('conf_valuetype')) {
 			case 'int':
@@ -58,7 +91,7 @@ class icms_config_Item_Object extends icms_core_Object {
 				break;
 
 			case 'array':
-				$value = @ $this->getVar('conf_value', 'N');
+				$value = @ unserialize($this->getVar('conf_value', 'N'));
 				return $value ? $value : array();
 
 			case 'float':
@@ -160,6 +193,7 @@ class icms_config_Item_Object extends icms_core_Object {
 			'float' => XOBJ_DTYPE_FLOAT,
 		);
 
-		$this->vars['conf_value']['data_type'] = $types[$newType];
+		$this->setVarInfo('conf_value', 'data_type',$types[$newType]);
 	}
 }
+

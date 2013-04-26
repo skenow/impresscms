@@ -6,7 +6,7 @@
  * @license		LICENSE.txt
  * @category	ICMS
  * @package		Notification
- * @version		SVN: $Id: Handler.php 10825 2010-12-03 00:01:23Z skenow $
+ * @version		SVN: $Id$
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -24,206 +24,11 @@ include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
  * @package		Notification
  * @author	    Michael van Dam <mvandam@caltech.edu>
  */
-class icms_data_notification_Handler extends icms_core_ObjectHandler {
-
-	/**
-	 * Create a {@link icms_data_notification_Object}
-	 *
-	 * @param	bool    $isNew  Flag the object as "new"?
-	 *
-	 * @return	object
-	 */
-	public function &create($isNew = true) {
-		$notification = new icms_data_notification_Object();
-		if ($isNew) {
-			$notification->setNew();
-		}
-		return $notification;
-	}
-
-	/**
-	 * Retrieve a {@link icms_data_notification_Object}
-	 *
-	 * @param   int $id ID
-	 *
-	 * @return  object  {@link icms_data_notification_Object}, FALSE on fail
-	 **/
-	public function &get($id) {
-		$notification = false;
-		$id = (int) $id;
-		if ($id > 0) {
-			$sql = "SELECT * FROM ".$this->db->prefix('xoopsnotifications')." WHERE not_id='".$id."'";
-			if (!$result = $this->db->query($sql)) {
-				return $notification;
-			}
-			$numrows = $this->db->getRowsNum($result);
-			if ($numrows == 1) {
-				$notification = new icms_data_notification_Object();
-				$notification->assignVars($this->db->fetchArray($result));
-			}
-		}
-		return $notification;
-	}
-
-	/**
-	 * Inserts a notification(subscription) into database
-	 *
-	 * @param   object  &$notification
-	 *
-	 * @return  bool
-	 **/
-	public function insert(&$notification) {
-		/**
-		 * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-		 */
-		if (!is_a($notification, 'icms_data_notification_Object')) {
-			return false;
-		}
-		if (!$notification->isDirty()) {
-			return true;
-		}
-		if (!$notification->cleanVars()) {
-			return false;
-		}
-		foreach ($notification->cleanVars as $k => $v) {
-			${$k} = $v;
-		}
-		if ($notification->isNew()) {
-			$not_id = $this->db->genId('xoopsnotifications_not_id_seq');
-			$sql = sprintf("INSERT INTO %s (not_id, not_modid, not_itemid, not_category, not_uid, not_event, not_mode) VALUES ('%u', '%u', '%u', %s, '%u', %s, '%u')", $this->db->prefix('xoopsnotifications'), (int) $not_id, (int) $not_modid, (int) $not_itemid, $this->db->quoteString($not_category), (int) $not_uid, $this->db->quoteString($not_event), (int) $not_mode);
-		} else {
-			$sql = sprintf("UPDATE %s SET not_modid = '%u', not_itemid = '%u', not_category = %s, not_uid = '%u', not_event = %s, not_mode = '%u' WHERE not_id = '%u'", $this->db->prefix('xoopsnotifications'), (int) $not_modid, (int) $not_itemid, $this->db->quoteString($not_category), (int) $not_uid, $this->db->quoteString($not_event), (int) $not_mode, (int) $not_id);
-		}
-		if (!$result = $this->db->query($sql)) {
-			return false;
-		}
-		if (empty($not_id)) {
-			$not_id = $this->db->getInsertId();
-		}
-		$notification->assignVar('not_id', (int)$not_id);
-		return true;
-	}
-
-	/**
-	 * Delete a {@link icms_data_notification_Object} from the database
-	 *
-	 * @param   object  &$notification {@link icms_data_notification_Object}
-	 *
-	 * @return  bool
-	 **/
-	public function delete(&$notification) {
-		/**
-		 * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-		 */
-		if (!is_a($notification, 'icms_data_notification_Object')) {
-			return false;
-		}
-
-		$sql = sprintf("DELETE FROM %s WHERE not_id = '%u'", $this->db->prefix('xoopsnotifications'), (int)$notification->getVar('not_id'));
-		if (!$result = $this->db->query($sql)) {
-			return false;
-		}
-		return true;
-	}
-
-	/**
-	 * Get some {@link icms_data_notification_Object}s
-	 *
-	 * @param   object  $criteria
-	 * @param   bool    $id_as_key  Use IDs as keys into the array?
-	 *
-	 * @return  array   Array of {@link icms_data_notification_Object} objects
-	 **/
-	public function getObjects($criteria = null, $id_as_key = false) {
-		$ret = array();
-		$limit = $start = 0;
-		$sql = 'SELECT * FROM '.$this->db->prefix('xoopsnotifications');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
-			$sql .= ' '.$criteria->renderWhere();
-			$sort = ($criteria->getSort() != '') ? $criteria->getSort() : 'not_id';
-			$sql .= ' ORDER BY '.$sort.' '.$criteria->getOrder();
-			$limit = $criteria->getLimit();
-			$start = $criteria->getStart();
-		}
-		$result = $this->db->query($sql, $limit, $start);
-		if (!$result) {
-			return $ret;
-		}
-		while ($myrow = $this->db->fetchArray($result)) {
-			$notification = new icms_data_notification_Object();
-			$notification->assignVars($myrow);
-			if (!$id_as_key) {
-				$ret[] =& $notification;
-			} else {
-				$ret[$myrow['not_id']] =& $notification;
-			}
-			unset($notification);
-		}
-		return $ret;
-	}
-
-	// TODO: Need this??
-	/**
-	* Count Notifications
-	*
-	* @param   object  $criteria   {@link icms_db_criteria_Element}
-	*
-	* @return  int     Count
-	**/
-	public function getCount($criteria = null) {
-		$sql = 'SELECT COUNT(*) FROM '.$this->db->prefix('xoopsnotifications');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
-			$sql .= ' '.$criteria->renderWhere();
-		}
-		if (!$result =& $this->db->query($sql)) {
-			return 0;
-		}
-		list($count) = $this->db->fetchRow($result);
-		return $count;
-	}
-
-	/**
-	 * Delete multiple notifications
-	 *
-	 * @param   object  $criteria   {@link icms_db_criteria_Element}
-	 *
-	 * @return  bool
-	 **/
-	public function deleteAll($criteria = null) {
-		$sql = 'DELETE FROM '.$this->db->prefix('xoopsnotifications');
-		if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
-			$sql .= ' '.$criteria->renderWhere();
-		}
-		if (!$result = $this->db->query($sql)) {
-			return false;
-		}
-		return true;
-	}
-
-	// Need this??
-	/**
-	* Change a value in multiple notifications
-	*
-	* @param   string  $fieldname  Name of the field
-	* @param   string  $fieldvalue Value to write
-	* @param   object  $criteria   {@link icms_db_criteria_Element}
-	*
-	* @return  bool
-	**/
-	/*
-	 function updateAll($fieldname, $fieldvalue, $criteria = null)
-	 {
-	 $set_clause = is_numeric($fieldvalue) ? $filedname.' = '.$fieldvalue : $filedname." = '".$fieldvalue."'";
-	 $sql = 'UPDATE '.$this->db->prefix('xoopsnotifications').' SET '.$set_clause;
-	 if (isset($criteria) && is_subclass_of($criteria, 'icms_db_criteria_Element')) {
-	 $sql .= ' '.$criteria->renderWhere();
-	 }
-	 if (!$result = $this->db->query($sql)) {
-	 return false;
-	 }
-	 return true;
-	 }
-	 */
+class icms_data_notification_Handler extends icms_ipf_Handler {
+    
+        public function __construct(&$db) {
+            parent::__construct($db, 'data_notification', 'not_id', 'not_event', 'not_itemid', 'icms', 'xoopsnotifications', 'not_id');
+        }
 
 	// TODO: rename this...
 	// Also, should we have get by module, get by category, etc...??
@@ -657,8 +462,6 @@ class icms_data_notification_Handler extends icms_core_ObjectHandler {
 	/**
 	 * Determine if notification is enabled for the selected module.
 	 *
-	 * Replaces function notificationEnabled()
-	 *
 	 * @param  string  $style	  Subscription style: 'block' or 'inline'
 	 * @param  int	 $module_id  ID of the module  (default current module)
 	 * @return bool
@@ -690,8 +493,6 @@ class icms_data_notification_Handler extends icms_core_ObjectHandler {
 	}
 
 	/**
-	 * Replaces function &notificationCategoryInfo()
-	 *
 	 * Get an associative array of info for a particular notification
 	 * category in the selected module.  If no category is selected,
 	 * return an array of info for all categories.
@@ -723,8 +524,6 @@ class icms_data_notification_Handler extends icms_core_ObjectHandler {
 	}
 
 	/**
-	 * Replaces function &notificationCommentCategoryInfo()
-	 *
 	 * Get associative array of info for the category to which comment events
 	 * belong.
 	 *
@@ -760,8 +559,6 @@ class icms_data_notification_Handler extends icms_core_ObjectHandler {
 	// TODO: some way to include or exclude admin-only events...
 
 	/**
-	 * Replaces function &notificationEvents()
-	 *
 	 * Get an array of info for all events (each event has associative array)
 	 * in the selected category of the selected module.
 	 *
@@ -880,8 +677,6 @@ class icms_data_notification_Handler extends icms_core_ObjectHandler {
 	}
 
 	/**
-	 * Replaces function notificationEventEnabled()
-	 *
 	 * Determine whether a particular notification event is enabled.
 	 * Depends on module config options.
 	 *
@@ -906,8 +701,6 @@ class icms_data_notification_Handler extends icms_core_ObjectHandler {
 	}
 
 	/**
-	 * Replaces function &notificationEventInfo()
-	 *
 	 * Get associative array of info for the selected event in the selected
 	 * category (for the selected module).
 	 *
@@ -928,8 +721,6 @@ class icms_data_notification_Handler extends icms_core_ObjectHandler {
 	}
 
 	/**
-	 * Replaces function &notificationSubscribableCategoryInfo()
-	 *
 	 * Get an array of associative info arrays for subscribable categories
 	 * for the selected module.
 	 *
@@ -983,8 +774,6 @@ class icms_data_notification_Handler extends icms_core_ObjectHandler {
 	}
 
 	/**
-	 * Replaces function notificationGenerateConfig()
-	 *
 	 * Generate module config info for a particular category, event pair.
 	 * The selectable config options are given names depending on the
 	 * category and event names, and the text depends on the category

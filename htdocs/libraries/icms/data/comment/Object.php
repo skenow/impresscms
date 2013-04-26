@@ -21,13 +21,13 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @subpackage	Comment
  *
  */
-class icms_data_comment_Object extends icms_core_Object {
+class icms_data_comment_Object extends icms_ipf_Object {
 
 	/**
 	 * Constructor
 	 **/
-	public function __construct() {
-		parent::__construct();
+	public function __construct(&$handler, $data = array()) {
+		parent::__construct($handler, $data);
 		$this->initVar('com_id', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('com_pid', XOBJ_DTYPE_INT, 0, false);
 		$this->initVar('com_modid', XOBJ_DTYPE_INT, null, false);

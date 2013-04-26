@@ -11,7 +11,7 @@
  * @subpackage	Permission
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		SVN: $Id: Handler.php 10897 2010-12-19 18:17:29Z phoenyx $
+ * @version		SVN: $Id$
  */
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
@@ -132,7 +132,7 @@ class icms_ipf_permission_Handler {
 				$groups = is_object(icms::$user) ? icms::$user->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 
 				//Get all allowed item ids in this module and for this user's groups
-				$userpermissions =& $gperm_handler->getItemIds($gperm_name, $groups, $icmsModule->getVar('mid'));
+				$userpermissions = $gperm_handler->getItemIds($gperm_name, $groups, $icmsModule->getVar('mid'));
 				$permissions[$gperm_name] = $userpermissions;
 			}
 		}

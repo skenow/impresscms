@@ -11,7 +11,7 @@
  * @subpackage	View
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		SVN: $Id: Table.php 12013 2012-09-11 17:41:40Z m0nty $
+ * @version		SVN: $Id$
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -273,8 +273,8 @@ class icms_ipf_view_Table {
 		icms_setCookieVar($_SERVER['SCRIPT_NAME'] . '_' . $this->_id . '_sortsel', $this->_sortsel);
 		$fieldsForSorting = $this->_tempObject->getFieldsForSorting($this->_sortsel);
 
-		if (isset($this->_tempObject->vars[$this->_sortsel]['itemName'])) {
-			$this->_criteria->setSort($this->_tempObject->vars[$this->_sortsel]['itemName'] . "." . $this->_sortsel);
+		if ($this->_tempObject->getVarInfo($this->_sortsel, 'itemName')) {
+			$this->_criteria->setSort($this->_tempObject->getVarInfo($this->_sortsel, 'itemName') . "." . $this->_sortsel);
 		} else {
 			$this->_criteria->setSort($this->_objectHandler->_itemname . "." . $this->_sortsel);
 		}
@@ -440,7 +440,7 @@ class icms_ipf_view_Table {
 					$field['caption'] = $key;
 					$field['selected'] = $this->_filtersel == $key ? "selected='selected'" : '';
 				} else {
-					$field['caption'] = $this->_tempObject->vars[$key]['form_caption'];
+					$field['caption'] = $this->_tempObject->getVarInfo($key, 'form_caption');
 					$field['selected'] = $this->_filtersel == $key ? "selected='selected'" : '';
 				}
 				$ret[$key] = $field;
@@ -740,7 +740,7 @@ class icms_ipf_view_Table {
 			} elseif ($column->getCustomCaption()) {
 				$aColumn['caption'] = $column->getCustomCaption();
 			} else {
-				$aColumn['caption'] = isset($this->_tempObject->vars[$column->getKeyName()]['form_caption']) ? $this->_tempObject->vars[$column->getKeyName()]['form_caption'] : $column->getKeyName();
+				$aColumn['caption'] = $this->_tempObject->getVarInfo($column->getKeyName(), 'form_caption') ? $this->_tempObject->getVarInfo($column->getKeyName(), 'form_caption') : $column->getKeyName();
 			}
 			// Are we doing a GET sort on this column ?
 			$getSort = (isset($_GET[$this->_objectHandler->_itemname . '_' . 'sortsel']) && $_GET[$this->_objectHandler->_itemname . '_' . 'sortsel'] == $column->getKeyName()) || ($this->_sortsel == $column->getKeyName());

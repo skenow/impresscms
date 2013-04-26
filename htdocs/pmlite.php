@@ -9,8 +9,7 @@
  * @package		core
  * @since		XOOPS
  * @author		http://www.xoops.org The XOOPS Project
- * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id: pmlite.php 11406 2011-10-17 03:35:09Z skenow $
+ * @version		$Id$
  */
 
 $xoopsOption['pagetype'] = "pmsg";

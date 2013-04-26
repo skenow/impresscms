@@ -9,7 +9,7 @@
  * @subpackage	richfile
  * @since		1.3
  * @author		Phoenyx
- * @version		$Id: Object.php 10851 2010-12-05 19:15:30Z phoenyx $
+ * @version		$Id$
  */
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
@@ -18,12 +18,14 @@ class icms_data_file_Object extends icms_ipf_Object {
 	/**
 	 * constructor
 	 */
-    public function __construct() {
-        $this->quickInitVar("fileid", XOBJ_DTYPE_INT, TRUE);
+    public function __construct(&$handler, $data = array()) {
+                $this->quickInitVar("fileid", XOBJ_DTYPE_INT, TRUE);
 		$this->quickInitVar("mid", XOBJ_DTYPE_INT, TRUE);
 		$this->quickInitVar("caption", XOBJ_DTYPE_TXTBOX, FALSE);
 		$this->quickInitVar("description", XOBJ_DTYPE_TXTBOX, FALSE);
-		$this->quickInitVar("url", XOBJ_DTYPE_TXTBOX, FALSE);
+		$this->quickInitVar("url", XOBJ_DTYPE_TXTAREA, FALSE);
+                
+                parent::__construct($handler, $data);
 	}
 
 	/**

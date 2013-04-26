@@ -1,0 +1,27 @@
+<div id="preface_wrapper" class="preface_wrapper">
+  <div id="preface" class="preface">
+    <div id="preface_inner" class="clearfix container preface_inner">
+      <div class="block">
+        <div class="block_inner">
+          <{if $ishome}>
+            <div class="flexslider" data-module="<{$icms_imageurl}>app/modules/flexslider/main">
+              <ul class="slides">
+                <li>
+                  <img src="http://lorempixel.com/980/360/technics/1" />
+                </li>
+                <li>
+                  <img src="http://placekitten.com/980/360" />
+                </li>
+                <li>
+                  <img src="http://placeholderimage.net/980x360/000/fff.png&amp;text=980+x+360" />
+                </li>
+              </ul>
+            </div>
+          <{else}>
+            <h1><{$icms_pagetitle}></h1>
+          <{/if}>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

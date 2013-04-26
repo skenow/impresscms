@@ -9,7 +9,7 @@
  * @package		libraries
  * @since		1.2
  * @author		TheRplima <therplima@impresscms.org>
- * @version		$Id: wideimage.php 10326 2010-07-11 18:54:25Z malanciault $
+ * @version		$Id$
  */
 /**
  *
@@ -33,6 +33,7 @@ class IcmsPreloadWideimage extends icms_preload_Item {
 	 * Events to be triggered at the start of the admin pages loading
 	 */
 	function eventAdminHeader() {
-		include_once  ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php' ;
+		if (extension_loaded('gd'))
+			include_once  ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php' ;
 	}
 }

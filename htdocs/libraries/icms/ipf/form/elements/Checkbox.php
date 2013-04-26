@@ -9,7 +9,7 @@
  * @subpackage	form
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id: Checkbox.php 12005 2012-09-02 13:18:34Z qm-b $
+ * @version		$Id$
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -30,7 +30,7 @@ class icms_ipf_form_elements_Checkbox extends icms_form_elements_Checkbox {
 			$this->_delimeter = $control['delimeter'];
 		}
 		
-		parent::__construct($object->vars[$key]['form_caption'], $key, $object->getVar($key), $this->_delimeter);
+		parent::__construct($object->getVarInfo($key, 'form_caption'), $key, $object->getVar($key), $this->_delimeter);
 		
 		if (isset($control['options'])) {
 			$this->addOptionArray($control['options']);

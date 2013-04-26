@@ -7,7 +7,7 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		Member
  * @subpackage	Users
- * @version		SVN: $Id: register.php 12078 2012-10-19 04:52:21Z sato-san $
+ * @version		SVN: $Id$
  */
 
 $xoopsOption['pagetype'] = 'user';

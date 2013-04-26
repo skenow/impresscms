@@ -1,0 +1,7 @@
+<div class="CPbigTitle" style="background-image: url(<{$xoops_url}>/modules/system/admin/alternatives/images/alternative_big.png)">Alternatives</div><br />
+
+<{if $icms_alternatives_table}>
+	<{$icms_alternatives_table}>
+<{else}>
+	<{includeq file='db:system_common_form.html' form=$addalternative}>
+<{/if}>

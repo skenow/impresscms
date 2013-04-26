@@ -27,6 +27,7 @@ defined('ICMS_ROOT_PATH') || die("ImpressCMS root path not defined");
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
  * @version		$Id: icmspersistabletreetable.php 19651 2010-06-26 06:15:15Z malanciault $
+
  */
 class icms_ipf_view_Tree extends icms_ipf_view_Table {
 
@@ -42,7 +43,6 @@ class icms_ipf_view_Tree extends icms_ipf_view_Table {
 		parent::__construct($objectHandler, $criteria, $actions, $userSide);
 		$this->_isTree = TRUE;
 	}
-
 	/**
 	 * Get children objects given a specific category_pid
 	 *

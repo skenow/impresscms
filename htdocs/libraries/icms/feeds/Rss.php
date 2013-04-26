@@ -9,7 +9,7 @@
  * @subpackage	RSS
  * @since		1.1
  * @author		Ignacio Segura, "Nachenko"
- * @version		$Id: Rss.php 12097 2012-10-28 21:01:59Z skenow $
+ * @version		$Id$
  */
 
 defined('ICMS_ROOT_PATH') or exit();

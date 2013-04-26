@@ -6,7 +6,7 @@
  * @license		LICENSE.txt
  * @category	ICMS
  * @package		Core
- * @version		SVN: $Id: ObjectHandler.php 12111 2012-11-09 02:11:04Z skenow $
+ * @version		SVN: $Id: ObjectHandler.php 12112 2012-11-09 02:15:50Z skenow $
  */
 
 /**
@@ -29,8 +29,7 @@ abstract class icms_core_ObjectHandler {
 	/**
 	 * holds referenced to {@link icms_db_legacy_Database} class object
 	 *
-	 * @var object
-	 * @see icms_db_legacy_Database
+	 * @var icms_db_legacy_Database
 	 * @access protected
 	 */
 	protected $db;
@@ -75,6 +74,6 @@ abstract class icms_core_ObjectHandler {
 	 * @param object $object
 	 * @abstract
 	 */
-	abstract function delete(&$object);
+	abstract function delete(&$object);        
 
 }

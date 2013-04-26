@@ -8,7 +8,7 @@
  * @since		1.2
  * @package		plugins
  * @subpackage	textsanitizer
- * @version		$Id: hiddencontent.php 10326 2010-07-11 18:54:25Z malanciault $
+ * @version		$Id$
  */
 /**
  *
@@ -19,7 +19,7 @@
  */
 function textsanitizer_hiddencontent(&$ts, $text) {
 	$patterns[] = "/\[hide](.*)\[\/hide\]/sU";
-	if (!empty($_SESSION['xoopsUserId']) && $_SESSION['xoopsUserId']) {
+	if (is_object(icms::$user)) {
 		$replacements[] = _HIDDENC . '<div class="icmsHidden">\\1</div>';
 	} else {
 		$replacements[] = _HIDDENC . '<div class="icmsHidden">' . _HIDDENTEXT . '</div>';

@@ -7,7 +7,7 @@
  * @package		icms_ipf_Object
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id: Base.php 11501 2011-12-17 22:31:45Z skenow $
+ * @version		$Id$
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -92,14 +92,15 @@ class icms_ipf_form_Base extends icms_form_Theme {
 	 */
 	public function addElement(&$formElement, $key = FALSE, $var = FALSE, $required = 'notset'){
 		if ($key) {
-			if ($this->targetObject->vars[$key]['readonly']) {
+			if ($this->targetObject->getVarInfo($key, 'readonly')) {
 				$formElement->setExtra('disabled="disabled"');
 				$formElement->setName($key . '-readonly');
 				// Since this element is disabled, we still want to pass it's value in the form
-				$hidden = new icms_form_elements_Hidden($key, $this->targetObject->vars[$key]['value']);
+				$hidden = new icms_form_elements_Hidden($key, $this->targetObject->getVar($key, 'n'));
 				$this->addElement($hidden);
 			}
-			$formElement->setDescription($var['form_dsc']);
+                        if (isset($var['form_dsc']) && !empty($var['form_dsc']))
+                            $formElement->setDescription($var['form_dsc']);
 			if (isset($this->targetObject->controls[$key]['onSelect'])) {
 				$hidden = new icms_form_elements_Hidden('changedField', FALSE);
 				$this->addElement($hidden);
@@ -132,11 +133,11 @@ class icms_ipf_form_Base extends icms_form_Theme {
 	 */
 	private function createElements() {
 		$controls = $this->targetObject->controls;
-		$vars = $this->targetObject->vars;
+		$vars = $this->targetObject->getVars();
 		foreach ($vars as $key=>$var) {
 			// If $displayOnForm is FALSE OR this is the primary key, it doesn't
 			// need to be displayed, then we only create an hidden field
-			if ($key == $this->targetObject->handler->keyName || !$var['displayOnForm']) {
+			if ($key == $this->targetObject->handler->keyName || (isset($var['displayOnForm']) && !$var['displayOnForm'])) {
 				$elementToAdd = new icms_form_elements_Hidden($key, $var['value']);
 				$this->addElement($elementToAdd, $key, $var, FALSE);
 				unset($elementToAdd);
@@ -345,96 +346,79 @@ class icms_ipf_form_Base extends icms_form_Theme {
 		switch ($controlName) {
 			case 'color':
 				$control = $this->targetObject->getControl($key);
-				$controlObj = new icms_form_elements_Colorpicker($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getVar($key));
+				$controlObj = new icms_form_elements_Colorpicker($this->targetObject->getVarInfo($key, 'form_caption'), $key, $this->targetObject->getVar($key));
 				return $controlObj;
 				break;
 
 			case 'label':
-				return new icms_form_elements_Label($this->targetObject->vars[$key]['form_caption'], $this->targetObject->getVar($key));
+				return new icms_form_elements_Label($this->targetObject->getVarInfo($key, 'form_caption'), $this->targetObject->getVar($key));
 				break;
 
 			case 'textarea' :
 				$form_rows = isset($this->targetObject->controls[$key]['rows']) ? $this->targetObject->controls[$key]['rows'] : 5;
 				$form_cols = isset($this->targetObject->controls[$key]['cols']) ? $this->targetObject->controls[$key]['cols'] : 60;
 
-				$editor = new icms_form_elements_Textarea($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getVar($key, 'e'), $form_rows, $form_cols);
-				if ($this->targetObject->vars[$key]['form_dsc']) {
-					$editor->setDescription($this->targetObject->vars[$key]['form_dsc']);
+				$editor = new icms_form_elements_Textarea($this->targetObject->getVarInfo($key, 'form_caption'), $key, $this->targetObject->getVar($key, 'e'), $form_rows, $form_cols);
+				if ($this->targetObject->getVarInfo($key, 'form_dsc')) {
+					$editor->setDescription($this->targetObject->getVarInfo($key, 'form_dsc'));
 				}
 				return $editor;
 				break;
 
 			case 'dhtmltextarea' :
-				$editor = new icms_form_elements_Dhtmltextarea($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getVar($key, 'e'), 15, 50);
-				if ($this->targetObject->vars[$key]['form_dsc']) {
-					$editor->setDescription($this->targetObject->vars[$key]['form_dsc']);
+				$editor = new icms_form_elements_Dhtmltextarea($this->targetObject->getVarInfo($key, 'form_caption'), $key, $this->targetObject->getVar($key, 'e'), 15, 50);
+				if ($this->targetObject->getVarInfo($key, 'form_dsc')) {
+					$editor->setDescription($this->targetObject->getVarInfo($key, 'form_dsc'));
 				}
 				return $editor;
 				break;
 
 			case 'theme':
-				return $this->getThemeSelect($key, $this->targetObject->vars[$key]);
+				return $this->getThemeSelect($key, $this->targetObject->getVarInfo($key));
 				break;
 
 			case 'theme_multi':
-				return $this->getThemeSelect($key, $this->targetObject->vars[$key], TRUE);
+				return $this->getThemeSelect($key, $this->targetObject->getVarInfo($key), TRUE);
 				break;
 
 			case 'timezone':
-				return new icms_form_elements_select_Timezone($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getVar($key));
+				return new icms_form_elements_select_Timezone($this->targetObject->getVarInfo($key, 'form_caption'), $key, $this->targetObject->getVar($key));
 				break;
 
 			case 'group':
-				return new icms_form_elements_select_Group($this->targetObject->vars[$key]['form_caption'], $key, FALSE, $this->targetObject->getVar($key, 'e'), 1, FALSE);
+				return new icms_form_elements_select_Group($this->targetObject->getVarInfo($key, 'form_caption'), $key, FALSE, $this->targetObject->getVar($key, 'e'), 1, FALSE);
 				break;
 
 			case 'group_multi':
-				return new icms_form_elements_select_Group($this->targetObject->vars[$key]['form_caption'], $key, FALSE, $this->targetObject->getVar($key, 'e'), 5, TRUE);
+				return new icms_form_elements_select_Group($this->targetObject->getVarInfo($key, 'form_caption'), $key, FALSE, $this->targetObject->getVar($key, 'e'), 5, TRUE);
 				break;
 
 			case 'user_multi':
-				return new icms_form_elements_select_User($this->targetObject->vars[$key]['form_caption'], $key, FALSE, $this->targetObject->getVar($key, 'e'), 5, TRUE);
+				return new icms_form_elements_select_User($this->targetObject->getVarInfo($key, 'form_caption'), $key, FALSE, $this->targetObject->getVar($key, 'e'), 5, TRUE);
 				break;
 
 			case 'password':
-				return new icms_form_elements_Password($this->targetObject->vars[$key]['form_caption'], $key, 50, 255, $this->targetObject->getVar($key, 'e'));
+				return new icms_form_elements_Password($this->targetObject->getVarInfo($key, 'form_caption'), $key, 50, 255, $this->targetObject->getVar($key, 'e'));
 				break;
 
 			case 'country':
-				return new icms_form_elements_select_Country($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getVar($key, 'e'));
+				return new icms_form_elements_select_Country($this->targetObject->getVarInfo($key, 'form_caption'), $key, $this->targetObject->getVar($key, 'e'));
 				break;
-
-			case 'sourceeditor':
-				// leave as last element so that default is executed for sourceeditor as well
-				icms_core_Debug::setDeprecated('icms_ipf_form_elements_Source', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-				$controlName = "source";
 
 			default:
 				$classname = "icms_ipf_form_elements_" . ucfirst($controlName);
 				if (!class_exists($classname)) {
-					/** @todo remove in 1.4 or even for 1.3 final */
-					$classname = "IcmsForm" . ucfirst($controlName) . "Element";
-					if (!class_exists($classname)) {
-						if (file_exists(ICMS_ROOT_PATH . "/class/icmsform/elements/" . strtolower($classname) . ".php")) {
-							include_once ICMS_ROOT_PATH . "/class/icmsform/elements/" . strtolower($classname) . ".php" ;
-						} else {
-							// perhaps this is a control created by the module
-							$moduleName = $this->targetObject->handler->_moduleName;
-							if ($moduleName != 'system') {
-								$moduleFormElementsPath = $this->targetObject->handler->_modulePath . "/class/form/elements/";
-							} else {
-								$moduleFormElementsPath = $this->targetObject->handler->_modulePath . "/admin/{$name}/class/form/elements/";
-							}
-							$classname = ucfirst($moduleName) . ucfirst($controlName) . "Element";
-							$classFileName = strtolower($classname) . ".php";
+					// perhaps this is a control created by the module
+					$moduleName = $this->targetObject->handler->_moduleName;
+					$moduleFormElementsPath = $this->targetObject->handler->_modulePath . "/class/form/elements/";
+					$classname = ucfirst($moduleName) . ucfirst($controlName) . "Element";
+					$classFileName = strtolower($classname) . ".php";
 
-							if (file_exists($moduleFormElementsPath . $classFileName)) {
-								include_once $moduleFormElementsPath . $classFileName ;
-							} else {
-								trigger_error($classname . " not found", E_USER_WARNING);
-								return new icms_form_elements_Label();
-							}
-						}
+					if (file_exists($moduleFormElementsPath . $classFileName)) {
+						include_once $moduleFormElementsPath . $classFileName ;
+					} else {
+						trigger_error($classname . " not found", E_USER_WARNING);
+						return new icms_form_elements_Label();
 					}
 				}
 				return new $classname($this->targetObject, $key);
@@ -491,35 +475,52 @@ class icms_ipf_form_Base extends icms_form_Theme {
 	 * @return	string  $ret
 	 */
 	public function render() {
-		$required =& $this->getRequired();
-		$ret = "
-			<form name='".$this->getName()."_dorga' id='".$this->getName()."' action='".$this->getAction()."' method='".$this->getMethod()."' onsubmit='return xoopsFormValidate_".$this->getName()."(this);'".$this->getExtra().">
-			<table width='100%' class='outer' cellspacing='1'>
-			<tr><th colspan='2'>".$this->getTitle()."</th></tr>
-		";
+		$ele_name = $this->getName();
+		$ret = "<form id='" . $ele_name . "' name='" . $ele_name . "' action='" . $this->getAction()	. "' method='" . $this->getMethod() . "'" . $this->getExtra() . ">"
+		. "<div class='icms-theme-form'>"
+		. "<fieldset>"
+		. "<legend>" . $this->getTitle() . "</legend>"
+		. "<div class='icms-form-contents'>";
+		
 		$hidden = '';
-		$class = 'even';
-		foreach ($this->getElements() as $ele) {
+		$class ='even';
+		foreach ( $this->getElements() as $ele ) {
+			$required = $ele->isRequired() === true ? true : false;
+			$requiredClass = $required ? " required" : "";
+			$isHidden = $ele->isHidden() ? true : false;
+			$groupName = $ele->getName() != '' && $ele->getName() != 'XOOPS_TOKEN_REQUEST' ? " group-" . $ele->getName() : "";
+	
+			if(!$isHidden) {
+				$ret .= "<div class='fieldWrapper" . $groupName . $requiredClass . "'>";
+				// $ret .= "<pre>" . print_r($ele, true) . "</pre>";
+			}
+
 			if (!is_object($ele)) {
 				$ret .= $ele;
-			} elseif (!$ele->isHidden()) {
-				if (get_class($ele) == 'icms_ipf_form_elements_Section' && !$ele->isClosingSection()) {
-					$ret .= '<tr><th colspan="2">' . $ele->render() . '</th></tr>';
-				} elseif (get_class($ele) == 'icms_ipf_form_elements_Section' && $ele->isClosingSection()) {
-					$ret .= '<tr><td class="even" colspan="2">&nbsp;</td></tr>';
-				} else {
-					$ret .= "<tr id='" . $ele->getName() . "_row' valign='top' align='"._GLOBAL_LEFT."'><td class='head'>".$ele->getCaption();
-					if ($ele->getDescription() != '') {
-						$ret .= '<br /><br /><span style="font-weight: normal;">'.$ele->getDescription().'</span>';
-					}
-					$ret .= "</td><td class='$class'>".$ele->render()."</td></tr>\n";
+			} elseif ( !$isHidden ) {
+				$caption = $ele->getCaption() != '' ? $ele->getCaption() : null;
+				if ($caption !== null) {
+					$ret .=	"<label for='".$ele->getName()."' class='caption-text'>{$caption}";
+					$ret .= $required ? "<span class='caption-marker'>*</span>" : "";
+					$ret .= "</label>";
 				}
+					
+				if (($desc = $ele->getDescription()) != '') {
+					$ret .= "<div class='icms-form-element-help'>{$desc}</div>";
+				}
+					
+				$ret .= "<div class='$class'>" . $ele->render() . "</div>\n";
 			} else {
 				$hidden .= $ele->render();
 			}
+
+			if(!$ele->isHidden()) {
+				$ret .= "</div>";
+			}
 		}
-		$ret .= "</table>\n$hidden\n</form>\n";
-		$ret .= $this->renderValidationJS(TRUE);
+			
+		$ret .= "\n<div class='hidden'>$hidden</div>\n</fieldset></div>\n</form>\n";
+		// $ret .= $this->renderValidationJS(true);
 		return $ret;
 	}
 
@@ -542,19 +543,19 @@ class icms_ipf_form_Base extends icms_form_Theme {
 			$elements[$n]['required'] = $ele->isRequired();
 			$elements[$n]['section'] = get_class($ele) == 'icms_ipf_form_elements_Section' && !$ele->isClosingSection();
 			$elements[$n]['section_close'] = get_class($ele) == 'icms_ipf_form_elements_Section' && $ele->isClosingSection();
-			$elements[$n]['hide'] = isset($this->targetObject->vars[$n]['hide']) ? $this->targetObject->vars[$n]['hide'] : FALSE;
+			$elements[$n]['hide'] = $this->targetObject->getVarInfo($n, 'hide', false);
 
 			if ($ele->getDescription() != '') {
 				$elements[$n]['description']  = $ele->getDescription();
 			}
 			$i++;
 		}
-		$js = $this->renderValidationJS();
+		// $js = $this->renderValidationJS();
 		if (!$smartyName) {
 			$smartyName = $this->getName();
 		}
 
-		$tpl->assign($smartyName, array('title' => $this->getTitle(), 'name' => $this->getName(), 'action' => $this->getAction(),  'method' => $this->getMethod(), 'extra' => 'onsubmit="return xoopsFormValidate_'.$this->getName().'(this);"'.$this->getExtra(), 'javascript' => $js, 'elements' => $elements));
+		$tpl->assign($smartyName, array('title' => $this->getTitle(), 'name' => $this->getName(), 'action' => $this->getAction(), 'method' => $this->getMethod(), 'elements' => $elements));
 	}
 
 	/**

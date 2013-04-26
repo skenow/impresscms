@@ -6,7 +6,7 @@
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		core
  * @subpackage	Privmessage
- * @version		SVN: $Id: viewpmsg.php 12085 2012-10-23 14:23:54Z sato-san $
+ * @version		SVN: $Id$
  */
 $xoopsOption['pagetype'] = 'pmsg';
 include_once 'mainfile.php';

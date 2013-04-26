@@ -10,7 +10,7 @@
  * @since		1.2
  * @author		marcan <marcan@impresscms.org>
  * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		SVN: $Id: Handler.php 11188 2011-04-16 03:29:27Z skenow $
+ * @version		SVN: $Id$
  */
 
 /**
@@ -65,7 +65,7 @@ class icms_ipf_export_Handler {
 		$firstObject = true;
 		foreach ( $objects as $object) {
 			$row = array();
-			foreach ( $object->vars as $key=>$var) {
+			foreach ( $object->getVars() as $key=>$var) {
 				if ((!$this->fields || in_array($key, $this->fields)) && !in_array($key, $this->notDisplayFields)) {
 					if ($this->outputMethods && (isset($this->outputMethods[$key])) && (method_exists($object, $this->outputMethods[$key]))) {
 						$method = $this->outputMethods[$key];
