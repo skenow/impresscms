@@ -19,7 +19,8 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path is not defined');
  * @package		Module
  * @author		Kazumi Ono 	<onokazu@xoops.org>
  **/
-class icms_module_Object extends icms_core_Object {
+class icms_module_Object 
+    extends icms_ipf_Object {
 	/**
 	 * Module configuration
 	 * @var array
@@ -51,8 +52,8 @@ class icms_module_Object extends icms_core_Object {
 	/**
 	 * Constructor
 	 */
-	public function __construct() {
-		parent::__construct();
+	public function __construct(&$handler, $data = array()) {
+		parent::__construct($handler, $data);
 		$this->initVar('mid', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('name', XOBJ_DTYPE_TXTBOX, null, true, 150);
 		$this->initVar('version', XOBJ_DTYPE_INT, 100, false);
@@ -90,23 +91,23 @@ class icms_module_Object extends icms_core_Object {
 	 * @return void
 	 */
 	public function registerClassPath($isactive = NULL) {
-		//if ($this->getVar("dirname") == "system") return;
-		$class_path = ICMS_MODULES_PATH . "/" . $this->getVar("dirname") . "/class";
-
-		// check if class path exists
-		if (!is_dir($class_path)) return;
-
-		// check if module is active (only if applicable)
+                // check if module is active (only if applicable)
 		if ($isactive !== NULL && $this->getVar("isactive") != (int) $isactive) return;
-
-		// register class path
-		if ($this->getVar("ipf")) {
-			$modname = ($this->getVar("modname") != "") ?
+            
+		//if ($this->getVar("dirname") == "system") return;
+                $module_path = ICMS_MODULES_PATH . "/" . $this->getVar("dirname");
+                
+                if ($this->getVar("ipf")) {
+                    $modname = ($this->getVar("modname") != "") ?
 				$this->getVar("modname") : $this->getVar("dirname");
-			icms_Autoloader::register($class_path, "mod_" . $modname);
-		} else {
-			icms_Autoloader::register($class_path);
-		}
+                    foreach (array('class' => 'mod', 'actions' => 'action') as $type => $name) {
+                        $folder = $module_path . '/' . $type;
+                        if (!is_dir($folder)) continue;
+                        icms_Autoloader::register($folder, $name . '_' . $modname);
+                    }
+                } else {
+                    icms_Autoloader::register($class_path);
+                }		
 	}
 
 	/**
