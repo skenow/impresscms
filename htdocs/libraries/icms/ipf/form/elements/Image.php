@@ -10,7 +10,7 @@
  * @subpackage	form
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id: Image.php 11604 2012-02-27 03:12:10Z skenow $
+ * @version		$Id$
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -22,7 +22,7 @@ class icms_ipf_form_elements_Image extends icms_form_elements_Tray {
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {
-		$var = $object->vars[$key];
+		$var = $object->getVarInfo($key);
 		$control = $object->getControl($key);
 
 		$object_imageurl = $object->getImageDir();

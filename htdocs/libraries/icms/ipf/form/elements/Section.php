@@ -9,7 +9,7 @@
  * @subpackage	form
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id: Section.php 10851 2010-12-05 19:15:30Z phoenyx $
+ * @version		$Id$
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -38,7 +38,7 @@ class icms_ipf_form_elements_Section extends icms_form_Element {
 		$control = $object->getControl($key);
 
 		$this->setName($key);
-		$this->_value = $object->vars[$key]['value'];
+		$this->_value = $object->getVarInfo($key)['value'];
 		$this->_close = isset($control['close']) ? $control['close'] : FALSE;
 	}
 

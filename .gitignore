@@ -4,3 +4,4 @@ htdocs/templates_c
 /.settings
 /.buildpath
 /.project
+/nbproject/private/

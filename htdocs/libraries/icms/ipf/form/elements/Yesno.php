@@ -9,7 +9,7 @@
  * @subpackage	form
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id: Yesno.php 10711 2010-10-10 17:11:29Z phoenyx $
+ * @version		$Id$
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -21,6 +21,6 @@ class icms_ipf_form_elements_Yesno extends icms_form_elements_Radioyn {
 	 * @param	string    $key      the form name
 	 */
 	public function __construct($object, $key) {
-		parent::__construct($object->vars[$key]['form_caption'], $key, $object->getVar($key,'e'));
+		parent::__construct($object->getVarInfo($key, 'form_caption'), $key, $object->getVar($key,'e'));
 	}
 }
