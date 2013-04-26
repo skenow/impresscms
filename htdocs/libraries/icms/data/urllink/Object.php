@@ -9,7 +9,7 @@
  * @subpackage	urllink
  * @since		1.3
  * @author		Phoenyx
- * @version		$Id: Object.php 10849 2010-12-05 18:46:02Z phoenyx $
+ * @version		$Id$
  */
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
@@ -18,7 +18,7 @@ class icms_data_urllink_Object extends icms_ipf_Object {
 	/**
 	 * constructor
 	 */
-	public function __construct() {
+	public function __construct(&$handler, $data = array()) {
 		$this->quickInitVar("urllinkid", XOBJ_DTYPE_INT, TRUE);
 		$this->quickInitVar("mid", XOBJ_DTYPE_INT, TRUE);
 		$this->quickInitVar("caption", XOBJ_DTYPE_TXTBOX, FALSE);
@@ -28,6 +28,8 @@ class icms_data_urllink_Object extends icms_ipf_Object {
 
 		$this->setControl("target", array("options" => array("_self" => _CO_ICMS_URLLINK_SELF,
 			"_blank" => _CO_ICMS_URLLINK_BLANK)));
+                
+                parent::__construct($handler, $data);
 	}
 
 	/**
