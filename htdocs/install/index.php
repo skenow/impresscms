@@ -166,7 +166,7 @@ switch ($op) {
 		if (!$trustPathOK) {
 			//show errors and reload
 			$reload = TRUE;
-			icms_core_Message::warning("The trust path is not accessible", TRUE);
+			icms_core_Message::warning($installTrustPath, "The trust path is not accessible", TRUE);
 			unset($trustPathOK);
 		} elseif ($debug) {
 			icms_core_Message::result("Trust path is ready");
@@ -261,7 +261,7 @@ switch ($op) {
 		
 		/* Populate database (install system module). Reinstall existing site profile?
 		 * Considerations
-		 *  - the db structure isn't the only thing added during install 
+		 *  - the db structure isn't the only thing added during install
 		 *  - data records are added (blocks, groups, positions, configuration settings, for example)
 		 *  - there are installation-specific variables, like db name and table prefix to deal with
 		 *  - some of the data is language-specific
