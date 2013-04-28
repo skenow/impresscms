@@ -6,9 +6,9 @@ $script   = $_SERVER['SCRIPT_NAME'];
 $params   = $_SERVER['QUERY_STRING'] ? '?' . $_SERVER['QUERY_STRING'] : '';
  
 $currentUrl = $protocol . $host . $script . $params;
-$baseUrl = ICMS_URL; 
-$rootPath = ICMS_ROOT_PATH; 
-$trustPath = $targetTrustPath; 
+$baseUrl = ICMS_URL;
+$rootPath = ICMS_ROOT_PATH;
+$trustPath = $targetTrustPath;
 
 ?>
 
@@ -31,7 +31,7 @@ $trustPath = $targetTrustPath;
 <body>
   <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you support IE 6.
        chromium.org/developers/how-tos/chrome-frame-getting-started -->
-  <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->  
+  <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
   
   <div id="fullWrapper" class="fullWrapper">
 
@@ -51,17 +51,17 @@ $trustPath = $targetTrustPath;
                 <label class="control-label" for="site_name">Site Name <span class="tip" title="Provide the name of your site." type="button"><i class="icon-info-sign"></i></span></label>
                 <div class="controls">
                   <div class="input-prepend">
-                    <span class="add-on"><i class="icon-list"></i></span> 
+                    <span class="add-on"><i class="icon-list"></i></span>
                     <input class="input-large" type="text" id="site_name" name="site_name" placeholder="ImpressCMS">
                   </div>
                 </div>
-              </div>   
+              </div>
 
               <div class="control-group">
                 <label class="control-label" for="site_slogan">Site Slogan <span class="tip" title="Provide the slogan of your site." type="button"><i class="icon-info-sign"></i></span></label>
                 <div class="controls">
                   <div class="input-prepend">
-                    <span class="add-on"><i class="icon-list"></i></span> 
+                    <span class="add-on"><i class="icon-list"></i></span>
                     <input class="input-large" type="text" id="site_slogan" name="site_slogan" placeholder="Make a lasting impression!">
                   </div>
                 </div>
@@ -77,18 +77,18 @@ $trustPath = $targetTrustPath;
                     <small><a href="#" target="_blank">Install another language</a></small>
                   </span>
                 </div>
-              </div>              
+              </div>
 
               <legend>Your Account</legend>
               <div class="control-group">
                 <label class="control-label" for="site_admin_email">Admin Email <span class="tip" title="Provide the Administrator's email." type="button"><i class="icon-info-sign"></i></span></label>
                 <div class="controls">
                   <div class="input-prepend">
-                    <span class="add-on"><i class="icon-envelope"></i></span> 
+                    <span class="add-on"><i class="icon-envelope"></i></span>
                     <input class="input-large" type="email" id="site_admin_email" name="site_admin_email">
                   </div>
                 </div>
-              </div>                  
+              </div>
             
               <div class="control-group">
                 <label class="control-label" for="site_admin_display">Admin Display Name <span class="tip" title="Provide the Administrator's display name." type="button"><i class="icon-info-sign"></i></span></label>
@@ -98,13 +98,13 @@ $trustPath = $targetTrustPath;
                     <input class="input-large" type="text" id="site_admin_display" name="site_admin_display">
                   </div>
                 </div>
-              </div>    
+              </div>
 
               <div class="control-group">
                 <label class="control-label" for="site_admin_uname">Admin Login Name <span class="tip" title="Provide the Administrator's login name." type="button"><i class="icon-info-sign"></i></span></label>
                 <div class="controls">
                   <div class="input-prepend">
-                    <span class="add-on"><i class="icon-user"></i></span>                  
+                    <span class="add-on"><i class="icon-user"></i></span>
                     <input class="input-large" type="text" id="site_admin_uname" name="site_admin_uname">
                   </div>
                 </div>
@@ -199,7 +199,7 @@ $trustPath = $targetTrustPath;
                 <label class="control-label" for="site_db_user">Database User <span class="tip" title="Provide the database user's name." type="button"><i class="icon-info-sign"></i></span></label>
                 <div class="controls">
                   <div class="input-prepend">
-                    <span class="add-on"><i class="icon-user"></i></span>                  
+                    <span class="add-on"><i class="icon-user"></i></span>
                     <input class="input-large" type="text" id="site_db_user" name="site_db_user" placeholder="<?php echo $site_db_user;?>" value="<?php echo $site_db_user;?>">
                   </div>
                 </div>
@@ -237,14 +237,14 @@ $trustPath = $targetTrustPath;
                 <div class="control-group">
                   <label class="control-label" for="site_db_prefix">Database Prefix <span class="tip" title="Provide the database prefix used for your install."><i class="icon-info-sign"></i></span></label>
                   <div class="controls">
-                    <input class="input-xlarge" type="text" id="site_db_prefix" name="site_db_prefix">
+                    <input class="input-xlarge" type="text" id="site_db_prefix" name="site_db_prefix" value="<?php echo $site_db_prefix;?>">
                   </div>
                 </div>
 
                 <div class="control-group">
                   <label class="control-label" for="site_pw_salt_key">Password Salt Key <span class="tip" title="Provide the salt used to encrypt your passwords."><i class="icon-info-sign"></i></span></label>
                   <div class="controls">
-                    <input class="input-xlarge" type="text" id="site_pw_salt_key" name="site_pw_salt_key">
+                    <input class="input-xlarge" type="text" id="site_pw_salt_key" name="site_pw_salt_key" value="<?php echo $site_pw_salt_key;?>">
                   </div>
                 </div>
 
@@ -256,7 +256,7 @@ $trustPath = $targetTrustPath;
                     </select>
                     <small>Do we need all these options?</small>
                   </div>
-                </div>   
+                </div>
 
                 <div class="control-group">
                   <label class="control-label" for="site_db_collation">Databse Collation <span class="tip" title="Select your database collation.<br />(Default: utf8_general_ci)"><i class="icon-info-sign"></i></span></label>
@@ -279,7 +279,7 @@ $trustPath = $targetTrustPath;
                   </p>
                   <br />
                   <button type="submit" class="btn btn-primary"><i class="icon-ok icon-white"></i> Let's Go!</button>
-                  <button type="button" class="btn btn-danger"><i class="icon-off icon-white"></i> Cancel</button>          
+                  <button type="button" class="btn btn-danger"><i class="icon-off icon-white"></i> Cancel</button>
                 </div>
               </div>
             </form>

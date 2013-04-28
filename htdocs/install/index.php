@@ -193,7 +193,7 @@ switch ($op) {
 			$site_db_user = isset($site_db_user) ? $site_db_user : 'root';
 			$site_db_pass = isset($site_db_pass) ? $site_db_pass : '';
 			$site_db_name = isset($site_db_name) ? $site_db_name : '';
-			$site_db_prefix = isset($site_db_prefix) ? $site_db_prefix : '';
+			$site_db_prefix = isset($site_db_prefix) ? $site_db_prefix : icms_core_Password::createSalt(7);
 			
 		/* Advanced: set db persistant connection, character set and collation */
 			$site_db_persist = isset($site_db_persist) ? $site_db_persist : FALSE;
@@ -201,7 +201,7 @@ switch ($op) {
 			$site_db_collation = isset($site_db_collation) ? $site_db_collation : '';
 			
 		/* set this, if not provided (reinstall) */
-			$site_pw_salt_key = isset($site_pw_salt_key) ? $site_pw_salt_key : '';
+			$site_pw_salt_key = isset($site_pw_salt_key) ? $site_pw_salt_key : icms_core_Password::createSalt();
 			
 			$targetTrustPath = isset($site_trust) ? $site_trust : $targetTrustPath;
 			
