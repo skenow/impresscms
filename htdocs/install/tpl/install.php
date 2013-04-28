@@ -249,7 +249,7 @@ $trustPath = $targetTrustPath;
                 </div>
 
                 <div class="control-group">
-                  <label class="control-label" for="site_db_charset">Databse Charset <span class="tip" title="Select your database character set.<br />(Default: UTF-8)"><i class="icon-info-sign"></i></span></label>
+                  <label class="control-label" for="site_db_charset">Database Charset <span class="tip" title="Select your database character set.<br />(Default: UTF-8)"><i class="icon-info-sign"></i></span></label>
                   <div class="controls">
                     <select name="site_db_charset" id="site_db_charset" name="site_db_charset">
                       <option val="utf8">UTF-8</option>
@@ -259,7 +259,7 @@ $trustPath = $targetTrustPath;
                 </div>
 
                 <div class="control-group">
-                  <label class="control-label" for="site_db_collation">Databse Collation <span class="tip" title="Select your database collation.<br />(Default: utf8_general_ci)"><i class="icon-info-sign"></i></span></label>
+                  <label class="control-label" for="site_db_collation">Database Collation <span class="tip" title="Select your database collation.<br />(Default: utf8_general_ci)"><i class="icon-info-sign"></i></span></label>
                   <div class="controls">
                     <select name="site_db_collation" id="site_db_collation" name="site_db_collation">
                       <option val="utf8_general_ci">utf8_general_ci</option>
