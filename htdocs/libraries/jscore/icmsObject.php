@@ -28,6 +28,7 @@ $icmsJsConfigData = array(
     'locale' => $icmsConfig['i18n']
   ) : false,
   'adminMenu' => false,
+  'showProjectMenu' => false,
   'onlineCount' => '0',
   'membersOnline' => '0',
   'social' => array(
@@ -59,6 +60,7 @@ if (is_object(icms::$user)) {
       $file = file_get_contents(ICMS_CACHE_PATH . "/adminmenu_" . $icmsConfig ['language'] . ".php");
       $admin_menu = eval('return ' . $file . ';');
       $icmsJsConfigData['adminMenu'] = $admin_menu;
+      $icmsJsConfigData['showProjectMenu'] = isset($icmsConfigPersona['show_impresscms_menu']) ? $icmsConfigPersona['show_impresscms_menu'] : true;
 
       global $icmsModule;
       $online_handler = icms::handler('icms_core_Online');
@@ -138,7 +140,7 @@ $icmsTheme->addScript(NULL, array('type' => 'text/javascript'),
     ' this.callback.call(this.scope);' .
     '}' .
   '};'
-);
+, 'head', '-10');
 
 $bootstrap = file_exists( ICMS_LIBRARIES_URL . '/jscore/bootstrap-built.js') ? ICMS_LIBRARIES_URL . '/jscore/bootstrap-built.js' : ICMS_LIBRARIES_URL . '/jscore/bootstrap.js';
 $icmsTheme->addScript(ICMS_LIBRARIES_URL . '/jscore/lib/modernizr.js', array('type' => 'text/javascript'), '', 'head', '-2');
