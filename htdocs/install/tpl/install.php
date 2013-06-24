@@ -10,6 +10,13 @@ $baseUrl = ICMS_URL;
 $rootPath = ICMS_ROOT_PATH;
 $trustPath = $targetTrustPath;
 
+$icmsJsConfigData = array(
+  'jscore' => ICMS_LIBRARIES_URL . '/jscore/',
+  'url' => ICMS_URL,
+  'uiTheme' => 'smoothness',
+  'adminMenu' => false
+);
+
 ?>
 
 <!doctype html>
@@ -23,15 +30,12 @@ $trustPath = $targetTrustPath;
   <title>Install ICMS</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width">
-  <script type="text/javascript" src="tpl/js/modernizr.js"></script>
-  <script type="text/javascript" data-main="" src="tpl/js/jquery.js"></script>
-  <script type="text/javascript" data-main="" src="tpl/js/twitter_bootstrap.js"></script>
-  <link rel="stylesheet" href="tpl/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="<?php echo ICMS_URL; ?>/install/tpl/css/install.css" />
 </head>
 <body>
   <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you support IE 6.
        chromium.org/developers/how-tos/chrome-frame-getting-started -->
-  <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
+  <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> to experience this site.</p><![endif]-->
   
   <div id="fullWrapper" class="fullWrapper">
 
@@ -120,7 +124,7 @@ $trustPath = $targetTrustPath;
                 </div>
               </div>
 
-              <div class="control-group">
+<!--               <div class="control-group">
                 <label class="control-label" for="site_admin_pass_confirm">Confirm Password <span class="tip" title="Confirm the Administrator's password." type="button"><i class="icon-info-sign"></i></span></label>
                 <div class="controls">
                   <div class="input-prepend">
@@ -128,7 +132,7 @@ $trustPath = $targetTrustPath;
                     <input class="input-large" type="password" id="site_admin_pass_confirm" name="site_admin_pass_confirm">
                   </div>
                 </div>
-              </div>
+              </div> -->
 
               <legend>Path Settings</legend>
               <div class="control-group">
@@ -289,61 +293,12 @@ $trustPath = $targetTrustPath;
     </div>
   </div>
 
-  <script type="text/javascript">
-    var installer = {
-      init: function() {
-        $(document).ready(function() {
-          $('.toggle').on({
-            click: function(e) {
-              e.preventDefault();
-              var ele = $(this).data('toggle');
-              $(ele).slideToggle('slow');
-            }
-          });
-
-          $('.tip').tooltip({
-            html: true
-          });
-
-          installer.trustPath();
-        });
-      }
-
-      , trustPath: function() {
-        // This is some example js to show states of the createTrustPath button
-        $('#createTrustPath').live({
-          click: function(e) {
-            e.preventDefault();
-            var path = $(this).prev('input').val();
-            // Error
-            $(this).off().attr('id', 'createTrustPathError').addClass('btn-danger').text('Error...').closest('.control-group').append('<div class="createPathAlert"><br /><div class="alert alert-error">Error attepting to create: <strong>' + path + '</strong>.<br />Please manually create folder and try again.</div></div>');
-            return false;
-          }
-        });
-        $('#createTrustPathError').live({
-          click: function(e) {
-            e.preventDefault();
-            var _this = $(this)
-            , path = _this.prev('input').val();
-            $('.createPathAlert').remove();
-            _this.off().attr('id', 'createTrustPathSuccess').removeClass('btn-danger').addClass('btn-success').text('Created!');
-            _this.closest('.control-group').append('<div class="createPathAlert"><br /><div class="alert alert-success">Created: <strong>' + path + '</strong>.</div></div>');
-
-            return false;
-          }
-        });
-        $('#createTrustPathSuccess').live({
-          click: function(e) {
-            e.preventDefault();
-            $('.createPathAlert').remove();
-            $(this).off().removeClass('btn-success').attr('id', 'createTrustPath').text('Create Trust Path');
-            return false;
-          }
-        });
-      }
-    }
-
-    installer.init();
+  <script>
+    var icms = {
+      config: <?php echo json_encode($icmsJsConfigData); ?>
+    };
   </script>
+  <script src="<?php echo ICMS_LIBRARIES_URL; ?>/jscore/lib/modernizr.js"></script>
+  <script data-main="<?php echo ICMS_LIBRARIES_URL; ?>/jscore/app/routes/installer/main.js" data-loaded="icms_install" src="<?php echo ICMS_LIBRARIES_URL; ?>/jscore/lib/require.js"></script>
 </body>
 </html>
