@@ -27,6 +27,13 @@ require({
 					}
 				});
 
+				$('#cancelInstall').on({
+					click: function(e) {
+						e.preventDefault();
+						$('form')[0].reset();
+					}
+				});
+
 				$('.tip').tooltip({
 					html: true
 				});
@@ -79,5 +86,5 @@ require({
 		}
 	};
 
-	installer.init();
+	return installer.init();
 });

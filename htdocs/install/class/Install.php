@@ -74,14 +74,16 @@ class Install {
 	 * @param	string	$installRoot	directory path to current site
 	 */
 	private function _suggestTrustPath($installRoot) {
+		$randName = substr( md5( time() ), 0, 15);
+
 		/* 1st, check outside the document root */
-		if (is_writable(dirname($_SERVER['DOCUMENT_ROOT']))) return dirname($_SERVER['DOCUMENT_ROOT']) . '/';
+		if (is_writable(dirname($_SERVER['DOCUMENT_ROOT']))) return dirname($_SERVER['DOCUMENT_ROOT']) . '/' . $randName;
 		/* Next, check the document root */
-		if (is_writable($_SERVER['DOCUMENT_ROOT'])) return $_SERVER['DOCUMENT_ROOT'] . '/';
+		if (is_writable($_SERVER['DOCUMENT_ROOT'])) return $_SERVER['DOCUMENT_ROOT'] . '/' . $randName;
 		/* Next, check 1 level above the install root */
-		if (is_writable(dirname($installRoot))) return dirname($installRoot) . '/';
+		if (is_writable(dirname($installRoot))) return dirname($installRoot) . '/' . $randName;
 		/* Finally, check the install root path */
-		if (is_writable($installRoot)) return $installRoot;
+		if (is_writable($installRoot)) return $installRoot . $randName;
 		
 	}
 	
