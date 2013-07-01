@@ -191,7 +191,7 @@ switch ($op) {
 		} else {
 		/*  show form, provide some smart defaults - will need POST vars (or GET or both) */
 			$site_db_host = isset($site_db_host) ? $site_db_host : 'localhost';
-			$site_db_user = isset($site_db_user) ? $site_db_user : 'root';
+			$site_db_user = isset($site_db_user) ? $site_db_user : '';
 			$site_db_pass = isset($site_db_pass) ? $site_db_pass : '';
 			$site_db_name = isset($site_db_name) ? $site_db_name : '';
 			$site_db_prefix = isset($site_db_prefix) ? $site_db_prefix : icms_core_Password::createSalt(7);
