@@ -22,6 +22,7 @@
 
 /* for developer testing */
 $debug = FALSE;
+$debugMsgs = array();
 
 /** language constants for installation */ // @todo	allow to change languages for installation
 require 'languages/english/install.php';
@@ -38,6 +39,7 @@ $siteRootPath = $installation->paths['siteRootPath'];
 $installTrustPath = $installation->paths['installTrustPath'];
 $targetTrustPath = $installation->paths['targetTrustPath'];
 $siteURI = $installation->paths['siteURI'];
+$dbPrefix = '';
 
 /* define these constants so we can use core classes/methods - no trailing slash (wrong convention) */
 define('ICMS_ROOT_PATH', substr($siteRootPath, 0, -1));
@@ -119,7 +121,7 @@ switch ($op) {
 		$reload = FALSE;
 		
 		/* Welcome */
-		//icms_core_Message::result("Welcome!");
+		//icms_core_Message::result("Welcome!", TRUE);
 		
 		/* Check requirements */
 		$phpVersionOK = $installation->checkPHPVersion($requirements['phpversion']);
@@ -136,10 +138,10 @@ switch ($op) {
 		if (count($systemOK) > 0) {
 			// show errors and reload
 			$reload = TRUE;
-			icms_core_Message::warning($systemOK, _SERVER_REQUIREMENTS_NOT_MET, TRUE);
+			$debugMsgs[] = icms_core_Message::warning($systemOK, _SERVER_REQUIREMENTS_NOT_MET, FALSE);
 			unset($systemOK, $phpVersionOK, $extensionsOK);
 		} elseif ($debug) {
-			icms_core_Message::result("System Requirements - OK");
+			$debugMsgs[] = icms_core_Message::result("System Requirements - OK", '', FALSE);
 		}
 		
 		/* Additional server/system information - file system */
@@ -148,10 +150,10 @@ switch ($op) {
 		if (count($pathsOK) > 0) {
 			//show errors and reload
 			$reload = TRUE;
-			icms_core_Message::warning($pathsOK, "These paths need to be writable", TRUE);
+			$debugMsgs[] = icms_core_Message::warning($pathsOK, "These paths need to be writable", FALSE);
 			unset($pathsOK);
 		} elseif ($debug) {
-			icms_core_Message::result("Paths are writable");
+			$debugMsgs[] = icms_core_Message::result("Paths are writable", '', FALSE);
 		}
 		
 		/* trustpath availability (User input? Existing site profile?)
@@ -166,10 +168,10 @@ switch ($op) {
 		if (!$trustPathOK) {
 			//show errors and reload
 			$reload = TRUE;
-			icms_core_Message::warning($installTrustPath, "The trust path is not accessible", TRUE);
+			$debugMsgs[] = icms_core_Message::warning($installTrustPath, "The trust path is not accessible", FALSE);
 			unset($trustPathOK);
 		} elseif ($debug) {
-			icms_core_Message::result("Trust path is ready");
+			$debugMsgs[] = icms_core_Message::result("Trust path is ready", '', FALSE);
 		}
 		
 		/* are you installing the latest version of ImpressCMS? */
@@ -178,10 +180,10 @@ switch ($op) {
 		if (count($versionCheck) > 0) {
 			// show errors and reload
 			$reload = TRUE;
-			icms_core_Message::warning($versionCheck, "Version recommendation", TRUE);
+			$debugMsgs[] = icms_core_Message::warning($versionCheck, "Version recommendation", FALSE);
 			unset($versionCheck);
 		} elseif ($debug) {
-			icms_core_Message::result("You are installing the latest version of ImpressCMS");
+			$debugMsgs[] = icms_core_Message::result("You are installing the latest version of ImpressCMS", '', FALSE);
 		}
 		
 		if ($reload) {
@@ -194,7 +196,7 @@ switch ($op) {
 			$site_db_pass = isset($site_db_pass) ? $site_db_pass : '';
 			$site_db_name = isset($site_db_name) ? $site_db_name : '';
 			$site_db_prefix = isset($site_db_prefix) ? $site_db_prefix : icms_core_Password::createSalt(7);
-			
+
 		/* Advanced: set db persistant connection, character set and collation */
 			$site_db_persist = isset($site_db_persist) ? $site_db_persist : FALSE;
 			$site_db_charset = isset($site_db_charset) ? $site_db_charset : 'utf8';
@@ -221,7 +223,7 @@ switch ($op) {
 		if (count($dbready) > 0) {
 			// show errors and reload
 			$reload = TRUE;
-			icms_core_Message::warning($dbready, "Database problems", TRUE);
+			$debugMsgs[] = icms_core_Message::warning($dbready, "Database problems", FALSE);
 			unset($dbready);
 		}
 		
@@ -241,7 +243,7 @@ switch ($op) {
 		if (count($mainfileResults) > 0) {
 			// show errors and reload
 			$reload = TRUE;
-			icms_core_Message::warning($mainfileResults, "Couldn't save configuration", TRUE);
+			$debugMsgs[] = icms_core_Message::warning($mainfileResults, "Couldn't save configuration", FALSE);
 			unset($mainfileResults);
 		}
 		
@@ -255,7 +257,7 @@ switch ($op) {
 		if (count($messages) > 0) {
 			// show errors and reload
 			$reload = TRUE;
-			icms_core_Message::warning($messages, "Your password entries don't match", TRUE);
+			$debugMsgs[] = icms_core_Message::warning($messages, "Your password entries don't match", FALSE);
 			unset($messages);
 		}
 		
@@ -272,9 +274,9 @@ switch ($op) {
 		if (count($messages) > 0) {
 			// show errors and reload
 			$reload = TRUE;
-			icms_core_Message::warning($messages, "Errors", TRUE);
+			$debugMsgs[] = icms_core_Message::warning($messages, "Errors", FALSE);
 		} else {
-			icms_core_Message::result("You're good to go!");
+			$debugMsgs[] = icms_core_Message::result("You're good to go!", '', FALSE);
 		}
 		break;
 	

@@ -19,14 +19,6 @@ require({
 	var installer = {
 		init: function() {
 			$(document).ready(function() {
-				$('.toggle').on({
-					click: function(e) {
-						e.preventDefault();
-						var ele = $(this).data('toggle');
-						$(ele).slideToggle('slow');
-					}
-				});
-
 				$('#cancelInstall').on({
 					click: function(e) {
 						e.preventDefault();
@@ -39,7 +31,6 @@ require({
 				});
 
 				installer.passwords();
-				installer.trustPath();
 			});
 		}
 
@@ -52,38 +43,33 @@ require({
       });
     }
 
-		, trustPath: function() {
-			// This is some example js to show states of the createTrustPath button
-			$('#createTrustPath').live({
-				click: function(e) {
-					e.preventDefault();
-					var path = $(this).prev('input').val();
-					// Error
-					$(this).off().attr('id', 'createTrustPathError').addClass('btn-danger').text('Error...').closest('.control-group').append('<div class="createPathAlert"><br /><div class="alert alert-error">Error attepting to create: <strong>' + path + '</strong>.<br />Please manually create folder and try again.</div></div>');
-					return false;
-				}
-			});
-			$('#createTrustPathError').live({
-				click: function(e) {
-					e.preventDefault();
-					var _this = $(this)
-					, path = _this.prev('input').val();
-					$('.createPathAlert').remove();
-					_this.off().attr('id', 'createTrustPathSuccess').removeClass('btn-danger').addClass('btn-success').text('Created!');
-					_this.closest('.control-group').append('<div class="createPathAlert"><br /><div class="alert alert-success">Created: <strong>' + path + '</strong>.</div></div>');
+		// , trustPath: function() {
+		// 	// This is some example js to show states of the createTrustPath button
+		// 	$('#createTrustPath').on({
+		// 		click: function(e) {
+		// 			e.preventDefault();
+		// 			var $this = $(this)
+		// 			, path = $this.prev('input').val()
+		// 			, alert = $this.closest('.control-group').children('.createPathAlert').children('.alert');
 
-					return false;
-				}
-			});
-			$('#createTrustPathSuccess').live({
-				click: function(e) {
-					e.preventDefault();
-					$('.createPathAlert').remove();
-					$(this).off().removeClass('btn-success').attr('id', 'createTrustPath').text('Create Trust Path');
-					return false;
-				}
-			});
-		}
+		// 			// Show worker
+		// 			alert.slideDown('slow');
+		// 			$.ajax({
+		// 				url: window.location.href
+		// 				, success: function() {
+		// 					$this.attr('class', 'btn btn-success disabled').text('Success!');
+		// 					alert.attr('class', 'alert alert-success').html('Created: <strong>' + path + '</strong>.');
+		// 					$('#submitInstall').attr('class','btn btn-primary');
+		// 				}
+		// 				, error: function() {
+		// 					$this.attr('class', 'btn btn-danger disabled').text('Error!');
+		// 					alert.attr('class', 'alert alert-error').html('Error Creating: <strong>' + path + '</strong>.<br />Please create manually and try again.');
+		// 				}
+		// 			});
+		// 			return false;
+		// 		}
+		// 	});
+		// }
 	};
 
 	return installer.init();

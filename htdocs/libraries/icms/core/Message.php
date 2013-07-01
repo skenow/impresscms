@@ -90,20 +90,24 @@ class icms_core_Message {
 	 * @param	string $title
 	 * @return	void
 	 */
-	static public function result($msg, $title='') {
-		echo '<div class="resultMsg">';
+	static public function result($msg, $title='', $render = true) {
+		$ret = '<div class="resultMsg">';
 		if ($title != '') {
-			echo '<h4>' . $title . '</h4>';
+			$ret .= '<h4>' . $title . '</h4>';
 		}
 		if (is_array($msg)) {
 			foreach ($msg as $m) {
-				echo $m . '<br />';
+				$ret .= $m . '<br />';
 			}
 		} else {
-			echo $msg;
+			$ret .= $msg;
 		}
-		echo '</div>';
-
+		$ret .= '</div>';
+		if ($render) {
+			echo $ret;
+		} else {
+			return $ret;
+		}
 	}
 
 	/**
