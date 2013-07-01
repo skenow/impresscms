@@ -37,7 +37,7 @@
         <div class="inner">
 
           <div id="header" class="header">
-            <h1><img src="tpl/img/logo.png" alt="ImpressCMS" /></h1>
+            <h1><img src="<?php echo ICMS_URL; ?>/themes/core/media/img/logo.png" alt="ImpressCMS" /></h1>
           </div>
 
           <?php 

@@ -81,4 +81,10 @@ textarea.error:focus {
 	border-color: #bce8f1;	
 }
 
-.marker {font-size: 18px; padding-top: 6px; float: right; color: #B94A48;}
+.marker {
+	font-size: 18px;
+	padding-top: 6px;
+	float: right;
+	color: #B94A48;
+	margin: 1px 0 0 5px;
+}
