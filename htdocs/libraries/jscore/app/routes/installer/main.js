@@ -7,18 +7,33 @@ require({
 		, app: 'app'
 		, modules: 'app/modules'
 		, mediator: 'app/mediator'
+		, locale: 'locale/english/'
 	}
 }
 ,[
 	'jquery'
+	, 'mediator'
 	, 'util/core/tools'
+	, 'modules/notify/main'
+	, 'modules/validator/main'
   , 'plugins/twitter_bootstrap'
   , 'plugins/jquery.ui/jquery.ui'
   , 'plugins/password/passfield'
-], function($, tools){
+], function($, mediator, tools, notifier, validator){
 	var installer = {
 		init: function() {
+			tools.loadCSS(icms.config.jscore + 'app/modules/notify/notify.css', 'jquery-notify');
+      validator.initialize();
+
 			$(document).ready(function() {
+				mediator.subscribe('addNotification', function(message, options) {
+					notifier.showMessage(message, options);
+				});
+
+        $('a[rel="external"]').click(function(){
+          $(this).attr('target', '_blank');
+        });
+
 				$('#cancelInstall').on({
 					click: function(e) {
 						e.preventDefault();
@@ -42,34 +57,6 @@ require({
         , 'showGenerate' : true
       });
     }
-
-		// , trustPath: function() {
-		// 	// This is some example js to show states of the createTrustPath button
-		// 	$('#createTrustPath').on({
-		// 		click: function(e) {
-		// 			e.preventDefault();
-		// 			var $this = $(this)
-		// 			, path = $this.prev('input').val()
-		// 			, alert = $this.closest('.control-group').children('.createPathAlert').children('.alert');
-
-		// 			// Show worker
-		// 			alert.slideDown('slow');
-		// 			$.ajax({
-		// 				url: window.location.href
-		// 				, success: function() {
-		// 					$this.attr('class', 'btn btn-success disabled').text('Success!');
-		// 					alert.attr('class', 'alert alert-success').html('Created: <strong>' + path + '</strong>.');
-		// 					$('#submitInstall').attr('class','btn btn-primary');
-		// 				}
-		// 				, error: function() {
-		// 					$this.attr('class', 'btn btn-danger disabled').text('Error!');
-		// 					alert.attr('class', 'alert alert-error').html('Error Creating: <strong>' + path + '</strong>.<br />Please create manually and try again.');
-		// 				}
-		// 			});
-		// 			return false;
-		// 		}
-		// 	});
-		// }
 	};
 
 	return installer.init();

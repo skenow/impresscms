@@ -57,24 +57,24 @@
           <h3>Welcome, Thanks for Installing ICMS!</h3>
           <p>We need to collect some information from you before we begin...</p>
 
-          <form class="form-horizontal">
+          <form class="form-horizontal ajax">
             <h4>Admin Account</h4>
             <div class="control-group">
               <label class="control-label" for="site_admin_email">Email</label>
               <div class="controls">
                 <div class="input-prepend">
                   <span class="add-on"><i class="icon-envelope"></i></span>
-                  <input class="input-xlarge" type="email" id="site_admin_email" name="site_admin_email">
+                  <input class="input-xlarge required" type="email" id="site_admin_email" name="site_admin_email">
                 </div>
               </div>
             </div>
           
             <div class="control-group">
-              <label class="control-label" for="site_admin_display">Display Name <span class="tip" title="Name displayed to public"><i class="icon-info-sign"></i></span></label>
+              <label class="control-label" for="site_admin_display">Display Name <span class="tip" title="Name displayed to public"><i class="icon-question"></i></span></label>
               <div class="controls">
                 <div class="input-prepend">
                   <span class="add-on"><i class="icon-eye-open"></i></span>
-                  <input class="input-xlarge" type="text" id="site_admin_display" name="site_admin_display">
+                  <input class="input-xlarge required" type="text" id="site_admin_display" name="site_admin_display">
                 </div>
               </div>
             </div>
@@ -82,7 +82,7 @@
             <!-- 
 
             <div class="control-group">
-              <label class="control-label" for="site_admin_uname">Login Name <span class="tip" title="Must differ from display name"><i class="icon-info-sign"></i></span></label>
+              <label class="control-label" for="site_admin_uname">Login Name <span class="tip" title="Must differ from display name"><i class="icon-question"></i></span></label>
               <div class="controls">
                 <div class="input-prepend">
                   <span class="add-on"><i class="icon-eye-close"></i></span>
@@ -96,14 +96,14 @@
               <div class="controls">
                 <div class="input-prepend">
                   <span class="add-on"><i class="icon-lock"></i></span>
-                  <input class="input-xlarge" type="password" id="site_admin_pass" name="site_admin_pass">
+                  <input class="input-xlarge required" type="password" id="site_admin_pass" name="site_admin_pass">
                 </div>
               </div>
             </div>
 
             <h4>Path Settings</h4>
             <div class="control-group">
-              <label class="control-label" for="site_trust">Trust Path <span class="tip" title="Select a location outside of your webroot for your secure trust path"><i class="icon-info-sign"></i></span></label>
+              <label class="control-label" for="site_trust">Trust Path <span class="tip" title="Select a location outside of your webroot for your secure trust path"><i class="icon-question"></i></span></label>
               <div class="controls">
                 <div class="input-prepend">
                   <span class="add-on"><i class="icon-exclamation-sign"></i></span>
@@ -118,7 +118,7 @@
               <div class="controls">
                 <div class="input-prepend">
                   <span class="add-on"><i class="icon-globe"></i></span>
-                  <input class="input-xlarge" type="text" id="site_db_host" name="site_db_host" placeholder="<?php echo $site_db_host;?>" value="<?php echo $site_db_host;?>">
+                  <input class="input-xlarge required" type="text" id="site_db_host" name="site_db_host" placeholder="<?php echo $site_db_host;?>" value="<?php echo $site_db_host;?>">
                 </div>
               </div>
             </div>
@@ -128,7 +128,7 @@
               <div class="controls">
                 <div class="input-prepend">
                   <span class="add-on"><i class="icon-briefcase"></i></span>
-                  <input class="input-xlarge" type="text" id="site_db_name" name="site_db_name" placeholder="<?php echo $site_db_name;?>" value="<?php echo $site_db_name;?>">
+                  <input class="input-xlarge required" type="text" id="site_db_name" name="site_db_name" placeholder="<?php echo $site_db_name;?>" value="<?php echo $site_db_name;?>">
                 </div>
               </div>
             </div>
@@ -138,7 +138,7 @@
               <div class="controls">
                 <div class="input-prepend">
                   <span class="add-on"><i class="icon-user"></i></span>
-                  <input class="input-xlarge" type="text" id="site_db_user" name="site_db_user" placeholder="<?php echo $site_db_user;?>" value="<?php echo $site_db_user;?>">
+                  <input class="input-xlarge required" type="text" id="site_db_user" name="site_db_user" placeholder="<?php echo $site_db_user;?>" value="<?php echo $site_db_user;?>">
                 </div>
               </div>
             </div>
@@ -148,7 +148,7 @@
               <div class="controls">
                 <div class="input-prepend">
                   <span class="add-on"><i class="icon-lock"></i></span>
-                  <input class="input-xlarge" type="password" id="site_db_pass" name="site_db_pass">
+                  <input class="input-xlarge required" type="password" id="site_db_pass" name="site_db_pass">
                 </div>
               </div>
             </div>
