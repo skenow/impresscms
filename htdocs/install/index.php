@@ -39,7 +39,6 @@ $siteRootPath = $installation->paths['siteRootPath'];
 $installTrustPath = $installation->paths['installTrustPath'];
 $targetTrustPath = $installation->paths['targetTrustPath'];
 $siteURI = $installation->paths['siteURI'];
-$dbPrefix = '';
 
 /* define these constants so we can use core classes/methods - no trailing slash (wrong convention) */
 define('ICMS_ROOT_PATH', substr($siteRootPath, 0, -1));
