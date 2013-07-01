@@ -40,7 +40,19 @@
             <h1><img src="tpl/img/logo.png" alt="ImpressCMS" /></h1>
           </div>
 
-          <?php if(isset($showMsg)) { echo $showMsg; } ?>
+          <?php 
+            if(isset($showMsg)) {
+              echo $showMsg;
+            }
+
+            if($reload) {
+          ?>
+            <p>
+              <a href="?op=reload" class="btn btn-primary"><i class="icon-refresh icon-white"></i> Try Again</a>
+            </p>          
+          <?php  
+            } else {
+          ?>
 
           <h3>Welcome, Thanks for Installing ICMS!</h3>
           <p>We need to collect some information from you before we begin...</p>
@@ -67,7 +79,9 @@
               </div>
             </div>
 
-<!--               <div class="control-group">
+            <!-- 
+
+            <div class="control-group">
               <label class="control-label" for="site_admin_uname">Login Name <span class="tip" title="Must differ from display name"><i class="icon-info-sign"></i></span></label>
               <div class="controls">
                 <div class="input-prepend">
@@ -165,6 +179,7 @@
               </div>
             </div>
           </form>
+          <?php } // Ends reload if ?>
         </div>
       </div>
     </div>
