@@ -23,6 +23,7 @@ $requirements = array(
 			),
 		'paths' => array(
 				'cache',
+				'install',
 				'modules',
 				'templates_c',
 				'uploads',
