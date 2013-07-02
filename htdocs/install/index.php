@@ -222,6 +222,13 @@ switch ($op) {
 		if (count($dbready) > 0) {
 			// show errors and reload
 			$reload = TRUE;
+			echo json_encode( 
+				array(
+					'status'=>'error'
+					, 'message'=>'Database problems'
+					, 'data'=>$dbready
+				)
+			);
 			$debugMsgs[] = icms_core_Message::warning($dbready, "Database problems", FALSE);
 			unset($dbready);
 		}
@@ -242,23 +249,15 @@ switch ($op) {
 		if (count($mainfileResults) > 0) {
 			// show errors and reload
 			$reload = TRUE;
+			echo json_encode( array(
+				'status'=>'error'
+				, 'message'=>'Couldn\'t save configuration'
+				, 'data'=>$mainfileResults
+			));
 			$debugMsgs[] = icms_core_Message::warning($mainfileResults, "Couldn't save configuration", FALSE);
 			unset($mainfileResults);
 		}
 		
-		/* User input - site details: administrator login (reinstall existing site profile?)
-		 * Minimum: email address/password. Create password?
-		 * Optional: site name, slogan, general preferences...
-		 */
-		
-		/* could be done with javascript and would be unnecessary, here */
-		$messages = array();
-		if (count($messages) > 0) {
-			// show errors and reload
-			$reload = TRUE;
-			$debugMsgs[] = icms_core_Message::warning($messages, "Your password entries don't match", FALSE);
-			unset($messages);
-		}
 		
 		/* Populate database (install system module). Reinstall existing site profile?
 		 * Considerations
@@ -273,8 +272,16 @@ switch ($op) {
 		if (count($messages) > 0) {
 			// show errors and reload
 			$reload = TRUE;
+			echo json_encode(
+				array(
+					'status'=>'error'
+					, 'message'=>'Errors'
+					, 'data'=>$messages
+				)
+			);
 			$debugMsgs[] = icms_core_Message::warning($messages, "Errors", FALSE);
 		} else {
+			echo json_encode(array('status'=>'success'));
 			$debugMsgs[] = icms_core_Message::result("You're good to go!", '', FALSE);
 		}
 		break;
