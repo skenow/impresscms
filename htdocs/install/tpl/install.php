@@ -57,14 +57,14 @@
           <h3>Welcome, Thanks for Installing ICMS!</h3>
           <p>We need to collect some information from you before we begin...</p>
 
-          <form class="form-horizontal ajax">
+          <form id="installForm" class="form-horizontal ajax" method="post" action="?op=go" name="installer">
             <h4>Admin Account</h4>
             <div class="control-group">
               <label class="control-label" for="site_admin_email">Email</label>
               <div class="controls">
                 <div class="input-prepend">
                   <span class="add-on"><i class="icon-envelope"></i></span>
-                  <input class="input-xlarge required" type="email" id="site_admin_email" name="site_admin_email">
+                  <input class="input-xlarge required" type="email" id="site_admin_email" name="site_admin_email" value="<?php echo $site_admin_email; ?>">
                 </div>
               </div>
             </div>
@@ -74,7 +74,7 @@
               <div class="controls">
                 <div class="input-prepend">
                   <span class="add-on"><i class="icon-eye-open"></i></span>
-                  <input class="input-xlarge required" type="text" id="site_admin_display" name="site_admin_display">
+                  <input class="input-xlarge required" type="text" id="site_admin_display" name="site_admin_display" value="<?php echo $site_admin_display; ?>">
                 </div>
               </div>
             </div>

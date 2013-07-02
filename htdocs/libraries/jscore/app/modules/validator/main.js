@@ -43,7 +43,7 @@ define([
             }
             , submitHandler: function(form) {
               if(ajax) {
-                form.ajaxSubmit({
+                $(form).ajaxSubmit({
                   success: function(data) {
                     mediator.publish('formCallback', formName, 'success', data);
                   }

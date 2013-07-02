@@ -20,24 +20,39 @@ require({
   , 'plugins/jquery.ui/jquery.ui'
   , 'plugins/password/passfield'
 ], function($, mediator, tools, notifier, validator){
-	var installer = {
+	var installForm
+	, installer = {
 		init: function() {
 			tools.loadCSS(icms.config.jscore + 'app/modules/notify/notify.css', 'jquery-notify');
       validator.initialize();
 
+			mediator.subscribe('addNotification', function(message, options) {
+				notifier.showMessage(message, options);
+			});
+
+			mediator.subscribe('formCallback', function(formName, status, data) {
+				console.log(formName, status, data);
+			});
+
 			$(document).ready(function() {
-				mediator.subscribe('addNotification', function(message, options) {
-					notifier.showMessage(message, options);
-				});
+				installForm = $('#installForm');
 
         $('a[rel="external"]').click(function(){
           $(this).attr('target', '_blank');
         });
 
+        $('#submitInstall').on({
+					click: function(e) {
+						e.preventDefault();
+						installForm.submit();
+						return false;
+					}
+        });
+
 				$('#cancelInstall').on({
 					click: function(e) {
 						e.preventDefault();
-						$('form')[0].reset();
+						installForm[0].reset();
 					}
 				});
 
