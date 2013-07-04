@@ -440,17 +440,17 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 * @param 	string	$dirname
 	 * @return	string	Results of the installation process
 	 */
-	public function install($dirname) {
-
+	static public function install($dirname) {
+	
 	}
 
 	/**
 	 * Logic for uninstalling a module
 	 *
-	 * @param unknown_type $dirname
+	 * @param	string	$dirname
 	 * @return	string	Result messages for uninstallation
 	 */
-	public function uninstall($dirname) {
+	static public function uninstall($dirname) {
 
 	}
 

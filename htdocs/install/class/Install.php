@@ -48,7 +48,7 @@ class Install {
 		$installPath = dirname(dirname(__FILE__)) . '/';
 		$siteRootPath = dirname(dirname(dirname(__FILE__))) . '/';
 		$installTrustPath = $installPath . 'trustpath/';
-		$targetTrustPath = $this->_suggestTrustPath($siteRootPath); 
+		$targetTrustPath = $this->_suggestTrustPath($siteRootPath);
 		
 		if ($this->_isWindows) {
 			$installPath = str_replace('\\', '/', $installPath);
@@ -70,20 +70,20 @@ class Install {
 	
 	/**
 	 * A method to suggest a trust path for the installation
-	 * 
+	 *
 	 * @param	string	$installRoot	directory path to current site
 	 */
 	private function _suggestTrustPath($installRoot) {
 		$randName = substr( md5( time() ), 0, 15);
 
 		/* 1st, check outside the document root */
-		if (is_writable(dirname($_SERVER['DOCUMENT_ROOT']))) return dirname($_SERVER['DOCUMENT_ROOT']) . '/' . $randName;
+		if (is_writable(dirname($_SERVER['DOCUMENT_ROOT']))) return dirname($_SERVER['DOCUMENT_ROOT']) . '/' . $randName . '/';
 		/* Next, check the document root */
-		if (is_writable($_SERVER['DOCUMENT_ROOT'])) return $_SERVER['DOCUMENT_ROOT'] . '/' . $randName;
+		if (is_writable($_SERVER['DOCUMENT_ROOT'])) return $_SERVER['DOCUMENT_ROOT'] . '/' . $randName . '/';
 		/* Next, check 1 level above the install root */
-		if (is_writable(dirname($installRoot))) return dirname($installRoot) . '/' . $randName;
+		if (is_writable(dirname($installRoot))) return dirname($installRoot) . '/' . $randName . '/';
 		/* Finally, check the install root path */
-		if (is_writable($installRoot)) return $installRoot . $randName;
+		if (is_writable($installRoot)) return $installRoot . $randName . '/';
 		
 	}
 	
@@ -234,6 +234,15 @@ class Install {
 	 */
 	public function moveTrustPath($installTrustPath, $targetTrustPath) {
 		$messages = array();
+		$moveTrustPath = icms_core_Filesystem::copyRecursive($installTrustPath, $targetTrustPath);
+		$moveTrustPath = is_readable($targetTrustPath);
+		if ($moveTrustPath) {
+			if (!icms_core_Filesystem::deleteRecursive($installTrustPath)) {
+				$messages[] = "Unable to remove the installation trust path";
+			}
+		} else {
+			$messages[] = "Unable to create the trustpath";
+		}
 		return $messages;
 	}
 
@@ -247,13 +256,38 @@ class Install {
 	 */
 	public function writeMainfile($sitepath, $trustpath, $sdata) {
 
-		$contents = "define('ICMS_URL', '". ICMS_URL . "');" . PHP_EOL;
-		$contents .= "define('ICMS_ROOT_PATH', dirname(dirname(__FILE__)));" . PHP_EOL;
-		$contents .= "define('ICMS_TRUST_PATH', '" . substr($trustpath, 0, -1) . "');" . PHP_EOL;
-		$contents .= "define('ICMS_SDATA', '$sdata');" . PHP_EOL;
-		$contents .= "require ICMS_TRUST_PATH . '/' . ICMS_SDATA;" . PHP_EOL;
+		$contents = "<?php
+/**
+ * Required site configuration information
+ *
+ * Be careful if you are changing data in this file.
+ *
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		Core
+ */
+ 
+"
+. "define('ICMS_URL', '". ICMS_URL . "');" . PHP_EOL
+. "define('ICMS_ROOT_PATH', dirname(__FILE__));" . PHP_EOL
 
+. "define('ICMS_TRUST_PATH', '" . substr($trustpath, 0, -1) . "');" . PHP_EOL
+. "define('ICMS_SDATA', '$sdata');" . PHP_EOL
+
+. "define('XOOPS_DB_TYPE', 'mysql');" . PHP_EOL
+
+. "require ICMS_TRUST_PATH . '/' . ICMS_SDATA;" . PHP_EOL
+
+. "define('ICMS_GROUP_ADMIN', '1');" . PHP_EOL
+. "define('ICMS_GROUP_USERS', '2');" . PHP_EOL
+. "define('ICMS_GROUP_ANONYMOUS', '3');" . PHP_EOL
+
+. "if (!isset(\$xoopsOption['nocommon']) && ICMS_ROOT_PATH != '') {
+	include ICMS_ROOT_PATH . '/include/common.php';
+}";
+		
 		$messages = icms_core_Filesystem::writeFile($contents, 'mainfile', 'php', $sitepath, FALSE);
+		icms_core_Filesystem::chmod($sitepath . 'mainfile.php', 0444);
 		return $messages;
 	}
 }

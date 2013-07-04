@@ -190,6 +190,8 @@ switch ($op) {
 		// 	echo "<button type='button'><a href='index.php?op=reload'>Try again</a></button>";
 		// } else {
 		/*  show form, provide some smart defaults - will need POST vars (or GET or both) */
+			$site_admin_email = isset($site_admin_email) ? $site_admin_email : '';
+			$site_admin_display = isset($site_admin_display) ? $site_admin_display : '';
 			$site_db_host = isset($site_db_host) ? $site_db_host : 'localhost';
 			$site_db_user = isset($site_db_user) ? $site_db_user : '';
 			$site_db_pass = isset($site_db_pass) ? $site_db_pass : '';
@@ -222,7 +224,7 @@ switch ($op) {
 		if (count($dbready) > 0) {
 			// show errors and reload
 			$reload = TRUE;
-			echo json_encode( 
+			echo json_encode(
 				array(
 					'status'=>'error'
 					, 'message'=>'Database problems'
@@ -244,9 +246,9 @@ switch ($op) {
 			$moveTrustPath = $installation->moveTrustPath($installTrustPath, $site_trust);
 		
 		/* Save sites/mainfile.php */
-			$mainfileResults = $installation->writeMainfile($site_path, $installTrustPath, $targetSecureData);
+			$mainfileResults = $installation->writeMainfile($siteRootPath, $site_trust, $targetSecureData);
 		
-		if (count($mainfileResults) > 0) {
+		if (is_array($mainfileResults) && count($mainfileResults) > 0) {
 			// show errors and reload
 			$reload = TRUE;
 			echo json_encode( array(
@@ -267,6 +269,18 @@ switch ($op) {
 		 *  - some of the data is language-specific
 		 */
 		
+		/* install system module
+		 * the system module will also handle adding any default content (old makedata.php tasks)
+		 */
+		icms_module_Handler::install('system');
+		
+		/* install all the other modules */
+		$availableModules = icms_module_Handler::getAvailable();
+		foreach ($availableModules as $module) {
+			if ($module != 'system') {
+				icms_module_Handler::install($module);
+			}
+		}
 		
 		$messages = array();
 		if (count($messages) > 0) {

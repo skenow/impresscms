@@ -219,6 +219,7 @@ class icms_core_Filesystem {
 			RecursiveIteratorIterator::CHILD_FIRST
 		);
 		foreach ($iterator as $path) {
+			if ($path->getFilename() == '.' || $path->getFilename() == '..') continue;
 			if (!$path->isWritable()) chmod($path->__toString(), 0777);
 			if ($path->isDir()) {
 				$success = rmdir($path->__toString());
