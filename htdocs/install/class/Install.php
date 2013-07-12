@@ -21,7 +21,7 @@ class Install {
 
 	/** is the install running on Windows OS? */
 	private $_isWindows;
-	
+
 	/** file paths for the installation */
 	public $paths;
 
@@ -31,7 +31,7 @@ class Install {
 	public function __construct() {
 		$this->_buildPaths();
 	}
-	
+
 	/**
 	 * Determine the various paths necessary, parsing from the server
 	 */
@@ -43,20 +43,20 @@ class Install {
 		$script = $_SERVER['SCRIPT_NAME'];
 		$query = $_SERVER['QUERY_STRING'];
 		$requestURI = $_SERVER['REQUEST_URI'];
-				
+
 		/* define these with a trailing slash, as directories should be */
 		$installPath = dirname(dirname(__FILE__)) . '/';
 		$siteRootPath = dirname(dirname(dirname(__FILE__))) . '/';
 		$installTrustPath = $installPath . 'trustpath/';
 		$targetTrustPath = $this->_suggestTrustPath($siteRootPath);
-		
+
 		if ($this->_isWindows) {
 			$installPath = str_replace('\\', '/', $installPath);
 			$siteRootPath = str_replace('\\', '/', $siteRootPath);
 			$installTrustPath = str_replace('\\', '/', $installTrustPath);
 			$targetTrustPath = str_replace('\\', '/', $targetTrustPath);
 		}
-		
+
 		$siteURI = $schema . $host . basename($siteRootPath) . '/';
 		$this->paths = array(
 				'installPath' => $installPath,
@@ -64,10 +64,10 @@ class Install {
 				'installTrustPath' => $installTrustPath,
 				'targetTrustPath' => $targetTrustPath,
 				'siteURI' => $siteURI,
-			);
+		);
 		return $this;
 	}
-	
+
 	/**
 	 * A method to suggest a trust path for the installation
 	 *
@@ -84,9 +84,9 @@ class Install {
 		if (is_writable(dirname($installRoot))) return dirname($installRoot) . '/' . $randName . '/';
 		/* Finally, check the install root path */
 		if (is_writable($installRoot)) return $installRoot . $randName . '/';
-		
+
 	}
-	
+
 	/**
 	 * Check if the PHP version is suitable
 	 *
@@ -202,26 +202,64 @@ class Install {
 	 * Write the secure data into the trust path
 	 *
 	 * @param	string	$installTrustPath
-	 * @param	string	$dbserver	name of the db server
-	 * @param	string	$dbuser		authorized db user
-	 * @param	string	$dbpassword	password for the db user
-	 * @param	string	$dbname		name of the database
-	 * @param	string	$dbprefix	db table prefix to use for this installation
-	 * @param	string	$sitesalt	site encryption salt
+	 * @param	string	$dbtype			DB engine - currently only MySQL is supported
+	 * @param	string	$dbserver		name of the db server
+	 * @param	string	$dbuser			authorized db user
+	 * @param	string	$dbpassword		password for the db user
+	 * @param	string	$dbname			name of the database
+	 * @param	string	$dbpersist		should the connection to the database be persistant, 0 for no, 1 for yes
+	 * @param	string	$dbcharset		the default characterset for the database
+	 * @param	string	$dbcollation	the collation of the characterset
+	 * @param	string	$dbprefix		db table prefix to use for this installation
+	 * @param	string	$sitesalt		site encryption salt
 	 * @return	array	$messages	an array of messages if errors, an empty array if successful
 	 */
-	public function writeSecureData($installTrustPath, $dbserver, $dbuser, $dbpassword, $dbname, $dbprefix, $sitesalt = '') {
+	public function writeSecureData($installTrustPath, $dbtype, $dbserver, $dbuser, $dbpassword, $dbname, $dbpersist, $dbcharset, $dbcollation, $dbprefix, $sitesalt = '') {
 
+		$messages = array();
+
+		if ($dbtype == '') $dbtype = 'mysql';
+		if ($dbcharset == '') $dbcharset = 'utf8';
+		if ($dbcollation == '') $dbcollation = 'utf8_general_ci';
+		if ($dbpersist == '') $dbpersist = '0';
+			
 		if ($sitesalt == '') $sitesalt = hash('sha1', time() . $installTrustPath);
+		$defines = array(
+				'ICMS_DB_TYPE' => $dbtype,
+				'ICMS_DB_HOST' => $dbserver,
+				'ICMS_DB_USER' => $dbuser,
+				'ICMS_DB_PASS' => $dbpassword,
+				'ICMS_DB_NAME' => $dbname,
+				'ICMS_DB_PCONNECT' => $dbpersist,
+				'ICMS_DB_PREFIX' => $dbprefix,
+				'ICMS_DB_CHARSET' => $dbcharset,
+				'ICMS_DB_COLLATION' => $dbcollation,
+				'ICMS_DB_SALT' => $sitesalt,
+		);
+		$legacy = array(
+				'XOOPS_DB_TYPE' => ICMS_DB_TYPE,
+				'XOOPS_DB_HOST' => ICMS_DB_HOST,
+				'XOOPS_DB_USER' => ICMS_DB_USER,
+				'XOOPS_DB_PASS' => ICMS_DB_PASS,
+				'XOOPS_DB_NAME' => ICMS_DB_NAME,
+				'XOOPS_DB_PCONNECT' => ICMS_DB_PCONNECT,
+				'XOOPS_DB_PREFIX' => ICMS_DB_PREFIX,
+				'XOOPS_DB_CHARSET' => ICMS_DB_CHARSET,
+				'XOOPS_DB_COLLATION' => ICMS_DB_COLLATION,
+				'XOOPS_DB_SALT' => ICMS_DB_SALT,
+		);
 
-		$contents = "define('ICMS_DB_HOST', '$dbserver');" . PHP_EOL;
-		$contents .= "define('ICMS_DB_USER', '$dbuser');" . PHP_EOL;
-		$contents .= "define('ICMS_DB_PASS', '$dbpassword');" . PHP_EOL;
-		$contents .= "define('ICMS_DB_NAME', '$dbname');" . PHP_EOL;
-		$contents .= "define('ICMS_DB_PREFIX', '$dbprefix');" . PHP_EOL;
-		$contents .= "define('ICMS_DB_SALT', '$sitesalt');" . PHP_EOL;
+		$contents = '';
+		foreach ($defines as $key => $val) {
+			$contents .= "define('" . $key . "', '" . $val . "');" . PHP_EOL;
+		}
+		$contents .= PHP_EOL . "// - Legacy db constants " . PHP_EOL;
+		foreach ($legacy as $key => $val) {
+			$contents .= "define('" . $key . "', " . $val . ");" . PHP_EOL;
+		}
+		$result = icms_core_Filesystem::writeFile($contents, 'sdata', 'php', $installTrustPath, FALSE);
+		if (!result) $messages[] = "Unable to write secure data";
 
-		$messages = icms_core_Filesystem::writeFile($contents, 'sdata', 'php', $installTrustPath, FALSE);
 		return $messages;
 	}
 
@@ -256,38 +294,57 @@ class Install {
 	 */
 	public function writeMainfile($sitepath, $trustpath, $sdata) {
 
-		$contents = "<?php
-/**
- * Required site configuration information
- *
- * Be careful if you are changing data in this file.
- *
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		Core
- */
- 
-"
-. "define('ICMS_URL', '". ICMS_URL . "');" . PHP_EOL
-. "define('ICMS_ROOT_PATH', dirname(__FILE__));" . PHP_EOL
+		$messages = array();
+		$header = array(
+				"<?php",
+				"/**",
+				" * Required site configuration information",
+				" *",
+				" * Be careful if you are changing data in this file.",
+				" *",
+				" * @copyright	http://www.impresscms.org/ The ImpressCMS Project",
+				" * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)",
+				" * @package		Core",
+				" */",
+		);
+		$defines = array(
+				'ICMS_URL' => ICMS_URL,
+				'ICMS_ROOT_PATH' => 'dirname(__FILE__)',
+				'ICMS_TRUST_PATH' => substr($trustpath, 0, -1),
+				'ICMS_SDATA' => $sdata,
+				'ICMS_GROUP_ADMIN' => '1',
+				'ICMS_GROUP_USERS' => '2',
+				'ICMS_GROUP_ANONYMOUS' => '3',
+		);
 
-. "define('ICMS_TRUST_PATH', '" . substr($trustpath, 0, -1) . "');" . PHP_EOL
-. "define('ICMS_SDATA', '$sdata');" . PHP_EOL
+		$includes = array(
+				"require ICMS_TRUST_PATH . '/' . ICMS_SDATA;",
+				"if (!isset(\$xoopsOption['nocommon']) && ICMS_ROOT_PATH != '') {",
+				"	include ICMS_ROOT_PATH . '/include/common.php';",
+				"}",
+		);
 
-. "define('XOOPS_DB_TYPE', 'mysql');" . PHP_EOL
+		$contents = '';
+		foreach ($header as $line) {
+			$contents .= $line . PHP_EOL;
+		}
+		foreach ($defines as $key => $val) {
+			if ($key == 'ICMS_ROOT_PATH') {
+				$contents .= "define('" . $key . "', " . $val . ");" . PHP_EOL;
+			} else {
+				$contents .= "define('" . $key . "', '" . $val . "');" . PHP_EOL;
+			}
+		}
+		foreach ($includes as $include) {
+			$contents .= $include . PHP_EOL;
+		}
 
-. "require ICMS_TRUST_PATH . '/' . ICMS_SDATA;" . PHP_EOL
+		$result = icms_core_Filesystem::writeFile($contents, 'mainfile', 'php', $sitepath, FALSE);
+		if (!$result) $messages[] = "Unable to write mainfile";
 
-. "define('ICMS_GROUP_ADMIN', '1');" . PHP_EOL
-. "define('ICMS_GROUP_USERS', '2');" . PHP_EOL
-. "define('ICMS_GROUP_ANONYMOUS', '3');" . PHP_EOL
+		$chmodMainfile = icms_core_Filesystem::chmod($sitepath . 'mainfile.php', 0444);
+		if (!$chmodMainfile) $messages[] = "Unable to write protect mainfile";
 
-. "if (!isset(\$xoopsOption['nocommon']) && ICMS_ROOT_PATH != '') {
-	include ICMS_ROOT_PATH . '/include/common.php';
-}";
-		
-		$messages = icms_core_Filesystem::writeFile($contents, 'mainfile', 'php', $sitepath, FALSE);
-		icms_core_Filesystem::chmod($sitepath . 'mainfile.php', 0444);
 		return $messages;
 	}
 }

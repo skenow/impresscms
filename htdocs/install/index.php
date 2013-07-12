@@ -192,6 +192,8 @@ switch ($op) {
 		/*  show form, provide some smart defaults - will need POST vars (or GET or both) */
 			$site_admin_email = isset($site_admin_email) ? $site_admin_email : '';
 			$site_admin_display = isset($site_admin_display) ? $site_admin_display : '';
+			
+			$site_db_type = isset($site_db_type) ? $site_db_type : 'mysql';
 			$site_db_host = isset($site_db_host) ? $site_db_host : 'localhost';
 			$site_db_user = isset($site_db_user) ? $site_db_user : '';
 			$site_db_pass = isset($site_db_pass) ? $site_db_pass : '';
@@ -199,7 +201,7 @@ switch ($op) {
 			$site_db_prefix = isset($site_db_prefix) ? $site_db_prefix : icms_core_Password::createSalt(7);
 
 		/* Advanced: set db persistant connection, character set and collation */
-			$site_db_persist = isset($site_db_persist) ? $site_db_persist : FALSE;
+			$site_db_persist = isset($site_db_persist) ? $site_db_persist : '0'; //FALSE;
 			$site_db_charset = isset($site_db_charset) ? $site_db_charset : 'utf8';
 			$site_db_collation = isset($site_db_collation) ? $site_db_collation : '';
 			
@@ -236,7 +238,11 @@ switch ($op) {
 		}
 		
 		/* Save credentials and path info to trustpath/sdata.php */
-			$sdataOK = $installation->writeSecureData($installTrustPath, $site_db_host, $site_db_user, $site_db_pass, $site_db_name, $site_db_prefix, $site_pw_salt_key = '');
+			$sdataOK = $installation->writeSecureData(
+					$installTrustPath, $site_db_type, $site_db_host, 
+					$site_db_user, $site_db_pass, $site_db_name, $site_db_persist, $site_db_charset, 
+					$site_db_collation, $site_db_prefix, $site_pw_salt_key
+					);
 		
 		/* Relocate & rename trustpath/sdata.php */
 			$secureData = 'trustpath/sdata.php';
@@ -248,7 +254,7 @@ switch ($op) {
 		/* Save sites/mainfile.php */
 			$mainfileResults = $installation->writeMainfile($siteRootPath, $site_trust, $targetSecureData);
 		
-		if (is_array($mainfileResults) && count($mainfileResults) > 0) {
+		if ($mainfileResults) {
 			// show errors and reload
 			$reload = TRUE;
 			echo json_encode( array(
