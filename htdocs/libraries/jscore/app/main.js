@@ -7,19 +7,16 @@
     Initializes the routes.
     Scrape the page for widgets
 */
-define([
+require([
   'jquery'
-  , 'util/core/log'
-  , 'app/routes'
-  , 'util/require-utils/module-activator'
+  , 'core'
+  , 'ext/router'
+  , 'ext/activator'
   , 'modules/notify/main'
-  , 'modules/adminMenu/main'
   , 'modules/uitools/main'
   , 'modules/validator/main'
-  , 'modules/i18n/main'
-  , 'mediator'
 ]
-, function($, log, routes, moduleActivator, notifier, adminMenu, uitools, validator, i18n, mediator) {
+, function($, Core, routes, activator, notifier, uitools, validator) {
   var _private = {
     appendSelectOption: function(selectMenuId, optionName, optionValue){
       $('<option />', {
@@ -101,22 +98,26 @@ define([
   }
   , app = {
     initialize: function() {
-      $.extend(window, _private);
-      mediator.publish('commonReady');
+      // assigning Core to icms object
+      icms.routeReady = $.Deferred();
+      icms.core = Core;
+      icms.core.mediator.subscribe('addNotification', function(message, options) {
+        notifier.showMessage(message, options);
+      });
 
-      log.initialize();
-      routes.initialize();
-      moduleActivator.execute();
-      // common.initialize();
       if(icms.config.adminMenu !== false) {
-        adminMenu.initialize();
+        require(['modules/adminMenu/main'], function(adminMenu) {
+          adminMenu.initialize();
+        });
       }
+
+      $.extend(window, _private);
+      icms.core.mediator.publish('commonReady');
+
+      routes.initialize();
+      activator.execute();
       uitools.initialize();
       validator.initialize();
-
-      if(icms.config.i18n !== false) {
-        i18n.initialize();
-      }
 
       $(document).ready(function() {
         $('a[rel="external"]').click(function(){
@@ -124,13 +125,10 @@ define([
         });
 
         if(icms.redirectmessage !== false) {
-          notifier.initialize(icms.redirectMessage);
+          notifier.showMessage(icms.redirectMessage);
         }
-        mediator.subscribe('addNotification', function(message, options) {
-          notifier.showMessage(message, options);
-        });
       });
     }
   };
-  return app;
+  return app.initialize();
 });
