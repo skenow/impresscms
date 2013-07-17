@@ -224,6 +224,12 @@ header {min-height: 60px; background: #FFF; color: #6E6E6E;}
 .preface .block_inner {color: #fff; padding: 20px 0;}
 .preface h1, .preface h2, .preface h3, .preface h4, .preface h5, .preface h6 {border: 0; color: #fff;}
 
+
+/* Slider Demo - these may need to be removed for your slider to look the way you want */
+.slides .slider-demo {background: #222; padding: 40px 60px 60px; font-size: 1.4em; font-weight: normal;}
+.slides .slider-demo li {margin: 0 0 7px 0;}
+.slides .slider-demo li strong {color: #ccc;}
+
 /* Aside Left */
 .leftside_wrapper {background: #F2F2F2; color: #6E6E6E;}
 .leftside { padding: 0 10px;}
