@@ -38,6 +38,20 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	private $_cachedModule_lookup = array();
 
 	/**
+	 * A list of database tables reserved for core use
+	 * 
+	 * @var		array
+	 * @access	private
+	 */
+	private $_reservedTables = array(
+			'avatar', 'avatar_users_link', 'block_module_link', 'xoopscomments', 'config',
+			'configcategory', 'configoption', 'image', 'imagebody', 'imagecategory', 'imgset',
+			'imgset_tplset_link', 'imgsetimg', 'groups', 'groups_users_link', 'group_permission',
+			'online', 'priv_msgs', 'ranks', 'session',  'smiles', 'users', 'newblocks',
+			'modules', 'tplfile', 'tplset', 'tplsource', 'xoopsnotifications'
+	);
+	
+	/**
 	 * Create a new {@link icms_module_Object} object
 	 *
 	 * @param   boolean     $isNew   Flag the new object as "new"
@@ -438,30 +452,101 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 * Function and rendering for installation of a module
 	 *
 	 * @param 	string	$dirname
-	 * @return	string	Results of the installation process
+	 * @return	array	Array of messages with results of the installation process
 	 */
 	static public function install($dirname) {
-	
+
+		// check if the current user has sufficient privileges
+		
+		// check if the module is already installed
+		
+		// get module info, sql file
+		
+		// parse and execute sql file, if it exists
+		
+			// if an error occurs during sql execution, remove any tables created
+			
+		// insert module info - from icms_version		
+			// insert module's templates' info, clear module cache (there shouldn't be any!)
+			
+			// insert module's blocks and block templates
+			
+			// insert module config options
+			
+			// insert module comment options
+			
+			// insert module notification options
+			
+			// add group permissions for module (admin, read)
+			
+			// add group permissions for blocks
+			
+			// add module autotasks
+			
+			// execute module-specific install function
+			
+			// return results
+		
+		
 	}
 
 	/**
 	 * Logic for uninstalling a module
 	 *
 	 * @param	string	$dirname
-	 * @return	string	Result messages for uninstallation
+	 * @return	array	Array of messages with results of the installation process
 	 */
 	static public function uninstall($dirname) {
-
+		
+		// check if the current user has sufficient privileges
+		
+		// check if the module is installed
+		
+		// check if module is system module
+		
+		// check if module is a start page for a group
+		
+		// check if a page (symlink) of the module is a start page for a group
+		
+		// delete module (handler->delete)
+		
+		// delete templates
+		
+		// delete blocks and block template files
+		
+		// delete tables used by this module (prevent deletion of reserved core tables!)
+		
+		// delete comments if any
+		
+		// delete notifications if any
+		
+		// delete permissions if any
+		
+		// delete module config options if any
+		
+		// delete autotasks
+		
+		// delete urllinks
+		
+		// delete files
+		
+		// execute module specific uninstall script if any
+		
+		// return results
 	}
 
 	/**
 	 * Logic for updating a module
 	 *
-	 * @param 	str $dirname
-	 * @return	str	Result messages from the module update
+	 * @param 	string	$dirname - directory where the module is located
+	 * @return	array	Result messages from the module update
 	 */
 	public function update($dirname) {
 
+		// check if the current user has sufficient privileges
+		
+		// check if the module is installed
+		
 	}
 
 	/**
@@ -472,6 +557,10 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 */
 	public function activate($mid) {
 
+		// check if the current user has sufficient privileges
+		
+		// check if the module is installed
+		
 	}
 
 	/**
@@ -482,17 +571,26 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 */
 	public function deactivate($mid) {
 
+		// check if the current user has sufficient privileges
+		
+		// check if the module is installed
+		
 	}
 
 	/**
-	 * Logic for changing the weight (order) and name of modules
+	 * Logic for changing the weight (order) or name of modules
 	 *
 	 * @param int $mid		Unique ID for the module to change
 	 * @param int $weight	Integer value of the weight to be applied to the module
 	 * @param str $name		Name to be applied to the module
+	 * @return	string
 	 */
 	public function change($mid, $weight, $name) {
 
+		// check if the current user has sufficient privileges
+		
+		// check if the module is installed
+				
 	}
 
 	/**
@@ -500,9 +598,12 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 * @param	string	$dirname	Directory name of the module
 	 * @param	string	$template	Name of the template file
 	 * @param	boolean	$block		Are you trying to retrieve the template for a block?
+	 * @return	string
 	 */
 	public function getTemplate($dirname, $template, $block = FALSE) {
 
+		// check if the current user has sufficient privileges
+				
 	}
 
 	/**
@@ -514,6 +615,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	 * @param	string	$icmsroot		A unique identifier for the site
 	 * @param	string	$modulename		The module being installed or updated, 'system' for the core
 	 * @param	string	$action			Action triggering the notification: install, uninstall, activate, deactivate, update
+	 * @return	null
 	 */
 	public static function installation_notify($versionstring, $icmsroot, $modulename = 'system', $action = 'install') {
 
