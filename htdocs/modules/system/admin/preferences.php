@@ -255,13 +255,13 @@ switch ($op) {
 					$list = array_merge($moduleslist, $pagelist);
 					asort($list);
 
-					$ele = new icms_form_elements_Tray($title, '<br />');
+					$ele = new icms_form_elements_Tray($title, '<hr />');
 					$hv = '';
 					foreach ($grps as $k => $v) {
 						if (! isset($value[$k])) {
 							$value[$k] = '--';
 						}
-						$f = new icms_form_elements_Select('<b>' . $v . ':</b>', $config[$i]->getVar('conf_name') . '[' . $k . ']', $value[$k]);
+						$f = new icms_form_elements_Select('<span class="label">' . $v . '</span> &nbsp;<i class="icon-arrow-right"></i>&nbsp;', $config[$i]->getVar('conf_name') . '[' . $k . ']', $value[$k]);
 						$f->addOptionArray($list);
 						$ele->addElement($f);
 						unset($f);
@@ -290,10 +290,10 @@ switch ($op) {
 					$currrent_val = $config[$i]->getConfValueForOutput();
 					$cache_options = array('0' => _NOCACHE, '30' => sprintf(_SECONDS, 30), '60' => _MINUTE, '300' => sprintf(_MINUTES, 5), '1800' => sprintf(_MINUTES, 30), '3600' => _HOUR, '18000' => sprintf(_HOURS, 5), '86400' => _DAY, '259200' => sprintf(_DAYS, 3), '604800' => _WEEK);
 					if (count($modules) > 0) {
-						$ele = new icms_form_elements_Tray($title, '<br />');
+						$ele = new icms_form_elements_Tray($title, '<hr />');
 						foreach (array_keys($modules) as $mid) {
 							$c_val = isset($currrent_val[$mid]) ?(int) $currrent_val[$mid] : NULL;
-							$selform = new icms_form_elements_Select($modules[$mid]->getVar('name'), $config[$i]->getVar('conf_name') . "[$mid]", $c_val);
+							$selform = new icms_form_elements_Select('<span class="label">' . $modules[$mid]->getVar('name') . '</span> &nbsp;<i class="icon-arrow-right"></i>&nbsp;', $config[$i]->getVar('conf_name') . "[$mid]", $c_val);
 							$selform->addOptionArray($cache_options);
 							$ele->addElement($selform);
 							unset($selform);

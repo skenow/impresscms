@@ -86,6 +86,6 @@ class icms_form_elements_Button extends icms_form_Element {
 	 * @return	string
 	 */
 	public function render() {
-		return "<input type='".$this->getType()."' class='formButton' name='".$this->getName()."'  id='".$this->getName()."' value='".$this->getValue()."'".$this->getExtra()." />";
+		return "<input type='".$this->getType()."' class='btn' name='".$this->getName()."'  id='".$this->getName()."' value='".$this->getValue()."'".$this->getExtra()." />";
 	}
 }

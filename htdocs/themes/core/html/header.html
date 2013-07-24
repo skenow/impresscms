@@ -35,13 +35,13 @@
 
       <{if $show_search}>
         <div id="header_search" class="header_search">
-          <form action="<{$icms_url}>/search.php" method="get" role="search">
-            <span>
-              <input aria-required="true" placeholder="<{$search_input_text}>" type="text" name="query" size="14" />
+          <form action="<{$icms_url}>/search.php" method="post" class="form-search" role="search">
+            <div class="input-append">
+              <input aria-required="true" placeholder="<{$search_input_text}>" type="text" name="query" />
               <input type="hidden" name="action" value="results" />
-              <input type="submit" class="btn btn-clear" value="<{$search_button_text}>" />              
-            </span>
-          </form>
+              <button type="submit" class="btn"><i class="icon icon-search"></i> <{$search_button_text}></button>
+            </div>
+          </form>   
         </div>
       <{/if}>
 
