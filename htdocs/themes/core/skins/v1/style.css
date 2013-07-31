@@ -222,7 +222,7 @@ header {min-height: 60px; background: #FFF; color: #6E6E6E;}
 
 
 /* Slider Demo - these may need to be removed for your slider to look the way you want */
-.slides .slider-demo {background: #222; padding: 40px 60px 60px; font-size: 1.4em; font-weight: normal;}
+.slides .slider-demo {background: #222 url(img/textures/diagTextureRight.png) top center no-repeat; padding: 40px 60px 60px; font-size: 1.4em; font-weight: normal;}
 .slides .slider-demo li {margin: 0 0 7px 0;}
 .slides .slider-demo li strong {color: #ccc;}
 

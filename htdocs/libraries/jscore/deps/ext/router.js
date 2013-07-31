@@ -1,13 +1,13 @@
 /* global icms: true */
-define(['underscore'], function(_) {
+define(['underscore', 'core'], function(_, Core) {
 	return {
 		processedRoutes: []
 
 		, initialize: function() {
 			var self = this;
-			icms.routeReady.done(function() {
+			Core.mediator.deferredSubscribe('routeReady', function() {
 				self.applyRoute();
-			}, self);
+			});
 		}
 
 		, applyRoute: function(){

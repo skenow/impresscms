@@ -118,26 +118,6 @@ $icmsTheme->addScript(NULL, array('type' => 'text/javascript'),
     '}' .
     ', redirectMessage: ' . $redirectMessage .
     ', router: []' .
-    ', routeReady: {' .
-      'isResolved: false' .
-      ', callback : {}' .
-      ', done : function(callback, scope){' .
-        'this.callback = callback;' .
-        'this.scope = scope;' .
-        'if(this.isResolved){' .
-        ' this.call();' .
-        '}' .
-      '}' .
-      ', resolve:function(){' .
-        'this.isResolved = true;' .
-        'if(typeof this.callback == "function"){' .
-        ' this.call();' .
-        '}' .
-      '}' .
-      ', call : function(){' .
-      ' this.callback.call(this.scope);' .
-      '}' .
-    '}' .
   '};' 
 , 'head', '-10');
 
@@ -145,4 +125,6 @@ $bootstrap = file_exists( ICMS_LIBRARIES_URL . '/jscore/bootstrap-built.js') ? I
 $icmsTheme->addScript(ICMS_LIBRARIES_URL . '/jscore/deps/libs/modernizr.js', array('type' => 'text/javascript'), '', 'head', '-3');
 $icmsTheme->addScript(ICMS_LIBRARIES_URL . '/jscore/configs/require.js', array('type' => 'text/javascript'), '', 'head', '-2');
 $icmsTheme->addScript(ICMS_LIBRARIES_URL . '/jscore/deps/libs/require-jquery.js', array('type' => 'text/javascript', 'data-main' => $bootstrap, 'data-loaded' => 'icms_core' ), '', 'head', '-1');
-$icmsTheme->addScript(NULL, array('type' => 'text/javascript'), 'icms.routeReady.resolve();', 'foot', '100');
+$icmsTheme->addScript(NULL, NULL, 'require(["core"], function(Core) {Core.mediator.deferredPublish("routeReady");});', 'foot', '100');
+
+

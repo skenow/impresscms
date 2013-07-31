@@ -20,6 +20,8 @@ define([
   , 'bootstrap/popover'
   , 'bootstrap/modal'
   , 'bootstrap/tab'
+  , 'bootstrap/selectable'
+  , 'css!bootstrap/selectable.css'
 ]
 , function($, labels, modalTemplate) {
   var modalMarkup = null
@@ -75,6 +77,9 @@ define([
           $('a[href="' + hash + 'pass-form"]').click();
         }
       }
+
+      // beautify select ele
+      $('select').selectpicker('refresh');
 
     }
 

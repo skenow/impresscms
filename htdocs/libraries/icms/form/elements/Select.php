@@ -172,21 +172,20 @@ class icms_form_elements_Select extends icms_form_Element {
 		$ele_name = $this->getName();
 		$ele_value = $this->getValue();
 		$ele_options = $this->getOptions();
-		$multiple = $this->getSize() > 1 ? " multiple='multiple'" : "";
 		$classes = $this->isRequired() ? 'required ' : '';
 		$classes .= get_class($this);
-		$ret = "<select class='".$classes."' " . $this->getExtra() . $multiple;
+		$ret = "<select class='".$classes."' " . $this->getExtra();
 		if ($this->isMultiple() != false) {
-			$ret .= " name='" . $ele_name . "[]' id='" . $ele_name . "[]' multiple='multiple'>\n";
+			$ret .= " name='" . $ele_name . "[]' id='" . $ele_name . "[]' multiple>";
 		} else {
-			$ret .= " name='" . $ele_name . "' id='" . $ele_name . "'>\n";
+			$ret .= " name='" . $ele_name . "' id='" . $ele_name . "'>";
 		}
 		foreach ( $ele_options as $value => $name ) {
 			$ret .= "<option value='" . htmlspecialchars($value, ENT_QUOTES) . "'";
 			if (count($ele_value) > 0 && in_array($value, $ele_value)) {
 				$ret .= " selected='selected'";
 			}
-			$ret .= ">" . $name . "</option>\n";
+			$ret .= ">" . $name . "</option>";
 		}
 		$ret .= "</select>";
 		return $ret;
