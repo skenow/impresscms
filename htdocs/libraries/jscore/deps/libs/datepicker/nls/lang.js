@@ -17,8 +17,10 @@ define({
 	, 'el': true
 	, 'es': true
 	, 'et': true
+	, 'fa-ir': true
 	, 'fi': true
 	, 'fr': true
+	, 'fo': true
 	, 'he': true
 	, 'hr': true
 	, 'hu': true
@@ -36,7 +38,7 @@ define({
 	, 'nl': true
 	, 'no': true
 	, 'pl': true
-	, 'pt-BR': true
+	, 'pt-br': true
 	, 'pt': true
 	, 'ro': true
 	, 'rs-latin': true
@@ -50,6 +52,6 @@ define({
 	, 'th': true
 	, 'tr': true
 	, 'uk': true
-	, 'zh-CN': true
-	, 'zh-TW': true
+	, 'zh-cn': true
+	, 'zh-tw': true
 });
