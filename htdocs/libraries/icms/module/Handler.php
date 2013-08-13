@@ -459,6 +459,10 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 		// check if the current user has sufficient privileges
 		
 		// check if the module is already installed
+		if (in_array($dirname, self::getList())) { 
+			// module is installed 
+			// this won't work during installation of the core - no db!
+		}
 		
 		// get module info, sql file
 		
@@ -483,9 +487,12 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 			
 			// add module autotasks
 			
-			// execute module-specific install function
+		// execute module-specific install function
 			
-			// return results
+		// on success, send basic install information to ImpressCMS 
+		self::installation_notify($versionstring, ICMS_URL, $dirname, 'install');
+		
+		// return results
 		
 		
 	}
@@ -532,6 +539,9 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 		
 		// execute module specific uninstall script if any
 		
+		// on success, send basic uninstall information to ImpressCMS
+		self::installation_notify($versionstring, ICMS_URL, $dirname, 'uninstall');
+		
 		// return results
 	}
 
@@ -547,6 +557,9 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 		
 		// check if the module is installed
 		
+		// on success, send basic update information to ImpressCMS, if module version changes
+		self::installation_notify($versionstring, ICMS_URL, $dirname, 'update');
+		
 	}
 
 	/**
@@ -561,6 +574,9 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 		
 		// check if the module is installed
 		
+		// on success, send basic activation information to ImpressCMS
+		self::installation_notify($versionstring, ICMS_URL, $dirname, 'activate');
+		
 	}
 
 	/**
@@ -574,6 +590,9 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 		// check if the current user has sufficient privileges
 		
 		// check if the module is installed
+		
+		// on success, send basic deactivation information to ImpressCMS
+		self::installation_notify($versionstring, ICMS_URL, $dirname, 'deactivate');
 		
 	}
 
@@ -607,7 +626,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	}
 
 	/**
-	 * Posts a notification of an install or update of the system module
+	 * Posts a notification of an install or update of a module
 	 *
 	 * @todo	Add language constants
 	 *
@@ -634,7 +653,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 
 		//url-ify the data for the POST
 		$fields_string = "";
-		foreach($fields as $key=>$value) {
+		foreach ($fields as $key=>$value) {
 			$fields_string .= $key . '=' . $value . '&';
 		}
 		rtrim($fields_string, '&');
@@ -659,7 +678,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 
 			//close connection
 			curl_close($ch);
-		} catch(Exception $e) {
+		} catch (Exception $e) {
 			icms_core_Message::error(sprintf($e->getMessage()));
 		}
 	}
