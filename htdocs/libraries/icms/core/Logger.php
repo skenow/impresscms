@@ -185,7 +185,7 @@ class icms_core_Logger {
 			$errortext = sprintf(_CORE_PAGENOTDISPLAYED, $errstr);
 			echo $errortext;
 			if ($trace && function_exists('debug_backtrace')) {
-				echo "<div style='color:#ffffff;background-color:#ffffff'>Backtrace:<br />";
+				echo "<div>Backtrace:<br />";
 				$trace = debug_backtrace();
 				array_shift($trace);
 				foreach ($trace as $step) {
