@@ -86,7 +86,9 @@ class icms_config_Item_Object extends icms_core_Object {
 	 */
 	public function setConfValueForInput($value, $force_slash = false) {
 		if ($this->getVar('conf_formtype') == 'textarea' && $this->getVar('conf_valuetype') !== 'array') {
-			$value = icms_core_DataFilter::checkVar($value, 'html', 'input');
+            if (!is_int($value) && !empty($value)) {
+                $value = icms_core_DataFilter::checkVar($value, 'html', 'input');
+            }
 		} elseif ($this->getVar('conf_formtype') == 'textsarea' && $this->getVar('conf_valuetype') !== 'array') {
 			$value = icms_core_DataFilter::checkVar($value, 'text', 'input');
 		} elseif ($this->getVar('conf_formtype') == 'password') {

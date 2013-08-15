@@ -930,7 +930,7 @@ class icms_ipf_Object extends icms_core_Object {
 						if (defined('XOOPS_EDITOR_IS_HTML')) {
 							$br = false;
 						}
-						if ($html) {
+						if ($html && (!is_int($ret) && !empty($ret))) {
 							return icms_core_DataFilter::checkVar($ret, 'html', 'output');
 						} else {
 							return icms_core_DataFilter::checkVar($ret, 'text', 'output');

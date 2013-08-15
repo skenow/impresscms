@@ -340,7 +340,7 @@ class icms_core_Object {
 						$smiley = (!isset($this->vars['dosmiley']['value']) || $this->vars['dosmiley']['value'] == 1) ? 1 : 0;
 						$image = (!isset($this->vars['doimage']['value']) || $this->vars['doimage']['value'] == 1) ? 1 : 0;
 						$br = (!isset($this->vars['dobr']['value']) || $this->vars['dobr']['value'] == 1) ? 1 : 0;
-						if ($html) {
+						if ($html && (!is_int($ret) && !empty($ret))) {
                             if ($br) { // have to use this whilst ever there's a zillion editors in the core
                                 return icms_core_DataFilter::filterHTMLdisplay($ret, $xcode, $br);
                             } else {
@@ -468,7 +468,7 @@ class icms_core_Object {
 
 		foreach ($this->vars as $k => $v) {
 			$cleanv = $v['value'];
-			if (!$v['changed'] || $this->_isNewConfig) {
+			if (!$v['changed'] || $this->_isNewConfig || (!is_int($cleanv) && empty($cleanv))) {
 			} else {
 				$cleanv = is_string($cleanv) ? trim($cleanv) : $cleanv;
 				switch ($v['data_type']) {
