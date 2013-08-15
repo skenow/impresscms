@@ -54,7 +54,11 @@ if (empty( $mode )) {
 			
 			$count = count($this->deprecated);
 			$ret .= "<li><a href='#debug-deprecated' data-toggle='tab'>" . _CORE_DEPRECATED . " (" . icms_conv_nr2local($count) . ")</a></li>\n";
-		$ret .= "</ul>\n";
+
+			$count = count($this->filters);
+			$ret .= "<li><a href='#debug-filters' data-toggle='tab'>" . _FILTERS . " (" . icms_conv_nr2local($count) . ")</a></li>\n";
+			
+	$ret .= "</ul>\n";
 
 		$ret .= "<div class='tab-content'>\n";
 			$ret .= "<div class='tab-pane active' id='debug-none'></div>\n";
@@ -140,6 +144,32 @@ if (empty($mode) || $mode == 'deprecated') {
 	$ret .= '<div class="tab-pane" id="debug-deprecated"><h4>' . _CORE_DEPRECATED . '</h4>';
 	foreach ( $this->deprecated as $dep) {
 		$ret .= '<div class="' . $class.'">' . $dep . '</div>';
+		$class = ($class == 'odd') ? 'even' : 'odd';
+	}
+	$ret .= '</div>';
+}
+
+/**
+ * @author		ImpressCMS
+ * @since 		1.3.5
+ */
+if (empty($mode) || $mode == 'filters') {
+	$class = 'even';
+	$ret .= '<div class="tab-pane" id="debug-filters"><h4>' . _FILTERS . '</h4>';
+	foreach ($this->filters as $f) {
+		$ret .= '<div class="' . $class.'"><strong>' . constant(_FILTERS_MSG . $f['filtermsg']) . '</strong> ' . htmlspecialchars($f['name']) . '</div>';
+	/*	previous line was a result of refactoring the below - skenow
+	 * @todo	remove before 2.0 rc
+		if($f['filtermsg'] == 1) {
+			$ret .= '<div class="' . $class.'"><strong>' . _FILTERS_MSG1 . '</strong> ' . htmlspecialchars($f['name']) . '</div>';
+		} elseif ($f['filtermsg'] == 2) {
+			$ret .= '<div class="' . $class.'"><strong>' . _FILTERS_MSG2 . '</strong> ' . htmlspecialchars($f['name']) . '</div>';
+		} elseif ($f['filtermsg'] == 3) {
+			$ret .= '<div class="' . $class.'"><strong>' . _FILTERS_MSG3 . '</strong> ' . htmlspecialchars($f['name']) . '</div>';
+		} elseif ($f['filtermsg'] == 4) {
+			$ret .= '<div class="' . $class.'"><strong>' . _FILTERS_MSG4 . '</strong> ' . htmlspecialchars($f['name']) . '</div>';
+		}
+	*/
 		$class = ($class == 'odd') ? 'even' : 'odd';
 	}
 	$ret .= '</div>';

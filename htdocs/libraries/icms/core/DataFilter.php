@@ -496,6 +496,8 @@ class icms_core_DataFilter {
 	 * @return  string
 	 **/
 	static public function filterHTMLdisplay($html, $icode = 1, $br = 0) {
+        global $icmsConfig;
+        
 		icms::$preload->triggerEvent('beforeFilterHTMLdisplay', array(&$html, 1, $br));
         
         $ifiltered = strpos($html, '<!-- input filtered -->');
@@ -507,7 +509,7 @@ class icms_core_DataFilter {
 
             $html = icms_core_HTMLFilter::filterHTML($html);
             
-            $html .= '<!-- warning! output filtered only -->';
+            //$html .= '<!-- warning! output filtered only -->';
         
             $purified = strpos($html, '<!-- filtered with htmlpurifier -->');
             if ($purified === FALSE || $br = 1) {
@@ -515,12 +517,32 @@ class icms_core_DataFilter {
             }
         }
         
+        if ($icmsConfig['debug_mode'] !==0) {
+            $purified = strpos($html, '<!-- filtered with htmlpurifier -->');
+            if ($ifiltered === FALSE) {
+                if ($purified === FALSE) {
+                    icms::$logger->addFilter(self::icms_substr($html, 0, 400), 3);
+                } else {
+                    $html = str_replace('<!-- filtered with htmlpurifier -->', '', $html);
+                    icms::$logger->addFilter(self::icms_substr($html, 0, 400), 4);
+                }
+            } else {
+                $html = str_replace('<!-- input filtered -->', '', $html);
+                if ($purified === FALSE) {
+                    icms::$logger->addFilter(self::icms_substr($html, 0, 400), 1);
+                } else {
+                    $html = str_replace('<!-- filtered with htmlpurifier -->', '', $html);
+                    icms::$logger->addFilter(self::icms_substr($html, 0, 400), 2);
+                }
+            }
+        } else {
+            $html = str_replace('<!-- input filtered -->', '', $html);
+            $html = str_replace('<!-- filtered with htmlpurifier -->', '', $html);
+        }
+
         $html = self::makeClickable($html);
         $html = self::censorString($html);
         
-//        $html = str_replace('<!-- input filtered -->', '', $html);
-//        $html = str_replace('<!-- filtered with htmlpurifier -->', '', $html);
-
 		icms::$preload->triggerEvent('afterFilterHTMLdisplay', array(&$html, 1, $br));
 		return $html;
 	}

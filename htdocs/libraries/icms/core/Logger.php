@@ -34,7 +34,8 @@ class icms_core_Logger {
 	public $logend = array();
 	public $errors = array();
 	public $deprecated = array();
-
+	public $filters = array();
+	
 	public $usePopup = FALSE;
 	public $activated = TRUE;
 
@@ -158,6 +159,17 @@ class icms_core_Logger {
 			$this->deprecated[] = $msg;
 		}
 	}
+
+	/**
+	 * Log display of filters
+	 * @param   string  $name       name/id of the content
+	 * @param   string  $filter_message     message displayed
+	 */
+	public function addFilter($name, $filter_message) {
+		if ($this->activated )
+		$this->filters[] = array('name' => $name, 'filtermsg' => (int) $filter_message);
+	}
+    
 	/**
 	 * Error handling callback (called by the zend engine)
 	 * @param  string  $errno
@@ -268,4 +280,16 @@ class icms_core_Logger {
 		return $stop - $this->logstart[$name];
 	}
 
+	/**
+	 * dumpFilters
+	 *
+	 * @since		1.3.5
+	 * @deprecated	Use dump('blocks'), instead
+	 * @todo		Remove in version 2.0
+	 * @return 		unknown
+	 */
+	public function dumpFilters() {
+		icms_core_Debug::setDeprecated('$this->dump("filters")', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return $this->dump('filters');
+	}
 }

@@ -313,6 +313,14 @@ define("_LOCAL_FOOTER",'Powered by ImpressCMS &copy; 2007-' . date('Y', time()) 
 define("_BLOCK_ID", "Block ID");
 define('_IMPRESSCMS_PROJECT','Project Development');
 
+// added in 1.3.5
+define("_FILTERS","Filters");
+define("_FILTER","Filter");
+define("_FILTERS_MSG1","Input Filter: ");
+define("_FILTERS_MSG2","Input Filter (HTMLPurifier): ");
+define("_FILTERS_MSG3","Output Filter: ");
+define("_FILTERS_MSG4","Output Filter (HTMLPurifier): ");
+
 // added in 2.0
 define('_ENTER_MENTION', 'Enter the user name to mention:');
 define( '_ENTER_HASHTAG', 'Enter the term(s) to tag:');
