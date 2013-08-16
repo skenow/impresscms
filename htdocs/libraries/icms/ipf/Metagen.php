@@ -142,13 +142,13 @@ class icms_ipf_Metagen {
 	 *
 	 */
 	public function setTitle($title) {
-		global $icmsModule, $icmsModuleConfig;
+		global $icmsModuleConfig;
 		$this->_title = $this->html2text($title);
 		$this->_title = $this->purifyText($this->_title);
 		$this->_original_title = $this->_title;
 
-		$moduleName = $icmsModule->getVar('name');
-
+		$moduleName = is_object(icms::$module) ? icms::$module->getVar('name') : "";
+		
 		$titleTag = array();
 
 		$show_mod_name_breadcrumb = isset($icmsModuleConfig['show_mod_name_breadcrumb'])
