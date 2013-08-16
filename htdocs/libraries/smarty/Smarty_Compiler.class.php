@@ -21,7 +21,7 @@
  * @link http://smarty.php.net/
  * @author Monte Ohrt <monte at ohrt dot com>
  * @author Andrei Zmievski <andrei@php.net>
- * @version 2.6.26
+ * @version 2.6.25-dev
  * @copyright 2001-2005 New Digital Group, Inc.
  * @package Smarty
  */
@@ -74,17 +74,12 @@ class Smarty_Compiler extends Smarty {
     var $_strip_depth           =   0;
     var $_additional_newline    =   "\n";
 
-    var $_phpversion            =   0;
-
-
     /**#@-*/
     /**
      * The class constructor.
      */
     function Smarty_Compiler()
     {
-        $this->_phpversion = substr(phpversion(),0,1);
-
         // matches double quoted strings:
         // "foobar"
         // "foo\"bar"
