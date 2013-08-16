@@ -53,7 +53,6 @@ class icms_ipf_form_Base extends icms_form_Theme {
 		$this->createElements();
 		//if ($captcha) $this->addCaptcha();
 		$this->createPermissionControls();
-		$this->createButtons($form_name, $form_caption, $submit_button_caption);
 	}
 
 	/**
@@ -291,7 +290,7 @@ class icms_ipf_form_Base extends icms_form_Theme {
 	}
 
 	/**
-	 * Add an element to the form
+	 * Add form buttons
 	 *
 	 * @param	string  $form_name              name of the form
 	 * @param	string  $form_caption           caption of the form
@@ -474,6 +473,7 @@ class icms_ipf_form_Base extends icms_form_Theme {
 	 * @return	string  $ret
 	 */
 	public function render() {
+		$this->createButtons($this->_form_name, $this->_form_caption, $this->_submit_button_caption);
 		$ele_name = $this->getName();
 		$ret = "<form id='" . $ele_name . "' name='" . $ele_name . "' action='" . $this->getAction()	. "' method='" . $this->getMethod() . "'" . $this->getExtra() . ">"
 		. "<div class='icms-theme-form'>"
@@ -535,6 +535,7 @@ class icms_ipf_form_Base extends icms_form_Theme {
 	 * @param	mixed   $smartyName   if smartyName is passed, assign it to the smarty call else assign the name of the form element
 	 */
 	public function assign(&$tpl, $smartyName = FALSE){
+		$this->createButtons($this->_form_name, $this->_form_caption, $this->_submit_button_caption);
 		$i = 0;
 		$elements = array();
 		foreach ($this->getElements() as $ele) {

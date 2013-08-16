@@ -58,7 +58,7 @@ final class icms_core_Password {
 		$microtime = function_exists('microtime') ? microtime() : time();
 		mt_srand((double)$microtime * 1000000);
 		for ($i=0; $i<=$slength; $i++)
-		$salt.= substr($base, mt_rand(0, $slength) % strlen($base), 1);
+		$salt.= substr($base, mt_rand(0, strlen($base)), 1);
 
 		return $salt;
 	}

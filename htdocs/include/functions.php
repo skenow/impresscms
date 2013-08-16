@@ -197,7 +197,7 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 	$icmsTheme = $xoTheme =& $xoopsThemeFactory->createInstance(array("plugins" => array()));
 	$xoopsTpl = $icmsTpl =& $xoTheme->template;
 
-	if($icmsConfig['debug_mode'] == 2 && icms::$user->isAdmin())
+	if($icmsConfig['debug_mode'] == 2 && is_object(icms::$user) &&  icms::$user->isAdmin())
 	{
 		$xoopsTpl->assign('time', 300);
 		$xoopsTpl->assign('xoops_logdump', icms::$logger->dump());

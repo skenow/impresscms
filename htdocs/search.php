@@ -183,7 +183,9 @@ switch ($action) {
 				$all_results_counts[$modname] = $count;
 
 				if (!is_array($results) || $count == 0) {
-					if ($icmsConfigSearch['search_no_res_mod']) {$all_results[$modname] = array(); }
+									if ($icmsConfigSearch['search_no_res_mod']) {
+						unset($all_results[$modname], $all_results_counts[$modname]);
+					}
 				} else {
 					(($count - $start) > $max_results_per_page)? $num_show_this_page = $max_results_per_page: $num_show_this_page = $count - $start;
 					for ($i = 0; $i < $num_show_this_page; $i++) {
