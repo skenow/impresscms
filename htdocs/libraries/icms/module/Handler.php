@@ -552,7 +552,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 			if (curl_exec($ch)) {
 				icms_core_Message::error($url . $fields_string, 'Notification Sent to');
 			} else {
-				throw new Execption("Unable to contact update server");
+				throw new Exception("Unable to contact update server");
 			}
 
 			//close connection
