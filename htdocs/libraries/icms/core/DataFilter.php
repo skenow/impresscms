@@ -512,7 +512,7 @@ class icms_core_DataFilter {
             //$html .= '<!-- warning! output filtered only -->';
         
             $purified = strpos($html, '<!-- filtered with htmlpurifier -->');
-            if ($purified === FALSE || $br = 1) {
+            if ($purified === FALSE || $br == 1) {
             	$html = self::nl2Br($html);
             }
         }
