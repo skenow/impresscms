@@ -29,9 +29,12 @@ icms::boot();
 
 // -- Easiest ML by Gijoe (no longer needed here)
 
-// Disable gzip compression if PHP is run under CLI mode
+// Disable gzip compression if PHP is run under CLI mode or if multi-language is enabled
 // To be refactored
-if (empty($_SERVER['SERVER_NAME']) || substr(PHP_SAPI, 0, 3) == 'cli') {
+if (empty($_SERVER['SERVER_NAME']) 
+		|| substr(PHP_SAPI, 0, 3) == 'cli'
+		|| $GLOBALS['icmsConfigMultilang']
+) {
 	$icmsConfig['gzip_compression'] = 0;
 }
 
