@@ -86,7 +86,7 @@ class icms_member_user_Handler
 	 *  @global array $icmsConfigUser user configuration
 	 *  @return string of errors encountered while validating the user information, will be blank if successful
 	 */
-	public function userCheck($login_name, $uname, $email, $pass, $vpass, $uid = 0) {
+	public function userCheck($login_name, $uname, $email, $pass, $uid = 0) { //$vpass
 		global $icmsConfigUser;
 
 		// initializations
@@ -138,10 +138,11 @@ class icms_member_user_Handler
 
 		// check password
 		if ($pass !== FALSE) {
-			if (!isset($pass) || $pass == '' || !isset($vpass) || $vpass == '') $stop .= _US_ENTERPWD . '<br />';
-			if ((isset($pass)) && ($pass != $vpass)) {
-				$stop .= _US_PASSNOTSAME . '<br />';
-			} elseif (($pass != '') && (strlen($pass) < $icmsConfigUser['minpass'])) {
+			// if (!isset($pass) || $pass == '' || !isset($vpass) || $vpass == '') $stop .= _US_ENTERPWD . '<br />';
+			// if ((isset($pass)) && ($pass != $vpass)) {
+				// $stop .= _US_PASSNOTSAME . '<br />';
+			// } elseif (($pass != '') && (strlen($pass) < $icmsConfigUser['minpass'])) {
+			if (($pass != '') && (strlen($pass) < $icmsConfigUser['minpass'])) { 
 				$stop .= sprintf(_US_PWDTOOSHORT,$icmsConfigUser['minpass']) . '<br />';
 			}
 			if (isset($pass) && isset($login_name) && ($pass == $login_name || $pass == icms_core_DataFilter::utf8_strrev($login_name, TRUE) || strripos($pass, $login_name) === TRUE)) $stop .= _US_BADPWD . '<br />';
@@ -249,4 +250,13 @@ class icms_member_user_Handler
 		return $GLOBALS['icmsConfig']['anonymous'];
 	}        
         
+	public function getList($criteria = NULL) {
+		$users = $this->getObjects($criteria, TRUE);
+		$ret = array();
+		foreach (array_keys($users) as $i) {
+			$ret[$i] = $users[$i]->getVar('uname');
+		}
+		return $ret;
+	}
 }
+>>>>>>> branches/impresscms_2.0
