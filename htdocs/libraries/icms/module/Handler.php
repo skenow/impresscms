@@ -28,8 +28,10 @@ class icms_module_Handler
          * 
          * @param object $db
          */
-        public function __construct(&$db) {
-            parent::__construct($db, 'module', 'mid', 'dirname', 'name', 'icms', 'modules', array('mid', 'dirname'));
+        public function __construct(&$db, $module = 'icms') {
+            if (!$module)
+                $module = 'icms_member';
+            parent::__construct($db, 'module', 'mid', 'dirname', 'name', $module, 'modules', true);
         }
 
 	/**
@@ -57,13 +59,13 @@ class icms_module_Handler
                 if (!($module = $this->getFromCache('dirname', $dirname))) {
                     $criteria = new icms_db_criteria_Item('dirname', trim($dirname));
                     $criteria->setLimit(1);
-                    $objs = $this->getObjects($criteria);
+                    $objs = $this->getObjects($criteria);                    
                     if (isset($objs[0])) {
                         $module = $objs[0];
                     }
                 }
                 if ($module && $loadConfig)
-                    $this->loadConfig($module);
+                    $this->loadConfig($module);                
                 return $module;
 	}
 

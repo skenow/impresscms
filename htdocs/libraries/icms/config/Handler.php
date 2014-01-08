@@ -208,7 +208,7 @@ class icms_config_Handler {
 			$configs = $this->getConfigs($criteria, true);
 			if (is_array($configs)) {
 				foreach ( array_keys($configs) as $i) {
-					$ret[$configs[$i]->getVar('conf_catid')][$configs[$i]->getVar('conf_name')] = $configs[$i]->getConfValueForOutput();
+                	$ret[$configs[$i]->getVar('conf_catid')][$configs[$i]->getVar('conf_name')] = $configs[$i]->getConfValueForOutput();
 				}
 				foreach ( $ret as $key => $value) {
 					$this->_cachedConfigs[$module][$key] = $value;

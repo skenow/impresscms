@@ -66,6 +66,7 @@ class icms_view_block_Object extends icms_ipf_Object {
 		$this->quickInitVar('bcachetime', XOBJ_DTYPE_INT);
 		$this->quickInitVar('last_modified', XOBJ_DTYPE_INT);
 		$this->quickInitVar('options', XOBJ_DTYPE_TXTBOX);
+        $this->quickInitVar('visiblein', self::DTYPE_ARRAY, 'visiblein', FALSE, FALSE, FALSE, TRUE);
 	}
 
 	// The next Methods are for backward Compatibility

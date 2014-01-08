@@ -93,10 +93,14 @@ class icms_member_user_Object
 		$this->initVar('pass_expired', self::DTYPE_BOOLEAN, 0, false, null, null, null, 'Pass Expired?');
 		$this->initVar('login_name', self::DTYPE_DEP_TXTBOX, null, true, 255, null, null, _US_LOGINNAME);                
                 
-                if (isset($data['_rank']))
+                if (isset($data['_rank'])) {
                     $this->_rank = $data['_rank'];
-                if (isset($data['_groups']))
+                    unset($data['_rank']);
+                }
+                if (isset($data['_groups'])) {
                     $this->_groups = $data['_groups'];
+                    unset($data['_groups']);
+                }
                 
                 parent::__construct($handler, $data);                                
 	}
@@ -349,7 +353,14 @@ class icms_member_user_Object
                 $control_handler = icms::handler('icms_controls');
                 $control = $control_handler->make('gravatar/avatar', compact('rating', 'size', 'default', 'border'));
 		return $control->makeURL();
-	}      
+	}
+        
+        public function setVar($name, $value, $options = null) {
+            parent::setVar($name, $value, $options);
+            if ($this->isSameAsLoggedInUser()) {
+                $_SESSION['icmsUser'][$name] = parent::getVar($name);
+            }
+        }
         
         /**
          * Logs in current user
@@ -361,9 +372,15 @@ class icms_member_user_Object
             $data['_rank'] = $this->rank();
             $data['_groups'] = $this->getGroups();
             unset($data['itemLink'], $data['itemUrl'], $data['editItemLink'], $data['deleteItemLink'], $data['printAndMailLink']);
-            $_SESSION = array();
-            $_SESSION['icmsUser'] = $data;
-            $_SESSION['icmsUserHandler'] = get_class($this->handler);
+            $class = get_class($this->handler);
+            $_SESSION = array(
+                'icmsUser' => $data, 
+                'icmsUserHandler' => $class,
+                'icmsUserPaths' => array(
+                    icms_Autoloader::classPath($class),
+                    icms_Autoloader::classPath(get_class($this))
+                )
+            );
         }
         
         /**
@@ -378,5 +395,35 @@ class icms_member_user_Object
                 return false;
             $_SESSION = array();            
         }
+        
+        /**
+         * Checks if this user is same as logged in user
+         * 
+         * @return boolean
+         */
+        public function isSameAsLoggedInUser() {
+            if (!icms::$user)
+                return false;
+            return icms::$user->getVar('uid') == $this->getVar('uid');
+        }
+        
+      /*  /**
+         * Converts user to array
+         * 
+         * @return array
+         */
+      /*  public function toArray() {           
+            $data = parent::toArray();
+            if ($this->isSameAsLoggedInUser()) {
+                if (!$data['user_viewoid'])
+                    unset($data['openid']);
+                unset($data['pass_expired'], $data['login_name'], $data['pass']);
+                foreach (array_keys($data) as $key) {
+                    if ($key == 'uid')
+                        continue;
+                }
+            }
+            return $data;
+        }*/
         
 }

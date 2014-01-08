@@ -34,7 +34,7 @@ class icms_member_rank_Handler extends icms_ipf_Handler {
 	 */
 	public function __construct($db) {
 		global $icmsConfigUser;
-		parent::__construct($db, 'member_rank', "rank_id", "rank_title", "", "icms", 'ranks');
+		parent::__construct($db, 'member_rank', "rank_id", "rank_title", "", "icms", 'ranks', true);
 		$this->enableUpload(array("image/gif", "image/jpeg", "image/pjpeg", "image/x-png", "image/png"), $icmsConfigUser["rank_maxsize"], $icmsConfigUser["rank_width"], $icmsConfigUser["rank_height"]);
 	}
 

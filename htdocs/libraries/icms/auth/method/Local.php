@@ -23,6 +23,14 @@
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
 class icms_auth_method_Local extends icms_auth_Object {
+    
+        /**
+         * Defines custom handler for returned data type
+         *
+         * @var icms_member_user_Handler
+         */
+        static public $customMemberHandler = null;
+    
 	/**
 	 * Authentication Service constructor
 	 * constructor
@@ -37,11 +45,12 @@ class icms_auth_method_Local extends icms_auth_Object {
 	 * Authenticate user
 	 * @param string $uname
 	 * @param string $pwd
+     * @param object $customUserHandler If specified will be used for getting results
 	 * @return object {@link icms_member_user_Object} icms_member_user_Object object
 	 */
-	public function authenticate($uname, $pwd = NULL) {
-		$member_handler = icms::handler('icms_member');
-		$user = $member_handler->loginUser($uname, $pwd);
+	public function authenticate($uname, $pwd = NULL, $customUserHandler = null) {
+        $member_handler = icms::handler('icms_member');
+		$user = $member_handler->loginUser($uname, $pwd, $customUserHandler);
 		icms::$session->enableRegenerateId = TRUE;
 		icms::$session->sessionOpen();
 		if ($user == FALSE) {

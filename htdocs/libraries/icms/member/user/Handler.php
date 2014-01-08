@@ -64,11 +64,13 @@ class icms_member_user_Handler
 	 * @return bool FALSE if deletion failed
 	 * @TODO we need to also delete the private messages of the user when we delete them! how do we determine which users were deleted from the criteria????
 	 */
-	public function deleteAll($criteria = NULL) {
-		$sql = sprintf("UPDATE %s SET level= '-1', pass = %s", $this->db->prefix('users'), substr(md5(time()), 0, 8));
-		if ($criteria instanceof icms_db_criteria_Element)
-                    $sql .= ' ' . $criteria->renderWhere();
-                return (bool)$this->db->query($sql);
+	public function deleteAll($criteria = NULL, $quick = false) {
+            if ($quick)
+                throw new Exception ('quick variable not supported!');
+            $sql = sprintf("UPDATE %s SET level= '-1', pass = %s", $this->db->prefix('users'), substr(md5(time()), 0, 8));
+            if ($criteria instanceof icms_db_criteria_Element)
+                $sql .= ' ' . $criteria->renderWhere();
+            return (bool)$this->db->query($sql);
 	}
 
 	/**
@@ -86,7 +88,7 @@ class icms_member_user_Handler
 	 *  @global array $icmsConfigUser user configuration
 	 *  @return string of errors encountered while validating the user information, will be blank if successful
 	 */
-	public function userCheck($login_name, $uname, $email, $pass, $uid = 0) { //$vpass
+	public function userCheck($login_name, $uname, $email, $pass, $vpass, $uid = 0) {
 		global $icmsConfigUser;
 
 		// initializations
@@ -138,11 +140,10 @@ class icms_member_user_Handler
 
 		// check password
 		if ($pass !== FALSE) {
-			// if (!isset($pass) || $pass == '' || !isset($vpass) || $vpass == '') $stop .= _US_ENTERPWD . '<br />';
-			// if ((isset($pass)) && ($pass != $vpass)) {
-				// $stop .= _US_PASSNOTSAME . '<br />';
-			// } elseif (($pass != '') && (strlen($pass) < $icmsConfigUser['minpass'])) {
-			if (($pass != '') && (strlen($pass) < $icmsConfigUser['minpass'])) { 
+			if (!isset($pass) || $pass == '' || !isset($vpass) || $vpass == '') $stop .= _US_ENTERPWD . '<br />';
+			if ((isset($pass)) && ($pass != $vpass)) {
+				$stop .= _US_PASSNOTSAME . '<br />';
+			} elseif (($pass != '') && (strlen($pass) < $icmsConfigUser['minpass'])) {
 				$stop .= sprintf(_US_PWDTOOSHORT,$icmsConfigUser['minpass']) . '<br />';
 			}
 			if (isset($pass) && isset($login_name) && ($pass == $login_name || $pass == icms_core_DataFilter::utf8_strrev($login_name, TRUE) || strripos($pass, $login_name) === TRUE)) $stop .= _US_BADPWD . '<br />';
@@ -259,4 +260,3 @@ class icms_member_user_Handler
 		return $ret;
 	}
 }
->>>>>>> branches/impresscms_2.0

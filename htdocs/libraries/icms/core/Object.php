@@ -103,28 +103,6 @@ class icms_core_Object extends icms_properties_Handler {
 
     /*     * #@- */
 
-    /*     * #@+
-
-     * mark modified objects as dirty
-     *
-     * used for modified objects only
-     * @access public
-     */
-
-    public function setDirty() {
-        $this->setVarInfo(null, parent::VARCFG_CHANGED, true);
-    }
-
-    public function unsetDirty() {
-        $this->setVarInfo(null, parent::VARCFG_CHANGED, false);
-    }
-
-    public function isDirty() {
-        return count($this->getChangedVars()) > 0;
-    }
-
-    /*     * #@- */
-
     /**
      * initialize variables for the object
      *
@@ -186,11 +164,23 @@ class icms_core_Object extends icms_properties_Handler {
     public function __call($name, $arguments) {
         switch ($name) {
             case 'xoopsClone':
-                trigger_error('Deprecached method xoopsClone', E_STRICT);
+                trigger_error('Deprecached method xoopsClone', E_USER_DEPRECATED);
                 return clone $this;
+            case 'setDirty':
+                trigger_error('Deprecached method xoopsClone', E_USER_DEPRECATED);
+                $this->setVarInfo(null, parent::VARCFG_CHANGED, true);                
+                return null;
+            case 'unsetDirty':
+                trigger_error('Deprecached method unsetDirty', E_USER_DEPRECATED);
+                $this->setVarInfo(null, parent::VARCFG_CHANGED, false);
+                return null;
+            break;
+            case 'isDirty':
+                trigger_error('Deprecached method isDirty', E_USER_DEPRECATED);
+                return count($this->getChangedVars()) > 0;
         }
         parent::__call($name, $arguments);
-    }
+    }    
 
     /**
      * Create cloned copy of current object
