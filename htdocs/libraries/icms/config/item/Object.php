@@ -42,16 +42,16 @@ class icms_config_Item_Object extends icms_ipf_Object {
 	 * @todo	Cannot set the data type of the conf_value on instantiation - the data type must be retrieved from the db.
 	 */
 	public function __construct(&$handler, $data = array()) {
-		$this->initVar('conf_id', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('conf_modid', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('conf_catid', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('conf_name', XOBJ_DTYPE_OTHER);
-		$this->initVar('conf_title', XOBJ_DTYPE_TXTBOX);
-		$this->initVar('conf_value', XOBJ_DTYPE_TXTAREA);
-		$this->initVar('conf_desc', XOBJ_DTYPE_OTHER);
-		$this->initVar('conf_formtype', XOBJ_DTYPE_OTHER);
-		$this->initVar('conf_valuetype', XOBJ_DTYPE_OTHER);
-		$this->initVar('conf_order', XOBJ_DTYPE_INT);
+		$this->initVar('conf_id', self::DTYPE_INTEGER, null, false);
+		$this->initVar('conf_modid', self::DTYPE_INTEGER, null, false);
+		$this->initVar('conf_catid', self::DTYPE_INTEGER, null, false);
+		$this->initVar('conf_name', self::DTYPE_DEP_OTHER);
+		$this->initVar('conf_title', self::DTYPE_DEP_TXTBOX);
+		$this->initVar('conf_value', self::DTYPE_STRING);
+		$this->initVar('conf_desc', self::DTYPE_DEP_OTHER);
+		$this->initVar('conf_formtype', self::DTYPE_DEP_OTHER);
+		$this->initVar('conf_valuetype', self::DTYPE_DEP_OTHER);
+		$this->initVar('conf_order', self::DTYPE_INTEGER);
                 
                 parent::__construct($handler, $data);
 	}
@@ -185,15 +185,15 @@ class icms_config_Item_Object extends icms_ipf_Object {
 	 */
 	public function setType($newType) {
 		$types = array(
-			'text' => XOBJ_DTYPE_TXTBOX,
-			'textarea' => XOBJ_DTYPE_TXTAREA,
-			'int' => XOBJ_DTYPE_INT,
-			'url' => XOBJ_DTYPE_URL,
-			'email' => XOBJ_DTYPE_EMAIL,
-			'array' => XOBJ_DTYPE_ARRAY,
-			'other' => XOBJ_DTYPE_OTHER,
-			'source' => XOBJ_DTYPE_SOURCE,
-			'float' => XOBJ_DTYPE_FLOAT,
+			'text' => self::DTYPE_DEP_TXTBOX,
+			'textarea' => self::DTYPE_STRING,
+			'int' => self::DTYPE_INTEGER,
+			'url' => self::DTYPE_DEP_URL,
+			'email' => self::DTYPE_DEP_EMAIL,
+			'array' => self::DTYPE_ARRAY,
+			'other' => self::DTYPE_DEP_OTHER,
+			'source' => self::DTYPE_DEP_SOURCE,
+			'float' => self::DTYPE_FLOAT,
 		);
 
 		$this->setVarInfo('conf_value', 'data_type',$types[$newType]);

@@ -26,9 +26,9 @@ class icms_member_group_membership_Object extends icms_ipf_Object {
 	 * constructor
 	 */
 	public function __construct(&$handler, $data = array()) {		
-		$this->initVar('linkid', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('groupid', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('uid', XOBJ_DTYPE_INT, null, false);
+		$this->initVar('linkid', self::DTYPE_INTEGER, null, false);
+		$this->initVar('groupid', self::DTYPE_INTEGER, null, false);
+		$this->initVar('uid', self::DTYPE_INTEGER, null, false);
                 
                 parent::__construct($handler, $data);
 	}

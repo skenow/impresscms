@@ -906,9 +906,9 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
         $url_files = array();
         foreach ($obj->getVars() as $key => $var) {
             if (isset($var[icms_properties_Handler::VARCFG_DEP_DATA_TYPE])) {
-                if ($var[icms_properties_Handler::VARCFG_DEP_DATA_TYPE] == XOBJ_DTYPE_URLLINK) {
+                if ($var[icms_properties_Handler::VARCFG_DEP_DATA_TYPE] == self::DTYPE_DEP_URLLINK) {
                     $url_links[] = $obj->getVar($key, 'n');
-                } elseif ($var[icms_properties_Handler::VARCFG_DEP_DATA_TYPE] == XOBJ_DTYPE_FILE) {
+                } elseif ($var[icms_properties_Handler::VARCFG_DEP_DATA_TYPE] == self::DTYPE_DEP_FILE) {
                     $url_files[] = $obj->getVar($key, 'n');
                 }
             }
