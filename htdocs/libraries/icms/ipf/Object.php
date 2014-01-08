@@ -16,16 +16,6 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 
 icms_loadLanguageFile('system', 'common');
 
-if (!defined('self::DTYPE_LIST')) define('self::DTYPE_LIST', 101);
-if (!defined('self::DTYPE_DEP_CURRENCY')) define('self::DTYPE_DEP_CURRENCY', 200);
-if (!defined('self::DTYPE_FLOAT')) define('self::DTYPE_FLOAT', 201);
-if (!defined('self::DTYPE_DEP_TIME_ONLY')) define('self::DTYPE_DEP_TIME_ONLY', 202);
-if (!defined('self::DTYPE_DEP_URLLINK')) define('self::DTYPE_DEP_URLLINK', 203);
-if (!defined('self::DTYPE_DEP_FILE')) define('self::DTYPE_DEP_FILE', 204);
-if (!defined('self::DTYPE_DEP_IMAGE')) define('self::DTYPE_DEP_IMAGE', 205);
-if (!defined('self::DTYPE_FORM_SECTION')) define('self::DTYPE_FORM_SECTION', 210);
-if (!defined('self::DTYPE_FORM_SECTION_CLOSE')) define('self::DTYPE_FORM_SECTION_CLOSE', 211);
-
 /**
  * icms_ipf_Object base class
  *
