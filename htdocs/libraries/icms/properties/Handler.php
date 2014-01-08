@@ -167,33 +167,144 @@ abstract class icms_properties_Handler implements Serializable {
      */
     const DTYPE_DEP_FORM_SECTION_CLOSE = 211; // XOBJ_DTYPE_FORM_SECTION_CLOSE
         
+    /**
+     * Specifies allowed mimetypes for the var (only suported for DTYPE_FILE)
+     */
     const VARCFG_ALLOWED_MIMETYPES = 'allowedMimeTypes';
+    
+    /**
+     * Specifies max filesize for the var (only suported for DTYPE_FILE)
+     */
     const VARCFG_MAX_FILESIZE = 'maxFileSize';
+    
+    /**
+     * Specifies max width of image for the var (only suported for DTYPE_FILE)
+     */
     const VARCFG_MAX_WIDTH = 'maxWidth';
+    
+    /**
+     * Specifies max height for the var (only suported for DTYPE_FILE)
+     */
     const VARCFG_MAX_HEIGHT = 'maxHeight';
+    
+    /**
+     * Specifies prefix for the var (only suported for DTYPE_FILE, DTYPE_STRING)
+     */
     const VARCFG_PREFIX = 'prefix';
+    
+    /**
+     * Specifies saving path for the var (only suported for DTYPE_FILE)
+     */
     const VARCFG_PATH = 'path';
+    
+    /**
+     * Specifies filename generator function for the var (only suported for DTYPE_FILE)
+     */
     const VARCFG_FILENAME_FUNCTION = 'filenameGenerator';
+    
+    /**
+     * Specifies list with options that can be used for the var
+     */
     const VARCFG_POSSIBLE_OPTIONS = 'possibleOptions';
+    
+    /**
+     * Specifies if this var is locked from changing?
+     */
     const VARCFG_LOCKED = 'locked';
+    
+    /**
+     * Specifies if this var is hidden from user
+     */
     const VARCFG_HIDE = 'hide';
+    
+    /**
+     * Specifies how var should be rendered
+     */
     const VARCFG_RENDER_TYPE = 'renderType';
+    
+    /**
+     * Specifies separator for saving list items for the var (only suported for DTYPE_LIST)
+     */
     const VARCFG_SEPARATOR = 'separator';
+    
+    /**
+     * Specifies max text length for the var (only suported for DTYPE_STRING)
+     */
     const VARCFG_MAX_LENGTH = 'maxLength';
+    
+    /**
+     * Specifies validation rule (REGEXP)
+     */
     const VARCFG_VALIDATE_RULE = 'validateRule';
+    
+    /**
+     * Specifies source formating options (only usable for DTYPE_STRING)
+     */
     const VARCFG_SOURCE_FORMATING = 'sourceFormating';
+    
+    /**
+     * Specifies outputing formating
+     */
     const VARCFG_FORMAT = 'format';
+    
+    /**
+     * Is autoforating for this var disabled?
+     */
     const VARCFG_AF_DISABLED = 'autoFormatingDisabled';
+    
+    /**
+     * Not GPC?
+     */
     const VARCFG_NOT_GPC = 'not_gpc';
+    
+    /**
+     * Is var changed?
+     */
     const VARCFG_CHANGED = 'changed';
+    
+    /**
+     * Value of var
+     */
     const VARCFG_VALUE = 'value';
+    
+    /**
+     * Var data type
+     */
     const VARCFG_TYPE = 'data_type';
+    
+    /**
+     * Is var required?
+     */
     const VARCFG_REQUIRED = 'required';
+    
+    /**
+     * Data handler
+     */
     const VARCFG_DATA_HANDLER = 'data_handler';
+    
+    /**
+     * Deprecached data type
+     */
     const VARCFG_DEP_DATA_TYPE = 'depDataType';
+    
+    /**
+     * Form caption for this var
+     */
     const VARCFG_FORM_CAPTION = 'form_caption';
+    
+    /**
+     * Form description for this var
+     */
     const VARCFG_FORM_DESC = 'form_dsc';
+    
+    /**
+     * Default value of this var
+     */
     const VARCFG_DEFAULT_VALUE = 'default_value';
+    
+    /**
+     * Is var not loaded?
+     */
     const VARCFG_NOTLOADED = 'not_loaded';
 
     /**
