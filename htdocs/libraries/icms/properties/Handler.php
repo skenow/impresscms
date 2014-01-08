@@ -929,31 +929,43 @@ abstract class icms_properties_Handler implements Serializable {
         foreach ($var_arr as $key => $value)
             $this->setVar($key, $value, $not_gpc);
     }
-
+    
     /**
-     * Magic function used when such function doesn't there exists
+     * Changes type for var
      * 
-     * @param string $name      Method name
-     * @param array $arguments  Calling arguments
+     * @param string $key   Var name
+     * @param int $type     Type
      * 
-     * @return mixed
+     * @deprecated since version 2.0
      */
-    public function __call($name, $arguments) {
-        switch ($name) {
-            case 'setType':
-                trigger_error(sprintf('%s is deprecached method for %s', $name, get_class($this)), E_USER_DEPRECATED);
-                $this->setVarInfo($arguments[0], self::VARCFG_TYPE, $arguments[1]);
-                break;
-            case 'doSetFieldAsRequired':
-                trigger_error(sprintf('%s is deprecached method for %s', $name, get_class($this)), E_USER_DEPRECATED);
-                $this->setVarInfo($arguments[0], self::VARCFG_REQUIRED, $arguments[1]);
-                break;
-            case 'cleanVars':
-                trigger_error(sprintf('%s is deprecached method for %s', 'cleanVars', get_class($this)), E_USER_DEPRECATED);
-                return $this->toArray();
-            default:
-                trigger_error(sprintf('Method \'%s\' doesn\'t exists for %s', $name, get_class($this)), E_USER_ERROR);
-        }
+    public function setType($key, $type) {
+        trigger_error(sprintf('%s is deprecached method for %s', $name, get_class($this)), E_USER_DEPRECATED);
+        $this->setVarInfo($key, self::VARCFG_TYPE, $type);
+    }
+    
+    /**
+     * Sets field as required
+     * 
+     * @param string $key   Var name
+     * @param bool $is_required     Is required?
+     * 
+     * @deprecated since version 2.0     
+     */
+    public function doSetFieldAsRequired($key, $is_required = true) {
+         trigger_error(sprintf('%s is deprecached method for %s', $name, get_class($this)), E_USER_DEPRECATED);
+         $this->setVarInfo($key, self::VARCFG_REQUIRED, $is_required);
+    }
+    
+    /**
+     * Returns cleaned vars array
+     * 
+     * @return array
+     * 
+     * @deprecated since version 2.0
+     */
+    public function cleanVars() {
+        trigger_error(sprintf('%s is deprecached method for %s', 'cleanVars', get_class($this)), E_USER_DEPRECATED);
+        return $this->toArray();
     }
 
     /**
