@@ -64,11 +64,13 @@ class icms_member_user_Handler
 	 * @return bool FALSE if deletion failed
 	 * @TODO we need to also delete the private messages of the user when we delete them! how do we determine which users were deleted from the criteria????
 	 */
-	public function deleteAll($criteria = NULL) {
-		$sql = sprintf("UPDATE %s SET level= '-1', pass = %s", $this->db->prefix('users'), substr(md5(time()), 0, 8));
-		if ($criteria instanceof icms_db_criteria_Element)
-                    $sql .= ' ' . $criteria->renderWhere();
-                return (bool)$this->db->query($sql);
+	public function deleteAll($criteria = NULL, $quick = false) {
+            if ($quick)
+                throw new Exception ('quick variable not supported!');
+            $sql = sprintf("UPDATE %s SET level= '-1', pass = %s", $this->db->prefix('users'), substr(md5(time()), 0, 8));
+            if ($criteria instanceof icms_db_criteria_Element)
+                $sql .= ' ' . $criteria->renderWhere();
+            return (bool)$this->db->query($sql);
 	}
 
 	/**
@@ -249,4 +251,12 @@ class icms_member_user_Handler
 		return $GLOBALS['icmsConfig']['anonymous'];
 	}        
         
+	public function getList($criteria = NULL) {
+		$users = $this->getObjects($criteria, TRUE);
+		$ret = array();
+		foreach (array_keys($users) as $i) {
+			$ret[$i] = $users[$i]->getVar('uname');
+		}
+		return $ret;
+	}
 }

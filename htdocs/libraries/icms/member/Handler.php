@@ -281,16 +281,9 @@ class icms_member_Handler {
 	}
 
 	public function icms_getLoginFromUserEmail($email = '') {
-		$table = new icms_db_legacy_updater_Table('users');
-
 		if ($email !== '') {
-			if ($table->fieldExists('loginname')) {
-				$sql = icms::$xoopsDB->query("SELECT loginname, email FROM " . icms::$xoopsDB->prefix('users')
-					. " WHERE email = '" . @htmlspecialchars($email, ENT_QUOTES, _CHARSET) . "'");
-			} elseif ($table->fieldExists('login_name')) {
-				$sql = icms::$xoopsDB->query("SELECT login_name, email FROM " . icms::$xoopsDB->prefix('users')
-					 . " WHERE email = '" . @htmlspecialchars($email, ENT_QUOTES, _CHARSET) . "'");
-			}
+                        $sql = icms::$xoopsDB->query("SELECT login_name, email FROM " . icms::$xoopsDB->prefix('users')
+					. " WHERE email = '" . @htmlspecialchars($email, ENT_QUOTES, _CHARSET) . "'");			
 			list($uname, $email) = icms::$xoopsDB->fetchRow($sql);
 		} else {
 			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
@@ -302,9 +295,10 @@ class icms_member_Handler {
 	 * log in a user
 	 * @param string $uname username as entered in the login form
 	 * @param string $pwd password entered in the login form
+     * @param object $customUserHanlder defined custom user handler
 	 * @return object icms_member_user_Object {@link icms_member_user_Object} reference to the logged in user. FALSE if failed to log in
 	 */
-	public function loginUser($uname, $pwd) {
+	public function loginUser($uname, $pwd, $customUserHanlder = null) {
 
 		$icmspass = new icms_core_Password();
 
@@ -319,16 +313,9 @@ class icms_member_Handler {
 
         $pwd = $icmspass->verifyPass($pwd, $uname);
 		
-		$table = new icms_db_legacy_updater_Table('users');
-		if ($table->fieldExists('loginname')) {
-			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('loginname', $uname));
-		} elseif ($table->fieldExists('login_name')) {
-			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('login_name', $uname));
-		} else {
-			$criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('uname', $uname));
-		}
+        $criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('login_name', $uname));		
 		$criteria->add(new icms_db_criteria_Item('pass', $pwd));
-		$user = $this->_uHandler->getObjects($criteria, false);
+		$user = $customUserHanlder?$customUserHanlder->getObjects($criteria, false):$this->_uHandler->getObjects($criteria, false);
 		if (!$user || count($user) != 1) {
 			$user = false;
 			return $user;
@@ -345,8 +332,8 @@ class icms_member_Handler {
 	 */
 	/*	function &loginUserMd5($uname, $md5pwd) {
 	 $table = new icms_db_legacy_updater_Table('users');
-	 if ($table->fieldExists('loginname')) {
-	 $criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('loginname', $uname));
+	 if ($table->fieldExists('login_name')) {
+	 $criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('login_name', $uname));
 	 } elseif ($table->fieldExists('login_name')) {
 	 $criteria = new icms_db_criteria_Compo(new icms_db_criteria_Item('login_name', $uname));
 	 } else {

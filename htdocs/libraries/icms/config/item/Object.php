@@ -91,7 +91,10 @@ class icms_config_Item_Object extends icms_ipf_Object {
 				break;
 
 			case 'array':
-				$value = @ unserialize($this->getVar('conf_value', 'N'));
+                $value = $this->getVar('conf_value', 'N');
+                if ($value === null || strlen($value) < 2 || (substr($value, 1, 1) != ':'))
+                	return array();                                
+                $value = @unserialize($value);
 				return $value ? $value : array();
 
 			case 'float':

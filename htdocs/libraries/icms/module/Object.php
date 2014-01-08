@@ -52,14 +52,13 @@ class icms_module_Object
 	/**
 	 * Constructor
 	 */
-	public function __construct(&$handler, $data = array()) {
-		parent::__construct($handler, $data);
+	public function __construct(&$handler, $data = array()) {		
 		$this->initVar('mid', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('name', XOBJ_DTYPE_TXTBOX, null, true, 150);
 		$this->initVar('version', XOBJ_DTYPE_INT, 100, false);
 		$this->initVar('last_update', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('weight', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('isactive', XOBJ_DTYPE_INT, 1, false);
+		$this->initVar('isactive', XOBJ_DTYPE_INT, 0, false);
 		$this->initVar('dirname', XOBJ_DTYPE_OTHER, null, true);
 		$this->initVar('hasmain', XOBJ_DTYPE_INT, 0, false);
 		$this->initVar('hasadmin', XOBJ_DTYPE_INT, 0, false);
@@ -71,6 +70,8 @@ class icms_module_Object
 		$this->initVar('dbversion', XOBJ_DTYPE_INT, 0, false);
 		$this->initVar('modname', XOBJ_DTYPE_OTHER, null, true);
 		$this->initVar('ipf', XOBJ_DTYPE_INT, 0, false);
+                
+        parent::__construct($handler, $data);
 	}
 
 	/**
@@ -95,7 +96,7 @@ class icms_module_Object
 		if ($isactive !== NULL && $this->getVar("isactive") != (int) $isactive) return;
             
 		//if ($this->getVar("dirname") == "system") return;
-                $module_path = ICMS_MODULES_PATH . "/" . $this->getVar("dirname");
+                $module_path = ICMS_MODULES_PATH . "/" . $this->getVar("dirname");                
                 
                 if ($this->getVar("ipf")) {
                     $modname = ($this->getVar("modname") != "") ?
@@ -106,7 +107,7 @@ class icms_module_Object
                         icms_Autoloader::register($folder, $name . '_' . $modname);
                     }
                 } else {
-                    icms_Autoloader::register($class_path);
+                    icms_Autoloader::register($module_path);
                 }		
 	}
 

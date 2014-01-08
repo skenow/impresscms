@@ -550,8 +550,8 @@ class icms_db_legacy_updater_Table {
 	 */
 	function dropFields() {
 		$ret = true;
-		$str = implode( ', DROP ', $this->getdropedFields() );
-		$query = 'ALTER TABLE ' . $this->name() . ' DROP ' . $str;
+		$str = implode( '`, DROP `', $this->getdropedFields() );
+		$query = 'ALTER TABLE ' . $this->name() . ' DROP `' . $str . '`';
 			if ($this->force) {
 				$ret = $ret && $this->_db->queryF($query);
 			} else {

@@ -48,7 +48,7 @@ class icms_ipf_Object extends icms_core_Object {
     /**
      * Reference to the handler managing this object
      *
-     * @var object reference to {@link icms_ipf_Handler}
+     * @var icms_ipf_Handler
      */
     public $handler;
 
@@ -56,14 +56,31 @@ class icms_ipf_Object extends icms_core_Object {
      * References to control objects, managing the form fields of this object
      */
     public $controls = array();
+    
+    /**
+     * Does object data loaded on creation?
+     *
+     * @var bool 
+     */
+    private $_loadedOnCreation = false;
 
     public function __construct(&$handler, $data = array()) {
-        $this->handler = $handler;
+        $this->handler = $handler;        
         if ($data === true) {
             $this->setNew();
-        } elseif (!empty($data)) {
-            $this->_values = $data;
+        } elseif (!empty($data)) {            
+            $this->assignVars($data);
+            $this->_loadedOnCreation = true;
         }
+    }
+    
+    /**
+     * Does object data loaded on creation?
+     * 
+     * @return bool
+     */
+    public function isLoadedOnCreation() {
+        return $this->_loadedOnCreation;
     }
 
     /**
@@ -94,6 +111,57 @@ class icms_ipf_Object extends icms_core_Object {
      */
     public function closeFormSection($section_name) {
         $this->initVar('close_section_' . $section_name, XOBJ_DTYPE_FORM_SECTION_CLOSE, '', FALSE, NULL, '', FALSE, '', '', FALSE, FALSE, TRUE);
+    }   
+    
+    public function getVarInfo($key = null, $info = null, $default = null) {
+        if ($key == null) {
+            $ret = parent::getVarInfo($key, $info, $default);
+            foreach ($ret as $key => $value) {
+                $ret[$key]['form_caption'] = $this->getFormCaption($key, $value['form_caption']);
+                $ret[$key]['form_dsc'] = $this->getFormDescription($key, $value['form_dsc']);
+            }
+            return $ret;
+        } else {
+            $ret = parent::getVarInfo($key, $info, $default);
+            if ($info == null) {
+                $ret['form_caption'] = $this->getFormCaption($key, isset($ret['form_caption'])?$ret['form_caption']:null);
+                $ret['form_dsc'] = $this->getFormDescription($key, isset($ret['form_dsc'])?$ret['form_dsc']:null);
+            } else {
+                switch ($info) {
+                    case 'form_caption':
+                        $ret = $this->getFormCaption($key, $ret);
+                        break;
+                    case 'form_dsc':
+                        $ret = $this->getFormDescription($key, $ret);
+                        break;
+                }
+            }
+            return $ret;
+        }
+    }
+
+    protected function getFormCaption($key, $form_caption) {
+        if ($form_caption)
+            return $form_caption;
+        $dyn_form_caption = strtoupper('_CO_' . $this->handler->_moduleName . '_' . $this->handler->_itemname . '_' . $key);            
+        if (defined($dyn_form_caption))
+            $form_caption = constant($dyn_form_caption);
+        else
+            $form_caption = $dyn_form_caption;
+        parent::setVarInfo($key, 'form_caption', $form_caption);
+        return $form_caption;
+    }
+    
+    protected function getFormDescription($form_dsc) {
+        if ($form_dsc)
+            return $form_dsc;
+        $dyn_form_dsc = strtoupper('_CO_' . $this->handler->_moduleName . '_' . $this->handler->_itemname . '_' . $key);            
+        if (defined($dyn_form_dsc))
+            $form_dsc = constant($dyn_form_dsc);
+        else
+            $form_dsc = $dyn_form_dsc;
+        parent::setVarInfo($key, 'form_dsc', $form_dsc);
+        return $form_dsc;
     }
 
     /**
@@ -113,22 +181,11 @@ class icms_ipf_Object extends icms_core_Object {
      */
     public function initVar($key, $data_type, $value = null, $required = false, $maxlength = null, $options = '', $multilingual = false, $form_caption = '', $form_dsc = '', $sortby = false, $persistent = true, $displayOnForm = true) {
         //url_ is reserved for files.
-        if (substr($key, 0, 4) == 'url_') {
-            trigger_error("Cannot use variable starting with 'url_'.");
-        }
+        if (substr($key, 0, 4) == 'url_')
+            return trigger_error("Cannot use variable starting with 'url_'.");
+        
         parent::initVar($key, $data_type, $value, $required, $maxlength, $options);
-        if ($this->handler && (!$form_caption || $form_caption == '')) {
-            $dyn_form_caption = strtoupper('_CO_' . $this->handler->_moduleName . '_' . $this->handler->_itemname . '_' . $key);
-            if (defined($dyn_form_caption)) {
-                $form_caption = constant($dyn_form_caption);
-            }
-        }
-        if ($this->handler && (!$form_dsc || $form_dsc == '')) {
-            $dyn_form_dsc = strtoupper('_CO_' . $this->handler->_moduleName . '_' . $this->handler->_itemname . '_' . $key . '_DSC');
-            if (defined($dyn_form_dsc)) {
-                $form_dsc = constant($dyn_form_dsc);
-            }
-        }
+                
         $this->_vars[$key]['multilingual'] = $multilingual;
         $this->_vars[$key]['form_caption'] = $form_caption;
         $this->_vars[$key]['form_dsc'] = $form_dsc;
@@ -304,7 +361,7 @@ class icms_ipf_Object extends icms_core_Object {
         else            
             switch (isset($this->_vars[$var][self::VARCFG_DEP_DATA_TYPE])?$this->_vars[$var][self::VARCFG_DEP_DATA_TYPE]:$this->_vars[$var][self::VARCFG_TYPE]) {
                 case self::DTYPE_BOOLEAN:
-                    return array('name' => 'checkbox');
+                    return array('name' => 'yesno');
                 //case self::DTYPE_DEP_CURRENCY:
                 case icms_properties_Handler::DTYPE_DEP_MTIME:
                 case self::DTYPE_DEP_STIME:
@@ -353,22 +410,34 @@ class icms_ipf_Object extends icms_core_Object {
 
         return $form;
     }
+    
+    /**
+     * Returns if data for this object has partial data
+     * 
+     * @return bool
+     */
+    public function isPartial() {
+        return !empty($this->handler->visibleColumns);
+    }
 
     /**
      *
      */
     public function toArray() {
         $ret = parent::toArray();
+        if ($this->isPartial()) {
+            $ret = array_intersect_key($ret, array_flip($this->handler->visibleColumns));
+        }
         if ($this->handler->identifierName != "") {
             $controller = new icms_ipf_Controller($this->handler);
             /**
              * Addition of some automatic value
              */
-            $ret['itemLink'] = $controller->getItemLink($this);
+       /*     $ret['itemLink'] = $controller->getItemLink($this);
             $ret['itemUrl'] = $controller->getItemLink($this, true);
             $ret['editItemLink'] = $controller->getEditItemLink($this, false, true);
             $ret['deleteItemLink'] = $controller->getDeleteItemLink($this, false, true);
-            $ret['printAndMailLink'] = $controller->getPrintAndMailLink($this);
+            $ret['printAndMailLink'] = $controller->getPrintAndMailLink($this);*/
         }
         /**
          * @todo implement this in ImpressCMS core
@@ -605,8 +674,52 @@ class icms_ipf_Object extends icms_core_Object {
      * @param bool $force
      * @return bool true if successful, false if not
      */
-    public function store($force = false) {
+    public function store($force = false) {        
         return $this->handler->insert($this, $force);
+    }
+    
+    /**
+     * Returns arary with changed vars
+     * 
+     * @return array
+     */
+    public function getVarsForSQL($only_changed) {
+        $fieldsToStoreInDB = array();
+        $db = &$this->handler->db;        
+        $vars = $only_changed?$this->getChangedVars():array_keys($this->_values);
+        foreach ($vars as $k) {
+            $persistent = $this->_vars[$k]['persistent'];
+            if ($persistent === true || $persistent === null)
+                switch ($this->_vars[$k][icms_properties_Handler::VARCFG_TYPE]) {
+                    case icms_properties_Handler::DTYPE_FLOAT:
+                        $fieldsToStoreInDB[$k] = (float) $this->_values[$k];
+                        break;
+                    case icms_properties_Handler::DTYPE_DATETIME:
+                        $fieldsToStoreInDB[$k] = 'FROM_UNIXTIME(' .  intval($this->_values[$k]) . ')';
+                        break;
+                    case icms_properties_Handler::DTYPE_INTEGER:
+                    case icms_properties_Handler::DTYPE_BOOLEAN:
+                        $fieldsToStoreInDB[$k] = (int) $this->_values[$k];
+                        break;
+                    case icms_properties_Handler::DTYPE_ARRAY:
+                        $value = json_encode($this->_values[$k]);
+                        $fieldsToStoreInDB[$k] = $db->quoteString($value);
+                        break;                    
+                    case icms_properties_Handler::DTYPE_LIST:
+                        $separator = $this->_vars[$k][icms_properties_Handler::VARCFG_SEPARATOR];
+                        if (is_array($this->_values[$k]))  {
+                            $value = array_map('strval', $this->_values[$k]);
+                            $value = implode($separator, $value);
+                        } elseif (!is_string($value))
+                            $value = strval($value);
+                        $fieldsToStoreInDB[$k] = $db->quoteString($value);
+                        break;
+                    default:
+                        //var_dump(array($k, $this->getVar($k, 'n')));
+                        $fieldsToStoreInDB[$k] = $db->quoteString($this->_values[$k]);
+                }
+        }        
+        return $fieldsToStoreInDB;
     }
 
     /**
@@ -667,6 +780,22 @@ class icms_ipf_Object extends icms_core_Object {
             $this->_vars[$key]['displayOnForm'] = true;
         }
     }
+    
+    /**
+     * Returns criteria for selecting this element by id
+     * 
+     * @return \icms_db_criteria_Item
+     */
+    public function getCriteriaForSelectByID() {        
+        $criteria = new icms_db_criteria_Compo();
+        if (is_array($this->handler->keyName)) {
+            foreach ($this->handler->keyName as $key) 
+                $criteria->add(new icms_db_criteria_Item($key, $this->getVar($key)));
+        } else
+            $criteria->add(new icms_db_criteria_Item($this->handler->keyName, $this->getVar($this->handler->keyName)));
+        
+        return $criteria;
+    }
 
     /**
      *
@@ -689,9 +818,7 @@ class icms_ipf_Object extends icms_core_Object {
      * @param	str	$key
      */
     public function doHideFieldFromForm($key) {
-        if (isset($this->_vars[$key])) {
-            $this->_vars[$key]['displayOnForm'] = false;
-        }
+        $this->setVarInfo($key, 'displayOnForm', false);
     }
 
     /**
@@ -700,9 +827,7 @@ class icms_ipf_Object extends icms_core_Object {
      * @param $key
      */
     public function doHideFieldFromSingleView($key) {
-        if (isset($this->_vars[$key])) {
-            $this->_vars[$key]['displayOnSingleView'] = false;
-        }
+        $this->setVarInfo($key, 'displayOnSingleView', false);
     }
 
     /**
@@ -921,5 +1046,23 @@ class icms_ipf_Object extends icms_core_Object {
         $file_handler = icms::handler("icms_data_file");
         return $file_handler->insert($fileObj);
     }
+    
+    public function serialize() {        
+         $data = array('vars' => parent::getValues(), 
+                       'handler' => array(
+                           'module' => $this->handler->_moduleName,
+                           'itemname' => $this->handler->_itemname
+                       ));
+         return serialize($data);
+     }
+    
+    public function unserialize($serialized) {
+        $data = unserialize($serialized);
+        if ($data['handler']['module'] == 'core' || $data['handler']['module'] == 'icms')
+            $handler = icms::handler('icms_' . $data['handler']['itemname']);       
+        else
+            $handler = icms_getModuleHandler($data['handler']['itemname'], $data['handler']['module']);
+        $this->__construct($handler, $data['vars']);
+    }   
 
 }

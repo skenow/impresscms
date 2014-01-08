@@ -9,7 +9,7 @@
  * @subpackage  Criteria
  * @since		1.3
  * @author		marcan <marcan@impresscms.org>
- * @version		SVN: $Id: Compo.php 10614 2010-09-08 15:39:19Z malanciault $
+ * @version		SVN: $Id$
  */
 
 defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
@@ -71,10 +71,12 @@ class icms_db_criteria_Compo extends icms_db_criteria_Element {
 	public function render() {
 		$ret = '';
 		$count = count($this->criteriaElements);
-		if ($count > 0) {
+		if ($count > 0) {                    
 			$ret = '(' . $this->criteriaElements[0]->render();
 			for ($i = 1; $i < $count; $i++) {
-				$ret .= ' ' . $this->conditions[$i] . ' ' . $this->criteriaElements[$i]->render();
+                $query = $this->criteriaElements[$i]->render();
+                if (!$query) continue;
+				$ret .= ' ' . $this->conditions[$i] . ' ' . $query;
 			}
 			$ret .= ')';
 		}

@@ -26,6 +26,6 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 class icms_member_group_Handler extends icms_ipf_Handler {
     
         public function __construct(&$db) {
-            parent::__construct($db, 'member_group', 'groupid', 'name', 'description', 'icms', 'group_permission', 'groupid');
+            parent::__construct($db, 'member_group', 'groupid', 'name', 'description', 'icms', 'groups', 'groupid');
         }
 }

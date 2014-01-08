@@ -138,7 +138,8 @@ class icms_ipf_form_Base extends icms_form_Theme {
 			// If $displayOnForm is FALSE OR this is the primary key, it doesn't
 			// need to be displayed, then we only create an hidden field
 			if ($key == $this->targetObject->handler->keyName || (isset($var['displayOnForm']) && !$var['displayOnForm'])) {
-				$elementToAdd = new icms_form_elements_Hidden($key, $var['value']);
+                $val = isset($var['value'])?$var['value']:null;
+				$elementToAdd = new icms_form_elements_Hidden($key, $val);
 				$this->addElement($elementToAdd, $key, $var, FALSE);
 				unset($elementToAdd);
 				// If not, the we need to create the proper form control for this fields
@@ -150,7 +151,18 @@ class icms_ipf_form_Base extends icms_form_Theme {
 					 * Why this ?
 					 */
 				}
-				if (isset($controls[$key])) {
+                                if (!isset($controls[$key])) {
+                                    $controls[$key] = $this->targetObject->getControl($key);                                    
+                                }
+                                
+                                if ($controls[$key] === null) {
+                                    $elementToAdd = new icms_form_elements_Hidden($key, isset($var['value'])?$var['value']:null);
+                                    $this->addElement($elementToAdd, $key, $var, FALSE);
+                                    unset($elementToAdd);
+                                    continue;
+                                }
+                                
+				//if (isset($controls[$key])) {
 					/* If the control has name, it's because it's an object already present in the script
 					 * for example, "user"
 					 * If the field does not have a name, than we will use a "select" (ie icms_form_elements_Select)
@@ -166,8 +178,9 @@ class icms_ipf_form_Base extends icms_form_Theme {
 					unset($form_select);
 
 					// If this field don't have a specific control, we will use the standard one, depending on its data type
-				} else {
-					switch ($var['data_type']) {
+				//} else {
+                                    
+					/*switch ($var['data_type']) {
 						case XOBJ_DTYPE_TXTBOX:
 							$form_text = $this->getControl("text", $key);
 							$this->addElement($form_text, $key, $var);
@@ -253,8 +266,8 @@ class icms_ipf_form_Base extends icms_form_Theme {
 							$this->addElement($section_control, $key, $var);
 							unset($section_control);
 							break;
-					}
-				}
+					}*/
+				//}
 			}
 		}
 		// Add a hidden field to store the URL of the page before this form

@@ -177,21 +177,10 @@ final class icms_core_Password {
 	 */
 	private function _passExpired($uname) {
 		$uname = @htmlspecialchars($uname, ENT_QUOTES, _CHARSET);
-        $table = new icms_db_legacy_updater_Table('users');
 
-		if ($table->fieldExists('loginname')) {
-			$sql = icms::$xoopsDB->query(sprintf("SELECT pass_expired FROM %s WHERE loginname = %s",
-				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
-			list($pass_expired) = icms::$xoopsDB->fetchRow($sql);
-		} elseif ($table->fieldExists('login_name')) {
-			$sql = icms::$xoopsDB->query(sprintf("SELECT pass_expired FROM %s WHERE login_name = %s",
-				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
-			list($pass_expired) = icms::$xoopsDB->fetchRow($sql);
-		} else {
-			$sql = icms::$xoopsDB->query(sprintf("SELECT pass_expired FROM %s WHERE uname = %s",
-				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
-			list($pass_expired) = icms::$xoopsDB->fetchRow($sql);
-		}
+		$sql = icms::$xoopsDB->query(sprintf("SELECT pass_expired FROM %s WHERE login_name = %s",
+                    icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
+                list($pass_expired) = icms::$xoopsDB->fetchRow($sql);
 
 		if ($pass_expired == 1) {
 			return true;
@@ -213,19 +202,9 @@ final class icms_core_Password {
 		$table = new icms_db_legacy_updater_Table('users');
 		$uname = @htmlspecialchars($uname, ENT_QUOTES, _CHARSET);
 
-		if ($table->fieldExists('loginname')) {
-			$sql = icms::$xoopsDB->query(sprintf("SELECT salt FROM %s WHERE loginname = %s",
-				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
-			list($salt) = icms::$xoopsDB->fetchRow($sql);
-		} elseif ($table->fieldExists('login_name')) {
-			$sql = icms::$xoopsDB->query(sprintf("SELECT salt FROM %s WHERE login_name = %s",
-				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
-			list($salt) = icms::$xoopsDB->fetchRow($sql);
-		} else {
-			$sql = icms::$xoopsDB->query(sprintf("SELECT salt FROM %s WHERE uname = %s",
-				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
-			list($salt) = icms::$xoopsDB->fetchRow($sql);
-		}
+                $sql = icms::$xoopsDB->query(sprintf("SELECT salt FROM %s WHERE login_name = %s",
+		icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
+		list($salt) = icms::$xoopsDB->fetchRow($sql);	
 
 		return $salt;
 	}
@@ -240,23 +219,12 @@ final class icms_core_Password {
 	 * To be removed in future versions
 	 */
 	private function _getUserEncType($uname) {
-		$table = new icms_db_legacy_updater_Table('users');
 		$uname = @htmlspecialchars($uname, ENT_QUOTES, _CHARSET);
 
-        if($table->fieldExists('loginname')) {
-			$sql = icms::$xoopsDB->query(sprintf("SELECT enc_type FROM %s WHERE loginname = %s",
-				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
-            list($enc_type) = icms::$xoopsDB->fetchRow($sql);
-        } elseif($table->fieldExists('login_name')) {
-			$sql = icms::$xoopsDB->query(sprintf("SELECT enc_type FROM %s WHERE login_name = %s",
-				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
-            list($enc_type) = icms::$xoopsDB->fetchRow($sql);
-        } else {
-            $sql = icms::$xoopsDB->query(sprintf("SELECT enc_type FROM %s WHERE uname = %s",
-				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
-            list($enc_type) = icms::$xoopsDB->fetchRow($sql);
-        }
-
+		$sql = icms::$xoopsDB->query(sprintf("SELECT enc_type FROM %s WHERE login_name = %s",
+                    icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
+                list($enc_type) = icms::$xoopsDB->fetchRow($sql);
+            
 		return (int) $enc_type;
     }
 
@@ -272,22 +240,10 @@ final class icms_core_Password {
 			redirect_header('user.php', 2, _US_SORRYNOTFOUND);
 		}
 
-		$table = new icms_db_legacy_updater_Table('users');
 		$uname = @htmlspecialchars($uname, ENT_QUOTES, _CHARSET);
-
-        if($table->fieldExists('loginname')) {
-			$sql = icms::$xoopsDB->query(sprintf("SELECT pass FROM %s WHERE loginname = %s",
-				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
-            list($pass) = icms::$xoopsDB->fetchRow($sql);
-        } elseif($table->fieldExists('login_name')) {
-			$sql = icms::$xoopsDB->query(sprintf("SELECT pass FROM %s WHERE login_name = %s",
-				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
-            list($pass) = icms::$xoopsDB->fetchRow($sql);
-        } else {
-            $sql = icms::$xoopsDB->query(sprintf("SELECT pass FROM %s WHERE uname = %s",
-				icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
-            list($pass) = icms::$xoopsDB->fetchRow($sql);
-        }
+                $sql = icms::$xoopsDB->query(sprintf("SELECT pass FROM %s WHERE login_name = %s",
+                    icms::$xoopsDB->prefix('users'), icms::$xoopsDB->quoteString($uname)));
+                list($pass) = icms::$xoopsDB->fetchRow($sql);        
 
 		return $pass;
     }
