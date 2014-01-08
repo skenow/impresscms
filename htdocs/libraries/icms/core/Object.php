@@ -160,27 +160,48 @@ class icms_core_Object extends icms_properties_Handler {
     private function _loadFilters() {
         
     }
-
-    public function __call($name, $arguments) {
-        switch ($name) {
-            case 'xoopsClone':
-                trigger_error('Deprecached method xoopsClone', E_USER_DEPRECATED);
-                return clone $this;
-            case 'setDirty':
-                trigger_error('Deprecached method xoopsClone', E_USER_DEPRECATED);
-                $this->setVarInfo(null, parent::VARCFG_CHANGED, true);                
-                return null;
-            case 'unsetDirty':
-                trigger_error('Deprecached method unsetDirty', E_USER_DEPRECATED);
-                $this->setVarInfo(null, parent::VARCFG_CHANGED, false);
-                return null;
-            break;
-            case 'isDirty':
-                trigger_error('Deprecached method isDirty', E_USER_DEPRECATED);
-                return count($this->getChangedVars()) > 0;
-        }
-        parent::__call($name, $arguments);
-    }    
+    
+    /**
+     * Clone current instance
+     * 
+     * @return object
+     * 
+     * @deprecated since version 2.0
+     */
+    public function xoopsClone() {
+        trigger_error('Deprecached method xoopsClone', E_USER_DEPRECATED);
+        return clone $this;
+    }
+    
+    /**
+     * Sets object modified
+     * 
+     * @deprecated since version 2.0
+     */
+    public function setDirty() {
+        trigger_error('Deprecached method setDirty', E_USER_DEPRECATED);
+        $this->setVarInfo(null, parent::VARCFG_CHANGED, true); 
+    }
+    
+    /**
+     * Sets object unmodified
+     * 
+     * @deprecated since version 2.0
+     */
+    public function unsetDirty() {
+        trigger_error('Deprecached method unsetDirty', E_USER_DEPRECATED);
+        $this->setVarInfo(null, parent::VARCFG_CHANGED, false); 
+    }
+    
+    /**
+     * Is object modified?
+     * 
+     * @deprecated since version 2.0
+     */
+    public function isDirty() {
+        trigger_error('Deprecached method isDirty', E_USER_DEPRECATED);
+        return count($this->getChangedVars()) > 0;
+    }
 
     /**
      * Create cloned copy of current object
