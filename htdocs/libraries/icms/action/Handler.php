@@ -68,11 +68,7 @@ class icms_action_Handler {
      * Includes some headers information in response
      */
     public function includeHeadersInResponse() {
-        $this->response->add('system_headers', getallheaders());
-        $this->response->add('$_GET', $_GET);
-        $this->response->add('$_POST', $_POST);
-        $this->response->add('$_FILES', $_FILES);
-        $this->response->add('$_SERVER', $_SERVER);
+        $this->response->add('system_headers', array('get' => $_GET, 'post' => $_POST, 'server' => $_SERVER, 'session' => $_SESSION, 'files' => $_FILES, 'cookie' => $_COOKIE));
     }
     
     /**
@@ -95,9 +91,11 @@ class icms_action_Handler {
     
     /**
      * Renders response
+     * 
+     * @return string
      */
     public function render() {
-        echo $this->response->render($this->output_format);
+        return $this->response->render($this->output_format);
     }
     
     /**
@@ -160,8 +158,8 @@ class icms_action_Handler {
         if (!file_exists($file))
             return null;
         icms_loadLanguageFile($module, 'actions');
-        include_once $file;
-        $class = 'action_' . $module . '_' . $action;
+        include_once $file;        
+        $class = 'action_' . $module . '_' . str_replace(array('/', '\\'), '_', $action);
         if (!class_exists($class))
             return null;
         $class = new ReflectionClass($class);
@@ -205,18 +203,7 @@ class icms_action_Handler {
                   $ret[] = $action_name;
         }
         return $ret;
-    }
-    
-    /**
-     * Checks if request has actions
-     * 
-     * @param array $params         Actions array
-     * 
-     * @return bool
-     */
-    public function hasActions($params) {
-        return isset($params[self::PARAM_ACTION]);
-    }
+    }    
     
     /**
      * Counter for grouped response
@@ -229,43 +216,22 @@ class icms_action_Handler {
      * Using when proccessing resuest params
      * 
      * @param array $params     Array of actions
-     * @throws Exception
      */
     public function execActionFromArray($params) {
-        if (!isset($params[self::PARAM_ACTION]))
-            Throw new Exception('Unknown action!');
-        if (is_array($params[self::PARAM_ACTION]) && isset($params[self::PARAM_ACTION][0])) { 
-            if ((bool)count(array_filter(array_keys($params[self::PARAM_ACTION]), 'is_string'))) 
-                 Throw new Exception('Bad params supplied!');
-            $count = count($params[self::PARAM_ACTION]);
-            $keys = array_keys($params);
-            for($i = 0; $i < $count; $i++) {
-                $cparams = array();
-                foreach ($keys as $key)
-                    if (is_array($params[$key]) && isset($params[$key][$i]))
-                        $cparams[$key] = $params[$key][$i];
-                $this->execActionFromArray($cparams);
+        $all_data = $this->response->getBaseData('responses', array());
+        foreach ($params as $action_info) {
+            $tmp_response = new icms_action_Response();
+            if (!isset($action_info['params'])) {
+                $action_info['params'] = array();
             }
-            return;
-        }
-        $action = $params[self::PARAM_ACTION];
-        unset($params[self::PARAM_ACTION]);
-        $tmp_response = new icms_action_Response();
-        if (isset($params[self::PARAM_CONTROL])) {
-            $control = $params[self::PARAM_CONTROL];            
-            unset($params[self::PARAM_CONTROL]);  
-            $tmp_response->addControlAction($control, $action, $params);            
-        } else {
-            if (!isset($params[self::PARAM_MODULE]))
-                $module = null;
-            else {
-                $module = $params[self::PARAM_MODULE];
-                unset($params[self::PARAM_MODULE]);
+            if (isset($action_info['control'])) {                
+                $tmp_response->addControlAction($action_info['control'], $action_info['name'], $action_info['params']);
+            } elseif (isset($action_info['module'])) {
+                $tmp_response->addModuleAction($action_info['name'], $action_info['params'], $action_info['module']);
             }
-            $tmp_response->addModuleAction($action, $params, $module);
+            $all_data[] = $tmp_response->toArray();            
         }
-        $this->response->add(self::$i++, $tmp_response->toArray());
+        $this->response->setBaseData('responses', $all_data);
     }
-    
     
 }

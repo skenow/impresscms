@@ -7,11 +7,35 @@
  * @author              Raimondas Rimkevičius <i.know@mekdrop.name>
  */
 class icms_action_Response {
+    
+    const NTYPE_MESSAGE = 0;
+    const NTYPE_ERROR = 1;
+    const NTYPE_WARNING = 2;
+    const NTYPE_LOG = 4;
+    
+    const MODE_AUTO = 0;
+    const MODE_REPLACE = 1;
+    const MODE_UPDATE = 2;
+    
+    const OPT_NONE = 0;
+    const OPT_RENDERTIME = 1;
+    const OPT_MODEASTEXT = 2;    
+    
+    /**
+     * Stores base data for response
+     *
+     * @var array
+     */
+    protected $_baseData = array(
+        'isOK'  => true,
+        'data'  => array(),
+        'mode'  => self::MODE_AUTO
+    );
 
     /**
      * Get's main response instance
      * 
-     * @return self 
+     * @return icms_action_Response 
      */
     public static function getInstance() {
         static $instance = null;
@@ -21,8 +45,39 @@ class icms_action_Response {
         }
         return $instance;
     }
-
-    public $renderFormat = 'json';
+    
+    /**
+     * Returns if everything is ok with response
+     * 
+     * @return bool
+     */
+    public function isOK() {
+        return $this->_baseData['isOK'];
+    }
+        
+    /**
+     * Switch response mode
+     * 
+     * @param int $mode
+     * 
+     * @throws Exception
+     */
+    public function switchMode($mode) {
+        if (($this->_baseData['mode'] == self::MODE_AUTO) && ($mode != self::MODE_AUTO)) {
+            $this->_baseData['mode'] = $mode;            
+        } elseif ($this->_baseData['mode'] != $mode) {
+            Throw new Exception(sprintf('Can\'t switch from %s to %s mode in response',$this->_baseData['mode'], $mode));
+        }
+    }
+    
+    /**
+     * Returns current mode
+     * 
+     * @return int
+     */
+    public function getMode() {
+        return $this->_baseData['mode'];
+    }
 
     /**
      * Import module action results into response 
@@ -39,13 +94,17 @@ class icms_action_Response {
             else
                 $module = 'system';
 
+
         $handler = icms::handler('icms_action');
-        $instance = $handler->getModuleAction($module, $action, $params);
+        $instance = $handler->getModuleAction($module, $action, $params);					
         if (!$instance)
             return $this->error(sprintf('Action "%s" for "%s" module doesn\'t exists', $action, $module));
+        elseif (!$instance->checkIfRightsAreOK($this))
+            return;
 
         try {
-            $instance->exec($this);
+            //$this->_baseData['hashes'][] = $module . '_' . $action . '_' . md5(json_encode($params));
+            $instance->exec($this);            
         } catch (Exception $e) {
             $this->error($e->getMessage());
         }
@@ -75,31 +134,20 @@ class icms_action_Response {
             return $this->error(sprintf('Action "%s" for "%s" control doesn\'t exists', $action, $control));
 
         try {
+            //$this->_baseData['hashes'][] = $module . '_' . $action . '_' . md5(json_encode($params));
             $instance->exec($this);
             $changed = $instance->control->getChangedVars();
-            if (!empty($changed)) {
-                $key = icms_action_base_Control::RESPONSE_KEY_CHANGED_PROPERTIES;
-                if (!isset($this->$key))
-                    $this->add(icms_action_base_Control::RESPONSE_KEY_CHANGED_PROPERTIES, array());
+            if (!empty($changed)) {                
                 $changes = $instance->control->toArray();
                 $changed = array_flip($changed);
                 foreach (array_keys($changes) as $var)
                     if (!isset($changed[$var]))
-                        unset($changes[$var]);
-                $data = $this->$key;
-                $data[$instance->control->getVar('id')] = $changes;
-                $this->$key = $data;
+                        unset($changes[$var]);                
+                $this->_baseData[icms_action_base_Control::RESPONSE_KEY_CHANGED_PROPERTIES][$instance->control->getVar('id')] = $changes;
             }
         } catch (Exception $e) {
             $this->error($e->getMessage());
         }
-    }
-
-    /**
-     * Constructor
-     */
-    public function __construct() {
-        $this->add('isOk', true);
     }
 
     /**
@@ -108,17 +156,8 @@ class icms_action_Response {
      * @param string/array $message     Error message or array with error messages
      */
     public function error($message) {
-        if (is_array($message)) {
-            $this->add('error', $message);
-        } else {
-            if ($this->keyExists('error')) {
-                $error = $this->error;
-                $this->remove('error');
-                return $this->error(array($error, $message));
-            } else
-                $this->add('error', $message);
-        }
-        $this->isOk = false;
+        $this->notify($message, self::NTYPE_ERROR);
+        $this->_baseData['isOK'] = false;
     }
 
     /**
@@ -127,48 +166,160 @@ class icms_action_Response {
      * @param string $message     Message to show in response
      */
     public function msg($message) {
+        $this->notify($message);
+    }
+    
+    /**
+     * Adds messages into to the response
+     * 
+     * @param string/array $message     Message text
+     * @param int $type                 NTYPE_* constant as message type
+     */
+    public function notify($message, $type = self::NTYPE_MESSAGE) {
         if (is_array($message)) {
-            $this->add('message', $message);
-        } else {            
-            if ($this->keyExists('message')) {
-                if (is_array($this->message)) {
-                    $this->message[] = $message;
-                } else {
-                    $msg = $this->message;
-                    $this->remove('message');
-                    $this->msg(array($msg, $message));
-                }
-            } else
-                $this->add('message', $message);
+            foreach ($message as $msg)
+                $this->notify($msg, self::NTYPE_ERROR);
+            return;
+        }           
+        $this->_baseData['messages'][] = array(
+            'time' => time(), 
+            'type' => $type, 
+            'message' => $message
+        );
+    }
+    
+    public function getBaseData($name) {
+        return isset($this->_baseData[$name])?$this->_baseData[$name]:null;
+    }
+    
+    public function setBaseData($name, $value) {
+        $this->_baseData[$name] = $value;
+    }
+    
+    /**
+     * Adds only changes from object to response
+     * 
+     * @param icms_properties_Handler $object       Object from where to fetch changes
+     * @param string $path                          Path to store this in array
+     */
+    public function addObjectChanges(icms_properties_Handler &$object, $path, $include_keys = array(), $include_values = array()) {        
+        
+	
+		
+		$temp = &$this->_baseData['data'];
+		
+		foreach(explode('/', $path) as $key)
+		{
+            $temp = &$temp[$key];
+        }
+		
+		
+		$values = $temp;
+		
+        $changed = $object->getChangedValues($include_keys, false);
+	
+	
+		if (empty($changed) == false)
+		{	
+		    $this->switchMode(self::MODE_UPDATE);
+        
+			foreach($changed as $key => $value)
+			{
+				$temp[$key] = $value;
+			}
+        }
+		
+		if ($include_values != null && empty($include_values) == false)
+		{
+			foreach($include_values as $key => $value)
+			{
+				$temp[$key] = $value;
+			}
+		}
+    }
+    
+    
+    /**
+     * Adds arrays changed to response
+     * 
+     * @param array $data           Object from where to fetch changes
+     * @param string $path          Path to store this in array
+     */
+    public function addArrayChanges(Array &$data, $path) {
+        $temp = &$this->_baseData['data'];
+        foreach(explode('/', $path) as $key) {
+            $temp = &$temp[$key];
+        }
+        $temp = $data;
+    }
+    
+    /**
+     * Get's mode as string
+     * 
+     * @param int
+     * 
+     * @return string
+     */
+    public function getModeString($mode) {
+        switch ($this->_baseData['mode']) {
+            case self::MODE_UPDATE:
+                return 'update';
+            case self::MODE_REPLACE:
+            case self::MODE_AUTO:
+            default:
+                return 'replace';
         }
     }
 
     /**
      * Renders response
      * 
-     * @return string 
+     * @param string $renderFormat  Specifies rendering format
+     * @param array $renderOptions  Array with rendering options
+     * 
+     * @return string
      */
-    public function render() {
-        $data = $this->toArray();
-        if ($this->renderFormat == 'json') {
-            if (!headers_sent())
-                header('Content-Type: application/json');
-            return json_encode($data);
+    public function render($renderFormat = 'json', $renderOptions = array()) {
+        $data = $this->_baseData;
+        if (isset($data['data']) && empty($data['data']))
+            unset($data['data']);
+        
+        if (isset($renderOptions['renderTime']) && $renderOptions['renderTime']) {
+            $data['time'] = time();
+            unset($renderOptions['renderTime']);
+        }
+        
+        if (isset($renderOptions['renderModeAsText']) && $renderOptions['renderModeAsText']) {
+            $data['mode'] = $this->getModeString($data['mode']);
+            if (isset($data['responses'])) {
+                foreach ($data['responses'] as $i => $response) {
+                    $data['responses'][$i]['mode'] = $this->getModeString($response['mode']);
+                }
+            }
+            unset($renderOptions['renderModeAsText']);
         } else {
-            $class = 'icms_action_rformat_' . $this->renderFormat;
-            if (!class_exists($class, true)) {
-                trigger_error('Unsupported rendering format');
-                return null;
-            }
-            $instance = new $class();
-            if (!($instance instanceof icms_action_IFormat)){
-                trigger_error('Unsupported rendering format');
-                return null;
-            }
-            if (!headers_sent())
-                header('Content-Type: ' .  $instance->getContentType());
-            return $instance->render($data);
-        }        
+            if (isset($data['responses']))
+                foreach ($data['responses'] as $i => $response)
+                    if ($response['mode'] == self::MODE_AUTO)
+                        unset($data['responses'][$i]['mode']);
+            if ($data['mode'] == self::MODE_AUTO)
+                unset($data['mode']);
+        }
+        
+        $class = 'icms_action_format_' . $renderFormat;
+        if (!class_exists($class, true)) {
+            trigger_error('Unsupported '.$renderFormat.' rendering format');
+            return null;
+        }
+        $instance = new $class();
+        if (!($instance instanceof icms_action_IFormat)){
+            trigger_error('Unsupported rendering format');
+            return null;
+        }
+        if (!headers_sent())
+            header('Content-Type: ' .  $instance->getContentType());
+        
+        return $instance->render($data, $renderOptions);        
     }
 
     /**
@@ -201,8 +352,29 @@ class icms_action_Response {
     public function __toString() {
         return $this->render();
     }
-
-    private $_data = array();
+    
+    private function prepareArray(&$array) {
+        $ret = array();
+        foreach ($array as $key => $value) {
+            if (is_array($value)) {
+                $this->prepareArray($value);
+            } elseif (is_object($value)) {
+                $this->prepareObject($value);                
+            }
+            $ret[$key] = $value;
+        }
+        $value = $ret;
+    }
+    
+    private function prepareObject(&$object) {
+        if (is_callable(array($object, 'toArray'))) {
+            $object = $object->toArray();
+        } else {
+             $value = (array)$object;
+             $this->prepareArray($value);
+             $object = $value;
+        }
+    }
 
     /**
      * Add item to collection
@@ -210,11 +382,47 @@ class icms_action_Response {
      * @param string $key
      * @param string $value 
      */
-    public function add($key, $value) {
-        if ($this->keyExists($key))
-            Throw new Exception('Key ' . $key . ' already exists!');
-        $this->_data[$key] = $value;
-    }
+    public function add($key, $value)
+	{
+		if (is_object($value))
+		{
+            $this->prepareObject($value);
+        }
+		elseif (is_array($value))
+        {
+			$this->prepareArray($value);
+        }
+		
+        $temp = &$this->_baseData['data'];
+        
+		if (strpos($key, '/') === false)
+		{
+            $temp = &$temp[$key];
+		}
+		else
+		{
+			foreach(explode('/', $key) as $path_key)
+			{
+	            $temp = &$temp[$path_key];
+	        }	
+		}
+		
+        if (isset($temp))
+		{
+            switch ($this->_baseData['mode'])
+			{
+                case self::MODE_UPDATE:
+                    $temp = array_merge_recursive($temp, $value);
+                break;
+                default:
+                    $temp = $value;   
+            }
+        }
+		else
+		{
+            $temp = $value;
+        }                    
+    }   
 
     /**
      * Removes item from response
@@ -222,7 +430,7 @@ class icms_action_Response {
      * @param string $key
      */
     public function remove($key) {
-        unset($this->_data[$key]);
+        unset($this->_baseData['data'][$key]);
     }
 
     /**
@@ -233,7 +441,7 @@ class icms_action_Response {
      * @return bool 
      */
     public function keyExists($key) {
-        return isset($this->_data[$key]);
+        return isset($this->_baseData['data'][$key]);
     }
 
     /**
@@ -244,14 +452,14 @@ class icms_action_Response {
      * @return mixed 
      */
     public function get($key) {
-        return $this->_data[$key];
+        return $this->_baseData['data'][$key];
     }
 
     /**
      * Clear collection
      */
     public function clear() {
-        $this->_data = array();
+        $this->_baseData['data'] = array();
     }
 
     /**
@@ -260,7 +468,10 @@ class icms_action_Response {
      * @return array
      */
     public function toArray() {
-        return $this->_data;
+        $data =  $this->_baseData;
+        if (isset($data['data']) && empty($data['data']))
+            unset($data['data']);
+        return $data;
     }
 
     /**
@@ -270,8 +481,8 @@ class icms_action_Response {
      * @param mixed $value      Value to change
      */
     public function __set($var, $value) {
-        if (isset($this->_data[$var]))
-            $this->_data[$var] = $value;
+        if (isset($this->_baseData['data'][$var]))
+            $this->_baseData['data'][$var] = $value;
         else
             Throw new Exception($var . ' var not added!');
     }
@@ -302,7 +513,7 @@ class icms_action_Response {
                 $name = '#@$' . microtime(true);
             $arx[$name] = $data;
         }
-        $this->_data = $this->mergeRecursive($this->_data, $arx);
+        $this->_baseData['data'] = $this->mergeRecursive($this->_baseData['data'], $arx);
     }
 
     private function mergeRecursive(&$array1, &$array2) {
