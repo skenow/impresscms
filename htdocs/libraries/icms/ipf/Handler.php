@@ -1400,40 +1400,5 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
         $this->_maxHeight = $_maxHeight ? $_maxHeight : $this->_maxHeight;
     }
 
-    /**
-     * Copy this object data to other object
-     * 
-     * @param array $source What to copy
-     * @param array $dest Where to copy (if key doesn't exist it will be created)
-     * @param array $changedParams Changed params
-     */
-    public function copyTo(array $source, array &$dest, array $changedParams = array(), array $skipCopykeys = array()) {
-        foreach ($source as $i => $obj) {
-
-            if (!isset($dest[$i]))
-                $dest[$i] = $this->create();
-
-            $vars = $obj->getValues(null, 'n');
-            unset($vars[$this->keyName]);
-
-            foreach ($changedParams as $key => $value)
-                $vars[$key] = $value;
-
-            if (!in_array($this->keyName, $skipCopykeys))
-                $skipCopykeys[] = $this->keyName;
-
-            foreach ($skipCopykeys as $key)
-                unset($vars[$key]);
-
-            foreach ($vars as $key => $value) {
-                $dest[$i]->setVar($key, $value);
-            }
-
-            $dest[$i]->setVars($vars, true);
-        }
-
-        $this->save($dest, true);
-    }
-
 }
 
