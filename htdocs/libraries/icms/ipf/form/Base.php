@@ -181,86 +181,86 @@ class icms_ipf_form_Base extends icms_form_Theme {
 				//} else {
                                     
 					/*switch ($var['data_type']) {
-						case XOBJ_DTYPE_TXTBOX:
+						case self::DTYPE_DEP_TXTBOX:
 							$form_text = $this->getControl("text", $key);
 							$this->addElement($form_text, $key, $var);
 							unset($form_text);
 							break;
 
-						case XOBJ_DTYPE_INT:
+						case self::DTYPE_INTEGER:
 							$this->targetObject->setControl($key, array('name' => 'text', 'size' => '5'));
 							$form_text = $this->getControl("text", $key);
 							$this->addElement($form_text, $key, $var);
 							unset($form_text);
 							break;
 
-						case XOBJ_DTYPE_FLOAT:
+						case self::DTYPE_FLOAT:
 							$this->targetObject->setControl($key, array('name' => 'text', 'size' => '5'));
 							$form_text = $this->getControl("text", $key);
 							$this->addElement($form_text, $key, $var);
 							unset($form_text);
 							break;
 
-						case XOBJ_DTYPE_LTIME:
+						case self::DTYPE_DATETIME:
 							$form_datetime = $this->getControl('datetime', $key);
 							$this->addElement($form_datetime, $key, $var);
 							unset($form_datetime);
 							break;
 
-						case XOBJ_DTYPE_STIME:
+						case self::DTYPE_DEP_STIME:
 							$form_date = $this->getControl('date', $key);
 							$this->addElement($form_date, $key, $var);
 							unset($form_date);
 							break;
 
-						case XOBJ_DTYPE_TIME_ONLY:
+						case self::DTYPE_DEP_TIME_ONLY:
 							$form_time = $this->getControl('time', $key);
 							$this->addElement($form_time, $key, $var);
 							unset($form_time);
 							break;
 
-						case XOBJ_DTYPE_CURRENCY:
+						case self::DTYPE_DEP_CURRENCY:
 							$this->targetObject->setControl($key, array('name' => 'text', 'size' => '15'));
 							$form_currency = $this->getControl("text", $key);
 							$this->addElement($form_currency, $key, $var);
 							unset($form_currency);
 							break;
 
-						case XOBJ_DTYPE_URLLINK:
+						case self::DTYPE_DEP_URLLINK:
 							$form_urllink = $this->getControl("urllink", $key);
 							$this->addElement($form_urllink, $key, $var);
 							unset($form_urllink);
 							break;
 
-						case XOBJ_DTYPE_FILE:
+						case self::DTYPE_DEP_FILE:
 							$form_file = $this->getControl("richfile", $key);
 							$this->addElement($form_file, $key, $var);
 							unset($form_file);
 							break;
 
-						case XOBJ_DTYPE_TXTAREA:
+						case self::DTYPE_STRING:
 							$form_text_area = $this->getControl('textarea', $key);
 							$this->addElement($form_text_area, $key, $var);
 							unset($form_text_area);
 							break;
 
-						case XOBJ_DTYPE_ARRAY:
+						case self::DTYPE_ARRAY:
 							// TODO : To come...
 							break;
 
-						case XOBJ_DTYPE_SOURCE:
+						case self::DTYPE_DEP_SOURCE:
 							$form_source_editor = $this->getControl('source', $key);
 							$this->addElement($form_source_editor, $key, $var);
 							unset($form_source_editor);
 							break;
 
-						case XOBJ_DTYPE_FORM_SECTION:
+						case self::DTYPE_FORM_SECTION:
 							$section_control = $this->getControl('section', $key);
 							$this->addElement($section_control, $key, $var);
 							unset($section_control);
 							break;
 
-						case XOBJ_DTYPE_FORM_SECTION_CLOSE:
+						case self::DTYPE_FORM_SECTION_CLOSE:
 							$this->targetObject->setControl($key, array("close" => TRUE));
 							$section_control = $this->getControl('section', $key);
 							$this->addElement($section_control, $key, $var);

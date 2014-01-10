@@ -31,11 +31,11 @@ class icms_member_groupperm_Object extends icms_ipf_Object {
 	 */
 	function __construct(&$handler, $data = array()) {
 		
-		$this->initVar('gperm_id', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('gperm_groupid', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('gperm_itemid', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('gperm_modid', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('gperm_name', XOBJ_DTYPE_OTHER, null, false);
+		$this->initVar('gperm_id', self::DTYPE_INTEGER, null, false);
+		$this->initVar('gperm_groupid', self::DTYPE_INTEGER, null, false);
+		$this->initVar('gperm_itemid', self::DTYPE_INTEGER, null, false);
+		$this->initVar('gperm_modid', self::DTYPE_INTEGER, 0, false);
+		$this->initVar('gperm_name', self::DTYPE_DEP_OTHER, null, false);
                 
                 parent::__construct($handler, $data);
 	}

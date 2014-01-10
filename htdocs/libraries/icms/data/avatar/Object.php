@@ -29,14 +29,14 @@ class icms_data_avatar_Object extends icms_ipf_Object {
 	 *
 	 */
 	public function __construct(&$handler, $data = array()) {		
-		$this->initVar('avatar_id', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('avatar_file', XOBJ_DTYPE_OTHER, null, false, 30);
-		$this->initVar('avatar_name', XOBJ_DTYPE_TXTBOX, null, true, 100);
-		$this->initVar('avatar_mimetype', XOBJ_DTYPE_OTHER, null, false);
-		$this->initVar('avatar_created', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('avatar_display', XOBJ_DTYPE_INT, 1, false);
-		$this->initVar('avatar_weight', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('avatar_type', XOBJ_DTYPE_OTHER, 0, false);
+		$this->initVar('avatar_id', self::DTYPE_INTEGER, null, false);
+		$this->initVar('avatar_file', self::DTYPE_DEP_OTHER, null, false, 30);
+		$this->initVar('avatar_name', self::DTYPE_DEP_TXTBOX, null, true, 100);
+		$this->initVar('avatar_mimetype', self::DTYPE_DEP_OTHER, null, false);
+		$this->initVar('avatar_created', self::DTYPE_INTEGER, null, false);
+		$this->initVar('avatar_display', self::DTYPE_INTEGER, 1, false);
+		$this->initVar('avatar_weight', self::DTYPE_INTEGER, 0, false);
+		$this->initVar('avatar_type', self::DTYPE_DEP_OTHER, 0, false);
                 
                 parent::__construct($handler, $data);
 	}

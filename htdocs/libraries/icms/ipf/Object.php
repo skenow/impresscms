@@ -16,16 +16,6 @@ defined("ICMS_ROOT_PATH") or die("ImpressCMS root path not defined");
 
 icms_loadLanguageFile('system', 'common');
 
-if (!defined('XOBJ_DTYPE_SIMPLE_ARRAY')) define('XOBJ_DTYPE_SIMPLE_ARRAY', 101);
-if (!defined('XOBJ_DTYPE_CURRENCY')) define('XOBJ_DTYPE_CURRENCY', 200);
-if (!defined('XOBJ_DTYPE_FLOAT')) define('XOBJ_DTYPE_FLOAT', 201);
-if (!defined('XOBJ_DTYPE_TIME_ONLY')) define('XOBJ_DTYPE_TIME_ONLY', 202);
-if (!defined('XOBJ_DTYPE_URLLINK')) define('XOBJ_DTYPE_URLLINK', 203);
-if (!defined('XOBJ_DTYPE_FILE')) define('XOBJ_DTYPE_FILE', 204);
-if (!defined('XOBJ_DTYPE_IMAGE')) define('XOBJ_DTYPE_IMAGE', 205);
-if (!defined('XOBJ_DTYPE_FORM_SECTION')) define('XOBJ_DTYPE_FORM_SECTION', 210);
-if (!defined('XOBJ_DTYPE_FORM_SECTION_CLOSE')) define('XOBJ_DTYPE_FORM_SECTION_CLOSE', 211);
-
 /**
  * icms_ipf_Object base class
  *
@@ -101,7 +91,7 @@ class icms_ipf_Object extends icms_core_Object {
      * @param	bool	$value
      */
     public function openFormSection($section_name, $value = FALSE) {
-        $this->initVar($section_name, XOBJ_DTYPE_FORM_SECTION, $value, FALSE, NULL, '', FALSE, '', '', FALSE, FALSE, TRUE);
+        $this->initVar($section_name, self::DTYPE_FORM_SECTION, $value, FALSE, NULL, '', FALSE, '', '', FALSE, FALSE, TRUE);
     }
 
     /**
@@ -110,7 +100,7 @@ class icms_ipf_Object extends icms_core_Object {
      * @param	str		$section_name
      */
     public function closeFormSection($section_name) {
-        $this->initVar('close_section_' . $section_name, XOBJ_DTYPE_FORM_SECTION_CLOSE, '', FALSE, NULL, '', FALSE, '', '', FALSE, FALSE, TRUE);
+        $this->initVar('close_section_' . $section_name, self::DTYPE_FORM_SECTION_CLOSE, '', FALSE, NULL, '', FALSE, '', '', FALSE, FALSE, TRUE);
     }   
     
     public function getVarInfo($key = null, $info = null, $default = null) {
@@ -167,10 +157,10 @@ class icms_ipf_Object extends icms_core_Object {
     /**
      *
      * @param string $key key of this field. This needs to be the name of the field in the related database table
-     * @param int $data_type  set to one of XOBJ_DTYPE_XXX constants (set to XOBJ_DTYPE_OTHER if no data type ckecking nor text sanitizing is required)
+     * @param int $data_type  set to one of XOBJ_DTYPE_XXX constants (set to self::DTYPE_DEP_OTHER if no data type ckecking nor text sanitizing is required)
      * @param mixed $value default value of this variable
      * @param bool $required set to TRUE if this variable needs to have a value set before storing the object in the table
-     * @param int $maxlength maximum length of this variable, for XOBJ_DTYPE_TXTBOX type only
+     * @param int $maxlength maximum length of this variable, for self::DTYPE_DEP_TXTBOX type only
      * @param string $options does this data have any select options?
      * @param bool $multilingual is this field needs to support multilingual features (NOT YET IMPLEMENTED...)
      * @param string $form_caption caption of this variable in a {@link icms_ipf_form_Base} and title of a column in a  {@link icms_ipf_ObjectTable}
@@ -223,14 +213,14 @@ class icms_ipf_Object extends icms_core_Object {
      * - all other vars are NULL or '' depending of the parameter
      *
      * @param string $key key of this field. This needs to be the name of the field in the related database table
-     * @param int $data_type  set to one of XOBJ_DTYPE_XXX constants (set to XOBJ_DTYPE_OTHER if no data type ckecking nor text sanitizing is required)
+     * @param int $data_type  set to one of XOBJ_DTYPE_XXX constants (set to self::DTYPE_DEP_OTHER if no data type ckecking nor text sanitizing is required)
      * @param bool $required set to TRUE if this variable needs to have a value set before storing the object in the table
      * @param string $form_caption caption of this variable in a {@link icms_ipf_form_Base} and title of a column in a  {@link icms_ipf_ObjectTable}
      * @param string $form_dsc description of this variable in a {@link icms_ipf_form_Base}
      * @param mixed $value default value of this variable
      */
     public function quickInitVar($key, $data_type, $required = false, $form_caption = '', $form_dsc = '', $value = null) {
-        $maxlength = $data_type == 'XOBJ_DTYPE_TXTBOX' ? 255 : null;
+        $maxlength = $data_type == 'self::DTYPE_DEP_TXTBOX' ? 255 : null;
         $this->initVar($key, $data_type, $value, $required, $maxlength, '', false, $form_caption, $form_dsc, false, true, true);
     }
 

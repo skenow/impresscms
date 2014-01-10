@@ -24,11 +24,11 @@ class icms_data_page_Object extends icms_ipf_Object {
 
 	public function __construct( & $handler, $data = array()) {		
 
-            $this->quickInitVar('page_id', XOBJ_DTYPE_INT);
-            $this->quickInitVar('page_moduleid', XOBJ_DTYPE_INT, true);
-            $this->quickInitVar('page_title', XOBJ_DTYPE_TXTBOX, true);
-            $this->quickInitVar('page_url', XOBJ_DTYPE_TXTBOX, true);
-            $this->quickInitVar('page_status', XOBJ_DTYPE_INT, true);
+            $this->quickInitVar('page_id', self::DTYPE_INTEGER);
+            $this->quickInitVar('page_moduleid', self::DTYPE_INTEGER, true);
+            $this->quickInitVar('page_title', self::DTYPE_DEP_TXTBOX, true);
+            $this->quickInitVar('page_url', self::DTYPE_DEP_TXTBOX, true);
+            $this->quickInitVar('page_status', self::DTYPE_INTEGER, true);
         
             parent::__construct( $handler , $data);
 	}

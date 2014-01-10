@@ -1,5 +1,5 @@
 <?php
 
 $value = $default != 'notdefined' ? $default : true;
-$this->initVar($varname, XOBJ_DTYPE_INT,$value, false, null, "", false, _(' Enable smiley icons'), '', false, true, $displayOnForm);
+$this->initVar($varname, icms_properties_Handler::DTYPE_INTEGER,$value, false, null, "", false, _CM_DOSMILEY, '', false, true, $displayOnForm);
 $this->setControl($varname, "yesno");

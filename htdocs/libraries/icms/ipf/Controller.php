@@ -53,7 +53,7 @@ class icms_ipf_Controller {
                 $data_type = $icmsObj->getVarInfo($key, icms_properties_Handler::VARCFG_TYPE);
             
 			switch ($data_type) {
-				case XOBJ_DTYPE_IMAGE:
+				case icms_properties_Handler::DTYPE_DEP_IMAGE:
 					if (isset($_POST['url_' . $key]) && $_POST['url_' . $key] !='') {
 						$eventResult = $this->handler->executeEvent('beforeFileUnlink', $icmsObj);
 						if (!$eventResult) {
@@ -82,7 +82,7 @@ class icms_ipf_Controller {
 					}
 					break;
 
-				case XOBJ_DTYPE_URLLINK:
+				case icms_properties_Handler::DTYPE_DEP_URLLINK:
 					$linkObj = $icmsObj->getUrlLinkObj($key);
 					$linkObj->setVar('mid', $_POST['mid_' . $key]);
 					$linkObj->setVar('caption', $_POST['caption_' . $key]);
@@ -96,7 +96,7 @@ class icms_ipf_Controller {
 					$icmsObj->setVar($key, $linkObj->getVar('urllinkid'));
 					break;
 
-				case XOBJ_DTYPE_FILE:
+				case icms_properties_Handler::DTYPE_DEP_FILE:
 					if (!isset($_FILES['upload_' . $key]['name']) || $_FILES['upload_' . $key]['name'] == '') {
 						$fileObj = $icmsObj->getFileObj($key);
 						$fileObj->setVar('mid', $_POST['mid_' . $key]);
@@ -115,9 +115,9 @@ class icms_ipf_Controller {
 					}
 					break;
 
-				case XOBJ_DTYPE_STIME:
-				case XOBJ_DTYPE_MTIME:
-				case XOBJ_DTYPE_LTIME:
+				case icms_properties_Handler::DTYPE_DEP_STIME:
+				case icms_properties_Handler::DTYPE_DEP_MTIME:
+				case icms_properties_Handler::DTYPE_DATETIME:
 					// check if this field's value is available in the POST array
 					if (is_array($_POST[$key]) && isset($_POST[$key]['date'])) {
 						$value = strtotime($_POST[$key]['date']) + $_POST[$key]['time'];
@@ -130,20 +130,20 @@ class icms_ipf_Controller {
 					$icmsObj->setVar($key, $value);
 					break;
 					
-				case XOBJ_DTYPE_URL:
+				case icms_properties_Handler::DTYPE_DEP_URL:
 					if (isset($_POST[$key])) {
 						$icmsObj->setVar($key, filter_var($_POST[$key], FILTER_SANITIZE_URL));
 					}
 					break;
 
-				case XOBJ_DTYPE_ARRAY:
+				case icms_properties_Handler::DTYPE_ARRAY:
 					if (is_array($_POST[$key])) {
 						$icmsObj->setVar($key, serialize($_POST[$key]));
 					}
 					break;
 
 				default:
-                        $icmsObj->setVar($key, isset($_POST[$key])?$_POST[$key]:null);
+                                        $icmsObj->setVar($key, isset($_POST[$key])?$_POST[$key]:null);
 					break;
 			}
 		}
@@ -185,7 +185,7 @@ class icms_ipf_Controller {
                             $var_type = $icmsObj->getVarInfo($related_field, icms_properties_Handler::VARCFG_DEP_DATA_TYPE);
                             if (!$var_type)
                                 $var_type = $icmsObj->getVarInfo($related_field, icms_properties_Handler::VARCFG_TYPE);
-							if ($var_type == XOBJ_DTYPE_FILE) {
+							if ($var_type == icms_properties_Handler::DTYPE_DEP_FILE) {
 								$object_fileurl = $icmsObj->getUploadDir();
 								$fileObj = $icmsObj->getFileObj($related_field);
 								$fileObj->setVar('url', $object_fileurl . $uploaderObj->getSavedFileName());

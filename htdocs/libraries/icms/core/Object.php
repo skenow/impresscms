@@ -14,8 +14,8 @@
  *
  * */
 define('XOBJ_DTYPE_TXTBOX', icms_properties_Handler::DTYPE_DEP_TXTBOX);
-define('XOBJ_DTYPE_TXTAREA', icms_properties_Handler::DTYPE_STRING);
-define('XOBJ_DTYPE_INT', icms_properties_Handler::DTYPE_INTEGER);
+define('XOBJ_DTYPE_STRING', icms_properties_Handler::DTYPE_STRING);
+define('XOBJ_DTYPE_INTEGER', icms_properties_Handler::DTYPE_INTEGER);
 define('XOBJ_DTYPE_URL', icms_properties_Handler::DTYPE_DEP_URL);
 define('XOBJ_DTYPE_EMAIL', icms_properties_Handler::DTYPE_DEP_EMAIL);
 define('XOBJ_DTYPE_ARRAY', icms_properties_Handler::DTYPE_ARRAY);
@@ -23,7 +23,7 @@ define('XOBJ_DTYPE_OTHER', icms_properties_Handler::DTYPE_OTHER);
 define('XOBJ_DTYPE_SOURCE', icms_properties_Handler::DTYPE_DEP_SOURCE);
 define('XOBJ_DTYPE_STIME', icms_properties_Handler::DTYPE_DEP_STIME);
 define('XOBJ_DTYPE_MTIME', icms_properties_Handler::DTYPE_DEP_MTIME);
-define('XOBJ_DTYPE_LTIME', icms_properties_Handler::DTYPE_DATETIME);
+define('XOBJ_DTYPE_DATETIME', icms_properties_Handler::DTYPE_DATETIME);
 
 define('XOBJ_DTYPE_SIMPLE_ARRAY', icms_properties_Handler::DTYPE_LIST);
 define('XOBJ_DTYPE_CURRENCY', icms_properties_Handler::DTYPE_DEP_CURRENCY);
@@ -32,8 +32,8 @@ define('XOBJ_DTYPE_TIME_ONLY', icms_properties_Handler::DTYPE_DEP_TIME_ONLY);
 define('XOBJ_DTYPE_URLLINK', icms_properties_Handler::DTYPE_DEP_URLLINK);
 define('XOBJ_DTYPE_FILE', icms_properties_Handler::DTYPE_DEP_FILE);
 define('XOBJ_DTYPE_IMAGE', icms_properties_Handler::DTYPE_DEP_IMAGE);
-define('XOBJ_DTYPE_FORM_SECTION', icms_properties_Handler::DTYPE_DEP_FORM_SECTION);
-define('XOBJ_DTYPE_FORM_SECTION_CLOSE', icms_properties_Handler::DTYPE_DEP_FORM_SECTION_CLOSE);
+define('XOBJ_DTYPE_FORM_SECTION', icms_properties_Handler::DTYPE_FORM_SECTION);
+define('XOBJ_DTYPE_FORM_SECTION_CLOSE', icms_properties_Handler::DTYPE_FORM_SECTION_CLOSE);
 
 /* * #@- */
 
@@ -108,10 +108,10 @@ class icms_core_Object extends icms_properties_Handler {
      *
      * @access public
      * @param string $key
-     * @param int $data_type  set to one of XOBJ_DTYPE_XXX constants (set to XOBJ_DTYPE_OTHER if no data type ckecking nor text sanitizing is required)
+     * @param int $data_type  set to one of XOBJ_DTYPE_XXX constants (set to XOBJ_DTYPE_DEP_OTHER if no data type ckecking nor text sanitizing is required)
      * @param mixed
      * @param bool $required  require html form input?
-     * @param int $maxlength  for XOBJ_DTYPE_TXTBOX type only
+     * @param int $maxlength  for XOBJ_DTYPE_DEP_TXTBOX type only
      * @param string $option  does this data have any select options?
      */
     public function initVar($key, $data_type, $value = null, $required = false, $maxlength = null, $options = '') {
@@ -160,27 +160,48 @@ class icms_core_Object extends icms_properties_Handler {
     private function _loadFilters() {
         
     }
-
-    public function __call($name, $arguments) {
-        switch ($name) {
-            case 'xoopsClone':
-                trigger_error('Deprecached method xoopsClone', E_USER_DEPRECATED);
-                return clone $this;
-            case 'setDirty':
-                trigger_error('Deprecached method xoopsClone', E_USER_DEPRECATED);
-                $this->setVarInfo(null, parent::VARCFG_CHANGED, true);                
-                return null;
-            case 'unsetDirty':
-                trigger_error('Deprecached method unsetDirty', E_USER_DEPRECATED);
-                $this->setVarInfo(null, parent::VARCFG_CHANGED, false);
-                return null;
-            break;
-            case 'isDirty':
-                trigger_error('Deprecached method isDirty', E_USER_DEPRECATED);
-                return count($this->getChangedVars()) > 0;
-        }
-        parent::__call($name, $arguments);
-    }    
+    
+    /**
+     * Clone current instance
+     * 
+     * @return object
+     * 
+     * @deprecated since version 2.0
+     */
+    public function xoopsClone() {
+        trigger_error('Deprecached method xoopsClone', E_USER_DEPRECATED);
+        return clone $this;
+    }
+    
+    /**
+     * Sets object modified
+     * 
+     * @deprecated since version 2.0
+     */
+    public function setDirty() {
+        trigger_error('Deprecached method setDirty', E_USER_DEPRECATED);
+        $this->setVarInfo(null, parent::VARCFG_CHANGED, true); 
+    }
+    
+    /**
+     * Sets object unmodified
+     * 
+     * @deprecated since version 2.0
+     */
+    public function unsetDirty() {
+        trigger_error('Deprecached method unsetDirty', E_USER_DEPRECATED);
+        $this->setVarInfo(null, parent::VARCFG_CHANGED, false); 
+    }
+    
+    /**
+     * Is object modified?
+     * 
+     * @deprecated since version 2.0
+     */
+    public function isDirty() {
+        trigger_error('Deprecached method isDirty', E_USER_DEPRECATED);
+        return count($this->getChangedVars()) > 0;
+    }
 
     /**
      * Create cloned copy of current object
