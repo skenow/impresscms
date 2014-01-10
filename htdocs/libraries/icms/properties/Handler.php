@@ -483,7 +483,7 @@ abstract class icms_properties_Handler implements Serializable {
                         return $this->_values[$name]; //icms_core_DataFilter::checkVar($this->_values[$name], 'text', 'output');
                     }
                 } else {
-                    $ret = str_replace(array("&amp;", "&nbsp;"), array('&', '&amp;nbsp;'), @htmlspecialchars($this->_values[$name], ENT_QUOTES, _('utf-8'))); //icms_core_DataFilter::htmlSpecialchars($this->_values[$name]);
+                    $ret = str_replace(array("&amp;", "&nbsp;"), array('&', '&amp;nbsp;'), @htmlspecialchars($this->_values[$name], ENT_QUOTES, _CHARSET)); //icms_core_DataFilter::htmlSpecialchars($this->_values[$name]);
                     if (method_exists($this, 'formatForML')) {
                         return $this->formatForML($ret);
                     } else {
@@ -496,9 +496,9 @@ abstract class icms_properties_Handler implements Serializable {
             case self::DTYPE_FLOAT: // XOBJ_DTYPE_FLOAT
                 return sprintf(isset($this->_vars[$name][self::VARCFG_FORMAT]) ? $this->_vars[$name][self::VARCFG_FORMAT] : '%d', $this->_values[$name]);
             case self::DTYPE_BOOLEAN:
-                return $this->_values[$name] ? _('Yes') : _('No');
+                return $this->_values[$name] ? _YES : _NO;
             case self::DTYPE_FILE: // XOBJ_DTYPE_FILE                    
-                return str_replace(array("&amp;", "&nbsp;"), array('&', '&amp;nbsp;'), @htmlspecialchars($this->_values[$name], ENT_QUOTES, _('utf-8')));
+                return str_replace(array("&amp;", "&nbsp;"), array('&', '&amp;nbsp;'), @htmlspecialchars($this->_values[$name], ENT_QUOTES, _CHARSET));
             case self::DTYPE_DATETIME: // XOBJ_DTYPE_LTIME
                 return date(isset($this->_vars[$name][self::VARCFG_FORMAT]) ? $this->_vars[$name][self::VARCFG_FORMAT] : 'r', $this->_values[$name]);
             case self::DTYPE_ARRAY: // XOBJ_DTYPE_ARRAY
@@ -554,7 +554,7 @@ abstract class icms_properties_Handler implements Serializable {
             case self::DTYPE_FILE: // XOBJ_DTYPE_FILE
             case self::DTYPE_DATETIME: // XOBJ_DTYPE_LTIME
             case self::DTYPE_ARRAY: // XOBJ_DTYPE_ARRAY            
-                return str_replace(array("&amp;", "&nbsp;"), array('&', '&amp;nbsp;'), @htmlspecialchars($this->_values[$name], ENT_QUOTES, _('utf-8')));
+                return str_replace(array("&amp;", "&nbsp;"), array('&', '&amp;nbsp;'), @htmlspecialchars($this->_values[$name], ENT_QUOTES, _CHARSET));
             case self::DTYPE_LIST: // XOBJ_DTYPE_SIMPLE_ARRAY
                 return $this->getVar($name, 'n');
                 break;
@@ -581,7 +581,7 @@ abstract class icms_properties_Handler implements Serializable {
             case self::DTYPE_DATETIME: // XOBJ_DTYPE_LTIME
             case self::DTYPE_ARRAY: // XOBJ_DTYPE_ARRAY
             case self::DTYPE_LIST: // XOBJ_DTYPE_SIMPLE_ARRAY
-                return str_replace(array("&amp;", "&nbsp;"), array('&', '&amp;nbsp;'), @htmlspecialchars($this->_values[$name], ENT_QUOTES, _('utf-8')));
+                return str_replace(array("&amp;", "&nbsp;"), array('&', '&amp;nbsp;'), @htmlspecialchars($this->_values[$name], ENT_QUOTES, _CHARSET));
             case self::DTYPE_OTHER: // XOBJ_DTYPE_OTHER
             case self::DTYPE_OBJECT:
             default:
@@ -928,7 +928,7 @@ abstract class icms_properties_Handler implements Serializable {
                 if (!is_string($value))
                     $value = strval($value);
                 if (isset($this->_vars[$key][self::VARCFG_MAX_LENGTH]) && ($this->_vars[$key][self::VARCFG_MAX_LENGTH] > 0) && (mb_strlen($value) > $this->_vars[$key][self::VARCFG_MAX_LENGTH])) {
-                    trigger_error(sprintf(_('%s must be shorter than %d characters.'), $key, (int) $this->_vars[$key][self::VARCFG_MAX_LENGTH]), E_USER_WARNING);
+                    trigger_error(sprintf(_XOBJ_ERR_SHORTERTHAN, $key, (int) $this->_vars[$key][self::VARCFG_MAX_LENGTH]), E_USER_WARNING);
                     $value = mb_substr($value, 0, $this->_vars[$key][self::VARCFG_MAX_LENGTH]);
                 }
                 return $value;
