@@ -10,7 +10,7 @@
  * @subpackage	Version
  * @since		1.0
  * @author		malanciault <marcan@impresscms.org)
- * @version		SVN: $Id: version.php 11610 2012-02-28 03:53:55Z skenow $
+ * @version		SVN: $Id: main.php 12403 2014-01-26 21:35:08Z skenow $
  */
 
 if (!is_object(icms::$user) || !is_object($icmsModule) || !icms::$user->isAdmin()) {
@@ -53,7 +53,7 @@ if ($icmsVersionChecker->check()) {
 
 $icmsAdminTpl->assign('your_version', $icmsVersionChecker->installed_version_name);
 $icmsAdminTpl->assign('lang_php_version', PHP_VERSION);
-$icmsAdminTpl->assign('lang_mysql_version', mysql_get_server_info());
+$icmsAdminTpl->assign('lang_mysql_version', icms::$xoopsDB->getServerVersion());
 $icmsAdminTpl->assign('lang_server_api', PHP_SAPI);
 $icmsAdminTpl->assign('lang_os_name', PHP_OS);
 $icmsAdminTpl->assign('safe_mode', ini_get('safe_mode') ? _CO_ICMS_ON : _CO_ICMS_OFF);
