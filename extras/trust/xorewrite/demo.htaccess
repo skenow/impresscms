@@ -1,0 +1,7 @@
+RewriteEngine on
+
+#Icms : Start xoRewriteModule
+RewriteRule ^infos/(.*)$ modules/content/$1 [L]
+RewriteRule ^banner/(.*)$ modules/banners/$1 [L]
+RewriteRule ^user/(.*)$ modules/profile/$1 [L]
+#Icms : End xoRewriteModule
