@@ -119,7 +119,8 @@ class icms_module_Object extends icms_core_Object {
 	 * @return void
 	 */
 	public function registerClassPath($isactive = NULL) {
-		//if ($this->getVar("dirname") == "system") return;
+	//daj composer integration : this shouldn't be needed, once all the modules are using composer
+/*			//if ($this->getVar("dirname") == "system") return;
 		$class_path = ICMS_MODULES_PATH . "/" . $this->getVar("dirname") . "/class";
 
 		// check if class path exists
@@ -136,6 +137,7 @@ class icms_module_Object extends icms_core_Object {
 		} else {
 			icms_Autoloader::register($class_path);
 		}
+*/
 	}
 
 	/**

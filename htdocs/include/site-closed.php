@@ -68,8 +68,10 @@ if (!$allowed) {
 	$icmsTpl->caching = 0;
 
 	icms_loadLanguageFile("system", "customtag", TRUE);
-	icms_Autoloader::register(ICMS_MODULES_PATH . "/system/class", "mod_system");
-	$icms_customtag_handler = icms_getModuleHandler("customtag", "system");
+	//daj composer integration : is this replacable with autoload.php, or should we leave this?
+    //icms_Autoloader::register(ICMS_MODULES_PATH . "/system/class", "mod_system");
+	include ICMS_ROOT_PATH . '/vendor/autoload.php';
+    $icms_customtag_handler = icms_getModuleHandler("customtag", "system");
 	$customtags_array = array();
 	if (is_object($icmsTpl)) {
 		foreach ($icms_customtag_handler->getCustomtagsByName() as $k => $v) {

@@ -113,8 +113,8 @@ abstract class icms {
 		self::$paths['themes']	= array(ICMS_THEME_PATH, ICMS_THEME_URL);
 		self::buildRelevantUrls();
 		// Initialize the autoloader
-		require_once dirname(__FILE__ ) . '/icms/Autoloader.php';
-		icms_Autoloader::setup();
+		require_once ICMS_ROOT_PATH . '/vendor/autoload.php';
+		//icms_Autoloader::setup();
 		register_shutdown_function(array(__CLASS__, 'shutdown'));
 	}
 
