@@ -16,18 +16,20 @@
       }
     ],
     "require": {
-      "php": ">=5.3.8",
-      "impresscms/profile": ">2.0.0"
+      "php": ">=5.3.8"
     },
     "autoload": {
-        "classmap": [ "libraries/icms/", "modules/system/class/", "install/class",
+        "classmap": [ "libraries/icms/", "modules/system/class/", "install/class", "install/include",
           "libraries/icms.php"
         ]
     },
     "repositories": [
         {
             "type": "composer",
-            "url": "http://beta.impresscms.org/packages"
-        }
+            "url": "http://localhost/packages-mirror"
+        },
+      {
+        "packagist": false
+      }
     ]
 }
