@@ -39,13 +39,13 @@
  * @version		SVN: $Id$
  */
 
-if (!defined('SMARTY_DIR')) {
+/*if (!defined('SMARTY_DIR')) {
 	exit();
-}
+}*/
 /**
  * Base class: Smarty template engine
  */
-require_once SMARTY_DIR . 'Smarty.class.php';
+//require_once SMARTY_DIR . 'Smarty.class.php';
 
 /**
  * Template engine
