@@ -11,7 +11,7 @@
  * @version		$Id$
  */
 
- include ICMS_ROOT_PATH . '/vendor/autoload.php';
+include ICMS_ROOT_PATH . '/vendor/autoload.php';
 
 class icms_Autoloader {
 	/**

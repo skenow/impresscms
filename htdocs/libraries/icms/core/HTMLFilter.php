@@ -68,8 +68,9 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
         }
 
         if ($icmsConfigPurifier['enable_purifier'] !== 0) {
-			require_once ICMS_LIBRARIES_PATH . '/htmlpurifier/HTMLPurifier.standalone.php';
-			require_once ICMS_LIBRARIES_PATH . '/htmlpurifier/HTMLPurifier.autoload.php';
+//  No longer necessary once composer autoloader is active
+//			require_once ICMS_LIBRARIES_PATH . '/htmlpurifier/HTMLPurifier.standalone.php';
+//			require_once ICMS_LIBRARIES_PATH . '/htmlpurifier/HTMLPurifier.autoload.php';
 			if ($icmsConfigPurifier['purifier_Filter_ExtractStyleBlocks'] !== 0) {
 				require_once ICMS_PLUGINS_PATH . '/csstidy/class.csstidy.php';
 			}
@@ -96,7 +97,8 @@ class icms_core_HTMLFilter extends icms_core_DataFilter {
 	 * @return	object	array list of filter objects
 	 */
 	static private function getCustomFilterList() {
-		$dirPath = ICMS_LIBRARIES_PATH . '/htmlpurifier/standalone/HTMLPurifier/Filter/';
+//todo: make this composer-compatible. Does HTMLPurifier has a function for this?
+		//$dirPath = ICMS_LIBRARIES_PATH . '/htmlpurifier/standalone/HTMLPurifier/Filter/';
 		$icmsConfigPurifier = icms::$config->getConfigsByCat(ICMS_CONF_PURIFIER);
 		if ($icmsConfigPurifier['purifier_Filter_AllowCustom'] !== 0) {
 			$filterList = array();
