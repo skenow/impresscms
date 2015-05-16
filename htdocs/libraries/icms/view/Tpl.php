@@ -72,7 +72,8 @@ class icms_view_Tpl extends Smarty {
 		$this->_compile_id = $this->compile_id;
 		$this->compile_check = ( $icmsConfig['theme_fromfile'] == 1 );
 		$this->plugins_dir = array(
-			SMARTY_DIR . 'icms_plugins',
+//			SMARTY_DIR . 'icms_plugins',
+			ICMS_ROOT_PATH . '/vendor/impresscms/smarty-plugins/icms_plugins',
 			SMARTY_DIR . 'plugins',
 		);
 
