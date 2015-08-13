@@ -3,3 +3,15 @@
 /.project
 /.idea
 /vendor
+/cfg_*/
+**/.svn/
+**/.git/
+/htdocs/modules/*
+!/htdocs/modules/system/
+!/htdocs/modules/index.html
+/htdocs/mainfile.php
+/nbproject/
+/htdocs/templates_c/*.php
+/htdocs/cache/*
+!/htdocs/cache/index.html
+htdocs/mainfile.php
