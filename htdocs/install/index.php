@@ -303,10 +303,13 @@ switch ($op) {
 			echo json_encode(array('status'=>'success'));
 			$debugMsgs[] = icms_core_Message::result("You're good to go!", '', FALSE);
 		}
+		/* include the page layout for this stage */
+			
 		break;
 	
 	case 'finish' :
-	
+		/* include the page layout for the final stage */
+			
 		break;
 	
 }

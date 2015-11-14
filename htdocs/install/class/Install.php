@@ -174,6 +174,8 @@ class Install {
 	/**
 	 * Check if the database is available
 	 *
+	 * @todo	use the DB factory in the core and enable PDO
+	 *
 	 * @param	string	$dbserver	name of the db server
 	 * @param	string	$dbuser		authorized db user
 	 * @param	string	$dbpassword	password for the db user
@@ -233,6 +235,8 @@ class Install {
 				'ICMS_DB_COLLATION' => $dbcollation,
 				'ICMS_DB_SALT' => $sitesalt,
 		);
+		
+		/* this will generate warnings, because the ICMS_ constants have not been defined, yet */
 		$legacy = array(
 				'XOOPS_DB_TYPE' => ICMS_DB_TYPE,
 				'XOOPS_DB_HOST' => ICMS_DB_HOST,
