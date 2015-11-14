@@ -340,7 +340,8 @@ class Install {
 		if (!$result) $messages[] = "Unable to write mainfile";
 
 		$chmodMainfile = icms_core_Filesystem::chmod($sitepath . 'mainfile.php', 0444);
-		if (!$chmodMainfile) $messages[] = "Unable to write protect mainfile";
+		/* This should not halt the install - will remove this, for now */
+		// if (!$chmodMainfile) $messages[] = "Unable to write protect mainfile";
 
 		return $messages;
 	}

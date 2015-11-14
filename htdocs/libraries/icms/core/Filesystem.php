@@ -441,7 +441,8 @@ class icms_core_Filesystem {
 	static public function writeFile($contents, $filename, $extension = '', $location = ICMS_TRUST_PATH, $overwrite = TRUE) {
 		if ($extension == '') $extension = 'php';
 		if (DIRECTORY_SEPARATOR !== "/") $location = str_replace(DIRECTORY_SEPARATOR, "/", $location);
-		$file = $location . '/' . $filename . '.' . $extension;
+		if (substr($location, -1) !== '/') $location .= '/';
+		$file = $location . $filename . '.' . $extension;
 		$mode = $overwrite ? "wb" : "ab";
 		if ($fp = fopen($file, $mode)) {
 			if (fwrite($fp, $contents) == FALSE) {
@@ -479,8 +480,10 @@ class icms_core_Filesystem {
 						implode("+", array_keys($files))
 				)
 		);
-
-		$combinedFile = $location . "/" . $filename . "." . $type;
+		
+		if (substr($location, -1) !== '/') $location .= '/';
+		
+		$combinedFile = $location . $filename . "." . $type;
 
 		/* check to see if the compound file has been cached and for how long */
 		$combinedFileExists = file_exists($combinedFile);
@@ -509,7 +512,7 @@ class icms_core_Filesystem {
 		}
 		$filepath = $combinedFile;
 
-		$minFile = $location . "/" . $filename . "-min". "." . $type;
+		$minFile = $location . $filename . "-min". "." . $type;
 		$minFileExists = file_exists($minFile);
 		if ($minFileExists && $maxage !== 0) {
 			$expired = (time() - filectime($minFile)) > $maxage;

@@ -176,7 +176,7 @@ switch ($op) {
 		
 		if (count($versionCheck) > 0) {
 			// show errors and reload
-			$reload = TRUE;
+			//$reload = TRUE;
 			$debugMsgs[] = icms_core_Message::warning($versionCheck, "Version recommendation", FALSE);
 			unset($versionCheck);
 		} elseif ($debug) {
@@ -275,6 +275,7 @@ switch ($op) {
 		
 		/* install system module
 		 * the system module will also handle adding any default content (old makedata.php tasks)
+		 * This method is just a stub, at the moment - it doesn't actually install the module
 		 */
 		icms_module_Handler::install('system');
 		

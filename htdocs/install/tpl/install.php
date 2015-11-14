@@ -37,10 +37,10 @@
         <div class="inner">
 
           <div id="header" class="header">
-            <h1><img src="<?php echo ICMS_URL; ?>/themes/core/media/img/logo.png" alt="ImpressCMS" /></h1>
+            <h1><img src="<?php echo ICMS_URL; ?>/themes/core/img/logo.png" alt="ImpressCMS" /></h1>
           </div>
 
-          <?php 
+          <?php
             if(isset($showMsg)) {
               echo $showMsg;
             }
@@ -49,8 +49,8 @@
           ?>
             <p>
               <a href="?op=reload" class="btn btn-primary"><i class="icon-refresh icon-white"></i> Try Again</a>
-            </p>          
-          <?php  
+            </p>
+          <?php
             } else {
           ?>
 
@@ -79,7 +79,7 @@
               </div>
             </div>
 
-            <!-- 
+            <!--
 
             <div class="control-group">
               <label class="control-label" for="site_admin_uname">Login Name <span class="tip" title="Must differ from display name"><i class="icon-question"></i></span></label>

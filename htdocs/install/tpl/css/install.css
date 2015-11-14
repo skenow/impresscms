@@ -1,5 +1,5 @@
-@import url('../../../themes/core/media/css/bootstrap/bootstrap.min.css');
-@import url('../../../themes/core/media/css/font-awesome/font-awesome.css');
+@import url('../../../libraries/bootstrap/bootstrap.min.css');
+@import url('http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css');
 
 /* Extra Css for Installer */
 html, body {background: #333;}
