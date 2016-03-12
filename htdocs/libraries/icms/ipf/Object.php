@@ -23,10 +23,39 @@ icms_loadLanguageFile('system', 'common');
  */
 class icms_ipf_Object extends icms_core_Object {
 
-    public $_image_path;
-    public $_image_url;
+    /**
+     * Image path
+     *
+     * @var string 
+     */
+    public $_image_path = '';
+    
+    /**
+     * Image URL
+     *
+     * @var string
+     */
+    public $_image_url = '';
+    
+    /**
+     * Is SEO enabled?
+     *
+     * @var bool
+     */
     public $seoEnabled = false;
-    public $titleField;
+    
+    /**
+     * Title field name
+     *
+     * @var string|null
+     */
+    public $titleField = null;
+    
+    /**
+     * Summary field name
+     *
+     * @var bool|null|string 
+     */
     public $summaryField = false;
 
     /**
@@ -683,7 +712,7 @@ class icms_ipf_Object extends icms_core_Object {
         $vars = $only_changed?$this->getChangedVars():array_keys($this->_vars);        
         
         foreach ($vars as $k) {
-            if ($this->handler->keyName == $k) {
+            if ($this->handler->keyName == $k && !$this->_vars[$k][self::VARCFG_VALUE]) {
                 continue; // Skipping ID
             }
             if ($this->_vars[$k]['persistent'] === true || $this->_vars[$k]['persistent'] === null) {
@@ -759,7 +788,7 @@ class icms_ipf_Object extends icms_core_Object {
                 $br = false;
                 $formatML = !$editor;
             } else {
-                return htmlspecialchars($ret, ENT_QUOTES);
+                return htmlspecialchars($ret, ENT_QUOTES, _CHARSET);
             }
         }
 
