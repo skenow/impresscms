@@ -412,41 +412,32 @@ class icms_ipf_Object extends icms_core_Object {
 				case self::DTYPE_DEP_MTIME:
 				case self::DTYPE_DATETIME:
 				case self::DTYPE_DEP_STIME:
-					return array ('name' => 'datetime'
-					);
+					return array ('name' => 'datetime');
 					
 				case self::DTYPE_DEP_TIME_ONLY:
-					return array ('name' => 'time'
-					);
+					return array ('name' => 'time');
 					
 				case self::DTYPE_DEP_URL:
 				case self::DTYPE_DEP_URLLINK:
-					return array ('name' => 'urllink'
-					);
+					return array ('name' => 'urllink');
 					
 				case self::DTYPE_DEP_SOURCE:
-					return array ('name' => 'source'
-					);
+					return array ('name' => 'source');
 					
 				case self::DTYPE_DEP_EMAIL:
-					return array ('name' => 'email'
-					);
+					return array ('name' => 'email');
 					
 				case self::DTYPE_DEP_TXTBOX:
-					return array ('name' => 'text'
-					);
+					return array ('name' => 'text');
 					
 				case self::DTYPE_DEP_IMAGE:
-					return array ('name' => 'image'
-					);
+					return array ('name' => 'image');
 					
 				case self::DTYPE_FILE:
-					return array ('name' => 'richfile'
-					);
+					return array ('name' => 'richfile');
 					
 				default:
-					return array ('name' => 'text'
-					);
+					return array ('name' => 'text');
 			}
 		}
 	}
