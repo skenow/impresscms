@@ -1,8 +1,8 @@
-ImpressCMS 1.2.9 Final release notes
+ImpressCMS 1.2.10 Final release notes
 ==================================
 
 The ImpressCMS Project is very proud to announce a new stable version of its 1.2 series! 
-ImpressCMS 1.2.9 Final is a final stable release and as such, can be used on production sites.
+ImpressCMS 1.2.10 Final is a final stable release and as such, can be used on production sites.
 
 The 1.2 series has been labeled as an LTS (Long Term Support) series and will continue to receive security updates until the 
 release of ImpressCMS 2.0.
