@@ -81,9 +81,9 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 					if (isset(${$extra_param})) {
 						$extra_params .= $extra_param .'='.${$extra_param}.'&amp;';
 					} elseif (isset($_POST[$extra_param])) {
-						$extra_params .= $extra_param .'='.$_POST[$extra_param].'&amp;';
+						$extra_params .= $extra_param .'='. htmlspecialchars(trim($_POST[$extra_param])).'&amp;';
 					} elseif (isset($_GET[$extra_param])) {
-						$extra_params .= $extra_param .'='.$_GET[$extra_param].'&amp;';
+						$extra_params .= $extra_param .'='. htmlspecialchars(trim($_GET[$extra_param])).'&amp;';
 					} else {
 						$extra_params .= $extra_param .'=&amp;';
 					}
@@ -173,9 +173,9 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 		  $hidden_value = htmlspecialchars(${$extra_param}, ENT_QUOTES);
 		  $extra_param_val = ${$extra_param};
   		} elseif (isset($_POST[$extra_param])) {
-  			$extra_param_val = $_POST[$extra_param];
+  			$extra_param_val = htmlspecialchars(trim($_POST[$extra_param]));
   		} elseif (isset($_GET[$extra_param])) {
-			$extra_param_val = $_GET[$extra_param];
+			$extra_param_val = htmlspecialchars(trim($_GET[$extra_param]));
   		}
   		if (isset($extra_param_val)) {
 			$link_extra .= '&amp;'.$extra_param.'='.$extra_param_val;

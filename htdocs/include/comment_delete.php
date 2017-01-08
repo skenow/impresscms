@@ -54,12 +54,13 @@ if ('system' == $icmsModule->getVar('dirname')) {
 				$redirect_page .= $extra_param.'='.${$extra_param}.'&amp;';
 				
 				// for the confirmation page
+				$clean_extra_param = filter_input(INPUT_GET, 'extra_param', FILTER_SANITIZE_SPECIAL_CHARS);
 				$comment_confirm_extra [$extra_param] = ${$extra_param};
 			} elseif (isset($_GET[$extra_param])) {
-				$redirect_page .= $extra_param.'='.$_GET[$extra_param].'&amp;';
+				$redirect_page .= $extra_param.'='. $clean_extra_param .'&amp;';
 				
 				// for the confirmation page
-				$comment_confirm_extra [$extra_param] = $_GET[$extra_param];
+				$comment_confirm_extra [$extra_param] = $clean_extra_param;
 			}
 		}
 	}

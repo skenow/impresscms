@@ -106,7 +106,7 @@ if ('system' != $icmsModule->getVar('dirname')) {
 			} else {
 				$hidden_value = '';
 			}
- 			$cform->addElement(new XoopsFormHidden($extra_param, $hidden_value));
+ 			$cform->addElement(new XoopsFormHidden($extra_param, filter_var($hidden_value, FILTER_SANITIZE_STRING)));
  		}
  	}
 }
