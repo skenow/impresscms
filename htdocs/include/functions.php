@@ -1395,7 +1395,12 @@ function icms_getCookieVar($name, $default = '')
 function icms_get_page_before_form()
 {
 	global $impresscms;
-	return isset($_POST['icms_page_before_form']) ? $_POST['icms_page_before_form'] : $impresscms->urls['previouspage'];
+	return isset($_POST['icms_page_before_form'])
+					? filter_var(
+							filter_var(
+									$_POST['icms_page_before_form'], FILTER_SANITIZE_URL)
+							, FILTER_VALIDATE_URL)
+					: $impresscms->urls['previouspage'];
 }
 
 /**
@@ -2334,14 +2339,29 @@ function icms_getImageSize($url, & $width, & $height) {
  */
 function icms_getCurrentUrls() {
 	$urls = array();
-	$http = ((strpos(ICMS_URL, "https://")) === false) ? ("http://") : ("https://");
-	$phpself = $_SERVER['PHP_SELF'];
-	$httphost = $_SERVER['HTTP_HOST'];
-	$querystring = $_SERVER['QUERY_STRING'];
+	$http = ((strpos(ICMS_URL, "https://")) === false)
+				? ("http://")
+				: ("https://");
+	
+	/* $_SERVER variables MUST be sanitized! They don't necessarily come from the server */
+	$filters = array(
+			'SCRIPT_NAME' => FILTER_SANITIZE_STRING,
+			'HTTP_HOST' => FILTER_SANITIZE_STRING,
+			'QUERY_STRING' => FILTER_SANITIZE_STRING,
+		);
+	
+	$clean_SERVER = filter_var_array($_SERVER, $filters);
+	
+	$phpself = $clean_SERVER['SCRIPT_NAME'];
+	$httphost = $clean_SERVER['HTTP_HOST'];
+	$querystring = $clean_SERVER['QUERY_STRING'];
+	
 	if ($querystring != '') {
 		$querystring = '?' . $querystring;
 	}
+	
 	$currenturl = $http . $httphost . $phpself . $querystring;
+	
 	$urls = array ();
 	$urls['http'] = $http;
 	$urls['httphost'] = $httphost;
