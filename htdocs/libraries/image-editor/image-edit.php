@@ -45,12 +45,12 @@ $op = (isset($_GET['op'])) ? filter_input(INPUT_GET, 'op') : ((isset($_POST['op'
 
 if (! file_exists ( ICMS_IMANAGER_FOLDER_PATH . '/temp/' )) {
 	if (! @mkdir ( ICMS_IMANAGER_FOLDER_PATH . '/temp', 0777 )) {
-		echo '<script>alert("Temporary folder dont exist and cannot be created. Create it mannualy and try again. Folder: ' . ICMS_IMANAGER_FOLDER_PATH . '/temp/' . '");window.close();</script>';
+		echo '<script>alert("Temporary folder doesn\'t exist and cannot be created. Create it manually and try again. Folder: ' . str_ireplace(ICMS_ROOT_PATH, "", ICMS_IMANAGER_FOLDER_PATH) . '/temp/' . '");window.close();</script>';
 		exit ();
 	}
 }
 
-if (! is_null ( $target ) && ! is_null ( $type )) {
+if (!empty($target) && !empty($type)) {
 	if (! isset ( $_SESSION ['icms_imanager'] )) {
 		session_start ();
 		$_SESSION ['icms_imanager'] = array ( );
@@ -63,11 +63,11 @@ if (! is_null ( $target ) && ! is_null ( $type )) {
 	}
 }
 
-if (!is_null($op) && $op == 'cancel') {
+if (!empty($op) && $op == 'cancel') {
 	/* make sure the file is in the temp folder and prevent arbitrary deletes of any file */
 	$valid_path = ICMS_IMANAGER_FOLDER_PATH . '/temp';
-	if (isset($_GET['image_path']) && strncmp(realpath($_GET['image_path']), strlen($valid_path)) == 0) {
-			$image_path = $_GET['image_path'];
+	if (!empty($image_path) && strncmp(realpath($image_path), strlen($valid_path)) == 0) {
+		$image_path = realpath($image_path);
 	} else {
 		$image_path = NULL;
 	}

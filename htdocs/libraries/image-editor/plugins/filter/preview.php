@@ -1,14 +1,7 @@
 <?php
 $xoopsOption['nodebug'] = 1;
-if (file_exists('../../../../../../../mainfile.php')) include_once '../../../../../../../mainfile.php';
-if (file_exists('../../../../../../mainfile.php')) include_once '../../../../../../mainfile.php';
-if (file_exists('../../../../../mainfile.php')) include_once '../../../../../mainfile.php';
 if (file_exists('../../../../mainfile.php')) include_once '../../../../mainfile.php';
-if (file_exists('../../../mainfile.php')) include_once '../../../mainfile.php';
-if (file_exists('../../mainfile.php')) include_once '../../mainfile.php';
-if (file_exists('../mainfile.php')) include_once '../mainfile.php';
-if (!defined('XOOPS_ROOT_PATH')) exit();
-include(ICMS_LIBRARIES_PATH."/wideimage/lib/WideImage.php");
+if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
 $file = $_GET['file'];
 $resize = isset($_GET['resize'])? (int) $_GET['resize']:1;
@@ -45,4 +38,3 @@ if (!is_null($filter)){
 		}
 	}
 }
-?>

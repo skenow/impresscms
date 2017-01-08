@@ -24,13 +24,13 @@ $resize = isset($_GET['resize'])?$_GET['resize']:1;
 $filter = isset($_GET['filter'])?$_GET['filter']:null;
 $args = array();
 if (isset($_GET['arg1'])){
-	$args[] = $_GET['arg1'];
+	$args[] = filter_input(INPUT_GET, 'arg1', FILTER_SANITIZE_STRING);
 }
 if (isset($_GET['arg2'])){
-	$args[] = $_GET['arg2'];
+	$args[] = filter_input(INPUT_GET, 'arg2', FILTER_SANITIZE_STRING);
 }
 if (isset($_GET['arg3'])){
-	$args[] = $_GET['arg3'];
+	$args[] = filter_input(INPUT_GET, 'arg3', FILTER_SANITIZE_STRING);
 }
 
 $image_handler = xoops_gethandler('image');
@@ -52,7 +52,7 @@ $width = $img->getWidth();
 $height = $img->getHeight();
 
 header('Content-type: image/png');
-if (!is_null($filter)){
+if (NULL !== $filter) {
 	if ($filter == 'IMG_FILTER_SEPIA'){
 		if ($resize && ($width > 400 || $height > 300)){
 			echo $img->resize(400, 300)->applyFilter(IMG_FILTER_GRAYSCALE)->applyFilter(IMG_FILTER_COLORIZE, 90, 60, 30)->asString('png');
@@ -74,4 +74,3 @@ if (!is_null($filter)){
 	}
 }
 
-?>

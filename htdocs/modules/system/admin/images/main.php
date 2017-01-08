@@ -84,7 +84,6 @@ $filter_post = array(
 		
 );
 
-
 if (isset($_POST['image_id']) && is_array($_POST['image_id'])) {
 	$filter_post['image_id'] = array('filter' => FILTER_VALIDATE_INT, 'flags' => FILTER_REQUIRE_ARRAY);
 }
@@ -409,7 +408,7 @@ function imanager_listimg($imgcat_id, $start = 0) {
 		$admin = (!$icmsUser->isAdmin(1)) ? FALSE : TRUE;
 	}
 
-	$query = isset($query) ? $query : NULL;
+	$query = !empty($query) ? $query : NULL;
 
 	if ($imgcat_id <= 0) {
 		redirect_header('admin.php?fct=images', 1, '');
@@ -511,7 +510,7 @@ function imanager_listimg($imgcat_id, $start = 0) {
 	$icmsAdminTpl->assign('query', filter_var($query, FILTER_SANITIZE_ENCODED));
 
 	$criteria = new CriteriaCompo(new Criteria('imgcat_id', $imgcat_id));
-	if (TRUE !== empty($query)) {
+	if (null !== $query) {
 		$criteria->add(new Criteria('image_nicename', '%' . mysql_real_escape_string($query) . '%', 'LIKE'));
 	}
 	$imgcount = $image_handler->getCount($criteria);
@@ -652,7 +651,7 @@ function imanager_addcat() {
 	}
 
 	$newid = $imagecategory->getVar('imgcat_id');
-	$imagecategoryperm_handler =& xoops_gethandler('groupperm');
+	$imagecategoryperm_handler = xoops_gethandler('groupperm');
 	if (!isset($readgroup)) {
 		$readgroup = array();
 	}
@@ -817,7 +816,7 @@ function imanager_delcatok($imgcat_id) {
 		redirect_header('admin.php?fct=images', 1, _MD_SCATDELNG);
 	}
 
-	$image_handler =& xoops_gethandler('image');
+	$image_handler = xoops_gethandler('image');
 	$images =& $image_handler->getObjects(new Criteria('imgcat_id', $imgcat_id), TRUE, FALSE);
 
 	$errors = array();
@@ -899,7 +898,7 @@ function imanager_addfile() {
 	/* because we are using a function, the GET/POST variables are not in scope */
 	global $imgcat_id, $image_display, $image_weight, $image_nicename;
 
-	$imgcat_handler =& xoops_gethandler('imagecategory');
+	$imgcat_handler = xoops_gethandler('imagecategory');
 	$imagecategory =& $imgcat_handler->get((int) $imgcat_id);
 	if (!is_object($imagecategory)) {
 		redirect_header('admin.php?fct=images', 1);
@@ -921,7 +920,7 @@ function imanager_addfile() {
 			if (!$uploader->upload()) {
 				$err[] = $uploader->getErrors();
 			} else {
-				$image_handler =& xoops_gethandler('image');
+				$image_handler = xoops_gethandler('image');
 				$image =& $image_handler->create();
 				$image->setVar('image_name', $uploader->getSavedFileName());
 				$image->setVar('image_nicename', $image_nicename);
@@ -974,7 +973,7 @@ function imanager_updateimage() {
 
 	$count = count($image_id);
 	if ($count > 0) {
-		$image_handler =& xoops_gethandler('image');
+		$image_handler = xoops_gethandler('image');
 		$error = array();
 		for ($i = 0; $i < $count; $i++) {
 			$image =& $image_handler->get($image_id[$i]);
@@ -997,7 +996,7 @@ function imanager_updateimage() {
 				$error[] = sprintf(_FAILSAVEIMG, $image_id[$i]);
 			}
 			if ($changedCat) {
-				$imgcat_handler =& xoops_gethandler('imagecategory');
+				$imgcat_handler = xoops_gethandler('imagecategory');
 				$imagecategory  =& $imgcat_handler->get((int) $imgcat_id[$i]);
 				$dest_categ_path = $imgcat_handler->getCategFolder($imagecategory);
 				if ($imagecategory->getVar('imgcat_storetype') != 'db') {
@@ -1042,12 +1041,12 @@ function imanager_delfileok($image_id, $redir = NULL) {
 	if ($image_id <= 0) {
 		redirect_header('admin.php?fct=images', 1);
 	}
-	$image_handler =& xoops_gethandler('image');
+	$image_handler = xoops_gethandler('image');
 	$image =& $image_handler->get($image_id);
 	if (!is_object($image)) {
 		redirect_header('admin.php?fct=images', 1);
 	}
-	$imgcat_handler =& xoops_gethandler('imagecategory');
+	$imgcat_handler = xoops_gethandler('imagecategory');
 	$imagecategory  =& $imgcat_handler->get((int) $image->getVar('imgcat_id'));
 	$categ_path = $imgcat_handler->getCategFolder($imagecategory);
 	if (!$image_handler->delete($image)) {
@@ -1103,14 +1102,14 @@ function imanager_clone() {
 	/* because we are using a function, the GET/POST variables are not in scope */
 	global $imgcat_id, $image_nicename, $image_display, $image_weight, $image_id;
 
-	$imgcat_handler =& xoops_gethandler('imagecategory');
+	$imgcat_handler = xoops_gethandler('imagecategory');
 	$imagecategory =& $imgcat_handler->get($imgcat_id);
 	if (!is_object($imagecategory)) {
 		redirect_header('admin.php?fct=images', 1);
 	}
 	$categ_path = $imgcat_handler->getCategFolder($imagecategory);
 
-	$image_handler =& xoops_gethandler('image');
+	$image_handler = xoops_gethandler('image');
 	$image =& $image_handler->get($image_id);
 	if (($ext = strrpos($image->getVar('image_name'), '.' )) !== FALSE) {
 		$ext = strtolower(substr($image->getVar('image_name'), $ext + 1 ));
@@ -1169,7 +1168,7 @@ function adminNav($id = NULL, $separador = "/", $list = FALSE, $style="style='fo
 	} else {
 		if ($id > 0) {
 			$id = (int) $id;
-			$imgcat_handler =& xoops_gethandler('imagecategory');
+			$imgcat_handler = xoops_gethandler('imagecategory');
 			$imagecategory =& $imgcat_handler->get($id);
 			if ($imagecategory->getVar('imgcat_id') > 0) {
 				if ($list) {
