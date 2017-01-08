@@ -511,12 +511,70 @@ class IcmsPersistableTable {
 
 	}
 
-	function render($fetchOnly=false, $debug=false)
-	{
+	/**
+	 * Render the table of records for an IPF object
+	 *
+	 * @todo	change to dependency injection methods
+	 * @todo	remove the rest of the HTML and move it to the templates
+	 *
+	 * @param $fetchOnly
+	 * @param $debug
+	 */
+	public function render($fetchOnly = false, $debug = false) {
 		global $impresscms;
 
-		include_once ICMS_ROOT_PATH . '/class/template.php';
+		/* Filters. First, some variable variables */
+		$start = 'start' . $this->_objectHandler->keyName;
+		$sortsel = $this->_objectHandler->_itemname . '_' . 'sortsel';
+		$ordersel = $this->_objectHandler->_itemname . '_' . 'ordersel';
+		$quicksearch = 'quicksearch_' . $this->_id;
 
+		$filter_get = array(
+				$start => FILTER_SANITIZE_NUMBER_INT,
+				'limitsel' => FILTER_SANITIZE_NUMBER_INT,
+				'filtersel' => FILTER_SANITIZE_STRING,
+				'filtersel2' => FILTER_SANITIZE_STRING,
+				$sortsel => FILTER_SANITIZE_STRING,
+				$ordersel => FILTER_SANITIZE_STRING,
+				$quicksearch => FILTER_SANITIZE_SPECIAL_CHARS,
+				'fct' => FILTER_SANITIZE_STRING,
+				'op' => FILTER_SANITIZE_STRING,
+		);
+		
+		$filter_post = array(
+				'limitsel' => FILTER_SANITIZE_NUMBER_INT,
+				'filtersel' => FILTER_SANITIZE_STRING,
+				'filtersel2' => FILTER_SANITIZE_STRING,
+				$quicksearch => FILTER_SANITIZE_SPECIAL_CHARS,
+				'fct' => FILTER_SANITIZE_STRING,
+				'op' => FILTER_SANITIZE_STRING,
+		);
+		
+		$filter_server = array(
+				'SCRIPT_NAME' => FILTER_SANITIZE_STRING,
+		);
+		
+		/* default values */
+		$$start = 0;
+		$limitsel = 15;
+		$filtersel = $this->getDefaultFilter();
+		$filtersel2 = $this->getDefaultFilter2();
+		$$sortsel = $$ordersel = '';
+		$$quicksearch = '';
+		
+		/* filter the user input - only allow specified variables */
+		if (!empty($_GET)) {
+			$clean_GET = filter_var_array($_GET, $filter_get, false);
+			extract($clean_GET);
+		}
+		if (!empty($_POST)) {
+			$clean_POST = filter_var_array($_POST, $filter_post, false);
+			extract($clean_POST);
+		}
+
+		$server_vars = filter_var_array($_SERVER, $filter_server, false);
+		$script_name = $server_vars['SCRIPT_NAME'];
+		
 		$this->_tpl = new XoopsTpl();
 
 		/**
@@ -526,24 +584,24 @@ class IcmsPersistableTable {
 		 */
 		$this->_tempObject =& $this->_objectHandler->create();
 
-		$this->_criteria->setStart(isset($_GET['start' . $this->_objectHandler->keyName]) ? intval($_GET['start' . $this->_objectHandler->keyName]) : 0);
+		$this->_criteria->setStart($$start);
 
 		$this->setSortOrder();
 
-		if (!$this->_isTree) {
-			$this->_limitsel = isset($_GET['limitsel']) ? $_GET['limitsel'] : icms_getCookieVar($_SERVER['SCRIPT_NAME'] . '_limitsel', '15');
-		} else {
+		$this->_limitsel = !empty($limitsel) ? $limitsel : icms_getCookieVar($script_name . '_limitsel', '15');
+
+		if ($this->_isTree) {
 			$this->_limitsel = 'all';
 		}
 
-		$this->_limitsel = isset($_POST['limitsel']) ? $_POST['limitsel'] : $this->_limitsel;
-		icms_setCookieVar($_SERVER['SCRIPT_NAME'] . '_limitsel', $this->_limitsel);
+		icms_setCookieVar($script_name . '_limitsel', $this->_limitsel);
+
 		$limitsArray = $this->getLimitsArray();
 		$this->_criteria->setLimit($this->_limitsel);
 
-		$this->_filtersel = isset($_GET['filtersel']) ? $_GET['filtersel'] : $this->getDefaultFilter();
-		$this->_filtersel = isset($_POST['filtersel']) ? $_POST['filtersel'] : $this->_filtersel;
-		icms_setCookieVar($_SERVER['SCRIPT_NAME'] . '_' . $this->_id . '_filtersel', $this->_filtersel);
+		$this->_filtersel = $filtersel;
+
+		icms_setCookieVar($script_name . '_' . $this->_id . '_filtersel', $this->_filtersel);
 		$filtersArray = $this->getFiltersArray();
 
 		if ($filtersArray) {
@@ -551,7 +609,7 @@ class IcmsPersistableTable {
 		}
 
 		// Check if the selected filter is defined and if so, create the selfilter2
-		if (isset($this->_filterseloptions[$this->_filtersel])) {
+		if (!empty($this->_filterseloptions[$this->_filtersel])) {
 			// check if method associate with this filter exists in the handler
 			if (is_array($this->_filterseloptions[$this->_filtersel])) {
 				$filter = $this->_filterseloptions[$this->_filtersel];
@@ -563,29 +621,28 @@ class IcmsPersistableTable {
 					$method = $this->_filterseloptions[$this->_filtersel];
 					$this->_filtersel2options = $this->_objectHandler->$method();
 
-					$this->_filtersel2 = isset($_GET['filtersel2']) ? $_GET['filtersel2'] : $this->getDefaultFilter2();
-					$this->_filtersel2 = isset($_POST['filtersel2']) ? $_POST['filtersel2'] : $this->_filtersel2;
+					$this->_filtersel2 = $filtersel2;
 
 					$filters2Array = $this->getFilters2Array();
 					$this->_tpl->assign('icms_optionssel_filters2Array', $filters2Array);
 
-					icms_setCookieVar($_SERVER['SCRIPT_NAME'] . '_filtersel2', $this->_filtersel2);
+					icms_setCookieVar($script_name . '_filtersel2', $this->_filtersel2);
 					if ($this->_filtersel2 != 'default') {
 						$this->_criteria->add(new Criteria($this->_filtersel, $this->_filtersel2));
 					}
 				}
 			}
 		}
-		// Check if we have a quicksearch
 
-		if (isset($_POST['quicksearch_' . $this->_id]) && $_POST['quicksearch_' . $this->_id] != '') {
+		// Check if we have a quicksearch
+		if (!empty($$quicksearch)) {
 			$quicksearch_criteria = new CriteriaCompo();
 			if (is_array($this->_quickSearch['fields'])) {
 				foreach($this->_quickSearch['fields'] as $v) {
-					$quicksearch_criteria->add(new Criteria($v, '%' . $_POST['quicksearch_' . $this->_id] . '%', 'LIKE'), 'OR');
+					$quicksearch_criteria->add(new Criteria($v, '%' . $$quicksearch . '%', 'LIKE'), 'OR');
 				}
 			} else {
-				$quicksearch_criteria->add(new Criteria($this->_quickSearch['fields'], '%' . $_POST['quicksearch_' . $this->_id] . '%', 'LIKE'));
+				$quicksearch_criteria->add(new Criteria($this->_quickSearch['fields'], '%' . $$quicksearch . '%', 'LIKE'));
 			}
 			$this->_criteria->add($quicksearch_criteria);
 		}
@@ -602,13 +659,13 @@ class IcmsPersistableTable {
 		if ($this->_criteria->getLimit() > 0) {
 
 			/**
-			 * Geeting rid of the old params
+			 * Getting rid of the old params
 			 * $new_get_array is an array containing the new GET parameters
 			 */
 			$new_get_array = array();
 
 			$not_needed_params = array('sortsel', 'limitsel', 'ordersel', 'start' . $this->_objectHandler->keyName);
-			foreach ($_GET as $k => $v) {
+			foreach ($clean_GET as $k => $v) {
 				if (!in_array($k, $not_needed_params)) {
 					$new_get_array[] = "$k=$v";
 					$params_of_the_options_sel[] = "$k=$v";
@@ -666,11 +723,11 @@ class IcmsPersistableTable {
 				$aColumn['caption'] = isset($this->_tempObject->vars[$column->getKeyName()]['form_caption']) ? $this->_tempObject->vars[$column->getKeyName()]['form_caption'] : $column->getKeyName();
 			}
 			// Are we doing a GET sort on this column ?
-			$getSort = (isset($_GET[$this->_objectHandler->_itemname . '_' . 'sortsel']) && $_GET[$this->_objectHandler->_itemname . '_' . 'sortsel'] == $column->getKeyName()) || ($this->_sortsel == $column->getKeyName());
-			$order = isset($_GET[$this->_objectHandler->_itemname . '_' . 'ordersel']) ? $_GET[$this->_objectHandler->_itemname . '_' . 'ordersel'] : 'DESC';
+			$getSort = (!empty($$sortsel) && $$sortsel == $column->getKeyName()) || ($this->_sortsel == $column->getKeyName());
+			$order = !empty($$ordersel) ? $$ordersel : 'DESC';
 
-			if (isset($_REQUEST['quicksearch_' . $this->_id]) && $_REQUEST['quicksearch_' . $this->_id] != '') {
-				$filter = isset($_POST['quicksearch_' . $this->_id]) ? INPUT_POST : INPUT_GET;
+			if (!empty($$quicksearch)) {
+				$filter = !empty($$quicksearch) ? INPUT_POST : INPUT_GET;
 				$qs_param = "&amp;quicksearch_".$this->_id."=".filter_input($filter, 'quicksearch_' . $this->_id, FILTER_SANITIZE_SPECIAL_CHARS);
 			} else {
 				$qs_param = '';
