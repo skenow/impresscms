@@ -122,6 +122,7 @@ switch ( $op ) {
 	}
 	break;
   case "post":
+	$myts =& MyTextSanitizer::getInstance();
 	// Captcha Hack
 	if(@include_once ICMS_ROOT_PATH . "/class/captcha/captcha.php") {
 	  if ( $icmsConfig['use_captchaf'] == true ) {
@@ -251,10 +252,10 @@ switch ( $op ) {
 	  $comment->setVar('com_uid', $uid);
 	}
 
-	$com_title = xoops_trim($_POST['com_title']);
+	$com_title = xoops_trim(filter_var($_POST['com_title'], FILTER_SANITIZE_STRING));
 	$com_title = ($com_title == '') ? _NOTITLE : $com_title;
 	$comment->setVar('com_title', $com_title);
-	$comment->setVar('com_text', $_POST['com_text']);
+	$comment->setVar('com_text', $myts->previewTarea($_POST['com_text'], true));
 	$comment->setVar('dohtml', $dohtml);
 	$comment->setVar('dosmiley', $dosmiley);
 	$comment->setVar('doxcode', $doxcode);
