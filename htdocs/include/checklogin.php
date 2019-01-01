@@ -1,6 +1,9 @@
 <?php
 /**
 * The check login include file
+ * This file is included from several others during their login validation process
+ *  - user.php, site-closed.php, finish_auth.php. checklogin.php does not return
+ *  to any of those files calling it. The outcome is a redirect with a result
 *
 * @copyright	http://www.xoops.org/ The XOOPS Project
 * @copyright	XOOPS_copyrights.txt
@@ -13,16 +16,43 @@
 * @version	$Id: checklogin.php 11462 2011-12-11 01:07:52Z skenow $
 */
 
-if (!defined('ICMS_ROOT_PATH')) {
-	exit();
-}
+defined('ICMS_ROOT_PATH') || exit();
+
 icms_loadLanguageFile('core', 'user');
 $uname = !isset($_POST['uname']) ? '' : trim($_POST['uname']);
 $pass = !isset($_POST['pass']) ? '' : trim($_POST['pass']);
-/**
- * Commented out for OpenID , we need to change it to make a better validation if OpenID is used
- */
-/*if ($uname == '' || $pass == '') {
+
+/* make sure redirect stays within domain and isn't open to exploit */
+if (!isset($redirect)) {
+
+	$redirect = isset($_GET['xoops_redirect'])
+		? $_GET['xoops_redirect']
+		: isset($_POST['xoops_redirect'])
+			? $_POST['xoops_redirect']
+			: ICMS_URL;
+	
+		$redirect = htmlspecialchars(trim($redirect));
+		if ($redirect !== htmlspecialchars($_SERVER['REQUEST_URI'])) $redirect = ICMS_URL;
+}
+
+/* if redirect goes to the register page, divert to main page - users don't go to register */
+if ($redirect && strpos($redirect, 'register') !== FALSE) {
+	$redirect = ICMS_URL;
+}
+
+/* prevent breaking out of the domain */
+$pos = strpos($redirect, '://');
+if ($pos !== FALSE) {
+	$icmsLocation = substr(ICMS_URL, strpos(ICMS_URL, '://') + 3);
+	if (substr($redirect, $pos + 3, strlen($icmsLocation)) != $icmsLocation) {
+		$redirect = ICMS_URL;
+	} elseif (substr($redirect, $pos + 3, strlen($icmsLocation) + 1) == $icmsLocation . '.') {
+		$redirect = ICMS_URL;
+	}
+}
+
+/* Commented out for OpenID , we need to change it to make a better validation if OpenID is used
+ if ($uname == '' || $pass == '') {
 	redirect_header(ICMS_URL.'/user.php', 1, _US_INCORRECTLOGIN);
 	exit();
 }*/
@@ -49,11 +79,18 @@ $pass4sql =  $myts->stripSlashesGPC($pass);
 if(empty($user) || !is_object($user)) {$user =& $xoopsAuth->authenticate($uname4sql, $pass4sql);}
 // end of uname&email hack GIJ
 
+/* User exists: check to see if the user has been activated.
+ * If not, redirect with 'no permission' message
+ */
 if (false != $user) {
 	if (0 == $user->getVar('level')) {
 		redirect_header(ICMS_URL.'/index.php', 5, _US_NOACTTPADM);
 		exit();
 	}
+	
+	/* Check to see if logins from multiple locations is permitted.
+	 * If it is not, check for existing login and redirect if detected
+	 */
 	if ($icmsConfigPersona['multi_login']){
 		if( is_object( $user ) ) {
 			$online_handler =& xoops_gethandler('online');
@@ -80,14 +117,14 @@ if (false != $user) {
 			}
 		}
 		if (!$allowed) {
-			redirect_header(ICMS_URL.'/index.php', 1, _NOPERM);
+			redirect_header(ICMS_URL.'/', 1, _NOPERM);
 			exit();
 		}
 	}
 	$user->setVar('last_login', time());
 	if (!$member_handler->insertUser($user)) {
 	}
-	// Regenrate a new session id and destroy old session
+	// Regenerate a new session id and destroy old session
 	session_regenerate_id(true);
 	$_SESSION = array();
 	$_SESSION['xoopsUserId'] = $user->getVar('uid');
@@ -137,6 +174,7 @@ if (false != $user) {
 	}
 
 	// autologin hack V3.1 GIJ (set cookie)
+	$secure = substr(ICMS_URL, 0, 5) == 'https' ? 1 : 0; // we need to secure cookie when using SSL
 	$xoops_cookie_path = defined('XOOPS_COOKIE_PATH') ? XOOPS_COOKIE_PATH : preg_replace( '?http://[^/]+(/.*)$?' , "$1" , ICMS_URL ) ;
 	if( $xoops_cookie_path == ICMS_URL ) $xoops_cookie_path = '/' ;
 	if (!empty($_POST['rememberme'])) {
@@ -153,10 +191,10 @@ if (false != $user) {
 	$notification_handler->doLoginMaintenance($user->getVar('uid'));
 
 	redirect_header($url, 1, sprintf(_US_LOGGINGU, $user->getVar('uname')), false);
-}elseif(empty($_POST['xoops_redirect'])){
+} elseif(!isset($redirect)) {
 	redirect_header(ICMS_URL.'/user.php', 5, $xoopsAuth->getHtmlErrors());
 }else{
-	redirect_header(ICMS_URL.'/user.php?xoops_redirect='.urlencode(trim($_POST['xoops_redirect'])), 5, $xoopsAuth->getHtmlErrors(), false);
+	redirect_header(ICMS_URL.'/user.php?xoops_redirect='. urlencode($redirect), 5, $xoopsAuth->getHtmlErrors(), false);
 }
 exit();
 
