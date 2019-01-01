@@ -1,4 +1,24 @@
 ImpressCMS ChangeLog
+=== ImpressCMS 1.2.11 Final ===
+Release Date: 
+DB Version: 40
+Build Version: 83
+
+Security release
+
+Security Fixes:
+- Installation vulnerability addressed in 1.3.11 not addressed here - no new installations of 1.2 LTS are supported
+
+Fixes:
+- Update the links to our website
+
+Updates
+- Update HTMLPurifier to 4.10
+- Update GeSHI to 1.0.8.13
+- Update jQuery to 3.3.1
+- Upgrade PHPMailer to 5.2.26
+- Adding CKEditor instead of FCKeditor
+
 === ImpressCMS 1.2.10 Final ===
 Release Date: 
 DB Version: 40
