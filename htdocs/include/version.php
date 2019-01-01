@@ -12,13 +12,11 @@
  * @version		$Id: version.php 12450 2014-06-18 03:36:41Z skenow $
  */
 
-define('ICMS_VERSION_NAME','ImpressCMS 1.2.10 RC');
+define('ICMS_VERSION_NAME','ImpressCMS 1.2.10 Final');
 /**
  * To developers:
  * if you want to get the version number of the core, please use something like:
  * substr(ICMS_VERSION_NAME, 11, -6)
- * OR
- * substr(XOOPS_VERSION, 11, -6)
  * Please note: This code works only on FINAL versions
 */
 
@@ -33,7 +31,7 @@ define('XOOPS_VERSION', ICMS_VERSION_NAME);
  * 10 = Final
 */
 
-define('ICMS_VERSION_STATUS', 3);
+define('ICMS_VERSION_STATUS', 10);
 
 /**
  * Build number

@@ -19,8 +19,35 @@
 $xoopsOption['pagetype'] = 'user';
 include 'mainfile.php';
 
-$op = (isset($_GET['op'])) ? trim(StopXSS($_GET['op'])) : ((isset($_POST['op']))
-    ? trim(StopXSS($_POST['op'])) : 'main');
+$op = (isset($_GET['op']))
+	? trim(filter_input(INPUT_GET, 'op', FILTER_SANITIZE_STRING))
+	: ((isset($_POST['op'])) ? trim(filter_input(INPUT_POST, 'op', FILTER_SANITIZE_STRING)) : 'main');
+
+$redirect = isset($_GET['xoops_redirect'])
+		? $_GET['xoops_redirect']
+		: isset($_POST['xoops_redirect'])
+			? $_POST['xoops_redirect']
+			: false;
+
+if ($redirect) {
+	$redirect = htmlspecialchars(trim($redirect), ENT_QUOTES);
+	$isExternal = false;
+	$pos = strpos($redirect, '://');
+	if ($pos !== false) {
+		$icmsLocation = substr(ICMS_URL, strpos(ICMS_URL, '://') + 3);
+		if (substr($redirect, $pos + 3, strlen($icmsLocation)) != $icmsLocation) {
+			$redirect = ICMS_URL;
+		} elseif (substr($redirect, $pos + 3, strlen($icmsLocation) + 1) == $icmsLocation . '.') {
+			$redirect = ICMS_URL;
+		}
+	}
+}
+
+if ($redirect && $redirect !== htmlspecialchars($_SERVER['REQUEST_URI'])) $redirect = ICMS_URL;
+
+if (!in_array($op, array('main' , 'resetpass', 'login', 'logout', 'actv', 'delete'), true)) {
+	$op = 'main';
+}
 
 if($op == 'main')
 {
@@ -28,24 +55,6 @@ if($op == 'main')
     {
         $xoopsOption['template_main'] = 'system_userform.html';
         include 'header.php';
-        $redirect = false;
-        if(isset($_GET['xoops_redirect']))
-        {
-            $redirect = htmlspecialchars(trim($_GET['xoops_redirect']), ENT_QUOTES);
-            $isExternal = false;
-            if($pos = strpos($redirect, '://'))
-            {
-                $xoopsLocation = substr(ICMS_URL, strpos(ICMS_URL, '://') +3);
-                if(substr($redirect, $pos + 3, strlen($xoopsLocation)) != $xoopsLocation)
-                {
-                    $redirect = ICMS_URL;
-                }
-                elseif(substr($redirect, $pos + 3, strlen($xoopsLocation)+1) == $xoopsLocation.'.')
-                {
-                    $redirect = ICMS_URL;
-                }
-            }
-        }
         icms_makeSmarty(array(
             'usercookie' => isset($_COOKIE[$icmsConfig['usercookie']]) ? $_COOKIE[$icmsConfig['usercookie']] : false,
             'lang_login' => _LOGIN,
@@ -68,23 +77,7 @@ if($op == 'main')
             'xoops_pagetitle' => _LOGIN
             ));
         include 'footer.php';
-    }
-    elseif(!empty($_GET['xoops_redirect']))
-    {
-        $redirect = htmlspecialchars(trim($_GET['xoops_redirect']));
-        $isExternal = false;
-        if($pos = strpos($redirect, '://'))
-        {
-            $xoopsLocation = substr(ICMS_URL, strpos(ICMS_URL, '://') +3);
-            if(substr($redirect, $pos + 3, strlen($xoopsLocation)) != $xoopsLocation)
-            {
-                $redirect = ICMS_URL;
-            }
-            elseif(substr($redirect, $pos + 3, strlen($xoopsLocation)+1) == $xoopsLocation.'.')
-            {
-                $redirect = ICMS_URL;
-            }
-        }
+		} elseif ($redirect) {
         header('Location: '.$redirect);
         exit();
     }
@@ -102,24 +95,6 @@ if($op == 'resetpass')
     {
         $xoopsOption['template_main'] = 'system_userform.html';
         include 'header.php';
-        $redirect = false;
-        if(isset($_GET['xoops_redirect']))
-        {
-            $redirect = htmlspecialchars(trim($_GET['xoops_redirect']), ENT_QUOTES);
-            $isExternal = false;
-            if($pos = strpos( $redirect, '://' ))
-            {
-                $xoopsLocation = substr( ICMS_URL, strpos( ICMS_URL, '://' ) + 3 );
-                if(substr($redirect, $pos + 3, strlen($xoopsLocation)) != $xoopsLocation)
-                {
-                    $redirect = ICMS_URL;
-                }
-                elseif(substr($redirect, $pos + 3, strlen($xoopsLocation)+1) == $xoopsLocation.'.')
-                {
-                    $redirect = ICMS_URL;
-                }
-            }
-        }
         icms_makeSmarty(array(
             'redirect_page' => $redirect,
             'lang_reset' => 1,
@@ -137,23 +112,7 @@ if($op == 'resetpass')
             'xoops_pagetitle' => _LOGIN
             ));
         include 'footer.php';
-    }
-    elseif(!empty($_GET['xoops_redirect']))
-    {
-        $redirect = htmlspecialchars(trim($_GET['xoops_redirect']));
-        $isExternal = false;
-        if($pos = strpos($redirect, '://'))
-        {
-            $xoopsLocation = substr(ICMS_URL, strpos(ICMS_URL, '://') +3);
-            if(substr($redirect, $pos + 3, strlen($xoopsLocation)) != $xoopsLocation)
-            {
-                $redirect = ICMS_URL;
-            }
-            elseif(substr($redirect, $pos + 3, strlen($xoopsLocation)+1) == $xoopsLocation.'.')
-            {
-                $redirect = ICMS_URL;
-            }
-        }
+		} elseif ($redirect) {
         header('Location: '.$redirect);
         exit();
     }

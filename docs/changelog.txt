@@ -6,6 +6,13 @@ Build Version: 82
 
 Security release
 
+Security Fix:
+#927 - SSRF vulnerabilities in image manager
+#931 - Vulnerability in PHPMailer 5.2.18
+#825 - Open redirect in user login 
+
+General Fixes
+#913 - Comment preview loses text of comment; Filtering of comment text
 
 === ImpressCMS 1.2.9 Final ===
 Release Date: Jun 2014
