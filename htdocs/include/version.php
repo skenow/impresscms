@@ -13,6 +13,7 @@
  */
 
 define('ICMS_VERSION_NAME','ImpressCMS 1.2.11 Final');
+
 /**
  * To developers:
  * if you want to get the version number of the core, please use something like:
