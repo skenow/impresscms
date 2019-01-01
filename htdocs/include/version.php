@@ -12,7 +12,7 @@
  * @version		$Id: version.php 12450 2014-06-18 03:36:41Z skenow $
  */
 
-define('ICMS_VERSION_NAME','ImpressCMS 1.2.10 Final');
+define('ICMS_VERSION_NAME','ImpressCMS 1.2.11 Final');
 /**
  * To developers:
  * if you want to get the version number of the core, please use something like:
@@ -38,8 +38,8 @@ define('ICMS_VERSION_STATUS', 10);
  *
  * Every release has its own build number, incrementable by 1 everytime we make a release
 */
-// impresscms_1.2.9 Final = 75, 1.3.9 Final = 80, 2.0.0 Alpha 4 = 73
-define('ICMS_VERSION_BUILD', 82);
+// impresscms_1.2.10 Final = 82, 1.3.9 Final = 80, 2.0.0 Alpha 4 = 73
+define('ICMS_VERSION_BUILD', 83);
 
 /**
  * Latest dbversion of the System Module
