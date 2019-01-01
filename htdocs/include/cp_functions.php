@@ -536,7 +536,7 @@ function impresscms_get_adminmenu() {
 	$i = 0;
 	$menu = array ( );
 
-	$menu [$i] ['link'] = 'http://www.impresscms.org';
+	$menu [$i] ['link'] = 'https://www.impresscms.org';
 	$menu [$i] ['title'] = _IMPRESSCMS_HOME;
 	$menu [$i] ['absolute'] = 1;
 	//$menu[$i]['small'] = ICMS_URL.'/images/impresscms.png';
@@ -550,42 +550,42 @@ function impresscms_get_adminmenu() {
 	$i ++;
 	}
 
-	$menu [$i] ['link'] = 'http://community.impresscms.org';
+	$menu [$i] ['link'] = 'https://www.impresscms.org/modules/iforum/';
 	$menu [$i] ['title'] = _IMPRESSCMS_COMMUNITY;
 	$menu [$i] ['absolute'] = 1;
 	//$menu[$i]['small'] = ICMS_URL.'/images/impresscms.png';
 	$i ++;
 
-	$menu [$i] ['link'] = 'http://addons.impresscms.org';
+	$menu [$i] ['link'] = 'https://www.impresscms.org/modules/downloads/';
 	$menu [$i] ['title'] = _IMPRESSCMS_ADDONS;
 	$menu [$i] ['absolute'] = 1;
 	//$menu[$i]['small'] = ICMS_URL.'/images/impresscms.png';
 	$i ++;
 
-	$menu [$i] ['link'] = 'http://wiki.impresscms.org';
+	$menu [$i] ['link'] = 'https://www.impresscms.org/modules/simplywiki/';
 	$menu [$i] ['title'] = _IMPRESSCMS_WIKI;
 	$menu [$i] ['absolute'] = 1;
 	//$menu[$i]['small'] = ICMS_URL.'/images/impresscms.png';
 	$i ++;
 
-	$menu [$i] ['link'] = 'http://blog.impresscms.org';
+	$menu [$i] ['link'] = 'https://www.impresscms.org/modules/news/';
 	$menu [$i] ['title'] = _IMPRESSCMS_BLOG;
 	$menu [$i] ['absolute'] = 1;
 	//$menu[$i]['small'] = ICMS_URL.'/images/impresscms.png';
 	$i ++;
 
-	$menu [$i] ['link'] = 'http://sourceforge.net/projects/impresscms/';
+	$menu [$i] ['link'] = 'https://github.com/ImpressCMS/impresscms';
 	$menu [$i] ['title'] = _IMPRESSCMS_SOURCEFORGE;
 	$menu [$i] ['absolute'] = 1;
 	//$menu[$i]['small'] = ICMS_URL.'/images/impresscms.png';
 	$i ++;
-
+/*
 	$menu [$i] ['link'] = 'http://www.impresscms.org/donations/';
 	$menu [$i] ['title'] = _IMPRESSCMS_DONATE;
 	$menu [$i] ['absolute'] = 1;
 	//$menu[$i]['small'] = ICMS_URL.'/images/impresscms.png';
 	$i ++;
-
+*/
 	$menu [$i] ['link'] = ICMS_URL . "/admin.php?rssnews=1";
 	$menu [$i] ['title'] = _IMPRESSCMS_NEWS;
 	$menu [$i] ['absolute'] = 1;
