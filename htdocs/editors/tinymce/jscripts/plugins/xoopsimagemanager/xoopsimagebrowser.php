@@ -20,13 +20,13 @@ include_once ICMS_ROOT_PATH.'/class/template.php';
 
 $icmsTpl = new XoopsTpl ( );
 
-$op = (isset($_GET['op'])) ? filter_input(INPUT_GET, 'op') : ((isset($_POST['op'])) ? filter_input(INPUT_POST, 'op') : 'list');
+$op = (isset($_GET['op'])) ? filter_input(INPUT_GET, 'op', FILTER_SANITIZE_STRING) : ((isset($_POST['op'])) ? filter_input(INPUT_POST, 'op', FILTER_SANITIZE_STRING) : 'list');
 $imgcat_id = (isset($_GET['imgcat_id']))?intval($_GET['imgcat_id']):((isset($_POST['imgcat_id']))?intval($_POST['imgcat_id']):null);
 $image_id = (isset($_GET['image_id']))?intval($_GET['image_id']):((isset($_POST['image_id']))?intval($_POST['image_id']):null);
-$target = (isset($_GET['target'])) ? filter_input(INPUT_GET, 'target') : ((isset($_POST['target'])) ? filter_input(INPUT_POST, 'target') : null);
+$target = (isset($_GET['target'])) ? filter_input(INPUT_GET, 'target', FILTER_SANITIZE_STRING) : ((isset($_POST['target'])) ? filter_input(INPUT_POST, 'target', FILTER_SANITIZE_STRING) : null);
 $limit = (isset($_GET['limit']))?intval($_GET['limit']):((isset($_POST['limit']))?intval($_POST['limit']):15);
 $start = (isset($_GET['start']))?intval($_GET['start']):((isset($_POST['start']))?intval($_POST['start']):0);
-$type = (isset($_GET['type'])) ? filter_input(INPUT_GET, 'type') : ((isset($_POST['type'])) ? filter_input(INPUT_POST, 'type') : 'ibrow');
+$type = (isset($_GET['type'])) ? filter_input(INPUT_GET, 'type', FILTER_SANITIZE_STRING) : ((isset($_POST['type'])) ? filter_input(INPUT_POST, 'type', FILTER_SANITIZE_STRING) : 'ibrow');
 
 global $icmsConfig, $icmsUser;
 #Adding language files

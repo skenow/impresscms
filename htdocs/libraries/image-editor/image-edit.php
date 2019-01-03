@@ -38,10 +38,10 @@ $icmsTpl->assign ( 'icms_imanager_temp_path', ICMS_IMANAGER_FOLDER_PATH . '/temp
 $icmsTpl->assign ( 'icms_imanager_temp_url', ICMS_IMANAGER_FOLDER_URL . '/temp' );
 
 $image_id = (isset($_GET['image_id'])) ? (int) $_GET['image_id'] : ((isset($_POST['image_id'])) ? (int) $_POST['image_id'] : null);
-$uniq = (isset($_GET ['uniq'])) ? filter_input(INPUT_GET,'uniq') : ((isset($_POST['uniq'])) ? filter_input(INPUT_POST, 'uniq') : null);
-$type = (isset($_GET['type'])) ? filter_input(INPUT_GET, 'type') : ((isset($_POST['type'])) ? filter_input(INPUT_POST, 'type') : null);
-$target = (isset($_GET['target'])) ? filter_input(INPUT_GET, 'target') : ((isset($_POST['target'])) ? filter_input(INPUT_POST, 'target') : null);
-$op = (isset($_GET['op'])) ? filter_input(INPUT_GET, 'op') : ((isset($_POST['op'])) ? filter_input(INPUT_POST, 'op') : null);
+$uniq = (isset($_GET ['uniq'])) ? filter_input(INPUT_GET,'uniq', FILTER_SANITIZE_STRING) : ((isset($_POST['uniq'])) ? filter_input(INPUT_POST, 'uniq', FILTER_SANITIZE_STRING) : null);
+$type = (isset($_GET['type'])) ? filter_input(INPUT_GET, 'type', FILTER_SANITIZE_STRING) : ((isset($_POST['type'])) ? filter_input(INPUT_POST, 'type', FILTER_SANITIZE_STRING) : null);
+$target = (isset($_GET['target'])) ? filter_input(INPUT_GET, 'target', FILTER_SANITIZE_STRING) : ((isset($_POST['target'])) ? filter_input(INPUT_POST, 'target', FILTER_SANITIZE_STRING) : null);
+$op = (isset($_GET['op'])) ? filter_input(INPUT_GET, 'op', FILTER_SANITIZE_STRING) : ((isset($_POST['op'])) ? filter_input(INPUT_POST, 'op', FILTER_SANITIZE_STRING) : null);
 
 if (! file_exists ( ICMS_IMANAGER_FOLDER_PATH . '/temp/' )) {
 	if (! @mkdir ( ICMS_IMANAGER_FOLDER_PATH . '/temp', 0777 )) {
@@ -101,10 +101,10 @@ if (!empty($op) && $op == 'cancel') {
 }
 if (! is_null ( $op ) && $op == 'save') {
 	$simage_id = isset($_GET['image_id']) ? (int) $_GET['image_id'] : null;
-	$simage_name = isset($_GET['image_name']) ? filter_input(INPUT_GET, 'image_name') : null;
+	$simage_name = isset($_GET['image_name']) ? filter_input(INPUT_GET, 'image_name', FILTER_SANITIZE_STRING) : null;
 	$simage_weight = isset($_GET['image_weight']) ? (int) $_GET['image_weight'] : null;
 	$simage_display = isset($_GET['image_display']) ? (int) $_GET['image_display'] : null;
-	$simage_temp = isset($_GET['image_temp']) ? filter_input(INPUT_GET, 'image_temp') : null;
+	$simage_temp = isset($_GET['image_temp']) ? filter_input(INPUT_GET, 'image_temp', FILTER_SANITIZE_STRING) : null;
 	$soverwrite = isset($_GET['overwrite']) ? (int) $_GET['overwrite'] : 1;
 
 	$image_handler = & xoops_gethandler ( 'image' );
