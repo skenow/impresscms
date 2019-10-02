@@ -1,4 +1,14 @@
-mainfile.php
 /.settings
 /.buildpath
 /.project
+/.idea
+**/.svn/
+**/.git/
+/nbproject/
+vendor/
+/.env
+.vagrant
+user-customizations.sh
+.env
+/modules/*
+!/modules/system/
