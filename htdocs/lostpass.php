@@ -82,7 +82,7 @@ if (empty($getuser)) {
 } else {
 	$icmspass = new icms_core_Password();
 
-	$areyou = substr($getuser[0]->getVar('pass'), 0, 5);
+	$areyou = substr($getuser[0]->getVar('pass'), -5) . $getuser[0]->getVar('last_login');
 	if ($code != '' && $areyou == $code) {
 		$newpass = $icmspass->createSalt(8);
 		$pass = $icmspass->encryptPass($newpass);
@@ -97,7 +97,7 @@ if (empty($getuser)) {
 		$xoopsMailer->setToUsers($getuser[0]);
 		$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
 		$xoopsMailer->setFromName($icmsConfig['sitename']);
-		$xoopsMailer->setSubject(sprintf(_US_NEWPWDREQ, ICMS_URL));
+		$xoopsMailer->setSubject(sprintf(_US_NEWPWDREQ, $icmsConfig['sitename'] . ' (' . ICMS_URL . ')'));
 		if (!$xoopsMailer->send()) {
 			echo $xoopsMailer->getErrors();
 		}
@@ -127,7 +127,7 @@ if (empty($getuser)) {
 		$xoopsMailer->setToUsers($getuser[0]);
 		$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
 		$xoopsMailer->setFromName($icmsConfig['sitename']);
-		$xoopsMailer->setSubject(sprintf(_US_NEWPWDREQ, $icmsConfig['sitename']));
+		$xoopsMailer->setSubject(sprintf(_US_NEWPWDREQ, $icmsConfig['sitename'] . ' (' . ICMS_URL . ')'));
 		/** Include header.php to start page rendering */
 		include 'header.php';
 		if (!$xoopsMailer->send()) {
