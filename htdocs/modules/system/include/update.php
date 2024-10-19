@@ -102,6 +102,11 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 	/* check for previous release's upgrades - dbversion < this major release's initial version */
 	if ($dbVersion < 46) include 'update-14.php';
+	
+	/* Begin automatic upgrades available with IPF-compliant objects
+	 * This can be done before any specific upgrade tasks are started
+	 */
+	$icmsDatabaseUpdater->automaticUpgrade('icms_data', array('file', 'urllink'));
 
 	/* Begin upgrade to version 2.0.0 beta 1 */
 	if (!$abortUpdate) $newDbVersion = 47;

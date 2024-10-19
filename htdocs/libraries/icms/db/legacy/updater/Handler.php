@@ -256,7 +256,7 @@ class icms_db_legacy_updater_Handler {
 	 * @param string $dirname
 	 */
 	function upgradeObjectItem($dirname, $item) {
-		$module_handler = icms_getModuleHandler($item, $dirname);
+		$module_handler = icms_getModuleHandler($item, $dirname, null, true);
 		if (!$module_handler) {
 			return false;
 		}
